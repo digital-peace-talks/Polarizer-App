@@ -1,0 +1,61 @@
+{
+  "author": "Digital Peace Talks Team",
+  "description": "Digital Peace Talks OpenAPI 3.0 server",
+  "main": "src/main/App.js",
+  "name": "dpt-server",
+  "private": true,
+  "version": "0.1.0",
+  "bugs": {
+    "url": "https://github.com/digital-peace-talks/DPT-server/issues"
+  },
+  "contributors": [
+    {
+      "email": "goran.karlic@gmail.com",
+      "name": "Goran Karlic",
+      "url": "https://github.com/gorankarlic"
+    },
+    {
+      "email": "iwan_ittermann@posteo.de",
+      "name": "Iwan Ittermann",
+      "url": "https://github.com/Iwan-Ittermann"
+    },
+    {
+      "email": "oz@soficoop.com",
+      "name": "Oz Fraier",
+      "url": "https://github.com/ozFri"
+    }
+  ],
+  "engines": {
+    "node": ">=11.11.0",
+    "npm": ">=6.9.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digital-peace-talks/DPT-server.git"
+  },
+  "scripts": {
+    "lint": "npx eslint src",
+    "start": "node src/main/App.js 127.0.0.1 8080",
+    "metrics": "rm -rf target/plato && mkdir -p target/plato && npx es6-plato --dir target/plato --eslint .eslintrc.json --recurse src/main src/site && open target/plato/index.html",
+    "test": "npm run test-clean && npm run test-site-instrument && npm run test-run && npm run test-site-run && npm run test-report",
+    "test-clean": "rm -rf target/coverage target/coverage-temp target/test target/test-site",
+    "test-site": "npm run test-site-instrument && npm run test-site-run",
+    "test-site-instrument": "cp -rf src/site/ target/test-site/ && npx istanbul instrument src/site -o target/test-site --es-module",
+    "test-site-run": "SITE=target/test-site npx mocha src/test-site/**/*.js",
+    "test-run": "npx nyc --all --cwd src/main --reporter html --report-dir ../../target/coverage --temp-dir ../../target/coverage-temp npx _mocha \"src/test/**/*Test.js\"",
+    "test-report": "npx nyc report --reporter html --reporter text --report-dir target/coverage --temp-dir target/coverage-temp"
+  },
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/digital-peace-talks/DPT-server#readme",
+  "devDependencies": {
+    "es6-plato": "^1.1.5",
+    "eslint": "^5.15.1",
+    "eslint-plugin-mocha": "^5.3.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "istanbul": "^1.1.0-alpha.1",
+    "nyc": "^13.3.0",
+    "plato": "^1.7.0",
+    "selenium-webdriver": "^4.0.0-alpha.1"
+  },
+  "dependencies": {}
+}
