@@ -2,11 +2,43 @@
 
 
 /**
+ * Start crisis mode
+ *
+ * dialogId String The id of the dialog to retrieve
+ * reason String The content of the message to create
+ * starterID String The ID of the message sender
+ * recipientID String The ID of the message recipient
+ * no response value expected for this operation
+ **/
+exports.addCrisis = function(dialogId,reason,starterID,recipientID) {
+  return new Promise(function(resolve, reject) {
+    resolve();
+  });
+}
+
+
+/**
  * Create a dialog
  *
  * no response value expected for this operation
  **/
 exports.createDialogs = function() {
+  return new Promise(function(resolve, reject) {
+    resolve();
+  });
+}
+
+
+/**
+ * Add a chat message
+ *
+ * dialogId String The id of the dialog to retrieve
+ * content String The content of the message to create
+ * senderID String The ID of the message sender
+ * recipientID String The ID of the message recipient
+ * no response value expected for this operation
+ **/
+exports.createMessage = function(dialogId,content,senderID,recipientID) {
   return new Promise(function(resolve, reject) {
     resolve();
   });
@@ -27,6 +59,23 @@ exports.listDialogs = function(limit) {
     } else {
       resolve();
     }
+  });
+}
+
+
+/**
+ * Start crisis mode
+ *
+ * dialogId String The id of the dialog to retrieve
+ * crisisId String The id of the crisis to retrieve
+ * reason String The content of the message to create
+ * starterID String The ID of the message sender
+ * recipientID String The ID of the message recipient
+ * no response value expected for this operation
+ **/
+exports.setCrisisModeStatus = function(dialogId,crisisId,reason,starterID,recipientID) {
+  return new Promise(function(resolve, reject) {
+    resolve();
   });
 }
 
