@@ -32,7 +32,7 @@ paths:
         style: simple
         explode: false
         schema:
-          pattern: ^[a-zA-Z0-9]{64}$
+          pattern: ^[a-zA-Z0-9]{111}$
           type: string
       responses:
         200:
@@ -108,7 +108,7 @@ paths:
         style: simple
         explode: false
         schema:
-          pattern: ^[a-zA-Z0-9]{64}$
+          pattern: ^[a-zA-Z0-9]{111}$
           type: string
       requestBody:
         description: Updated user object
@@ -445,7 +445,7 @@ components:
           pattern: ^[a-f\d]{24}$
           type: string
         publicKey:
-          pattern: ^[a-zA-Z0-9]{64}$
+          pattern: ^[a-zA-Z0-9]{111}$
           type: string
         statements:
           type: array
@@ -470,7 +470,7 @@ components:
       type: object
       properties:
         publicKey:
-          pattern: ^[a-zA-Z0-9]{64}$
+          pattern: ^[a-zA-Z0-9]{111}$
           type: string
         statements:
           type: integer
@@ -521,7 +521,7 @@ components:
       type: object
       properties:
         publicKey:
-          pattern: ^[a-zA-Z0-9]{64}$
+          pattern: ^[a-zA-Z0-9]{111}$
           type: string
           description: The user's public key
   securitySchemes:
