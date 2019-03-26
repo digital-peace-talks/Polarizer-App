@@ -53,7 +53,6 @@ paths:
       tags:
       - user
       summary: Creates a user
-      description: This can only be done by the logged in user.
       operationId: createUser
       requestBody:
         description: Created user object

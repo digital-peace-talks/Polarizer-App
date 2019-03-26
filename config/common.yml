@@ -1,0 +1,32 @@
+defaults: &defaults
+  api:
+    port: 3000
+
+  logger:
+    name: Digital Peace Talks
+    level: debug
+    levels:
+      trace:
+      debug: STDOUT
+      info:
+      warn:
+      error: STDERR
+      fatal:
+
+development:
+  <<: *defaults
+  dbUrl: mongodb://localhost/dpt-dev
+
+production:
+  <<: *defaults
+  dbUrl: mongodb://localhost/dpt-prod
+
+  logger:
+    level: debug
+    levels:
+      trace:
+      debug: STDOUT
+      info: ./log/info.log
+      warn: ./log/warn.log
+      error: ./log/error.log
+      fatal: ./log/fatal.log
