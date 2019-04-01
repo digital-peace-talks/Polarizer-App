@@ -1,4 +1,4 @@
-const bunyan = require('bunyan');
+const bunyan = require("bunyan");
 
 /**
  * @param {Object} config Logger configuration
@@ -11,13 +11,13 @@ module.exports = config => {
     const bunyanLevel = config.levels[level];
     if (!bunyanLevel) return;
 
-    if (level === 'debug' && config.level !== 'debug') return;
+    if (level === "debug" && config.level !== "debug") return;
 
-    const logger = {level};
+    const logger = { level };
 
-    if (bunyanLevel === 'STDOUT') {
+    if (bunyanLevel === "STDOUT") {
       logger.stream = process.stdout;
-    } else if (bunyanLevel === 'STDERR') {
+    } else if (bunyanLevel === "STDERR") {
       logger.stream = process.stderr;
     } else if (bunyanLevel) {
       logger.path = bunyanLevel;

@@ -1,5 +1,5 @@
 class ServerError extends Error {
-  constructor (...args) {
+  constructor(...args) {
     super(...args);
     Error.captureStackTrace(this, ServerError);
     this.status = args[0].status;

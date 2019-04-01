@@ -1,4 +1,5 @@
 const ServerError = require("../../lib/error");
+const jwt = require("jsonwebtoken");
 const User = require("../models/user").userModel;
 /**
  * @param {Object} options
@@ -7,27 +8,9 @@ const User = require("../models/user").userModel;
  */
 module.exports.createUser = async options => {
   const user = await User.create(options.body);
-  console.info(user);
-  // Implement your business logic here...
-  //
-  // This function should return as follows:
-  //
-  // return {
-  //   status: 200, // Or another success code.
-  //   data: [] // Optional. You can put whatever you want here.
-  // };
-  //
-  // If an error happens during your business logic implementation,
-  // you should throw an error as follows:
-  //
-  // throw new ServerError({
-  //   status: 500, // Or another error code.
-  //   error: 'Server Error' // Or another error message.
-  // });
-
   return {
     status: 200,
-    data: "createUser ok!"
+    data: user,
   };
 };
 
@@ -56,7 +39,7 @@ module.exports.loginUser = async options => {
 
   return {
     status: 200,
-    data: "loginUser ok!"
+    data: "loginUser ok!",
   };
 };
 
@@ -67,6 +50,10 @@ module.exports.loginUser = async options => {
  * @return {Promise}
  */
 module.exports.updateUser = async options => {
+  const result = await User.updateOne(
+    { publicKey: options.publicKey },
+    options.body
+  );
   // Implement your business logic here...
   //
   // This function should return as follows:
@@ -86,7 +73,7 @@ module.exports.updateUser = async options => {
 
   return {
     status: 200,
-    data: "updateUser ok!"
+    data: "updateUser ok!",
   };
 };
 
@@ -97,6 +84,7 @@ module.exports.updateUser = async options => {
  * @return {Promise}
  */
 module.exports.deleteUser = async options => {
+  const result = await User.remove({ publicKey: options.publicKey });
   // Implement your business logic here...
   //
   // This function should return as follows:
@@ -116,6 +104,6 @@ module.exports.deleteUser = async options => {
 
   return {
     status: 200,
-    data: "deleteUser ok!"
+    data: "deleteUser ok!",
   };
 };
