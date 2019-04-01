@@ -7,7 +7,9 @@ const User = require("../models/user").userModel;
  * @return {Promise}
  */
 module.exports.createUser = async options => {
-  const user = await User.create(options.body);
+  let body = options.body;
+  body.signupTime = new Date();
+  const user = await User.create(body);
   return {
     status: 200,
     data: user,

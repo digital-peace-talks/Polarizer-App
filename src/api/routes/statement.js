@@ -26,9 +26,10 @@ router.get('/', async (req, res, next) => {
  * statement. This should work only if the user is the one who 
  * made the statement
  */
-router.put('/', async (req, res, next) => {
+router.put('/:statementId/', async (req, res, next) => {
   const options = {
-    body: req.body
+    body: req.body,
+    statementId: req.params["statementId"]
   };
 
   try {

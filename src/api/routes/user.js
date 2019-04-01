@@ -52,12 +52,12 @@ router.put("/:publicKey/", async (req, res, next) => {
   let token = req.get("authorization") || "Bearer ";
   // remove "Bearer "
   token = token.slice(7, token.length);
-  try {
-    jwt.verify(token, options.publicKey, {algorithms: 'rs256'});
-  } catch (err) {
-    next(err);
-    return;
-  }
+  // try {
+  //   jwt.verify(token, options.publicKey, {algorithms: 'rs256'});
+  // } catch (err) {
+  //   next(err);
+  //   return;
+  // }
   try {
     const result = await user.updateUser(options);
     res.status(result.status || 200).send(result.data);
