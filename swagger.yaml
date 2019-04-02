@@ -4,364 +4,425 @@ info:
   description: This is a specification for DPT server.
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
   version: 1.0.0
-servers:
-- url: https://virtserver.swaggerhub.com/S9715/DPT/1.0.0
-  description: SwaggerHub API Auto Mocking
 tags:
-- name: statement
-  description: Access to statements made by users
-- name: dialog
-  description: Get, create or update a dialog
-- name: user
-  description: User operations
+  - name: statement
+    description: Access to statements made by users
+  - name: dialog
+    description: Get, create or update a dialog
+  - name: user
+    description: User operations
+
 paths:
   /metadata/user/{publicKey}/:
     get:
       tags:
-      - metadata
-      - user
+        - metadata
+        - user
       summary: Gets metadata of a specific user
       operationId: getUserMetadata
       parameters:
-      - name: publicKey
-        in: path
-        description: User that needs to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          pattern: ^[a-zA-Z0-9]{111}$
-          type: string
+        - name: publicKey
+          in: path
+          description: User that needs to be updated
+          required: true
+          schema:
+            type: string
+            pattern: "^[a-zA-Z0-9]{111}$"
       responses:
-        200:
+        "200":
           description: User has been found
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/UserMetadata'
-        404:
+                $ref: "#/components/schemas/UserMetadata"
+        "404":
           description: User not found
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: Metadata
+                $ref: "#/components/schemas/ApiResponse"
   /user/:
     post:
       tags:
-      - user
+        - user
       summary: Creates a user
       operationId: createUser
       requestBody:
         description: Created user object
         content:
-          application/json:
+          "application/json":
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
         required: true
       responses:
         default:
           description: successful operation
           content: {}
-      x-swagger-router-controller: User
   /user/login/:
     post:
       tags:
-      - user
+        - user
       summary: Logs user into the system
-      description: Issues a JWT for the user - [click for further reading](http://jwt.io)
+      description: Issues a JWT for the user -
+        [click for further reading](http://jwt.io)
       operationId: loginUser
       requestBody:
         content:
-          application/json:
+          "application/json":
             schema:
-              $ref: '#/components/schemas/body'
+              type: object
+              properties:
+                publicKey:
+                  description: The user's public key
+                  type: string
+                  pattern: "^[a-zA-Z0-9]{111}$"
       responses:
-        200:
+        "200":
           description: successful operation
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/LoginResponse'
-        400:
+                $ref: "#/components/schemas/LoginResponse"
+        "400":
           description: Bad request
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: User
+                $ref: "#/components/schemas/ApiResponse"
   /user/{publicKey}/:
     put:
       tags:
-      - user
+        - user
       summary: Updates a user
       description: This can only be done by the logged in user.
       operationId: updateUser
+      security:
+        - bearerAuth: []
       parameters:
-      - name: publicKey
-        in: path
-        description: User that needs to be updated
-        required: true
-        style: simple
-        explode: false
-        schema:
-          pattern: ^[a-zA-Z0-9]{111}$
-          type: string
+        - name: publicKey
+          in: path
+          description: User that needs to be updated
+          required: true
+          schema:
+            type: string
+            pattern: "^[a-zA-Z0-9]{111}$"
       requestBody:
         description: Updated user object
         content:
-          application/json:
+          "application/json":
             schema:
-              $ref: '#/components/schemas/User'
+              $ref: "#/components/schemas/User"
         required: true
       responses:
-        200:
+        "200":
           description: User has been updated
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-        400:
+                $ref: "#/components/schemas/ApiResponse"
+        "400":
           description: Bad request
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-        404:
+                $ref: "#/components/schemas/ApiResponse"
+        "404":
           description: User not found
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-      - bearerAuth: []
-      x-swagger-router-controller: User
+                $ref: "#/components/schemas/ApiResponse"
     delete:
       tags:
-      - user
+        - user
       summary: Delete user
       description: This can only be done by the logged in user.
+      security:
+        - bearerAuth: []
       operationId: deleteUser
       parameters:
-      - name: publicKey
-        in: path
-        description: The name that needs to be deleted
-        required: true
-        style: simple
-        explode: false
-        schema:
-          pattern: ^[a-f\d]{24}$
-          type: string
+        - name: publicKey
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: string
+            pattern: '^[a-f\d]{24}$'
       responses:
-        200:
+        "200":
           description: User has been deleted
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-        400:
+                $ref: "#/components/schemas/ApiResponse"
+        "400":
           description: Invalid username supplied
           content: {}
-        404:
+        "404":
           description: User not found
           content: {}
-      security:
-      - bearerAuth: []
-      x-swagger-router-controller: User
   /statement/:
     summary: Contains statment operations
     get:
-      tags:
-      - statement
       summary: Gets all statements
+      tags:
+        - statement
       operationId: getStatements
       responses:
-        200:
+        "200":
           description: Succesful operation
           content:
-            application/json:
+            "application/json":
               schema:
-                type: array
+                type: "array"
                 items:
-                  $ref: '#/components/schemas/Statement'
-      x-swagger-router-controller: Statement
-    put:
-      tags:
-      - statement
-      summary: Updates a statement
-      description: The user has changed its mind and would like to alter the statement. This should work only if the user is the one who made the statement
-      operationId: statementPUT
-      requestBody:
-        description: Statement Object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Statement'
-        required: true
-      responses:
-        200:
-          description: Statement was updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-        400:
-          description: Bad request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-      - bearerAuth: []
-      x-swagger-router-controller: Statement
+                  $ref: "#/components/schemas/Statement"
     post:
-      tags:
-      - statement
       summary: Creates a new statement
-      operationId: statementPOST
+      tags:
+        - statement
       requestBody:
         description: Statement Object
         content:
-          application/json:
+          "application/json":
             schema:
-              $ref: '#/components/schemas/Statement'
+              $ref: "#/components/schemas/Statement"
         required: true
       responses:
-        201:
+        "201":
           description: Statement was created successfully
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-        400:
+                $ref: "#/components/schemas/ApiResponse"
+        "400":
           description: Bad request
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiResponse'
+                $ref: "#/components/schemas/ApiResponse"
       security:
-      - bearerAuth: []
-      x-swagger-router-controller: Statement
+        - bearerAuth: []
+  /statement/{statementId}/:
+    put:
+      summary: Updates a statement
+      description: The user has changed its mind and
+        would like to alter the statement.
+        This should work only if the user
+        is the one who made the statement
+      tags:
+        - statement
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: statementId
+          in: path
+          description: ID of statement to update
+          required: true
+          schema:
+            type: string
+            pattern: '^[a-f\d]{24}$'
+      requestBody:
+        description: Statement Object
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/Statement"
+        required: true
+      responses:
+        "200":
+          description: Statement was updated successfully
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+        "400":
+          description: Bad request
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
   /dialog/:
     summary: Main dialog endpoint
     post:
-      tags:
-      - dialog
       summary: Creates a dialog
+      tags:
+        - dialog
       operationId: createDialog
+      security:
+        - bearerAuth: []
       requestBody:
         content:
-          application/json:
+          "application/json":
             schema:
-              $ref: '#/components/schemas/Dialog'
+              $ref: "#/components/schemas/Dialog"
         required: true
       responses:
-        200:
-          description: Dialog has been created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Dialog'
-        400:
+        "400":
           description: Bad request
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-      - bearerAuth: []
-      x-swagger-router-controller: Dialog
+                $ref: "#/components/schemas/ApiResponse"
+        "200":
+          description: Dialog has been created
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Dialog"
   /dialog/{dialogId}/:
     summary: Endpoint for a specific dialog
     get:
-      tags:
-      - dialog
       summary: Gets a specific dialog by its ID
+      tags:
+        - dialog
       operationId: getDialog
       parameters:
-      - name: dialogId
-        in: path
-        description: ID of dialog to return
-        required: true
-        style: simple
-        explode: false
-        schema:
-          pattern: ^[a-f\d]{24}$
-          type: string
+        - name: dialogId
+          in: path
+          description: ID of dialog to return
+          required: true
+          schema:
+            type: string
+            pattern: '^[a-f\d]{24}$'
       responses:
-        200:
-          description: Dialog found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Dialog'
-        400:
+        "400":
           description: Bad request
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-        404:
+                $ref: "#/components/schemas/ApiResponse"
+        "200":
+          description: Dialog found
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Dialog"
+        "404":
           description: Dialog not found
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ApiResponse'
-      x-swagger-router-controller: Dialog
+                $ref: "#/components/schemas/ApiResponse"
     put:
+      summary: Updates a specific dialog by its ID
       tags:
-      - dialog
-      summary: Updates a dialog (with a message)
+        - dialog
       operationId: updateDialog
       parameters:
-      - name: dialogId
-        in: path
-        description: ID of dialog to update
-        required: true
-        style: simple
-        explode: false
-        schema:
-          pattern: ^[a-f\d]{24}$
-          type: string
+        - name: dialogId
+          in: path
+          description: ID of dialog to update
+          required: true
+          schema:
+            type: string
+            pattern: '^[a-f\d]{24}$'
       requestBody:
         content:
-          application/json:
+          "application/json":
             schema:
-              $ref: '#/components/schemas/Message'
+              $ref: "#/components/schemas/Dialog"
+      responses:
+        "400":
+          description: Bad request
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+        "200":
+          description: Dialog found
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Dialog"
+        "404":
+          description: Dialog not found
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /dialog/{dialogId}/message/:
+    post:
+      summary: Posts a message to a dialog
+      tags:
+        - dialog
+      operationId: postMessage
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: dialogId
+          in: path
+          description: ID of dialog to update
+          required: true
+          schema:
+            type: string
+            pattern: '^[a-f\d]{24}$'
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/Message"
         required: true
       responses:
-        200:
+        "200":
           description: Successful operation
           content:
-            application/json:
+            "application/json":
               schema:
-                $ref: '#/components/schemas/Dialog'
+                $ref: "#/components/schemas/Dialog"
+  /dialog/{dialogId}/crisis/:
+    post:
+      summary: Posts a crisis to a dialog
+      tags:
+        - dialog
+        - crisis
+      operationId: createCrisis
       security:
-      - bearerAuth: []
-      x-swagger-router-controller: Dialog
+        - bearerAuth: []
+      parameters:
+        - name: dialogId
+          in: path
+          description: ID of dialog to post crisis to
+          required: true
+          schema:
+            type: string
+            pattern: '^[a-f\d]{24}$'
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/Message"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Dialog"
 components:
   schemas:
     Statement:
       type: object
       properties:
         id:
-          pattern: ^[a-f\d]{24}$
           type: string
+          pattern: '^[a-f\d]{24}$'
         content:
           type: string
           example: Batman can win superman
         user:
-          pattern: ^[a-f\d]{24}$
           type: string
           description: UUID of linked user
+          pattern: '^[a-f\d]{24}$'
     Crisis:
       type: object
       properties:
         id:
-          pattern: ^[a-f\d]{24}$
           type: string
+          pattern: '^[a-f\d]{24}$'
         startDate:
           type: string
           format: date-time
@@ -369,26 +430,26 @@ components:
           type: string
           format: date-time
         initiator:
-          pattern: ^[a-f\d]{24}$
           type: string
           description: UUID of the crisis intiator
+          pattern: '^[a-f\d]{24}$'
         reason:
           type: string
           description: The reason for the crisis
         causingMessage:
-          pattern: ^[a-f\d]{24}$
           type: string
           description: ID of the message that caused the crisis
+          pattern: '^[a-f\d]{24}$'
     Dialog:
       type: object
       properties:
         id:
-          pattern: ^[a-f\d]{24}$
           type: string
+          pattern: '^[a-f\d]{24}$'
         statement:
-          pattern: ^[a-f\d]{24}$
           type: string
           description: ID of linked statement
+          pattern: '^[a-f\d]{24}$'
         statementProposition:
           type: string
           description: Proposition for changing the linked statement
@@ -396,109 +457,112 @@ components:
           type: array
           description: All of the dialog's crisises
           items:
-            $ref: '#/components/schemas/Crisis'
+            $ref: "#/components/schemas/Crisis"
         startDate:
           type: string
           format: date-time
-        messges:
+        messages:
           type: array
           items:
-            $ref: '#/components/schemas/Message'
+            $ref: "#/components/schemas/Message"
         initiator:
-          pattern: ^[a-f\d]{24}$
           type: string
           description: UUID of the user who requested the dialog
+          pattern: '^[a-f\d]{24}$'
         recipient:
-          pattern: ^[a-f\d]{24}$
           type: string
-          description: UUID of the dialog's recipient, who accepted the dialog request
+          description: UUID of the dialog's recipient,
+            who accepted the dialog request
+          pattern: '^[a-f\d]{24}$'
         status:
+          description: A dialog has many statuses.
+            For example, when a dialog has been requested,
+            a new `pending` dialog will be created.
           type: string
-          description: A dialog has many statuses. For example, when a dialog has been requested, a new `pending` dialog will be created.
-          default: pending
           enum:
-          - pending
-          - active
-          - crisis
-          - closed
+            - "pending"
+            - "active"
+            - "crisis"
+            - "closed"
+          default: "pending"
     Message:
       type: object
       properties:
         id:
-          pattern: ^[a-f\d]{24}$
           type: string
+          pattern: '^[a-f\d]{24}$'
         timestamp:
           type: string
           format: date-time
         sender:
-          pattern: ^[a-f\d]{24}$
           type: string
           description: UUID of the message's sender
+          pattern: '^[a-f\d]{24}$'
         content:
           type: string
-          example: Hi mate, how are you doing?
+          example: "Hi mate, how are you doing?"
     User:
       type: object
       properties:
         id:
-          pattern: ^[a-f\d]{24}$
           type: string
+          pattern: '^[a-f\d]{24}$'
         publicKey:
-          pattern: ^[a-zA-Z0-9]{111}$
           type: string
+          pattern: "^[a-zA-Z0-9]{111}$"
         statements:
           type: array
-          description: IDS of statements that the user has made
           items:
-            type: array
             items:
-              pattern: ^[a-f\d]{24}$
               type: string
+              pattern: '^[a-f\d]{24}$'
+          description: IDS of statements that the user has made
         dialogs:
           type: array
-          description: IDS of dialogs in which the user participates
           items:
-            type: array
             items:
-              pattern: ^[a-f\d]{24}$
               type: string
+              pattern: '^[a-f\d]{24}$'
+          description: IDS of dialogs in which the user participates
         signupTime:
           type: string
           format: date-time
     UserMetadata:
+      description:
+        Metadata for a user. This will be returned by the GET user method,
+        and will not be saved in the database (as the data already exists in the user document)
       type: object
       properties:
         publicKey:
-          pattern: ^[a-zA-Z0-9]{111}$
           type: string
+          pattern: "^[a-zA-Z0-9]{111}$"
         statements:
           type: integer
-          description: Amount of statements that the user has made
           format: int32
+          description: Amount of statements that the user has made
         refactoredStatements:
           type: integer
-          description: Amount of statements that the user has refactored
           format: int32
+          description: Amount of statements that the user has refactored
         dialogs:
           type: integer
-          description: Amount of dialogs that the user had participated in
           format: int32
+          description: Amount of dialogs that the user had participated in
         dialogRequestsSent:
           type: integer
-          description: Amount of dialog requests that the user has sent
           format: int32
+          description: Amount of dialog requests that the user has sent
         dialogRequestsReceived:
           type: integer
-          description: Amount of dialog requests that the user has received
           format: int32
+          description: Amount of dialog requests that the user has received
         crisises:
           type: integer
-          description: Amount of crisies that the user had been involved in
           format: int32
+          description: Amount of crisies that the user had been involved in
         signupTime:
           type: string
           format: date-time
-      description: Metadata for a user. This will be returned by the GET user method, and will not be saved in the database (as the data already exists in the user document)
     ApiResponse:
       type: object
       properties:
@@ -511,20 +575,17 @@ components:
       type: object
       properties:
         user:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
         token:
-          pattern: ^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$
           type: string
           description: the generated JWT
-    body:
-      type: object
-      properties:
-        publicKey:
-          pattern: ^[a-zA-Z0-9]{111}$
-          type: string
-          description: The user's public key
+          pattern: '^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$'
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
+# Added by API Auto Mocking Plugin
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/S9715/DPT/1.0.0

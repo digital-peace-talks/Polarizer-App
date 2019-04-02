@@ -12,9 +12,7 @@ const statementSchema = mongoose.Schema({
 });
 
 statementSchema.post("save", async doc => {
-  const user = await User.findById(doc.user);
-  user.statements.push(doc);
-  user.save();
+  await User.findByIdAndUpdate(doc.user, { $addToSet: { statements: doc } });
 });
 
 statementSchema.post("remove", async doc => {

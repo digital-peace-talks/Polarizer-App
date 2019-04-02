@@ -1,14 +1,14 @@
-const express = require('express');
-const dialog = require('../services/dialog');
+const express = require("express");
+const dialog = require("../services/dialog");
 
 const router = new express.Router();
 
 /**
  * Creates a dialog
  */
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   const options = {
-    body: req.body
+    body: req.body,
   };
 
   try {
@@ -22,9 +22,9 @@ router.post('/', async (req, res, next) => {
 /**
  * Gets a specific dialog by its ID
  */
-router.get('/:dialogId/', async (req, res, next) => {
+router.get("/:dialogId/", async (req, res, next) => {
   const options = {
-    dialogId: req.params['dialogId']
+    dialogId: req.params["dialogId"],
   };
 
   try {
@@ -36,16 +36,53 @@ router.get('/:dialogId/', async (req, res, next) => {
 });
 
 /**
- * Updates a dialog (with a message)
+ * Updates a specific dialog by its ID
  */
-router.put('/:dialogId/', async (req, res, next) => {
+router.put("/:dialogId/", async (req, res, next) => {
+  const options = {
+    body: req.body,
+    dialogId: req.params["dialogId"],
+  };
+
+  try {
+    const result = await dialog.updateDialog(options);
+    res.status(result.status || 200).send(result.data);
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
+ * Posts a message to a dialog
+ */
+router.post("/:dialogId/message/", async (req, res, next) => {
+  const options = {
+    body: req.body,
+    dialogId: req.params["dialogId"],
+  };
+
+  try {
+    const result = await dialog.postMessage(options);
+    res.status(result.status || 200).send(result.data);
+  } catch (err) {
+    return res.status(500).send({
+      status: 500,
+      error: "Server Error",
+    });
+  }
+});
+
+/**
+ * Posts a crisis to a dialog
+ */
+router.post('/:dialogId/crisis/', async (req, res, next) => {
   const options = {
     body: req.body,
     dialogId: req.params['dialogId']
   };
 
   try {
-    const result = await dialog.updateDialog(options);
+    const result = await dialog.createCrisis(options);
     res.status(result.status || 200).send(result.data);
   } catch (err) {
     return res.status(500).send({
