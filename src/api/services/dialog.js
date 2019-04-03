@@ -117,7 +117,14 @@ module.exports.postMessage = async options => {
 module.exports.createCrisis = async options => {
   const dialog = await Dialog.findById(options.dialogId);
   dialog.crisises.push(options.body);
-  dialog.crisises.save();
+  try {
+    await dialog.save();
+  } catch (e) {
+    return {
+      status: 400,
+      data: e.message,
+    };
+  }
   // Implement your business logic here...
   //
   // This function should return as follows:
