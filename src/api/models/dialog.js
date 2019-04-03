@@ -3,16 +3,16 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const messaageSchema = mongoose.Schema({
-  timestamp: Date,
-  sender: { type: Schema.Types.ObjectId, ref: "User" },
+  timestamp: {type: Date, default: Date.now},
+  sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
   content: String,
 });
 
 const crisisSchema = mongoose.Schema({
-  startDate: Date,
-  expirationDate: Date,
-  initiator: { type: Schema.Types.ObjectId, ref: "User" },
-  reason: String,
+  startDate: { type: Date, required: true, default: Date.now },
+  expirationDate: { type: Date, required: true },
+  initiator: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  reason: { type: String, required: true },
   causingMessage: { type: Schema.Types.ObjectId, ref: "Dialog.messages" },
 });
 
@@ -30,6 +30,7 @@ const dialogSchema = mongoose.Schema({
   startDate: {
     type: Date,
     required: true,
+    default: Date.now,
   },
   statementProposition: String,
   initiator: {
