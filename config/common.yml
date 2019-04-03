@@ -1,6 +1,6 @@
 defaults: &defaults
   api:
-    port: 3000
+    port: 8000
 
   logger:
     name: Digital Peace Talks
