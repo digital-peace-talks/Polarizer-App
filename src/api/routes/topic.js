@@ -1,17 +1,17 @@
 const express = require('express');
-const statement = require('../services/statement');
+const topic = require('../services/topic');
 
 const router = new express.Router();
 
 /**
- * Gets all statements
+ * Gets all opinions
  */
 router.get('/', async (req, res, next) => {
   const options = {
   };
 
   try {
-    const result = await statement.getStatements(options);
+    const result = await topic.getTopics(options);
     res.status(result.status || 200).send(result.data);
   } catch (err) {
     return res.status(500).send({
@@ -23,17 +23,17 @@ router.get('/', async (req, res, next) => {
 
 /**
  * The user has changed its mind and would like to alter the 
- * statement. This should work only if the user is the one who 
- * made the statement
+ * opinion. This should work only if the user is the one who 
+ * made the topic
  */
-router.put('/:statementId/', async (req, res, next) => {
+router.put('/:topicId/', async (req, res, next) => {
   const options = {
     body: req.body,
-    statementId: req.params["statementId"]
+    opinionId: req.params["topicId"]
   };
 
   try {
-    const result = await statement.statementPut(options);
+    const result = await topic.TopicPut(options);
     res.status(result.status || 200).send(result.data);
   } catch (err) {
     next(err);
@@ -41,7 +41,7 @@ router.put('/:statementId/', async (req, res, next) => {
 });
 
 /**
- * Creates a new statement
+ * Creates a new topic
  */
 router.post('/', async (req, res, next) => {
   const options = {
@@ -49,7 +49,7 @@ router.post('/', async (req, res, next) => {
   };
 
   try {
-    const result = await statement.statementPost(options);
+    const result = await topic.topicPost(options);
     res.status(result.status || 200).send(result.data);
   } catch (err) {
     next(err);

@@ -1,34 +1,35 @@
 const ServerError = require("../../lib/error");
-const Statement = require("../models/statement").statementModel;
+const Opinion = require("../models/opinion").opinionModel;
 const User = require("../models/user").userModel;
+const Topic = require("../models/topic").topicModel;
 /**
  * @param {Object} options
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.getStatements = async options => {
-  const statements = await Statement.find({});
+module.exports.getOpinions = async options => {
+  const opinions = await Opinion.find({});
 
   return {
     status: 200,
-    data: statements
+    data: opinions
   };
 };
 
 /**
  * @param {Object} options
- * @param {String} options.statementId Statement that needs to be updated
+ * @param {String} options.opinionId opinion that needs to be updated
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.statementPut = async options => {
-  const result = await Statement.findByIdAndUpdate(
-    options.statementId,
+module.exports.opinionPut = async options => {
+  const result = await Opinion.findByIdAndUpdate(
+    options.opinionId,
     options.body
   );
   return {
     status: 200,
-    data: "statementPut ok!",
+    data: "opinionPut ok!",
   };
 };
 
@@ -37,8 +38,8 @@ module.exports.statementPut = async options => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.statementPost = async options => {
-  const result = await Statement.create(options.body);
+module.exports.opinionPost = async options => {
+  const result = await Opinion.create(options.body);
   // Implement your business logic here...
   //
   // This function should return as follows:
