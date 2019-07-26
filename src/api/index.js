@@ -18,8 +18,10 @@ app.use(cors());
  */
 app.use("/metadata", require("./routes/metadata"));
 app.use("/user", require("./routes/user"));
-app.use("/statement", require("./routes/statement"));
+app.use("/topic", require("./routes/topic"));
+app.use("/opinion", require("./routes/opinion"));
 app.use("/dialog", require("./routes/dialog"));
+app.use("/misc", require("./routes/misc"));
 
 // catch 404
 app.use((req, res, next) => {
@@ -40,3 +42,4 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
+

@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("./user").userModel;
 const Topic = require("./topic").topicModel;
-console.log("=======================================");
-console.log(Topic);
-console.log("=======================================");
 const Schema = mongoose.Schema;
 
 const opinionSchema = mongoose.Schema({

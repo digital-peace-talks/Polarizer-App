@@ -17,9 +17,9 @@ const crisisSchema = mongoose.Schema({
 });
 
 const dialogSchema = mongoose.Schema({
-  statement: {
+  opinion: {
     type: Schema.Types.ObjectId,
-    ref: "Statement",
+    ref: "Opinion",
     required: true,
   },
   status: {
@@ -32,7 +32,7 @@ const dialogSchema = mongoose.Schema({
     required: true,
     default: Date.now,
   },
-  statementProposition: String,
+  opinionProposition: String,
   initiator: {
     type: Schema.Types.ObjectId,
     ref: "User",
