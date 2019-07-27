@@ -8,7 +8,15 @@ const cors = require("cors");
 const log = logger(config.logger);
 const app = express();
 
-app.use(bodyParser.json());
+/*
+Setup of the express http service
+*/
+
+// We need one cookie per user and we have hash-cookies
+// Please change the credential when you run the server in production
+const cookieKey = 'geheim';
+app.use(cookieParser(cookieKey));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
@@ -22,16 +30,7 @@ app.use("/topic", require("./routes/topic"));
 app.use("/opinion", require("./routes/opinion"));
 app.use("/dialog", require("./routes/dialog"));
 app.use("/misc", require("./routes/misc"));
-
-app.get('/', async (req, res, next) => {
-    try {
-            await res.send('homepage');
-            res.status(200);
-    } catch(err) {
-            next(err);
-    }
-});
-
+app.use("/", require("./routes/frontend"));
 
 // catch 404
 app.use((req, res, next) => {
@@ -50,6 +49,7 @@ app.use((err, req, res, next) => {
   );
   res.status(status).send({ status, error: msg });
 });
+
 
 module.exports = app;
 

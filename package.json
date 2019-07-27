@@ -16,7 +16,8 @@
     "mongoose": "^5.6.6",
     "node-yaml-config": "0.0.5",
     "prettier": "^1.18.2",
-    "request-promise": "^4.2.4"
+    "request-promise": "^4.2.4",
+    "socketio": "^1.0.0"
   },
   "devDependencies": {
     "@types/mongoose": "^5.5.1"
