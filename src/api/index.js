@@ -23,6 +23,16 @@ app.use("/opinion", require("./routes/opinion"));
 app.use("/dialog", require("./routes/dialog"));
 app.use("/misc", require("./routes/misc"));
 
+app.get('/', async (req, res, next) => {
+    try {
+            await res.send('homepage');
+            res.status(200);
+    } catch(err) {
+            next(err);
+    }
+});
+
+
 // catch 404
 app.use((req, res, next) => {
   log.error(`Error 404 on ${req.url}.`);
