@@ -39,13 +39,13 @@ async function main() {
 	var new_user = new User.userModel;
 	new_user.publicKey = "publicKey1";
 	var res = await sendRequest('/user/', JSON.stringify(new_user));
-//	console.log(res);
+//	console.log('new user 1: '+res);
 	const user1 = JSON.parse(res);
 	
 	var new_user = new User.userModel;
 	new_user.publicKey = "publicKey2";
 	var res = await sendRequest('/user/', JSON.stringify(new_user));
-//	console.log(res);
+//	console.log('new user 2: '+res);
 	const user2 = JSON.parse(res);
 
 	var new_topic = new Topic.topicModel;
@@ -84,14 +84,14 @@ async function main() {
 		content: "Hey, as i said: people need to work. They wont do without money."
 	}
     res = await sendRequest('/dialog/'+dialog1._id+'/message', JSON.stringify(new_message));
-	console.log(res);
+//	console.log(res);
 	
 	new_message = {
 		sender: user1._id,
 		content: "But have you read about alternatives?"
 	}
     res = await sendRequest('/dialog/'+dialog1._id+'/message', JSON.stringify(new_message));
-	console.log(res);
+//	console.log(res);
 	
 	
 	process.exit();

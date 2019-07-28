@@ -3,7 +3,7 @@ defaults: &defaults
     port: 3100
 
   logger:
-    name: Digital Peace Talks
+    name: dpt-server
     level: debug
     levels:
       trace:

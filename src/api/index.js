@@ -15,10 +15,11 @@ Setup of the express http service
 // We need one cookie per user and we have hash-cookies
 // Please change the credential when you run the server in production
 const cookieKey = 'geheim';
-app.use(cookieParser(cookieKey));
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(cookieKey));
+//app.use(cookieParser());
 app.use(cors());
 
 /*

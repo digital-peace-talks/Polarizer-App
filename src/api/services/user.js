@@ -1,6 +1,22 @@
 const ServerError = require("../../lib/error");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user").userModel;
+
+module.exports.onlineUsers = async options => {
+	const users = global.dptNS.online;
+	return {
+		status: 200,
+		data: users
+	};
+}
+
+module.exports.getUsers = async options => {
+	const users = await User.find();
+	return {
+		status: 200,
+		data: users
+	};
+}
 /**
  * @param {Object} options
  * @throws {Error}
