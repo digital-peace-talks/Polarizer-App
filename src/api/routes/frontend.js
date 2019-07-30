@@ -6,7 +6,7 @@ const router = new express.Router();
 
 router.get('/', async (req, res, next) => {
 	try {
-		await res.send('homepage');
+		await res.send('homepage<br><a href=/launch>start dpt protype</a><br><a href=/dialog>start the chat</a>');
 		res.status(200);
 	} catch(err) {
 		next(err);
