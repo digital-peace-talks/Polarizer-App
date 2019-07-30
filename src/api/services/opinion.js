@@ -2,13 +2,19 @@ const ServerError = require("../../lib/error");
 const Opinion = require("../models/opinion").opinionModel;
 const User = require("../models/user").userModel;
 const Topic = require("../models/topic").topicModel;
+
 /**
  * @param {Object} options
  * @throws {Error}
  * @return {Promise}
  */
 module.exports.getOpinions = async options => {
-  const opinions = await Opinion.find({});
+  var opinions;
+  if(options.body.id) {
+	  opinions = await Opinion.find({ topic: options.body.id });
+  } else {
+	  opinions = await Opinion.find({});
+  }
 
   return {
     status: 200,

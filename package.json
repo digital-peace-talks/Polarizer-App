@@ -3,8 +3,8 @@
   "description": "This is a specification for DPT server.",
   "version": "1.0.0",
   "scripts": {
-    "start": "node src/bin/www",
-    "dev": "node src/bin/www | bunyan"
+    "start": "nodemon src/bin/www",
+    "dev": "nodemon src/bin/www | bunyan"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

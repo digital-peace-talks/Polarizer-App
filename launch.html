@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+	<head>
+		<title></title>
+		<style>
+		</style>
+	</head>
+	<body style="background: #0a120a; color: #fee; font-family: sans; font-size: 125%" link="#fd0">
+	<div id="main"></div>
+	<div id="misc"></div>
+	</body>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+//		jQuery(function () {
+
+		var currentTopic = 0;
+		jQuery(document).ready(function(){
+			var socket = io.connect(window.location.protocol+'//'+window.location.host, {transports: ['websocket']});
+			var restObj = {};
+
+			function linkHandler() {
+				jQuery("a.opinionlist").click(function( event ) {
+					socket.emit("api", {method: "get", path: "/opinion/"+this.id+"/", data: {id: this.id}});
+					currentTopic = this.id;
+					event.preventDefault();
+				});
+			}
+			
+			function phraseForm(dptUUID) {
+				jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
+						+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="phrase">'
+						+'This device seems not registered, yet.<br>'
+						+'Please enter your phrase:<br><form id="phrase">'
+						+'<input type="text" name="phrase" size="50" class="phrase"></form></div>');
+				jQuery(".phrase").focus();
+				jQuery("#phrase").submit(function(event) {
+					socket.emit("api", {method: 'post', path: '/user/', data: { publicKey: dptUUID, phrase: jQuery('.phrase').val() }});
+					jQuery('.phrase').val('');
+					event.preventDefault();
+				});
+			}
+
+			function topicForm() {
+				jQuery('div.col.left').append(
+					'<br><hr style="border-color: #5a825a; border-style: solid;">Your topic:<br><form id="newTopic">'
+					+'<input class="anewtopic" type=text size=50 name="newTopic"></form>'
+				);
+				jQuery("#newTopic").submit(function(event) {
+					socket.emit("api", {method: 'post', path: '/topic/', data: { content: jQuery('.anewtopic').val() } });
+					jQuery('.anewtopic').val('');
+					event.preventDefault();
+				});
+			}
+
+			function opinionForm() {
+				jQuery('div.col.mid').append(
+					'<br><hr style="border-color: #5a825a; border-style: solid;">Your opinion:<br><form id="newOpinion">'
+					+'<input class="anewopinion" type=text size=50 name="newOpinion"></form>'
+				);
+				jQuery("#newOpinion").submit(function(event) {
+					event.preventDefault();
+					socket.emit("api", {method: 'post', path: '/opinion/', data: { topic: currentTopic, content: jQuery('.anewopinion').val() } });
+					jQuery('.anewopinion').val('');
+					event.preventDefault();
+				});
+			}
+
+			jQuery('#main').height("100%").width("100%")
+			.append('<div style="border-bottom-style: solid; border-bottom-width: 5px; border-color: #5a825a;">'
+					+'<h1>e r l k ȫ n i g</h1></div><div class="row">'
+					+'<div class="col left"><h2>Topics</h2></div>'
+					+'<div class="col mid"><h2>Opinions</h2></div>'
+					+'<div class="col right"><h2>Dialogs</h2></div></div>');
+			jQuery('div.col').css({float: "left", 'padding-left': "20px", height: "100%", width: "32%", 'overflow-y': "auto"});
+			jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
+
+			socket.on('connect', () => {
+				console.log('welcome back: ('+document.cookie+')');
+				if(document.cookie) {
+					socket.emit("add user", document.cookie);
+				}
+			} );
+				
+			socket.on('kanal', function(msg) {
+				jQuery('#messages').append(jQuery('<li>').text(msg.username +": "+msg.message));
+				window.scrollTo(0, document.body.scrollHeight);
+			});
+
+			socket.on('update', function(restObj){
+			    if(restObj.method == 'post') {
+			        if(restObj.path == '/info/') {
+
+						jQuery('#messages')
+						.append(jQuery('<li>')
+						.text(restObj.payload.message));
+
+						window.scrollTo(0, document.body.scrollHeight);
+			        }
+			    }
+		        if(restObj.path == '/topic/' && restObj.method == 'get') {
+					socket.emit('api', restObj);
+		        }
+		        if(restObj.path.startsWith('/opinion/')
+		        && restObj.data.id == currentTopic
+		        && restObj.method == 'get') {
+					socket.emit('api', restObj);
+		        }
+			});
+			
+			socket.on('api', function(restObj) {
+				if(restObj.path == '/topic/') {
+					jQuery('div.col.left').html('<h2>Topics</h2>');
+					for (var i in restObj.data) {
+						jQuery('div.col.left').append(
+							'<li> <a class="opinionlist" id="'
+							+restObj.data[i]._id
+							+'" href="#">'
+							+restObj.data[i].content
+							+"</a></li><br>");
+					}
+					topicForm();
+				}
+				if(restObj.path.startsWith('/opinion/')) {
+					jQuery('div.col.mid').html('<h2>Opinions</h2>');
+					for (var i in restObj.data) {
+						jQuery('div.col.mid')
+						.append("<li>"+restObj.data[i].content + "</li><br>");
+					}
+					opinionForm();
+				}
+				linkHandler();
+			});
+
+			socket.on('private', function(restObj) {
+			    if(restObj.method == 'post') {
+			        if(restObj.path == '/info/') {
+			        	if(restObj.payload.message.startsWith('Welcome back')) {
+							socket.emit("api", {method: 'get', path: '/topic/'});
+			        	}
+						if(restObj.payload.message == 'user unknown') {
+							phraseForm(restObj.payload.dptUUID);
+						} else {
+							jQuery('#messages').append(jQuery('<li>').text(restObj.payload.message));
+							window.scrollTo(0, document.body.scrollHeight);
+			        	}
+			        }
+			    }
+			});
+			socket.on('error', function (e) {
+				console.log('System', e ? e : 'A unknown error occurred');
+				document.location.reload(true);
+				window.location.reload(true);
+			});
+
+			jQuery('form').submit(function(){
+				socket.emit('kanal', jQuery('#m').val());
+				jQuery('#m').val('');
+				return false;
+			});
+
+/*
+			io('connection_timeout', function() {
+				console.log('connection_timeout');
+			});
+			io('connection_error', function(e) {
+				console.log('connection_error', e ? e : 'A unknown error occurred');
+			});
+			io('reconnect_error', function(e) {
+				console.log('reconnect_error', e ? e : 'A unknown error occurred');
+			});
+			io('reconnect_attempt', function(n) {
+				console.log('reconnect attempt: '+n);
+			});
+			io('reconnect_failed', function() {
+				console.log('reconnect failed');
+			});
+			io('reconnect', function() {
+				console.log('successful reconnected');
+			});
+			io('reconnect', function(n) {
+				console.log('try to reconnect '+n);
+			});
+*/
+		});
+	</script>
+</html>  
