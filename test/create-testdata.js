@@ -25,7 +25,7 @@ async function sendRequest(path, body) {
 		});
 		return(ret);
 	} catch(err) {
-		return(err.response.body);
+		return(err);
 	}
 }
 
@@ -38,21 +38,23 @@ async function main() {
 	
 	var new_user = new User.userModel;
 	new_user.publicKey = "publicKey1";
+	new_user.phrase = "hello world 1";
 	var res = await sendRequest('/user/', JSON.stringify(new_user));
-//	console.log('new user 1: '+res);
+	console.log('new user 1: '+res);
 	const user1 = JSON.parse(res);
 	
 	var new_user = new User.userModel;
 	new_user.publicKey = "publicKey2";
+	new_user.phrase = "hello world 2";
 	var res = await sendRequest('/user/', JSON.stringify(new_user));
-//	console.log('new user 2: '+res);
+	console.log('new user 2: '+res);
 	const user2 = JSON.parse(res);
 
 	var new_topic = new Topic.topicModel;
 	new_topic.user = user1._id;
 	new_topic.content = "Do we really need a money based economy?";
 	res = await sendRequest('/topic/', JSON.stringify(new_topic));
-//	console.log(res);
+	console.log(res);
 	const topic1 = JSON.parse(res);
 	
 	var new_opinion = new Opinion.opinionModel;
@@ -60,7 +62,7 @@ async function main() {
 	new_opinion.topic = topic1._id;
 	new_opinion.content = "No. There are alternatives. I've heared of a resource based economy. Maybe this could work."
 	res = await sendRequest('/opinion/', JSON.stringify(new_opinion));
-//	console.log(res);
+	console.log(res);
 	const opinion1 = JSON.parse(res);
 	
 	var new_opinion = new Opinion.opinionModel;
@@ -68,7 +70,7 @@ async function main() {
 	new_opinion.topic = topic1._id;
 	new_opinion.content = "Yes. Money is God given."
 	res = await sendRequest('/opinion/', JSON.stringify(new_opinion));
-//	console.log(res);
+	console.log(res);
 	const opinion2 = JSON.parse(res);
 
 	var new_dialog = new Dialog.dialogModel;
@@ -76,7 +78,7 @@ async function main() {
 	new_dialog.initiator = user1._id;
 	new_dialog.recipient = user2._id;
 	res = await sendRequest('/dialog/', JSON.stringify(new_dialog));
-//	console.log(res);
+	console.log(res);
 	const dialog1 = JSON.parse(res);
 
 	var new_message = {
@@ -84,14 +86,14 @@ async function main() {
 		content: "Hey, as i said: people need to work. They wont do without money."
 	}
     res = await sendRequest('/dialog/'+dialog1._id+'/message', JSON.stringify(new_message));
-//	console.log(res);
+	console.log(res);
 	
 	new_message = {
 		sender: user1._id,
 		content: "But have you read about alternatives?"
 	}
     res = await sendRequest('/dialog/'+dialog1._id+'/message', JSON.stringify(new_message));
-//	console.log(res);
+	console.log(res);
 	
 	
 	process.exit();

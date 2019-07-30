@@ -37,7 +37,7 @@ router.get('/launch', async (req, res, next) => {
 			res.cookie('dptUUID', dptUUID, cookieOptions)
 		}
 		console.log('session tagged with dptUUID '+dptUUID);
-		res.sendFile('/root/git/DPT-server/launch.html');
+		res.sendFile('/opt/DPT-server/launch.html');
 		res.end;
    	} catch(err) {
    		next(err);
@@ -68,7 +68,7 @@ router.get('/dialog', async (req, res, next) => {
 			res.cookie('dptUUID', dptUUID, cookieOptions)
 		}
 		console.log('session tagged with dptUUID '+dptUUID);
-		res.sendFile('/root/git/DPT-server/dialog.html');
+		res.sendFile('/opt/DPT-server/dialog.html');
 		res.end;
    	} catch(err) {
     		next(err);
