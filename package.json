@@ -19,7 +19,8 @@
     "path-to-regexp": "^3.0.0",
     "prettier": "^1.18.2",
     "request-promise": "^4.2.4",
-    "socketio": "^1.0.0"
+    "socketio": "^1.0.0",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@types/mongoose": "^5.5.1"
