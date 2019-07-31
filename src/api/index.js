@@ -14,7 +14,7 @@ Setup of the express http service
 
 // We need one cookie per user and we have hash-cookies
 // Please change the credential when you run the server in production
-const cookieKey = 'geheim';
+const cookieKey = process.env.DPT_SECRET;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

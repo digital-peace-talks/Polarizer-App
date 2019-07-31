@@ -23,7 +23,7 @@ const logger	= require("../lib/logger");
 const log		= logger(config.logger);
 
 
-var cookieKey		= "geheim";
+var cookieKey		= process.env.DPT_SECRET;
 
 const uuidReg		= "([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})";
 const mongoReg		= "([0-9a-fA-F]{24})";
@@ -42,6 +42,7 @@ match.push({path: "/user/", method: "post",
 match.push({path: "/user/online/", method: "get", fun: async () => { return userService.onlineUsers()} });
 match.push({path: "/user/login/", method: "post", fun: function() { console.log("user login") }});
 match.push({path: "/user/"+ uuidReg +"/", method: "put", fun: function() { console.log("update user data") }});
+match.push({path: "/userReclaim/", method: "put", fun: async (data) => { return userService.reclaimUser(data)} });
 match.push({path: "/user/"+ uuidReg +"/", method: "delete", fun: function() { console.log("delete user data") }});
 match.push({path: "/topic/", method: "get", fun: async () => { return topicService.getTopics()} });
 match.push({path: "/topic/", method: "post",
@@ -95,29 +96,19 @@ function userRegistered(dptUUID) {
 async function triggerService(obj, dptUUID) {
 	try {
 		var res;
-		if(obj.method == "post") {
+		if(obj.method == "post"
+		|| obj.method == "get"
+		|| obj.method == "put"
+		|| obj.method == "update"
+		|| obj.method == "delete") {
 			for(var i=0; i < match.length; i++) {
-			    if(obj.path.match('^'+match[i].path+'$') && match[i].method == "post") {
+			    if(obj.path.match('^'+match[i].path+'$')) {
 
 			        res = await match[i].fun(obj.data, dptUUID); 
 			        // clone the data
 			        res = JSON.parse(JSON.stringify(res.data));
 			        // hide the users mongodb id.
 			        res = res.map(e => ({...e, user: "Cafe-C0ffe-C0de"}));
-			        // re-pack it.
-			        res = { method: match[i].method, path: match[i].path, data: res };
-			        return(res);
-			    }
-			}
-		} else if(obj.method == 'get') {
-			for(var i=0; i < match.length; i++) {
-			    if(obj.path.match('^'+match[i].path+'$') && match[i].method == "get") {
-
-			        res = await match[i].fun(obj.data); 
-			        // clone the data
-			        res = JSON.parse(JSON.stringify(res.data));
-			        // hide the users mongodb id.
-			        res = await res.map(e => ({...e, user: "Cafe-C0ffe-C0de"}));
 			        // re-pack it.
 			        res = { method: match[i].method, path: match[i].path, data: res };
 			        return(res);

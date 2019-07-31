@@ -35,7 +35,7 @@
 						+'<input type="text" name="phrase" size="50" class="phrase"></form></div>');
 				jQuery(".phrase").focus();
 				jQuery("#phrase").submit(function(event) {
-					socket.emit("api", {method: 'post', path: '/user/', data: { publicKey: dptUUID, phrase: jQuery('.phrase').val() }});
+					socket.emit("api", {method: 'put', path: '/userReclaim/', data: { body: {publicKey: dptUUID, phrase: jQuery('.phrase').val() }}});
 					jQuery('.phrase').val('');
 					event.preventDefault();
 				});
@@ -72,7 +72,9 @@
 					+'<div class="col left"><h2>Topics</h2></div>'
 					+'<div class="col mid"><h2>Opinions</h2></div>'
 					+'<div class="col right"><h2>Dialogs</h2></div></div>');
-			jQuery('div.col').css({float: "left", 'padding-left': "20px", height: "100%", width: "32%", 'overflow-y': "auto"});
+			jQuery('div.col').css({float: "left", 'padding-left': "20px", height: "100%", 'overflow-y': "auto"});
+			jQuery('div.col.left div.col.mid').css({ width: "32%"});
+			jQuery('div.col.left div.col.right').css({ width: "auto"});
 			jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
 
 			socket.on('connect', () => {
