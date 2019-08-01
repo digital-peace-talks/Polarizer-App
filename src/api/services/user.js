@@ -123,6 +123,8 @@ module.exports.loginUser = async options => {
 	const result = await User.findOne({ publicKey: options.body.publicKey});
 	
 	if(result != null) {
+		// don't transmit the pass phrase
+		result.phrase = 'exists';
 		return {
 			status: 200,
 			data: result,
