@@ -3,6 +3,17 @@ const Opinion = require("../models/opinion").opinionModel;
 const User = require("../models/user").userModel;
 const Topic = require("../models/topic").topicModel;
 
+
+module.exports.opinionPostAllowed = async (options, oid) => {
+	if(options.body.topicId && oid) {
+		var opinions = Opinion.findOne({topic: options.body.topicId, user: oid});
+		if(opinions != null) {
+			return(true);
+		}
+	}
+	return(false);
+}
+
 /**
  * @param {Object} options
  * @throws {Error}
@@ -13,7 +24,7 @@ module.exports.getOpinions = async options => {
   if(options.body.id) {
 	  opinions = await Opinion.find({ topic: options.body.id });
   } else {
-	  opinions = await Opinion.find({});
+	  opinions = await Opinion.find([]);
   }
 
   return {

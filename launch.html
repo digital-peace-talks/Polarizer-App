@@ -127,6 +127,14 @@
 						jQuery('div.col.mid')
 						.append("<li>"+restObj.data[i].content + "</li><br>");
 					}
+					if(restObj.data.length > 0) {
+						socket.emit('api', {method: 'post', path: "/opinionPostAllowed/", data: {topicId: restObj.data[0].topic}});
+					} else {
+						opinionForm();
+					}
+				}
+				if(restObj.path == '/opinionPostAlloweded/'
+				&& restObj.value == true) {
 					opinionForm();
 				}
 				linkHandler();

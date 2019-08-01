@@ -32,20 +32,50 @@ const opinionIdReg	= mongoReg;
 const dialogIdReg	= mongoReg;
 
 const match = [];
-match.push({path: "/metadata/user/"+ uuidReg +"/", method: "get", fun: function() { console.log("get user metadata") }});
-match.push({path: "/user/", method: "get", fun: async () => { return userService.getUsers()} });
+match.push({
+	path: "/metadata/user/"+ uuidReg +"/",
+	method: "get",
+	fun: function() { console.log("get user metadata") }});
+
+
+match.push({
+	path: "/user/",
+	method: "get",
+	fun: async () => { return userService.getUsers()} });
 match.push({path: "/user/", method: "post",
 	fun: async (data, dptUUID) => {
 		data.id = "";
 		return(userService.createUser({body: data}));
 	}});
-match.push({path: "/user/online/", method: "get", fun: async () => { return userService.onlineUsers()} });
-match.push({path: "/user/login/", method: "post", fun: function() { console.log("user login") }});
-match.push({path: "/user/"+ uuidReg +"/", method: "put", fun: function() { console.log("update user data") }});
-match.push({path: "/userReclaim/", method: "put", fun: async (data) => { return userService.reclaimUser(data)} });
-match.push({path: "/user/"+ uuidReg +"/", method: "delete", fun: function() { console.log("delete user data") }});
-match.push({path: "/topic/", method: "get", fun: async () => { return topicService.getTopics()} });
-match.push({path: "/topic/", method: "post",
+match.push({
+	path: "/user/online/",
+	method: "get",
+	fun: async () => { return userService.onlineUsers()} });
+match.push({
+	path: "/user/login/",
+	method: "post",
+	fun: function() { console.log("user login") }});
+match.push({
+	path: "/user/"+ uuidReg +"/",
+	method: "put",
+	fun: function() { console.log("update user data") }});
+match.push({
+	path: "/userReclaim/",
+	method: "put",
+	fun: async (data) => { return userService.reclaimUser(data)} });
+match.push({
+	path: "/user/"+ uuidReg +"/",
+	method: "delete",
+	fun: function() { console.log("delete user data") }});
+
+
+match.push({
+	path: "/topic/",
+	method: "get",
+	fun: async () => { return topicService.getTopics()} });
+match.push({
+	path: "/topic/",
+	method: "post",
 	fun: async (data, dptUUID) => {
 		var user;
 		if(user = userRegistered(dptUUID)) {
@@ -57,14 +87,36 @@ match.push({path: "/topic/", method: "post",
 			return({});
 		}
 	}});
-match.push({path: "/topic/"+ topicIdReg +"/", method: "put", fun: function() { console.log("update a topic") }});
-match.push({path: "/opinion/", method: "get", fun: function() { return opinionService.getOpinions()} });
-match.push({path: "/opinion/"+ opinionIdReg +"/", method: "get",
+match.push({
+	path: "/topic/"+ topicIdReg +"/",
+	method: "put",
+	fun: function() { console.log("update a topic") }});
+
+
+match.push({
+	path: "/opinion/",
+	method: "get",
+	fun: function() { return opinionService.getOpinions()} });
+match.push({
+	path: "/opinion/"+ opinionIdReg +"/",
+	method: "get",
 	fun: function(data) {
 		data.id = mongoose.Types.ObjectId(data.id);
 		return opinionService.getOpinions({body: data})
 	}});
-match.push({path: "/opinion/", method: "post",
+match.push({
+	path: "/opinionPostAllowed/",
+	method: "post",
+	fun: async (data, dptUUID) => {
+		var user;
+		if(user = userRegistered(dptUUID)) {
+			var bool = await opinionService.opinionPostAllowed({body: data}, user.user);
+			return({ path: /opinionPostAllowed/, value: bool });
+		}
+	}});
+match.push({
+	path: "/opinion/",
+	method: "post",
 	fun: async (data, dptUUID) => {
 		var user;
 		if(user = userRegistered(dptUUID)) {
@@ -76,12 +128,28 @@ match.push({path: "/opinion/", method: "post",
 			return({});
 		}
 	}});
-match.push({path: "/opinion/"+ opinionIdReg +"/", method: "put", fun: function() { console.log("update a opinion") }});
-match.push({path: "/dialog/", method: "get", fun: function() { console.log("get dialogs list") }});
-match.push({path: "/dialog/", method: "post", fun: function() { console.log("create a new dialog") }});
-match.push({path: "/dialog/"+ dialogIdReg +"/", method: "put", fun: function() { console.log("update a dialog") }});
-match.push({path: "/dialog/"+ dialogIdReg +"/message/", method: "post", fun: function() { console.log("create a new message") }});
-match.push({path: "/dialog/"+ dialogIdReg +"/crisis/", method: "post", fun: function() { console.log("escalate dialog") }});
+match.push({path: "/opinion/"+ opinionIdReg +"/",
+	method: "put",
+	
+	
+	fun: function() { console.log("update a opinion") }});
+match.push({path: "/dialog/",
+	method: "get",
+	fun: function() { console.log("get dialogs list") }});
+match.push({path: "/dialog/",
+	method: "post",
+	fun: function() { console.log("create a new dialog") }});
+match.push({path: "/dialog/"+ dialogIdReg +"/",
+	method: "put",
+	fun: function() { console.log("update a dialog") }});
+match.push({path: "/dialog/"+ dialogIdReg +"/message/",
+	method: "post",
+	fun: function() { console.log("create a new message") }});
+match.push({
+	path: "/dialog/"+ dialogIdReg +"/crisis/",
+	method: "post",
+	fun: function() { console.log("escalate dialog") }});
+
 
 function userRegistered(dptUUID) {
 	var user = Lo_.find(global.dptNS.online, {dptUUID: dptUUID});
