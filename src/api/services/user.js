@@ -120,10 +120,19 @@ module.exports.loginUser = async options => {
   //   error: 'Server Error' // Or another error message.
   // });
 
-  return {
-    status: 200,
-    data: "loginUser ok!",
-  };
+	const result = await User.findOne({ publicKey: options.body.publicKey});
+	
+	if(result != null) {
+		return {
+			status: 200,
+			data: result,
+		};
+	} else {	
+		return {
+			status: 403,
+			data: 'not found',
+		};
+	}
 };
 
 /**
