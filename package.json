@@ -3,7 +3,7 @@
   "description": "This is a specification for DPT server.",
   "version": "1.0.0",
   "scripts": {
-    "start": "nodemon --inspect=0.0.0.0:9229 src/bin/www | node_modules/.bin/bunyan"
+    "start": "nodemon --inspect=0.0.0.0:9229 src/bin/www | node_modules/.bin/bunyan -o inspect"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
