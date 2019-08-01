@@ -131,7 +131,7 @@ module.exports.loginUser = async options => {
 		};
 	} else {	
 		return {
-			status: 403,
+			status: 404,
 			data: 'not found',
 		};
 	}

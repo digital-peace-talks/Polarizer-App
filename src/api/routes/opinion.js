@@ -3,6 +3,22 @@ const opinion = require('../services/opinion');
 
 const router = new express.Router();
 
+router.get('/:opinionId/', async (req, res, next) => {
+	const options = {
+		body: req.body
+	};
+
+	try {
+		const result = await opinion.getOpinions(options);
+		res.status(result.status || 200).send(result.data);
+	} catch (err) {
+		return res.status(500).send({
+			status: 500,
+			error: 'Server Error'
+		});
+	}
+});
+
 /**
  * Gets all opinions
  */

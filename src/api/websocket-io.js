@@ -102,8 +102,9 @@ async function triggerService(obj, dptUUID) {
 		|| obj.method == "update"
 		|| obj.method == "delete") {
 			for(var i=0; i < match.length; i++) {
-			    if(obj.path.match('^'+match[i].path+'$')) {
-
+			    if(obj.path.match('^'+match[i].path+'$')
+			    && obj.method == match[i].method) {
+			    	// call the matching function
 			        res = await match[i].fun(obj.data, dptUUID); 
 			        // clone the data
 			        res = JSON.parse(JSON.stringify(res.data));
