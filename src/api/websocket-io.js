@@ -20,10 +20,6 @@ var cookieKey		= process.env.DPT_SECRET;
 var match = require('./websocket-resolver.js')(io);
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> branch 'master' of git@github.com:digital-peace-talks/DPT-server.git
 async function apiBroker(obj, dptUUID) {
 	try {
 		var ret;
