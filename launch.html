@@ -11,20 +11,30 @@
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 	<script>
-//		jQuery(function () {
 
 		var currentTopic = 0;
 		var mysocketid;
 		var whoami = {};
 		jQuery(document).ready(function(){
-			var socket = io.connect(window.location.protocol+'//'+window.location.host, {transports: ['websocket']});
+			var socket = io.connect(window.location.protocol
+						+ '//'+window.location.host, {transports: ['websocket']});
 			var restObj = {};
 
+			// make links triggers for api calls
 			function linkHandler() {
+				// first and foremost, we need to remove all old event hooks
 				jQuery("a.opinionlist").off("click");
+				// and then implement the new ones
 				jQuery("a.opinionlist").click(function( event ) {
 					event.preventDefault();
-					socket.emit("api", {method: "get", path: "/opinion/"+this.id+"/", data: {id: this.id}});
+					socket.emit("api", {
+						method: "get",
+						path: "/opinion/"+this.id+"/",
+						data: {
+							id: this.id
+						}
+					});
+					// the clicked link sets the new current topic.
 					currentTopic = this.id;
 					return(false);
 				});
@@ -38,7 +48,16 @@
 						+'<input type="text" name="phrase" size="50" class="phrase"></form></div>');
 				jQuery(".phrase").focus();
 				jQuery("#phrase").submit(function(event) {
-					socket.emit("api", {method: 'put', path: '/userReclaim/', data: { body: {publicKey: dptUUID, phrase: jQuery('.phrase').val() }}});
+					socket.emit("api", {
+						method: 'put',
+						path: '/userReclaim/',
+						data: {
+							body: {
+								publicKey: dptUUID,
+								phrase: jQuery('.phrase').val()
+							}
+						}
+					});
 					jQuery('.phrase').val('');
 					event.preventDefault();
 				});
@@ -50,7 +69,13 @@
 					+'<input class="anewtopic" type=text size=50 name="newTopic"></form>'
 				);
 				jQuery("#newTopic").submit(function(event) {
-					socket.emit("api", {method: 'post', path: '/topic/', data: { content: jQuery('.anewtopic').val() } });
+					socket.emit("api", {
+						method: 'post',
+						path: '/topic/',
+						data: {
+							content: jQuery('.anewtopic').val()
+						}
+					});
 					jQuery('.anewtopic').val('');
 					event.preventDefault();
 				});
@@ -63,7 +88,14 @@
 				);
 				jQuery("#newOpinion").submit(function(event) {
 					event.preventDefault();
-					socket.emit("api", {method: 'post', path: '/opinion/', data: { topic: currentTopic, content: jQuery('.anewopinion').val() } });
+					socket.emit("api", {
+						method: 'post',
+						path: '/opinion/',
+						data: {
+							topic: currentTopic,
+							content: jQuery('.anewopinion').val()
+						}
+					});
 					jQuery('.anewopinion').val('');
 					event.preventDefault();
 				});
@@ -139,7 +171,13 @@
 						.append("<li>"+restObj.data[i].content + "</li><br>");
 					}
 					if(restObj.data.length > 0) {
-						socket.emit('api', {method: 'get', path: "/opinionPostAllowed/", data: {topicId: restObj.data[0].topic}});
+						socket.emit('api', {
+							method: 'get',
+							path: "/opinionPostAllowed/",
+							data: {
+								topicId: restObj.data[0].topic
+							}
+						});
 					} else {
 						opinionForm();
 					}
@@ -154,7 +192,10 @@
 			        if(restObj.path == '/info/') {
 			        	if(restObj.data.message == 'logged in') {
 			        		whoami = restObj.data.user;
-							socket.emit("api", {method: 'get', path: '/topic/'});
+							socket.emit("api", {
+								method: 'get',
+								path: '/topic/'
+							});
 			        	}
 						if(restObj.data.message == 'user unknown') {
 							phraseForm(restObj.data.dptUUID);

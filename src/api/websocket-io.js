@@ -17,9 +17,27 @@ const log		= logger(config.logger);
 
 var cookieKey		= process.env.DPT_SECRET;
 
+
+/*
+	apiBroker sounds impressive. but in the end it parses an openapi json
+	message. such a request message looks like this:
+	{
+		method: 'post'|'get'|'put'|update'|'delete',
+		path: '/path/to/resource'|'/path/with/:argument',
+		data: {
+			keyword1: value1,
+				:
+			keywordN: valueN,
+		}
+	}
+	this pattern is matched against an array of all defined api entrypoints.
+	in our case, we load this array from the websocket-resolver.js and store
+	everything in the array "match". each entrypoint is an own object with an
+	associated function "fun" which receives the data of the record and handle
+	it with care. in the apiBroker function, we just call this function which
+	match the path and return the return value to the caller function.
+ */
 var match = require('./websocket-resolver.js')(io);
-
-
 async function apiBroker(obj, dptUUID) {
 	try {
 		var ret;
