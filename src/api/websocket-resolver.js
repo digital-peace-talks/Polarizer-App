@@ -18,6 +18,11 @@ const match = [];
 var io;
 module.exports = (importIo) => { io = importIo; return(match); }	
 
+/*
+	userRegistered is a little helper function, to check if a
+	current online user is registered or not. unregistered users can't
+	post something, etc.
+ */
 function userRegistered(dptUUID) {
 	var user = Lo_.find(global.dptNS.online, {dptUUID: dptUUID});
 	if(user.registered) {
@@ -28,6 +33,15 @@ function userRegistered(dptUUID) {
 }
 
 
+/*
+	from here on we setup the match array, which will be used in the
+	apiBroker function. this array defines each api entry point. the associated
+	function will work with the data it may receive via the apiBroker and
+	it will also return an object, the data part of an object, which looks like
+	a mutation of the request object itself. if a return value is required.
+	most times, the action of the functions is the call of a service function.
+ */
+
 
 match.push({
 	path: "/metadata/user/"+ uuidReg +"/",
@@ -37,6 +51,8 @@ match.push({
 	}
 });
 
+// not in the api and maybe needs to protected, somehow.
+// this entry point will return a list of all users.
 match.push({
 	path: "/user/",
 	method: "get",
@@ -45,6 +61,8 @@ match.push({
 	}
 });
 
+
+// creates a new user.
 match.push({path: "/user/", method: "post",
 	fun: async (data, dptUUID) => {
 		data.id = "";
@@ -52,6 +70,7 @@ match.push({path: "/user/", method: "post",
 	}
 });
 
+// returns a list of current online users
 match.push({
 	path: "/user/online/",
 	method: "get",
@@ -60,6 +79,8 @@ match.push({
 	}
 });
 
+// this entrypoint will never be called in the socket.io environment
+// instead we use a socket.on("login", ...), not via socket.on("api", ...)
 match.push({
 	path: "/user/login/",
 	method: "post",
@@ -76,6 +97,7 @@ match.push({
 	}
 });
 
+// users with login difficulties will end up here.
 match.push({
 	path: "/userReclaim/",
 	method: "put",
@@ -92,6 +114,7 @@ match.push({
 	}
 });
 
+// get a list of all topics
 match.push({
 	path: "/topic/",
 	method: "get",
@@ -100,6 +123,7 @@ match.push({
 	}
 });
 
+// creates a new socket. it also informs all online users about this event.
 match.push({
 	path: "/topic/",
 	method: "post",
@@ -124,6 +148,7 @@ match.push({
 	}
 });
 
+// returns a list of all opinions
 match.push({
 	path: "/opinion/",
 	method: "get",
@@ -132,8 +157,9 @@ match.push({
 	}
 });
 
+// returns a list of all opinions associated to a specific topic
 match.push({
-	path: "/opinion/"+ opinionIdReg +"/",
+	path: "/opinion/"+ topicIdReg +"/",
 	method: "get",
 	fun: function(data) {
 		data.id = mongoose.Types.ObjectId(data.id);
@@ -141,6 +167,7 @@ match.push({
 	}
 });
 
+// returns a bool value, if the user is allowed to post an opinion
 match.push({
 	path: "/opinionPostAllowed/",
 	method: "get",
@@ -153,6 +180,7 @@ match.push({
 	}
 });
 
+// creates a new opinion and informs all connected clients about this event
 match.push({
 	path: "/opinion/",
 	method: "post",

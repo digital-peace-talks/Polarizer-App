@@ -17,9 +17,27 @@ const log		= logger(config.logger);
 
 var cookieKey		= process.env.DPT_SECRET;
 
+
+/*
+	apiBroker sounds impressive. but in the end it parses an openapi json
+	message. such a request message looks like this:
+	{
+		method: 'post'|'get'|'put'|update'|'delete',
+		path: '/path/to/resource'|'/path/with/:argument',
+		data: {
+			keyword1: value1,
+				:
+			keywordN: valueN,
+		}
+	}
+	this pattern is matched against an array of all defined api entrypoints.
+	in our case, we load this array from the websocket-resolver.js and store
+	everything in the array "match". each entrypoint is an own object with an
+	associated function "fun" which receives the data of the record and handle
+	it with care. in the apiBroker function, we just call this function which
+	match the path and return the return value to the caller function.
+ */
 var match = require('./websocket-resolver.js')(io);
-
-
 async function apiBroker(obj, dptUUID) {
 	try {
 		var ret;
@@ -106,16 +124,16 @@ io.on('connection', function(socket) {
 				// check, if we can find our new connected user via the cookie
 				// stored dptUUID in the mongodb, don't like to delay it so much,
 				// thats why we query via mongoose right here.
-				var user = await User.userModel.find({publicKey: dptUUID});
+				var user = await User.userModel.findOne({publicKey: dptUUID});
 				
-				if(user.length && dptUUID) {
+				if(user != null && dptUUID) {
 
 					// yes, we found a user with the dptUUID
 					global.dptNS.online.push( {
 						socketid: socket.id,
 						dptUUID: dptUUID,
 						registered: true,
-						user: user[0]
+						user: user
 					});
 
 					// log.info('updated global online (user+): '+require('util').inspect(global.dptNS.online));
@@ -124,7 +142,7 @@ io.on('connection', function(socket) {
 						path: "/info/",
 						data: {
 							message: 'logged in',
-							data: user,
+							user: user,
 							status: 200
 						}
 					});
