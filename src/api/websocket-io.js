@@ -106,12 +106,12 @@ match.push({
 	}});
 match.push({
 	path: "/opinionPostAllowed/",
-	method: "post",
+	method: "get",
 	fun: async (data, dptUUID) => {
 		var user;
 		if(user = userRegistered(dptUUID)) {
 			var bool = await opinionService.opinionPostAllowed({body: data}, user.user);
-			return({ path: /opinionPostAllowed/, value: bool });
+			return({ data: {value: bool}});
 		}
 	}});
 match.push({
@@ -177,7 +177,11 @@ async function triggerService(obj, dptUUID) {
 			        // clone the data
 			        res = JSON.parse(JSON.stringify(res.data));
 			        // hide the users mongodb id.
-			        res = res.map(e => ({...e, user: "Cafe-C0ffe-C0de"}));
+			        if(Lo_.isArray(res)) {
+			        	res = res.map(e => ({...e, user: "Cafe-C0ffe-C0de"}));
+			        } else {
+//			        	res.name = "Cafe-C0ffe-C0de";
+			        }
 			        // re-pack it.
 			        res = { method: match[i].method, path: match[i].path, data: res };
 			        return(res);

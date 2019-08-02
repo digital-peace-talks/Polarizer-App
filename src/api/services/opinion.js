@@ -3,11 +3,14 @@ const Opinion = require("../models/opinion").opinionModel;
 const User = require("../models/user").userModel;
 const Topic = require("../models/topic").topicModel;
 
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema
+
 
 module.exports.opinionPostAllowed = async (options, oid) => {
 	if(options.body.topicId && oid) {
-		var opinions = Opinion.findOne({topic: options.body.topicId, user: oid});
-		if(opinions != null) {
+		var opinions = await Opinion.findOne({topic: mongoose.Types.ObjectId(options.body.topicId), user: oid._id});
+		if(opinions == null) {
 			return(true);
 		}
 	}

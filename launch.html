@@ -14,15 +14,18 @@
 //		jQuery(function () {
 
 		var currentTopic = 0;
+		var mysocketid;
 		jQuery(document).ready(function(){
 			var socket = io.connect(window.location.protocol+'//'+window.location.host, {transports: ['websocket']});
 			var restObj = {};
 
 			function linkHandler() {
+				jQuery("a.opinionlist").off("click");
 				jQuery("a.opinionlist").click(function( event ) {
+					event.preventDefault();
 					socket.emit("api", {method: "get", path: "/opinion/"+this.id+"/", data: {id: this.id}});
 					currentTopic = this.id;
-					event.preventDefault();
+					return(false);
 				});
 			}
 			
@@ -77,6 +80,7 @@
 			jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
 
 			socket.on('connect', () => {
+				mysocketid = socket.id;
 				if(document.cookie) {
 					socket.emit("add user", document.cookie);
 				}
@@ -111,7 +115,8 @@
 			socket.on('api', function(restObj) {
 				if(restObj.path == '/topic/') {
 					jQuery('div.col.left').html('<h2>Topics</h2>');
-					for (var i in restObj.data) {
+					var i;
+					for (i in restObj.data) {
 						jQuery('div.col.left').append(
 							'<li> <a class="opinionlist" id="'
 							+restObj.data[i]._id
@@ -120,21 +125,19 @@
 							+"</a></li><br>");
 					}
 					topicForm();
-				}
-				if(restObj.path.startsWith('/opinion/')) {
+				} else if(restObj.path.startsWith('/opinion/')) {
 					jQuery('div.col.mid').html('<h2>Opinions</h2>');
-					for (var i in restObj.data) {
+					var i;
+					for (i in restObj.data) {
 						jQuery('div.col.mid')
 						.append("<li>"+restObj.data[i].content + "</li><br>");
 					}
 					if(restObj.data.length > 0) {
-						socket.emit('api', {method: 'post', path: "/opinionPostAllowed/", data: {topicId: restObj.data[0].topic}});
+						socket.emit('api', {method: 'get', path: "/opinionPostAllowed/", data: {topicId: restObj.data[0].topic}});
 					} else {
 						opinionForm();
 					}
-				}
-				if(restObj.path == '/opinionPostAlloweded/'
-				&& restObj.value == true) {
+				} else if(restObj.path == '/opinionPostAllowed/' && restObj.data.value == true) {
 					opinionForm();
 				}
 				linkHandler();
