@@ -4,7 +4,7 @@
 		<title></title>
 		<style></style>
 	</head>
-	<body style="background: #0a120a; color: #fee; font-family: sans; font-size: 125%" link="#fd0">
+	<body style="background: #0a120a; color: #fee; font-family: sans; font-size: 100%" link="#fd0">
 	<div id="main"></div>
 	<div id="misc"></div>
 	</body>
@@ -70,13 +70,12 @@
 
 			jQuery('#main').height("100%").width("100%")
 			.append('<div style="border-bottom-style: solid; border-bottom-width: 5px; border-color: #5a825a;">'
-					+'<h1 style="letter-spacing: 50px">erlkȫnig</h1></div><div class="row">'
+					+'<h1 style="letter-spacing: 30px">version 0.1</h1></div><div class="row">'
 					+'<div class="col left"><h2>Topics</h2></div>'
 					+'<div class="col mid"><h2>Opinions</h2></div>'
 					+'<div class="col right"><h2>Dialogs</h2></div></div>');
 			jQuery('div.col').css({float: "left", 'padding-left': "20px", height: "100%", 'overflow-y': "auto"});
-			jQuery('div.col.left div.col.mid').css({ width: "32%"});
-			jQuery('div.col.left div.col.right').css({ width: "auto"});
+ 			jQuery('div.col').css({ width: "30%", "max-width": "30%"});
 			jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
 
 			socket.on('connect', () => {
