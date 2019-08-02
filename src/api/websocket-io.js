@@ -106,16 +106,16 @@ io.on('connection', function(socket) {
 				// check, if we can find our new connected user via the cookie
 				// stored dptUUID in the mongodb, don't like to delay it so much,
 				// thats why we query via mongoose right here.
-				var user = await User.userModel.find({publicKey: dptUUID});
+				var user = await User.userModel.findOne({publicKey: dptUUID});
 				
-				if(user.length && dptUUID) {
+				if(user != null && dptUUID) {
 
 					// yes, we found a user with the dptUUID
 					global.dptNS.online.push( {
 						socketid: socket.id,
 						dptUUID: dptUUID,
 						registered: true,
-						user: user[0]
+						user: user
 					});
 
 					// log.info('updated global online (user+): '+require('util').inspect(global.dptNS.online));
@@ -124,7 +124,7 @@ io.on('connection', function(socket) {
 						path: "/info/",
 						data: {
 							message: 'logged in',
-							data: user,
+							user: user,
 							status: 200
 						}
 					});
