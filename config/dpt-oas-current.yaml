@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 openapi: 3.0.1
 info:
   description: This is a specification for DPT server.
@@ -816,3 +817,1117 @@ components:
       bearerFormat: JWT
       scheme: bearer
       type: http
+=======
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Digital Peace Talks",
+    "description" : "This is a specification for DPT server.",
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://proto1.dpt.world",
+    "description" : "dpt-oas-current"
+  } ],
+  "tags" : [ {
+    "name" : "topic",
+    "description" : "Access to topics made by product owner and/or users"
+  }, {
+    "name" : "opinion",
+    "description" : "Access to opinions made by users"
+  }, {
+    "name" : "dialog",
+    "description" : "Get, create or update a dialog"
+  }, {
+    "name" : "user",
+    "description" : "User operations"
+  } ],
+  "paths" : {
+    "/metadata/user/{publicKey}/" : {
+      "get" : {
+        "tags" : [ "metadata", "user" ],
+        "summary" : "Gets metadata of a specific user",
+        "operationId" : "getUserMetadata",
+        "parameters" : [ {
+          "name" : "publicKey",
+          "in" : "path",
+          "description" : "User that needs to be updated",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-zA-Z0-9]{111}$",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User has been found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserMetadata"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "User not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Creates a user",
+        "operationId" : "createUser",
+        "requestBody" : {
+          "description" : "Created user object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "default" : {
+            "description" : "successful operation",
+            "content" : { }
+          }
+        }
+      }
+    },
+    "/user/login/" : {
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "Logs user into the system",
+        "description" : "Issues a JWT for the user - [click for further reading](http://jwt.io)",
+        "operationId" : "loginUser",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/inline_object"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{publicKey}/" : {
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "Updates a user",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "updateUser",
+        "parameters" : [ {
+          "name" : "publicKey",
+          "in" : "path",
+          "description" : "User that needs to be updated",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-zA-Z0-9]{111}$",
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Updated user object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "User has been updated",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "User not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "user" ],
+        "summary" : "Delete user",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "deleteUser",
+        "parameters" : [ {
+          "name" : "publicKey",
+          "in" : "path",
+          "description" : "The name that needs to be deleted",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User has been deleted",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid username supplied",
+            "content" : { }
+          },
+          "404" : {
+            "description" : "User not found",
+            "content" : { }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/topic/" : {
+      "summary" : "Contains topic operations",
+      "get" : {
+        "tags" : [ "topic" ],
+        "summary" : "Gets all topics",
+        "operationId" : "getTopics",
+        "responses" : {
+          "200" : {
+            "description" : "Succesful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Topic"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "topic" ],
+        "summary" : "Creates a new topic",
+        "operationId" : "postTopics",
+        "requestBody" : {
+          "description" : "Topic Object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Topic"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Topic was created successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/topic/{topicId}/" : {
+      "put" : {
+        "tags" : [ "topic" ],
+        "summary" : "Updates a topic",
+        "description" : "The user has changed its mind and would like to alter topic. This should work only if the user is the one who opened the topic",
+        "operationId" : "putTopics",
+        "parameters" : [ {
+          "name" : "topicId",
+          "in" : "path",
+          "description" : "ID of Topic to update",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Topic Object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Topic"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Topic was updated successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/opinion/" : {
+      "summary" : "Contains opinion operations",
+      "get" : {
+        "tags" : [ "opinion" ],
+        "summary" : "Get a list of all opinion",
+        "operationId" : "getOpinion",
+        "responses" : {
+          "200" : {
+            "description" : "Succesful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Opinion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "opinion" ],
+        "summary" : "Creates a new opinion",
+        "operationId" : "postOpinion",
+        "requestBody" : {
+          "description" : "Opinion Object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Opinion"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Opinion created successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/opinion/{opinionId}/" : {
+      "put" : {
+        "tags" : [ "opinion" ],
+        "summary" : "Updates a opinion",
+        "description" : "The user has changed its mind and would like to alter a opinion. This should work only if the user is the one who opened the opinion.",
+        "operationId" : "putOpinion",
+        "parameters" : [ {
+          "name" : "opinionId",
+          "in" : "path",
+          "description" : "ID of Opinion to update",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "Opinion Object",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Opinion"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Opinion updated successfully",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/dialog/" : {
+      "summary" : "Main dialog endpoint",
+      "post" : {
+        "tags" : [ "dialog" ],
+        "summary" : "Creates a dialog",
+        "operationId" : "createDialog",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Dialog"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "Dialog has been created",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Dialog"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/dialog/{dialogId}/" : {
+      "summary" : "Endpoint for a specific dialog",
+      "get" : {
+        "tags" : [ "dialog" ],
+        "summary" : "Gets a specific dialog by its ID",
+        "operationId" : "getDialog",
+        "parameters" : [ {
+          "name" : "dialogId",
+          "in" : "path",
+          "description" : "ID of dialog to return",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "Dialog found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Dialog"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Dialog not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "dialog" ],
+        "summary" : "Updates a specific dialog by its ID",
+        "operationId" : "updateDialog",
+        "parameters" : [ {
+          "name" : "dialogId",
+          "in" : "path",
+          "description" : "ID of dialog to update",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Dialog"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "400" : {
+            "description" : "Bad request",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "Dialog found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Dialog"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Dialog not found",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dialog/{dialogId}/message/" : {
+      "post" : {
+        "tags" : [ "dialog" ],
+        "summary" : "Posts a message to a dialog",
+        "operationId" : "postMessage",
+        "parameters" : [ {
+          "name" : "dialogId",
+          "in" : "path",
+          "description" : "ID of dialog to update",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Message"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Dialog"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/dialog/{dialogId}/crisis/" : {
+      "post" : {
+        "tags" : [ "dialog", "crisis" ],
+        "summary" : "Posts a crisis to a dialog",
+        "operationId" : "createCrisis",
+        "parameters" : [ {
+          "name" : "dialogId",
+          "in" : "path",
+          "description" : "ID of dialog to post crisis to",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Message"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Dialog"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Topic" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          },
+          "content" : {
+            "type" : "string",
+            "example" : "Do we really need a money based economy?"
+          },
+          "user" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string",
+            "description" : "UUID of linked user"
+          },
+          "opinions" : {
+            "type" : "array",
+            "description" : "List of all opinions under the topic",
+            "items" : {
+              "$ref" : "#/components/schemas/Opinion"
+            }
+          }
+        },
+        "example" : {
+          "id" : "id",
+          "user" : "user",
+          "opinions" : "[ opinion, opinion ]",
+          "content" : "Do we really need a money based economy?"
+        }
+      },
+      "Opinion" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          },
+          "content" : {
+            "type" : "string",
+            "example" : "Batman can win superman"
+          },
+          "topic" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string",
+            "description" : "ID of related linked topic."
+          },
+          "user" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string",
+            "description" : "UUID of linked user"
+          }
+        },
+        "example" : {
+          "id" : "id",
+          "user" : "user",
+          "topic" : "topic",
+          "content" : "Batman can win superman"
+        }
+      },
+      "Crisis" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          },
+          "startDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "expirationDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "initiator" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string",
+            "description" : "UUID of the crisis intiator"
+          },
+          "reason" : {
+            "type" : "string",
+            "description" : "The reason for the crisis"
+          },
+          "causingMessage" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string",
+            "description" : "ID of the message that caused the crisis"
+          }
+        },
+        "example" : {
+          "reason" : "reason",
+          "initiator" : "initiator",
+          "causingMessage" : "causingMessage",
+          "id" : "id",
+          "startDate" : "2000-01-23T04:56:07.000+00:00",
+          "expirationDate" : "2000-01-23T04:56:07.000+00:00"
+        }
+      },
+      "Dialog" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          },
+          "opinion" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string",
+            "description" : "ID of linked opinion"
+          },
+          "opinionProposition" : {
+            "type" : "string",
+            "description" : "Proposition for changing the linked opinion"
+          },
+          "crisises" : {
+            "type" : "array",
+            "description" : "All of the dialog's crisises",
+            "items" : {
+              "$ref" : "#/components/schemas/Crisis"
+            }
+          },
+          "startDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "messages" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/Message"
+            }
+          },
+          "initiator" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string",
+            "description" : "UUID of the user who requested the dialog"
+          },
+          "recipient" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string",
+            "description" : "UUID of the dialog's recipient, who accepted the dialog request"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "A dialog has many statuses. For example, when a dialog has been requested, a new `pending` dialog will be created.",
+            "default" : "pending",
+            "enum" : [ "pending", "active", "crisis", "closed" ]
+          }
+        },
+        "example" : {
+          "opinionProposition" : "OpinionProposition",
+          "initiator" : "initiator",
+          "opinion" : "opinion",
+          "recipient" : "recipient",
+          "messages" : [ {
+            "sender" : "sender",
+            "id" : "id",
+            "content" : "Hi mate, how are you doing?",
+            "timestamp" : "2000-01-23T04:56:07.000+00:00"
+          }, {
+            "sender" : "sender",
+            "id" : "id",
+            "content" : "Hi mate, how are you doing?",
+            "timestamp" : "2000-01-23T04:56:07.000+00:00"
+          } ],
+          "id" : "id",
+          "crisises" : [ {
+            "reason" : "reason",
+            "initiator" : "initiator",
+            "causingMessage" : "causingMessage",
+            "id" : "id",
+            "startDate" : "2000-01-23T04:56:07.000+00:00",
+            "expirationDate" : "2000-01-23T04:56:07.000+00:00"
+          }, {
+            "reason" : "reason",
+            "initiator" : "initiator",
+            "causingMessage" : "causingMessage",
+            "id" : "id",
+            "startDate" : "2000-01-23T04:56:07.000+00:00",
+            "expirationDate" : "2000-01-23T04:56:07.000+00:00"
+          } ],
+          "startDate" : "2000-01-23T04:56:07.000+00:00",
+          "status" : "pending"
+        }
+      },
+      "Message" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          },
+          "timestamp" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "sender" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string",
+            "description" : "UUID of the message's sender"
+          },
+          "content" : {
+            "type" : "string",
+            "example" : "Hi mate, how are you doing?"
+          }
+        },
+        "example" : {
+          "sender" : "sender",
+          "id" : "id",
+          "content" : "Hi mate, how are you doing?",
+          "timestamp" : "2000-01-23T04:56:07.000+00:00"
+        }
+      },
+      "User" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          },
+          "publicKey" : {
+            "pattern" : "^[a-zA-Z0-9]{111}$",
+            "type" : "string"
+          },
+          "topics" : {
+            "type" : "array",
+            "description" : "IDs of the topics that the user has opened",
+            "items" : {
+              "type" : "array",
+              "items" : {
+                "pattern" : "^[a-f\\d]{24}$",
+                "type" : "string"
+              }
+            }
+          },
+          "opinions" : {
+            "type" : "array",
+            "description" : "IDS of opinions that the user has made",
+            "items" : {
+              "type" : "array",
+              "items" : {
+                "pattern" : "^[a-f\\d]{24}$",
+                "type" : "string"
+              }
+            }
+          },
+          "dialogs" : {
+            "type" : "array",
+            "description" : "IDS of dialogs in which the user participates",
+            "items" : {
+              "type" : "array",
+              "items" : {
+                "pattern" : "^[a-f\\d]{24}$",
+                "type" : "string"
+              }
+            }
+          },
+          "signupTime" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        },
+        "example" : {
+          "opinions" : [ [ "opinions", "opinions" ], [ "opinions", "opinions" ] ],
+          "id" : "id",
+          "publicKey" : "publicKey",
+          "signupTime" : "2000-01-23T04:56:07.000+00:00",
+          "dialogs" : [ [ "dialogs", "dialogs" ], [ "dialogs", "dialogs" ] ]
+        }
+      },
+      "UserMetadata" : {
+        "type" : "object",
+        "properties" : {
+          "publicKey" : {
+            "pattern" : "^[a-zA-Z0-9]{111}$",
+            "type" : "string"
+          },
+          "opinions" : {
+            "type" : "integer",
+            "description" : "Amount of opinions that the user has made",
+            "format" : "int32"
+          },
+          "refactoredOpinions" : {
+            "type" : "integer",
+            "description" : "Amount of opinions that the user has refactored",
+            "format" : "int32"
+          },
+          "dialogs" : {
+            "type" : "integer",
+            "description" : "Amount of dialogs that the user had participated in",
+            "format" : "int32"
+          },
+          "dialogRequestsSent" : {
+            "type" : "integer",
+            "description" : "Amount of dialog requests that the user has sent",
+            "format" : "int32"
+          },
+          "dialogRequestsReceived" : {
+            "type" : "integer",
+            "description" : "Amount of dialog requests that the user has received",
+            "format" : "int32"
+          },
+          "crisises" : {
+            "type" : "integer",
+            "description" : "Amount of crisies that the user had been involved in",
+            "format" : "int32"
+          },
+          "signupTime" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        },
+        "description" : "Metadata for a user. This will be returned by the GET user method, and will not be saved in the database (as the data already exists in the user document)",
+        "example" : {
+          "dialogRequestsSent" : 5,
+          "opinions" : 0,
+          "publicKey" : "publicKey",
+          "dialogRequestsReceived" : 5,
+          "signupTime" : "2000-01-23T04:56:07.000+00:00",
+          "crisises" : 2,
+          "refactoredOpinions" : 6,
+          "dialogs" : 1
+        }
+      },
+      "ApiResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "code" : 0,
+          "message" : "message"
+        }
+      },
+      "LoginResponse" : {
+        "type" : "object",
+        "properties" : {
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "token" : {
+            "pattern" : "^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$",
+            "type" : "string",
+            "description" : "the generated JWT"
+          }
+        },
+        "example" : {
+          "user" : {
+            "opinions" : [ [ "opinions", "opinions" ], [ "opinions", "opinions" ] ],
+            "id" : "id",
+            "publicKey" : "publicKey",
+            "signupTime" : "2000-01-23T04:56:07.000+00:00",
+            "dialogs" : [ [ "dialogs", "dialogs" ], [ "dialogs", "dialogs" ] ]
+          },
+          "token" : "token"
+        }
+      },
+      "inline_object" : {
+        "type" : "object",
+        "properties" : {
+          "publicKey" : {
+            "pattern" : "^[a-zA-Z0-9]{111}$",
+            "type" : "string",
+            "description" : "The user's public key"
+          }
+        }
+      }
+    },
+    "requestBodies" : {
+      "inline_object" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_object"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    }
+  }
+}
+>>>>>>> branch 'master' of git@github.com:digital-peace-talks/DPT-server.git
