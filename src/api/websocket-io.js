@@ -9,6 +9,7 @@ const util			= require('util');
 var io				= require('socket.io')();
 
 const User			= require('./models/user');
+const userService	= require('./services/user');
 
 const config		= require("../lib/config");
 const logger	= require("../lib/logger");
@@ -41,6 +42,7 @@ var match = require('./websocket-resolver.js')(io);
 async function apiBroker(obj, dptUUID) {
 	try {
 		var ret;
+		var user = await userService.whoamiByDptUUID({body: { dptUUID: dptUUID}});
 		if(obj.method == "post"
 		|| obj.method == "get"
 		|| obj.method == "put"
@@ -58,7 +60,14 @@ async function apiBroker(obj, dptUUID) {
 
 			        // hide the users mongodb id.
 			        if(Lo_.isArray(ret)) {
-			        	ret = ret.map(e => ({...e, user: "Cafe-C0ffe-C0de"}));
+			        	//ret = ret.map(e => ({...e, user: "Cafe-C0ffe-C0de"}));
+			    		for(var j = 0; j < ret.length; j++) {
+			    			if(ret[j].user == user.user.id.toString()) {
+						 		ret[j].user = 'mine';
+			    			} else {
+			    				ret[j].user = 'notmine';
+			    			}
+			    		}
 			        } else {
 			        	// ret.name = "Cafe-C0ffe-C0de";
 			        }
