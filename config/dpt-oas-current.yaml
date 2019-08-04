@@ -247,9 +247,35 @@ paths:
       summary: Updates a topic
       tags:
       - topic
+  /opinion/{topicId}/:
+    get:
+      operationId: getOpinionsBLA
+      summary: Get a list of all opinions of a specified topic.
+      tags:
+      - opinion  
+      parameters:
+      - description: The topicId
+        explode: false
+        in: path
+        name: topicId
+        required: true
+        schema:
+          pattern: ^[a-zA-Z0-9]{111}$
+          type: string
+        style: simple
+      responses:
+        201:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Opinion'
+                type: array
+          description:
+            Successful operation
   /opinion/:
     get:
-      operationId: getOpinion
+      operationId: getOpinions
       responses:
         200:
           content:

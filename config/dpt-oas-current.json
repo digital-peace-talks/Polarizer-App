@@ -15,7 +15,8 @@
   } ],
   "tags" : [ {
     "name" : "topic",
-    "description" : "Access to topics made by product owner and/or users"}, {
+    "description" : "Access to topics made by product owner and/or users"
+  }, {
     "name" : "opinion",
     "description" : "Access to opinions made by users"
   }, {
@@ -98,20 +99,6 @@
         "description" : "Issues a JWT for the user - [click for further reading](http://jwt.io)",
         "operationId" : "loginUser",
         "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "type" : "object",
-                "properties" : {
-                  "publicKey" : {
-                    "pattern" : "^[a-zA-Z0-9]{111}$",
-                    "type" : "string",
-                    "description" : "The user's public key"
-                  }
-                }
-              }
-            }
-          },
           "$ref" : "#/components/requestBodies/inline_object"
         },
         "responses" : {
@@ -270,6 +257,7 @@
       "post" : {
         "tags" : [ "topic" ],
         "summary" : "Creates a new topic",
+        "operationId" : "postTopics",
         "requestBody" : {
           "description" : "Topic Object",
           "content" : {
@@ -313,6 +301,7 @@
         "tags" : [ "topic" ],
         "summary" : "Updates a topic",
         "description" : "The user has changed its mind and would like to alter topic. This should work only if the user is the one who opened the topic",
+        "operationId" : "putTopics",
         "parameters" : [ {
           "name" : "topicId",
           "in" : "path",
@@ -363,12 +352,46 @@
         } ]
       }
     },
+    "/opinion/{topicId}/" : {
+      "get" : {
+        "tags" : [ "opinion" ],
+        "summary" : "Get a list of all opinions of a specified topic.",
+        "operationId" : "getOpinionsBLA",
+        "parameters" : [ {
+          "name" : "topicId",
+          "in" : "path",
+          "description" : "The topicId",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-zA-Z0-9]{111}$",
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/Opinion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/opinion/" : {
       "summary" : "Contains opinion operations",
       "get" : {
         "tags" : [ "opinion" ],
         "summary" : "Get a list of all opinion",
-        "operationId" : "getOpinion",
+        "operationId" : "getOpinions",
         "responses" : {
           "200" : {
             "description" : "Succesful operation",
@@ -388,6 +411,7 @@
       "post" : {
         "tags" : [ "opinion" ],
         "summary" : "Creates a new opinion",
+        "operationId" : "postOpinion",
         "requestBody" : {
           "description" : "Opinion Object",
           "content" : {
@@ -431,6 +455,7 @@
         "tags" : [ "opinion" ],
         "summary" : "Updates a opinion",
         "description" : "The user has changed its mind and would like to alter a opinion. This should work only if the user is the one who opened the opinion.",
+        "operationId" : "putOpinion",
         "parameters" : [ {
           "name" : "opinionId",
           "in" : "path",
@@ -737,17 +762,17 @@
             "example" : "Do we really need a money based economy?"
           },
           "user" : {
-            "description" : "UUID of linked user",
             "pattern" : "^[a-f\\d]{24}$",
-            "type" : "string"
+            "type" : "string",
+            "description" : "UUID of linked user"
           },
           "opinions" : {
-            "description" : "List of all opinions under the topic",
             "type" : "array",
+            "description" : "List of all opinions under the topic",
             "items" : {
               "$ref" : "#/components/schemas/Opinion"
             }
-	  }
+          }
         },
         "example" : {
           "id" : "id",
@@ -767,11 +792,11 @@
             "type" : "string",
             "example" : "Batman can win superman"
           },
-	  "topic" : {
+          "topic" : {
             "pattern" : "^[a-f\\d]{24}$",
             "type" : "string",
             "description" : "ID of related linked topic."
-	  },
+          },
           "user" : {
             "pattern" : "^[a-f\\d]{24}$",
             "type" : "string",
@@ -781,7 +806,7 @@
         "example" : {
           "id" : "id",
           "user" : "user",
-	  "topic" : "topic",
+          "topic" : "topic",
           "content" : "Batman can win superman"
         }
       },
