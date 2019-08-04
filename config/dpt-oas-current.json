@@ -7,11 +7,7 @@
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-<<<<<<< HEAD
     "version" : "1.0.1"
-=======
-    "version" : "1.0.0"
->>>>>>> branch 'master' of git@github.com:digital-peace-talks/DPT-server.git
   },
   "servers" : [ {
     "url" : "https://proto1.dpt.world",
