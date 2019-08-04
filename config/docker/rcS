@@ -4,4 +4,6 @@
 cd /opt/DPT-server
 nodemon --delay 10 src/bin/www &
 
+/etc/init.d/mongodb start
+
 /usr/sbin/sshd -D
