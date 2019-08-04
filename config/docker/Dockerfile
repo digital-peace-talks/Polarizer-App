@@ -1,11 +1,12 @@
 FROM debian:unstable-slim
+ARG CACHE_DATE=do_not_cache
 
 RUN apt-get update
 RUN apt-get --no-install-recommends --yes install apt-utils
-RUN apt-get --no-install-recommends --yes install busybox ssh git mongodb npm make
+RUN apt-get --no-install-recommends --yes -m install busybox ssh git mongodb npm make
 
 RUN busybox --install
-run npm install npm@latest -g
+RUN npm install npm@latest -g
 RUN npm install nodemon -g
 
 RUN mkdir /run/sshd
