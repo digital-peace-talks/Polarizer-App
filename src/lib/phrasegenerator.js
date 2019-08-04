@@ -3,24 +3,24 @@ const util = require('util');
 const readFile = util.promisify(fs.readFile);
 module.exports = async () => {
 	try {
-		var buf = await readFile('./dict/adjectives.txt');
+		var buf = await readFile('./src/lib/dict/adjectives.txt');
 		var adjectives = buf.toString().split("\n");
-		buf = await readFile('./dict/adverbs.txt');
+		buf = await readFile('./src/lib/dict/adverbs.txt');
 		var adverbs = buf.toString().split("\n");
-		buf = await readFile('./dict/nouns.txt');
+		buf = await readFile('./src/lib/dict/nouns.txt');
 		var nouns = buf.toString().split("\n");
-		buf = await readFile('./dict/verbs.txt');
+		buf = await readFile('./src/lib/dict/verbs.txt');
 		var verbs = buf.toString().split("\n");
 		/*
-		buf = await readFile('./dict/comparatives.txt');
+		buf = await readFile('./src/lib/dict/comparatives.txt');
 		var comparatives = buf.toString().split("\n");
-		buf = await readFile('./dict/conjunctions.txt');
+		buf = await readFile('./src/lib/dict/conjunctions.txt');
 		var conjunctions = buf.toString().split("\n");
-		buf = await readFile('./dict/determiners.txt');
+		buf = await readFile('./src/lib/dict/determiners.txt');
 		var determiners = buf.toString().split("\n");
-		buf = await readFile('./dict/interjections.txt');
+		buf = await readFile('./src/lib/dict/interjections.txt');
 		var interjections = buf.toString().split("\n");
-		buf = await readFile('./dict/prepositions.txt');
+		buf = await readFile('./src/lib/dict/prepositions.txt');
 		var prepositions = buf.toString().split("\n");
 		*/
 	
