@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 if(!process.env.DPT_PATH || !process.env.DPT_SECRET) {
-	dotenv = require("dotenv");
+	var dotenv = require("dotenv");
 	dotenv.config();
 }
 

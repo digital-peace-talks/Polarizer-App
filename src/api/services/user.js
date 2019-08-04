@@ -2,6 +2,8 @@ const ServerError = require("../../lib/error");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user").userModel;
 const uuid = require('uuid/v4');
+const Lo_ = require('lodash');
+
 
 
 module.exports.reclaimUser = async options => {
@@ -73,6 +75,15 @@ module.exports.onlineUsers = async options => {
 		status: 200,
 		data: users
 	};
+}
+
+module.exports.whoamiByDptUUID = async options => {
+	var user = Lo_.find(global.dptNS.online, {dptUUID: options.body.dptUUID});
+	if(user.registered) {
+		return(user);
+	} else {
+		return(false);
+	}
 }
 
 module.exports.getUsers = async options => {

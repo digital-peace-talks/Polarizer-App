@@ -154,21 +154,34 @@
 				if(restObj.path == '/topic/') {
 					jQuery('div.col.left').html('<h2>Topics</h2>');
 					var i;
+					var options = '';
 					for (i in restObj.data) {
+						if(restObj.data[i].user == 'mine') {
+							options = '*';
+						} else {
+							options = '';
+						}
 						jQuery('div.col.left').append(
 							'<li> <a class="opinionlist" id="'
 							+restObj.data[i]._id
 							+'" href="#">'
 							+restObj.data[i].content
-							+"</a></li><br>");
+							+"</a>"+options+"</li><br>");
 					}
 					topicForm();
 				} else if(restObj.path.startsWith('/opinion/')) {
 					jQuery('div.col.mid').html('<h2>Opinions</h2>');
 					var i;
+					var options = '';
 					for (i in restObj.data) {
+						if(restObj.data[i].user == 'mine') {
+							options = '*';
+						} else {
+							options = '(E)';
+						}
 						jQuery('div.col.mid')
-						.append("<li>"+restObj.data[i].content + "</li><br>");
+						.append("<li>"+restObj.data[i].content
+								+ " " +options+ "</li><br>");
 					}
 					if(restObj.data.length > 0) {
 						socket.emit('api', {

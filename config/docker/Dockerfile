@@ -1,5 +1,4 @@
 FROM debian:unstable-slim
-ARG CACHE_DATE=do_not_cache
 
 RUN apt-get update
 RUN apt-get --no-install-recommends --yes install apt-utils

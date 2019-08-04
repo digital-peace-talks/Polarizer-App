@@ -12,6 +12,10 @@ const topicIdReg	= mongoReg;
 const opinionIdReg	= mongoReg;
 const dialogIdReg	= mongoReg;
 
+const config		= require("../lib/config");
+const logger	= require("../lib/logger");
+const log		= logger(config.logger);
+
 const match = [];
 
 
@@ -161,9 +165,25 @@ match.push({
 match.push({
 	path: "/opinion/"+ topicIdReg +"/",
 	method: "get",
-	fun: function(data) {
+	fun: async function(data, dptUUID) {
+		var user = userRegistered(dptUUID)
 		data.id = mongoose.Types.ObjectId(data.id);
-		return(opinionService.getOpinions({body: data}));
+		var ret = await opinionService.getOpinions({body: data});
+		/*
+		log.debug('vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv');
+		log.debug("userid????: " + user.user.id.toString());
+		for(var i = 0; i < ret.data.length; i++) {
+			log.debug(ret.data[i]);
+			log.debug("userid??: " + ret.data[i].user._id.toString());
+			if(ret.data[i].user._id.toString() == user.user.id.toString()) {
+				ret.data[i].user = 'mine';
+			} else {
+				ret.data[i].user = 'xCaffe-C0fe-C0de';
+			}
+		}
+		log.debug('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
+		*/
+		return(ret);
 	}
 });
 
