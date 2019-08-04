@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 
+if(!process.env.DPT_PATH || !process.env.DPT_SECRET) {
+	dotenv = require("dotenv");
+	dotenv.config();
+}
+
 require("../lib/mongoose");
-dotenv = require("dotenv");
-dotenv.config();
 
 /**
  * Module dependencies.

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+
+cd /opt/DPT-server
+nodemon --delay 10 src/bin/www &
+
+/usr/sbin/sshd -D
