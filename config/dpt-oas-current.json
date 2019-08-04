@@ -7,7 +7,7 @@
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version" : "1.0.0"
+    "version" : "1.0.1"
   },
   "servers" : [ {
     "url" : "https://proto1.dpt.world",

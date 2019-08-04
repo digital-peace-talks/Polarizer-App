@@ -1,0 +1,818 @@
+openapi: 3.0.1
+info:
+  description: This is a specification for DPT server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Digital Peace Talks
+  version: 1.0.0
+servers:
+- description: dpt-oas-current
+  url: https://proto1.dpt.world
+tags:
+- description: Access to topics made by product owner and/or users
+  name: topic
+- description: Access to opinions made by users
+  name: opinion
+- description: Get, create or update a dialog
+  name: dialog
+- description: User operations
+  name: user
+paths:
+  /metadata/user/{publicKey}/:
+    get:
+      operationId: getUserMetadata
+      parameters:
+      - description: User that needs to be updated
+        explode: false
+        in: path
+        name: publicKey
+        required: true
+        schema:
+          pattern: ^[a-zA-Z0-9]{111}$
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMetadata'
+          description: User has been found
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: User not found
+      summary: Gets metadata of a specific user
+      tags:
+      - metadata
+      - user
+  /user/:
+    post:
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: Created user object
+        required: true
+      responses:
+        default:
+          content: {}
+          description: successful operation
+      summary: Creates a user
+      tags:
+      - user
+  /user/login/:
+    post:
+      description: Issues a JWT for the user - [click for further reading](http://jwt.io)
+      operationId: loginUser
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+          description: successful operation
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Bad request
+      summary: Logs user into the system
+      tags:
+      - user
+  /user/{publicKey}/:
+    delete:
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      parameters:
+      - description: The name that needs to be deleted
+        explode: false
+        in: path
+        name: publicKey
+        required: true
+        schema:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: User has been deleted
+        400:
+          content: {}
+          description: Invalid username supplied
+        404:
+          content: {}
+          description: User not found
+      security:
+      - bearerAuth: []
+      summary: Delete user
+      tags:
+      - user
+    put:
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      parameters:
+      - description: User that needs to be updated
+        explode: false
+        in: path
+        name: publicKey
+        required: true
+        schema:
+          pattern: ^[a-zA-Z0-9]{111}$
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: Updated user object
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: User has been updated
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Bad request
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: User not found
+      security:
+      - bearerAuth: []
+      summary: Updates a user
+      tags:
+      - user
+  /topic/:
+    get:
+      operationId: getTopics
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Topic'
+                type: array
+          description: Succesful operation
+      summary: Gets all topics
+      tags:
+      - topic
+    post:
+      operationId: postTopics
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Topic'
+        description: Topic Object
+        required: true
+      responses:
+        201:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Topic was created successfully
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Bad request
+      security:
+      - bearerAuth: []
+      summary: Creates a new topic
+      tags:
+      - topic
+    summary: Contains topic operations
+  /topic/{topicId}/:
+    put:
+      description: The user has changed its mind and would like to alter topic. This
+        should work only if the user is the one who opened the topic
+      operationId: putTopics
+      parameters:
+      - description: ID of Topic to update
+        explode: false
+        in: path
+        name: topicId
+        required: true
+        schema:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Topic'
+        description: Topic Object
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Topic was updated successfully
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Bad request
+      security:
+      - bearerAuth: []
+      summary: Updates a topic
+      tags:
+      - topic
+  /opinion/:
+    get:
+      operationId: getOpinion
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Opinion'
+                type: array
+          description: Succesful operation
+      summary: Get a list of all opinion
+      tags:
+      - opinion
+    post:
+      operationId: postOpinion
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Opinion'
+        description: Opinion Object
+        required: true
+      responses:
+        201:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Opinion created successfully
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Bad request
+      security:
+      - bearerAuth: []
+      summary: Creates a new opinion
+      tags:
+      - opinion
+    summary: Contains opinion operations
+  /opinion/{opinionId}/:
+    put:
+      description: The user has changed its mind and would like to alter a opinion.
+        This should work only if the user is the one who opened the opinion.
+      operationId: putOpinion
+      parameters:
+      - description: ID of Opinion to update
+        explode: false
+        in: path
+        name: opinionId
+        required: true
+        schema:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Opinion'
+        description: Opinion Object
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Opinion updated successfully
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Bad request
+      security:
+      - bearerAuth: []
+      summary: Updates a opinion
+      tags:
+      - opinion
+  /dialog/:
+    post:
+      operationId: createDialog
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dialog'
+        required: true
+      responses:
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Bad request
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dialog'
+          description: Dialog has been created
+      security:
+      - bearerAuth: []
+      summary: Creates a dialog
+      tags:
+      - dialog
+    summary: Main dialog endpoint
+  /dialog/{dialogId}/:
+    get:
+      operationId: getDialog
+      parameters:
+      - description: ID of dialog to return
+        explode: false
+        in: path
+        name: dialogId
+        required: true
+        schema:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        style: simple
+      responses:
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Bad request
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dialog'
+          description: Dialog found
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Dialog not found
+      summary: Gets a specific dialog by its ID
+      tags:
+      - dialog
+    put:
+      operationId: updateDialog
+      parameters:
+      - description: ID of dialog to update
+        explode: false
+        in: path
+        name: dialogId
+        required: true
+        schema:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dialog'
+      responses:
+        400:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Bad request
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dialog'
+          description: Dialog found
+        404:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+          description: Dialog not found
+      summary: Updates a specific dialog by its ID
+      tags:
+      - dialog
+    summary: Endpoint for a specific dialog
+  /dialog/{dialogId}/message/:
+    post:
+      operationId: postMessage
+      parameters:
+      - description: ID of dialog to update
+        explode: false
+        in: path
+        name: dialogId
+        required: true
+        schema:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dialog'
+          description: Successful operation
+      security:
+      - bearerAuth: []
+      summary: Posts a message to a dialog
+      tags:
+      - dialog
+  /dialog/{dialogId}/crisis/:
+    post:
+      operationId: createCrisis
+      parameters:
+      - description: ID of dialog to post crisis to
+        explode: false
+        in: path
+        name: dialogId
+        required: true
+        schema:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+        required: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dialog'
+          description: Successful operation
+      security:
+      - bearerAuth: []
+      summary: Posts a crisis to a dialog
+      tags:
+      - dialog
+      - crisis
+components:
+  requestBodies:
+    inline_object:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object'
+  schemas:
+    Topic:
+      example:
+        id: id
+        user: user
+        opinions: '[ opinion, opinion ]'
+        content: Do we really need a money based economy?
+      properties:
+        id:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        content:
+          example: Do we really need a money based economy?
+          type: string
+        user:
+          description: UUID of linked user
+          pattern: ^[a-f\d]{24}$
+          type: string
+        opinions:
+          description: List of all opinions under the topic
+          items:
+            $ref: '#/components/schemas/Opinion'
+          type: array
+      type: object
+    Opinion:
+      example:
+        id: id
+        user: user
+        topic: topic
+        content: Batman can win superman
+      properties:
+        id:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        content:
+          example: Batman can win superman
+          type: string
+        topic:
+          description: ID of related linked topic.
+          pattern: ^[a-f\d]{24}$
+          type: string
+        user:
+          description: UUID of linked user
+          pattern: ^[a-f\d]{24}$
+          type: string
+      type: object
+    Crisis:
+      example:
+        reason: reason
+        initiator: initiator
+        causingMessage: causingMessage
+        id: id
+        startDate: 2000-01-23T04:56:07.000+00:00
+        expirationDate: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        startDate:
+          format: date-time
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        initiator:
+          description: UUID of the crisis intiator
+          pattern: ^[a-f\d]{24}$
+          type: string
+        reason:
+          description: The reason for the crisis
+          type: string
+        causingMessage:
+          description: ID of the message that caused the crisis
+          pattern: ^[a-f\d]{24}$
+          type: string
+      type: object
+    Dialog:
+      example:
+        opinionProposition: OpinionProposition
+        initiator: initiator
+        opinion: opinion
+        recipient: recipient
+        messages:
+        - sender: sender
+          id: id
+          content: Hi mate, how are you doing?
+          timestamp: 2000-01-23T04:56:07.000+00:00
+        - sender: sender
+          id: id
+          content: Hi mate, how are you doing?
+          timestamp: 2000-01-23T04:56:07.000+00:00
+        id: id
+        crisises:
+        - reason: reason
+          initiator: initiator
+          causingMessage: causingMessage
+          id: id
+          startDate: 2000-01-23T04:56:07.000+00:00
+          expirationDate: 2000-01-23T04:56:07.000+00:00
+        - reason: reason
+          initiator: initiator
+          causingMessage: causingMessage
+          id: id
+          startDate: 2000-01-23T04:56:07.000+00:00
+          expirationDate: 2000-01-23T04:56:07.000+00:00
+        startDate: 2000-01-23T04:56:07.000+00:00
+        status: pending
+      properties:
+        id:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        opinion:
+          description: ID of linked opinion
+          pattern: ^[a-f\d]{24}$
+          type: string
+        opinionProposition:
+          description: Proposition for changing the linked opinion
+          type: string
+        crisises:
+          description: All of the dialog's crisises
+          items:
+            $ref: '#/components/schemas/Crisis'
+          type: array
+        startDate:
+          format: date-time
+          type: string
+        messages:
+          items:
+            $ref: '#/components/schemas/Message'
+          type: array
+        initiator:
+          description: UUID of the user who requested the dialog
+          pattern: ^[a-f\d]{24}$
+          type: string
+        recipient:
+          description: UUID of the dialog's recipient, who accepted the dialog request
+          pattern: ^[a-f\d]{24}$
+          type: string
+        status:
+          default: pending
+          description: A dialog has many statuses. For example, when a dialog has
+            been requested, a new `pending` dialog will be created.
+          enum:
+          - pending
+          - active
+          - crisis
+          - closed
+          type: string
+      type: object
+    Message:
+      example:
+        sender: sender
+        id: id
+        content: Hi mate, how are you doing?
+        timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        timestamp:
+          format: date-time
+          type: string
+        sender:
+          description: UUID of the message's sender
+          pattern: ^[a-f\d]{24}$
+          type: string
+        content:
+          example: Hi mate, how are you doing?
+          type: string
+      type: object
+    User:
+      example:
+        opinions:
+        - - opinions
+          - opinions
+        - - opinions
+          - opinions
+        id: id
+        publicKey: publicKey
+        signupTime: 2000-01-23T04:56:07.000+00:00
+        dialogs:
+        - - dialogs
+          - dialogs
+        - - dialogs
+          - dialogs
+      properties:
+        id:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        publicKey:
+          pattern: ^[a-zA-Z0-9]{111}$
+          type: string
+        topics:
+          description: IDs of the topics that the user has opened
+          items:
+            items:
+              pattern: ^[a-f\d]{24}$
+              type: string
+            type: array
+          type: array
+        opinions:
+          description: IDS of opinions that the user has made
+          items:
+            items:
+              pattern: ^[a-f\d]{24}$
+              type: string
+            type: array
+          type: array
+        dialogs:
+          description: IDS of dialogs in which the user participates
+          items:
+            items:
+              pattern: ^[a-f\d]{24}$
+              type: string
+            type: array
+          type: array
+        signupTime:
+          format: date-time
+          type: string
+      type: object
+    UserMetadata:
+      description: Metadata for a user. This will be returned by the GET user method,
+        and will not be saved in the database (as the data already exists in the user
+        document)
+      example:
+        dialogRequestsSent: 5
+        opinions: 0
+        publicKey: publicKey
+        dialogRequestsReceived: 5
+        signupTime: 2000-01-23T04:56:07.000+00:00
+        crisises: 2
+        refactoredOpinions: 6
+        dialogs: 1
+      properties:
+        publicKey:
+          pattern: ^[a-zA-Z0-9]{111}$
+          type: string
+        opinions:
+          description: Amount of opinions that the user has made
+          format: int32
+          type: integer
+        refactoredOpinions:
+          description: Amount of opinions that the user has refactored
+          format: int32
+          type: integer
+        dialogs:
+          description: Amount of dialogs that the user had participated in
+          format: int32
+          type: integer
+        dialogRequestsSent:
+          description: Amount of dialog requests that the user has sent
+          format: int32
+          type: integer
+        dialogRequestsReceived:
+          description: Amount of dialog requests that the user has received
+          format: int32
+          type: integer
+        crisises:
+          description: Amount of crisies that the user had been involved in
+          format: int32
+          type: integer
+        signupTime:
+          format: date-time
+          type: string
+      type: object
+    ApiResponse:
+      example:
+        code: 0
+        message: message
+      properties:
+        code:
+          format: int32
+          type: integer
+        message:
+          type: string
+      type: object
+    LoginResponse:
+      example:
+        user:
+          opinions:
+          - - opinions
+            - opinions
+          - - opinions
+            - opinions
+          id: id
+          publicKey: publicKey
+          signupTime: 2000-01-23T04:56:07.000+00:00
+          dialogs:
+          - - dialogs
+            - dialogs
+          - - dialogs
+            - dialogs
+        token: token
+      properties:
+        user:
+          $ref: '#/components/schemas/User'
+        token:
+          description: the generated JWT
+          pattern: ^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$
+          type: string
+      type: object
+    inline_object:
+      properties:
+        publicKey:
+          description: The user's public key
+          pattern: ^[a-zA-Z0-9]{111}$
+          type: string
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
