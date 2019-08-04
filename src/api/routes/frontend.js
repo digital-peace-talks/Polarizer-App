@@ -112,7 +112,7 @@ router.get('/dialog', async (req, res, next) => {
 			res.cookie('dptUUID', dptUUID, cookieOptions)
 		}
 		console.log('session tagged with dptUUID '+dptUUID);
-		res.sendFile(DPT_PATH+'/dialog.html');
+		res.sendFile(process.env.DPT_PATH+'/dialog.html');
 		res.end;
    	} catch(err) {
     		next(err);
