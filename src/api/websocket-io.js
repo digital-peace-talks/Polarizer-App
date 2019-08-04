@@ -97,7 +97,7 @@ io.on('connection', function(socket) {
 	console.log("socket.id: "+socket.id);
 
 	socket.on('kanal', function(msg) {
-		io.emit('kanal', { username: socket.username, message: msg });
+		io.emit('kanal', { username: socket.id, message: msg });
 		//log.info("rooms: "+JSON.stringify(io.sockets.adapter.rooms, null, 2));
 		log.info("rooms: "+JSON.stringify(socket.adapter.rooms, null, 2));
 		log.info("sids: "+JSON.stringify(io.sockets.adapter.sids, null, 2));
