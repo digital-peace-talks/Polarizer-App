@@ -169,7 +169,7 @@
 							+"</a>"+options+"</li><br>");
 					}
 					topicForm();
-				} else if(restObj.path.startsWith('/opinion/')) {
+				} else if(restObj.path.startsWith("/opinion/(")) {
 					jQuery('div.col.mid').html('<h2>Opinions</h2>');
 					var i;
 					var options = '';
@@ -185,8 +185,8 @@
 					}
 					if(restObj.data.length > 0) {
 						socket.emit('api', {
-							method: 'get',
-							path: "/opinionPostAllowed/",
+							method: 'post',
+							path: "/opinion/postAllowed/",
 							data: {
 								topicId: restObj.data[0].topic
 							}
@@ -194,7 +194,7 @@
 					} else {
 						opinionForm();
 					}
-				} else if(restObj.path == '/opinionPostAllowed/' && restObj.data.value == true) {
+				} else if(restObj.path == '/opinion/postAllowed/' && restObj.data.value == true) {
 					opinionForm();
 				}
 				linkHandler();

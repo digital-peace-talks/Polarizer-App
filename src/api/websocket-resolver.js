@@ -44,8 +44,16 @@ function userRegistered(dptUUID) {
 	it will also return an object, the data part of an object, which looks like
 	a mutation of the request object itself. if a return value is required.
 	most times, the action of the functions is the call of a service function.
- */
+*/
 
+
+match.push({
+	path: "/user/registrered/"+ uuidReg +"/",
+	method: "get",
+	fun: async (data, dptUUID) => {
+		return(await userRegistered(dptUUID));
+	}
+});
 
 match.push({
 	path: "/metadata/user/"+ uuidReg +"/",
@@ -55,7 +63,8 @@ match.push({
 	}
 });
 
-// not in the api and maybe needs to protected, somehow.
+
+// not in the api and maybe needs to get protected, somehow.
 // this entry point will return a list of all users.
 match.push({
 	path: "/user/",
@@ -67,7 +76,9 @@ match.push({
 
 
 // creates a new user.
-match.push({path: "/user/", method: "post",
+match.push({
+	path: "/user/",
+	method: "post",
 	fun: async (data, dptUUID) => {
 		data.id = "";
 		return(userService.createUser({body: data}));
@@ -189,8 +200,8 @@ match.push({
 
 // returns a bool value, if the user is allowed to post an opinion
 match.push({
-	path: "/opinionPostAllowed/",
-	method: "get",
+	path: "/opinion/postAllowed/",
+	method: "post",
 	fun: async (data, dptUUID) => {
 		var user;
 		if(user = userRegistered(dptUUID)) {
