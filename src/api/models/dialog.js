@@ -2,7 +2,7 @@ const User = require("./user").userModel;
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const messaageSchema = mongoose.Schema({
+const messageSchema = mongoose.Schema({
   timestamp: {type: Date, default: Date.now},
   sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
   content: String,
@@ -43,7 +43,7 @@ const dialogSchema = mongoose.Schema({
     ref: "User",
     required: true,
   },
-  messages: [messaageSchema],
+  messages: [messageSchema],
   crisises: [crisisSchema],
   // messages: [
   //   {

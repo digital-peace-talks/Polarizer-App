@@ -11,7 +11,7 @@ const router = new express.Router();
  */
 router.get('/api', async (req, res, next) => {
   try {
-    await res.sendFile('/opt/DPT-server/config/dpt-oas-current.json');
+    await res.sendFile('/opt/DPT-server/docs/dpt-oas-current.json');
     res.status(200);
   } catch (err) {
     next(err);
