@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const config = require("../lib/config");
 const logger = require("../lib/logger");
 const cors = require("cors");
+const favicon = require('serve-favicon');
 
 const log = logger(config.logger);
 const app = express();
@@ -19,7 +20,7 @@ const cookieKey = process.env.DPT_SECRET;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(cookieKey));
-//app.use(cookieParser());
+app.use(favicon(process.env.DPT_PATH+'/static/favicon.ico'));
 app.use(cors());
 
 /*
