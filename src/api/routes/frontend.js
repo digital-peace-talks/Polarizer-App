@@ -82,7 +82,7 @@ router.get('/launch', async (req, res, next) => {
 			res.cookie('dptUUID', dptUUID, cookieOptions)
 		}
 		console.log('session tagged with dptUUID '+dptUUID);
-		res.sendFile(process.env.DPT_PATH+'/launch.html');
+		res.sendFile(process.env.DPT_PATH+'/static/launch.html');
 		res.end;
    	} catch(err) {
    		next(err);
@@ -113,7 +113,7 @@ router.get('/dialog', async (req, res, next) => {
 			res.cookie('dptUUID', dptUUID, cookieOptions)
 		}
 		console.log('session tagged with dptUUID '+dptUUID);
-		res.sendFile(process.env.DPT_PATH+'/dialog.html');
+		res.sendFile(process.env.DPT_PATH+'/static/dialog.html');
 		res.end;
    	} catch(err) {
     		next(err);
