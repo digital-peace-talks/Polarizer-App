@@ -6,7 +6,7 @@ const Lo_ = require('lodash');
 
 
 
-module.exports.reclaimUser = async options => {
+module.exports.userReclaim = async options => {
 	var status = 200;
 	const userByPhraseGuess = await User.findOne({ phrase: options.body.phraseGuess });
 	const newPhrase = await User.findOne({ phrase: options.body.newPhrase });

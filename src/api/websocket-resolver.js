@@ -114,10 +114,17 @@ match.push({
 
 // users with login difficulties will end up here.
 match.push({
-	path: "/userReclaim/",
+	path: "/user/Reclaim/",
 	method: "put",
 	fun: async (data) => {
-		return userService.reclaimUser(data);
+		var userData = await userService.userReclaim(data);
+		if(userData.newCookie) {
+			var cookie = require('cookie-signature');
+			userData.newCookie = 's:' + cookie.sign(userData.newCookie, process.env.DPT_SECRET);
+		}
+		var ret = {path: '/user/Reclaim', method: 'put', data: userData};
+//		return userService.userReclaim(data);
+		return(ret);
 	}
 });
 
@@ -179,7 +186,7 @@ match.push({
 	fun: async function(data, dptUUID) {
 		var user = userRegistered(dptUUID)
 		data.id = mongoose.Types.ObjectId(data.id);
-		var ret = await opinionService.getOpinions({body: data});
+		var ret = await opinionService.getOpinionsByTopicId({body: data});
 		/*
 		log.debug('vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv');
 		log.debug("userid????: " + user.user.id.toString());

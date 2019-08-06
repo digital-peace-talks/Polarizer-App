@@ -44,17 +44,18 @@ router.post('/recover', async (req, res, next) => {
 		console.log("use old cookie");
 		dptUUID = cookieParser.signedCookie(req.signedCookies.dptUUID, process.env.DPT_SECRET);
 	}
-	var ret = await userService.reclaimUser({body: {phraseGuess: req.body.phraseinput, newPhrase: req.body.phrase, dptUUID: dptUUID}});
+	var ret = await userService.userReclaim({body: {phraseGuess: req.body.phraseinput, newPhrase: req.body.phrase, dptUUID: dptUUID}});
 	if(ret.newCookie)  {
 		res.cookie('dptUUID', ret.newCookie, cookieOptions);
-		res.writeHead(302, {
+		await res.writeHead(302, {
 		  'Location': '/launch'
 		  //add other headers here...
 		});
 		res.end();
+	} else {
+		res.send('bla '+req.body.phraseinput);
+		res.status(201);
 	}
-	res.send('bla '+req.body.phraseinput);
-	res.status(201);
 });
 
 //Deliver the dialog page

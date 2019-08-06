@@ -40,6 +40,18 @@
 				});
 			}
 			
+			function userReclaim(phrase, dptUUID) {
+				socket.emit("api", {
+					method: 'put',
+					path: '/user/Reclaim/',
+					data: {
+						body: {
+							phraseGuess: phrase,
+							publicKey: dptUUID,
+						}
+					}
+				});
+			}
 			function phraseForm(dptUUID) {
 				jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
 						+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="phrase">'
@@ -48,34 +60,28 @@
 						+'<input type="text" name="phrase" size="50" class="phrase"></form></div>');
 				jQuery(".phrase").focus();
 				jQuery("#phrase").submit(function(event) {
-					socket.emit("api", {
-						method: 'put',
-						path: '/userReclaim/',
-						data: {
-							body: {
-								publicKey: dptUUID,
-								phrase: jQuery('.phrase').val()
-							}
-						}
-					});
+					userReclaim(jQuery('.phrase').val(), dptUUID);
 					jQuery('.phrase').val('');
 					event.preventDefault();
 				});
 			}
 
+			function postTopic(topic) {
+				socket.emit("api", {
+					method: 'post',
+					path: '/topic/',
+					data: {
+						content: topic
+					}
+				});
+			}
 			function topicForm() {
 				jQuery('div.col.left').append(
 					'<br><hr style="border-color: #5a825a; border-style: solid;">Your topic:<br><form id="newTopic">'
 					+'<input class="anewtopic" type=text size=50 name="newTopic"></form>'
 				);
 				jQuery("#newTopic").submit(function(event) {
-					socket.emit("api", {
-						method: 'post',
-						path: '/topic/',
-						data: {
-							content: jQuery('.anewtopic').val()
-						}
-					});
+					postTopic(jQuery('.anewtopic').val());
 					jQuery('.anewtopic').val('');
 					event.preventDefault();
 				});
@@ -196,6 +202,13 @@
 					}
 				} else if(restObj.path == '/opinion/postAllowed/' && restObj.data.value == true) {
 					opinionForm();
+				} else if(restObj.path == '/user/Reclaim/') {
+					if(restObj.data.newCookie) {
+						document.cookie = "dptUUID="+restObj.data.newCookie+"; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/;"; 
+						location.reload();
+					} else {
+						console.log("special treadment, new account?!");
+					}
 				}
 				linkHandler();
 			});

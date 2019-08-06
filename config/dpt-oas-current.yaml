@@ -249,7 +249,7 @@ paths:
       - topic
   /opinion/{topicId}/:
     get:
-      operationId: getOpinionsBLA
+      operationId: getOpinionsByTopicId
       summary: Get a list of all opinions of a specified topic.
       tags:
       - opinion  

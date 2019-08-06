@@ -17,19 +17,30 @@ module.exports.opinionPostAllowed = async (options, oid) => {
 	return(false);
 }
 
+module.exports.getOpinionsByTopicId = async (options) => {
+  var opinions;
+  if(options.body.id) {
+	  opinions = await Opinion.find({ topic: options.body.id });
+	  return {
+		  status: 200,
+		  data: opinions
+	  };
+  } else {
+	  return {
+		  status: 400,
+		  data: null
+	  };
+  }
+};
+
+
 /**
  * @param {Object} options
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.getOpinions = async options => {
-  var opinions;
-  if(options.body.id) {
-	  opinions = await Opinion.find({ topic: options.body.id });
-  } else {
-	  opinions = await Opinion.find([]);
-  }
-
+module.exports.getOpinions = async (options) => {
+  var opinions = await Opinion.find([]);
   return {
     status: 200,
     data: opinions
