@@ -74,8 +74,8 @@ async function apiBroker(obj, dptUUID) {
 
 			        // re-pack it.
 			        ret = {
-			        	method: match[i].method,
-			        	path: match[i].path,
+			        	method: obj.method,
+			        	path: obj.path,
 			        	data: ret
 			        };
 			        return(ret);

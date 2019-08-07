@@ -14,7 +14,7 @@
 
 		var currentTopic = 0;
 		var mysocketid;
-		var whoami = {};
+		var whoami = { dptUUID: '', user: {}};
 		jQuery(document).ready(function(){
 			var socket = io.connect(window.location.protocol
 						+ '//'+window.location.host, {transports: ['websocket']});
@@ -43,7 +43,7 @@
 			function userReclaim(phrase, dptUUID) {
 				socket.emit("api", {
 					method: 'put',
-					path: '/user/Reclaim/',
+					path: '/user/reclaim/'+dptUUID+'/',
 					data: {
 						body: {
 							phraseGuess: phrase,
@@ -175,7 +175,7 @@
 							+"</a>"+options+"</li><br>");
 					}
 					topicForm();
-				} else if(restObj.path.startsWith("/opinion/(")) {
+				} else if(restObj.path.startsWith("/opinion/"+currentTopic+"/")) {
 					jQuery('div.col.mid').html('<h2>Opinions</h2>');
 					var i;
 					var options = '';
@@ -202,7 +202,7 @@
 					}
 				} else if(restObj.path == '/opinion/postAllowed/' && restObj.data.value == true) {
 					opinionForm();
-				} else if(restObj.path == '/user/Reclaim/') {
+				} else if(restObj.path == '/user/reclaim/'+ whoami.dptUUID +'/') {
 					if(restObj.data.newCookie) {
 						document.cookie = "dptUUID="+restObj.data.newCookie+"; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/;"; 
 						location.reload();
@@ -216,14 +216,16 @@
 			socket.on('private', function(restObj) {
 			    if(restObj.method == 'post') {
 			        if(restObj.path == '/info/') {
+			        	whoami.dptUUID = restObj.data.dptUUID;
 			        	if(restObj.data.message == 'logged in') {
-			        		whoami = restObj.data.user;
+			        		whoami.user = restObj.data.user;
 							socket.emit("api", {
 								method: 'get',
 								path: '/topic/'
 							});
 			        	}
 						if(restObj.data.message == 'user unknown') {
+							whoami.user = {};
 							phraseForm(restObj.data.dptUUID);
 						} else {
 							jQuery('#messages').append(jQuery('<li>').text(restObj.data.message));
