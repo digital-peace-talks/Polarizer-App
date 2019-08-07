@@ -114,7 +114,7 @@ match.push({
 
 // users with login difficulties will end up here.
 match.push({
-	path: "/user/Reclaim/",
+	path: "/user/reclaim/"+ uuidReg +"/",
 	method: "put",
 	fun: async (data) => {
 		var userData = await userService.userReclaim(data);
@@ -122,7 +122,11 @@ match.push({
 			var cookie = require('cookie-signature');
 			userData.newCookie = 's:' + cookie.sign(userData.newCookie, process.env.DPT_SECRET);
 		}
-		var ret = {path: '/user/Reclaim', method: 'put', data: userData};
+		var ret = {
+			path: '/user/reclaim',
+			method: 'put',
+			data: userData
+		};
 //		return userService.userReclaim(data);
 		return(ret);
 	}
