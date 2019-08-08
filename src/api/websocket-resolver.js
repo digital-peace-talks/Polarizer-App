@@ -250,7 +250,11 @@ match.push({
 		var user;
 		if(user = userRegistered(dptUUID)) { // && user.user._id ==) {
 			const ret = await opinionService.opinionPut({opinionId: data.opinionId, body: data.body});
-			console.log("update a opinion");
+			io.emit('update', {
+				path: '/opinion/'+data.topicId+'/',
+				method: 'get',
+				data: { id: data.topicId }
+			});
 		} else {
 			return({});
 		}
