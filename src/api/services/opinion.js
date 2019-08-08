@@ -53,15 +53,15 @@ module.exports.getOpinions = async (options) => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.opinionPut = async options => {
-  const result = await Opinion.findByIdAndUpdate(
-    options.opinionId,
-    options.body
-  );
-  return {
-    status: 200,
-    data: "opinionPut ok!",
-  };
+module.exports.opinionPut = async (options) => {
+	const result = await Opinion.findByIdAndUpdate(
+		options.opinionId,
+		options.body
+	);
+	return {
+		status: 200,
+		data: "opinionPut ok!",
+	};
 };
 
 /**

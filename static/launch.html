@@ -156,6 +156,39 @@
 		        }
 			});
 			
+			function putOpinion(opinion, opinionId) {
+				socket.emit("api", {
+					method: 'put',
+					path: '/opinion/'+opinionId+'/',
+					data: {
+						dptUUID: whoami.dptUUID,
+						opinionId: opinionId,
+						body: {
+							content: opinion
+						}
+					}
+				});
+			}
+
+			jQuery(document).on("submit", "form.newOpinion", function(event) {
+				putOpinion(this[0].value, this.parentNode.nextElementSibling.id);
+				event.stopImmediatePropagation();
+				event.preventDefault();
+			});
+
+			function opinionEdit() {
+				jQuery('.button').click(function(event) {
+					jQuery(this).prev('span').html(
+							'<form class="newOpinion">'
+							+ '<input type="text" value="'
+							+  this.previousElementSibling.innerText
+							+ '" name="newOpinion">'
+							+'</form>'
+					);
+				});
+				event.preventDefault();
+			}
+
 			socket.on('api', function(restObj) {
 				if(restObj.path == '/topic/') {
 					jQuery('div.col.left').html('<h2>Topics</h2>');
@@ -181,13 +214,15 @@
 					var options = '';
 					for (i in restObj.data) {
 						if(restObj.data[i].user == 'mine') {
-							options = '*';
+							options = '<button class="button" id='+restObj.data[i]._id+ ' name="button" type="submit">'
+								+	'edit'
+								+	'</button>';
 						} else {
 							options = '(E)';
 						}
 						jQuery('div.col.mid')
-						.append("<li>"+restObj.data[i].content
-								+ " " +options+ "</li><br>");
+						.append('<li><span class="text">'+restObj.data[i].content
+								+ "</span> " +options+ "</li><br>");
 					}
 					if(restObj.data.length > 0) {
 						socket.emit('api', {
@@ -200,6 +235,7 @@
 					} else {
 						opinionForm();
 					}
+					opinionEdit();
 				} else if(restObj.path == '/opinion/postAllowed/' && restObj.data.value == true) {
 					opinionForm();
 				} else if(restObj.path == '/user/reclaim/'+ whoami.dptUUID +'/') {

@@ -246,8 +246,14 @@ match.push({
 match.push({
 	path: "/opinion/"+ opinionIdReg +"/",
 	method: "put",
-	fun: function() {
-		console.log("update a opinion");
+	fun: async function(data, dptUUID) {
+		var user;
+		if(user = userRegistered(dptUUID)) { // && user.user._id ==) {
+			const ret = await opinionService.opinionPut({opinionId: data.opinionId, body: data.body});
+			console.log("update a opinion");
+		} else {
+			return({});
+		}
 	}
 });
 
