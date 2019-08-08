@@ -164,6 +164,25 @@ paths:
       summary: Updates a user
       tags:
       - user
+  /user/reclaim/{publicKey}/:
+    put:
+      description: if the user lost the public key, somehow, the user is able to reclaim the account with a stored phrase. thats passed with this message.
+      operationId: userReclaim
+      parameters:
+      - description: the required data for the server are the phrase and the publicKEY
+        in: path
+        name: publicKey
+        required: true
+        schema:
+          pattern: ^[a-zA-Z0-9]{111}$
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+            
+      
   /topic/:
     get:
       operationId: getTopics
