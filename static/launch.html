@@ -178,7 +178,7 @@
 			});
 
 			function opinionEdit() {
-				jQuery('.button').click(function(event) {
+				jQuery('.editOpinion').click(function(event) {
 					jQuery(this).prev('span').html(
 							'<form class="newOpinion">'
 							+ '<input type="text" value="'
@@ -186,8 +186,8 @@
 							+ '" name="newOpinion">'
 							+'</form>'
 					);
+					event.preventDefault();
 				});
-				event.preventDefault();
 			}
 
 			socket.on('api', function(restObj) {
@@ -215,11 +215,9 @@
 					var options = '';
 					for (i in restObj.data) {
 						if(restObj.data[i].user == 'mine') {
-							options = '<button class="button" id='+restObj.data[i]._id+ ' name="button" type="submit">'
-								+	'edit'
-								+	'</button>';
+							options = '<span class="editOpinion" id="'+restObj.data[i]._id+ '">&#128393;</span>';
 						} else {
-							options = '(E)';
+							options = '<span class="inviteToDialog">&#128172;</span>';
 						}
 						jQuery('div.col.mid')
 						.append('<li><span class="text">'+restObj.data[i].content
