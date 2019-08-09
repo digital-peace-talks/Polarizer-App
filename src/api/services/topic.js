@@ -6,7 +6,7 @@ const Topic = require("../models/topic").topicModel;
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.getTopics = async options => {
+module.exports.getTopics = async (options) => {
   const topics = await Topic.find({});
 
   return {
@@ -21,7 +21,7 @@ module.exports.getTopics = async options => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.topicPut = async topics => {
+module.exports.topicPut = async (topic) => {
   const result = await Topic.findByIdAndUpdate(
     topic.topicId,
     topic.body
@@ -37,7 +37,7 @@ module.exports.topicPut = async topics => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.topicPost = async topics => {
+module.exports.topicPost = async (topics) => {
   const result = await Topic.create(topics.body);
   // Implement your business logic here...
   //

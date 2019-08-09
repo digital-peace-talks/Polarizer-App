@@ -66,6 +66,55 @@
 				});
 			}
 
+
+
+
+
+
+
+
+			function putTopic(topic, topicId) {
+				socket.emit("api", {
+					method: 'put',
+					path: '/topic/'+topicId+'/',
+					data: {
+						dptUUID: whoami.dptUUID,
+						topicId: topicId,
+						body: {
+							content: topic
+						}
+					}
+				});
+			}
+
+			jQuery(document).on("submit", "form.newTopic", function(event) {
+				putTopic(this[0].value, this.parentNode.nextElementSibling.id);
+				event.stopImmediatePropagation();
+				event.preventDefault();
+			});
+
+			function topicEdit() {
+				jQuery('.editTopic').click(function(event) {
+					jQuery(this).prev('a').html(
+							'<form class="newTopic">'
+							+ '<input type="text" value="'
+							+  this.previousElementSibling.innerText
+							+ '" name="newTopic">'
+							+'</form>'
+					);
+					event.preventDefault();
+				});
+			}
+
+
+
+
+
+
+
+
+
+
 			function postTopic(topic) {
 				socket.emit("api", {
 					method: 'post',
@@ -197,7 +246,7 @@
 					var options = '';
 					for (i in restObj.data) {
 						if(restObj.data[i].user == 'mine') {
-							options = '*';
+							options = '<span class="editTopic" id="'+restObj.data[i]._id+ '">&#128393;</span>';
 						} else {
 							options = '';
 						}
@@ -208,6 +257,7 @@
 							+restObj.data[i].content
 							+"</a>"+options+"</li><br>");
 					}
+					topicEdit();
 					topicForm();
 				} else if(restObj.path.startsWith("/opinion/"+currentTopic+"/")) {
 					jQuery('div.col.mid').html('<h2>Opinions</h2>');
