@@ -169,8 +169,18 @@ match.push({
 match.push({
 	path: "/topic/"+ topicIdReg +"/",
 	method: "put",
-	fun: function() {
-		console.log("update a topic");
+	fun: async function(data, dptUUID) {
+		var user;
+		if(user = userRegistered(dptUUID)) { // && user.user._id ==) {
+			const ret = await topicService.topicPut({topicId: data.topicId, body: data.body});
+			io.emit('update', {
+				path: '/topic/',
+				method: 'get',
+				data: {}
+			});
+		} else {
+			return({});
+		}
 	}
 });
 
