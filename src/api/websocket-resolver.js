@@ -46,6 +46,17 @@ function userRegistered(dptUUID) {
 	most times, the action of the functions is the call of a service function.
 */
 
+// test path for nils
+match.push({
+	path: "/nilsTestPath/",
+	method: "post",
+	fun: async (data, dptUUID) => {
+		return({
+			status: 200,
+			data: data.content.split("").reverse().join("")
+		});
+	}
+});
 
 match.push({
 	path: "/user/registrered/"+ uuidReg +"/",

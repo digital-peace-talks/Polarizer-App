@@ -21,11 +21,13 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "serve-favicon": "^2.5.0",
+    "socket.io-client-cookies-headers": "^0.4.2",
     "socketio": "^1.0.0",
     "uuid": "^3.3.2",
     "ws": "^7.1.1"
   },
   "devDependencies": {
-    "@types/mongoose": "^5.5.1"
+    "@types/mongoose": "^5.5.1",
+    "mocha": "^6.2.0"
   }
 }
