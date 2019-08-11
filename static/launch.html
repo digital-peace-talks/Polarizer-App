@@ -15,7 +15,7 @@
 		var currentTopic = 0;
 		var mysocketid;
 		var whoami = { dptUUID: '', user: {}};
-		jQuery(document).ready(function(){
+		jQuery(document).ready(function() {
 			var socket = io.connect(window.location.protocol
 						+ '//'+window.location.host, {transports: ['websocket']});
 			var restObj = {};

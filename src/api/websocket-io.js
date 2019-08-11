@@ -121,7 +121,8 @@ io.on('connection', function(socket) {
 		&& payload.path == '/user/login/') {
 			var testUUID = require('cookie').parse(payload.data.publicKey)['dptUUID'];
 			var dptUUID = cookieParser.signedCookie(testUUID, cookieKey);
-			log.info("check dptUUID: "+dptUUID);
+            log.info("check dptUUID: "+dptUUID);
+			log.info("payload: "+util.inspect(payload.data));
 
 			if(dptUUID != false) {
 
@@ -152,6 +153,7 @@ io.on('connection', function(socket) {
 						data: {
 							message: 'logged in',
 							user: user,
+							dptUUID: dptUUID,
 							status: 200
 						}
 					});
