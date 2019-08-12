@@ -10,14 +10,15 @@
 	</body>
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="dpt-client.js"></script>
 	<script>
 
 		var currentTopic = 0;
-		var mysocketid;
 		var whoami = { dptUUID: '', user: {}};
 		jQuery(document).ready(function() {
 			var socket = io.connect(window.location.protocol
 						+ '//'+window.location.host, {transports: ['websocket']});
+			var dpt = new DPT(socket);
 			var restObj = {};
 
 			// make links triggers for api calls
@@ -27,31 +28,13 @@
 				// and then implement the new ones
 				jQuery("a.opinionlist").click(function( event ) {
 					event.preventDefault();
-					socket.emit("api", {
-						method: "get",
-						path: "/opinion/"+this.id+"/",
-						data: {
-							id: this.id
-						}
-					});
+					dpt.getOpinionByTopic(this.id);
 					// the clicked link sets the new current topic.
 					currentTopic = this.id;
 					return(false);
 				});
 			}
 			
-			function userReclaim(phrase, dptUUID) {
-				socket.emit("api", {
-					method: 'put',
-					path: '/user/reclaim/'+dptUUID+'/',
-					data: {
-						body: {
-							phraseGuess: phrase,
-							publicKey: dptUUID,
-						}
-					}
-				});
-			}
 			function phraseForm(dptUUID) {
 				jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
 						+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="phrase">'
@@ -60,35 +43,15 @@
 						+'<input type="text" name="phrase" size="50" class="phrase"></form></div>');
 				jQuery(".phrase").focus();
 				jQuery("#phrase").submit(function(event) {
-					userReclaim(jQuery('.phrase').val(), dptUUID);
+					dpt.userReclaim(jQuery('.phrase').val(), dptUUID);
 					jQuery('.phrase').val('');
 					event.preventDefault();
 				});
 			}
 
 
-
-
-
-
-
-
-			function putTopic(topic, topicId) {
-				socket.emit("api", {
-					method: 'put',
-					path: '/topic/'+topicId+'/',
-					data: {
-						dptUUID: whoami.dptUUID,
-						topicId: topicId,
-						body: {
-							content: topic
-						}
-					}
-				});
-			}
-
 			jQuery(document).on("submit", "form.newTopic", function(event) {
-				putTopic(this[0].value, this.parentNode.nextElementSibling.id);
+				dpt.putTopic(this[0].value, this.parentNode.nextElementSibling.id);
 				event.stopImmediatePropagation();
 				event.preventDefault();
 			});
@@ -106,31 +69,13 @@
 				});
 			}
 
-
-
-
-
-
-
-
-
-
-			function postTopic(topic) {
-				socket.emit("api", {
-					method: 'post',
-					path: '/topic/',
-					data: {
-						content: topic
-					}
-				});
-			}
 			function topicForm() {
 				jQuery('div.col.left').append(
 					'<br><hr style="border-color: #5a825a; border-style: solid;">Your topic:<br><form id="newTopic">'
 					+'<input class="anewtopic" type=text size=50 name="newTopic"></form>'
 				);
 				jQuery("#newTopic").submit(function(event) {
-					postTopic(jQuery('.anewtopic').val());
+					dpt.postTopic(jQuery('.anewtopic').val());
 					jQuery('.anewtopic').val('');
 					event.preventDefault();
 				});
@@ -143,14 +88,7 @@
 				);
 				jQuery("#newOpinion").submit(function(event) {
 					event.preventDefault();
-					socket.emit("api", {
-						method: 'post',
-						path: '/opinion/',
-						data: {
-							topic: currentTopic,
-							content: jQuery('.anewopinion').val()
-						}
-					});
+					dpt.postOpinion(currentTopic, jQuery('.anewopinion').val());
 					jQuery('.anewopinion').val('');
 					event.preventDefault();
 				});
@@ -167,17 +105,11 @@
 			jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
 
 			socket.on('connect', () => {
-				mysocketid = socket.id;
+				// if needed, we can keep socket.id somewhere
 				if(document.cookie) {
-					socket.emit("login", {
-						method: 'post',
-						path: '/user/login/',
-						data: {
-							publicKey: document.cookie
-						}
-					});
+					dpt.userLogin(document.cookie);
 				}
-			} );
+			});
 				
 			socket.on('kanal', function(msg) {
 				jQuery('#messages').append(jQuery('<li>').text(msg.username +": "+msg.message));
@@ -196,32 +128,19 @@
 			        }
 			    }
 		        if(restObj.path == '/topic/' && restObj.method == 'get') {
-					socket.emit('api', restObj);
+		        	dpt.getTopic();
+					// socket.emit('api', restObj);
 		        }
 		        if(restObj.path.startsWith('/opinion/')
 		        && restObj.data.id == currentTopic
 		        && restObj.method == 'get') {
-					socket.emit('api', restObj);
+		        	dpt.getOpinionByTopic(currentTopic);
+					//socket.emit('api', restObj);
 		        }
 			});
 			
-			function putOpinion(opinion, opinionId) {
-				socket.emit("api", {
-					method: 'put',
-					path: '/opinion/'+opinionId+'/',
-					data: {
-						dptUUID: whoami.dptUUID,
-						opinionId: opinionId,
-						topicId: currentTopic,
-						body: {
-							content: opinion
-						}
-					}
-				});
-			}
-
 			jQuery(document).on("submit", "form.newOpinion", function(event) {
-				putOpinion(this[0].value, this.parentNode.nextElementSibling.id);
+				dpt.putOpinion(whoami.dptUUID, this.parentNode.nextElementSibling.id, currentTopic, this[0].value);
 				event.stopImmediatePropagation();
 				event.preventDefault();
 			});
@@ -240,6 +159,9 @@
 			}
 
 			socket.on('api', function(restObj) {
+				if(!restObj) {
+					return;
+				}
 				if(restObj.path == '/topic/') {
 					jQuery('div.col.left').html('<h2>Topics</h2>');
 					var i;
@@ -274,13 +196,7 @@
 								+ "</span> " +options+ "</li><br>");
 					}
 					if(restObj.data.length > 0) {
-						socket.emit('api', {
-							method: 'post',
-							path: "/opinion/postAllowed/",
-							data: {
-								topicId: restObj.data[0].topic
-							}
-						});
+						dpt.opinionPostAllowed(restObj.data[0].topic);
 					} else {
 						opinionForm();
 					}
@@ -304,10 +220,7 @@
 			        	whoami.dptUUID = restObj.data.dptUUID;
 			        	if(restObj.data.message == 'logged in') {
 			        		whoami.user = restObj.data.user;
-							socket.emit("api", {
-								method: 'get',
-								path: '/topic/'
-							});
+			        		dpt.getTopic();
 			        	}
 						if(restObj.data.message == 'user unknown') {
 							whoami.user = {};

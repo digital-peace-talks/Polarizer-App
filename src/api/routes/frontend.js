@@ -58,6 +58,15 @@ router.post('/recover', async (req, res, next) => {
 	}
 });
 
+router.get('/dpt-client.js', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/dpt-client.js');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
 //Deliver the dialog page
 router.get('/launch', async (req, res, next) => {
 	try {
