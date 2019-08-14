@@ -40,9 +40,11 @@ module.exports.getDialog = async (options) => {
 		var worker2 = await Topic.findOne({ "_id": mongoose.Types.ObjectId(worker[i].opinion.topic)}).populate('opinions');
 		collection.topic = worker2.content;
 		var opinion = Lo_.find(worker2.opinions, {user: worker[i].initiator});
-		collection.initiatorOpinion = opinion.content;
-		collection.initiator = 'me';
-		result.push(collection);
+		if(opinion) {
+			collection.initiatorOpinion = opinion.content;
+			collection.initiator = 'me';
+			result.push(collection);
+		}
 	}
 
 	worker = await Dialog.find({"recipient": options.userId}).populate('opinion');
@@ -55,9 +57,11 @@ module.exports.getDialog = async (options) => {
 		var worker2 = await Topic.findOne({ "_id": mongoose.Types.ObjectId(worker[i].opinion.topic)}).populate('opinions');
 		collection.topic = worker2.content;
 		var opinion = Lo_.find(worker2.opinions, {user: worker[i].initiator});
-		collection.initiatorOpinion = opinion.content;
-		collection.initiator = 'notme';
-		result.push(collection);
+		if(opinion) {
+			collection.initiatorOpinion = opinion.content;
+			collection.initiator = 'notme';
+			result.push(collection);
+		}
 	}
 	
 //	result = { data: result };

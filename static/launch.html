@@ -3,18 +3,13 @@
 	<head>
 		<title></title>
 		<style>
-			i {font-style: oblique,italic; color: #4a624a; }
+			i {font-style: italic; color: #4a624a; }
 			a { color: #fd0; text-decoration: none; }
 			body {
 				background: #0a120a;
 				color: #fee;
 				font-family: sans;
-			};
-			div#hide {
-				background-color: red;
-				visibility: hidden;
-				line-height: 0%;
-			}	
+			}
 		</style>
 	</head>
 	<body>
@@ -208,12 +203,13 @@
 			}
 
 			jQuery(document).on('mouseover', '.dialog', (event) => {
-				console.log("over: "+event);
+				jQuery(event.currentTarget).css({"background-color": "#1a221a"});
 				jQuery(event.currentTarget.children[2]).css({"visibility": "visible", "line-height": "100%"});
 				event.preventDefault();
 			});
+
 			jQuery(document).on('mouseout', '.dialog', (event) => {
-				console.log("out: "+event);
+				jQuery(event.currentTarget).css({"background-color": "#0a120a"});
 				jQuery(event.currentTarget.children[2]).css({"visibility": "hidden", "line-height": "0%"});
 				event.preventDefault();
 			});
