@@ -312,7 +312,8 @@ match.push({
 		if(user) {
 			data.body.initiator = user.user.id;
 			const ret = await dialogService.createDialog(data.body);
-			socket.emit('api', {path: '/dialog/', method: 'get'});
+			socket.emit('update', {path: '/dialog/', method: 'get'});
+			return({data: {}});
 		}
 	}
 });

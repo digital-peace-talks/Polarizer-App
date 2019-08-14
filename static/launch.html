@@ -177,6 +177,10 @@
 		        	dpt.getTopic();
 		        }
 
+		        if(restObj.path == '/dialog/' && restObj.method == 'get') {
+		        	dpt.getDialog();
+		        }
+
 		        if(restObj.path.startsWith('/opinion/')
 		        && restObj.data.id == currentTopic
 		        && restObj.method == 'get') {
@@ -224,6 +228,7 @@
 					console.log(restObj.data);
 					var dialog = '';
 					var dialogs = restObj.data.data;
+					jQuery('div.col.right').html('<h2>Dialogs</h2>');
 					for(var i=0; i < dialogs.length; i++) {
 						dialog = '<div class="dialog"><i>proposition:</i> '+dialogs[i].opinionProposition+"<br>";
 						dialog += '<div class="hide"><i>topic:</i> '+dialogs[i].topic+"<br>";
