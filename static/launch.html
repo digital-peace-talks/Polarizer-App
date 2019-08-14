@@ -2,9 +2,22 @@
 <html>
 	<head>
 		<title></title>
-		<style></style>
+		<style>
+			i {font-style: oblique,italic; color: #4a624a; }
+			a { color: #fd0; text-decoration: none; }
+			body {
+				background: #0a120a;
+				color: #fee;
+				font-family: sans;
+			};
+			div#hide {
+				background-color: red;
+				visibility: hidden;
+				line-height: 0%;
+			}	
+		</style>
 	</head>
-	<body style="background: #0a120a; color: #fee; font-family: sans; font-size: 100%" link="#fd0">
+	<body>
 	<div id="main"></div>
 	<div id="misc"></div>
 	</body>
@@ -77,6 +90,7 @@
 					return(0);
 				});
 			}
+
 
 			jQuery(document).on('click', 'span.inviteToDialog', function(event) {
 				propositionForm(this.id);
@@ -193,6 +207,17 @@
 				});
 			}
 
+			jQuery(document).on('mouseover', '.dialog', (event) => {
+				console.log("over: "+event);
+				jQuery(event.currentTarget.children[2]).css({"visibility": "visible", "line-height": "100%"});
+				event.preventDefault();
+			});
+			jQuery(document).on('mouseout', '.dialog', (event) => {
+				console.log("out: "+event);
+				jQuery(event.currentTarget.children[2]).css({"visibility": "hidden", "line-height": "0%"});
+				event.preventDefault();
+			});
+			
 			socket.on('api', function(restObj) {
 				if(!restObj) {
 					return;
@@ -204,19 +229,20 @@
 					var dialog = '';
 					var dialogs = restObj.data.data;
 					for(var i=0; i < dialogs.length; i++) {
-						dialog = "topic: "+dialogs[i].topic+"<br>";
-						dialog += "proposition: "+dialogs[i].opinionProposition+"<br>";
-						dialog += "status: "+dialogs[i].status+"<br>";
+						dialog = '<div class="dialog"><i>proposition:</i> '+dialogs[i].opinionProposition+"<br>";
+						dialog += '<div class="hide"><i>topic:</i> '+dialogs[i].topic+"<br>";
 						if(dialogs[i].initiator == 'me') {
-							dialog += "initiator: me<br>";
-							dialog += "my opinion: "+dialogs[i].initiatorOpinion+"<br>";
-							dialog += "other's opinion: "+dialogs[i].recipientOpinion+"<br>";
+							dialog += "<i>my opinion:</i> "+dialogs[i].initiatorOpinion+"<br>";
+							dialog += "<i>other's opinion:</i> "+dialogs[i].recipientOpinion+"<br>";
+							dialog += "<i>initiator:</i> me ";
 						} else {
-							dialog += "initiator: other<br>";
-							dialog += "my opinion: "+dialogs[i].recipientOpinion+"<br>";
-							dialog += "other's opinion: "+dialogs[i].initiatorOpinion+"<br>";
+							dialog += "<i>my opinion:</i> "+dialogs[i].recipientOpinion+"<br>";
+							dialog += "<i>other's opinion:</i> "+dialogs[i].initiatorOpinion+"<br>";
+							dialog += "<i>initiator:</i> other ";
 						}
-						jQuery('div.col.right').append(dialog+"<br>");
+						dialog += "<i>status:</i> "+dialogs[i].status+"</div>";
+						jQuery('div.col.right').append(dialog+"<br></div>");
+						jQuery('.hide').css({"visibility": "hidden", "line-height": "0%"});
 					}
 				}
 						
