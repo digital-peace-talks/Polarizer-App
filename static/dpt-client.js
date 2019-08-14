@@ -1,5 +1,9 @@
 class DPT {
+	constructor(socket) {
+		this.socket = socket;
 
+
+		/*
 	constructor(host) {
 		this.socket = io.connect(
 			host,
@@ -7,7 +11,9 @@ class DPT {
 				transport: ['websocket']
 			}
 		);
+		*/
 		return(this);
+		
 	}
 	
 	// user
