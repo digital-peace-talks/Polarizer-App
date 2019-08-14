@@ -1,4 +1,5 @@
 # Logs
+launch.json
 logs
 *.log
 npm-debug.log*
