@@ -1,10 +1,15 @@
 class DPT {
 
-	constructor(socket) {
-		this.socket = socket;
+	constructor(host) {
+		this.socket = io.connect(
+			host,
+			{
+				transport: ['websocket']
+			}
+		);
 		return(this);
 	}
-
+	
 	// user
 
 	userReclaim(phrase, publicKey) {
@@ -113,4 +118,27 @@ class DPT {
 	}
 	
 	// dialog
+	
+	postDialog(proposition, publicKey, opinionId) {
+		console.log('here we go: '+proposition+' me: '+publicKey+' opinionId: '+opinionId);
+		this.socket.emit("api", {
+			method: 'post',
+			path: '/dialog/',
+			data: {
+				dptUUID: publicKey,
+				body: {
+					opinion: opinionId,
+					opinionProposition: proposition,
+				}
+			}
+		});
+	}
+	
+	getDialog() {
+		this.socket.emit('api', {
+			method: 'get',
+			path: '/dialog/',
+			data: {},
+		});
+	}
 }

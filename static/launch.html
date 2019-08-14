@@ -16,15 +16,16 @@
 		var currentTopic = 0;
 		var whoami = { dptUUID: '', user: {}};
 		jQuery(document).ready(function() {
-			var socket = io.connect(window.location.protocol
-						+ '//'+window.location.host, {transports: ['websocket']});
-			var dpt = new DPT(socket);
+			var dpt = new DPT(window.location.protocol+ '//'+window.location.host);
+			var socket = dpt.socket;
 			var restObj = {};
 
 			// make links triggers for api calls
 			function linkHandler() {
+
 				// first and foremost, we need to remove all old event hooks
 				jQuery("a.opinionlist").off("click");
+
 				// and then implement the new ones
 				jQuery("a.opinionlist").click(function( event ) {
 					event.preventDefault();
@@ -33,6 +34,7 @@
 					currentTopic = this.id;
 					return(false);
 				});
+
 			}
 			
 			function phraseForm(dptUUID) {
@@ -41,13 +43,44 @@
 						+'This device seems not registered, yet.<br>'
 						+'Please enter your phrase:<br><form id="phrase">'
 						+'<input type="text" name="phrase" size="50" class="phrase"></form></div>');
+
 				jQuery(".phrase").focus();
+
 				jQuery("#phrase").submit(function(event) {
 					dpt.userReclaim(jQuery('.phrase').val(), dptUUID);
 					jQuery('.phrase').val('');
 					event.preventDefault();
 				});
 			}
+			
+			function propositionForm(opinionId) {
+				jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
+						+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">'
+						+'Please enter your proposition:<br><form id="proposition">'
+						+'<input type="text" name="proposition" size="50" class="proposition">'
+						+'<input type="hidden" id="opinionId" name="opinionId" value="'+opinionId+'"</form></div>');
+
+				jQuery(".proposition").focus();
+				
+				jQuery(document).on('submit', 'form#proposition', function(event) {
+					event.stopImmediatePropagation();
+					var proposition = jQuery('.proposition').val();
+					var opinionId = jQuery('#opinionId').val();
+					if(proposition) {
+						dpt.postDialog(proposition, whoami.dptUUID, opinionId);
+					}
+					jQuery('.proposition').val('');
+					jQuery('#misc').empty();
+					event.preventDefault();
+					return(0);
+				});
+			}
+
+			jQuery(document).on('click', 'span.inviteToDialog', function(event) {
+				propositionForm(this.id);
+				event.stopImmediatePropagation();
+				event.preventDefault();
+			});
 
 
 			jQuery(document).on("submit", "form.newTopic", function(event) {
@@ -68,7 +101,7 @@
 					event.preventDefault();
 				});
 			}
-
+			
 			function topicForm() {
 				jQuery('div.col.left').append(
 					'<br><hr style="border-color: #5a825a; border-style: solid;">Your topic:<br><form id="newTopic">'
@@ -117,6 +150,7 @@
 			});
 
 			socket.on('update', function(restObj){
+
 			    if(restObj.method == 'post') {
 			        if(restObj.path == '/info/') {
 
@@ -127,21 +161,20 @@
 						window.scrollTo(0, document.body.scrollHeight);
 			        }
 			    }
+
 		        if(restObj.path == '/topic/' && restObj.method == 'get') {
 		        	dpt.getTopic();
-					// socket.emit('api', restObj);
 		        }
+
 		        if(restObj.path.startsWith('/opinion/')
 		        && restObj.data.id == currentTopic
 		        && restObj.method == 'get') {
 		        	dpt.getOpinionByTopic(currentTopic);
-					//socket.emit('api', restObj);
 		        }
 			});
 			
 			jQuery(document).on("submit", "form.newOpinion", function(event) {
 				dpt.putOpinion(whoami.dptUUID, this.parentNode.nextElementSibling.id, currentTopic, this[0].value);
-				event.stopImmediatePropagation();
 				event.preventDefault();
 			});
 
@@ -162,13 +195,39 @@
 				if(!restObj) {
 					return;
 				}
+				
+				if(restObj.path == '/dialog/'
+				&& restObj.method == 'get') {
+					console.log(restObj.data);
+					var dialog = '';
+					var dialogs = restObj.data.data;
+					for(var i=0; i < dialogs.length; i++) {
+						dialog = "topic: "+dialogs[i].topic+"<br>";
+						dialog += "proposition: "+dialogs[i].opinionProposition+"<br>";
+						dialog += "status: "+dialogs[i].status+"<br>";
+						if(dialogs[i].initiator == 'me') {
+							dialog += "initiator: me<br>";
+							dialog += "my opinion: "+dialogs[i].initiatorOpinion+"<br>";
+							dialog += "other's opinion: "+dialogs[i].recipientOpinion+"<br>";
+						} else {
+							dialog += "initiator: other<br>";
+							dialog += "my opinion: "+dialogs[i].recipientOpinion+"<br>";
+							dialog += "other's opinion: "+dialogs[i].initiatorOpinion+"<br>";
+						}
+						jQuery('div.col.right').append(dialog+"<br>");
+					}
+				}
+						
+
 				if(restObj.path == '/topic/') {
 					jQuery('div.col.left').html('<h2>Topics</h2>');
 					var i;
 					var options = '';
 					for (i in restObj.data) {
 						if(restObj.data[i].user == 'mine') {
-							options = '<span class="editTopic" id="'+restObj.data[i]._id+ '">&#128393;</span>';
+							options = '<span class="editTopic" id="'
+									+ restObj.data[i]._id
+									+ '">&#128393;</span>';
 						} else {
 							options = '';
 						}
@@ -181,36 +240,56 @@
 					}
 					topicEdit();
 					topicForm();
+
 				} else if(restObj.path.startsWith("/opinion/"+currentTopic+"/")) {
-					jQuery('div.col.mid').html('<h2>Opinions</h2>');
+
 					var i;
 					var options = '';
+
+					jQuery('div.col.mid').html('<h2>Opinions</h2>');
+
 					for (i in restObj.data) {
+
 						if(restObj.data[i].user == 'mine') {
-							options = '<span class="editOpinion" id="'+restObj.data[i]._id+ '">&#128393;</span>';
+							options = '<span class="editOpinion" id="'
+							+ restObj.data[i]._id
+							+ '">&#128393;</span>';
 						} else {
-							options = '<span class="inviteToDialog">&#128172;</span>';
+							options = '<span class="inviteToDialog" id="'
+							+ restObj.data[i]._id
+							+ '">'
+							+ '&#128172;'
+							+ '</span>';
 						}
+
 						jQuery('div.col.mid')
-						.append('<li><span class="text">'+restObj.data[i].content
-								+ "</span> " +options+ "</li><br>");
+						.append('<li><span class="text">'
+						+restObj.data[i].content
+							+ "</span> " +options+ "</li><br>");
 					}
+
 					if(restObj.data.length > 0) {
 						dpt.opinionPostAllowed(restObj.data[0].topic);
 					} else {
 						opinionForm();
 					}
 					opinionEdit();
+
 				} else if(restObj.path == '/opinion/postAllowed/' && restObj.data.value == true) {
+
 					opinionForm();
+
 				} else if(restObj.path == '/user/reclaim/'+ whoami.dptUUID +'/') {
+
 					if(restObj.data.newCookie) {
 						document.cookie = "dptUUID="+restObj.data.newCookie+"; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/;"; 
 						location.reload();
 					} else {
 						console.log("special treadment, new account?!");
 					}
+
 				}
+
 				linkHandler();
 			});
 
@@ -221,6 +300,7 @@
 			        	if(restObj.data.message == 'logged in') {
 			        		whoami.user = restObj.data.user;
 			        		dpt.getTopic();
+			        		dpt.getDialog();
 			        	}
 						if(restObj.data.message == 'user unknown') {
 							whoami.user = {};

@@ -160,7 +160,7 @@ match.push({
 	}
 });
 
-// creates a new socket. it also informs all online users about this event.
+// creates a new topic. it also informs all online users about this event.
 match.push({
 	path: "/topic/",
 	method: "post",
@@ -285,6 +285,20 @@ match.push({
 match.push({
 	path: "/dialog/",
 	method: "get",
+	fun: async function(data, dptUUID) {
+		console.log("get my dialogs list");
+		var user = userRegistered(dptUUID);
+		if(user) {
+			data = await dialogService.getDialog({userId: mongoose.Types.ObjectId(user.user.id)});
+			return({data: data});
+		}
+		return(data);
+	}
+});
+
+match.push({
+	path: "/dialog/"+dialogIdReg+"/",
+	method: "get",
 	fun: function() {
 		console.log("get dialogs list");
 	}
@@ -293,8 +307,13 @@ match.push({
 match.push({
 	path: "/dialog/",
 	method: "post",
-	fun: function() {
-		console.log("create a new dialog");
+	fun: async function(data, dptUUID, socket) {
+		var user = userRegistered(data.dptUUID);
+		if(user) {
+			data.body.initiator = user.user.id;
+			const ret = await dialogService.createDialog(data.body);
+			socket.emit('api', {path: '/dialog/', method: 'get'});
+		}
 	}
 });
 

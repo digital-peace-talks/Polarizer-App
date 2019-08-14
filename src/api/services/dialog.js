@@ -1,16 +1,24 @@
 const ServerError = require("../../lib/error");
+const mongoose = require("mongoose");
 const Dialog = require("../models/dialog").dialogModel;
+const Opinion = require("../models/opinion").opinionModel;
+const Topic = require("../models/topic").topicModel;
+const Lo_ = require("lodash");
+
 /**
  * @param {Object} options
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.createDialog = async options => {
-  const result = await Dialog.create(options.body);
-  return {
-    status: 200,
-    data: result,
-  };
+module.exports.createDialog = async (options) => {
+	console.log(options);
+	const opinion = await Opinion.findOne({"_id": mongoose.Types.ObjectId(options.opinion)});
+	options.recipient = opinion.user;
+	const result = await Dialog.create(options);
+	return {
+		status: 200,
+		data: result,
+	};
 };
 
 /**
@@ -19,8 +27,41 @@ module.exports.createDialog = async options => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.getDialog = async options => {
-  const result = await Dialog.find();
+module.exports.getDialog = async (options) => {
+	var result = [];
+	var worker = {};
+	worker = await Dialog.find({"initiator": options.userId}).populate('opinion');
+	for(var i = 0; i < worker.length; i++) {
+		var collection = {};
+		collection.dialog = worker[i].id;
+		collection.opinionProposition = worker[i].opinionProposition;
+		collection.recipientOpinion = worker[i].opinion.content;
+		collection.status = worker[i].status;
+		var worker2 = await Topic.findOne({ "_id": mongoose.Types.ObjectId(worker[i].opinion.topic)}).populate('opinions');
+		collection.topic = worker2.content;
+		var opinion = Lo_.find(worker2.opinions, {user: worker[i].initiator});
+		collection.initiatorOpinion = opinion.content;
+		collection.initiator = 'me';
+		result.push(collection);
+	}
+
+	worker = await Dialog.find({"recipient": options.userId}).populate('opinion');
+	for(var i = 0; i < worker.length; i++) {
+		var collection = {};
+		collection.dialog = worker[i].id;
+		collection.opinionProposition = worker[i].opinionProposition;
+		collection.recipientOpinion = worker[i].opinion.content;
+		collection.status = worker[i].status;
+		var worker2 = await Topic.findOne({ "_id": mongoose.Types.ObjectId(worker[i].opinion.topic)}).populate('opinions');
+		collection.topic = worker2.content;
+		var opinion = Lo_.find(worker2.opinions, {user: worker[i].initiator});
+		collection.initiatorOpinion = opinion.content;
+		collection.initiator = 'notme';
+		result.push(collection);
+	}
+	
+//	result = { data: result };
+
   // Implement your business logic here...
   //
   // This function should return as follows:
