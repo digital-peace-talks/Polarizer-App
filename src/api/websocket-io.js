@@ -39,7 +39,7 @@ var cookieKey		= process.env.DPT_SECRET;
 	match the path and return the return value to the caller function.
  */
 var match = require('./websocket-resolver.js')(io);
-async function apiBroker(obj, dptUUID) {
+async function apiBroker(obj, dptUUID, socket) {
 	try {
 		var ret;
 		var user = await userService.whoamiByDptUUID({body: { dptUUID: dptUUID}});
@@ -53,7 +53,7 @@ async function apiBroker(obj, dptUUID) {
 			    && obj.method == match[i].method) {
 
 			    	// call the matching function
-			        ret = await match[i].fun(obj.data, dptUUID); 
+			        ret = await match[i].fun(obj.data, dptUUID, socket); 
 
 			        // clone the data
 			        ret = JSON.parse(JSON.stringify(ret.data));
@@ -200,7 +200,7 @@ io.on('connection', function(socket) {
 	*/
 	socket.on('api', async (payload) => {
 		log.debug('sio request: '+util.inspect(payload));
-		var ret = await apiBroker(payload, socket.dptUUID);
+		var ret = await apiBroker(payload, socket.dptUUID, socket);
 		socket.emit('api', ret);
 		log.debug('answer sio request: '+util.inspect(ret));
 	});
