@@ -16,13 +16,10 @@
 		var currentTopic = 0;
 		var whoami = { dptUUID: '', user: {}};
 		jQuery(document).ready(function() {
-			var dpt = new DPT(window.location.protocol+ '//'+window.location.host);
-			var socket = dpt.socket;
-			/*
 			var socket = io.connect(window.location.protocol
-				+ '//'+window.location.host, {transports: ['websocket']});
+				+ '//' + window.location.host, {transports: ['websocket']});
+
 			var dpt = new DPT(socket);
-*/
 			var restObj = {};
 
 			// make links triggers for api calls
