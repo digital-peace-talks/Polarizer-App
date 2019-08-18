@@ -1,25 +1,41 @@
 const io = require('socket.io-client');
 const util = require('util');
-require('assert');
+var expect = require("chai").expect();
+const assert = require('assert');
+var chai = require('chai');
+var expect = chai.expect;
 
 var whoami = {};
 var socket;
 
-async function postNilsTestPath(nilsTestString) {
+function postNilsTestPath(nilsTestString) {
 
-	socket.on('api', async (payload) => {
-		console.log('sio request: '+require('util').inspect(payload));
-//		process.exit();
-//		return(1);
+	describe('request', function() {
+		it('should send string', async function() {
+			await socket.emit("api", {
+				method: 'post',
+				path: '/nilsTestPath/',
+				data: {
+					content: nilsTestString
+				}
+			});
+		});
 	});
 
-	socket.emit("api", {
-		method: 'post',
-		path: '/nilsTestPath/',
-		data: {
-			content: nilsTestString
-		}
+	describe('answer', function() {
+	    it('it should receive an anwer', function() {
+			socket.on('api', function(payload) {
+
+				// test method: standard assert
+				assert.equal(payload.data, nilsTestString.split("").reverse().join(""));
+
+				// test method: chai.expect
+				expect(payload.data).equal(nilsTestString.split("").reverse().join(""));
+				process.exit();
+			});
+		});
 	});
+
 }
 
 // in this function add your tests
@@ -29,40 +45,54 @@ async function test() {
 }
 
 async function main() {
-    socket = io.connect(
-        "ws://localhost:3100",
-        { transports: ['websocket'] }
-	);
+	describe('connect', function() {
+		it('it will connect to the server', function(done) {
+		    socket = io.connect(
+				"ws://localhost:3100",
+				{
+					transports: ['websocket'],
+					forceNew: true,
+					reconnection: false
+				}
+			);
+			done();
+		});
+	});
 	
-	socket.on('connect', () => {
-		mysocketid = socket.id;
-		socket.emit("login", {
-			method: 'post',
-			path: '/user/login/',
-			data: {
-				publicKey: "dptUUID=s%3A099f0fa3-9d96-479f-9cc3-642c54e31e3b.4TmfeSNnQUDubTDU9XTZvHoTDqUn9Q%2BCpmH%2Fg6GfZ6Y"
-			}
+	describe('send login', () => {
+		it('it will send the cookie to the server', (done) => {
+			socket.on('connect', async () => {
+				await socket.emit("login", {
+					method: 'post',
+					path: '/user/login/',
+					data: {
+						publicKey: "dptUUID=s%3A099f0fa3-9d96-479f-9cc3-642c54e31e3b.4TmfeSNnQUDubTDU9XTZvHoTDqUn9Q%2BCpmH%2Fg6GfZ6Y"
+					}
+				});
+				done();
+			});
 		});
 	});
 
-	socket.on('xapi', (payload) => {
-		console.log('sio request: '+require('util').inspect(payload));
-		return(1);
-	});
-
-	socket.on('private', function(restObj) {
-		if(restObj.method == 'post') {
-			if(restObj.path == '/info/') {
-				whoami.dptUUID = restObj.data.dptUUID;
-				if(restObj.data.message == 'logged in') {
-					whoami.user = restObj.data.user;
-					test();
+	describe('logged in', () => {
+		it('it will receive a login message', (done) => {
+			socket.on('private', function(restObj) {
+				if(restObj.method == 'post') {
+					if(restObj.path == '/info/') {
+						whoami.dptUUID = restObj.data.dptUUID;
+						if(restObj.data.message == 'logged in') {
+							whoami.user = restObj.data.user;
+							test();
+							done();
+						}
+						if(restObj.data.message == 'user unknown') {
+							whoami.user = {};
+							done();
+						}
+					}
 				}
-				if(restObj.data.message == 'user unknown') {
-					whoami.user = {};
-				}
-			}
-		}
+			});
+		});
 	});
 }
 
