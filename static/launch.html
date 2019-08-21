@@ -214,7 +214,7 @@
 
 			socket.on('private', function(restObj) {
 			    if(restObj.method == 'post') {
-			        if(restObj.path == '/info/') {
+			        if(restObj.path == '/user/login/') {
 			        	whoami.dptUUID = restObj.data.dptUUID;
 			        	if(restObj.data.message == 'logged in') {
 			        		whoami.user = restObj.data.user;

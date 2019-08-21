@@ -149,7 +149,7 @@ io.on('connection', function(socket) {
 					// log.info('updated global online (user+): '+require('util').inspect(global.dptNS.online));
 					socket.emit('private', {
 						method: 'post',
-						path: "/info/",
+						path: "/user/login/",
 						data: {
 							message: 'logged in',
 							user: user,
