@@ -101,11 +101,26 @@
 		        && restObj.method == 'get') {
 		        	dpt.getOpinionByTopic(currentTopic);
 		        }
+		        
+		        if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/'
+		        && restObj.method == 'get') {
+		        	dpt.getDialog(currentDialog.dialog);
+		        }
 			});
 
 			socket.on('api', function(restObj) {
 				if(!restObj) {
 					return;
+				}
+				
+				if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/'
+				&& restObj.method == 'get') {
+					var old = currentDialog;
+					currentDialog = restObj.data;
+					currentDialog.topic = old.topic;
+					currentDialog.initiatorOpinion = old.initiatorOpinion;
+					currentDialog.recipientOpinion = old.recipientOpinion;
+					dialogForm();
 				}
 				
 				if(restObj.path == '/dialog/list/'
@@ -376,11 +391,16 @@
 					opinion1 += "<br><br>Initiators proposition:<br>" + currentDialog.opinionProposition
 					opinion2 = currentDialog.recipientOpinion;
 				}
-				var dialog = "<p class='left'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>";
-				dialog += "<p class='right'>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>";
-				dialog += "<p class='left'>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>";
-				dialog += "<p class='right'>At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>";
-				dialog += "<p class='left'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>";
+				
+				var dialog = ""
+				for(var i=0; i < currentDialog.messages.length; i++) {
+					if(currentDialog.messages[i].sender == 'me') {
+						dialog += '<p class="right">' + currentDialog.messages[i].content + '</p>';
+					} else {
+						dialog += '<p class="left">' + currentDialog.messages[i].content + '</p>';
+					}
+				}
+
 				jQuery('#misc').append(`<div style="position: absolute; padding: 10px;
 						border: #fff; border-style: solid; border-width: 5px; background: #0a120a; margin-left: 10%; margin-right: 10%; min-height: 80%" id="dialogFrame">
 						<div class="table">
@@ -422,9 +442,6 @@
 			}
 
 
-
-
-			
 			jQuery(document).on('click', 'span.inviteToDialog', function(event) {
 				propositionForm(this.id);
 				event.stopImmediatePropagation();
@@ -442,15 +459,15 @@
 				jQuery(event.currentTarget.children[2]).css({"visibility": "hidden", "line-height": "0%"});
 				event.preventDefault();
 			});
-			
+
 			jQuery(document).on('click', '.dialog', (event) => {
 				currentDialog = jQuery(event.currentTarget).children('div.dialogInfo');
 				currentDialog = JSON.parse(currentDialog[0].textContent);
-				dialogForm();
+				dpt.getDialog(currentDialog.dialog);
+				event.stopImmediatePropagation();
 				event.preventDefault();
 			});
-			
-			
+
 			jQuery('#main').height("100%").width("100%")
 			.append('<div style="border-bottom-style: solid; border-bottom-width: 5px; border-color: #5a825a;">'
 					+'<h1 style="letter-spacing: 30px">version 0.1</h1></div><div class="row">'
@@ -461,7 +478,6 @@
  			jQuery('div.col').css({ width: "30%", "max-width": "30%"});
 			jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
 
-			
 /*
 			io('connection_timeout', function() {
 				console.log('connection_timeout');

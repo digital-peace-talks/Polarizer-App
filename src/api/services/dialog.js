@@ -23,7 +23,7 @@ module.exports.createDialog = async (options) => {
 
 
 module.exports.getDialog = async (options) => {
-	var result;
+	var result = await Dialog.findOne({"_id": mongoose.Types.ObjectId(options.body.dialogId)})
 	
 	return( {
 		status: 200,
@@ -74,25 +74,6 @@ module.exports.getDialogList = async (options) => {
 		}
 	}
 	
-//	result = { data: result };
-
-  // Implement your business logic here...
-  //
-  // This function should return as follows:
-  //
-  // return {
-  //   status: 200, // Or another success code.
-  //   data: [] // Optional. You can put whatever you want here.
-  // };
-  //
-  // If an error happens during your business logic implementation,
-  // you should throw an error as follows:
-  //
-  // throw new ServerError({
-  //   status: 500, // Or another error code.
-  //   error: 'Server Error' // Or another error message.
-  // });
-
   return {
     status: 200,
     data: result,

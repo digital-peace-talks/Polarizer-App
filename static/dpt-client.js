@@ -147,6 +147,18 @@ class DPT {
 		});
 	}
 	
+	getDialog(dialogId) {
+		this.socket.emit('api', {
+			method: 'get',
+			path: '/dialog/'+ dialogId +'/',
+			data: {
+				body: {
+					dialogId: dialogId
+				}
+			},
+		});
+	}
+	
 	postMessage(message, publicKey, dialogId) {
 		this.socket.emit('api', {
 			method: 'post',
