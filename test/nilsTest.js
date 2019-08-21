@@ -46,7 +46,8 @@ function postNilsTestPath(nilsTestString) {
 				done();
 
 				socket.disconnect();
-				console.log(payload.data);
+				console.log(' input: '+nilsTestString);
+				console.log('output: '+payload.data);
 				await sleep(100);
 				
 				// and exit the program

@@ -1,10 +1,11 @@
 const mongoose 		= require('mongoose');
 const Lo_			= require('lodash');
 
-const userService	= require('./services/user');
-const topicService	= require('./services/topic');
-const opinionService= require('./services/opinion');
-const dialogService	= require('./services/dialog');
+const userService		= require('./services/user');
+const topicService		= require('./services/topic');
+const opinionService	= require('./services/opinion');
+const dialogService		= require('./services/dialog');
+const metadataService	= require('./services/metadata');
 
 const uuidReg		= "([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})";
 const mongoReg		= "([0-9a-fA-F]{24})";
@@ -69,8 +70,12 @@ match.push({
 match.push({
 	path: "/metadata/user/"+ uuidReg +"/",
 	method: "get",
-	fun: function() {
-		console.log("get user metadata")
+	fun: async function(data, dptUUID) {
+		const user = metadataService.getUserMetadata({body: {publicKey: dptUUID}});
+		delete(user.phrase);
+		delete(user._id);
+		delete(user.__v);
+		return(user);
 	}
 });
 
@@ -233,7 +238,7 @@ match.push({
 // returns a bool value, if the user is allowed to post an opinion
 match.push({
 	path: "/opinion/postAllowed/",
-	method: "post",
+	method: "get",
 	fun: async (data, dptUUID) => {
 		var user;
 		if(user = userRegistered(dptUUID)) {
@@ -283,13 +288,13 @@ match.push({
 });
 
 match.push({
-	path: "/dialog/",
+	path: "/dialog/list/",
 	method: "get",
 	fun: async function(data, dptUUID) {
 		console.log("get my dialogs list");
 		var user = userRegistered(dptUUID);
 		if(user) {
-			data = await dialogService.getDialog({userId: mongoose.Types.ObjectId(user.user.id)});
+			data = await dialogService.getDialogList({userId: mongoose.Types.ObjectId(user.user.id)});
 			return({data: data});
 		}
 		return(data);
@@ -329,8 +334,21 @@ match.push({
 match.push({
 	path: "/dialog/"+ dialogIdReg +"/message/",
 	method: "post",
-	fun: function() {
-		console.log("create a new message");
+	fun: async function(data, dptUUID) {
+		var user = userRegistered(data.publicKey);
+		if(user) {
+			console.log("create a new message");
+			const ret = await dialogService.postMessage({
+				dialogId: data.dialogId,
+				body: {
+					content: data.message,
+					sender: user.user.id
+				}
+			});
+			return({data: ret});
+		} else {
+			return({data: {}});
+		}
 	}
 });
 

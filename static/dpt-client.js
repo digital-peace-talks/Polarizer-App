@@ -1,13 +1,22 @@
 class DPT {
+
 	constructor(socket) {
 		this.socket = socket;
-
 		return(this);
-		
 	}
 	
 	// user
 
+	getMetadataUser(publicKey) {
+		this.socket.emit("api", {
+			method: 'get',
+			path: '/metadata/user/'+publicKey+'/',
+			data: {
+				publicKey: publicKey
+			}
+		});
+	}
+	
 	userReclaim(phrase, publicKey) {
 		this.socket.emit("api", {
 			method: 'put',
@@ -79,7 +88,7 @@ class DPT {
 	
 	opinionPostAllowed(topicId) {
 		this.socket.emit('api', {
-			method: 'post',
+			method: 'get',
 			path: "/opinion/postAllowed/",
 			data: {
 				topicId: topicId
@@ -130,11 +139,23 @@ class DPT {
 		});
 	}
 	
-	getDialog() {
+	getDialogList() {
 		this.socket.emit('api', {
 			method: 'get',
-			path: '/dialog/',
+			path: '/dialog/list/',
 			data: {},
+		});
+	}
+	
+	postMessage(message, publicKey, dialogId) {
+		this.socket.emit('api', {
+			method: 'post',
+			path: '/dialog/'+dialogId+'/message/',
+			data: {
+				publicKey: publicKey,
+				message: message,
+				dialogId: dialogId
+			},
 		});
 	}
 }

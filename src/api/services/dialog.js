@@ -21,13 +21,23 @@ module.exports.createDialog = async (options) => {
 	};
 };
 
+
+module.exports.getDialog = async (options) => {
+	var result;
+	
+	return( {
+		status: 200,
+		data: result
+	});
+}
+
 /**
  * @param {Object} options
  * @param {String} options.dialogId ID of dialog to return
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.getDialog = async (options) => {
+module.exports.getDialogList = async (options) => {
 	var result = [];
 	var worker = {};
 	worker = await Dialog.find({"initiator": options.userId}).populate('opinion');
