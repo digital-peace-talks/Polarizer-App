@@ -104,6 +104,11 @@ async function main() {
 			// as a result to our login request, we get a message on channel 'private'
 			// with the some fundamental informations about the new logged in client
 			socket.on('private', function(restObj) {
+				try {
+					assert.equal(restObj.data.message, 'logged in');
+				} catch(err) {
+					console.log(err);
+				}
 				if(restObj.method == 'post') {
 					if(restObj.path == '/info/') {
 						whoami.dptUUID = restObj.data.dptUUID;
