@@ -143,13 +143,14 @@ io.on('connection', function(socket) {
 						socketid: socket.id,
 						dptUUID: dptUUID,
 						registered: true,
-						user: user
+						user: user,
+						socket: socket
 					});
 
 					// log.info('updated global online (user+): '+require('util').inspect(global.dptNS.online));
 					socket.emit('private', {
 						method: 'post',
-						path: "/info/",
+						path: "/user/login/",
 						data: {
 							message: 'logged in',
 							user: user,

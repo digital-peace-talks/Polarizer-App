@@ -10,6 +10,33 @@
 				color: #fee;
 				font-family: sans;
 			}
+			.table { 
+				min-height: 100%;
+				height: 100%;
+				min-width: 100%;
+			}
+			div.top {
+				height: 100%;
+			}
+			div.middle {
+				height: 100%;
+			}
+			div.bottom {
+				height: 100%;
+				position: center;
+				bottom: 0px;
+			}
+			p.left {
+				margin-right: 20%;
+				text-align: justify; text-justify: inter-word;
+			}
+			p.right {
+				margin-left: 20%;
+				text-align: justify-right; text-justify: inter-word;
+			}
+			div#c1 { text-align: justify; text-justify: inter-word; width: 19%; float: left; }
+			div#c2 { width: 56%; float: left; }
+			div#c3 { text-align: justify; text-justify: inter-word; width: 19%; float: left; }
 		</style>
 	</head>
 	<body>
@@ -21,150 +48,38 @@
 	<script src="dpt-client.js"></script>
 	<script>
 
-		var currentTopic = 0;
-		var whoami = { dptUUID: '', user: {}};
 		jQuery(document).ready(function() {
 			var socket = io.connect(window.location.protocol
 				+ '//' + window.location.host, {transports: ['websocket']});
 
 			var dpt = new DPT(socket);
 			var restObj = {};
-
-			// make links triggers for api calls
-			function linkHandler() {
-
-				// first and foremost, we need to remove all old event hooks
-				jQuery("a.opinionlist").off("click");
-
-				// and then implement the new ones
-				jQuery("a.opinionlist").click(function( event ) {
-					event.preventDefault();
-					dpt.getOpinionByTopic(this.id);
-					// the clicked link sets the new current topic.
-					currentTopic = this.id;
-					return(false);
-				});
-
-			}
+			var currentTopic = 0;
+			var currentDialog;
+			var whoami = { dptUUID: '', user: {}};
 			
-			function phraseForm(dptUUID) {
-				jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
-						+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="phrase">'
-						+'This device seems not registered, yet.<br>'
-						+'Please enter your phrase:<br><form id="phrase">'
-						+'<input type="text" name="phrase" size="50" class="phrase"></form></div>');
-
-				jQuery(".phrase").focus();
-
-				jQuery("#phrase").submit(function(event) {
-					dpt.userReclaim(jQuery('.phrase').val(), dptUUID);
-					jQuery('.phrase').val('');
-					event.preventDefault();
-				});
-			}
 			
-			function propositionForm(opinionId) {
-				jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
-						+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">'
-						+'Please enter your proposition:<br><form id="proposition">'
-						+'<input type="text" name="proposition" size="50" class="proposition">'
-						+'<input type="hidden" id="opinionId" name="opinionId" value="'+opinionId+'"</form></div>');
-
-				jQuery(".proposition").focus();
-				
-				jQuery(document).on('submit', 'form#proposition', function(event) {
-					event.stopImmediatePropagation();
-					var proposition = jQuery('.proposition').val();
-					var opinionId = jQuery('#opinionId').val();
-					if(proposition) {
-						dpt.postDialog(proposition, whoami.dptUUID, opinionId);
-					}
-					jQuery('.proposition').val('');
-					jQuery('#misc').empty();
-					event.preventDefault();
-					return(0);
-				});
-			}
-
-
-			jQuery(document).on('click', 'span.inviteToDialog', function(event) {
-				propositionForm(this.id);
-				event.stopImmediatePropagation();
-				event.preventDefault();
-			});
-
-
-			jQuery(document).on("submit", "form.newTopic", function(event) {
-				dpt.putTopic(this[0].value, this.parentNode.nextElementSibling.id);
-				event.stopImmediatePropagation();
-				event.preventDefault();
-			});
-
-			function topicEdit() {
-				jQuery('.editTopic').click(function(event) {
-					jQuery(this).prev('a').html(
-							'<form class="newTopic">'
-							+ '<input type="text" value="'
-							+  this.previousElementSibling.innerText
-							+ '" name="newTopic">'
-							+'</form>'
-					);
-					event.preventDefault();
-				});
-			}
-			
-			function topicForm() {
-				jQuery('div.col.left').append(
-					'<br><hr style="border-color: #5a825a; border-style: solid;">Your topic:<br><form id="newTopic">'
-					+'<input class="anewtopic" type=text size=50 name="newTopic"></form>'
-				);
-				jQuery("#newTopic").submit(function(event) {
-					dpt.postTopic(jQuery('.anewtopic').val());
-					jQuery('.anewtopic').val('');
-					event.preventDefault();
-				});
-			}
-
-			function opinionForm() {
-				jQuery('div.col.mid').append(
-					'<br><hr style="border-color: #5a825a; border-style: solid;">Your opinion:<br><form id="newOpinion">'
-					+'<input class="anewopinion" type=text size=50 name="newOpinion"></form>'
-				);
-				jQuery("#newOpinion").submit(function(event) {
-					event.preventDefault();
-					dpt.postOpinion(currentTopic, jQuery('.anewopinion').val());
-					jQuery('.anewopinion').val('');
-					event.preventDefault();
-				});
-			}
-
-			jQuery('#main').height("100%").width("100%")
-			.append('<div style="border-bottom-style: solid; border-bottom-width: 5px; border-color: #5a825a;">'
-					+'<h1 style="letter-spacing: 30px">version 0.1</h1></div><div class="row">'
-					+'<div class="col left"><h2>Topics</h2></div>'
-					+'<div class="col mid"><h2>Opinions</h2></div>'
-					+'<div class="col right"><h2>Dialogs</h2></div></div>');
-			jQuery('div.col').css({float: "left", 'padding-left': "20px", height: "100%", 'overflow-y': "auto"});
- 			jQuery('div.col').css({ width: "30%", "max-width": "30%"});
-			jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
+			// Handle the incomming websocket trafic
 
 			socket.on('connect', () => {
-				// if needed, we can keep socket.id somewhere
+				// if needed, we could keep socket.id somewhere
 				if(document.cookie) {
 					dpt.userLogin(document.cookie);
 				}
 			});
 				
+			// will be obsolete soon
 			socket.on('kanal', function(msg) {
 				jQuery('#messages').append(jQuery('<li>').text(msg.username +": "+msg.message));
 				window.scrollTo(0, document.body.scrollHeight);
 			});
 
+			// server says it has some updates for client
 			socket.on('update', function(restObj){
 
 			    if(restObj.method == 'post') {
+			    	
 			        if(restObj.path == '/info/') {
-
 						jQuery('#messages')
 						.append(jQuery('<li>')
 						.text(restObj.data.message));
@@ -177,8 +92,8 @@
 		        	dpt.getTopic();
 		        }
 
-		        if(restObj.path == '/dialog/' && restObj.method == 'get') {
-		        	dpt.getDialog();
+		        if(restObj.path == '/dialog/list/' && restObj.method == 'get') {
+		        	dpt.getDialogList();
 		        }
 
 		        if(restObj.path.startsWith('/opinion/')
@@ -186,44 +101,29 @@
 		        && restObj.method == 'get') {
 		        	dpt.getOpinionByTopic(currentTopic);
 		        }
-			});
-			
-			jQuery(document).on("submit", "form.newOpinion", function(event) {
-				dpt.putOpinion(whoami.dptUUID, this.parentNode.nextElementSibling.id, currentTopic, this[0].value);
-				event.preventDefault();
-			});
-
-			function opinionEdit() {
-				jQuery('.editOpinion').click(function(event) {
-					jQuery(this).prev('span').html(
-							'<form class="newOpinion">'
-							+ '<input type="text" value="'
-							+  this.previousElementSibling.innerText
-							+ '" name="newOpinion">'
-							+'</form>'
-					);
-					event.preventDefault();
-				});
-			}
-
-			jQuery(document).on('mouseover', '.dialog', (event) => {
-				jQuery(event.currentTarget).css({"background-color": "#1a221a"});
-				jQuery(event.currentTarget.children[2]).css({"visibility": "visible", "line-height": "100%"});
-				event.preventDefault();
+		        
+		        if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/'
+		        && restObj.method == 'get') {
+		        	dpt.getDialog(currentDialog.dialog);
+		        }
 			});
 
-			jQuery(document).on('mouseout', '.dialog', (event) => {
-				jQuery(event.currentTarget).css({"background-color": "#0a120a"});
-				jQuery(event.currentTarget.children[2]).css({"visibility": "hidden", "line-height": "0%"});
-				event.preventDefault();
-			});
-			
 			socket.on('api', function(restObj) {
 				if(!restObj) {
 					return;
 				}
 				
-				if(restObj.path == '/dialog/'
+				if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/'
+				&& restObj.method == 'get') {
+					var old = currentDialog;
+					currentDialog = restObj.data;
+					currentDialog.topic = old.topic;
+					currentDialog.initiatorOpinion = old.initiatorOpinion;
+					currentDialog.recipientOpinion = old.recipientOpinion;
+					dialogForm();
+				}
+				
+				if(restObj.path == '/dialog/list/'
 				&& restObj.method == 'get') {
 					console.log(restObj.data);
 					var dialog = '';
@@ -242,6 +142,7 @@
 							dialog += "<i>initiator:</i> other ";
 						}
 						dialog += "<i>status:</i> "+dialogs[i].status+"</div>";
+						dialog += `<div class="dialogInfo" style="visibility: hidden; line-height: 0px; font-size: 0px;">${JSON.stringify(dialogs[i])}</div>`;
 						jQuery('div.col.right').append(dialog+"<br></div>");
 						jQuery('.hide').css({"visibility": "hidden", "line-height": "0%"});
 					}
@@ -318,18 +219,23 @@
 					}
 
 				}
-
+				
+				if(restObj.path == '/metadata/user/'+whoami.dptUUID+'/') {
+					whoami.user = restObj.data;
+					console.log('whoami.user: '+whoami.user);
+				}
 				linkHandler();
 			});
 
 			socket.on('private', function(restObj) {
 			    if(restObj.method == 'post') {
-			        if(restObj.path == '/info/') {
+			        if(restObj.path == '/user/login/') {
 			        	whoami.dptUUID = restObj.data.dptUUID;
 			        	if(restObj.data.message == 'logged in') {
 			        		whoami.user = restObj.data.user;
+			        		dpt.getMetadataUser(whoami.dptUUID);
 			        		dpt.getTopic();
-			        		dpt.getDialog();
+			        		dpt.getDialogList();
 			        	}
 						if(restObj.data.message == 'user unknown') {
 							whoami.user = {};
@@ -347,11 +253,230 @@
 				window.location.reload(true);
 			});
 
-			jQuery('form').submit(function(){
-				socket.emit('kanal', jQuery('#m').val());
-				jQuery('#m').val('');
-				return false;
+
+			// make links triggers for api calls
+			function linkHandler() {
+
+				// first and foremost, we need to remove all old event hooks
+				jQuery("a.opinionlist").off("click");
+
+				// and then implement the new ones
+				jQuery("a.opinionlist").click(function( event ) {
+					event.preventDefault();
+					dpt.getOpinionByTopic(this.id);
+					// the clicked link sets the new current topic.
+					currentTopic = this.id;
+					return(false);
+				});
+
+			}
+			
+			function phraseForm(dptUUID) {
+				jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
+						+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="phrase">'
+						+'This device seems not registered, yet.<br>'
+						+'Please enter your phrase:<br><form id="phrase">'
+						+'<input type="text" name="phrase" size="50" class="phrase"></form></div>');
+
+				jQuery(".phrase").focus();
+
+				jQuery("#phrase").submit(function(event) {
+					dpt.userReclaim(jQuery('.phrase').val(), dptUUID);
+					jQuery('#misc').empty();
+					event.preventDefault();
+				});
+			}
+			
+			function propositionForm(opinionId) {
+				jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
+						+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">'
+						+'Please enter your proposition:<br><form id="proposition">'
+						+'<input type="text" name="proposition" size="50" class="proposition">'
+						+'<input type="hidden" id="opinionId" name="opinionId" value="'+opinionId+'"</form></div>');
+
+				jQuery(".proposition").focus();
+				
+				jQuery(document).one('keyup', '#proposition', function(event) {
+				    if (event.keyCode == 27) {
+						jQuery('#misc').empty();
+						event.preventDefault();
+				    }
+				});
+				jQuery(document).on('submit', 'form#proposition', function(event) {
+					event.stopImmediatePropagation();
+					var proposition = jQuery('.proposition').val();
+					var opinionId = jQuery('#opinionId').val();
+					if(proposition) {
+						dpt.postDialog(proposition, whoami.dptUUID, opinionId);
+					}
+					jQuery('.proposition').val('');
+					jQuery('#misc').empty();
+					event.preventDefault();
+					return(0);
+				});
+			}
+
+			function topicForm() {
+				jQuery('div.col.left').append(
+					'<br><hr style="border-color: #5a825a; border-style: solid;">Your topic:<br><form id="newTopic">'
+					+'<input class="anewtopic" type=text size=50 name="newTopic"></form>'
+				);
+				jQuery("#newTopic").submit(function(event) {
+					dpt.postTopic(jQuery('.anewtopic').val());
+					jQuery('.anewtopic').val('');
+					event.preventDefault();
+				});
+			}
+
+			function opinionForm() {
+				jQuery('div.col.mid').append(
+					'<br><hr style="border-color: #5a825a; border-style: solid;">Your opinion:<br><form id="newOpinion">'
+					+'<input class="anewopinion" type=text size=50 name="newOpinion"></form>'
+				);
+				jQuery("#newOpinion").submit(function(event) {
+					dpt.postOpinion(currentTopic, jQuery('.anewopinion').val());
+					jQuery('.anewopinion').val('');
+					event.preventDefault();
+				});
+			}
+
+
+			function topicEdit() {
+				jQuery('.editTopic').click(function(event) {
+					jQuery(this).prev('a').html(
+							'<form class="newTopic">'
+							+ '<input type="text" value="'
+							+  this.previousElementSibling.innerText
+							+ '" name="newTopic">'
+							+'</form>'
+					);
+					event.preventDefault();
+				});
+				jQuery(document).one("submit", "form.newTopic", function(event) {
+					dpt.putTopic(this[0].value, this.parentNode.nextElementSibling.id);
+					event.stopImmediatePropagation();
+					event.preventDefault();
+				});
+			}
+
+			function opinionEdit() {
+				jQuery('.editOpinion').click(function(event) {
+					jQuery(this).prev('span').html(
+							'<form class="editOpinion">'
+							+ '<input type="text" value="'
+							+  this.previousElementSibling.innerText
+							+ '" name="newOpinion">'
+							+'</form>'
+					);
+					event.preventDefault();
+				});
+				jQuery(document).one("submit", "form.editOpinion", function(event) {
+					dpt.putOpinion(whoami.dptUUID, this.parentNode.nextElementSibling.id, currentTopic, this[0].value);
+					event.preventDefault();
+				});
+
+			}
+			
+			function dialogForm() {
+
+				var opinion1;
+				var opinion2;
+
+				if(currentDialog.initiator == 'me') {
+					opinion1 = currentDialog.recipientOpinion;
+					opinion2 = currentDialog.initiatorOpinion;
+					opinion2 += "<br><br>Initiators proposition:<br>" + currentDialog.opinionProposition
+				} else {
+					opinion1 = currentDialog.initiatorOpinion;
+					opinion1 += "<br><br>Initiators proposition:<br>" + currentDialog.opinionProposition
+					opinion2 = currentDialog.recipientOpinion;
+				}
+				
+				var dialog = ""
+				for(var i=0; i < currentDialog.messages.length; i++) {
+					if(currentDialog.messages[i].sender == 'me') {
+						dialog += '<p class="right">' + currentDialog.messages[i].content + '</p>';
+					} else {
+						dialog += '<p class="left">' + currentDialog.messages[i].content + '</p>';
+					}
+				}
+
+				jQuery('#misc').append(`<div style="position: absolute; padding: 10px;
+						border: #fff; border-style: solid; border-width: 5px; background: #0a120a; margin-left: 10%; margin-right: 10%; min-height: 80%" id="dialogFrame">
+						<div class="table">
+						<div class="top">
+						<center>
+							<h3>${currentDialog.topic}</h3>
+						</center>
+						</div>
+						<div class="middle">
+						<div style="text-align: justify; text-justify: inter-word;" id="c1">Others opinion:<br>${opinion1}</div>
+						<div style="padding-left: 30px; padding-right: 30px;" id="c2">${dialog}</div>
+						<div style="text-align:justify; text-justify:inter-word;" id="c3">My opinion:<br>${opinion2}</div>
+						</div>
+					   <div class="bottom">
+					   <div style="bottom: 10px; position: absolute; min-width: 98%">
+							<center>
+							<form id="dialogFrame">
+							<input type="text" name="message" size="120" id="dialogInput">
+							</form>
+					   		</center>
+					   </div>
+					   </div>
+					   </div>
+				`);
+				jQuery(document).one('submit', '#dialogFrame', function(event) {
+					event.stopImmediatePropagation();
+					event.preventDefault();
+					var message = this[0].value;
+					dpt.postMessage(message, whoami.dptUUID, currentDialog.dialog);
+				});
+				jQuery("#dialogFrame").css({"background-color": "rgba(10,24,10, 0.9)"});
+				jQuery("#dialogInput").focus();
+				jQuery(document).on('keyup', '#dialogInput', function(event) {
+				    if (event.keyCode == 27) {
+						jQuery('#misc').empty();
+						event.preventDefault();
+				    }
+				});
+			}
+
+
+			jQuery(document).on('click', 'span.inviteToDialog', function(event) {
+				propositionForm(this.id);
+				event.stopImmediatePropagation();
+				event.preventDefault();
 			});
+
+			jQuery(document).on('mouseover', '.dialog', (event) => {
+				jQuery(event.currentTarget).css({"background-color": "#1a221a"});
+				jQuery(event.currentTarget.children[2]).css({"visibility": "visible", "line-height": "100%"});
+				event.preventDefault();
+			});
+
+			jQuery(document).on('mouseout', '.dialog', (event) => {
+				jQuery(event.currentTarget).css({"background-color": "#0a120a"});
+				jQuery(event.currentTarget.children[2]).css({"visibility": "hidden", "line-height": "0%"});
+				event.preventDefault();
+			});
+
+			jQuery(document).on('click', '.dialog', (event) => {
+				currentDialog = jQuery(event.currentTarget).children('div.dialogInfo');
+				currentDialog = JSON.parse(currentDialog[0].textContent);
+				dpt.getDialog(currentDialog.dialog);
+				event.stopImmediatePropagation();
+				event.preventDefault();
+			});
+
+			jQuery('#main').height("100%").width("100%")
+			.append('<div style="border-bottom-style: solid; border-bottom-width: 5px; border-color: #5a825a;">'
+					+'<h1 style="letter-spacing: 30px">version 0.1</h1></div><div class="row">'
+					+'<div class="col left"><h2>Topics</h2></div>'
+					+'<div class="col mid"><h2>Opinions</h2></div>'
+					+'<div class="col right"><h2>Dialogs</h2></div></div>');
+			jQuery('div.col').css({float: "left", 'padding-left': "20px", height: "100%", 'overflow-y': "auto"});
+ 			jQuery('div.col').css({ width: "30%", "max-width": "30%"});
+			jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
 
 /*
 			io('connection_timeout', function() {
