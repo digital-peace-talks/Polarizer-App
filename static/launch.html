@@ -27,12 +27,18 @@
 				bottom: 0px;
 			}
 			p.left {
+				margin: 1px;
 				margin-right: 20%;
+				padding: 5px;
 				text-align: justify; text-justify: inter-word;
+				background-color: rgba(0,127,63,.5);
 			}
 			p.right {
+				margin: 1px;
 				margin-left: 20%;
+				padding: 5px;
 				text-align: justify-right; text-justify: inter-word;
+				background-color: rgba(0,63,127,.5);
 			}
 			div#c1 { text-align: justify; text-justify: inter-word; width: 19%; float: left; }
 			div#c2 { width: 56%; float: left; }
@@ -430,15 +436,16 @@
 					event.preventDefault();
 					var message = this[0].value;
 					dpt.postMessage(message, whoami.dptUUID, currentDialog.dialog);
+					jQuery("#dialogInput").focus();
 				});
 				jQuery("#dialogFrame").css({"background-color": "rgba(10,24,10, 0.9)"});
-				jQuery("#dialogInput").focus();
 				jQuery(document).on('keyup', '#dialogInput', function(event) {
 				    if (event.keyCode == 27) {
 						jQuery('#misc').empty();
 						event.preventDefault();
 				    }
 				});
+				jQuery("#dialogInput").focus();
 			}
 
 
