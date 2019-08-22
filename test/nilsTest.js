@@ -111,7 +111,7 @@ async function main() {
 					console.log(err);
 				}
 				if(restObj.method == 'post') {
-					if(restObj.path == '/info/') {
+					if(restObj.path == '/user/login/') {
 						whoami.dptUUID = restObj.data.dptUUID;
 						
 						// here we go, we are logged in
@@ -120,16 +120,14 @@ async function main() {
 							
 							// and we can start our api test
 							postNilsTestPath("reit nie ein tier");
-
-							done();
 						}
 
 						if(restObj.data.message == 'user unknown') {
 							whoami.user = {};
-							done();
 						}
 					}
 				}
+				done();
 			});
 		});
 	});
