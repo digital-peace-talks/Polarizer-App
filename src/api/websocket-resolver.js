@@ -360,8 +360,9 @@ match.push({
 match.push({
 	path: "/dialog/"+ dialogIdReg +"/",
 	method: "put",
-	fun: function() {
+	fun: async function(data, dptUUID, socket) {
 		console.log("update a dialog")
+		dialogService.updateDialog(data);
 	}
 });
 

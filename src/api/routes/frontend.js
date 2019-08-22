@@ -98,6 +98,15 @@ router.get('/dpt-client.js', async (req, res, next) => {
 	}
 });
 
+router.get('/launch.js', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/launch.js');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
 //Deliver the dialog page
 router.get('/launch', async (req, res, next) => {
 	try {

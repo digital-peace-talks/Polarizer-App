@@ -159,6 +159,20 @@ class DPT {
 		});
 	}
 	
+	putDialog(dialogId, key, value) {
+		var obj = {
+				method: 'put',
+				path: '/dialog/'+ dialogId +'/',
+				data: {
+					dialogId: dialogId,
+					body: {
+					}
+				}
+		};
+		obj.data.body[key] = value;
+		this.socket.emit('api', obj);
+	}
+	
 	postMessage(message, publicKey, dialogId) {
 		this.socket.emit('api', {
 			method: 'post',
