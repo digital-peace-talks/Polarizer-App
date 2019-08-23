@@ -51,7 +51,7 @@ router.get('/', async (req, res, next) => {
 			+ '<form method="post" action="/recover"><input type=text name=phraseinput>'
 			+ '<input type="hidden" name="phrase" value="'+phrase+'"></form>');
 		} else {
-			res.send('homepage<br><a href=/launch>start dpt protype</a><br><a href=/dialog>start the chat</a>');
+			res.send('homepage<br><a href=/launch>start dpt protype</a><br><a href=/dialog>start the chat</a><br><a href=/babylon.html>babylon sample</a>');
 		}
 		res.status(200);
 	} catch(err) {
