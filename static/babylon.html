@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>DPT 3d view</title>
+
+    <!-- Babylon.js -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+    <script src="https://preview.babylonjs.com/gltf_validator.js"></script>
+    <script src="https://preview.babylonjs.com/earcut.min.js"></script>
+    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+    <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+    <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="dpt-client.js"></script>
+
+    <style>
+        html,
+        body {
+            overflow:auto;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #renderCanvas {
+            width: 100%;
+            height: 90%;
+            touch-action: none;
+        }
+    </style>
+</head>
+
+<body>
+
+        <canvas id="renderCanvas"></canvas>
+    
+    <div id="main"></div>
+	<div id="misc"></div>
+    
+
+
+
+
+<script>
+
+var currentTopic = 0;
+var whoami = { dptUUID: '', user: {}};
+jQuery(document).ready(function() {
+    var socket = io.connect(window.location.protocol
+        + '//' + window.location.host, {transports: ['websocket']});
+
+    var dpt = new DPT(socket);
+    var restObj = {};
+
+    // make links triggers for api calls
+    function linkHandler() {
+
+        // first and foremost, we need to remove all old event hooks
+        jQuery("a.opinionlist").off("click");
+
+        // and then implement the new ones
+        jQuery("a.opinionlist").click(function( event ) {
+            event.preventDefault();
+            dpt.getOpinionByTopic(this.id);
+            // the clicked link sets the new current topic.
+            currentTopic = this.id;
+            return(false);
+        });
+
+    }
+    
+    function phraseForm(dptUUID) {
+        jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
+                +'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="phrase">'
+                +'This device seems not registered, yet.<br>'
+                +'Please enter your phrase:<br><form id="phrase">'
+                +'<input type="text" name="phrase" size="50" class="phrase"></form></div>');
+
+        jQuery(".phrase").focus();
+
+        jQuery("#phrase").submit(function(event) {
+            dpt.userReclaim(jQuery('.phrase').val(), dptUUID);
+            jQuery('.phrase').val('');
+            event.preventDefault();
+        });
+    }
+    
+    function propositionForm(opinionId) {
+        jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
+                +'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">'
+                +'Please enter your proposition:<br><form id="proposition">'
+                +'<input type="text" name="proposition" size="50" class="proposition">'
+                +'<input type="hidden" id="opinionId" name="opinionId" value="'+opinionId+'"</form></div>');
+
+        jQuery(".proposition").focus();
+        
+        jQuery(document).on('submit', 'form#proposition', function(event) {
+            event.stopImmediatePropagation();
+            var proposition = jQuery('.proposition').val();
+            var opinionId = jQuery('#opinionId').val();
+            if(proposition) {
+                dpt.postDialog(proposition, whoami.dptUUID, opinionId);
+            }
+            jQuery('.proposition').val('');
+            jQuery('#misc').empty();
+            event.preventDefault();
+            return(0);
+        });
+    }
+
+
+    jQuery(document).on('click', 'span.inviteToDialog', function(event) {
+        propositionForm(this.id);
+        event.stopImmediatePropagation();
+        event.preventDefault();
+    });
+
+
+    jQuery(document).on("submit", "form.newTopic", function(event) {
+        dpt.putTopic(this[0].value, this.parentNode.nextElementSibling.id);
+        event.stopImmediatePropagation();
+        event.preventDefault();
+    });
+
+    function topicEdit() {
+        jQuery('.editTopic').click(function(event) {
+            jQuery(this).prev('a').html(
+                    '<form class="newTopic">'
+                    + '<input type="text" value="'
+                    +  this.previousElementSibling.innerText
+                    + '" name="newTopic">'
+                    +'</form>'
+            );
+            event.preventDefault();
+        });
+    }
+    
+    function topicForm() {
+        jQuery('div.col.left').append(
+            '<br><hr style="border-color: #5a825a; border-style: solid;">Your topic:<br><form id="newTopic">'
+            +'<input class="anewtopic" type=text size=50 name="newTopic"></form>'
+        );
+        jQuery("#newTopic").submit(function(event) {
+            dpt.postTopic(jQuery('.anewtopic').val());
+            jQuery('.anewtopic').val('');
+            event.preventDefault();
+        });
+    }
+
+    function opinionForm() {
+        jQuery('div.col.mid').append(
+            '<br><hr style="border-color: #5a825a; border-style: solid;">Your opinion:<br><form id="newOpinion">'
+            +'<input class="anewopinion" type=text size=50 name="newOpinion"></form>'
+        );
+        jQuery("#newOpinion").submit(function(event) {
+            event.preventDefault();
+            dpt.postOpinion(currentTopic, jQuery('.anewopinion').val());
+            jQuery('.anewopinion').val('');
+            event.preventDefault();
+        });
+    }
+
+    jQuery('#main').height("100%").width("100%")
+    .append('<div style="border-bottom-style: solid; border-bottom-width: 5px; border-color: #5a825a;">'
+            +'<h1 style="letter-spacing: 30px">version 0.1</h1></div><div class="row">'
+            +'<div class="col left"><h2>Topics</h2></div>'
+            +'<div class="col mid"><h2>Opinions</h2></div>'
+            +'<div class="col right"><h2>Dialogs</h2></div></div>');
+    jQuery('div.col').css({float: "left", 'padding-left': "20px", height: "100%", 'overflow-y': "auto"});
+     jQuery('div.col').css({ width: "30%", "max-width": "30%"});
+    jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
+
+    socket.on('connect', () => {
+        // if needed, we can keep socket.id somewhere
+        if(document.cookie) {
+            dpt.userLogin(document.cookie);
+        }
+    });
+        
+    socket.on('kanal', function(msg) {
+        jQuery('#messages').append(jQuery('<li>').text(msg.username +": "+msg.message));
+        window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    socket.on('update', function(restObj){
+
+        if(restObj.method == 'post') {
+            if(restObj.path == '/info/') {
+
+                jQuery('#messages')
+                .append(jQuery('<li>')
+                .text(restObj.data.message));
+
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+        }
+
+        if(restObj.path == '/topic/' && restObj.method == 'get') {
+            dpt.getTopic();
+        }
+
+        if(restObj.path == '/dialog/' && restObj.method == 'get') {
+            dpt.getDialog();
+        }
+
+        if(restObj.path.startsWith('/opinion/')
+        && restObj.data.id == currentTopic
+        && restObj.method == 'get') {
+            dpt.getOpinionByTopic(currentTopic);
+        }
+    });
+    
+    jQuery(document).on("submit", "form.newOpinion", function(event) {
+        dpt.putOpinion(whoami.dptUUID, this.parentNode.nextElementSibling.id, currentTopic, this[0].value);
+        event.preventDefault();
+    });
+
+    function opinionEdit() {
+        jQuery('.editOpinion').click(function(event) {
+            jQuery(this).prev('span').html(
+                    '<form class="newOpinion">'
+                    + '<input type="text" value="'
+                    +  this.previousElementSibling.innerText
+                    + '" name="newOpinion">'
+                    +'</form>'
+            );
+            event.preventDefault();
+        });
+    }
+
+    jQuery(document).on('mouseover', '.dialog', (event) => {
+        jQuery(event.currentTarget).css({"background-color": "#1a221a"});
+        jQuery(event.currentTarget.children[2]).css({"visibility": "visible", "line-height": "100%"});
+        event.preventDefault();
+    });
+
+    jQuery(document).on('mouseout', '.dialog', (event) => {
+        jQuery(event.currentTarget).css({"background-color": "#0a120a"});
+        jQuery(event.currentTarget.children[2]).css({"visibility": "hidden", "line-height": "0%"});
+        event.preventDefault();
+    });
+    
+    socket.on('api', function(restObj) {
+        if(!restObj) {
+            return;
+        }
+        
+        if(restObj.path == '/dialog/'
+        && restObj.method == 'get') {
+            console.log(restObj.data);
+            var dialog = '';
+            var dialogs = restObj.data.data;
+            jQuery('div.col.right').html('<h2>Dialogs</h2>');
+            for(var i=0; i < dialogs.length; i++) {
+                dialog = '<div class="dialog"><i>proposition:</i> '+dialogs[i].opinionProposition+"<br>";
+                dialog += '<div class="hide"><i>topic:</i> '+dialogs[i].topic+"<br>";
+                if(dialogs[i].initiator == 'me') {
+                    dialog += "<i>my opinion:</i> "+dialogs[i].initiatorOpinion+"<br>";
+                    dialog += "<i>other's opinion:</i> "+dialogs[i].recipientOpinion+"<br>";
+                    dialog += "<i>initiator:</i> me ";
+                } else {
+                    dialog += "<i>my opinion:</i> "+dialogs[i].recipientOpinion+"<br>";
+                    dialog += "<i>other's opinion:</i> "+dialogs[i].initiatorOpinion+"<br>";
+                    dialog += "<i>initiator:</i> other ";
+                }
+                dialog += "<i>status:</i> "+dialogs[i].status+"</div>";
+                jQuery('div.col.right').append(dialog+"<br></div>");
+                jQuery('.hide').css({"visibility": "hidden", "line-height": "0%"});
+            }
+        }
+                
+
+        if(restObj.path == '/topic/') {
+            jQuery('div.col.left').html('<h2>Topics</h2>');
+            var i;
+            var options = '';
+            for (i in restObj.data) {
+                if(restObj.data[i].user == 'mine') {
+                    options = '<span class="editTopic" id="'
+                            + restObj.data[i]._id
+                            + '">&#128393;</span>';
+                } else {
+                    options = '';
+                }
+                jQuery('div.col.left').append(
+                    '<li> <a class="opinionlist" id="'
+                    +restObj.data[i]._id
+                    +'" href="#">'
+                    +restObj.data[i].content
+                    +"</a>"+options+"</li><br>");
+            }
+            topicEdit();
+            topicForm();
+
+        } else if(restObj.path.startsWith("/opinion/"+currentTopic+"/")) {
+
+            var i;
+            var options = '';
+
+            jQuery('div.col.mid').html('<h2>Opinions</h2>');
+
+            for (i in restObj.data) {
+
+                if(restObj.data[i].user == 'mine') {
+                    options = '<span class="editOpinion" id="'
+                    + restObj.data[i]._id
+                    + '">&#128393;</span>';
+                } else {
+                    options = '<span class="inviteToDialog" id="'
+                    + restObj.data[i]._id
+                    + '">'
+                    + '&#128172;'
+                    + '</span>';
+                }
+
+                jQuery('div.col.mid')
+                .append('<li><span class="text">'
+                +restObj.data[i].content
+                    + "</span> " +options+ "</li><br>");
+            }
+
+            if(restObj.data.length > 0) {
+                dpt.opinionPostAllowed(restObj.data[0].topic);
+            } else {
+                opinionForm();
+            }
+            opinionEdit();
+
+        } else if(restObj.path == '/opinion/postAllowed/' && restObj.data.value == true) {
+
+            opinionForm();
+
+        } else if(restObj.path == '/user/reclaim/'+ whoami.dptUUID +'/') {
+
+            if(restObj.data.newCookie) {
+                document.cookie = "dptUUID="+restObj.data.newCookie+"; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/;"; 
+                location.reload();
+            } else {
+                console.log("special treadment, new account?!");
+            }
+
+        }
+
+        linkHandler();
+    });
+
+    socket.on('private', function(restObj) {
+        if(restObj.method == 'post') {
+            if(restObj.path == '/info/') {
+                whoami.dptUUID = restObj.data.dptUUID;
+                if(restObj.data.message == 'logged in') {
+                    whoami.user = restObj.data.user;
+                    dpt.getTopic();
+                    dpt.getDialog();
+                }
+                if(restObj.data.message == 'user unknown') {
+                    whoami.user = {};
+                    phraseForm(restObj.data.dptUUID);
+                } else {
+                    jQuery('#messages').append(jQuery('<li>').text(restObj.data.message));
+                    window.scrollTo(0, document.body.scrollHeight);
+                }
+            }
+        }
+    });
+    socket.on('error', function (e) {
+        console.log('System', e ? e : 'A unknown error occurred');
+        document.location.reload(true);
+        window.location.reload(true);
+    });
+
+    jQuery('form').submit(function(){
+        socket.emit('kanal', jQuery('#m').val());
+        jQuery('#m').val('');
+        return false;
+    });
+
+/*
+    io('connection_timeout', function() {
+        console.log('connection_timeout');
+    });
+    io('connection_error', function(e) {
+        console.log('connection_error', e ? e : 'A unknown error occurred');
+    });
+    io('reconnect_error', function(e) {
+        console.log('reconnect_error', e ? e : 'A unknown error occurred');
+    });
+    io('reconnect_attempt', function(n) {
+        console.log('reconnect attempt: '+n);
+    });
+    io('reconnect_failed', function() {
+        console.log('reconnect failed');
+    });
+    io('reconnect', function() {
+        console.log('successful reconnected');
+    });
+    io('reconnect', function(n) {
+        console.log('try to reconnect '+n);
+    });
+*/
+});
+
+
+
+
+
+
+
+
+
+        var lastX = 0;
+        var lastY = 0;
+        var xxx = 0;
+        // array-länge ergibt anzahl der topics
+        var opinionanzahl = [0, 1, 2, 3, 4, 5, 6, 7, 8];//, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+
+        var canvas = document.getElementById("renderCanvas");
+
+        var createScene = function () {
+            // Szene
+            var scene = new BABYLON.Scene(engine);
+            // scene.ambientColor = new BABYLON.Color3(1, 1, 1);
+
+            // Skybox
+            var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", { size: 1000.0 }, scene);
+            var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+            var skyboxfiles = [
+                "textures/space2_left.jpg",
+                "textures/space2_up.jpg",
+                "textures/space2_front.jpg",
+                "textures/space2_right.jpg",
+                "textures/space2_down.jpg",
+                "textures/space2_back.jpg",];
+            skyboxMaterial.backFaceCulling = false;
+            skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture.CreateFromImages(skyboxfiles, scene);
+            skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+            skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
+            skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+            skybox.material = skyboxMaterial;
+
+            // Kamera
+
+            var camera = new BABYLON.ArcRotateCamera("cam", -Math.PI / 2, Math.PI / 2, 50, BABYLON.Vector3.Zero());
+            camera.wheelDeltaPercentage = 0.01;
+            camera.attachControl(canvas, true);
+            camera.lowerRadiusLimit = 2;
+            camera.upperRadiusLimit = 120;
+
+            // Parameters: name, position, scene
+            /*
+var camera = new BABYLON.FollowCamera("FollowCam", new BABYLON.Vector3(0,0,-300), scene);
+
+// The goal distance of camera from target
+camera.radius = 30;
+
+// The goal height of camera above local origin (centre) of target
+camera.heightOffset = 10;
+
+// The goal rotation of camera around local origin (centre) of target in x y plane
+camera.rotationOffset = 180;
+
+// Acceleration of camera in moving from current to goal position
+camera.cameraAcceleration = 0.05
+
+// The speed at which acceleration is halted
+camera.maxCameraSpeed = 3
+
+// This attaches the camera to the canvas
+camera.attachControl(canvas, true);
+*/
+
+
+            /*
+                var camera = new BABYLON.ArcRotateCamera("Camera",  Math.PI / 2, -Math.PI / 2, 50, BABYLON.Vector3.Zero(), scene);
+                // The goal distance of camera from target
+            camera.radius = 30;
+            
+            // The goal height of camera above local origin (centre) of target
+            camera.heightOffset = 10;
+            
+            // The goal rotation of camera around local origin (centre) of target in x y plane
+            camera.rotationOffset = 0;
+            
+            // Acceleration of camera in moving from current to goal position
+            camera.cameraAcceleration = 0.05
+            
+            // The speed at which acceleration is halted
+            camera.maxCameraSpeed = 3
+            
+                camera.attachControl(canvas, true);
+                camera.useFramingBehavior = true;
+                
+            */
+            // Licht
+            var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
+            var light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(0, 1, -1), scene);
+
+            // Die Kugel ist das Zentrum der Szene (0,0,0) und 0,1 Einheit im Durchmesser
+            var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 0.1 }, scene);
+            //Kameraziel
+            //camera.setTarget(sphere);
+
+            var anchor = new BABYLON.TransformNode("");
+
+            // Create the 3D UI manager
+            var uiManager = new BABYLON.GUI.GUI3DManager(scene);
+
+            //Set font
+            var font_size = 48;
+            var font = "bold " + font_size + "px Arial";
+
+            //Set height for plane
+            var planeHeight = 0.2;
+
+            //Set height for dynamic texture
+            var DTHeight = 1.5 * font_size; //or set as wished
+
+            //Calcultae ratio
+            var ratio = planeHeight / DTHeight;
+
+
+
+            //
+            // Button-Adder für Topics
+            var addTopic = function (i) {
+
+                //
+                // Scattert Panel für Topics
+                var panelTopic = new BABYLON.GUI.ScatterPanel();
+                panelTopic.margin = 8;
+                uiManager.addControl(panelTopic);
+
+                panelTopic.linkToTransformNode(anchor);
+                // Ausrichten zulassen oder blocken
+                panelTopic.blockLayout = false;
+                // Koordinaten
+                panelTopic.position.z = 0.1;
+
+                // Topic BUTTON
+                var butTopic = new BABYLON.GUI.Button3D("butTopic");
+                var text = new BABYLON.GUI.TextBlock();
+                text.text = "Topic #:" + i + " O: " + opinionanzahl[i];
+                text.color = "white";
+                text.fontSize = 18;
+                butTopic.content = text;
+                /*
+                                if (i % 2 == 0) {
+                                    butTopic.imageUrl = "picture01.png";
+                                } else {
+                                    butTopic.imageUrl = "picture02.png";
+                                }
+                */
+                panelTopic.addControl(butTopic);
+
+
+                //NEW BUTTON
+
+
+                /*
+                // GUI
+                    var plane = BABYLON.Mesh.CreatePlane("plane", 2);
+                    plane.parent = sphere;
+                    plane.position.y = 2;
+                
+                    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane);
+                
+                    var button1 = BABYLON.GUI.Button.CreateSimpleButton("but1", "Click Me");
+                    button1.width = 1;
+                    button1.height = 0.4;
+                    button1.color = "white";
+                    button1.fontSize = 50;
+                    button1.background = "green";
+                    button1.onPointerUpObservable.add(function() {
+                        alert("you did it!");
+                    });
+                    advancedTexture.addControl(button1);
+                    
+                    */
+
+                //create a Center of Transformation
+                var CoT = new BABYLON.TransformNode("root");
+                butTopic.parent = CoT;  //apply to CoT
+
+                lastX = butTopic.position.x;
+                lastY = butTopic.position.y;
+                // Buttonbehavior Topic
+                butTopic.onPointerUpObservable.add(function () {
+                    text.text = "checked!";
+                    butTopic.scaling.x = 2;
+                    butTopic.scaling.y = 2;
+                    //butTopic.content = text;
+                    //alert(butTopic.text);
+                    //camera.lockedTarget = this;
+                });
+
+                // Torus um das Topic machen
+                var torus = BABYLON.Mesh.CreateTorus("torusTopic", 6, 0.05, 64, scene);
+                // Torus Material (random Farbe)
+                var torusMat = new BABYLON.StandardMaterial("torusMat", scene);
+                torusMat.diffuseColor = new BABYLON.Color3(Math.random(1), Math.random(1), Math.random(1));
+                torusMat.emissiveColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+                torus.material = torusMat;
+                torus.parent = CoT;
+                // Ausrichten
+                torus.rotation.x = -Math.PI / 2;
+                torus.position.x = lastX;
+                torus.position.y = lastY;
+
+
+                // Dynamisches Textfeld
+                //Set text
+                var dyntext = "Topic Nummer: " + i + " Anzahl Opinions: " + opinionanzahl[i];
+
+                //Use a temporay dynamic texture to calculate the length of the text on the dynamic texture canvas
+                var temp = new BABYLON.DynamicTexture("DynamicTexture", 64, scene);
+                var tmpctx = temp.getContext();
+                tmpctx.font = font;
+                var DTWidth = tmpctx.measureText(dyntext).width + 8;
+
+                //Calculate width the plane has to be 
+                var planeWidth = DTWidth * ratio;
+
+                //Create dynamic texture and write the text
+                var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", { width: DTWidth, height: DTHeight }, scene, false);
+                var mat = new BABYLON.StandardMaterial("mat", scene);
+                mat.diffuseTexture = dynamicTexture;
+                dynamicTexture.drawText(dyntext, null, null, font, "#000000", "#ffffff", true);
+
+                //Create plane and set dynamic texture as material
+                var plane = BABYLON.MeshBuilder.CreatePlane("plane", { width: planeWidth, height: planeHeight }, scene);
+                plane.material = mat;
+                plane.position.x = lastX;
+                plane.position.y = lastY;
+                plane.position.z = -1;
+            }
+
+            // Button-Adder für Opinions
+            var addOpinion = function (j) {
+
+
+                //
+                // Scattert Panel für Opinions
+                var panelOpinion = new BABYLON.GUI.ScatterPanel();
+                uiManager.addControl(panelOpinion);
+                panelOpinion.margin = 0.5;
+                panelOpinion.linkToTransformNode(anchor);
+                // Ausrichten zulassen oder  blocken
+                panelOpinion.blockLayout = false;
+                // Koordinaten
+                panelOpinion.position.x = lastX;
+                panelOpinion.position.y = lastY;
+                panelOpinion.position.z = (Math.random(150)) + 1;
+                panelOpinion.size = Math.random(1);
+
+                // Topic BUTTON
+                var butOpinion = new BABYLON.GUI.Button3D("butOpinion");
+                var text = new BABYLON.GUI.TextBlock();
+                text.text = " T: " + i + " O: " + (j + 1);
+                text.color = "red";
+                text.fontSize = 40;
+                butOpinion.content = text;
+
+                if (j % 2 == 0) {
+                    butOpinion.imageUrl = "picture01.png";
+                } else {
+                    butOpinion.imageUrl = "picture02.png";
+                }
+                panelOpinion.addControl(butOpinion);
+            }
+
+            // durch Topics iterieren
+            for (i = 0; i < opinionanzahl.length; i++) {
+                addTopic(i);
+                //
+                // durch Opinions iterieren
+                j = 0;
+                if (opinionanzahl[i] > 0) {
+                    for (j = 0; j <= (i - 1); j++) {
+                        addOpinion(j);
+                    }
+                }
+            }
+
+            // 2D GUI für input, tastatur, etc....
+            var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI");
+
+            // Input (linksoben)
+            var input = new BABYLON.GUI.InputText();
+            input.width = 0.2;
+            input.maxWidth = 0.2;
+            input.height = "40px";
+            input.text = "Click here to start typing!";
+            input.color = "white";
+            input.background = "gray";
+            input.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+            input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+            advancedTexture.addControl(input);
+
+            // Tastatur (bottom, midde)
+            var keyboard = BABYLON.GUI.VirtualKeyboard.CreateDefaultLayout();
+            keyboard.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+            advancedTexture.addControl(keyboard);
+            keyboard.connect(input);
+
+            //
+            // show must go on!! Return all this s**t!
+            return scene;
+        };
+
+        // Create!
+        var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+        var scene = createScene();
+
+        // Render, Scene, render!!! 
+        engine.runRenderLoop(function () {
+            if (scene) {
+                scene.render();
+            }
+        });
+
+        // Resize Listener : Hello Window?!: How is your size?
+        window.addEventListener("resize", function () {
+            engine.resize();
+        });
+
+    </script>
+</body>
+
+</html>

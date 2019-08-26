@@ -1,23 +1,22 @@
 class DPT {
+
 	constructor(socket) {
 		this.socket = socket;
-
-
-		/*
-	constructor(host) {
-		this.socket = io.connect(
-			host,
-			{
-				transport: ['websocket']
-			}
-		);
-		*/
 		return(this);
-		
 	}
 	
 	// user
 
+	getMetadataUser(publicKey) {
+		this.socket.emit("api", {
+			method: 'get',
+			path: '/metadata/user/'+publicKey+'/',
+			data: {
+				publicKey: publicKey
+			}
+		});
+	}
+	
 	userReclaim(phrase, publicKey) {
 		this.socket.emit("api", {
 			method: 'put',
@@ -89,7 +88,7 @@ class DPT {
 	
 	opinionPostAllowed(topicId) {
 		this.socket.emit('api', {
-			method: 'post',
+			method: 'get',
 			path: "/opinion/postAllowed/",
 			data: {
 				topicId: topicId
@@ -140,11 +139,49 @@ class DPT {
 		});
 	}
 	
-	getDialog() {
+	getDialogList() {
 		this.socket.emit('api', {
 			method: 'get',
-			path: '/dialog/',
+			path: '/dialog/list/',
 			data: {},
+		});
+	}
+	
+	getDialog(dialogId) {
+		this.socket.emit('api', {
+			method: 'get',
+			path: '/dialog/'+ dialogId +'/',
+			data: {
+				body: {
+					dialogId: dialogId
+				}
+			},
+		});
+	}
+	
+	putDialog(dialogId, key, value) {
+		var obj = {
+				method: 'put',
+				path: '/dialog/'+ dialogId +'/',
+				data: {
+					dialogId: dialogId,
+					body: {
+					}
+				}
+		};
+		obj.data.body[key] = value;
+		this.socket.emit('api', obj);
+	}
+	
+	postMessage(message, publicKey, dialogId) {
+		this.socket.emit('api', {
+			method: 'post',
+			path: '/dialog/'+dialogId+'/message/',
+			data: {
+				publicKey: publicKey,
+				message: message,
+				dialogId: dialogId
+			},
 		});
 	}
 }

@@ -1,10 +1,11 @@
 const mongoose 		= require('mongoose');
 const Lo_			= require('lodash');
 
-const userService	= require('./services/user');
-const topicService	= require('./services/topic');
-const opinionService= require('./services/opinion');
-const dialogService	= require('./services/dialog');
+const userService		= require('./services/user');
+const topicService		= require('./services/topic');
+const opinionService	= require('./services/opinion');
+const dialogService		= require('./services/dialog');
+const metadataService	= require('./services/metadata');
 
 const uuidReg		= "([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})";
 const mongoReg		= "([0-9a-fA-F]{24})";
@@ -69,8 +70,12 @@ match.push({
 match.push({
 	path: "/metadata/user/"+ uuidReg +"/",
 	method: "get",
-	fun: function() {
-		console.log("get user metadata")
+	fun: async function(data, dptUUID) {
+		const user = metadataService.getUserMetadata({body: {publicKey: dptUUID}});
+		delete(user.phrase);
+		delete(user._id);
+		delete(user.__v);
+		return(user);
 	}
 });
 
@@ -233,7 +238,7 @@ match.push({
 // returns a bool value, if the user is allowed to post an opinion
 match.push({
 	path: "/opinion/postAllowed/",
-	method: "post",
+	method: "get",
 	fun: async (data, dptUUID) => {
 		var user;
 		if(user = userRegistered(dptUUID)) {
@@ -283,14 +288,15 @@ match.push({
 });
 
 match.push({
-	path: "/dialog/",
+	path: "/dialog/list/",
 	method: "get",
 	fun: async function(data, dptUUID) {
 		console.log("get my dialogs list");
 		var user = userRegistered(dptUUID);
+		var ret;
 		if(user) {
-			data = await dialogService.getDialog({userId: mongoose.Types.ObjectId(user.user.id)});
-			return({data: data});
+			ret = await dialogService.getDialogList({userId: mongoose.Types.ObjectId(user.user.id)});
+			return({data: ret});
 		}
 		return(data);
 	}
@@ -299,8 +305,41 @@ match.push({
 match.push({
 	path: "/dialog/"+dialogIdReg+"/",
 	method: "get",
-	fun: function() {
-		console.log("get dialogs list");
+	fun: async function(data, dptUUID, socket) {
+		console.log("get a dialog");
+		var user = userRegistered(dptUUID);
+		var dialog = {};
+		dialog.messages = [];
+		if(user) {
+			var ret = await dialogService.getDialog(data);
+			ret = ret.data;
+//			dialog.crisis = ret.crisis;
+			dialog.status = ret.status;
+			dialog.opinionProposition = ret.opinionProposition;
+			dialog.dialog = ret._id.toString();
+			
+			if(ret.initiator.toString() == user.user.id) {
+				dialog.initiator = 'me';
+				dialog.recipient = 'notme';
+			} else {
+				dialog.initiator = 'notme';
+				dialog.recipient = 'me';
+			}
+
+			for(var i=0; i < ret.messages.length; i++) {
+				var message = {};
+				message.messageId = ret.messages[i]._id.toString();
+				message.content = ret.messages[i].content;
+				if(ret.messages[i].sender.toString() == user.user.id) {
+					message.sender = 'me';
+				} else {
+					message.sender = 'notme';
+				}
+				dialog.messages.push(message);
+			}
+
+			return({data: dialog});
+		}
 	}
 });
 
@@ -312,7 +351,8 @@ match.push({
 		if(user) {
 			data.body.initiator = user.user.id;
 			const ret = await dialogService.createDialog(data.body);
-			socket.emit('api', {path: '/dialog/', method: 'get'});
+			socket.emit('update', {path: '/dialog/', method: 'get'});
+			return({data: {}});
 		}
 	}
 });
@@ -320,16 +360,38 @@ match.push({
 match.push({
 	path: "/dialog/"+ dialogIdReg +"/",
 	method: "put",
-	fun: function() {
+	fun: async function(data, dptUUID, socket) {
 		console.log("update a dialog")
+		dialogService.updateDialog(data);
 	}
 });
 
 match.push({
 	path: "/dialog/"+ dialogIdReg +"/message/",
 	method: "post",
-	fun: function() {
-		console.log("create a new message");
+	fun: async function(data, dptUUID, socket) {
+		var user = userRegistered(data.publicKey);
+		if(user) {
+			console.log("create a new message");
+			const ret = await dialogService.postMessage({
+				dialogId: data.dialogId,
+				body: {
+					content: data.message,
+					sender: user.user.id
+				}
+			});
+			var dialog = await dialogService.getDialog({body: {dialogId: data.dialogId}});
+			for(var i = 0; i < global.dptNS.online.length; i++) {
+				if(global.dptNS.online[i].user.id == dialog.data.initiator.toString()
+				|| global.dptNS.online[i].user.id == dialog.data.recipient.toString()) {
+					global.dptNS.online[i].socket.emit('update', {path: '/dialog/'+data.dialogId+'/', method: 'get'});
+				}
+			}
+//			user = userRegistered(data.publicKey);
+			return({data: ret});
+		} else {
+			return({data: {}});
+		}
 	}
 });
 
