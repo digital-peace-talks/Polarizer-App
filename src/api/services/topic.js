@@ -7,7 +7,7 @@ const Topic = require("../models/topic").topicModel;
  * @return {Promise}
  */
 module.exports.getTopics = async (options) => {
-  const topics = await Topic.find({});
+  const topics = await Topic.find();
 
   return {
     status: 200,

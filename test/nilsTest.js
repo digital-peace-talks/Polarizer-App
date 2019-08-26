@@ -8,9 +8,19 @@ var expect = chai.expect;
 var whoami = {};
 var socket;
 
+
+// sleep with a returned promise, works in an async/await environment, argument is in milliseconds
+function sleep(milliseconds) {
+	return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
+
+// here is the API test, we call a service with
+// a string and the service returns the reversed string
 function postNilsTestPath(nilsTestString) {
 
 	describe('request', function() {
+
+		// send the string to the server
 		it('should send string', async function() {
 			await socket.emit("api", {
 				method: 'post',
@@ -20,32 +30,41 @@ function postNilsTestPath(nilsTestString) {
 				}
 			});
 		});
-	});
 
-	describe('answer', function() {
-	    it('it should receive an anwer', function() {
-			socket.on('api', function(payload) {
+	    it('it should receive an anwer', function(done) {
+
+	    	// get the reversed string back
+			socket.on('api', async function(payload) {
 
 				// test method: standard assert
 				assert.equal(payload.data, nilsTestString.split("").reverse().join(""));
 
-				// test method: chai.expect
-				expect(payload.data).equal(nilsTestString.split("").reverse().join(""));
+				// alternative test method: chai.expect
+				//expect(payload.data).equal(nilsTestString.split("").reverse().join(""));
+
+				// now finish the test
+				done();
+
+				socket.disconnect();
+				console.log(' input: '+nilsTestString);
+				console.log('output: '+payload.data);
+				await sleep(100);
+				
+				// and exit the program
 				process.exit();
 			});
 		});
+
 	});
 
 }
 
-// in this function add your tests
-async function test() {
-	await postNilsTestPath('string');
-//	process.exit();
-}
 
 async function main() {
-	describe('connect', function() {
+
+	describe('connect and login', function() {
+
+		// first, we get a fresh socket to the web server
 		it('it will connect to the server', function(done) {
 		    socket = io.connect(
 				"ws://localhost:3100",
@@ -57,45 +76,63 @@ async function main() {
 			);
 			done();
 		});
-	});
 	
-	describe('send login', () => {
 		it('it will send the cookie to the server', (done) => {
+			
+			// now we have a connection
 			socket.on('connect', async () => {
+
+				// standard test via assert
+				assert.equal(socket.connected, true);
+
+				// alternative test via chia.expect
+				//expect(socket.connected).equal(true);
+
+				// and we send our identification (signed publicKey)
 				await socket.emit("login", {
 					method: 'post',
 					path: '/user/login/',
 					data: {
-						publicKey: "dptUUID=s%3A099f0fa3-9d96-479f-9cc3-642c54e31e3b.4TmfeSNnQUDubTDU9XTZvHoTDqUn9Q%2BCpmH%2Fg6GfZ6Y"
+						publicKey: "dptUUID=s%3Afa59e97e-1ebd-40ce-b7d9-3f6d31fb902b.vEf3yukbDh7vhwETPLkJ656zHsZ2XlfPVpCWfokmzJ0"
 					}
 				});
 				done();
 			});
 		});
-	});
 
-	describe('logged in', () => {
 		it('it will receive a login message', (done) => {
+			
+			// as a result to our login request, we get a message on channel 'private'
+			// with the some fundamental informations about the new logged in client
 			socket.on('private', function(restObj) {
+				try {
+					assert.equal(restObj.data.message, 'logged in');
+				} catch(err) {
+					console.log(err);
+				}
 				if(restObj.method == 'post') {
-					if(restObj.path == '/info/') {
+					if(restObj.path == '/user/login/') {
 						whoami.dptUUID = restObj.data.dptUUID;
+						
+						// here we go, we are logged in
 						if(restObj.data.message == 'logged in') {
 							whoami.user = restObj.data.user;
-							test();
-							done();
+							
+							// and we can start our api test
+							postNilsTestPath("reit nie ein tier");
 						}
+
 						if(restObj.data.message == 'user unknown') {
 							whoami.user = {};
-							done();
 						}
 					}
 				}
+				done();
 			});
 		});
 	});
 }
 
-// main will call test()
-// when the connection to the server is established.
+// main will call postNilsTestPath() when the connection
+// to the server is established and authentication is confirmed.
 main();
