@@ -3,7 +3,6 @@ jQuery(document).ready(function() {
 		+ '//' + window.location.host, {transports: ['websocket']});
 
 	var dpt = new DPT(socket);
-	var restObj = {};
 	var currentTopic = 0;
 	var currentDialog;
 	var whoami = { dptUUID: '', user: {}};
@@ -135,11 +134,13 @@ jQuery(document).ready(function() {
 					+ restObj.data[i]._id
 					+ '">&#128393;</span>';
 				} else {
-					options = '<span class="inviteToDialog" id="'
-					+ restObj.data[i]._id
-					+ '">'
-					+ '&#128172;'
-					+ '</span>';
+					if(restObj.data[i].blocked == 0) {
+						options = '<span class="inviteToDialog" id="'
+						+ restObj.data[i]._id
+						+ '">'
+						+ '&#128172;'
+						+ '</span>';
+					}
 				}
 
 				jQuery('div.col.mid')
@@ -197,8 +198,8 @@ jQuery(document).ready(function() {
 	        }
 	    }
 	});
-	socket.on('error', function (e) {
-		console.log('System', e ? e : 'A unknown error occurred');
+	socket.on('error', function (err) {
+		console.log('System', err ? err : 'A unknown error occurred');
 		document.location.reload(true);
 		window.location.reload(true);
 	});
@@ -401,7 +402,7 @@ jQuery(document).ready(function() {
 					<div style="bottom: 10px; position: absolute; min-width: 98%">
 						<center id="actionSpace">
 							<input type="button" value="accept dialog" name="accept dialog" size="120" id="dialogAccept">
-							<input type="button" value="ask me later" name="accept dialog" size="120" id="dialogLater">
+							<input type="button" value="ask me later" name="accept dialog" size="120" id="dialogCloseWindow">
 							<input type="button" value="reject" name="accept dialog" size="120" id="dialogReject">
 			   			</center>
 					</div>
@@ -415,15 +416,29 @@ jQuery(document).ready(function() {
 					dpt.putDialog(currentDialog.dialog, "status", "ACTIVE");
 					event.preventDefault();
 				});
-				jQuery(document).one('click', "#dialogLater", function(event) {
+				jQuery(document).one('click', "#dialogCloseWindow", function(event) {
 					jQuery('#misc').empty();
 					event.preventDefault();
 				});
 				jQuery(document).one('click', "#dialogReject", function(event) {
 					jQuery('#misc').empty();
+					dpt.putDialog(currentDialog.dialog, "status", "CLOSED");
 					event.preventDefault();
 				});
 			}
+		} else if(currentDialog.status == 'CLOSED') {
+				html += `
+					<div style="bottom: 10px; position: absolute; min-width: 98%">
+						<center>
+							<b>This dialog is closed.</b>
+							<input type="button" value="close window" name="close window" size="120" id="dialogCloseWindow">
+			   			</center>
+					</div>
+				`;
+				jQuery(document).one('click', "#dialogCloseWindow", function(event) {
+					jQuery('#misc').empty();
+					event.preventDefault();
+				});
 		}
 
 		html += '</div></div>';

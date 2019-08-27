@@ -2,6 +2,8 @@ const ServerError = require("../../lib/error");
 const Opinion = require("../models/opinion").opinionModel;
 const User = require("../models/user").userModel;
 const Topic = require("../models/topic").topicModel;
+const Dialog = require("../models/dialog").dialogModel;
+const util = require("util");
 
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema
@@ -17,10 +19,36 @@ module.exports.opinionPostAllowed = async (options, oid) => {
 	return(false);
 }
 
-module.exports.getOpinionsByTopicId = async (options) => {
+module.exports.getOpinionsByTopicId = async (options, userId) => {
   var opinions;
   if(options.body.id) {
 	  opinions = await Opinion.find({ topic: options.body.id });
+	  
+	  for(i=0; i < opinions.length; i++) {
+		  opinions[i]._doc.blocked = 0;
+		  var worker = await Dialog.find({
+			  $or: [
+				  { $and: [
+					  { opinion: opinions[i]._id },
+					  { recipient: opinions[i].user },
+					  { initiator: userId },
+				  ]},
+
+				  { $and: [
+					  { opinion: opinions[i]._id },
+					  { recipient: userId },
+					  { initiator: opinions[i].user },
+				  ]}
+			  ]
+		  });
+		  if(worker.length) {
+			  opinions[i]._doc.blocked = 1;
+			  console.log("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+			  console.log(util.inspect(opinions[i]));
+			  console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+		  }
+	  }
+
 	  return {
 		  status: 200,
 		  data: opinions

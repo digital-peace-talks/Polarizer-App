@@ -144,7 +144,8 @@ io.on('connection', function(socket) {
 						dptUUID: dptUUID,
 						registered: true,
 						user: user,
-						socket: socket
+						socket: socket,
+						login: Date.now()
 					});
 
 					// log.info('updated global online (user+): '+require('util').inspect(global.dptNS.online));
@@ -210,9 +211,15 @@ io.on('connection', function(socket) {
 		let a user disconnect. remove it from the table of
 		online users.
 	 */
-	socket.on('disconnect', (reason) => {
+	socket.on('disconnect', async (reason) => {
 		log.info(socket.id+" disconnected, reason: "+reason);
-		Lo_.pull(global.dptNS.online, Lo_.find(global.dptNS.online, {socketid: socket.id}));
+		var user = Lo_.find(global.dptNS.online, {socketid: socket.id});
+		if(user) {
+			var updateUser = await User.userModel.findById(user.user.id);
+			updateUser.onlineTimes.push({ login: user.login, logout: Date.now() });
+			updateUser.save();
+		}
+		Lo_.pull(global.dptNS.online, user);
 		//log.info('updated global online (user-): '+require('util').inspect(global.dptNS.online));
 	});
 });
