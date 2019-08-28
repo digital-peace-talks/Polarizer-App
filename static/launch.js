@@ -124,8 +124,15 @@ jQuery(document).ready(function() {
 
 			var i;
 			var options = '';
+			var canInvite = false;
 
 			jQuery('div.col.mid').html('<h2>Opinions</h2>');
+
+			for (i in restObj.data) {
+				if(restObj.data[i].user == 'mine') {
+					canInvite = true;
+				}
+			}
 
 			for (i in restObj.data) {
 
@@ -134,7 +141,8 @@ jQuery(document).ready(function() {
 					+ restObj.data[i]._id
 					+ '">&#128393;</span>';
 				} else {
-					if(restObj.data[i].blocked == 0) {
+					if(restObj.data[i].blocked == 0
+					&& canInvite) {
 						options = '<span class="inviteToDialog" id="'
 						+ restObj.data[i]._id
 						+ '">'
