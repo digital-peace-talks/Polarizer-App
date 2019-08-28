@@ -6,6 +6,7 @@ const mongoose 		= require('mongoose');
 const Lo_			= require('lodash');
 const cookieParser	= require('cookie-parser');
 const util			= require('util');
+
 var io				= require('socket.io')();
 
 const User			= require('./models/user');
@@ -95,19 +96,6 @@ async function apiBroker(obj, dptUUID, socket) {
 */
 io.on('connection', function(socket) {
 	console.log("socket.id: "+socket.id);
-
-	socket.on('kanal', function(msg) {
-		io.emit('kanal', { username: socket.id, message: msg });
-		//log.info("rooms: "+JSON.stringify(io.sockets.adapter.rooms, null, 2));
-		log.info("rooms: "+JSON.stringify(socket.adapter.rooms, null, 2));
-		log.info("sids: "+JSON.stringify(io.sockets.adapter.sids, null, 2));
-		log.info("got message: "+msg);
-	});
-
-	socket.on('channel', function(msg) {
-		io.emit('channel', { username: socket.username, message: msg });
-		log.info("got message: "+msg);
-	});
 
 	/*
 		we decided to pull the login api endpoint from the standard api

@@ -366,16 +366,18 @@ match.push({
 					sender: user.user.id
 				}
 			});
-			var dialog = await dialogService.getDialog({body: {dialogId: data.dialogId}});
-			for(var i = 0; i < global.dptNS.online.length; i++) {
-				if(global.dptNS.online[i].user.id == dialog.data.initiator.toString()
-				|| global.dptNS.online[i].user.id == dialog.data.recipient.toString()) {
-					global.dptNS.online[i].socket.emit('update', {path: '/dialog/'+data.dialogId+'/', method: 'get'});
+			if(ret.status == 200) {
+				var dialog = await dialogService.getDialog({body: {dialogId: data.dialogId}});
+				for(var i = 0; i < global.dptNS.online.length; i++) {
+					if(global.dptNS.online[i].user.id == dialog.data.initiator.toString()
+					|| global.dptNS.online[i].user.id == dialog.data.recipient.toString()) {
+						global.dptNS.online[i].socket.emit('update', {path: '/dialog/'+data.dialogId+'/', method: 'get'});
+					}
 				}
 			}
 			return({data: ret});
 		} else {
-			return({data: {}});
+			return({data: {status: 400, data: "User not found" }});
 		}
 	}
 });

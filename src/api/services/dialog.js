@@ -5,6 +5,8 @@ const Opinion = require("../models/opinion").opinionModel;
 const Topic = require("../models/topic").topicModel;
 const Lo_ = require("lodash");
 
+const MAXCONTENTLENGTH = 5;
+
 /**
  * @param {Object} options
  * @throws {Error}
@@ -102,68 +104,44 @@ module.exports.updateDialog = async options => {
  * @return {Promise}
  */
 module.exports.postMessage = async options => {
-  const dialog = await Dialog.findById(options.dialogId);
-  dialog.messages.push(options.body);
-  dialog.save();
-  // Implement your business logic here...
-  //
-  // This function should return as follows:
-  //
-  // return {
-  //   status: 200, // Or another success code.
-  //   data: [] // Optional. You can put whatever you want here.
-  // };
-  //
-  // If an error happens during your business logic implementation,
-  // you should throw an error as follows:
-  //
-  // throw new ServerError({
-  //   status: 500, // Or another error code.
-  //   error: 'Server Error' // Or another error message.
-  // });
 
-  return {
-    status: 200,
-    data: dialog,
-  };
+	if(options.body.content.length > MAXCONTENTLENGTH) {
+		return {
+			status: 500,
+			data: { error: "Text entry is to long" },
+		};
+	}
+
+	const dialog = await Dialog.findById(options.dialogId);
+	dialog.messages.push(options.body);
+	dialog.save();
+
+	return {
+		status: 200,
+		data: dialog,
+	};
 };
+
 /**
  * @param {Object} options
  * @param {String} options.dialogId ID of dialog to post crisis to
  * @throws {Error}
  * @return {Promise}
  */
-
 module.exports.createCrisis = async options => {
-  const dialog = await Dialog.findById(options.dialogId);
-  dialog.crisises.push(options.body);
-  try {
-    await dialog.save();
-  } catch (e) {
-    return {
-      status: 400,
-      data: e.message,
-    };
-  }
-  // Implement your business logic here...
-  //
-  // This function should return as follows:
-  //
-  // return {
-  //   status: 200, // Or another success code.
-  //   data: [] // Optional. You can put whatever you want here.
-  // };
-  //
-  // If an error happens during your business logic implementation,
-  // you should throw an error as follows:
-  //
-  // throw new ServerError({
-  //   status: 500, // Or another error code.
-  //   error: 'Server Error' // Or another error message.
-  // });
+	const dialog = await Dialog.findById(options.dialogId);
+	dialog.crisises.push(options.body);
+	try {
+		await dialog.save();
+	} catch (e) {
+		return {
+			status: 500,
+			data: e.message,
+		};
+	}
 
-  return {
-    status: 200,
-    data: "createCrisis ok!",
-  };
+	return {
+		status: 200,
+		data: "createCrisis ok!",
+	};
 };

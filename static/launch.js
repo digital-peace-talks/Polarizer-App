@@ -62,6 +62,11 @@ jQuery(document).ready(function() {
 			return;
 		}
 		
+		if(restObj.data.status == 500) {
+			alert(restObj.data.data.error);
+//			return;
+		}
+		
 		if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/'
 		&& restObj.method == 'get') {
 			var old = currentDialog;
