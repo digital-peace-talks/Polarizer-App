@@ -1,11 +1,11 @@
 const ServerError = require("../../lib/error");
+const config = require("../lib/config");
 const mongoose = require("mongoose");
 const Dialog = require("../models/dialog").dialogModel;
 const Opinion = require("../models/opinion").opinionModel;
 const Topic = require("../models/topic").topicModel;
 const Lo_ = require("lodash");
 
-const MAXCONTENTLENGTH = 5;
 
 /**
  * @param {Object} options
@@ -14,9 +14,16 @@ const MAXCONTENTLENGTH = 5;
  */
 module.exports.createDialog = async (options) => {
 	console.log(options);
-	const opinion = await Opinion.findOne({"_id": mongoose.Types.ObjectId(options.opinion)});
-	options.recipient = opinion.user;
-	const result = await Dialog.create(options);
+	try {
+		const opinion = await Opinion.findOne({"_id": mongoose.Types.ObjectId(options.opinion)});
+		options.recipient = opinion.user;
+		const result = await Dialog.create(options);
+	} catch(error) {
+		return {
+			status: 500,
+			data: error.message,
+		};
+	}
 	return {
 		status: 200,
 		data: result,
@@ -25,7 +32,15 @@ module.exports.createDialog = async (options) => {
 
 
 module.exports.getDialog = async (options) => {
-	var result = await Dialog.findOne({"_id": mongoose.Types.ObjectId(options.body.dialogId)})
+	var result;
+	try {
+		result = await Dialog.findOne({"_id": mongoose.Types.ObjectId(options.body.dialogId)})
+	} catch(error) {
+		return {
+			status: 500,
+			data: error.message,
+		};
+	}
 	
 	return( {
 		status: 200,
@@ -41,45 +56,52 @@ module.exports.getDialog = async (options) => {
  */
 module.exports.getDialogList = async (options) => {
 	var result = [];
-	var worker = {};
-	worker = await Dialog.find({"initiator": options.userId}).populate('opinion');
-	for(var i = 0; i < worker.length; i++) {
-		var collection = {};
-		collection.dialog = worker[i].id;
-		collection.opinionProposition = worker[i].opinionProposition;
-		collection.recipientOpinion = worker[i].opinion.content;
-		collection.status = worker[i].status;
-		var worker2 = await Topic.findOne({ "_id": mongoose.Types.ObjectId(worker[i].opinion.topic)}).populate('opinions');
-		collection.topic = worker2.content;
-		var opinion = Lo_.find(worker2.opinions, {user: worker[i].initiator});
-		if(opinion) {
-			collection.initiatorOpinion = opinion.content;
-			collection.initiator = 'me';
-			result.push(collection);
+	try {
+		var worker = {};
+		worker = await Dialog.find({"initiator": options.userId}).populate('opinion');
+		for(var i = 0; i < worker.length; i++) {
+			var collection = {};
+			collection.dialog = worker[i].id;
+			collection.opinionProposition = worker[i].opinionProposition;
+			collection.recipientOpinion = worker[i].opinion.content;
+			collection.status = worker[i].status;
+			var worker2 = await Topic.findOne({ "_id": mongoose.Types.ObjectId(worker[i].opinion.topic)}).populate('opinions');
+			collection.topic = worker2.content;
+			var opinion = Lo_.find(worker2.opinions, {user: worker[i].initiator});
+			if(opinion) {
+				collection.initiatorOpinion = opinion.content;
+				collection.initiator = 'me';
+				result.push(collection);
+			}
 		}
-	}
-
-	worker = await Dialog.find({"recipient": options.userId}).populate('opinion');
-	for(var i = 0; i < worker.length; i++) {
-		var collection = {};
-		collection.dialog = worker[i].id;
-		collection.opinionProposition = worker[i].opinionProposition;
-		collection.recipientOpinion = worker[i].opinion.content;
-		collection.status = worker[i].status;
-		var worker2 = await Topic.findOne({ "_id": mongoose.Types.ObjectId(worker[i].opinion.topic)}).populate('opinions');
-		collection.topic = worker2.content;
-		var opinion = Lo_.find(worker2.opinions, {user: worker[i].initiator});
-		if(opinion) {
-			collection.initiatorOpinion = opinion.content;
-			collection.initiator = 'notme';
-			result.push(collection);
+	
+		worker = await Dialog.find({"recipient": options.userId}).populate('opinion');
+		for(var i = 0; i < worker.length; i++) {
+			var collection = {};
+			collection.dialog = worker[i].id;
+			collection.opinionProposition = worker[i].opinionProposition;
+			collection.recipientOpinion = worker[i].opinion.content;
+			collection.status = worker[i].status;
+			var worker2 = await Topic.findOne({ "_id": mongoose.Types.ObjectId(worker[i].opinion.topic)}).populate('opinions');
+			collection.topic = worker2.content;
+			var opinion = Lo_.find(worker2.opinions, {user: worker[i].initiator});
+			if(opinion) {
+				collection.initiatorOpinion = opinion.content;
+				collection.initiator = 'notme';
+				result.push(collection);
+			}
 		}
+	} catch(error) {
+		return {
+			status: 500,
+			data: error.message,
+		};
 	}
 	
-  return {
-    status: 200,
-    data: result,
-  };
+	return {
+		status: 200,
+		data: result,
+	};
 };
 
 /**
@@ -89,7 +111,16 @@ module.exports.getDialogList = async (options) => {
  * @return {Promise}
  */
 module.exports.updateDialog = async options => {
-  const result = await Dialog.findByIdAndUpdate(options.dialogId, options.body);
+	var result;
+
+	try {
+		result = await Dialog.findByIdAndUpdate(options.dialogId, options.body);
+	} catch(error) {
+		return {
+			status: 500,
+			data: error.message,
+		};
+	}
 
   return {
     status: 200,
@@ -105,16 +136,25 @@ module.exports.updateDialog = async options => {
  */
 module.exports.postMessage = async options => {
 
-	if(options.body.content.length > MAXCONTENTLENGTH) {
+	var dialog;
+	
+	if(options.body.content.length > config.api.maxContentLength) {
 		return {
 			status: 500,
 			data: { error: "Text entry is to long" },
 		};
 	}
 
-	const dialog = await Dialog.findById(options.dialogId);
-	dialog.messages.push(options.body);
-	dialog.save();
+	try {
+		dialog = await Dialog.findById(options.dialogId);
+		dialog.messages.push(options.body);
+		dialog.save();
+	} catch(error) {
+		return {
+			status: 500,
+			data: error.message,
+		};
+	}
 
 	return {
 		status: 200,
@@ -129,19 +169,20 @@ module.exports.postMessage = async options => {
  * @return {Promise}
  */
 module.exports.createCrisis = async options => {
-	const dialog = await Dialog.findById(options.dialogId);
-	dialog.crisises.push(options.body);
+	var dialog;
 	try {
+		dialog = await Dialog.findById(options.dialogId);
+		dialog.crisises.push(options.body);
 		await dialog.save();
-	} catch (e) {
+	} catch (error) {
 		return {
 			status: 500,
-			data: e.message,
+			data: error.message,
 		};
 	}
 
 	return {
 		status: 200,
-		data: "createCrisis ok!",
+		data: dialog
 	};
 };

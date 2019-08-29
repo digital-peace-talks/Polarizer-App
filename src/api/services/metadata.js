@@ -1,4 +1,5 @@
 const ServerError = require('../../lib/error');
+const config = require("../lib/config");
 const User = require("../models/user").userModel;
 
 
@@ -9,8 +10,16 @@ const User = require("../models/user").userModel;
  * @return {Promise}
  */
 module.exports.getUserMetadata = async (options) => {
-	const user = await User.findOne({ publicKey: options.body.publicKey })
+	var user;
+	try {
+		user= await User.findOne({ publicKey: options.body.publicKey })
 				.populate('topics').populate('opinions').populate('dialogs');
+	} catch(error) {
+		return({
+			status: 500,
+			data: error.message
+		});
+	}
 	return {
 		status: 200,
 		data: user
