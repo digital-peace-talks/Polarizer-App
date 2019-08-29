@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Babylon Template</title>
+​
+    <style>
+      html,
+      body {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+​
+      #renderCanvas {
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
+    </style>
+    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+  </head>
+​
+  <body>
+    <div id="main"></div>
+    <div id="misc"></div>
+    <canvas id="renderCanvas" touch-action="none"></canvas>
+    <script>
+      // var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI");
+      // array-länge ergibt anzahl der topics
+      var opinionanzahl = [0, 1, 2, 3, 4, 5, 6, 7, 8]; //, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+      //Set font
+      var font_size = 48;
+      var font = "bold " + font_size + "px Arial";
+​
+      //Set height for plane
+      var planeHeight = 0.2;
+​
+      //Set height for dynamic texture
+      var DTHeight = 1.5 * font_size; //or set as wished
+​
+      //Calcultae ratio
+      var ratio = planeHeight / DTHeight;
+​
+      document.addEventListener("DOMContentLoaded", function(event) {
+        var socket = io.connect(
+          window.location.protocol + "//" + window.location.host,
+          {
+            transports: ["websocket"],
+          }
+        );
+​
+        var dpt = new DPT(socket);
+        var restObj = {};
+        var whoami = {
+          dptUUID: "",
+          user: {},
+        };
+​
+        // Handle the incomming websocket trafic
+​
+        socket.on("connect", () => {
+          // if needed, we could keep socket.id somewhere
+          if (document.cookie) {
+            dpt.userLogin(document.cookie);
+          }
+        });
+​
+        socket.on("private", function(restObj) {
+          if (restObj.method == "post") {
+            if (restObj.path == "/user/login/") {
+              whoami.dptUUID = restObj.data.dptUUID;
+              if (restObj.data.message == "logged in") {
+                whoami.user = restObj.data.user;
+                dpt.getTopic();
+              }
+              if (restObj.data.message == "user unknown") {
+                whoami.user = {};
+              }
+            }
+          }
+        });
+​
+        socket.on("error", function(e) {
+          console.log("System", e ? e : "A unknown error occurred");
+          document.location.reload(true);
+          window.location.reload(true);
+        });
+​
+        let main = document.getElementById("main");
+        main.style.height = "50%";
+        main.style.width = "100%";
+​
+        var canvas = document.getElementById("renderCanvas"); // Get the canvas element
+        var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+​
+        /******* Add the create scene function ******/
+        var createScene = function() {
+          // Create the scene space
+          var scene = new BABYLON.Scene(engine);
+​
+          // Add a camera to the scene and attach it to the canvas
+          var camera = new BABYLON.ArcRotateCamera(
+            "Camera",
+            Math.PI / 2,
+            Math.PI / 2,
+            2,
+            new BABYLON.Vector3(0, 0, 5),
+            scene
+          );
+          camera.attachControl(canvas, true);
+​
+          // Add lights to the scene
+          var light1 = new BABYLON.HemisphericLight(
+            "light1",
+            new BABYLON.Vector3(1, 1, 0),
+            scene
+          );
+          var light2 = new BABYLON.PointLight(
+            "light2",
+            new BABYLON.Vector3(0, 1, -1),
+            scene
+          );
+​
+          // Add and manipulate meshes in the scene
+​
+          socket.on("api", function(restObj) {
+            if (!restObj) {
+              return;
+            }
+​
+            if (restObj.path == "/topic/") {
+              var i;
+              var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
+                "UI"
+              );
+              var panel = new BABYLON.GUI.StackPanel();
+              advancedTexture.addControl(panel);
+​
+              for (i in restObj.data) {
+                var topicAsAppendableElement = document.createElement("p");
+                topicAsAppendableElement.innerHTML = restObj.data[i].content;
+                main.appendChild(topicAsAppendableElement) + "<br>";
+                //   allTopics.push(restObj.data[i].content);
+                addTopic[i];
+                var box = BABYLON.MeshBuilder.CreateBox(
+                  "box",
+                  { height: 5 },
+                  scene
+                );
+                box.position = new BABYLON.Vector3(
+                  Math.random(150) + i * 2,
+                  Math.random(150) + i * 10,
+                  Math.random(150) + i * 2
+                );
+                // var text = new BABYLON.GUI.TextBlock();
+                // text.text = "Topic #:" + i + " O: ";
+                // text.color = "white";
+                // text.fontSize = 18;
+​
+                var topicButton = BABYLON.GUI.Button.CreateSimpleButton(
+                  "but",
+                  restObj.data[i].content
+                );
+                topicButton.width = 0.2;
+                topicButton.height = "40px";
+                topicButton.color = "white";
+                topicButton.background = "green";
+                // topicText.textVerticalAlignment = 0;
+                // topicText.lineSpacing = "10px";
+                advancedTexture.addControl(topicButton);
+                panel.addControl(topicButton);
+              }
+            }
+          });
+          return scene;
+        };
+        /******* End of the create scene function ******/
+​
+        var addTopic = function(i) {
+          //
+        };
+​
+        var scene = createScene(); //Call the createScene function
+​
+        // Register a render loop to repeatedly render the scene
+        engine.runRenderLoop(function() {
+          scene.render();
+        });
+​
+        // Watch for browser/canvas resize events
+        window.addEventListener("resize", function() {
+          engine.resize();
+        });
+      });
+    </script>
+  </body>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="dpt-client.js"></script>
+</html>
