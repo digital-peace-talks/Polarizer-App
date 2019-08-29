@@ -1,19 +1,29 @@
 const ServerError = require("../../lib/error");
+const config = require("../../lib/config");
 const Topic = require("../models/topic").topicModel;
-//const User = require("../models/user").userModel;
+
+
 /**
  * @param {Object} options
  * @throws {Error}
  * @return {Promise}
  */
 module.exports.getTopics = async (options) => {
-  const topics = await Topic.find();
+	var topics;
+	try {
+	  topics = await Topic.find();
+	} catch(error) {
+		return({
+			status: 500,
+			data: error.message
+		});
+	}
 
-  return {
-    status: 200,
-    data: topics
-  };
-};
+	return({
+		status: 200,
+		data: topics
+	});
+}
 
 /**
  * @param {Object} options
@@ -22,15 +32,23 @@ module.exports.getTopics = async (options) => {
  * @return {Promise}
  */
 module.exports.topicPut = async (topic) => {
-  const result = await Topic.findByIdAndUpdate(
-    topic.topicId,
-    topic.body
-  );
-  return {
-    status: 200,
-    data: "topicPut ok!",
-  };
-};
+	var result;
+	try {
+		result = await Topic.findByIdAndUpdate(
+			topic.topicId,
+			topic.body
+		);
+	} catch(error) {
+		return({
+			status: 500,
+			data: error.message
+		});
+	}
+	return({
+		status: 200,
+		data: "topicPut ok!",
+	});
+}
 
 /**
  * @param {Object} options
@@ -38,26 +56,18 @@ module.exports.topicPut = async (topic) => {
  * @return {Promise}
  */
 module.exports.topicPost = async (topics) => {
-  const result = await Topic.create(topics.body);
-  // Implement your business logic here...
-  //
-  // This function should return as follows:
-  //
-  // return {
-  //   status: 200, // Or another success code.
-  //   data: [] // Optional. You can put whatever you want here.
-  // };
-  //
-  // If an error happens during your business logic implementation,
-  // you should throw an error as follows:
-  //
-  // throw new ServerError({
-  //   status: 500, // Or another error code.
-  //   error: 'Server Error' // Or another error message.
-  // });
+	var result;
+	try {
+		result = await Topic.create(topics.body);
+	} catch(error) {
+		return({
+			status: 500,
+			data: error.message
+		});
+	}
 
-  return {
-    status: 200,
-    data: result,
-  };
-};
+	return {
+		status: 200,
+		data: result,
+	};
+}
