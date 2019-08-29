@@ -45,7 +45,6 @@
     <canvas id="renderCanvas"></canvas>
     <script>
 
-
         //Set font
         var font_size = 48;
         var font = "bold " + font_size + "px Arial";
@@ -122,7 +121,6 @@
                 );
 
                 // Input and such
-
                 // 2D GUI für input, tastatur, etc....
                 var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("GUI");
                 advancedTexture.setVisible = false;
@@ -137,7 +135,7 @@
                 input.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
                 input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
                 advancedTexture.addControl(input);
-
+                
                 // Tastatur (bottom, middle)
                 var keyboard = BABYLON.GUI.VirtualKeyboard.CreateDefaultLayout();
                 keyboard.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
@@ -184,11 +182,7 @@
                             var font = "bold 44px monospace";
                             textureGround.drawText(restObj.data[i].content, 75, 135, font, "green", "white", true, true);
 
-                            var text = new BABYLON.GUI.TextBlock();
-                            text.text = "Topic #:" + i + " O: ";
-                            // text.color = "white";
-                            // text.fontSize = 18;
-
+                   
                             var topicButton = BABYLON.GUI.Button.CreateSimpleButton(
                                 "but",
                                 restObj.data[i].content
@@ -205,15 +199,13 @@
                             topicButton.linkWithMesh(box);
                             topicButton.linkOffsetY = -50;
                             topicButton.onPointerUpObservable.add(function () {
-                               console.log(topicButton.text);
-                               // input.text = topicButton.text;
+                               console.log(topicButton.textBlock.text);
+                               input.text = topicButton.textBlock.text;
                             });
-
-
-
                         }
                     }
                 });
+                
                 return scene;
             };
             /******* End of the create scene function ******/
@@ -232,6 +224,7 @@
             window.addEventListener("resize", function () {
                 engine.resize();
             });
+            topicButton.textBlock.text = input.text;
         });
     </script>
 </body>
