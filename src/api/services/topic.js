@@ -1,5 +1,5 @@
 const ServerError = require("../../lib/error");
-const config = require("../lib/config");
+const config = require("../../lib/config");
 const Topic = require("../models/topic").topicModel;
 
 

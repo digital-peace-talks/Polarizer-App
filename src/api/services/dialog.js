@@ -1,5 +1,5 @@
 const ServerError = require("../../lib/error");
-const config = require("../lib/config");
+const config = require("../../lib/config");
 const mongoose = require("mongoose");
 const Dialog = require("../models/dialog").dialogModel;
 const Opinion = require("../models/opinion").opinionModel;
