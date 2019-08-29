@@ -216,21 +216,7 @@ match.push({
 	fun: async function(data, dptUUID) {
 		var user = userRegistered(dptUUID)
 		data.id = mongoose.Types.ObjectId(data.id);
-		var ret = await opinionService.getOpinionsByTopicId({body: data});
-		/*
-		log.debug('vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv');
-		log.debug("userid????: " + user.user.id.toString());
-		for(var i = 0; i < ret.data.length; i++) {
-			log.debug(ret.data[i]);
-			log.debug("userid??: " + ret.data[i].user._id.toString());
-			if(ret.data[i].user._id.toString() == user.user.id.toString()) {
-				ret.data[i].user = 'mine';
-			} else {
-				ret.data[i].user = 'xCaffe-C0fe-C0de';
-			}
-		}
-		log.debug('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^');
-		*/
+		var ret = await opinionService.getOpinionsByTopicId({body: data}, user.user.id);
 		return(ret);
 	}
 });
@@ -351,7 +337,7 @@ match.push({
 		if(user) {
 			data.body.initiator = user.user.id;
 			const ret = await dialogService.createDialog(data.body);
-			socket.emit('update', {path: '/dialog/', method: 'get'});
+			socket.emit('update', {path: '/dialog/list/', method: 'get'});
 			return({data: {}});
 		}
 	}
@@ -380,17 +366,18 @@ match.push({
 					sender: user.user.id
 				}
 			});
-			var dialog = await dialogService.getDialog({body: {dialogId: data.dialogId}});
-			for(var i = 0; i < global.dptNS.online.length; i++) {
-				if(global.dptNS.online[i].user.id == dialog.data.initiator.toString()
-				|| global.dptNS.online[i].user.id == dialog.data.recipient.toString()) {
-					global.dptNS.online[i].socket.emit('update', {path: '/dialog/'+data.dialogId+'/', method: 'get'});
+			if(ret.status == 200) {
+				var dialog = await dialogService.getDialog({body: {dialogId: data.dialogId}});
+				for(var i = 0; i < global.dptNS.online.length; i++) {
+					if(global.dptNS.online[i].user.id == dialog.data.initiator.toString()
+					|| global.dptNS.online[i].user.id == dialog.data.recipient.toString()) {
+						global.dptNS.online[i].socket.emit('update', {path: '/dialog/'+data.dialogId+'/', method: 'get'});
+					}
 				}
 			}
-//			user = userRegistered(data.publicKey);
 			return({data: ret});
 		} else {
-			return({data: {}});
+			return({data: {status: 400, data: "User not found" }});
 		}
 	}
 });
@@ -402,3 +389,4 @@ match.push({
 		console.log("escalate dialog");
 	}
 });
+
