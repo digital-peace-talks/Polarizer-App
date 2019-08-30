@@ -70,13 +70,13 @@ module.exports.userReclaim = async options => {
 	};
 }
 
-module.exports.onlineUsers = async options => {
+module.exports.onlineUsers = async (options) => {
 	var users;
 
 	try {
 		users = global.dptNS.online;
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
@@ -103,7 +103,7 @@ module.exports.getUsers = async (options) => {
 	try {
 		users= await User.find();
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
@@ -127,7 +127,7 @@ module.exports.createUser = async options => {
 		options.body.signupTime = new Date();
 		user = await User.create(options.body);
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
@@ -161,7 +161,7 @@ module.exports.loginUser = async options => {
 			});
 		}
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
@@ -188,7 +188,7 @@ module.exports.updateUser = async (options) => {
 				options.body
 		);
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
@@ -212,7 +212,7 @@ module.exports.deleteUser = async options => {
 	try {
 		result = await User.remove({ publicKey: options.publicKey });
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});

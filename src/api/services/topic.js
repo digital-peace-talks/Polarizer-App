@@ -13,7 +13,7 @@ module.exports.getTopics = async (options) => {
 	try {
 	  topics = await Topic.find();
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
@@ -39,7 +39,7 @@ module.exports.topicPut = async (topic) => {
 			topic.body
 		);
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
@@ -60,7 +60,7 @@ module.exports.topicPost = async (topics) => {
 	try {
 		result = await Topic.create(topics.body);
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});

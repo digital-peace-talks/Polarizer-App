@@ -61,6 +61,11 @@ jQuery(document).ready(function() {
 		if(!restObj) {
 			return;
 		}
+		if('status' in restObj
+		&& restObj.status > 399) {
+			alert(restObj.data);
+			return;
+		}
 		
 		if(restObj.data.status == 500) {
 			alert(restObj.data.data.error);
@@ -380,9 +385,11 @@ jQuery(document).ready(function() {
 				</center>
 				</div>
 				<div class="middle">
-				<div style="text-align: justify; text-justify: inter-word;" id="c1"><b>Others opinion:</b><br>${opinion1}</div>
+				<div style="text-align: justify; text-justify: inter-word;" id="c1">
+				<b>Others opinion:</b><br>${opinion1}</div>
 				<div style="padding-left: 30px; padding-right: 30px;" id="c2">${dialog}</div>
-				<div style="text-align:justify; text-justify:inter-word;" id="c3"><b>My opinion:</b><br>${opinion2}</div>
+				<div style="text-align:justify; text-justify:inter-word;" id="c3">
+				<b>My opinion:</b><br>${opinion2}</div>
 				</div>
 		`;
 
@@ -392,10 +399,16 @@ jQuery(document).ready(function() {
 					<center>
 					<form id="dialogFrame">
 					<input type="text" name="message" size="120" id="dialogInput">
+					<input type="submit" name="send" value="send">
+					<input type="button" value="close window" name="close window" id="dialogClose">
 					</form>
 			   		</center>
 			   </div>
 			`;
+			jQuery(document).one('click', "#dialogClose", function(event) {
+				jQuery('#misc').empty();
+				event.preventDefault();
+			});
 		} else if(currentDialog.status == 'PENDING') {
 			if(currentDialog.initiator == 'me') {
 				html += `

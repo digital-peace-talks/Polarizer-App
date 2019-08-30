@@ -15,7 +15,7 @@ module.exports.getUserMetadata = async (options) => {
 		user= await User.findOne({ publicKey: options.body.publicKey })
 				.populate('topics').populate('opinions').populate('dialogs');
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});

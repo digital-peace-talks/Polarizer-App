@@ -53,7 +53,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 				data: opinions
 			});
 		} catch(error) {
-			return({
+			throw({
 				status: 500,
 				data: error.message
 			});
@@ -77,7 +77,7 @@ module.exports.getOpinions = async (options) => {
 	try {
 		opinions = await Opinion.find([]);
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
@@ -102,7 +102,7 @@ module.exports.opinionPut = async (options) => {
 			options.body
 		);
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
@@ -124,7 +124,7 @@ module.exports.opinionPost = async options => {
 	try {
 		result = await Opinion.create(options.body);
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
