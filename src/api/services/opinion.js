@@ -133,7 +133,7 @@ module.exports.opinionPost = async options => {
 	if(options.body.content.length > config.api.maxContentLength) {
 		throw {
 			status: 500,
-			data: "Topic text is to long",
+			data: "Opinion text is to long",
 		};
 	}	
 
