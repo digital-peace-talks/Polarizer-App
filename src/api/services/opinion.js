@@ -53,7 +53,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 				data: opinions
 			});
 		} catch(error) {
-			return({
+			throw({
 				status: 500,
 				data: error.message
 			});
@@ -77,7 +77,7 @@ module.exports.getOpinions = async (options) => {
 	try {
 		opinions = await Opinion.find([]);
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
@@ -96,17 +96,26 @@ module.exports.getOpinions = async (options) => {
  */
 module.exports.opinionPut = async (options) => {
 	var result
+
+	if(options.body.content.length > config.api.maxContentLength) {
+		throw {
+			status: 500,
+			data: "Topic text is to long",
+		};
+	}
+
 	try {
 		result = await Opinion.findByIdAndUpdate(
 			options.opinionId,
 			options.body
 		);
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
 	}
+
 	return({
 		status: 200,
 		data: result,
@@ -120,11 +129,18 @@ module.exports.opinionPut = async (options) => {
  */
 module.exports.opinionPost = async options => {
 	var result;
-	
+
+	if(options.body.content.length > config.api.maxContentLength) {
+		throw {
+			status: 500,
+			data: "Topic text is to long",
+		};
+	}	
+
 	try {
 		result = await Opinion.create(options.body);
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});

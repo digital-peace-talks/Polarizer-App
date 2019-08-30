@@ -54,7 +54,11 @@ async function apiBroker(obj, dptUUID, socket) {
 			    && obj.method == match[i].method) {
 
 			    	// call the matching function
-			        ret = await match[i].fun(obj.data, dptUUID, socket); 
+//			    	try {
+			    		ret = await match[i].fun(obj.data, dptUUID, socket); 
+//			    	} catch(error) {
+//			    		ret = error;
+//			    	}
 
 			        // clone the data
 			        ret = JSON.parse(JSON.stringify(ret.data));
@@ -83,8 +87,9 @@ async function apiBroker(obj, dptUUID, socket) {
 			    }
 			}
 		}
-	} catch(err) {
-		log.error("error: " + err);
+	} catch(error) {
+		ret = error;
+		log.error("error:> " + util.inspect(ret));
 	}
 	return(ret);
 }

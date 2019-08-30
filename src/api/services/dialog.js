@@ -14,12 +14,18 @@ const Lo_ = require("lodash");
  */
 module.exports.createDialog = async (options) => {
 	console.log(options);
+	if(options.opinionProposition.length > config.api.maxContentLength) {
+		throw {
+			status: 500,
+			data: "Proposition text is to long",
+		};
+	}
 	try {
 		const opinion = await Opinion.findOne({"_id": mongoose.Types.ObjectId(options.opinion)});
 		options.recipient = opinion.user;
 		const result = await Dialog.create(options);
 	} catch(error) {
-		return {
+		throw {
 			status: 500,
 			data: error.message,
 		};
@@ -36,7 +42,7 @@ module.exports.getDialog = async (options) => {
 	try {
 		result = await Dialog.findOne({"_id": mongoose.Types.ObjectId(options.body.dialogId)})
 	} catch(error) {
-		return {
+		throw {
 			status: 500,
 			data: error.message,
 		};
@@ -92,7 +98,7 @@ module.exports.getDialogList = async (options) => {
 			}
 		}
 	} catch(error) {
-		return {
+		throw {
 			status: 500,
 			data: error.message,
 		};
@@ -116,7 +122,7 @@ module.exports.updateDialog = async options => {
 	try {
 		result = await Dialog.findByIdAndUpdate(options.dialogId, options.body);
 	} catch(error) {
-		return {
+		throw {
 			status: 500,
 			data: error.message,
 		};
@@ -139,9 +145,9 @@ module.exports.postMessage = async options => {
 	var dialog;
 	
 	if(options.body.content.length > config.api.maxContentLength) {
-		return {
+		throw {
 			status: 500,
-			data: { error: "Text entry is to long" },
+			data: "Text entry is to long",
 		};
 	}
 
@@ -150,7 +156,7 @@ module.exports.postMessage = async options => {
 		dialog.messages.push(options.body);
 		dialog.save();
 	} catch(error) {
-		return {
+		throw {
 			status: 500,
 			data: error.message,
 		};
@@ -175,7 +181,7 @@ module.exports.createCrisis = async options => {
 		dialog.crisises.push(options.body);
 		await dialog.save();
 	} catch (error) {
-		return {
+		throw {
 			status: 500,
 			data: error.message,
 		};

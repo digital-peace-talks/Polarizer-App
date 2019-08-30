@@ -43,7 +43,7 @@ app.use((req, res, next) => {
 // catch errors
 app.use((err, req, res, next) => {
   const status = err.status || 500;
-  const msg = err.error || err.message;
+  const msg = err.error || err.message || err.data;
   log.error(
     `Error ${status} (${msg}) on ${req.method} ${req.url} with payload ${
       req.body

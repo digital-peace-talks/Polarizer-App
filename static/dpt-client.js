@@ -60,12 +60,12 @@ class DPT {
 		});
 	}
 	
-	putTopic(topic, topicId) {
+	putTopic(topic, topicId, publicKey) {
 		this.socket.emit("api", {
 			method: 'put',
 			path: '/topic/'+topicId+'/',
 			data: {
-				dptUUID: whoami.dptUUID,
+				dptUUID: publicKey,
 				topicId: topicId,
 				body: {
 					content: topic

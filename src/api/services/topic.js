@@ -13,7 +13,7 @@ module.exports.getTopics = async (options) => {
 	try {
 	  topics = await Topic.find();
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
@@ -33,13 +33,19 @@ module.exports.getTopics = async (options) => {
  */
 module.exports.topicPut = async (topic) => {
 	var result;
+	if(topic.body.content.length > config.api.maxContentLength) {
+		throw {
+			status: 500,
+			data: "Topic text is to long",
+		};
+	}
 	try {
 		result = await Topic.findByIdAndUpdate(
 			topic.topicId,
 			topic.body
 		);
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
@@ -55,12 +61,18 @@ module.exports.topicPut = async (topic) => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.topicPost = async (topics) => {
+module.exports.topicPost = async (topic) => {
 	var result;
+	if(topic.body.content.length > config.api.maxContentLength) {
+		throw {
+			status: 500,
+			data: "Topic text is to long",
+		};
+	}
 	try {
-		result = await Topic.create(topics.body);
+		result = await Topic.create(topic.body);
 	} catch(error) {
-		return({
+		throw({
 			status: 500,
 			data: error.message
 		});
