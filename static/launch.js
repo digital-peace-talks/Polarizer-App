@@ -67,11 +67,6 @@ jQuery(document).ready(function() {
 			return;
 		}
 		
-		if(restObj.data.status == 500) {
-			alert(restObj.data.data.error);
-//			return;
-		}
-		
 		if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/'
 		&& restObj.method == 'get') {
 			var old = currentDialog;
@@ -322,7 +317,7 @@ jQuery(document).ready(function() {
 			event.preventDefault();
 		});
 		jQuery(document).one("submit", "form.newTopic", function(event) {
-			dpt.putTopic(this[0].value, this.parentNode.nextElementSibling.id);
+			dpt.putTopic(this[0].value, this.parentNode.nextElementSibling.id, whoami.dptUUID);
 			event.stopImmediatePropagation();
 			event.preventDefault();
 		});
