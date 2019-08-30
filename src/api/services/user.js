@@ -7,7 +7,7 @@ const Lo_ = require('lodash');
 
 
 
-module.exports.userReclaim = async options => {
+module.exports.userReclaim = async (options) => {
 	var status = 200;
 	const userByPhraseGuess = await User.findOne({ phrase: options.body.phraseGuess });
 	const newPhrase = await User.findOne({ phrase: options.body.newPhrase });
@@ -120,7 +120,7 @@ module.exports.getUsers = async (options) => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.createUser = async options => {
+module.exports.createUser = async (options) => {
 	var user;
 
 	try {
@@ -144,7 +144,7 @@ module.exports.createUser = async options => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.loginUser = async options => {
+module.exports.loginUser = async (options) => {
 
 	var result
 
@@ -206,7 +206,7 @@ module.exports.updateUser = async (options) => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.deleteUser = async options => {
+module.exports.deleteUser = async (options) => {
 	var result;
 	
 	try {
