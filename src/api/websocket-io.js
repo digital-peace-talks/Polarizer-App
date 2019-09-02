@@ -20,6 +20,19 @@ const log		= logger(config.logger);
 var cookieKey		= process.env.DPT_SECRET;
 
 
+const getCircularReplacer = () => {
+	const seen = new WeakSet();
+	return (key, value) => {
+		if (typeof value === "object" && value !== null) {
+			if (seen.has(value)) {
+				return;
+			}
+			seen.add(value);
+		}
+		return value;
+	};
+};
+
 /*
 	apiBroker sounds impressive. but in the end it parses an openapi json
 	message. such a request message looks like this:
@@ -61,7 +74,7 @@ async function apiBroker(obj, dptUUID, socket) {
 //			    	}
 
 			        // clone the data
-			        ret = JSON.parse(JSON.stringify(ret.data));
+			        ret = JSON.parse(JSON.stringify(ret.data, getCircularReplacer()));
 
 			        // hide the users mongodb id.
 			        if(Lo_.isArray(ret)) {
