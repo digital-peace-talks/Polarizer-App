@@ -10,41 +10,58 @@ const messageSchema = mongoose.Schema({
 
 const crisisSchema = mongoose.Schema({
   startDate: { type: Date, required: true, default: Date.now },
-  expirationDate: { type: Date, required: true },
+  expirationDate: { type: Date, default: () => { return Date.now() + 86400000 * 5 }, required: true },
   initiator: { type: Schema.Types.ObjectId, ref: "User", required: true },
   reason: { type: String, required: true },
   causingMessage: { type: Schema.Types.ObjectId, ref: "Dialog.messages" },
 });
 
 const dialogSchema = mongoose.Schema({
-  opinion: {
-    type: Schema.Types.ObjectId,
-    ref: "Opinion",
-    required: true,
-  },
-  status: {
-    type: String,
-    enum: ["PENDING", "ACTIVE", "CRISIS", "CLOSED"],
-    default: "PENDING",
-  },
-  startDate: {
-    type: Date,
-    required: true,
-    default: Date.now,
-  },
-  opinionProposition: String,
-  initiator: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  recipient: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  messages: [messageSchema],
-  crisises: [crisisSchema],
+	opinion: {
+		type: Schema.Types.ObjectId,
+		ref: "Opinion",
+		required: true,
+	},
+
+	status: {
+		type: String,
+		enum: ["PENDING", "ACTIVE", "CRISIS", "CLOSED"],
+		default: "PENDING",
+	},
+
+	extension: {
+		type: Number,
+		default: 1,
+		required: true,
+	},
+	
+	extensionState: {
+		type: Number,
+		default: 0,
+		required: true,
+	},
+	
+	startDate: {
+		type: Date,
+		required: true,
+		default: Date.now,
+	},
+
+	opinionProposition: String,
+
+	initiator: {
+		type: Schema.Types.ObjectId,
+		ref: "User",
+		required: true,
+	},
+
+	recipient: {
+		type: Schema.Types.ObjectId,
+		ref: "User",
+		required: true,
+	},
+	messages: [messageSchema],
+	crisises: [crisisSchema],
   // messages: [
   //   {
   //     _id: { type: Schema.Types.ObjectId },
@@ -65,18 +82,18 @@ const dialogSchema = mongoose.Schema({
 });
 
 dialogSchema.post("save", async doc => {
-  await User.findByIdAndUpdate(doc.initiator, { $addToSet: { dialogs: doc } });
-  await User.findByIdAndUpdate(doc.recipient, { $addToSet: { dialogs: doc } });
-  // initiator.save();
-  // const recipient = await User.findById(doc.recipient);
-  // recipient.dialogs.push(doc);
-  // recipient.save();
+	await User.findByIdAndUpdate(doc.initiator, { $addToSet: { dialogs: doc } });
+	await User.findByIdAndUpdate(doc.recipient, { $addToSet: { dialogs: doc } });
+	// initiator.save();
+	// const recipient = await User.findById(doc.recipient);
+	// recipient.dialogs.push(doc);
+	// recipient.save();
 });
 
 dialogSchema.post("remove", async doc => {
-  const user = await User.findById(doc.user);
-  user.dialogs.pull(doc);
-  user.save();
+	const user = await User.findById(doc.user);
+	user.dialogs.pull(doc);
+	user.save();
 });
 
 exports.dialogModel = mongoose.model("Dialog", dialogSchema);

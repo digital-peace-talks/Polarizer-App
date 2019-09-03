@@ -296,12 +296,14 @@ match.push({
 		var user = userRegistered(dptUUID);
 		var dialog = {};
 		dialog.messages = [];
+		dialog.crisises = [];
 		if(user) {
 			var ret = await dialogService.getDialog(data);
 			ret = ret.data;
-//			dialog.crisis = ret.crisis;
+//			dialog.crisises = ret.crisises;
 			dialog.status = ret.status;
 			dialog.opinionProposition = ret.opinionProposition;
+			dialog.extension = ret.extension;
 			dialog.dialog = ret._id.toString();
 			
 			if(ret.initiator.toString() == user.user.id) {
@@ -310,6 +312,17 @@ match.push({
 			} else {
 				dialog.initiator = 'notme';
 				dialog.recipient = 'me';
+			}
+
+			for(var i=0; i < ret.crisises.length; i++) {
+				var crisis = {};
+				crisis.crisisesId = ret.crisises[i]._id.toString();
+				if(ret.crisises[i].initiator.toString() == user.user.id) {
+					crisis.initiator = 'me';
+				} else {
+					crisis.initiator = 'notme';
+				}
+				dialog.crisises.push(crisis);
 			}
 
 			for(var i=0; i < ret.messages.length; i++) {
@@ -385,8 +398,22 @@ match.push({
 match.push({
 	path: "/dialog/"+ dialogIdReg +"/crisis/",
 	method: "post",
-	fun: function() {
-		console.log("escalate dialog");
+	fun: async function(data, dptUUID, socket) {
+		var user = userRegistered(data.initiator);
+		if(user) {
+			console.log("escalate dialog");
+			const ret = await dialogService.createCrisis({
+				dialogId: data.dialogId,
+				body: {
+					causingMessage: data.causingMessage,
+					reason: data.reason,
+					initiator: user.user.id,
+				}
+			});
+			return(ret);
+		} else {
+			return({data: {status: 400, data: "User not found" }});
+		}
 	}
 });
 

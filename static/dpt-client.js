@@ -184,4 +184,17 @@ class DPT {
 			},
 		});
 	}
+	
+	postCrisis(reason, dialogId, messageId, publicKey) {
+		this.socket.emit('api', {
+			method: 'post',
+			path: '/dialog/'+dialogId+'/crisis/',
+			data: {
+				initiator: publicKey,
+				reason: reason,
+				dialogId: dialogId,
+				causingMessage: messageId
+			}
+		});
+	}
 }

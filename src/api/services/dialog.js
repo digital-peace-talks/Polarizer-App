@@ -176,6 +176,7 @@ module.exports.postMessage = async options => {
  */
 module.exports.createCrisis = async options => {
 	var dialog;
+
 	try {
 		dialog = await Dialog.findById(options.dialogId);
 		dialog.crisises.push(options.body);
