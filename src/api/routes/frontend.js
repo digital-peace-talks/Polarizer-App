@@ -79,8 +79,8 @@ router.post('/recover', async (req, res, next) => {
 	if(ret.newCookie)  {
 		res.cookie('dptUUID', ret.newCookie, cookieOptions);
 		await res.writeHead(302, {
-		  //'Location': '/launch'
-		  'Location': '/'
+		  'Location': '/launch'
+		  //'Location': '/'
 		  //add other headers here...
 		});
 		res.end();
