@@ -322,6 +322,10 @@ match.push({
 				} else {
 					crisis.initiator = 'notme';
 				}
+				if(ret.status == 'CLOSED') {
+					crisis.reason = ret.crisises[i].reason;
+					crisis.rating = ret.crisises[i].rating;
+				}
 				dialog.crisises.push(crisis);
 			}
 

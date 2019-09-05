@@ -97,6 +97,29 @@ module.exports.getDialogList = async (options) => {
 				result.push(collection);
 			}
 		}
+		for(var i=0; i<result.length; i++) {
+			if(result[i].status == 'ACTIVE') {
+				result[i].status = 'C';
+			} else if(result[i].status == 'PENDING') {
+				result[i].status = 'A';
+			} else if(result[i].status == 'CRISIS') {
+				result[i].status = 'B';
+			} else if(result[i].status == 'CLOSED') {
+				result[i].status = 'D';
+			}
+		}
+		result = Lo_.sortBy(result, ['status', 'messages.timestamp']);
+		for(var i=0; i<result.length; i++) {
+			if(result[i].status == 'C') {
+				result[i].status = 'ACTIVE';
+			} else if(result[i].status == 'A') {
+				result[i].status = 'PENDING';
+			} else if(result[i].status == 'B') {
+				result[i].status = 'CRISIS';
+			} else if(result[i].status == 'D') {
+				result[i].status = 'CLOSED';
+			}
+		}
 	} catch(error) {
 		throw {
 			status: 500,
@@ -104,10 +127,10 @@ module.exports.getDialogList = async (options) => {
 		};
 	}
 	
-	return {
+	return({
 		status: 200,
 		data: result,
-	};
+	});
 };
 
 /**
@@ -116,7 +139,7 @@ module.exports.getDialogList = async (options) => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.updateDialog = async options => {
+module.exports.updateDialog = async (options) => {
 	var result;
 
 	try {
@@ -147,19 +170,31 @@ module.exports.postMessage = async options => {
 	if(options.body.content.length > config.api.maxContentLength) {
 		throw {
 			status: 500,
-			data: "Text entry is to long",
+			data: "Text entry is to long.",
 		};
 	}
 
 	try {
+
 		dialog = await Dialog.findById(options.dialogId);
+		
+		if(dialog.messages.length+1 > 10 * dialog.extension) {
+			throw {
+				status: 500,
+				data: "Message limit exceeded.",
+			};
+		}
+
 		dialog.messages.push(options.body);
 		dialog.save();
+
 	} catch(error) {
+
 		throw {
 			status: 500,
-			data: error.message,
+			data: error.message||error.data,
 		};
+
 	}
 
 	return {
@@ -181,6 +216,12 @@ module.exports.createCrisis = async options => {
 		dialog = await Dialog.findById(options.dialogId);
 		dialog.crisises.push(options.body);
 		await dialog.save();
+		if(dialog.crisises.length >= 2) {
+			module.exports.updateDialog({
+				dialogId: options.dialogId,
+				body: { status: 'CLOSED' },
+			});
+		}
 	} catch (error) {
 		throw {
 			status: 500,

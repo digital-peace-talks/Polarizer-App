@@ -370,21 +370,46 @@ jQuery(document).ready(function() {
 	
 	function crisisForm(messageId) {
 
-		jQuery('#misc2').append('<div style="position: absolute; padding: 10px; left: 37%;'
-				+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="crisis">'
-				+'crisis form.<br><br>'
-				+'Finish the dialog '+ messageId +'.<br>'
-				+'Please enter the reason:<br><form id="crisis">'
-				+'<input type="text" name="reason" size="50" class="reason"></form></div>');
+		var message = '';
+
+		for(var i=0; i < currentDialog.messages.length; i++) {
+			if(currentDialog.messages[i].messageId == messageId) {
+				message = currentDialog.messages[i].content;
+				break;
+			}
+		}
+		jQuery('#misc2').append(`
+			<div style="position: absolute; padding: 10px; left: 37%;
+			border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="crisis">
+			<u>End of discussion, appraisal of results.</u><br><br>
+			Finish the dialog under Topic:<br><b>${currentDialog.topic}</b><br><br>
+			Most impressive message:<br><b>${message}</b><br><br>
+			Please enter the reason:<br>
+			<form id="crisis">
+			<input type="text" name="reason" size="50" class="reason"><br><br>
+			<label style="color: #f00;">[-1: <input type="radio" name="rating" value="-1">]</label>
+			<label style="color: #77f;">[0: <input type="radio" name="rating" value="0" checked>]</label>
+			<label style="color: #0f0;">[1: <input type="radio" name="rating" value="1">]</label><br>
+			<input type="submit" name="send" value="send">
+			<input type="button" value="close window" name="close window" id="crisisCloseWindow">
+			</form>
+			</div>
+		`);
 
 		jQuery(".crisis").focus();
 
 		jQuery("#crisis").submit(function(event) {
 			event.stopImmediatePropagation();
 			event.preventDefault();
-			dpt.postCrisis(jQuery('.reason').val(), currentDialog.dialog, messageId, whoami.dptUUID);
+			dpt.postCrisis(jQuery('.reason').val(), jQuery("input[name='rating']:checked").val(), currentDialog.dialog, messageId, whoami.dptUUID);
 			jQuery('#misc2').empty();
 		});
+		
+		jQuery(document).one('click', "#crisisCloseWindow", function(event) {
+			dialogFormOpen = 0;
+			jQuery('#misc2').empty();
+			event.preventDefault();
+		})
 
 	}
 	
@@ -392,8 +417,15 @@ jQuery(document).ready(function() {
 
 		var opinion1;
 		var opinion2;
+		var dialog = '';
+		var meReadyToEnd = '';
+		var otherReadyToEnd = '';
+		var viewOnly = true;
+		
+		const maxMessages = currentDialog.extension * 10;
 
 		dialogFormOpen = 1;
+
 		if(currentDialog.initiator == 'me') {
 
 			opinion1 = currentDialog.recipientOpinion;
@@ -408,26 +440,26 @@ jQuery(document).ready(function() {
 
 		}
 		
-		var dialog = '';
-		var myMessageCount = 0;
-		var othersMessageCount = 0;
-		var meReadyToEnd = '';
-		var otherReadyToEnd = '';
-		var viewOnly = true;
-		
-		const maxMessages = currentDialog.extension * 10;
-
 		if(currentDialog.messages.length == 0) {
 			dialog = '<i style="line-height: 0px">&nbsp;</i>';
 		}
 
 		for(var i=0; i < currentDialog.crisises.length; i++) {
-			if(currentDialog.crisises[i].initiator == 'me') {
-				meReadyToEnd = 'Ready to End';
+
+			if(currentDialog.status == 'CLOSED') {
+				if(currentDialog.crisises[i].initiator == 'me') {
+					meReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
+				} else if(currentDialog.crisises[i].initiator == 'notme') {
+					otherReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
+				}
+			} else {
+				if(currentDialog.crisises[i].initiator == 'me') {
+					meReadyToEnd = 'Ready to End';
+				} else if(currentDialog.crisises[i].initiator == 'notme') {
+					otherReadyToEnd = 'Ready to End';
+				}
 			}
-			if(currentDialog.crisises[i].initiator == 'notme') {
-				otherReadyToEnd = 'Ready to End';
-			}
+
 		}
 		
 		if(meReadyToEnd == '') {
@@ -438,14 +470,12 @@ jQuery(document).ready(function() {
 
 			if(currentDialog.messages[i].sender == 'me') {
 				dialog += '<p class="right">' + currentDialog.messages[i].content + '</p>';
-				myMessageCount++;
 			} else {
 				var option = '';
 				if(viewOnly == false) {
 					option = ' <span class="crisis" id="'+ currentDialog.messages[i].messageId +'">&#9878;</span>';
 				}
 				dialog += '<p class="left">' + currentDialog.messages[i].content + option + '</p>';
-				othersMessageCount++;
 			}
 
 		}
@@ -457,15 +487,15 @@ jQuery(document).ready(function() {
 				<div class="table">
 				<div class="top">
 				<center>
-					<h3>${currentDialog.topic}</h3>
+					<h3>${currentDialog.topic} <b>Messages:</b> <div style="position:relative; height: 100%">${currentDialog.messages.length} of ${maxMessages}</h3>
 				</center>
 				</div>
 				<div class="middle">
-				<div style="text-align: justify; text-justify: inter-word;" id="c1">
-				<b>Others opinion:</b><br>${opinion1}<br><br><b>Messages:</b> ${othersMessageCount} of ${maxMessages}<br><br><b>${otherReadyToEnd}</b></div>
-				<div style="padding-left: 30px; padding-right: 30px;" id="c2">${dialog}</div>
-				<div style="text-align:justify; text-justify:inter-word;" id="c3">
-				<b>My opinion:</b><br>${opinion2}<br><br><b>Messages:</b> ${myMessageCount} of ${maxMessages}<br><br><b>${meReadyToEnd}</b></div>
+				<div style="position: absolute; text-align: justify; text-justify: inter-word;" id="c1">
+				<b>Others opinion:</b><br>${opinion1}<br><br>${otherReadyToEnd}</div>
+				<div style="position: absolute; overflow-y: auto; margin-left: 20%; max-height: 80%; width: 53%; padding-left: 30px; padding-right: 30px; height: 100%; overflow-y: auto;" id="c2">${dialog}</div>
+				<div style="position: absolute; margin-left: 80%; text-align:justify; text-justify:inter-word;" id="c3">
+				<b>My opinion:</b><br>${opinion2}<br><br>${meReadyToEnd}</div>
 				</div>
 		`;
 
@@ -577,6 +607,16 @@ jQuery(document).ready(function() {
 		html += '</div></div>';
 		
 		jQuery('#misc').append(html);
+		
+		if(currentDialog.status == 'CLOSED') {
+			for(var i=0; i < currentDialog.crisises.length; i++) {
+				if(currentDialog.crisises[i].sender == 'me') {
+					jQuery('#c3', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
+				} else {
+					jQuery('#c1', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
+				}
+			}
+		}
 
 		jQuery(document).one('submit', '#dialogFrame', function(event) {
 			event.stopImmediatePropagation();
@@ -586,7 +626,7 @@ jQuery(document).ready(function() {
 			jQuery("#dialogInput").focus();
 		});
 
-		jQuery(document).one('click', '.crisis', function(event) {
+		jQuery(document).on('click', '.crisis', function(event) {
 			crisisForm(this.id);
 			event.stopImmediatePropagation();
 			event.preventDefault();

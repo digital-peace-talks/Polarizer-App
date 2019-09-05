@@ -185,13 +185,14 @@ class DPT {
 		});
 	}
 	
-	postCrisis(reason, dialogId, messageId, publicKey) {
+	postCrisis(reason, rating, dialogId, messageId, publicKey) {
 		this.socket.emit('api', {
 			method: 'post',
 			path: '/dialog/'+dialogId+'/crisis/',
 			data: {
 				initiator: publicKey,
 				reason: reason,
+				rating: rating,
 				dialogId: dialogId,
 				causingMessage: messageId
 			}

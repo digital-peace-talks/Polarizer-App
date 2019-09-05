@@ -66,12 +66,7 @@ async function apiBroker(obj, dptUUID, socket) {
 			    if(obj.path.match('^'+match[i].path+'$')
 			    && obj.method == match[i].method) {
 
-			    	// call the matching function
-//			    	try {
-			    		ret = await match[i].fun(obj.data, dptUUID, socket); 
-//			    	} catch(error) {
-//			    		ret = error;
-//			    	}
+		    		ret = await match[i].fun(obj.data, dptUUID, socket); 
 
 			        // clone the data
 			        ret = JSON.parse(JSON.stringify(ret.data, getCircularReplacer()));
