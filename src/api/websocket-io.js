@@ -215,6 +215,7 @@ io.on('connection', function(socket) {
 	socket.on('disconnect', async (reason) => {
 		log.info(socket.id+" disconnected, reason: "+reason);
 		var user = Lo_.find(global.dptNS.online, {socketid: socket.id});
+		log.info("user disconnected: "+util.inspect(user));
 		if(user) {
 			var updateUser = await User.userModel.findById(user.user.id);
 			updateUser.onlineTimes.push({ login: user.login, logout: Date.now() });
