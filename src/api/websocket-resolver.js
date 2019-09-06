@@ -267,8 +267,9 @@ match.push({
 				method: 'get',
 				data: { id: data.topicId }
 			});
+			return(ret);
 		} else {
-			return({});
+			return({status: 400, data: "User not found"});
 		}
 	}
 });
