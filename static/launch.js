@@ -481,13 +481,13 @@ jQuery(document).ready(function() {
 		}
 
 		var html = `<div style="position: absolute; padding: 10px;
-				border: #fff; border-style: solid; border-width: 5px;
+				border: #666; border-style: solid; border-width: 5px;
 				background: #0a120a; margin-left: 10%; margin-right: 10%;
 				min-height: 80%; min-width: 80%" id="dialogFrame">
 				<div class="table">
 				<div class="top">
 				<center>
-					<h3>${currentDialog.topic} <b>Messages:</b> <div style="position:relative; height: 100%">${currentDialog.messages.length} of ${maxMessages}</h3>
+					<h3>${currentDialog.topic}</h3><hr>Messages: <b>${currentDialog.messages.length} of ${maxMessages}</b>
 				</center>
 				</div>
 				<div class="middle">
