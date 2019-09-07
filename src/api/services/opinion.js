@@ -109,7 +109,7 @@ module.exports.opinionPut = async (options) => {
 			options.opinionId,
 			options.body
 		);
-		result.content = options.body.content;
+//		result.content = options.body.content;
 	} catch(error) {
 		throw({
 			status: 500,

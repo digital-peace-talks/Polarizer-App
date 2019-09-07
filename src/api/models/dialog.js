@@ -2,6 +2,11 @@ const User = require("./user").userModel;
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const extensionRequestSchema = mongoose.Schema({
+	timestamp: {type: Date, default: Date.now},
+	sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
+});
+	
 const messageSchema = mongoose.Schema({
 	timestamp: {type: Date, default: Date.now},
 	sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
@@ -36,11 +41,7 @@ const dialogSchema = mongoose.Schema({
 		required: true,
 	},
 	
-	extensionState: {
-		type: Number,
-		default: 0,
-		required: true,
-	},
+	extensionRequests: [extensionRequestSchema],
 	
 	startDate: {
 		type: Date,

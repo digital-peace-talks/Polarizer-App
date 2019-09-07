@@ -163,7 +163,7 @@ module.exports.updateDialog = async (options) => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.postMessage = async options => {
+module.exports.postMessage = async (options) => {
 
 	var dialog;
 	
@@ -209,7 +209,7 @@ module.exports.postMessage = async options => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.createCrisis = async options => {
+module.exports.createCrisis = async (options) => {
 	var dialog;
 
 	try {
@@ -234,3 +234,32 @@ module.exports.createCrisis = async options => {
 		data: dialog
 	};
 };
+
+
+
+module.exports.extensionRequest = async (options) => {
+	var dialog;
+	try {
+		dialog = await Dialog.findById(options.dialogId);
+		dialog.extensionRequests.push( options.body );
+		await dialog.save();
+		if(dialog.extensionRequests.length >= 2) {
+			dialog = module.exports.updateDialog({
+				dialogId: options.dialogId,
+				body: {
+					extension: dialog.extension + 1,
+					extensionRequests: [],
+				},
+			});
+		}
+		return({
+			status: 200,
+			data: dialog,
+		});
+	} catch (error) {
+		throw({
+			status: 500,
+			data: error.message,
+		});
+	}
+}

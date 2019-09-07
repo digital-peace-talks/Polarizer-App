@@ -198,4 +198,15 @@ class DPT {
 			}
 		});
 	}
+	
+	extensionRequest(dialogId, publicKey) {
+		this.socket.emit('api', {
+			method: 'post',
+			path: '/dialog/'+dialogId+'/extensionRequest/',
+			data: {
+				dialogId: dialogId,
+				sender: publicKey,
+			}
+		});
+	}
 }

@@ -140,6 +140,7 @@ jQuery(document).ready(function() {
 			}
 
 			for (i in restObj.data) {
+				options = '';
 
 				if(restObj.data[i].user == 'mine') {
 					options = '<span class="editOpinion" id="'
@@ -459,7 +460,13 @@ jQuery(document).ready(function() {
 					otherReadyToEnd = 'Ready to End';
 				}
 			}
-
+		}
+		
+		var extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest">`;
+		for(var i=0; i < currentDialog.extensionRequests.length; i++) {
+			if(currentDialog.extensionRequests[i].sender == 'me') {
+				extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest" checked>`;
+			}
 		}
 		
 		if(meReadyToEnd == '') {
@@ -495,7 +502,7 @@ jQuery(document).ready(function() {
 				<b>Others opinion:</b><br>${opinion1}<br><br>${otherReadyToEnd}</div>
 				<div style="position: absolute; overflow-y: auto; margin-left: 20%; max-height: 80%; width: 53%; padding-left: 30px; padding-right: 30px; height: 100%; overflow-y: auto;" id="c2">${dialog}</div>
 				<div style="position: absolute; margin-left: 80%; text-align:justify; text-justify:inter-word;" id="c3">
-				<b>My opinion:</b><br>${opinion2}<br><br>${meReadyToEnd}</div>
+				<b>My opinion:</b><br>${opinion2}<br><br>${meReadyToEnd}<br><br>${extensionRequest}</div>
 				</div>
 		`;
 
@@ -529,6 +536,12 @@ jQuery(document).ready(function() {
 				dialogFormOpen = 0;
 				jQuery('#misc').empty();
 				event.preventDefault();
+			});
+
+			jQuery(document).one('click', "#extensionRequest", function(event) {
+				if(jQuery("#extensionRequest").is(':checked')) {
+					dpt.extensionRequest(currentDialog.dialog, whoami.dptUUID);
+				}
 			});
 
 		} else if(currentDialog.status == 'PENDING') {

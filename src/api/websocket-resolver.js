@@ -37,6 +37,15 @@ function userRegistered(dptUUID) {
 	}
 }
 
+async function publishDialogUpdate(dialogId) {
+	var dialog = await dialogService.getDialog({body: {dialogId: dialogId}});
+	for(var i = 0; i < global.dptNS.online.length; i++) {
+		if(global.dptNS.online[i].user.id == dialog.data.initiator.toString()
+		|| global.dptNS.online[i].user.id == dialog.data.recipient.toString()) {
+			global.dptNS.online[i].socket.emit('update', {path: '/dialog/'+dialogId+'/', method: 'get'});
+		}
+	}
+}
 
 /*
 	from here on we setup the match array, which will be used in the
@@ -298,6 +307,7 @@ match.push({
 		var dialog = {};
 		dialog.messages = [];
 		dialog.crisises = [];
+		dialog.extensionRequests = [];
 		if(user) {
 			var ret = await dialogService.getDialog(data);
 			ret = ret.data;
@@ -340,6 +350,18 @@ match.push({
 					message.sender = 'notme';
 				}
 				dialog.messages.push(message);
+			}
+			
+			for(var i=0; i < ret.extensionRequests.length; i++) {
+				var request = {};
+				request.extensionRequestId = ret.extensionRequests[i]._id.toString();
+				if(ret.extensionRequests[i].sender.toString() == user.user.id) {
+					request.sender = 'me';
+				} else {
+					request.sender = 'notme';
+				}
+
+				dialog.extensionRequests.push(request);
 			}
 
 			return({data: dialog});
@@ -385,13 +407,7 @@ match.push({
 				}
 			});
 			if(ret.status == 200) {
-				var dialog = await dialogService.getDialog({body: {dialogId: data.dialogId}});
-				for(var i = 0; i < global.dptNS.online.length; i++) {
-					if(global.dptNS.online[i].user.id == dialog.data.initiator.toString()
-					|| global.dptNS.online[i].user.id == dialog.data.recipient.toString()) {
-						global.dptNS.online[i].socket.emit('update', {path: '/dialog/'+data.dialogId+'/', method: 'get'});
-					}
-				}
+				publishDialogUpdate(data.dialogId);
 			}
 			return({data: ret});
 		} else {
@@ -422,3 +438,29 @@ match.push({
 	}
 });
 
+match.push({
+	path: "/dialog/"+ dialogIdReg +"/extensionRequest/",
+	method: "post",
+	fun: async function(data, dptUUID, socket) {
+		var user = userRegistered(data.sender);
+		if(user) {
+			console.log("dialog extension requested");
+			ret = await dialogService.extensionRequest({ dialogId: data.dialogId, body: { sender: user.user.id }});
+			/*
+			for(var i=0; i < ret.length; i++) {
+				if(ret.sender == user.user.id) {
+					ret.sender = 'me';
+				} else {
+					ret.sender = 'me';
+				}
+			}
+			*/
+			if(ret.status == 200) {
+				publishDialogUpdate(data.dialogId);
+			}
+			return({ data: {} });
+		} else {
+			return({data: {status: 400, data: "User not found" }});
+		}
+	}
+});
