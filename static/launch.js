@@ -462,10 +462,13 @@ jQuery(document).ready(function() {
 			}
 		}
 		
-		var extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest">`;
-		for(var i=0; i < currentDialog.extensionRequests.length; i++) {
-			if(currentDialog.extensionRequests[i].sender == 'me') {
-				extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest" checked>`;
+		var extensionRequest = '';
+		if(currentDialog.status == 'ACTIVE') {
+			extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest">`;
+			for(var i=0; i < currentDialog.extensionRequests.length; i++) {
+				if(currentDialog.extensionRequests[i].sender == 'me') {
+					extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest" checked>`;
+				}
 			}
 		}
 		
