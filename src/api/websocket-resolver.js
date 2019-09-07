@@ -451,7 +451,7 @@ match.push({
 				if(ret.sender == user.user.id) {
 					ret.sender = 'me';
 				} else {
-					ret.sender = 'me';
+					ret.sender = 'notme';
 				}
 			}
 			*/
