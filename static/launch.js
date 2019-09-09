@@ -48,13 +48,15 @@ jQuery(document).ready(function() {
         if(restObj.path.startsWith('/opinion/')
         && restObj.data.id == currentTopic
         && restObj.method == 'get') {
-        	dpt.getOpinionByTopic(currentTopic);
-        }
+            dpt.getOpinionByTopic(currentTopic);
+            alert("dtp.getOpionion by topic")
+       {   dpt.getOpinionByTopic(currentTopic); }
         
         if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/'
         && restObj.method == 'get') {
         	dpt.getDialog(currentDialog.dialog);
         }
+    };
 	});
 
 	socket.on('api', function(restObj) {

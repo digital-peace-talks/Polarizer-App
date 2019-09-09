@@ -1,3 +1,46 @@
+                // var topicAsAppendableElement = document.createElement("p");
+                // topicAsAppendableElement.innerHTML = restObj.data[i].content;
+                // main.appendChild(topicAsAppendableElement) + "<br>";
+                // allTopics.push(restObj.data[i].content);
+                // addTopic[i];
+
+                //create one box for every topic received from 
+                var box = BABYLON.MeshBuilder.CreateBox(
+                  "box",
+                  {
+                    height: 5,
+                  },
+                  scene
+                );
+                box.position = new BABYLON.Vector3(
+                  Math.random(150) + i * 2,
+                  Math.random(150) + i * 10,
+                  Math.random(150) + i * 2
+                );
+                // var text = new BABYLON.GUI.TextBlock();
+                // text.text = "Topic #:" + i + " O: ";
+                // text.color = "white";
+                // text.fontSize = 18;
+
+                var topicButton = BABYLON.GUI.Button.CreateSimpleButton(
+                  "but" + [i],
+                  restObj.data[i].content
+                );
+                topicButton.width = 0.2;
+                topicButton.height = "40px";
+                topicButton.color = "white";
+                topicButton.background = "green";
+
+                // topicText.textVerticalAlignment = 0;
+                // topicText.lineSpacing = "10px";
+                advancedTexture.addControl(topicButton);
+                panel.addControl(topicButton);
+
+                topicButton.onPointerDownObservable.add(function() {
+                  console.log(topicButton.textBlock.text);
+                });
+
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -154,8 +197,6 @@
               var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
                 "UI"
               );
-              var panel = new BABYLON.GUI.StackPanel();
-              advancedTexture.addControl(panel);
 
               for (i in restObj.data) {
                 var box = BABYLON.MeshBuilder.CreateBox(
@@ -202,7 +243,6 @@
                 // topicText.textVerticalAlignment = 0;
                 // topicText.lineSpacing = "10px";
                 advancedTexture.addControl(topicButton);
-                //panel.addControl(topicButton);
                 topicButton.linkWithMesh(box);
                 topicButton.linkOffsetY = -50;
                 topicButton.onPointerUpObservable.add(function() {
