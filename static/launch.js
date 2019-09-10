@@ -6,6 +6,7 @@ jQuery(document).ready(function() {
 	var currentTopic = 0;
 	var currentDialog;
 	var dialogFormOpen = 0;
+	var colors = {};
 	var whoami = { dptUUID: '', user: {}};
 	
 	
@@ -132,8 +133,50 @@ jQuery(document).ready(function() {
 			var canInvite = false;
 
 			jQuery('div.col.mid').html('<h2>Opinions</h2>');
+			
+			colors = {};
+			for(var i in restObj.data) {
+				colors[restObj.data[i].topo.opinionId] = restObj.data[i].topo;
+			}
+				/*	
+			colors = {};
+			for(var i=0; i < restObj.data.length; i++) {
+				const root = restObj.data[i]._id;
+				const topo = restObj.data[i].topo;
+				console.log('');
+				console.log('');
+				console.log(root);
+				console.log('---------------------');
 
-			for (i in restObj.data) {
+				if(topo) {
+				for(var j=0; j < topo.leafs.length; j++) {
+					console.log(topo.leafs[j].opinionId);
+//					if('rating' in topo.leafs[j] && topo.leafs[j].opinionId != root) {
+					if('rating' in topo.leafs[j]) {
+//						if(!(topo.leafs[j].opinionId in colors)) {
+//							colors[topo.leafs[j].opinionId] = {red: [], blue: [], green: []};
+//						}
+						if(!(root in colors)) {
+							colors[root] = {red: [], blue: [], green: []};
+						}
+						if(topo.leafs[j].rating == -1) {
+//							colors[topo.leafs[j].opinionId].red.push(topo.leafs[j].opinionId);
+							colors[root].red.push(topo.leafs[j].opinionId);
+						} else if(topo.leafs[j].rating == 0) {
+//							colors[topo.leafs[j].opinionId].blue.push(topo.leafs[j].opinionId);
+							colors[root].blue.push(topo.leafs[j].opinionId);
+						} else if(topo.leafs[j].rating == 1) {
+//							colors[topo.leafs[j].opinionId].green.push(topo.leafs[j].opinionId);
+							colors[root].green.push(topo.leafs[j].opinionId);
+						}
+						console.log(topo.leafs[j].rating);
+					}
+				}
+			}
+			}
+			*/
+
+			for (var i in restObj.data) {
 				if(restObj.data[i].user == 'mine') {
 					canInvite = true;
 				}
@@ -157,10 +200,12 @@ jQuery(document).ready(function() {
 					}
 				}
 
-				jQuery('div.col.mid').append('<li><span class="text">'
+				jQuery('div.col.mid').append('<li class="connector" id="'+ restObj.data[i]._id +'"><span class="text">'
 				+ restObj.data[i].content
-				+ "</span> " +options+ "</li><br>");
+				+ "</span> " +options+ ' <span class="connector" id="'+ restObj.data[i]._id +'"></span></li><br>');
 			}
+			
+			
 
 			if(restObj.data.length > 0) {
 				dpt.opinionPostAllowed(restObj.data[0].topic);
@@ -669,7 +714,47 @@ jQuery(document).ready(function() {
 
 	});
 
-	jQuery(document).on('mouseover', '.dialog', (event) => {
+	
+	jQuery(document).on('mouseenter touchstart', 'li.connector', (event) => {
+		/*
+		jQuery(event.currentTarget).children("span.connector").html(`
+		${event.currentTarget.id}
+			<b style="color: #f00">${colors[event.currentTarget.id].red.length}</b>,
+			<b style="color: #88f">${colors[event.currentTarget.id].blue.length}</b>,
+			<b style="color: #0f0">${colors[event.currentTarget.id].green.length}</b>
+		`);
+		*/
+		var root = event.currentTarget.id;
+		for(var i in colors[root].leafs.negative) {
+			jQuery(`span#${colors[root].leafs.negative[i]}.connector`).append(`
+				<b style="color: #f00">${colors[root].leafs.negative.length}</b>,
+			`);
+		}
+		for(var i in colors[root].leafs.neutral) {
+			jQuery(`span#${colors[root].leafs.neutral[i]}.connector`).append(`
+				<b style="color: #88f">${colors[root].leafs.neutral.length}</b>,
+			`);
+		}
+		for(var i in colors[root].leafs.positive) {
+			jQuery(`span#${colors[root].leafs.positive[i]}.connector`).append(`
+				<b style="color: #0f0">${colors[root].leafs.positive.length}</b>,
+			`);
+		}
+		for(var i in colors[root].leafs.unset) {
+			jQuery(`span#${colors[root].leafs.unset[i]}.connector`).append(`
+				<b style="color: #ccc">${colors[root].leafs.unset.length}</b>,
+			`);
+		}
+		event.preventDefault();
+	});
+	jQuery(document).on('mouseleave touchend', 'li.connector', (event) => {
+		var root = event.currentTarget.id;
+//		jQuery(event.currentTarget).children("span.connector").html('');
+		jQuery("span.connector").text('');
+		event.preventDefault();
+	});
+
+	jQuery(document).on('mouseenter touchstart', '.dialog', (event) => {
 
 		jQuery(event.currentTarget).css({"background-color": "#1a221a"});
 		jQuery(event.currentTarget.children[2]).css({"visibility": "visible", "line-height": "100%"});
@@ -677,7 +762,7 @@ jQuery(document).ready(function() {
 
 	});
 
-	jQuery(document).on('mouseout', '.dialog', (event) => {
+	jQuery(document).on('mouseleave touchend', '.dialog', (event) => {
 
 		jQuery(event.currentTarget).css({"background-color": "#0a120a"});
 		jQuery(event.currentTarget.children[2]).css({"visibility": "hidden", "line-height": "0%"});
@@ -685,7 +770,7 @@ jQuery(document).ready(function() {
 
 	});
 
-	jQuery(document).on('click', '.dialog', (event) => {
+	jQuery(document).on('touchend click', '.dialog', (event) => {
 
 		currentDialog = jQuery(event.currentTarget).children('div.dialogInfo');
 		currentDialog = JSON.parse(currentDialog[0].textContent);

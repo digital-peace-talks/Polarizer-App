@@ -428,6 +428,7 @@ match.push({
 				body: {
 					causingMessage: data.causingMessage,
 					reason: data.reason,
+					rating: data.rating,
 					initiator: user.user.id,
 				}
 			});
