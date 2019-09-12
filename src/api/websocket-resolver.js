@@ -201,8 +201,9 @@ match.push({
 			io.emit('update', {
 				path: '/topic/',
 				method: 'get',
-				data: {}
+				data:  {}
 			});
+			return(ret);
 		} else {
 			return({});
 		}

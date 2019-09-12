@@ -52,7 +52,7 @@ module.exports.topicPut = async (topic) => {
 	}
 	return({
 		status: 200,
-		data: "topicPut ok!",
+		data: topic.body
 	});
 }
 
