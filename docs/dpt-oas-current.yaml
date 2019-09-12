@@ -5,7 +5,7 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   title: Digital Peace Talks
-  version: 1.0.1
+  version: 1.1.0
 servers:
 - description: dpt-oas-current
   url: https://proto1.dpt.world
@@ -14,11 +14,13 @@ tags:
   name: topic
 - description: Access to opinions made by users
   name: opinion
-- description: Get, create or update a dialog
+- description: Get, create or update a dialog, send messages, manage crisises
   name: dialog
 - description: User operations
   name: user
+
 paths:
+
   /metadata/user/{publicKey}/:
     get:
       operationId: getUserMetadata
@@ -49,6 +51,58 @@ paths:
       tags:
       - metadata
       - user
+
+
+  /user/registered/{publicKey}/:
+    get:
+      description: Check, if the user with the given publicKey, exists
+      operationId: userRegistered
+      parameters:
+      - description: User we like to check
+        explode: false
+        in: path
+        name: publicKey
+        required: true
+        schema:
+          pattern: ^[a-zA-Z0-9]{111}$
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              {}
+        description: data we need
+        required: true
+      responses:
+        default:
+          content: {}
+          description: successful operation
+      summary: Check registered user by publicKey
+      tags:
+      - user
+      
+  /user/online/:
+    get:
+      description: Get a list of all users currently online.
+      operationId: onlineUsers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              {}
+        description: data, we need
+        required: true
+      responses:
+        default:
+          content: {}
+          description: successful operation
+      summary: Get a list of online users.
+      tags:
+      - user
+
+
+
   /user/:
     post:
       operationId: createUser
@@ -66,6 +120,8 @@ paths:
       summary: Creates a user
       tags:
       - user
+
+
   /user/login/:
     post:
       description: Issues a JWT for the user - [click for further reading](http://jwt.io)
@@ -88,6 +144,8 @@ paths:
       summary: Logs user into the system
       tags:
       - user
+
+
   /user/{publicKey}/:
     delete:
       description: This can only be done by the logged in user.
@@ -164,9 +222,12 @@ paths:
       summary: Updates a user
       tags:
       - user
+
+
   /user/reclaim/{publicKey}/:
     put:
-      description: if the user lost the public key, somehow, the user is able to reclaim the account with a stored phrase. thats passed with this message.
+      description: if the user lost the public key, somehow, the user is able
+        to reclaim the account with a stored phrase. thats passed with this message.
       operationId: userReclaim
       parameters:
       - description: the required data for the server are the phrase and the publicKEY
@@ -181,6 +242,19 @@ paths:
         content:
           application/json:
             schema:
+              {}
+        description: data we need
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                {}
+          description: all fine
+      summary: reclaim an account
+      tags:
+      - user
             
       
   /topic/:
@@ -226,6 +300,8 @@ paths:
       tags:
       - topic
     summary: Contains topic operations
+
+
   /topic/{topicId}/:
     put:
       description: The user has changed its mind and would like to alter topic. This
@@ -266,6 +342,8 @@ paths:
       summary: Updates a topic
       tags:
       - topic
+
+
   /opinion/{topicId}/:
     get:
       operationId: getOpinionsByTopicId
@@ -292,6 +370,8 @@ paths:
                 type: array
           description:
             Successful operation
+
+
   /opinion/:
     get:
       operationId: getOpinions
@@ -335,6 +415,32 @@ paths:
       tags:
       - opinion
     summary: Contains opinion operations
+
+
+  /opinion/postAllowed/:
+    get:
+      description: Can the user post a new opinion? Only one opinion per user
+        per topic.
+      operationId: opinionPostAllowed
+      requestBody:
+        content:
+          application/json:
+            schema:
+              {}
+        description: data we need
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                {}
+          description: successful operation
+      summary: Check, if the user is able to post an opinion
+      tags:
+      - user
+      - opinion
+
+
   /opinion/{opinionId}/:
     put:
       description: The user has changed its mind and would like to alter a opinion.
@@ -375,6 +481,8 @@ paths:
       summary: Updates a opinion
       tags:
       - opinion
+
+
   /dialog/:
     post:
       operationId: createDialog
@@ -403,11 +511,29 @@ paths:
       tags:
       - dialog
     summary: Main dialog endpoint
+
+
+  /dialog/list/:
+    get:
+      description: Get a list of dialogs associated with the user.
+      operationId: getDialogList
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                {}
+          description: data we need
+      summary: List all dialogs of associated with the user.
+      tags:
+      - dialog, user
+
+
   /dialog/{dialogId}/:
     get:
       operationId: getDialog
       parameters:
-      - description: ID of dialog to return
+      - description: ID of the dialog to return.
         explode: false
         in: path
         name: dialogId
@@ -478,6 +604,8 @@ paths:
       tags:
       - dialog
     summary: Endpoint for a specific dialog
+
+
   /dialog/{dialogId}/message/:
     post:
       operationId: postMessage
@@ -509,6 +637,8 @@ paths:
       summary: Posts a message to a dialog
       tags:
       - dialog
+
+
   /dialog/{dialogId}/crisis/:
     post:
       operationId: createCrisis
@@ -541,6 +671,40 @@ paths:
       tags:
       - dialog
       - crisis
+
+  /dialog/{dialogId}/extensionRequest/:
+    post:
+      description: We limit the number of messages per dialog. If both users
+        request more messages, they will get more messages.
+      operationId: extenstionRequest
+      parameters:
+      - description: ID of dialog
+        explode: false
+        in: path
+        name: dialogId
+        required: true
+        schema:
+          pattern: ^[a-f\d]{24}$
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              {}
+        required: true
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                {}
+          description: data we need 
+      summary: extend the number of messages
+      tags:
+      - dialog
+             
+
 components:
   requestBodies:
     inline_object:
@@ -549,6 +713,7 @@ components:
           schema:
             $ref: '#/components/schemas/inline_object'
   schemas:
+
     Topic:
       example:
         id: id
@@ -572,6 +737,7 @@ components:
             $ref: '#/components/schemas/Opinion'
           type: array
       type: object
+
     Opinion:
       example:
         id: id
@@ -594,6 +760,7 @@ components:
           pattern: ^[a-f\d]{24}$
           type: string
       type: object
+      
     Crisis:
       example:
         reason: reason
@@ -624,6 +791,7 @@ components:
           pattern: ^[a-f\d]{24}$
           type: string
       type: object
+      
     Dialog:
       example:
         opinionProposition: OpinionProposition
@@ -697,6 +865,7 @@ components:
           - closed
           type: string
       type: object
+      
     Message:
       example:
         sender: sender
@@ -718,6 +887,7 @@ components:
           example: Hi mate, how are you doing?
           type: string
       type: object
+      
     User:
       example:
         opinions:
@@ -768,6 +938,7 @@ components:
           format: date-time
           type: string
       type: object
+      
     UserMetadata:
       description: Metadata for a user. This will be returned by the GET user method,
         and will not be saved in the database (as the data already exists in the user
@@ -813,6 +984,7 @@ components:
           format: date-time
           type: string
       type: object
+      
     ApiResponse:
       example:
         code: 0
@@ -824,6 +996,7 @@ components:
         message:
           type: string
       type: object
+      
     LoginResponse:
       example:
         user:
@@ -856,6 +1029,7 @@ components:
           pattern: ^[a-zA-Z0-9]{111}$
           type: string
       type: object
+      
   securitySchemes:
     bearerAuth:
       bearerFormat: JWT

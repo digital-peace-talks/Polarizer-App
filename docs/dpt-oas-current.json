@@ -7,7 +7,7 @@
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version" : "1.0.1"
+    "version" : "1.1.0"
   },
   "servers" : [ {
     "url" : "https://proto1.dpt.world",
@@ -21,7 +21,7 @@
     "description" : "Access to opinions made by users"
   }, {
     "name" : "dialog",
-    "description" : "Get, create or update a dialog"
+    "description" : "Get, create or update a dialog, send messages, manage crisises"
   }, {
     "name" : "user",
     "description" : "User operations"
@@ -64,6 +64,64 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/user/registered/{publicKey}/" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Check registered user by publicKey",
+        "description" : "Check, if the user with the given publicKey, exists",
+        "operationId" : "userRegistered",
+        "parameters" : [ {
+          "name" : "publicKey",
+          "in" : "path",
+          "description" : "User we like to check",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-zA-Z0-9]{111}$",
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "data we need",
+          "content" : {
+            "application/json" : {
+              "schema" : { }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "default" : {
+            "description" : "successful operation",
+            "content" : { }
+          }
+        }
+      }
+    },
+    "/user/online/" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "Get a list of online users.",
+        "description" : "Get a list of all users currently online.",
+        "operationId" : "onlineUsers",
+        "requestBody" : {
+          "description" : "data, we need",
+          "content" : {
+            "application/json" : {
+              "schema" : { }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "default" : {
+            "description" : "successful operation",
+            "content" : { }
           }
         }
       }
@@ -232,6 +290,45 @@
         } ]
       }
     },
+    "/user/reclaim/{publicKey}/" : {
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "reclaim an account",
+        "description" : "if the user lost the public key, somehow, the user is able to reclaim the account with a stored phrase. thats passed with this message.",
+        "operationId" : "userReclaim",
+        "parameters" : [ {
+          "name" : "publicKey",
+          "in" : "path",
+          "description" : "the required data for the server are the phrase and the publicKEY",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-zA-Z0-9]{111}$",
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "data we need",
+          "content" : {
+            "application/json" : {
+              "schema" : { }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "default" : {
+            "description" : "all fine",
+            "content" : {
+              "application/json" : {
+                "schema" : { }
+              }
+            }
+          }
+        }
+      }
+    },
     "/topic/" : {
       "summary" : "Contains topic operations",
       "get" : {
@@ -356,7 +453,7 @@
       "get" : {
         "tags" : [ "opinion" ],
         "summary" : "Get a list of all opinions of a specified topic.",
-        "operationId" : "getOpinionsBLA",
+        "operationId" : "getOpinionsByTopicId",
         "parameters" : [ {
           "name" : "topicId",
           "in" : "path",
@@ -448,6 +545,32 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ]
+      }
+    },
+    "/opinion/postAllowed/" : {
+      "get" : {
+        "tags" : [ "user", "opinion" ],
+        "summary" : "Check, if the user is able to post an opinion",
+        "description" : "Can the user post a new opinion? Only one opinion per user per topic.",
+        "operationId" : "opinionPostAllowed",
+        "requestBody" : {
+          "description" : "data we need",
+          "content" : {
+            "application/json" : {
+              "schema" : { }
+            }
+          }
+        },
+        "responses" : {
+          "default" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : { }
+              }
+            }
+          }
+        }
       }
     },
     "/opinion/{opinionId}/" : {
@@ -549,6 +672,24 @@
         } ]
       }
     },
+    "/dialog/list/" : {
+      "get" : {
+        "tags" : [ "dialog, user" ],
+        "summary" : "List all dialogs of associated with the user.",
+        "description" : "Get a list of dialogs associated with the user.",
+        "operationId" : "getDialogList",
+        "responses" : {
+          "default" : {
+            "description" : "data we need",
+            "content" : {
+              "application/json" : {
+                "schema" : { }
+              }
+            }
+          }
+        }
+      }
+    },
     "/dialog/{dialogId}/" : {
       "summary" : "Endpoint for a specific dialog",
       "get" : {
@@ -558,7 +699,7 @@
         "parameters" : [ {
           "name" : "dialogId",
           "in" : "path",
-          "description" : "ID of dialog to return",
+          "description" : "ID of the dialog to return.",
           "required" : true,
           "style" : "simple",
           "explode" : false,
@@ -745,6 +886,44 @@
         "security" : [ {
           "bearerAuth" : [ ]
         } ]
+      }
+    },
+    "/dialog/{dialogId}/extensionRequest/" : {
+      "post" : {
+        "tags" : [ "dialog" ],
+        "summary" : "extend the number of messages",
+        "description" : "We limit the number of messages per dialog. If both users request more messages, they will get more messages.",
+        "operationId" : "extenstionRequest",
+        "parameters" : [ {
+          "name" : "dialogId",
+          "in" : "path",
+          "description" : "ID of dialog",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "pattern" : "^[a-f\\d]{24}$",
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : { }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "default" : {
+            "description" : "data we need",
+            "content" : {
+              "application/json" : {
+                "schema" : { }
+              }
+            }
+          }
+        }
       }
     }
   },

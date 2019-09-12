@@ -40,8 +40,17 @@ class DPT {
 		});
 	}
 	
-	// topic
+	userDelete(publicKey) {
+		this.socket.emit("api", {
+			method: 'delete',
+			path: '/users/'+publicKey+'/',
+			data: {
+				publicKey: publicKey,
+			}
+		});
+	}
 	
+	// topic
 	
 	getTopic() {
 		this.socket.emit("api", {
@@ -76,6 +85,14 @@ class DPT {
 	
 	// opinion
 	
+	getOpinion() {
+		this.socket.emit("api", {
+			method: "get",
+			path: "/opinion/"+topicId+"/",
+			data: {},
+		});
+	}
+
 	getOpinionByTopic(topicId) {
 		this.socket.emit("api", {
 			method: "get",
@@ -125,7 +142,6 @@ class DPT {
 	// dialog
 	
 	postDialog(proposition, publicKey, opinionId) {
-		console.log('here we go: '+proposition+' me: '+publicKey+' opinionId: '+opinionId);
 		this.socket.emit("api", {
 			method: 'post',
 			path: '/dialog/',
