@@ -1,10 +1,6 @@
 <!-- 
-      /*withDialogue() appends a speech bubble graphic to the opinion text, if canDialogue == true.
-  user can dialogue with another opinion only if user has submitted an opinion to the topic.
-  There are several problems with this- the big one is that we only set canDialogue to true when user adds an opinion to the topic.
-  So if user opines and refreshes the page, s/he can no longer start a dialogue.
-  The solution is to compare the user id with the id of the creater of each opinion. If there is a match - IE if the user is the author of one of the opinions -  the set dialogue button to visible.
-  I'm going to try and implement this now - am 12/09/19 -R*/
+      /*
+      Better solution to the problem of verifying whether or not user can begin a dialogue is to use the opinionPostAllowed API. -R*/
  -->
 
 <!DOCTYPE html>
@@ -36,6 +32,8 @@
     <canvas id="renderCanvas" touch-action="none"></canvas>
     <script>
       let topicData = [];
+      let opinionData = [];
+
       var currentTopic = 0;
       var opinions = [];
       var canDialogue = false;
@@ -44,6 +42,7 @@
       // var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI");
       // array-länge ergibt anzahl der topics
       var opinionanzahl = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+      var whoOfferedOpinion = [];
       //Set font
       var font_size = 48;
       var font = "bold " + font_size + "px Arial";
@@ -150,13 +149,27 @@
               restObj.path == "/opinion/" + currentTopic + "/" &&
               restObj.method == "get"
             ) {
-              console.log(restObj);
-              console.log(topicData);
+              //   console.log(restObj);
+              //   console.log(topicData[0].user);
               for (i = 0; i < restObj.data.length; i++) {
                 opinions.push(restObj.data[i].content);
+                whoOfferedOpinion.push(topicData[i]);
+
+                // whoOfferedOpinion.push(topicData[i].user);
               }
-              console.log("Opinions Array:" + opinions);
+
+              console.log("who offered opinions:" + whoOfferedOpinion);
+              //   console.log("whoami " + whoami.dptUUID);
+              //   console.log("Opinions Array:" + opinions);
             }
+            // if (restObj.path == "/opinion/postAlllowed") {
+            //   for (i = 0; i < restObj.data.length; i++) {
+            //     console.log(
+            //       "Opinion Post Allowed: " +
+            //         dpt.opinionPostAllowed(restObj.data[0].topic)
+            //     );
+            //   }
+            // }
 
             if (
               currentDialog &&
@@ -194,21 +207,19 @@
 
               //when user pushes a topic button:
               topicButton.onPointerUpObservable.add(function() {
+                dpt.opinionPostAllowed(topicData[i].id);
                 console.log("the id =" + topicData[i].id);
                 currentTopic = topicData[i].id;
-                // let test = dpt.getOpinionByTopic();
                 // let plate = test;
                 dpt.getOpinionByTopic(topicData[i].id);
 
-                // console.log(">>>>" + dpt.opinions.findOne());
-
-                console.log(topicButton.textBlock.text);
                 /*Hide All Topics in Topic Panel on Any topic Click:*/
                 var btnsInPanel = panel.getDescendants();
                 btnsInPanel.forEach(btn => {
                   btn.isVisible = false;
                 });
                 tempTopic = topicButton;
+
                 showOpinions(topicButton); //ask server .dpt.getopinionby topic _id as done in dpt client
                 enableOfferOpinion();
               });
@@ -290,11 +301,17 @@
             for (let i = 0; i < topicData.length; i++) {
               dpt.getOpinionByTopic(topicData[i].id);
             }
-            canDialogue = true;
             showOpinions(tempTopic);
           }
           function showOpinions(topicButton) {
             setTimeout(function() {
+                for(let i = 0; i<whoOfferedOpinion.length; i++){
+                    if(whoOfferedOpinion[i]==="mine"){
+                        canDialogue = true;
+                        alert("true")
+                    }
+                
+                }
               console.log("hello " + topicButton.textBlock.text);
               //   alert("running show opinions");
               //retrieve opinions corresponding to this topic
@@ -315,6 +332,7 @@
                 "Transformation"
               );
               for (let i = 0; i < opinions.length; i++) {
+
                 let topicOpinion = BABYLON.GUI.Button.CreateSimpleButton(
                   "but", // + i,
 
