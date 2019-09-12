@@ -1,3 +1,12 @@
+<!-- 
+      /*withDialogue() appends a speech bubble graphic to the opinion text, if canDialogue == true.
+  user can dialogue with another opinion only if user has submitted an opinion to the topic.
+  There are several problems with this- the big one is that we only set canDialogue to true when user adds an opinion to the topic.
+  So if user opines and refreshes the page, s/he can no longer start a dialogue.
+  The solution is to compare the user id with the id of the creater of each opinion. If there is a match - IE if the user is the author of one of the opinions -  the set dialogue button to visible.
+  I'm going to try and implement this now - am 12/09/19 -R*/
+ -->
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -308,6 +317,7 @@
               for (let i = 0; i < opinions.length; i++) {
                 let topicOpinion = BABYLON.GUI.Button.CreateSimpleButton(
                   "but", // + i,
+
                   withDialogue()
                 );
                 topicOpinion.width = 0.4;
@@ -315,9 +325,6 @@
                 topicOpinion.color = "white";
                 topicOpinion.background = "orange";
                 topicOpinion.uniqueId = i;
-                if (canDialogue) {
-                  topicOpinion;
-                }
 
                 function withDialogue() {
                   if (canDialogue && opinions[i] != opinionToSubmit) {
