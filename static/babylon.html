@@ -155,6 +155,40 @@
               }
 
               makeTopics();
+
+              for (i in restObj.data) {
+                var box = BABYLON.MeshBuilder.CreateBox(
+                  "box",
+                  { height: 1 },
+                  scene
+                );
+                box.position = new BABYLON.Vector3(i * 2, 0, 0);
+                //Create dynamic texture
+                var textureResolution = 256;
+                var textureGround = new BABYLON.DynamicTexture(
+                  "dynamic texture",
+                  { width: 256, height: 256 },
+                  scene
+                );
+                var textureContext = textureGround.getContext();
+
+                var materialGround = new BABYLON.StandardMaterial("Mat", scene);
+                materialGround.diffuseTexture = textureGround;
+                box.material = materialGround;
+
+                //Add text to dynamic texture
+                var font = "bold 44px monospace";
+                textureGround.drawText(
+                  restObj.data[i].content,
+                  75,
+                  135,
+                  font,
+                  "green",
+                  "white",
+                  true,
+                  true
+                );
+              }
             } else if (
               restObj.path == "/opinion/" + currentTopic + "/" &&
               restObj.method == "get"
@@ -198,6 +232,7 @@
             var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
               "UI"
             );
+
             var panel = new BABYLON.GUI.StackPanel();
             advancedTexture.addControl(panel);
             for (let i = 0; i < topicData.length; i++) {
