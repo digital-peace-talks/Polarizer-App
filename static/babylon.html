@@ -157,7 +157,7 @@
                 });
               }
 
-              makeTopics();
+              //   makeTopics();
 
               for (i in restObj.data) {
                 let box = BABYLON.MeshBuilder.CreateBox(
@@ -180,8 +180,28 @@
                   new BABYLON.ExecuteCodeAction(
                     BABYLON.ActionManager.OnPickTrigger,
                     function() {
-                      currentTopic = topicData[i].id;
-                      alert(box.uniqueId);
+                      var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
+                        "UI"
+                      );
+
+                      currentTopic = topicData[box.uniqueId].topic;
+                      var panel = new BABYLON.GUI.StackPanel();
+
+                      advancedTexture.addControl(panel);
+
+                      let topicButton = BABYLON.GUI.Button.CreateSimpleButton(
+                        "but", // + i,
+
+                        currentTopic
+                      );
+                      topicButton.width = 0.2;
+                      topicButton.height = "40px";
+                      topicButton.color = "white";
+                      topicButton.background = "green";
+                      topicButton.uniqueId = i;
+
+                      advancedTexture.addControl(topicButton);
+                      panel.addControl(topicButton);
                     }
                   )
                 );
@@ -245,12 +265,6 @@
             // alert("opinion maker active");
           }
           function makeTopics() {
-            var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
-              "UI"
-            );
-
-            var panel = new BABYLON.GUI.StackPanel();
-            advancedTexture.addControl(panel);
             for (let i = 0; i < topicData.length; i++) {
               let topicButton = BABYLON.GUI.Button.CreateSimpleButton(
                 "but", // + i,
