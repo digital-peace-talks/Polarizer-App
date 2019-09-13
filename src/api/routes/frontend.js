@@ -8,38 +8,6 @@ const getPhrase = require('../../lib/phrasegenerator')
 
 const router = new express.Router();
 
-//Deliver the dialog page
-router.get('/justTheTopics.html', async (req, res, next) => {
-	try {
-		// Do we need the 'real' IP address?
-		// var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-		var dptUUID = uuid();
-		var cookieOptions = {
-			maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
-			signed: true,
-			httpOnly: false
-		}
-
-		// First time visitor?
-		if(req.signedCookies.dptUUID === undefined) {
-			console.log("no cookie found, set new one");
-			// The client need to get the uuid for the first time, it needs to send it back.
-			cookieOptions.httpOnly = false;
-			res.cookie('dptUUID', dptUUID, cookieOptions)
-		} else {
-			console.log("use old cookie");
-			dptUUID = req.signedCookies.dptUUID;
-			res.cookie('dptUUID', dptUUID, cookieOptions)
-		}
-		console.log('session tagged with dptUUID '+dptUUID);
-		res.sendFile(process.env.DPT_PATH+'/static/justTheTopics.html');
-		res.end;
-   	} catch(err) {
-   		next(err);
-    }
-});
-
-
 router.get('/', async (req, res, next) => {
 	try {
 		if(req.signedCookies.dptUUID === undefined) {
@@ -51,7 +19,7 @@ router.get('/', async (req, res, next) => {
 			+ '<form method="post" action="/recover"><input type=text name=phraseinput>'
 			+ '<input type="hidden" name="phrase" value="'+phrase+'"></form>');
 		} else {
-			res.send('homepage<hr><br><br><a href=/launch>start dpt protype</a><br><br><a href=/babylon.html>babylon sample</a>');
+			res.send('homepage<hr><br><br><a href=/launch>start dpt protype</a><br><br><a href=/babylon.html>babylon sample</a><br><br><a href=/dialog.html>dialog sample</a>');
 		}
 		res.status(200);
 	} catch(err) {
@@ -108,6 +76,15 @@ router.get('/babylon.html', async (req, res, next) => {
 	}
 });
 
+router.get('/dialog.html', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/dialog.html');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
 router.get('/launch.js', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/launch.js');
@@ -117,7 +94,16 @@ router.get('/launch.js', async (req, res, next) => {
 	}
 });
 
-//Deliver the dialog page
+router.get('/dialog.js', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/dialog.js');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+//Deliver the launch page
 router.get('/launch', async (req, res, next) => {
 	try {
 		// Do we need the 'real' IP address?
@@ -147,8 +133,6 @@ router.get('/launch', async (req, res, next) => {
    		next(err);
     }
 });
-
-
 
 //Deliver the dialog page
 router.get('/dialog', async (req, res, next) => {
@@ -206,6 +190,37 @@ router.get('/babylon', async (req, res, next) => {
 		}
 		console.log('session tagged with dptUUID '+dptUUID);
 		res.sendFile(process.env.DPT_PATH+'/static/babylon.html');
+		res.end;
+   	} catch(err) {
+   		next(err);
+    }
+});
+
+//Deliver the justTheTopics page
+router.get('/justTheTopics.html', async (req, res, next) => {
+	try {
+		// Do we need the 'real' IP address?
+		// var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+		var dptUUID = uuid();
+		var cookieOptions = {
+			maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
+			signed: true,
+			httpOnly: false
+		}
+
+		// First time visitor?
+		if(req.signedCookies.dptUUID === undefined) {
+			console.log("no cookie found, set new one");
+			// The client need to get the uuid for the first time, it needs to send it back.
+			cookieOptions.httpOnly = false;
+			res.cookie('dptUUID', dptUUID, cookieOptions)
+		} else {
+			console.log("use old cookie");
+			dptUUID = req.signedCookies.dptUUID;
+			res.cookie('dptUUID', dptUUID, cookieOptions)
+		}
+		console.log('session tagged with dptUUID '+dptUUID);
+		res.sendFile(process.env.DPT_PATH+'/static/justTheTopics.html');
 		res.end;
    	} catch(err) {
    		next(err);
