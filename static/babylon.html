@@ -170,6 +170,17 @@
                   { width: 256, height: 256 },
                   scene
                 );
+
+                box.actionManager = new BABYLON.ActionManager(scene);
+                box.actionManager.registerAction(
+                  new BABYLON.InterpolateValueAction(
+                    BABYLON.ActionManager.OnPickTrigger,
+                    box,
+                    "visibility",
+                    0.2,
+                    1000
+                  )
+                );
                 var textureContext = textureGround.getContext();
 
                 var materialGround = new BABYLON.StandardMaterial("Mat", scene);
