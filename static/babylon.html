@@ -1,7 +1,10 @@
 <!-- 
       /*
       This version aims to integrate the 3d functionality with the database-connection functionality.
-      The 3d stuff being included is from an older verion of the babylon.html file, and the database-connection stuff will soon be upgraded as well. Putting the 2 older versions together here is mostly to find what's difficult about doing that - and will have to be done again soon with the more advanced versions of both.*/
+      The 3d stuff being included is from an older verion of the babylon.html file, and the database-connection stuff will soon be upgraded as well. Putting the 2 older versions together here is mostly to find what's difficult about doing that - and will have to be done again soon with the more advanced versions of both.
+      
+      note: I think InterpolateValueAction() can be used to reposition the camera on topic/opinion click. see https://doc.babylonjs.com/how_to/how_to_use_actions
+      */
  -->
 
 <!DOCTYPE html>
@@ -172,25 +175,13 @@
                 );
 
                 box.actionManager = new BABYLON.ActionManager(scene);
-                box.actionManager
-                  .registerAction(
-                    new BABYLON.InterpolateValueAction(
-                      BABYLON.ActionManager.OnPickTrigger,
-                      box,
-                      "visibility",
-                      0.2,
-                      1000
-                    )
+                box.actionManager.registerAction(
+                  new BABYLON.ExecuteCodeAction(
+                    BABYLON.ActionManager.OnPickTrigger,
+                    updateTopicHUD
                   )
-                  .then(
-                    new BABYLON.InterpolateValueAction(
-                      BABYLON.ActionManager.OnPickTrigger,
-                      box,
-                      "visibility",
-                      1.0,
-                      1000
-                    )
-                  );
+                );
+
                 var textureContext = textureGround.getContext();
 
                 var materialGround = new BABYLON.StandardMaterial("Mat", scene);
@@ -434,6 +425,10 @@
           engine.resize();
         });
       });
+
+      function updateTopicHUD() {
+        alert(this.id);
+      }
     </script>
   </body>
 </html>
