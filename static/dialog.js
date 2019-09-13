@@ -9,16 +9,14 @@ jQuery(document).ready(function() {
 	var colors = {};
 	var whoami = { dptUUID: '', user: {}};
 	
-	
 	// Handle the incomming websocket trafic
-
 	socket.on('connect', () => {
 		// if needed, we could keep socket.id somewhere
 		if(document.cookie) {
 			dpt.userLogin(document.cookie);
 		}
 	});
-		
+
 	// will be obsolete soon
 	socket.on('kanal', function(msg) {
 		jQuery('#messages').append(jQuery('<li>').text(msg.username +": "+msg.message));
@@ -138,43 +136,6 @@ jQuery(document).ready(function() {
 			for(var i in restObj.data) {
 				colors[restObj.data[i].topo.opinionId] = restObj.data[i].topo;
 			}
-				/*	
-			colors = {};
-			for(var i=0; i < restObj.data.length; i++) {
-				const root = restObj.data[i]._id;
-				const topo = restObj.data[i].topo;
-				console.log('');
-				console.log('');
-				console.log(root);
-				console.log('---------------------');
-
-				if(topo) {
-				for(var j=0; j < topo.leafs.length; j++) {
-					console.log(topo.leafs[j].opinionId);
-//					if('rating' in topo.leafs[j] && topo.leafs[j].opinionId != root) {
-					if('rating' in topo.leafs[j]) {
-//						if(!(topo.leafs[j].opinionId in colors)) {
-//							colors[topo.leafs[j].opinionId] = {red: [], blue: [], green: []};
-//						}
-						if(!(root in colors)) {
-							colors[root] = {red: [], blue: [], green: []};
-						}
-						if(topo.leafs[j].rating == -1) {
-//							colors[topo.leafs[j].opinionId].red.push(topo.leafs[j].opinionId);
-							colors[root].red.push(topo.leafs[j].opinionId);
-						} else if(topo.leafs[j].rating == 0) {
-//							colors[topo.leafs[j].opinionId].blue.push(topo.leafs[j].opinionId);
-							colors[root].blue.push(topo.leafs[j].opinionId);
-						} else if(topo.leafs[j].rating == 1) {
-//							colors[topo.leafs[j].opinionId].green.push(topo.leafs[j].opinionId);
-							colors[root].green.push(topo.leafs[j].opinionId);
-						}
-						console.log(topo.leafs[j].rating);
-					}
-				}
-			}
-			}
-			*/
 
 			for (var i in restObj.data) {
 				if(restObj.data[i].user == 'mine') {
@@ -716,14 +677,7 @@ jQuery(document).ready(function() {
 
 	
 	jQuery(document).on('mouseenter touchstart', 'li.connector', (event) => {
-		/*
-		jQuery(event.currentTarget).children("span.connector").html(`
-		${event.currentTarget.id}
-			<b style="color: #f00">${colors[event.currentTarget.id].red.length}</b>,
-			<b style="color: #88f">${colors[event.currentTarget.id].blue.length}</b>,
-			<b style="color: #0f0">${colors[event.currentTarget.id].green.length}</b>
-		`);
-		*/
+
 		var root = event.currentTarget.id;
 		for(var i in colors[root].leafs.negative) {
 			jQuery(`span#${colors[root].leafs.negative[i]}.connector`).append(`
@@ -790,27 +744,4 @@ jQuery(document).ready(function() {
 	jQuery('div.col').css({ width: "30%", "max-width": "30%"});
 	jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
 
-/*
-			io('connection_timeout', function() {
-				console.log('connection_timeout');
-			});
-			io('connection_error', function(e) {
-				console.log('connection_error', e ? e : 'A unknown error occurred');
-			});
-			io('reconnect_error', function(e) {
-				console.log('reconnect_error', e ? e : 'A unknown error occurred');
-			});
-			io('reconnect_attempt', function(n) {
-				console.log('reconnect attempt: '+n);
-			});
-			io('reconnect_failed', function() {
-				console.log('reconnect failed');
-			});
-			io('reconnect', function() {
-				console.log('successful reconnected');
-			});
-			io('reconnect', function(n) {
-				console.log('try to reconnect '+n);
-			});
-*/
 });

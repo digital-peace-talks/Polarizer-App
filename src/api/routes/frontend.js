@@ -85,18 +85,18 @@ router.get('/dialog.html', async (req, res, next) => {
 	}
 });
 
-router.get('/launch.js', async (req, res, next) => {
+router.get('/dialog.js', async (req, res, next) => {
 	try {
-		await res.sendFile(process.env.DPT_PATH+'/static/launch.js');
+		await res.sendFile(process.env.DPT_PATH+'/static/dialog.js');
 		res.status(200);
 	} catch (err) {
 		next(err);
 	}
 });
 
-router.get('/dialog.js', async (req, res, next) => {
+router.get('/launch.js', async (req, res, next) => {
 	try {
-		await res.sendFile(process.env.DPT_PATH+'/static/dialog.js');
+		await res.sendFile(process.env.DPT_PATH+'/static/launch.js');
 		res.status(200);
 	} catch (err) {
 		next(err);
