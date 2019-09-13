@@ -1,6 +1,6 @@
 <!-- 
       /*
-      This version aims to integrate the 3d functionality of with the database-connection functionality.
+      This version aims to integrate the 3d functionality with the database-connection functionality.
       The 3d stuff being included is from an older verion of the babylon.html file, and the database-connection stuff will soon be upgraded as well. Putting the 2 older versions together here is mostly to find what's difficult about doing that - and will have to be done again soon with the more advanced versions of both.*/
  -->
 
@@ -24,10 +24,20 @@
         touch-action: none;
       }
     </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+    <script src="https://preview.babylonjs.com/gltf_validator.js"></script>
+    <script src="https://preview.babylonjs.com/earcut.min.js"></script>
     <script src="https://preview.babylonjs.com/babylon.js"></script>
-    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
-    <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+    <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+    <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+    <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
     <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="dpt-client.js"></script>
   </head>
   <body>
     <canvas id="renderCanvas" touch-action="none"></canvas>
@@ -42,7 +52,6 @@
       var tempTopic;
       // var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI");
       // array-länge ergibt anzahl der topics
-      var opinionanzahl = [0, 1, 2, 3, 4, 5, 6, 7, 8];
       var whoOfferedOpinion = [];
       //Set font
       var font_size = 48;
@@ -371,7 +380,4 @@
       });
     </script>
   </body>
-  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  <script src="dpt-client.js"></script>
 </html>
