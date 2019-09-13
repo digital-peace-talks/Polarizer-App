@@ -1,6 +1,7 @@
 <!-- 
       /*
-      Better solution to the problem of verifying whether or not user can begin a dialogue is to use the opinionPostAllowed API. -R*/
+      This version aims to integrate the 3d functionality of with the database-connection functionality.
+      The 3d stuff being included is from an older verion of the babylon.html file, and the database-connection stuff will soon be upgraded as well. Putting the 2 older versions together here is mostly to find what's difficult about doing that - and will have to be done again soon with the more advanced versions of both.*/
  -->
 
 <!DOCTYPE html>
@@ -305,13 +306,11 @@
           }
           function showOpinions(topicButton) {
             setTimeout(function() {
-                for(let i = 0; i<whoOfferedOpinion.length; i++){
-                    if(whoOfferedOpinion[i]==="mine"){
-                        canDialogue = true;
-                        alert("true")
-                    }
-                
+              for (let i = 0; i < whoOfferedOpinion.length; i++) {
+                if (whoOfferedOpinion[i] === "mine") {
+                  canDialogue = true;
                 }
+              }
               console.log("hello " + topicButton.textBlock.text);
               //   alert("running show opinions");
               //retrieve opinions corresponding to this topic
@@ -332,7 +331,6 @@
                 "Transformation"
               );
               for (let i = 0; i < opinions.length; i++) {
-
                 let topicOpinion = BABYLON.GUI.Button.CreateSimpleButton(
                   "but", // + i,
 
