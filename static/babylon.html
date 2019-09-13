@@ -47,7 +47,7 @@
     <script>
       let topicData = [];
       let opinionData = [];
-
+      var lastClickedTopic;
       var currentTopic = 0;
       var opinions = [];
       var canDialogue = false;
@@ -174,17 +174,18 @@
                   { width: 256, height: 256 },
                   scene
                 );
-
                 box.actionManager = new BABYLON.ActionManager(scene);
                 box.actionManager.registerAction(
                   new BABYLON.ExecuteCodeAction(
-                    BABYLON.ActionManager.OnPickTrigger,
+                    BABYLON.ActionManager.OnPointerOverTrigger,
                     function() {
                       var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
                         "UI"
                       );
-
+                      console.log("lastClicked Topic:" + lastClickedTopic);
+                      lastClickedTopic = currentTopic;
                       currentTopic = topicData[box.uniqueId].topic;
+
                       var panel = new BABYLON.GUI.StackPanel();
 
                       advancedTexture.addControl(panel);
