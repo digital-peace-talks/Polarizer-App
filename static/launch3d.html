@@ -205,7 +205,10 @@
 			scene.onPointerDown = function (evt, pickResult) {
 				// if the click hits the ground object, we change the impact position
 				if(pickResult.hit) {
-					const jsonFromName = JSON.parse(pickResult.pickedMesh.name);
+					var jsonFromName;
+					try {
+						jsonFromName = JSON.parse(pickResult.pickedMesh.name);
+					} catch(err) { }
 					if(jsonFromName && jsonFromName.context == "topicMap") {
 						console.log("hit topicId: "+jsonFromName.topicId);
 						pickResult.pickedMesh.showBoundingBox = true;

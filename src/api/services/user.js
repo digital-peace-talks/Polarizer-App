@@ -27,7 +27,7 @@ module.exports.userReclaim = async (options) => {
 		
 		in case of A + C: nothing needs to be done here.
 		in case of B + C: the phrase is maybe misspelled
-		in case of A + D: if we are sure, that the phrase is unique,j
+		in case of A + D: if we are sure, that the phrase is unique,
 		                  we might conclude, the dptUUID from the cookie
 		                  is maybe a new device and we set the cookies
 		                  dptUUID value to the assigned to the phrase in
@@ -66,7 +66,8 @@ module.exports.userReclaim = async (options) => {
 	}
 	
 	return {
-		status: 401
+		status: 401,
+		data: "Can't reclaim the account."
 	};
 }
 

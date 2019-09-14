@@ -37,6 +37,9 @@ function userRegistered(dptUUID) {
 	}
 }
 
+/*
+	Send an update info of modified dialog.
+ */
 async function publishDialogUpdate(dialogId) {
 	var dialog = await dialogService.getDialog({body: {dialogId: dialogId}});
 	for(var i = 0; i < global.dptNS.online.length; i++) {
@@ -152,7 +155,6 @@ match.push({
 			method: 'put',
 			data: userData
 		};
-//		return userService.userReclaim(data);
 		return(ret);
 	}
 });
