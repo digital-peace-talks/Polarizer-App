@@ -47,103 +47,7 @@
 	<script>
 		var canvas = document.getElementById("renderCanvas");
 		
-		/**********************************************************************/
-
-var font = "28pt verdana";
-var textHeight = 30;
-var lineHeight = textHeight + 5;
-
-var cx = 600;
-var cy = 600;
-var r = 363;
-
-
-
-
-// pre-calculate width of each horizontal chord of the circle
-// This is the max width allowed for text
-
-function initLines() {
-	var lines = [];
-    for(var y = r * .90; y > -r; y -= lineHeight) {
-        var h = Math.abs(r - y);
-        if (y - lineHeight < 0) {
-            h += 20;
-        }
-
-        var length = 2 * Math.sqrt(h * (2 * r - h));
-        if (length && length > 10) {
-            lines.push({
-                y: y,
-                maxLength: length
-            });
-        }
-    }
-    return(lines);
-}
-
-
-// draw text on each line of the circle
-
-function wrapText(ctx, text) {
-
-    var i = 0;
-
-	var lines = initLines();
-	ctx.beginPath();
-	ctx.arc(cx, cy, r, 0, Math.PI * 2, false);
-	ctx.closePath();
-	ctx.strokeStyle = "skyblue";
-	ctx.lineWidth = 2;
-	ctx.stroke();
-
-    var words = text.split(" ");
-
-    while (i < lines.length && words.length > 0) {
-        line = lines[i++];
-        var lineData = calcAllowableWords(ctx, line.maxLength, words);
-        ctx.fillText(lineData.text, cx - lineData.width / 2, cy - line.y + textHeight);
-        words.splice(0, lineData.count);
-    };
-}
-
-
-// calculate how many words will fit on a line
-
-function calcAllowableWords(ctx, maxWidth, words) {
-
-    var wordCount = 0;
-    var testLine = "";
-    var spacer = "";
-    var fittedWidth = 0;
-    var fittedText = "";
-
-    ctx.font = font;
-
-    for (var i = 0; i < words.length; i++) {
-
-        testLine += spacer + words[i];
-        spacer = " ";
-
-        var width = ctx.measureText(testLine).width;
-
-        if (width > maxWidth) {
-            return ({
-                count: i,
-                width: fittedWidth,
-                text: fittedText
-            });
-        }
-
-        fittedWidth = width;
-        fittedText = testLine;
-
-    }
-
-}
-		/**********************************************************************/
-
-		function wrapTextOK(context, text, x, y, maxWidth, lineHeight) {
+		function wrapText(context, text, x, y, maxWidth, lineHeight) {
 			var words = text.split(' ');
 			var line = '';
 			for(var n = 0; n < words.length; n++) {
@@ -164,14 +68,14 @@ function calcAllowableWords(ctx, maxWidth, words) {
 		function textBlock(x, y, z, name, text) {
 			//Set width an height for plane
 			var planeWidth = 10;
-			var planeHeight = 10; 2.5;
+			var planeHeight = 2.5; //10;
 
 			//Create plane
 			var plane = BABYLON.MeshBuilder.CreatePlane(name, {width:planeWidth, height:planeHeight}, scene);
 
 			//Set width and height for dynamic texture using same multiplier
-			var DTWidth = planeWidth * 120;
-			var DTHeight = planeHeight * 120; //80;
+			var DTWidth = planeWidth * 120; //64;
+			var DTHeight = planeHeight * 80; //64
 
 			var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", {width:DTWidth, height:DTHeight}, scene);
 
@@ -182,14 +86,24 @@ function calcAllowableWords(ctx, maxWidth, words) {
 			ctx.fillStyle = 'transparent';
 
 			textureContext = dynamicTexture.getContext();
-			textureContext.font = " 28px Fixed";
+			textureContext.font = " 28px Courier bold";
 			textureContext.save();
 			textureContext.fillStyle = "white";
 
+			//wrapText(textureContext, text, 112, 112, 480, 25);
 			wrapText(textureContext, text, 20, 25, 1180, 25);
 			textureContext.restore();
+			
+			/*
+			textureContext.beginPath();
+			textureContext.arc(320, 320, 320, 0, Math.PI * 2, false);
+			textureContext.closePath();
+			textureContext.strokeStyle = "white";
+			textureContext.lineWidth = 5;
+			textureContext.stroke();
+			*/
 
-			dynamicTexture.update(); 
+			dynamicTexture.update();
 
 			//create material
 			var mat = new BABYLON.StandardMaterial("mat", scene);
@@ -203,12 +117,12 @@ function calcAllowableWords(ctx, maxWidth, words) {
 			plane.position.x = x;
 			plane.position.y = y;
 			plane.position.z = z;
-			plane.showBoundingBox = true;
+			plane.showBoundingBox = false;
 
 			return(plane);
 		}
 
-		function getBoundingBox() {
+		function getCollisionBox() {
 			//Simple box
 			var box = new BABYLON.MeshBuilder.CreateBox("crate", {
 				width: 100, 
@@ -240,8 +154,8 @@ function calcAllowableWords(ctx, maxWidth, words) {
 
 		function getCamera() {
 			// camera
-			var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 0, -10), scene);
-//			var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(0, 0, -10), scene);
+//			var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 0, -10), scene);
+			var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(0, 0, -10), scene);
 //			var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, -10), scene);			
 /*
 			camera.rollCorrect = 10;
@@ -255,21 +169,20 @@ function calcAllowableWords(ctx, maxWidth, words) {
 			camera.keysRight.push(39);
 			camera.keysDown.push(40);
 
-/*
 			camera.keysForward.push(33);
 			camera.keysBackward.push(34);
 
 			camera.lowerRadiusLimit = 1;
 			camera.upperRadiusLimit = 10;
+/*
 */
-
 			camera.acceleration = 0.01;
 			camera.speed = 0.5;
 
 			return(camera);
 		}
 
-		var createScene = function() {
+		var createTopicScene = function() {
 			var scene = new BABYLON.Scene(engine);
 
 			// lights - no light!!
@@ -281,7 +194,7 @@ function calcAllowableWords(ctx, maxWidth, words) {
 			camera = getCamera();
 			camera.attachControl(canvas, true);
 
-			box = getBoundingBox();
+			box = getCollisionBox();
 
 			// Enable Collisions
 			box.checkCollisions = true;
@@ -292,41 +205,136 @@ function calcAllowableWords(ctx, maxWidth, words) {
 			scene.onPointerDown = function (evt, pickResult) {
 				// if the click hits the ground object, we change the impact position
 				if(pickResult.hit) {
-					console.log("hit something: "+pickResult.pickedMesh.name);
-					pickResult.pickedMesh.showBoundingBox = true;
-					setTimeout(function() {
-						pickResult.pickedMesh.showBoundingBox = false;
-					}, 100);
-					
+					const jsonFromName = JSON.parse(pickResult.pickedMesh.name);
+					if(jsonFromName && jsonFromName.context == "topicMap") {
+						console.log("hit topicId: "+jsonFromName.topicId);
+						pickResult.pickedMesh.showBoundingBox = true;
+						setTimeout(function() {
+							pickResult.pickedMesh.showBoundingBox = false;
+						}, 100);
+					}
 				}
 			};
 
 			return scene;
 	}
 
-	__createScene = createScene;
+	__createScene = createTopicScene;
 
 	var engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
-	var scene = createScene();
+	var scene = createTopicScene();
 
-	engine.runRenderLoop(function () {
-		if (scene) {
-			scene.render();
-		}
-	});
+	document.addEventListener("DOMContentLoaded", function(event) {
+		var socket = io.connect(
+			window.location.protocol + "//" + window.location.host,
+			{
+				transports: ["websocket"],
+			}
+		);
 
-	// Resize
-	window.addEventListener("resize", function () {
-		engine.resize();
-	});
+		var dpt = new DPT(socket);
+		var restObj = {};
+		var whoami = {
+			dptUUID: "",
+			user: {},
+		};
 
-	for(i=-40; i <= 50; i+=10) {
-//		for(j=-10; j <= 12.5; j+=2.5) {
-		for(j=-40; j <= 50; j+=10) {
+		// Handle the incomming websocket trafic
+		socket.on("connect", () => {
+			// if needed, we could keep socket.id somewhere
+			if (document.cookie) {
+				dpt.userLogin(document.cookie);
+			}
+		});
+
+		socket.on("private", function(restObj) {
+			if (restObj.method == "post") {
+				if (restObj.path == "/user/login/") {
+					whoami.dptUUID = restObj.data.dptUUID;
+					if (restObj.data.message == "logged in") {
+						whoami.user = restObj.data.user;
+						dpt.getTopic();
+					}
+					if (restObj.data.message == "user unknown") {
+						whoami.user = {};
+					}
+				}
+			}
+		});
+
+		socket.on("error", function(e) {
+			console.log("System", e ? e : "A unknown error occurred");
+			document.location.reload(true);
+			window.location.reload(true);
+		});
+
+		socket.on("api", function(restObj) {
+			if(!restObj || !restObj.path || !restObj.method) {
+				return;
+			}
+			if(restObj.path == '/topic/') {
+				var options = '';
+
+				var n = Math.floor((Math.sqrt(restObj.data.length)));
+				var x = 0 - Math.floor(n/2)*10, xstart = x; xmax = (n-1)*10;
+				var y = ymax = (n-1)*2.5; ystart = ymax; y = ystart;
+
+				for (var i in restObj.data) {
+					if(restObj.data[i].user == 'mine') {
+						options = '<span class="editTopic" id="'
+								+ restObj.data[i]._id
+								+ '">&#128393;</span>';
+					} else {
+						options = '';
+					}
+					var plane = textBlock(
+							x, y, 0,
+							`{"context": "topicMap", "topicId": "${restObj.data[i]._id}"}`,
+							`${restObj.data[i].content} [ ${restObj.data[i].opinions.length} ]`);
+					x+=10;
+					if(x > xmax) {
+						y -= 2.5;
+						x=xstart;
+					}
+/*
+					jQuery('div.col.left').append(
+						'<li> <a class="opinionlist" id="'
+						+ restObj.data[i]._id
+						+ '" href="#">'
+						+ restObj.data[i].content
+						+ "</a>"
+						+ ' [' + restObj.data[i].opinions.length + '] '
+						+ options+"</li><br>");
+*/
+				}
+				//topicEdit();
+				//topicForm();
+			} 
+		});
+
+		engine.runRenderLoop(function () {
+			if(scene) {
+				scene.render();
+			}
+		});
+
+		// Resize
+		window.addEventListener("resize", function () {
+			engine.resize();
+		});
+
+		/*
+	for(i=-40; i <= 50; i+=10) {}
+		for(j=-10; j <= 12.5; j+=2.5) {
+//		for(j=-40; j <= 50; j+=10) {}
 			plane = textBlock(i, j, 0, 'topicId'+i+j, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam vol uptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum X');
 		}
-	}
+		*/
+	});
 
 	</script>
 	</body>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-1.11.1.js"></script> -->
+	<script src="dpt-client.js"></script>
 </html>
