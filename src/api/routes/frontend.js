@@ -76,6 +76,16 @@ router.get('/babylon.html', async (req, res, next) => {
 	}
 });
 
+router.get('/launch3d.html', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/launch3d.html');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+
 router.get('/dialog.html', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/dialog.html');
