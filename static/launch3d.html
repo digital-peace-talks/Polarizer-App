@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<title>Babylon.js sample code</title>
+
+	<!-- Babylon.js -->
+	<script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+	<!--
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+	<script src="https://preview.babylonjs.com/ammo.js"></script>
+	<script src="https://preview.babylonjs.com/cannon.js"></script>
+	<script src="https://preview.babylonjs.com/Oimo.js"></script>
+	<script src="https://preview.babylonjs.com/gltf_validator.js"></script>
+	<script src="https://preview.babylonjs.com/earcut.min.js"></script>
+	<script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+	<script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+	<script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+	-->
+	<script src="https://preview.babylonjs.com/babylon.js"></script>
+	<!--
+	<script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+	<script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"/>
+	<script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+	<script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+	-->
+
+	<style>
+		html, body {
+			overflow: hidden;
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
+		#renderCanvas {
+			width: 100%;
+			height: 100%;
+			touch-action: none;
+		}
+	</style>
+	</head>
+	<body>
+	<canvas id="renderCanvas" ></canvas>
+	<script>
+		var canvas = document.getElementById("renderCanvas");
+		
+		/**********************************************************************/
+
+var font = "28pt verdana";
+var textHeight = 30;
+var lineHeight = textHeight + 5;
+
+var cx = 600;
+var cy = 600;
+var r = 363;
+
+
+
+
+// pre-calculate width of each horizontal chord of the circle
+// This is the max width allowed for text
+
+function initLines() {
+	var lines = [];
+    for(var y = r * .90; y > -r; y -= lineHeight) {
+        var h = Math.abs(r - y);
+        if (y - lineHeight < 0) {
+            h += 20;
+        }
+
+        var length = 2 * Math.sqrt(h * (2 * r - h));
+        if (length && length > 10) {
+            lines.push({
+                y: y,
+                maxLength: length
+            });
+        }
+    }
+    return(lines);
+}
+
+
+// draw text on each line of the circle
+
+function wrapText(ctx, text) {
+
+    var i = 0;
+
+	var lines = initLines();
+	ctx.beginPath();
+	ctx.arc(cx, cy, r, 0, Math.PI * 2, false);
+	ctx.closePath();
+	ctx.strokeStyle = "skyblue";
+	ctx.lineWidth = 2;
+	ctx.stroke();
+
+    var words = text.split(" ");
+
+    while (i < lines.length && words.length > 0) {
+        line = lines[i++];
+        var lineData = calcAllowableWords(ctx, line.maxLength, words);
+        ctx.fillText(lineData.text, cx - lineData.width / 2, cy - line.y + textHeight);
+        words.splice(0, lineData.count);
+    };
+}
+
+
+// calculate how many words will fit on a line
+
+function calcAllowableWords(ctx, maxWidth, words) {
+
+    var wordCount = 0;
+    var testLine = "";
+    var spacer = "";
+    var fittedWidth = 0;
+    var fittedText = "";
+
+    ctx.font = font;
+
+    for (var i = 0; i < words.length; i++) {
+
+        testLine += spacer + words[i];
+        spacer = " ";
+
+        var width = ctx.measureText(testLine).width;
+
+        if (width > maxWidth) {
+            return ({
+                count: i,
+                width: fittedWidth,
+                text: fittedText
+            });
+        }
+
+        fittedWidth = width;
+        fittedText = testLine;
+
+    }
+
+}
+		/**********************************************************************/
+
+		function wrapTextOK(context, text, x, y, maxWidth, lineHeight) {
+			var words = text.split(' ');
+			var line = '';
+			for(var n = 0; n < words.length; n++) {
+				var testLine = line + words[n] + ' ';
+				var metrics = context.measureText(testLine);
+				var testWidth = metrics.width;
+				if (testWidth > maxWidth && n > 0) {
+					context.fillText(line, x, y);
+					line = words[n] + ' ';
+					y += lineHeight;
+				} else {
+					line = testLine;
+				}
+			}
+			context.fillText(line, x, y);
+		}
+
+		function textBlock(x, y, z, name, text) {
+			//Set width an height for plane
+			var planeWidth = 10;
+			var planeHeight = 10; 2.5;
+
+			//Create plane
+			var plane = BABYLON.MeshBuilder.CreatePlane(name, {width:planeWidth, height:planeHeight}, scene);
+
+			//Set width and height for dynamic texture using same multiplier
+			var DTWidth = planeWidth * 120;
+			var DTHeight = planeHeight * 120; //80;
+
+			var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", {width:DTWidth, height:DTHeight}, scene);
+
+			//Check width of text for given font type at any size of font
+			var ctx = dynamicTexture.getContext();
+
+			dynamicTexture.hasAlpha = true;
+			ctx.fillStyle = 'transparent';
+
+			textureContext = dynamicTexture.getContext();
+			textureContext.font = " 28px Fixed";
+			textureContext.save();
+			textureContext.fillStyle = "white";
+
+			wrapText(textureContext, text, 20, 25, 1180, 25);
+			textureContext.restore();
+
+			dynamicTexture.update(); 
+
+			//create material
+			var mat = new BABYLON.StandardMaterial("mat", scene);
+			mat.diffuseTexture = dynamicTexture;
+			mat.emissiveColor = new BABYLON.Color3(0, .8, 1);
+
+			//apply material
+			plane.material = mat;
+
+			// set the position
+			plane.position.x = x;
+			plane.position.y = y;
+			plane.position.z = z;
+			plane.showBoundingBox = true;
+
+			return(plane);
+		}
+
+		function getBoundingBox() {
+			//Simple box
+			var box = new BABYLON.MeshBuilder.CreateBox("crate", {
+				width: 100, 
+				height: 30,
+				depth: 40,
+				sideOrientation: 1
+			}, scene);
+
+			box.position = new BABYLON.Vector3(7.5, 2.5, -19.99);
+
+			var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", {width: 1, height: 1}, scene);
+			var ctx = dynamicTexture.getContext();
+
+			dynamicTexture.hasAlpha = true;
+			ctx.fillStyle = 'transparent';
+
+			//create material
+			var mat = new BABYLON.StandardMaterial("mat", scene);
+			mat.diffuseTexture = dynamicTexture;
+			mat.emissiveColor = new BABYLON.Color3(0, .8, 1);
+
+			//apply material
+			box.material = mat;
+
+			dynamicTexture.update();
+
+			return(box);
+		}
+
+		function getCamera() {
+			// camera
+			var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 0, -10), scene);
+//			var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(0, 0, -10), scene);
+//			var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, -10), scene);			
+/*
+			camera.rollCorrect = 10;
+			camera.bankedTurn = true;
+			camera.bankedTurnLimit = Math.PI / 8;
+			camera.bankedTurnMultiplier = 1;
+*/
+
+			camera.keysLeft.push(37);
+			camera.keysUp.push(38);
+			camera.keysRight.push(39);
+			camera.keysDown.push(40);
+
+/*
+			camera.keysForward.push(33);
+			camera.keysBackward.push(34);
+
+			camera.lowerRadiusLimit = 1;
+			camera.upperRadiusLimit = 10;
+*/
+
+			camera.acceleration = 0.01;
+			camera.speed = 0.5;
+
+			return(camera);
+		}
+
+		var createScene = function() {
+			var scene = new BABYLON.Scene(engine);
+
+			// lights - no light!!
+			// var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), scene);
+			// light.intensity = 0.9;
+
+			scene.clearColor = new BABYLON.Color3(10/255, 80/255, 119/255);
+
+			camera = getCamera();
+			camera.attachControl(canvas, true);
+
+			box = getBoundingBox();
+
+			// Enable Collisions
+			box.checkCollisions = true;
+			camera.checkCollisions = true;
+			scene.collisionsEnabled = true;
+
+			//When pointer down event is raised
+			scene.onPointerDown = function (evt, pickResult) {
+				// if the click hits the ground object, we change the impact position
+				if(pickResult.hit) {
+					console.log("hit something: "+pickResult.pickedMesh.name);
+					pickResult.pickedMesh.showBoundingBox = true;
+					setTimeout(function() {
+						pickResult.pickedMesh.showBoundingBox = false;
+					}, 100);
+					
+				}
+			};
+
+			return scene;
+	}
+
+	__createScene = createScene;
+
+	var engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
+	var scene = createScene();
+
+	engine.runRenderLoop(function () {
+		if (scene) {
+			scene.render();
+		}
+	});
+
+	// Resize
+	window.addEventListener("resize", function () {
+		engine.resize();
+	});
+
+	for(i=-40; i <= 50; i+=10) {
+//		for(j=-10; j <= 12.5; j+=2.5) {
+		for(j=-40; j <= 50; j+=10) {
+			plane = textBlock(i, j, 0, 'topicId'+i+j, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam vol uptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum X');
+		}
+	}
+
+	</script>
+	</body>
+</html>
