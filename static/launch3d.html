@@ -233,7 +233,7 @@
             button.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
 		    advancedTexture.addControl(button); 
 		    button.onPointerClickObservable.add((pointerInfo) => {
-				currentScene = topicsScene;
+				currentScene = __topicScene();
 				dpt.getTopic();
 		    });
 
@@ -271,7 +271,7 @@
 							}, 250);
 
 							currentTopic = pointerInfo.pickInfo.pickedMesh.dpt.topicId;
-							currentScene = opinionsScene;
+							currentScene = __opinionScene();
 							dpt.getOpinionByTopic(currentTopic);
 						}
 						break;
@@ -296,9 +296,9 @@
 
 	var engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
 	var currentScene;
-	var topicsScene = createGenericScene();
-	var opinionsScene = createGenericScene();
-	var currentScene = topicsScene;
+	var __topicScene = createGenericScene;
+	var __opinionScene = createGenericScene;
+	var currentScene = createGenericScene();
 	var currentTopic;
 	var dpt;
 
