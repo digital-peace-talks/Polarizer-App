@@ -144,12 +144,10 @@
 //			var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 0, -10), currentScene);
 			var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(0, 0, -10), currentScene);
 //			var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, -10), currentScene);			
-/*
 			camera.rollCorrect = 10;
 			camera.bankedTurn = true;
 			camera.bankedTurnLimit = Math.PI / 8;
 			camera.bankedTurnMultiplier = 1;
-*/
 
 			camera.keysLeft.push(37);
 			camera.keysUp.push(38);
@@ -172,18 +170,20 @@
 
 		function circlePoints(points, radius, center) {
 			var slice = 2 * Math.PI / points;
+			var nodes = [];
 			for (var i = 0; i < points; i++) {
 				var angle = slice * i;
 			    var newX = center.X + radius * Math.cos(angle);
 			    var newY = center.Y + radius * Math.sin(angle);
 
+			    nodes.push({x: newX, y: newY});
+/*
 				var box = new BABYLON.MeshBuilder.CreateBox("box", {
 					width: 0.1, 
 					height: 0.1,
 					depth: 0.1,
 					sideOrientation: 1
 				}, currentScene);
-
 				box.position = new BABYLON.Vector3(newX, newY, -1);
 				//create material
 				var mat = new BABYLON.StandardMaterial("mat", currentScene);
@@ -192,8 +192,9 @@
 
 				//apply material
 				box.material = mat;
-
+*/
 			}
+			return(nodes);
 		}
 
 		var createGenericScene = function() {
@@ -386,6 +387,7 @@
 					}
 				}
 
+				var nodes = circlePoints(restObj.data.length, 5, {X: 0, Y: 0});
 				for (i in restObj.data) {
 					options = '';
 
@@ -405,15 +407,15 @@
 					}
 
 					var plane = textBlock(
-							x, y, 0,
+							nodes[i].x, nodes[i].y, 0,
 							`{"context": "opinionMap", "opinionId": "${restObj.data[i]._id}"}`,
 							`${restObj.data[i].content}`);
+					/*
 					x+=10;
 					if(x > xmax) {
 						y -= 2.5;
 						x=xstart;
 					}
-					/*
 					jQuery('div.col.mid').append('<li class="connector" id="'+ restObj.data[i]._id +'"><span class="text">'
 					+ restObj.data[i].content
 					+ "</span> " +options+ ' <span class="connector" id="'+ restObj.data[i]._id +'"></span></li><br>');
