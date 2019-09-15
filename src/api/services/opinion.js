@@ -77,7 +77,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 					topo.dialogId = dialogarr[j]._id.toString();
 					topo.opinionId = opinionInitiator._id.toString();
 					
-					if('rating' in crisisInitiator) {
+					if(crisisInitiator && 'rating' in crisisInitiator) {
 						if(crisisInitiator.rating > 0) {
 							topo.leafs.positive.push(opinionRecipient._id.toString());
 						} else if (crisisInitiator.rating < 0) {
@@ -89,7 +89,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 						topo.leafs.unset.push(opinionRecipient._id.toString());
 					}
 	
-					if('rating' in crisisRecipient) {
+					if(crisisRecipient && 'rating' in crisisRecipient) {
 						if(crisisRecipient.rating > 0) {
 							topo.leafs.positive.push(opinionInitiator._id.toString());
 						} else if (crisisInitiator.rating < 0) {
