@@ -23,8 +23,8 @@
 	<script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
 	<script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"/>
 	<script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
-	<script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
 	-->
+	<script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
 
 	<style>
 		@font-face {
@@ -218,6 +218,24 @@
 			box.checkCollisions = true;
 			camera.checkCollisions = true;
 			genericScene.collisionsEnabled = true;
+			
+		    // GUI
+		    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+		    var button = BABYLON.GUI.Button.CreateImageButton("homebutton", "Home", "/nav-top-logo.png");
+		    button.width = 0.1;
+		    button.height = "40px";
+		    button.color = "white";
+		    button.name = "homebutton";
+		    button.fontFamily = "AldoSemiBold";
+		    button.background = "transparent";
+            button.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+            button.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+		    advancedTexture.addControl(button); 
+		    button.onPointerClickObservable.add((pointerInfo) => {
+				currentScene = topicsScene;
+				dpt.getTopic();
+		    });
 
 			genericScene.onPointerObservable.add((pointerInfo) => {
 				switch (pointerInfo.type) {
@@ -238,6 +256,7 @@
 						break;
 					case BABYLON.PointerEventTypes.POINTERTAP:
 						//console.log("POINTER TAP");
+
 						break;
 					case BABYLON.PointerEventTypes.POINTERDOUBLETAP:
 						//console.log("POINTER DOUBLE-TAP");
