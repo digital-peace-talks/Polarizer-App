@@ -27,7 +27,12 @@
 	-->
 
 	<style>
+		@font-face {
+			font-family: 'AldoSemiBold';
+			src: url('/font.ttf') format('truetype');
+		}
 		html, body {
+			font-family: 'AldoSemiBold';
 			overflow: hidden;
 			width: 100%;
 			height: 100%;
@@ -71,13 +76,13 @@
 			var planeHeight = 2.5; //10;
 
 			//Create plane
-			var plane = BABYLON.MeshBuilder.CreatePlane(name, {width:planeWidth, height:planeHeight}, scene);
+			var plane = BABYLON.MeshBuilder.CreatePlane(name, {width:planeWidth, height:planeHeight}, currentScene);
 
 			//Set width and height for dynamic texture using same multiplier
 			var DTWidth = planeWidth * 120; //64;
 			var DTHeight = planeHeight * 80; //64
 
-			var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", {width:DTWidth, height:DTHeight}, scene);
+			var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", {width:DTWidth, height:DTHeight}, currentScene);
 
 			//Check width of text for given font type at any size of font
 			var ctx = dynamicTexture.getContext();
@@ -86,29 +91,20 @@
 			ctx.fillStyle = 'transparent';
 
 			textureContext = dynamicTexture.getContext();
-			textureContext.font = " 28px Courier bold";
+			textureContext.font = "28px AldoSemiBold";
 			textureContext.save();
-			textureContext.fillStyle = "white";
+			textureContext.fillStyle = "#00ccff";
 
 			//wrapText(textureContext, text, 112, 112, 480, 25);
 			wrapText(textureContext, text, 20, 25, 1180, 25);
 			textureContext.restore();
 			
-			/*
-			textureContext.beginPath();
-			textureContext.arc(320, 320, 320, 0, Math.PI * 2, false);
-			textureContext.closePath();
-			textureContext.strokeStyle = "white";
-			textureContext.lineWidth = 5;
-			textureContext.stroke();
-			*/
-
 			dynamicTexture.update();
 
 			//create material
-			var mat = new BABYLON.StandardMaterial("mat", scene);
+			var mat = new BABYLON.StandardMaterial("mat", currentScene);
 			mat.diffuseTexture = dynamicTexture;
-			mat.emissiveColor = new BABYLON.Color3(0, .8, 1);
+			mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
 
 			//apply material
 			plane.material = mat;
@@ -124,39 +120,30 @@
 
 		function getCollisionBox() {
 			//Simple box
-			var box = new BABYLON.MeshBuilder.CreateBox("crate", {
+			var box = new BABYLON.MeshBuilder.CreateBox("collisionBox", {
 				width: 100, 
 				height: 30,
 				depth: 40,
 				sideOrientation: 1
-			}, scene);
+			}, currentScene);
 
 			box.position = new BABYLON.Vector3(7.5, 2.5, -19.99);
-
-			var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", {width: 1, height: 1}, scene);
-			var ctx = dynamicTexture.getContext();
-
-			dynamicTexture.hasAlpha = true;
-			ctx.fillStyle = 'transparent';
-
 			//create material
-			var mat = new BABYLON.StandardMaterial("mat", scene);
-			mat.diffuseTexture = dynamicTexture;
-			mat.emissiveColor = new BABYLON.Color3(0, .8, 1);
+			var mat = new BABYLON.StandardMaterial("mat", currentScene);
+			mat.diffuseColor = new BABYLON.Color3(10/255, 80/255, 119/255);
+			mat.emissiveColor = new BABYLON.Color3(10/255, 80/255, 119/255);
 
 			//apply material
 			box.material = mat;
-
-			dynamicTexture.update();
 
 			return(box);
 		}
 
 		function getCamera() {
 			// camera
-//			var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 0, -10), scene);
-			var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(0, 0, -10), scene);
-//			var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, -10), scene);			
+//			var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 0, -10), currentScene);
+			var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(0, 0, -10), currentScene);
+//			var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, -10), currentScene);			
 /*
 			camera.rollCorrect = 10;
 			camera.bankedTurn = true;
@@ -169,6 +156,7 @@
 			camera.keysRight.push(39);
 			camera.keysDown.push(40);
 
+			
 			camera.keysForward.push(33);
 			camera.keysBackward.push(34);
 
@@ -182,14 +170,40 @@
 			return(camera);
 		}
 
-		var createTopicScene = function() {
-			var scene = new BABYLON.Scene(engine);
+		function circlePoints(points, radius, center) {
+			var slice = 2 * Math.PI / points;
+			for (var i = 0; i < points; i++) {
+				var angle = slice * i;
+			    var newX = center.X + radius * Math.cos(angle);
+			    var newY = center.Y + radius * Math.sin(angle);
+
+				var box = new BABYLON.MeshBuilder.CreateBox("box", {
+					width: 0.1, 
+					height: 0.1,
+					depth: 0.1,
+					sideOrientation: 1
+				}, currentScene);
+
+				box.position = new BABYLON.Vector3(newX, newY, -1);
+				//create material
+				var mat = new BABYLON.StandardMaterial("mat", currentScene);
+				mat.diffuseColor = new BABYLON.Color3(1,.5,0);
+				mat.emissiveColor = new BABYLON.Color3(1,.5,0);
+
+				//apply material
+				box.material = mat;
+
+			}
+		}
+
+		function createGenericScene() {
+			var genericScene = new BABYLON.Scene(engine);
 
 			// lights - no light!!
-			// var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), scene);
-			// light.intensity = 0.9;
+			//var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
+			//light.intensity = 0.3;
 
-			scene.clearColor = new BABYLON.Color3(10/255, 80/255, 119/255);
+			genericScene.clearColor = new BABYLON.Color3(10/255, 80/255, 119/255);
 
 			camera = getCamera();
 			camera.attachControl(canvas, true);
@@ -199,33 +213,66 @@
 			// Enable Collisions
 			box.checkCollisions = true;
 			camera.checkCollisions = true;
-			scene.collisionsEnabled = true;
+			genericScene.collisionsEnabled = true;
 
-			//When pointer down event is raised
-			scene.onPointerDown = function (evt, pickResult) {
-				// if the click hits the ground object, we change the impact position
-				if(pickResult.hit) {
-					var jsonFromName;
-					try {
-						jsonFromName = JSON.parse(pickResult.pickedMesh.name);
-					} catch(err) { }
-					if(jsonFromName && jsonFromName.context == "topicMap") {
-						console.log("hit topicId: "+jsonFromName.topicId);
-						pickResult.pickedMesh.showBoundingBox = true;
-						setTimeout(function() {
-							pickResult.pickedMesh.showBoundingBox = false;
-						}, 100);
-					}
+			genericScene.onPointerObservable.add((pointerInfo) => {
+				switch (pointerInfo.type) {
+					case BABYLON.PointerEventTypes.POINTERDOWN:
+						//console.log("POINTER DOWN");
+						break;
+					case BABYLON.PointerEventTypes.POINTERUP:
+						//console.log("POINTER UP");
+						break;
+					case BABYLON.PointerEventTypes.POINTERMOVE:
+						//console.log("POINTER MOVE");
+						break;
+					case BABYLON.PointerEventTypes.POINTERWHEEL:
+						//console.log("POINTER WHEEL");
+						break;
+					case BABYLON.PointerEventTypes.POINTERPICK:
+						//console.log("POINTER PICK");
+						break;
+					case BABYLON.PointerEventTypes.POINTERTAP:
+						//console.log("POINTER TAP");
+						break;
+					case BABYLON.PointerEventTypes.POINTERDOUBLETAP:
+						//console.log("POINTER DOUBLE-TAP");
+						var jsonFromName;
+						try {
+							jsonFromName = JSON.parse(pointerInfo.pickInfo.pickedMesh.name);
+						} catch(err) { }
+						if(jsonFromName && jsonFromName.context == "topicMap") {
+							console.log("hit topicId: "+jsonFromName.topicId);
+							pointerInfo.pickInfo.pickedMesh.showBoundingBox = true;
+							setTimeout(function() {
+								pointerInfo.pickInfo.pickedMesh.showBoundingBox = false;
+							}, 100);
+						}
+						break;
+		        }
+		    });
+
+			genericScene.onKeyboardObservable.add((kbInfo) => {
+				switch (kbInfo.type) {
+					case BABYLON.KeyboardEventTypes.KEYDOWN:
+						//console.log("KEY DOWN: ", kbInfo.event.key);
+						break;
+					case BABYLON.KeyboardEventTypes.KEYUP:
+						//console.log("KEY UP: ", kbInfo.event.keyCode);
+						break;
 				}
-			};
+			});
 
-			return scene;
+			return genericScene;
 	}
 
-	__createScene = createTopicScene;
+
+//	__createScene = createTopicScene;
 
 	var engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
-	var scene = createTopicScene();
+	var currentScene = createGenericScene();
+	var topicsScene = currentScene;
+	var opinionsScene = createGenericScene();
 
 	document.addEventListener("DOMContentLoaded", function(event) {
 		var socket = io.connect(
@@ -315,9 +362,11 @@
 			} 
 		});
 
+		//circlePoints(4, 2, {X: 0, Y: 0});
+
 		engine.runRenderLoop(function () {
-			if(scene) {
-				scene.render();
+			if(currentScene) {
+				currentScene.render();
 			}
 		});
 
@@ -326,13 +375,6 @@
 			engine.resize();
 		});
 
-		/*
-	for(i=-40; i <= 50; i+=10) {}
-		for(j=-10; j <= 12.5; j+=2.5) {
-//		for(j=-40; j <= 50; j+=10) {}
-			plane = textBlock(i, j, 0, 'topicId'+i+j, 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam vol uptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum X');
-		}
-		*/
 	});
 
 	</script>
