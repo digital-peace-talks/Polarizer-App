@@ -72,16 +72,16 @@
 
 		function textBlock(x, y, z, name, text) {
 			//Set width an height for plane
-			var planeWidth = 10;
-			var planeHeight = 2.5; //10;
+			var planeWidth = 4.8;
+			var planeHeight = 3.2; //10;
 
 			//Create plane
 			var plane = BABYLON.MeshBuilder.CreatePlane(name, {width:planeWidth, height:planeHeight}, currentScene);
 			plane.dpt = JSON.parse(name);
 
 			//Set width and height for dynamic texture using same multiplier
-			var DTWidth = planeWidth * 120; //64;
-			var DTHeight = planeHeight * 80; //64
+			var DTWidth = planeWidth * 100; //64;
+			var DTHeight = planeHeight * 100; //64
 
 			var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", {width:DTWidth, height:DTHeight}, currentScene);
 
@@ -97,7 +97,7 @@
 			textureContext.fillStyle = "#00ccff";
 
 			//wrapText(textureContext, text, 112, 112, 480, 25);
-			wrapText(textureContext, text, 20, 25, 1180, 25);
+			wrapText(textureContext, text, 5, 20, 475, 25);
 			textureContext.restore();
 			
 			dynamicTexture.update();
@@ -233,7 +233,7 @@
             button.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
 		    advancedTexture.addControl(button); 
 		    button.onPointerClickObservable.add((pointerInfo) => {
-				currentScene = topicsScene;
+				currentScene = __topicScene();
 				dpt.getTopic();
 		    });
 
@@ -271,7 +271,7 @@
 							}, 250);
 
 							currentTopic = pointerInfo.pickInfo.pickedMesh.dpt.topicId;
-							currentScene = opinionsScene;
+							currentScene = __opinionScene();
 							dpt.getOpinionByTopic(currentTopic);
 						}
 						break;
@@ -296,9 +296,9 @@
 
 	var engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
 	var currentScene;
-	var topicsScene = createGenericScene();
-	var opinionsScene = createGenericScene();
-	var currentScene = topicsScene;
+	var __topicScene = createGenericScene;
+	var __opinionScene = createGenericScene;
+	var currentScene = createGenericScene();
 	var currentTopic;
 	var dpt;
 
@@ -355,8 +355,8 @@
 				var options = '';
 
 				var n = Math.floor((Math.sqrt(restObj.data.length)));
-				var x = 0 - Math.floor(n/2)*10, xstart = x; xmax = (n-1)*10;
-				var y = ymax = (n-1)*2.5; ystart = ymax; y = ystart;
+				var x = 0 - Math.floor(n/2)*10, xstart = x; xmax = (n-1)*4.8;
+				var y = ymax = (n-1)*3.2; ystart = ymax; y = ystart;
 
 				for (var i in restObj.data) {
 					if(restObj.data[i].user == 'mine') {
@@ -370,9 +370,9 @@
 							x, y, 0,
 							`{"context": "topicMap", "topicId": "${restObj.data[i]._id}"}`,
 							`${restObj.data[i].content} [ ${restObj.data[i].opinions.length} ]`);
-					x+=10;
+					x+=4.8;
 					if(x > xmax) {
-						y -= 2.5;
+						y -= 3.2;
 						x=xstart;
 					}
 /*
