@@ -196,19 +196,21 @@
 			}
 		}
 
-		function createGenericScene() {
+		var createGenericScene = function() {
 			var genericScene = new BABYLON.Scene(engine);
 
+			currentScene = genericScene;
+			
 			// lights - no light!!
 			//var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
 			//light.intensity = 0.3;
 
 			genericScene.clearColor = new BABYLON.Color3(10/255, 80/255, 119/255);
 
-			camera = getCamera();
+			var camera = getCamera();
 			camera.attachControl(canvas, true);
 
-			box = getCollisionBox();
+			var box = getCollisionBox();
 
 			// Enable Collisions
 			box.checkCollisions = true;
@@ -247,6 +249,9 @@
 							setTimeout(function() {
 								pointerInfo.pickInfo.pickedMesh.showBoundingBox = false;
 							}, 100);
+							currentTopic = jsonFromName.topicId;
+							currentScene = opinionsScene;
+							dpt.getOpinionByTopic(jsonFromName.topicId);
 						}
 						break;
 		        }
@@ -266,13 +271,15 @@
 			return genericScene;
 	}
 
-
 //	__createScene = createTopicScene;
 
 	var engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
-	var currentScene = createGenericScene();
-	var topicsScene = currentScene;
+	var currentScene;
+	var topicsScene = createGenericScene();
 	var opinionsScene = createGenericScene();
+	var currentScene = topicsScene;
+	var currentTopic;
+	var dpt;
 
 	document.addEventListener("DOMContentLoaded", function(event) {
 		var socket = io.connect(
@@ -282,7 +289,7 @@
 			}
 		);
 
-		var dpt = new DPT(socket);
+		dpt = new DPT(socket);
 		var restObj = {};
 		var whoami = {
 			dptUUID: "",
@@ -322,7 +329,8 @@
 			if(!restObj || !restObj.path || !restObj.method) {
 				return;
 			}
-			if(restObj.path == '/topic/') {
+			if(restObj.path == '/topic/'
+			&& restObj.method == 'get') {
 				var options = '';
 
 				var n = Math.floor((Math.sqrt(restObj.data.length)));
@@ -359,7 +367,67 @@
 				}
 				//topicEdit();
 				//topicForm();
-			} 
+			} else if(restObj.path == "/opinion/"+currentTopic+"/") {
+				var i;
+				var options = '';
+				var canInvite = false;
+
+				var n = Math.floor((Math.sqrt(restObj.data.length)));
+				var x = 0 - Math.floor(n/2)*10, xstart = x; xmax = (n-1)*10;
+				var y = ymax = (n-1)*2.5; ystart = ymax; y = ystart;
+
+				var colors = {};
+				for(var i in restObj.data) {
+					colors[restObj.data[i].topo.opinionId] = restObj.data[i].topo;
+				}
+				for (var i in restObj.data) {
+					if(restObj.data[i].user == 'mine') {
+						canInvite = true;
+					}
+				}
+
+				for (i in restObj.data) {
+					options = '';
+
+					if(restObj.data[i].user == 'mine') {
+						options = '<span class="editOpinion" id="'
+						+ restObj.data[i]._id
+						+ '">&#128393;</span>';
+					} else {
+						if(restObj.data[i].blocked == 0
+						&& canInvite) {
+							options = '<span class="inviteToDialog" id="'
+							+ restObj.data[i]._id
+							+ '">'
+							+ '&#128172;'
+							+ '</span>';
+						}
+					}
+
+					var plane = textBlock(
+							x, y, 0,
+							`{"context": "opinionMap", "opinionId": "${restObj.data[i]._id}"}`,
+							`${restObj.data[i].content}`);
+					x+=10;
+					if(x > xmax) {
+						y -= 2.5;
+						x=xstart;
+					}
+					/*
+					jQuery('div.col.mid').append('<li class="connector" id="'+ restObj.data[i]._id +'"><span class="text">'
+					+ restObj.data[i].content
+					+ "</span> " +options+ ' <span class="connector" id="'+ restObj.data[i]._id +'"></span></li><br>');
+					*/
+				}
+				
+				
+				if(restObj.data.length > 0) {
+//					dpt.opinionPostAllowed(restObj.data[0].topic);
+				} else {
+//					opinionForm();
+				}
+//				opinionEdit();
+			}
 		});
 
 		//circlePoints(4, 2, {X: 0, Y: 0});
