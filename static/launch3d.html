@@ -144,6 +144,16 @@
 						}
 					}
 				}
+				for(var j in opinionDialogConnections[i].leafs.unset) {
+					var opinionId = opinionDialogConnections[i].leafs.unset[j];
+					if(opinionId != i) {
+						for(var k in currentScene.meshes) {
+							if('dpt' in currentScene.meshes[k] && currentScene.meshes[k].dpt.opinionId == opinionId) {
+								recipientOpinionPosition = currentScene.meshes[k].position;
+							}
+						}
+					}
+				}
 
 				var sv = new BABYLON.Vector3(0, 0, 0);
 				var ev = new BABYLON.Vector3(0, 0, 0);
@@ -151,7 +161,16 @@
 				sv.y = initiatorOpinionPosition.y + 1.2;
 				ev.x = recipientOpinionPosition.x - 2.4;
 				ev.y = recipientOpinionPosition.y + 1.2;
-				BABYLON.MeshBuilder.CreateLines("lines", {points: [sv, ev]}, currentScene);
+				var tube = BABYLON.MeshBuilder.CreateTube("tube", {path: [sv, ev], radius: 0.06, updatable: true, }, currentScene);
+//				BABYLON.MeshBuilder.CreateLines("lines", {points: [sv, ev]}, currentScene);
+				//create material
+				var mat = new BABYLON.StandardMaterial("mat", currentScene);
+				mat.diffuseColor = new BABYLON.Color3(1, 0, 0);
+				//mat.specularColor = new BABYLON.Color3(.5, .5, 1);
+				mat.alpha = 0.75;
+				mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
+				//mat.emissiveColor = new BABYLON.Color3(196, 196, 196);
+				tube.material = mat;
 				console.log(`from: ${initiatorOpinionPosition} to: ${recipientOpinionPosition}`);
 			}
 		}
@@ -373,8 +392,8 @@ console.log(`circlepoint: x: ${newX} y: ${newY}`);
 			currentScene = genericScene;
 			
 			// lights - no light!!
-			//var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
-			//light.intensity = 0.3;
+			var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
+			light.intensity = 0.1;
 
 			genericScene.clearColor = new BABYLON.Color3(10/255, 80/255, 119/255);
 
@@ -576,6 +595,6 @@ console.log(`circlepoint: x: ${newX} y: ${newY}`);
 	</body>
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+<!--	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script> -->
 	<script src="dpt-client.js"></script>
 </html>
