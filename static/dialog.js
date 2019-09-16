@@ -17,11 +17,11 @@ jQuery(document).ready(function() {
 		}
 	});
 
-	// will be obsolete soon
+	/* // will be obsolete soon
 	socket.on('kanal', function(msg) {
 		jQuery('#messages').append(jQuery('<li>').text(msg.username +": "+msg.message));
 		window.scrollTo(0, document.body.scrollHeight);
-	});
+	}); */
 
 	// server says it has some updates for client
 	socket.on('update', function(restObj){
@@ -37,19 +37,19 @@ jQuery(document).ready(function() {
 	        }
 	    }
 
-        if(restObj.path == '/topic/' && restObj.method == 'get') {
+        /* if(restObj.path == '/topic/' && restObj.method == 'get') {
         	dpt.getTopic();
-        }
+        } */
 
         if(restObj.path == '/dialog/list/' && restObj.method == 'get') {
         	dpt.getDialogList();
         }
 
-        if(restObj.path.startsWith('/opinion/')
+        /* if(restObj.path.startsWith('/opinion/')
         && restObj.data.id == currentTopic
         && restObj.method == 'get') {
         	dpt.getOpinionByTopic(currentTopic);
-        }
+        } */
         
         if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/'
         && restObj.method == 'get'
