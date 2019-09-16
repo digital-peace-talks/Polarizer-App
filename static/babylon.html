@@ -157,8 +157,6 @@
                 });
               }
 
-              //   makeTopics();
-
               for (i in restObj.data) {
                 let box = BABYLON.MeshBuilder.CreateBox(
                   "box",
@@ -211,8 +209,9 @@
                     BABYLON.ActionManager.OnPickTrigger,
                     function() {
                       for (i in restObj) {
-                        box.dispose();
+                        box.dispose(); //how to dispose of all boxes?
                       }
+                      showOpinionBoxes();
                     }
                   )
                 );
@@ -388,6 +387,46 @@
               dpt.getOpinionByTopic(topicData[i].id);
             }
             showOpinions(tempTopic);
+          }
+
+          function showOpinionBoxes() {
+            scene.dispose();
+            for (i = 0; i < 5; i++) {
+              let opinionBox = BABYLON.MeshBuilder.CreateBox(
+                "opinionBox",
+                { height: 1 },
+                scene
+              );
+              //   alert("creating opinion boxes")
+              opinionBox.position = new BABYLON.Vector3(i * 3, i * 3, 0);
+              opinionBox.uniqueId = i;
+              //Create dynamic texture
+              var textureResolution = 256;
+              var textureGround = new BABYLON.DynamicTexture(
+                "dynamic texture",
+                { width: 256, height: 256 },
+                scene
+              );
+
+              var textureContext = textureGround.getContext();
+
+              var materialGround = new BABYLON.StandardMaterial("Mat", scene);
+              materialGround.diffuseTexture = textureGround;
+              opinionBox.material = materialGround;
+
+              //Add text to dynamic texture
+              var font = "bold 44px monospace";
+              textureGround.drawText(
+                opinions[i],
+                75,
+                135,
+                font,
+                "green",
+                "white",
+                true,
+                true
+              );
+            }
           }
           function showOpinions(topicButton) {
             setTimeout(function() {
