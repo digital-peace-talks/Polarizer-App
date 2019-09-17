@@ -43,7 +43,8 @@ p.left {
 	margin: 1px;
 	margin-right: 20%;
 	padding: 5px;
-	text-align: justify; text-justify: inter-word;
+	text-align: justify;
+	text-justify: inter-word;
 	background-color: rgba(0,127,63,.5);
 }
 
@@ -51,12 +52,28 @@ p.right {
 	margin: 1px;
 	margin-left: 20%;
 	padding: 5px;
-	text-align: justify-right; text-justify: inter-word;
+	/* direction:rtl;
+	text-align:justify;*/
+	text-align: justify-right;
+	text-justify: inter-word;
 	background-color: rgba(0,63,127,.5);
 }
 
-div#c1 { text-align: justify; text-justify: inter-word; width: 19%; float: left; }
+div#c1 {
+	text-align: justify;
+	text-justify: inter-word;
+	width: 19%;
+	loat: left;
+}
 
-div#c2 { width: 56%; float: left; }
+div#c2 {
+	width: 56%;
+	float: left;
+}
 
-div#c3 { text-align: justify; text-justify: inter-word; width: 19%; float: left; }
+div#c3 {
+	text-align: justify;
+	text-justify: inter-word;
+	width: 19%;
+	float: left;
+}

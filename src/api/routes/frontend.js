@@ -62,15 +62,6 @@ router.post('/recover', async (req, res, next) => {
 	}
 });
 
-router.get('/dialog.css', async (req, res, next) => {
-	try {
-		await res.sendFile(process.env.DPT_PATH+'/static/dialog.css');
-		res.status(200);
-	} catch (err) {
-		next(err);
-	}
-});
-
 router.get('/dpt-client.js', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/dpt-client.js');
@@ -120,6 +111,15 @@ router.get('/launch3d.html', async (req, res, next) => {
 router.get('/dialog.html', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/dialog.html');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/dialog.css', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/dialog.css');
 		res.status(200);
 	} catch (err) {
 		next(err);
