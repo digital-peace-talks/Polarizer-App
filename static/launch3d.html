@@ -74,23 +74,28 @@
 			var dialogs = restObj.data.data;
 		
 			for(var i=0; i < dialogs.length; i++) {
+
 				menuEntry = `proposition: ${dialogs[i].opinionProposition}`;
-				dialog = `<i>proposition:</i> ${dialogs[i].opinionProposition}<br>
-						  <i>topic:</i> ${dialogs[i].topic}<br>`;
-//				dialog = `proposition: ${dialogs[i].opinionProposition}\ntopic: ${dialogs[i].topic}\n`;
+
+				dialog = `<u style="font-size: 32px">Dialog Info</u><br><br><i>proposition:</i><br>${dialogs[i].opinionProposition}<br><br>
+						  <i>topic:</i><br>${dialogs[i].topic}<br><br>`;
+
 				if(dialogs[i].initiator == 'me') {
-					dialog += `<i>my opinion:</i> ${dialogs[i].initiatorOpinion}<br>
-						  <i>other's opinion:</i> ${dialogs[i].recipientOpinion}<br>
-						  <i>initiator:</i> me`;
-//					dialog += `my opinion: ${dialogs[i].initiatorOpinion}\nother's opinion: ${dialogs[i].recipientOpinion}\ninitiator: me`;
+
+					dialog += `<i>my opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
+						  <i>other's opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>
+						  <i>initiator:</i> me<br><br>`;
+
 				} else {
-					dialog += `<i>my opinion:</i> ${dialogs[i].recipientOpinion}<br>
-							   <i>other's opinion:</i> ${dialogs[i].initiatorOpinion}<br>
-							   <i>initiator:</i> other<br>`;
-//					dialog += `my opinion: ${dialogs[i].recipientOpinion} other's opinion: ${dialogs[i].initiatorOpinion}\ninitiator: other\n`;
+
+					dialog += `<i>my opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>
+							   <i>other's opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
+							   <i>initiator:</i> other<br><br>`;
+
 				}
+
 				dialog += `<i>status:</i> ${dialogs[i].status}`;
-//				dialog += `status: ${dialogs[i].status}`;
+
 				myDialogMenu.push({dialogId: dialogs[i].dialog, menuEntry: menuEntry, description: dialog});
 
 				var tb = new BABYLON.GUI.TextBlock();
@@ -114,9 +119,9 @@
 
             	tb.onPointerEnterObservable.add((pointerInfo) => {
 //				jQuery('#misc').append('<div style="position: absolute; padding: 10px; margin-left: 37% '
-				jQuery('body').append('<div id="bla" style="position: absolute; padding: 10px; margin-left: 25%; '
-					+'border: #ffffff; border-style: solid; border-width: 1px; color: #ffffff;'
-					+'width: 50%; z-index: 2; font-family: AldoSemiBold; background-color: #00000049;">'
+				jQuery('body').append('<div id="bla" style="position: absolute; padding: 20px; margin-left: 25%; '
+					+'border: #fff; border-style: solid; border-width: 1px; color: #000;'
+					+'width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px; background-color: #00ccffcc;">'
 					+myDialogMenu[pointerInfo.name].description+'</div>');
 //					+'<div style="background-color: #00000049;">'+myDialogMenu[pointerInfo.name].description
 //					+'</div></div>');
@@ -236,6 +241,7 @@
 				mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 				//mat.emissiveColor = new BABYLON.Color3(196, 196, 196);
 				tube.material = mat;
+				mat.freeze();
 				console.log(`from: ${initiatorOpinionPosition} to: ${recipientOpinionPosition}`);
 			}
 		}
@@ -362,13 +368,15 @@
 
 			//apply material
 			plane.material = mat;
+			mat.freeze();
 
 			// set the position
 			plane.position.x = x;
 			plane.position.y = y;
 			plane.position.z = z;
 			plane.showBoundingBox = false;
-
+			plane.doNotSyncBoundingInfo = true
+			plane.freezeWorldMatrix();
 			return(plane);
 		}
 
@@ -389,6 +397,7 @@
 
 			//apply material
 			box.material = mat;
+			mat.freeze();
 
 			return(box);
 		}
@@ -452,6 +461,7 @@
 
 				//apply material
 				box.material = mat;
+				mat.freeze();
 */
 			}
 			return(nodes);
@@ -594,6 +604,12 @@
 				}
 			});
 
+
+			genericScene.autoClear = false; // Color buffer
+			genericScene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
+			genericScene.getAnimationRatio();
+			genericScene.clearCachedVertexData();
+			genericScene.cleanCachedTextureBuffer();
 			dpt.getDialogList();
 			return genericScene;
 	}
@@ -625,6 +641,9 @@
 		};
 
 		engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
+		engine.doNotHandleContextLost = true;
+		engine.enableOfflineSupport = false;
+
 		__topicScene = createGenericScene;
 		__opinionScene = createGenericScene;
 		currentScene = createGenericScene("topicScene");
