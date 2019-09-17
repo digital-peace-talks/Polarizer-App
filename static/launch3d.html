@@ -24,7 +24,6 @@
 	<script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"/>
 	<script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
 	-->
-
     <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
 
     <style>
@@ -52,9 +51,9 @@
 
       #misc {
         position: absolute;
-        margin: 0 auto;
-        z-index: 2;
+        z-index: 1;
         background: red;
+        margin: 0 auto;
       }
     </style>
   </head>
@@ -63,8 +62,76 @@
     <div id="misc"></div>
     <div id="misc2"></div>
     <script>
+
       		var canvas = document.getElementById("renderCanvas");
-      		//Lo_ = _;
+      		var myDialogsSV;
+      		var myDialogsSP;
+      		var myDialogMenu=[];
+
+      		function loadDialogList(restObj) {
+      			var dialog = '';
+      			var menuEntry = '';
+      			var dialogs = restObj.data.data;
+
+      			for(var i=0; i < dialogs.length; i++) {
+
+      				menuEntry = `proposition: ${dialogs[i].opinionProposition}`;
+
+      				dialog = `<u style="font-size: 32px">Dialog Info</u><br><br><i>proposition:</i><br>${dialogs[i].opinionProposition}<br><br>
+      						  <i>topic:</i><br>${dialogs[i].topic}<br><br>`;
+
+      				if(dialogs[i].initiator == 'me') {
+
+      					dialog += `<i>my opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
+      						  <i>other's opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>
+      						  <i>initiator:</i> me<br><br>`;
+
+      				} else {
+
+      					dialog += `<i>my opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>
+      							   <i>other's opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
+      							   <i>initiator:</i> other<br><br>`;
+
+      				}
+
+      				dialog += `<i>status:</i> ${dialogs[i].status}`;
+
+      				myDialogMenu.push({dialogId: dialogs[i].dialog, menuEntry: menuEntry, description: dialog});
+
+      				var tb = new BABYLON.GUI.TextBlock();
+      				tb.textWrapping = BABYLON.GUI.TextWrapping.WordWrap;
+      				tb.resizeToFit = true;
+      				tb.paddingTop = "10px";
+      				tb.paddingLeft = "10px";
+      				tb.paddingRight = "10px"
+      				tb.paddingBottom = "10px";
+      				tb.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+      				tb.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+      				tb.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+      				tb.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+      				tb.color = "white";
+      				tb.background = "transparent";
+      				tb.fontSize = "18px";
+      				tb.fontFamily = "AldoSemiBold";
+      				tb.name=i;
+
+      				tb.text = menuEntry;
+
+                  	tb.onPointerEnterObservable.add((pointerInfo) => {
+
+      					jQuery('body').append('<div id="bla" style="position: absolute; padding: 20px;'
+      						+'margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;'
+      						+'color: #000; width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;'
+      						+'background-color: #00ccffcc;">'+myDialogMenu[pointerInfo.name].description+'</div>');
+                  		});
+
+                  	tb.onPointerOutObservable.add((pointerInfo) => {
+                  		jQuery('#bla').remove();
+                  	});
+
+      				myDialogSP.addControl(tb);
+      			}
+      		}
 
       		function loadTopics(restObj) {
       			var options = '';
@@ -167,10 +234,11 @@
       				var mat = new BABYLON.StandardMaterial("mat", currentScene);
       				mat.diffuseColor = new BABYLON.Color3(1, 0, 0);
       				//mat.specularColor = new BABYLON.Color3(.5, .5, 1);
-      				mat.alpha = 0.75;
+      				mat.alpha = 0.95;
       				mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
       				//mat.emissiveColor = new BABYLON.Color3(196, 196, 196);
       				tube.material = mat;
+      				//mat.freeze();
       				console.log(`from: ${initiatorOpinionPosition} to: ${recipientOpinionPosition}`);
       			}
       		}
@@ -297,13 +365,15 @@
 
       			//apply material
       			plane.material = mat;
+      			//mat.freeze();
 
       			// set the position
       			plane.position.x = x;
       			plane.position.y = y;
       			plane.position.z = z;
       			plane.showBoundingBox = false;
-
+      			//plane.doNotSyncBoundingInfo = true
+      			//plane.freezeWorldMatrix();
       			return(plane);
       		}
 
@@ -324,14 +394,22 @@
 
       			//apply material
       			box.material = mat;
+      			//mat.freeze();
 
       			return(box);
       		}
 
       		function getCamera() {
       			// camera
+      			if(currentScene.dptMode == "topicScene") {
+      				console.log('ts cam');
+      				var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(2.5, 4.5, -15), currentScene);
+      			}
+      			if(currentScene.dptMode == "opinionScene") {
+      				console.log('os cam');
+      				var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(4.5, 1.0, -15), currentScene);
+      			}
       //			var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 0, -10), currentScene);
-      			var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(2.0, 0, -20), currentScene);
       //			var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, -10), currentScene);
       			camera.rollCorrect = 10;
       			camera.bankedTurn = true;
@@ -364,7 +442,6 @@
       				var angle = slice * i;
       			    var newX = center.X + radius * Math.cos(angle);
       			    var newY = center.Y + radius * Math.sin(angle);
-      console.log(`circlepoint: x: ${newX} y: ${newY}`);
       			    nodes.push({x: newX, y: newY});
       /*
       				var box = new BABYLON.MeshBuilder.CreateBox("box", {
@@ -381,15 +458,115 @@
 
       				//apply material
       				box.material = mat;
+      				mat.freeze();
       */
       			}
       			return(nodes);
       		}
 
-      		var createGenericScene = function() {
+      		var advancedTexture;
+      		var myDialogsVisible = false;
+      		var createGUIScene = function(dptMode) {
+      		    // GUI
+      		    if(advancedTexture) {
+      		    	advancedTexture.dispose();
+      		    }
+      		    advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+      			/*Input TextField for adding a new Topic. Visibile when "button3" (newTopicbutton) Click detected.*/var input=new BABYLON.GUI.InputText();
+      			input.isVisible = false;
+      			input.width = 0.2;
+      			input.maxWidth = 0.2;
+      			input.height = "40px";
+      			input.text = "";
+      			input.color = "white";
+      			input.background = "gray";
+      			input.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+      			advancedTexture.addControl(input);
+      			var inputLabel = new BABYLON.GUI.TextBlock
+				inputLabel.text = "Click here to start typing!";
+				inputLabel.isVisible = false;
+				inputLabel.paddingBottom = 100;
+      			inputLabel.color = "white";
+      			advancedTexture.addControl(inputLabel);
+
+
+
+      		    var button = BABYLON.GUI.Button.CreateImageButton("homebutton", "Home", "/nav-top-logo.png");
+      		    button.width = 0.1;
+      		    button.height = "40px";
+      		    button.color = "white";
+      		    button.fontFamily = "AldoSemiBold";
+      		    button.background = "#0000003f";
+                  button.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+                  button.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+                  button.top = "0px";
+      		    advancedTexture.addControl(button);
+      		    button.onPointerClickObservable.add((pointerInfo) => {
+      		    	currentScene.dispose();
+      				currentScene = __topicScene("topicScene");
+      				dpt.getTopic();
+      		    });
+
+      		    var button2 = BABYLON.GUI.Button.CreateImageButton("blind", "Own\nDialogs", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png");
+      		    button2.width = 0.1;
+      		    button2.height = "48px";
+      		    button2.color = "white";
+      		    button2.fontFamily = "AldoSemiBold";
+      		    button2.background = "#0000003f";
+                  button2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP+100;
+                  button2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+                  button2.top = "39";
+                  button2.onPointerClickObservable.add((pointerInfo) => {
+                  	if(myDialogsVisible) {
+                  		myDialogsVisible = false;
+                  	} else {
+                  		myDialogsVisible = true;
+                  	}
+                  	myDialogSV.isVisible = myDialogsVisible;
+                  });
+      			advancedTexture.addControl(button2);
+
+      			var button3 = BABYLON.GUI.Button.CreateImageButton("newtopicbutton","New Topic","https://imgur.com/kZA0lGr.png");
+      			button3.width = 0.1;
+      			button3.height = "48px";
+      			button3.color = "white";
+      			button3.fontFamily = "AldoSemiBold";
+      			button3.background = "#0000003f";
+      			button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
+      			button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+      			button3.top = "86";
+      			advancedTexture.addControl(button3);
+      			button3.onPointerUpObservable.add( function(){
+      				//alert('kungfu')
+      				input.isVisible = true;
+					inputLabel.isVisible = true;
+
+      			});
+
+      		    myDialogSV = new BABYLON.GUI.ScrollViewer();
+      		    myDialogSV.thickness = 1;
+      		    myDialogSV.color = "white";
+      		    myDialogSV.width = 0.2;
+      		    myDialogSV.height = "40%";
+      		    myDialogSV.background = "#0000003f";
+                  myDialogSV.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+                  myDialogSV.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+      		    myDialogSV.isVisible = myDialogsVisible;
+      		    advancedTexture.addControl(myDialogSV);
+
+      		    myDialogSP = new BABYLON.GUI.StackPanel();
+      		    myDialogSP.isVertical = true;
+      		    myDialogSP.ignoreLayoutWarnings = true;
+      		    myDialogSV.addControl(myDialogSP);
+
+      		}
+
+      		var createGenericScene = function(dptMode) {
       			var genericScene = new BABYLON.Scene(engine);
 
       			currentScene = genericScene;
+      			currentScene.dptMode = dptMode;
 
       			// lights - no light!!
       			var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
@@ -407,92 +584,8 @@
       			camera.checkCollisions = true;
       			genericScene.collisionsEnabled = true;
 
-      		    // GUI
-      		    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-      		    var button = BABYLON.GUI.Button.CreateImageButton("homebutton", "Home", "/nav-top-logo.png");
+      			createGUIScene();
 
-      		    button.width = 0.1;
-      		    button.height = "40px";
-      		    button.color = "white";
-      		    button.fontFamily = "AldoSemiBold";
-      		    button.background = "transparent";
-                  button.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-                  button.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-                  button.top = "0px";
-      		    advancedTexture.addControl(button);
-      		    button.onPointerClickObservable.add((pointerInfo) => {
-      				currentScene = __topicScene();
-      				dpt.getTopic();
-      		    });
-                  var button3 = BABYLON.GUI.Button.CreateImageButton("newtopicbutton", "New Topic", "https://imgur.com/g4bIWkP.png");
-      		    button3.width = 0.1;
-      		    button3.height = "48px";
-      		    button3.color = "white";
-      		    button3.fontFamily = "AldoSemiBold";
-      		    button3.background = "transparent";
-                  button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
-                  button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-                  button3.top = "86";
-      			advancedTexture.addControl(button3);
-
-
-
-
-      button3.onPointerUpObservable.add(function() {
-
-    //   alert('kungfu')
-    var input = new BABYLON.GUI.InputText();
-              input.width = 0.2;
-              input.maxWidth = 0.2;
-              input.height = "40px";
-              input.text = "";
-              input.color = "white";
-              input.background = "gray";
-              input.verticalAlignment =
-                BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;
-              input.horizontalAlignment =
-                BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-              advancedTexture.addControl(input);
-              var inputLabel = new BABYLON.GUI.TextBlock
-              inputLabel.text="Click here to start typing!";
-              inputLabel.paddingBottom=100;
-              inputLabel.color = "white";
-
-              advancedTexture.addControl(inputLabel);
-
-            }
-    
-    );
-
-      		    var button2 = BABYLON.GUI.Button.CreateImageButton("blind", "Own\nDialogs", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png");
-      		    button2.width = 0.1;
-      		    button2.height = "48px";
-      		    button2.color = "white";
-      		    button2.fontFamily = "AldoSemiBold";
-      		    button2.background = "transparent";
-                  button2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
-                  button2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-                  button2.top = "39";
-                  button2.onPointerEnterObservable.add((pointerInfo) => {
-                  	console.log('bla');
-      				jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
-                      +'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">'
-      					+'Please enter your proposition:<br><form id="proposition">'
-      					+'<input type="text" name="proposition" size="50" class="proposition">'
-      					+'<input type="hidden" id="opinionId" name="opinionId" value="'+0+'"</form></div>');
-
-                          jQuery(".proposition").focus();
-
-                  });
-                  button2.onPointerOutObservable.add((pointerInfo) => {
-                  	console.log('fasel');
-                  	jQuery('#misc').empty();
-                  });
-      			advancedTexture.addControl(button2);
-      		    /*
-      		    button2.onPointerClickObservable.add((pointerInfo) => {
-      		    });
-      		    */
       			genericScene.onPointerObservable.add((pointerInfo) => {
       				switch (pointerInfo.type) {
       					case BABYLON.PointerEventTypes.POINTERDOWN:
@@ -504,9 +597,9 @@
       					case BABYLON.PointerEventTypes.POINTERMOVE:
       						//console.log("POINTER MOVE");
       						break;
-                              case BABYLON.PointerEventTypes.POINTERWHEEL:
-                                  //console.log("POINTER WHEEL");
-                                  break;
+      					case BABYLON.PointerEventTypes.POINTERWHEEL:
+      						//console.log("POINTER WHEEL");
+      						break;
       					case BABYLON.PointerEventTypes.POINTERPICK:
       						//console.log("POINTER PICK");
       						break;
@@ -527,7 +620,8 @@
       							}, 250);
 
       							currentTopic = pointerInfo.pickInfo.pickedMesh.dpt.topicId;
-      							currentScene = __opinionScene();
+      					    	currentScene.dispose();
+      							currentScene = __opinionScene("opinionScene");
       							dpt.getOpinionByTopic(currentTopic);
       						}
       						break;
@@ -535,29 +629,36 @@
       		    });
 
       			genericScene.onKeyboardObservable.add((kbInfo) => {
-                      switch (kbInfo.type) {
+      				switch (kbInfo.type) {
       					case BABYLON.KeyboardEventTypes.KEYDOWN:
-                              //console.log("KEY DOWN: ", kbInfo.event.key);
+      						//console.log("KEY DOWN: ", kbInfo.event.key);
       						break;
-                              case BABYLON.KeyboardEventTypes.KEYUP:
-                                  //console.log("KEY UP: ", kbInfo.event.keyCode);
-                                  break;
-                              }
+      					case BABYLON.KeyboardEventTypes.KEYUP:
+      						//console.log("KEY UP: ", kbInfo.event.keyCode);
+      						break;
+      				}
       			});
 
+
+      			//genericScene.autoClear = false; // Color buffer
+      			//genericScene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
+      			//genericScene.getAnimationRatio();
+      			//genericScene.clearCachedVertexData();
+      			//genericScene.cleanCachedTextureBuffer();
+      			dpt.getDialogList();
       			return genericScene;
       	}
 
       //	__createScene = createTopicScene;
 
-      	var engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
+      	var engine;
       	var currentScene;
-      	var __topicScene = createGenericScene;
-      	var __opinionScene = createGenericScene;
-      	var currentScene = createGenericScene();
+      	var __topicScene;
+      	var __opinionScene;
+      	var currentScene;
       	var currentTopic;
-      	var dpt;
       	var opinionDialogConnections = {};
+      	var dpt;
 
       	document.addEventListener("DOMContentLoaded", function(event) {
       		var socket = io.connect(
@@ -573,6 +674,14 @@
       			dptUUID: "",
       			user: {},
       		};
+
+      		engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
+      		//engine.doNotHandleContextLost = true;
+      		//engine.enableOfflineSupport = false;
+
+      		__topicScene = createGenericScene;
+      		__opinionScene = createGenericScene;
+      		currentScene = createGenericScene("topicScene");
 
       		// Handle the incomming websocket trafic
       		socket.on("connect", () => {
@@ -610,8 +719,12 @@
       			if(restObj.path == '/topic/'
       			&& restObj.method == 'get') {
       				loadTopics(restObj);
-      			} else if(restObj.path == "/opinion/"+currentTopic+"/") {
+      			} else if(restObj.path == "/opinion/"+currentTopic+"/"
+      					&& restObj.method == "get") {
       				loadOpinions(restObj);
+      			} else if(restObj.path == '/dialog/list/'
+      					&& restObj.method == 'get') {
+      				loadDialogList(restObj);
       			}
       		});
 
@@ -635,5 +748,4 @@
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <!--	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script> -->
   <script src="dpt-client.js"></script>
-
 </html>
