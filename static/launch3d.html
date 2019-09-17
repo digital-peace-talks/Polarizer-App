@@ -465,33 +465,13 @@
 			return(nodes);
 		}
 		
+		var advancedTexture;
 		var createGUIScene = function(dptMode) {
-		}
-
-		var createGenericScene = function(dptMode) {
-			var genericScene = new BABYLON.Scene(engine);
-
-			currentScene = genericScene;
-			currentScene.dptMode = dptMode;
-			
-			// lights - no light!!
-			var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
-			light.intensity = 0.1;
-
-			genericScene.clearColor = new BABYLON.Color3(10/255, 80/255, 119/255);
-
-			var camera = getCamera();
-			camera.attachControl(canvas, true);
-
-			var box = getCollisionBox();
-
-			// Enable Collisions
-			box.checkCollisions = true;
-			camera.checkCollisions = true;
-			genericScene.collisionsEnabled = true;
-			
 		    // GUI
-		    var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+		    if(advancedTexture) {
+		    	advancedTexture.dispose();
+		    }
+		    advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
 		    var button = BABYLON.GUI.Button.CreateImageButton("homebutton", "Home", "/nav-top-logo.png");
 		    button.width = 0.1;
@@ -504,6 +484,7 @@
             button.top = "0px";
 		    advancedTexture.addControl(button); 
 		    button.onPointerClickObservable.add((pointerInfo) => {
+		    	currentScene.dispose();
 				currentScene = __topicScene("topicScene");
 				dpt.getTopic();
 		    });
@@ -544,6 +525,32 @@
 		    myDialogSP.ignoreLayoutWarnings = true;
 		    myDialogSV.addControl(myDialogSP);
 
+		}
+
+		var createGenericScene = function(dptMode) {
+			var genericScene = new BABYLON.Scene(engine);
+
+			currentScene = genericScene;
+			currentScene.dptMode = dptMode;
+			
+			// lights - no light!!
+			var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
+			light.intensity = 0.1;
+
+			genericScene.clearColor = new BABYLON.Color3(10/255, 80/255, 119/255);
+
+			var camera = getCamera();
+			camera.attachControl(canvas, true);
+
+			var box = getCollisionBox();
+
+			// Enable Collisions
+			box.checkCollisions = true;
+			camera.checkCollisions = true;
+			genericScene.collisionsEnabled = true;
+			
+			createGUIScene();
+
 			genericScene.onPointerObservable.add((pointerInfo) => {
 				switch (pointerInfo.type) {
 					case BABYLON.PointerEventTypes.POINTERDOWN:
@@ -578,6 +585,7 @@
 							}, 250);
 
 							currentTopic = pointerInfo.pickInfo.pickedMesh.dpt.topicId;
+					    	currentScene.dispose();
 							currentScene = __opinionScene("opinionScene");
 							dpt.getOpinionByTopic(currentTopic);
 						}
