@@ -1,0 +1,377 @@
+<!-- 
+      /*
+      Better solution to the problem of verifying whether or not user can begin a dialogue is to use the opinionPostAllowed API. -R*/
+ -->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Babylon Template</title>
+    <style>
+      html,
+      body {
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #renderCanvas {
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+      }
+    </style>
+    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+  </head>
+  <body>
+    <canvas id="renderCanvas" touch-action="none"></canvas>
+    <script>
+      let topicData = [];
+      let opinionData = [];
+
+      var currentTopic = 0;
+      var opinions = [];
+      var canDialogue = false;
+      var opinionToSubmit;
+      var tempTopic;
+      // var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("myUI");
+      // array-länge ergibt anzahl der topics
+      var opinionanzahl = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+      var whoOfferedOpinion = [];
+      //Set font
+      var font_size = 48;
+      var font = "bold " + font_size + "px Arial";
+      //Set height for plane
+      var planeHeight = 0.2;
+      //Set height for dynamic texture
+      var DTHeight = 1.5 * font_size; //or set as wished
+      //Calcultae ratio
+      var ratio = planeHeight / DTHeight;
+      document.addEventListener("DOMContentLoaded", function(event) {
+        var socket = io.connect(
+          window.location.protocol + "//" + window.location.host,
+          {
+            transports: ["websocket"],
+          }
+        );
+        var dpt = new DPT(socket);
+        var restObj = {};
+        var whoami = {
+          dptUUID: "",
+          user: {},
+        };
+        var currentDialog;
+        var toSpeak = function(isChecked) {
+          if (isChecked) {
+          } else {
+          }
+        };
+
+        // Handle the incomming websocket trafic
+
+        socket.on("connect", () => {
+          // if needed, we could keep socket.id somewhere
+          if (document.cookie) {
+            dpt.userLogin(document.cookie);
+          }
+        });
+        socket.on("private", function(restObj) {
+          if (restObj.method == "post") {
+            if (restObj.path == "/user/login/") {
+              whoami.dptUUID = restObj.data.dptUUID;
+              if (restObj.data.message == "logged in") {
+                whoami.user = restObj.data.user;
+                dpt.getTopic();
+              }
+              if (restObj.data.message == "user unknown") {
+                whoami.user = {};
+              }
+            }
+          }
+        });
+        socket.on("error", function(e) {
+          console.log("System", e ? e : "A unknown error occurred");
+          document.location.reload(true);
+          window.location.reload(true);
+        });
+        let main = document.getElementById("main");
+
+        var canvas = document.getElementById("renderCanvas"); // Get the canvas element
+        var engine = new BABYLON.Engine(canvas, true); // Generate the BABYLON 3D engine
+        /******* Add the create scene function ******/
+        var createScene = function() {
+          // Create the scene space
+          var scene = new BABYLON.Scene(engine);
+          // Add a camera to the scene and attach it to the canvas
+          var camera = new BABYLON.ArcRotateCamera(
+            "Camera",
+            Math.PI / 2,
+            Math.PI / 2,
+            2,
+            new BABYLON.Vector3(0, 0, 5),
+            scene
+          );
+          camera.attachControl(canvas, true);
+          // Add lights to the scene
+          var light1 = new BABYLON.HemisphericLight(
+            "light1",
+            new BABYLON.Vector3(1, 1, 0),
+            scene
+          );
+          var light2 = new BABYLON.PointLight(
+            "light2",
+            new BABYLON.Vector3(0, 1, -1),
+            scene
+          );
+
+          socket.on("api", function(restObj) {
+            if (!restObj) {
+              return;
+            }
+            if (restObj.path == "/topic/") {
+              console.log(restObj);
+              var i;
+              for (i in restObj.data) {
+                topicData.push({
+                  topic: restObj.data[i].content,
+                  id: restObj.data[i]._id,
+                  user: restObj.data[i].user,
+                });
+              }
+
+              makeTopics();
+            } else if (
+              restObj.path == "/opinion/" + currentTopic + "/" &&
+              restObj.method == "get"
+            ) {
+              //   console.log(restObj);
+              //   console.log(topicData[0].user);
+              for (i = 0; i < restObj.data.length; i++) {
+                opinions.push(restObj.data[i].content);
+                whoOfferedOpinion.push(topicData[i]);
+
+                // whoOfferedOpinion.push(topicData[i].user);
+              }
+
+              console.log("who offered opinions:" + whoOfferedOpinion);
+              //   console.log("whoami " + whoami.dptUUID);
+              //   console.log("Opinions Array:" + opinions);
+            }
+            // if (restObj.path == "/opinion/postAlllowed") {
+            //   for (i = 0; i < restObj.data.length; i++) {
+            //     console.log(
+            //       "Opinion Post Allowed: " +
+            //         dpt.opinionPostAllowed(restObj.data[0].topic)
+            //     );
+            //   }
+            // }
+
+            if (
+              currentDialog &&
+              restObj.path == "/dialog/" + currentDialog.dialog + "/" &&
+              restObj.method == "get"
+            ) {
+              dpt.getDialog(currentDialog.dialog);
+            }
+          });
+
+          return scene;
+          function makeOpinions() {
+            // alert("opinion maker active");
+          }
+          function makeTopics() {
+            var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
+              "UI"
+            );
+            var panel = new BABYLON.GUI.StackPanel();
+            advancedTexture.addControl(panel);
+            for (let i = 0; i < topicData.length; i++) {
+              let topicButton = BABYLON.GUI.Button.CreateSimpleButton(
+                "but", // + i,
+
+                topicData[i].topic
+              );
+              topicButton.width = 0.2;
+              topicButton.height = "40px";
+              topicButton.color = "white";
+              topicButton.background = "green";
+              topicButton.uniqueId = i;
+
+              advancedTexture.addControl(topicButton);
+              panel.addControl(topicButton);
+
+              //when user pushes a topic button:
+              topicButton.onPointerUpObservable.add(function() {
+                dpt.opinionPostAllowed(topicData[i].id);
+                console.log("the id =" + topicData[i].id);
+                currentTopic = topicData[i].id;
+                // let plate = test;
+                dpt.getOpinionByTopic(topicData[i].id);
+
+                /*Hide All Topics in Topic Panel on Any topic Click:*/
+                var btnsInPanel = panel.getDescendants();
+                btnsInPanel.forEach(btn => {
+                  btn.isVisible = false;
+                });
+                tempTopic = topicButton;
+
+                showOpinions(topicButton); //ask server .dpt.getopinionby topic _id as done in dpt client
+                enableOfferOpinion();
+              });
+            }
+          }
+
+          function enableOfferOpinion() {
+            let opineBtn = BABYLON.GUI.Button.CreateSimpleButton(
+              "opineBtn",
+              "opine"
+            );
+
+            let submitOpinionBtn = BABYLON.GUI.Button.CreateSimpleButton(
+              "submitOpinionBtn",
+              "Okay"
+            );
+
+            var appendToHUD = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
+              "appendToHud"
+            );
+
+            //offer opinion btn style:
+            opineBtn.width = 0.2;
+            opineBtn.height = "50px";
+            opineBtn.color = "white";
+            opineBtn.background = "blue";
+            opineBtn.horizontalAlignment = 0;
+            appendToHUD.addControl(opineBtn);
+
+            //onclick input opinion
+            opineBtn.onPointerUpObservable.add(function() {
+              var input = new BABYLON.GUI.InputText();
+              input.width = 0.2;
+              input.maxWidth = 0.2;
+              input.height = "40px";
+              input.text = "Click here to start typing!";
+              input.color = "white";
+              input.background = "gray";
+              input.verticalAlignment =
+                BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+              input.horizontalAlignment =
+                BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+              appendToHUD.addControl(input);
+              //clear input placeholder text and show submit btn (OKAY) when selected:
+              input.onPointerUpObservable.add(function() {
+                // input.text = "";
+
+                submitOpinionBtn.width = 0.1;
+                submitOpinionBtn.height = "50px";
+                submitOpinionBtn.color = "white";
+                submitOpinionBtn.background = "green";
+                submitOpinionBtn.verticalAlignment =
+                  BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+                submitOpinionBtn.horizontalAlignment =
+                  BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+                //submit opinion btn add:
+                appendToHUD.addControl(submitOpinionBtn);
+              });
+              // Tastatur (bottom, middle)
+              var keyboard = BABYLON.GUI.VirtualKeyboard.CreateDefaultLayout();
+              keyboard.verticalAlignment =
+                BABYLON.GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+              appendToHUD.addControl(keyboard);
+              keyboard.connect(input);
+
+              //submit opinion btn style:
+
+              //on "OKAY" button click
+              submitOpinionBtn.onPointerUpObservable.add(function() {
+                opinionToSubmit = input.text;
+                submitOpinion();
+              });
+            });
+          }
+          function submitOpinion() {
+            // alert(opinionToSubmit)
+            // opinions.push(opinionToSubmit);
+            dpt.postOpinion(currentTopic, opinionToSubmit);
+            for (let i = 0; i < topicData.length; i++) {
+              dpt.getOpinionByTopic(topicData[i].id);
+            }
+            showOpinions(tempTopic);
+          }
+          function showOpinions(topicButton) {
+            setTimeout(function() {
+              for (let i = 0; i < whoOfferedOpinion.length; i++) {
+                if (whoOfferedOpinion[i] === "mine") {
+                  canDialogue = true;
+                  alert("true");
+                }
+              }
+              console.log("hello " + topicButton.textBlock.text);
+              //   alert("running show opinions");
+              //retrieve opinions corresponding to this topic
+              //reveal opinions.
+              var advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI(
+                "UI"
+              );
+              var panel = new BABYLON.GUI.StackPanel();
+              advancedTexture.addControl(panel);
+              let topic = BABYLON.GUI.Button.CreateSimpleButton(
+                "topic",
+                topicButton.textBlock.text
+              );
+
+              advancedTexture.addControl(topic);
+              panel.addControl(topic);
+              var transformGroup = new BABYLON.GUI.CheckboxGroup(
+                "Transformation"
+              );
+              for (let i = 0; i < opinions.length; i++) {
+                let topicOpinion = BABYLON.GUI.Button.CreateSimpleButton(
+                  "but", // + i,
+
+                  withDialogue()
+                );
+                topicOpinion.width = 0.4;
+                topicOpinion.height = "50px";
+                topicOpinion.color = "white";
+                topicOpinion.background = "orange";
+                topicOpinion.uniqueId = i;
+
+                function withDialogue() {
+                  if (canDialogue && opinions[i] != opinionToSubmit) {
+                    return opinions[i] + `     🗨`;
+                  } else {
+                    return opinions[i];
+                  }
+                }
+                advancedTexture.addControl(topicOpinion);
+                panel.addControl(topicOpinion);
+              }
+            }, 100);
+          }
+        };
+        /******* End of the create scene function ******/
+        var addTopic = function(i) {
+          //
+        };
+        var scene = createScene(); //Call the createScene function
+        // Register a render loop to repeatedly render the scene
+        engine.runRenderLoop(function() {
+          scene.render();
+        });
+        // Watch for browser/canvas resize events
+        window.addEventListener("resize", function() {
+          engine.resize();
+        });
+      });
+    </script>
+  </body>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="dpt-client.js"></script>
+</html>
