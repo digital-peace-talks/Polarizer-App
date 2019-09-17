@@ -3,10 +3,11 @@ jQuery(document).ready(function() {
 		+ '//' + window.location.host, {transports: ['websocket']});
 
 	var dpt = new DPT(socket);
-	var currentTopic = 0;
+	var colors = {};
+	//var currentTopic = 0;
 	var currentDialog;
 	var dialogFormOpen = 0;
-	var colors = {};
+
 	var whoami = { dptUUID: '', user: {}};
 	
 	// Handle the incomming websocket trafic
@@ -17,39 +18,12 @@ jQuery(document).ready(function() {
 		}
 	});
 
-	/* // will be obsolete soon
-	socket.on('kanal', function(msg) {
-		jQuery('#messages').append(jQuery('<li>').text(msg.username +": "+msg.message));
-		window.scrollTo(0, document.body.scrollHeight);
-	}); */
-
 	// server says it has some updates for client
 	socket.on('update', function(restObj){
-
-	    if(restObj.method == 'post') {
-	    	
-	        if(restObj.path == '/info/') {
-				jQuery('#messages')
-				.append(jQuery('<li>')
-				.text(restObj.data.message));
-
-				window.scrollTo(0, document.body.scrollHeight);
-	        }
-	    }
-
-        /* if(restObj.path == '/topic/' && restObj.method == 'get') {
-        	dpt.getTopic();
-        } */
 
         if(restObj.path == '/dialog/list/' && restObj.method == 'get') {
         	dpt.getDialogList();
         }
-
-        /* if(restObj.path.startsWith('/opinion/')
-        && restObj.data.id == currentTopic
-        && restObj.method == 'get') {
-        	dpt.getOpinionByTopic(currentTopic);
-        } */
         
         if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/'
         && restObj.method == 'get'
@@ -83,120 +57,11 @@ jQuery(document).ready(function() {
 			jQuery('div.col.right').html('<h2>Dialogs</h2>');
 			for(var i=0; i < dialogs.length; i++) {
 				dialog = '<div class="dialog"><i>proposition:</i> '+dialogs[i].opinionProposition+"<br>";
-				dialog += '<div class="hide"><i>topic:</i> '+dialogs[i].topic+"<br>";
-				if(dialogs[i].initiator == 'me') {
-					dialog += "<i>my opinion:</i> "+dialogs[i].initiatorOpinion+"<br>";
-					dialog += "<i>other's opinion:</i> "+dialogs[i].recipientOpinion+"<br>";
-					dialog += "<i>initiator:</i> me ";
-				} else {
-					dialog += "<i>my opinion:</i> "+dialogs[i].recipientOpinion+"<br>";
-					dialog += "<i>other's opinion:</i> "+dialogs[i].initiatorOpinion+"<br>";
-					dialog += "<i>initiator:</i> other ";
-				}
-				dialog += "<i>status:</i> "+dialogs[i].status+"</div>";
 				dialog += `<div class="dialogInfo" style="visibility: hidden; line-height: 0px; font-size: 0px;">${JSON.stringify(dialogs[i])}</div>`;
 				jQuery('div.col.right').append(dialog+"<br></div>");
 				jQuery('.hide').css({"visibility": "hidden", "line-height": "0%"});
 			}
-
-		} else if(restObj.path == '/topic/') {
-
-			jQuery('div.col.left').html('<h2>Topics</h2>');
-			var i;
-			var options = '';
-			for (i in restObj.data) {
-				if(restObj.data[i].user == 'mine') {
-					options = '<span class="editTopic" id="'
-							+ restObj.data[i]._id
-							+ '">&#128393;</span>';
-				} else {
-					options = '';
-				}
-				jQuery('div.col.left').append(
-					'<li> <a class="opinionlist" id="'
-					+ restObj.data[i]._id
-					+ '" href="#">'
-					+ restObj.data[i].content
-					+ "</a>"
-					+ ' [' + restObj.data[i].opinions.length + '] '
-					+ options+"</li><br>");
-			}
-			topicEdit();
-			topicForm();
-
-		} else if(restObj.path.startsWith("/opinion/"+currentTopic+"/")) {
-
-			var i;
-			var options = '';
-			var canInvite = false;
-
-			jQuery('div.col.mid').html('<h2>Opinions</h2>');
-			
-			colors = {};
-			for(var i in restObj.data) {
-				colors[restObj.data[i].topo.opinionId] = restObj.data[i].topo;
-			}
-
-			for (var i in restObj.data) {
-				if(restObj.data[i].user == 'mine') {
-					canInvite = true;
-				}
-			}
-
-			for (i in restObj.data) {
-				options = '';
-
-				if(restObj.data[i].user == 'mine') {
-					options = '<span class="editOpinion" id="'
-					+ restObj.data[i]._id
-					+ '">&#128393;</span>';
-				} else {
-					if(restObj.data[i].blocked == 0
-					&& canInvite) {
-						options = '<span class="inviteToDialog" id="'
-						+ restObj.data[i]._id
-						+ '">'
-						+ '&#128172;'
-						+ '</span>';
-					}
-				}
-
-				jQuery('div.col.mid').append('<li class="connector" id="'+ restObj.data[i]._id +'"><span class="text">'
-				+ restObj.data[i].content
-				+ "</span> " +options+ ' <span class="connector" id="'+ restObj.data[i]._id +'"></span></li><br>');
-			}
-			
-			
-
-			if(restObj.data.length > 0) {
-				dpt.opinionPostAllowed(restObj.data[0].topic);
-			} else {
-				opinionForm();
-			}
-			opinionEdit();
-
-		} else if(restObj.path == '/opinion/postAllowed/' && restObj.data.value == true) {
-
-			opinionForm();
-
-		} else if(restObj.path == '/user/reclaim/'+ whoami.dptUUID +'/') {
-
-			if(restObj.data.newCookie) {
-				document.cookie = "dptUUID="+restObj.data.newCookie+"; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/;"; 
-				location.reload();
-			} else {
-				console.log("special treadment, new account?!");
-			}
-
-		} else if(restObj.path == '/metadata/user/'+whoami.dptUUID+'/') {
-
-			whoami.user = restObj.data;
-			console.log('whoami.user: '+whoami.user);
-
 		}
-
-		linkHandler();
-
 	});
 
 	socket.on('private', function(restObj) {
@@ -209,22 +74,7 @@ jQuery(document).ready(function() {
 	        	if(restObj.data.message == 'logged in') {
 
 	        		whoami.user = restObj.data.user;
-	        		dpt.getMetadataUser(whoami.dptUUID);
-	        		dpt.getTopic();
 	        		dpt.getDialogList();
-
-	        	}
-
-				if(restObj.data.message == 'user unknown') {
-
-					whoami.user = {};
-					phraseForm(restObj.data.dptUUID);
-
-				} else {
-
-					jQuery('#messages').append(jQuery('<li>').text(restObj.data.message));
-					window.scrollTo(0, document.body.scrollHeight);
-
 	        	}
 	        }
 	    }
@@ -236,52 +86,16 @@ jQuery(document).ready(function() {
 		window.location.reload(true);
 	});
 
-
-	// make links triggers for api calls
-	function linkHandler() {
-
-		// first and foremost, we need to remove all old event hooks
-		jQuery("a.opinionlist").off("click");
-
-		// and then implement the new ones
-		jQuery("a.opinionlist").click(function( event ) {
-			event.preventDefault();
-			dpt.getOpinionByTopic(this.id);
-			// the clicked link sets the new current topic.
-			currentTopic = this.id;
-			return(false);
-		});
-
-	}
-	
-	function phraseForm(dptUUID) {
-
-		jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
-				+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="phrase">'
-				+'This device seems not registered, yet.<br>'
-				+'Please enter your phrase:<br><form id="phrase">'
-				+'<input type="text" name="phrase" size="50" class="phrase"></form></div>');
-
-		jQuery(".phrase").focus();
-
-		jQuery("#phrase").submit(function(event) {
-			dpt.userReclaim(jQuery('.phrase').val(), dptUUID);
-			jQuery('#misc').empty();
-			event.preventDefault();
-		});
-
-	}
-	
 	function propositionForm(opinionId) {
 
-		jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
-				+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">'
-				+'Please enter your proposition:<br><form id="proposition">'
-				+'<input type="text" name="proposition" size="50" class="proposition">'
-				+'<input type="hidden" id="opinionId" name="opinionId" value="'+opinionId+'"</form></div>');
+		jQuery('#misc').append(`<div style="position: absolute; padding: 10px; left: 37%;
+				border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">
+				Please enter your proposition:<br><form id="proposition">
+				<input type="text" name="proposition" size="50" class="proposition">
+				<input type="hidden" id="opinionId" name="opinionId" value="'+opinionId+'"</form></div>`);
 
 		jQuery(".proposition").focus();
-		
+
 		jQuery(document).one('keyup', '#proposition', function(event) {
 		    if (event.keyCode == 27) {
 				jQuery('#misc').empty();
@@ -303,78 +117,6 @@ jQuery(document).ready(function() {
 		});
 	}
 
-	function topicForm() {
-
-		jQuery('div.col.left').append(
-			'<br><hr style="border-color: #5a825a; border-style: solid;">Your topic:<br><form id="newTopic">'
-			+'<input class="anewtopic" type=text size=50 name="newTopic"></form>'
-		);
-
-		jQuery("#newTopic").submit(function(event) {
-			dpt.postTopic(jQuery('.anewtopic').val());
-			jQuery('.anewtopic').val('');
-			event.preventDefault();
-		});
-
-	}
-
-	function opinionForm() {
-
-		jQuery('div.col.mid').append(
-			'<br><hr style="border-color: #5a825a; border-style: solid;">Your opinion:<br><form id="newOpinion">'
-			+'<input class="anewopinion" type=text size=50 name="newOpinion"></form>'
-		);
-
-		jQuery("#newOpinion").submit(function(event) {
-			dpt.postOpinion(currentTopic, jQuery('.anewopinion').val());
-			jQuery('.anewopinion').val('');
-			event.preventDefault();
-		});
-
-	}
-
-
-	function topicEdit() {
-
-		jQuery('.editTopic').click(function(event) {
-			jQuery(this).prev('a').html(
-					'<form class="newTopic">'
-					+ '<input type="text" value="'
-					+  this.previousElementSibling.innerText
-					+ '" name="newTopic">'
-					+'</form>'
-			);
-
-			event.preventDefault();
-		});
-
-		jQuery(document).one("submit", "form.newTopic", function(event) {
-			dpt.putTopic(this[0].value, this.parentNode.nextElementSibling.id, whoami.dptUUID);
-			event.stopImmediatePropagation();
-			event.preventDefault();
-		});
-	}
-
-	function opinionEdit() {
-
-		jQuery('.editOpinion').click(function(event) {
-			jQuery(this).prev('span').html(
-					'<form class="editOpinion">'
-					+ '<input type="text" value="'
-					+  this.previousElementSibling.innerText
-					+ '" name="newOpinion">'
-					+'</form>'
-			);
-			event.preventDefault();
-		});
-
-		jQuery(document).one("submit", "form.editOpinion", function(event) {
-			dpt.putOpinion(whoami.dptUUID, this.parentNode.nextElementSibling.id, currentTopic, this[0].value);
-			event.preventDefault();
-		});
-
-	}
-	
 	function crisisForm(messageId) {
 
 		var message = '';
@@ -417,7 +159,6 @@ jQuery(document).ready(function() {
 			jQuery('#misc2').empty();
 			event.preventDefault();
 		})
-
 	}
 	
 	function dialogForm() {
@@ -444,7 +185,6 @@ jQuery(document).ready(function() {
 			opinion1 = currentDialog.initiatorOpinion;
 			opinion1 += "<br><br><b>Initiators proposition:</b><br>" + currentDialog.opinionProposition
 			opinion2 = currentDialog.recipientOpinion;
-
 		}
 		
 		if(currentDialog.messages.length == 0) {
@@ -493,7 +233,6 @@ jQuery(document).ready(function() {
 				}
 				dialog += '<p class="left">' + currentDialog.messages[i].content + option + '</p>';
 			}
-
 		}
 
 		var html = `<div style="position: absolute; padding: 10px;
@@ -513,7 +252,7 @@ jQuery(document).ready(function() {
 				<div style="position: absolute; margin-left: 80%; text-align:justify; text-justify:inter-word;" id="c3">
 				<b>My opinion:</b><br>${opinion2}<br><br>${meReadyToEnd}<br><br>${extensionRequest}</div>
 				</div>
-		`;
+			`;
 
 		if(currentDialog.status == 'ACTIVE') {
 
@@ -604,7 +343,6 @@ jQuery(document).ready(function() {
 					dpt.putDialog(currentDialog.dialog, "status", "CLOSED");
 					event.preventDefault();
 				});
-
 			}
 
 		} else if(currentDialog.status == 'CLOSED') {
@@ -623,7 +361,6 @@ jQuery(document).ready(function() {
 				jQuery('#misc').empty();
 				event.preventDefault();
 			});
-
 		}
 
 		html += '</div></div>';
@@ -666,62 +403,11 @@ jQuery(document).ready(function() {
 		jQuery("#dialogInput").focus();
 	}
 
-
-	jQuery(document).on('click', 'span.inviteToDialog', function(event) {
-
-		propositionForm(this.id);
-		event.stopImmediatePropagation();
-		event.preventDefault();
-
-	});
-
-	
-	jQuery(document).on('mouseenter touchstart', 'li.connector', (event) => {
-
-		var root = event.currentTarget.id;
-		for(var i in colors[root].leafs.negative) {
-			jQuery(`span#${colors[root].leafs.negative[i]}.connector`).append(`
-				<b style="color: #f00">${colors[root].leafs.negative.length}</b>,
-			`);
-		}
-		for(var i in colors[root].leafs.neutral) {
-			jQuery(`span#${colors[root].leafs.neutral[i]}.connector`).append(`
-				<b style="color: #88f">${colors[root].leafs.neutral.length}</b>,
-			`);
-		}
-		for(var i in colors[root].leafs.positive) {
-			jQuery(`span#${colors[root].leafs.positive[i]}.connector`).append(`
-				<b style="color: #0f0">${colors[root].leafs.positive.length}</b>,
-			`);
-		}
-		for(var i in colors[root].leafs.unset) {
-			jQuery(`span#${colors[root].leafs.unset[i]}.connector`).append(`
-				<b style="color: #ccc">${colors[root].leafs.unset.length}</b>,
-			`);
-		}
-		event.preventDefault();
-	});
 	jQuery(document).on('mouseleave touchend', 'li.connector', (event) => {
 		var root = event.currentTarget.id;
 //		jQuery(event.currentTarget).children("span.connector").html('');
 		jQuery("span.connector").text('');
 		event.preventDefault();
-	});
-
-	jQuery(document).on('mouseenter touchstart', '.dialog', (event) => {
-
-		jQuery(event.currentTarget).css({"background-color": "#1a221a"});
-		jQuery(event.currentTarget.children[2]).css({"visibility": "visible", "line-height": "100%"});
-		event.preventDefault();
-
-	});
-
-	jQuery(document).on('mouseleave touchend', '.dialog', (event) => {
-
-		jQuery(event.currentTarget).css({"background-color": "#0a120a"});
-		jQuery(event.currentTarget.children[2]).css({"visibility": "hidden", "line-height": "0%"});
-		event.preventDefault();
-
 	});
 
 	jQuery(document).on('touchend click', '.dialog', (event) => {
@@ -731,17 +417,11 @@ jQuery(document).ready(function() {
 		dpt.getDialog(currentDialog.dialog);
 		event.stopImmediatePropagation();
 		event.preventDefault();
-
 	});
 
 	jQuery('#main').height("100%").width("100%")
-	.append('<div style="border-bottom-style: solid; border-bottom-width: 5px; border-color: #5a825a;">'
-			+'<h1 style="letter-spacing: 30px">version 0.1</h1></div><div class="row">'
-			+'<div class="col left"><h2>Topics</h2></div>'
-			+'<div class="col mid"><h2>Opinions</h2></div>'
-			+'<div class="col right"><h2>Dialogs</h2></div></div>');
+	.append(`<div class="row"><div class="col right"><h2>Dialogs</h2></div></div>`);
 	jQuery('div.col').css({float: "left", 'padding-left': "20px", height: "100%", 'overflow-y': "auto"});
 	jQuery('div.col').css({ width: "30%", "max-width": "30%"});
-	jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
-
+	//jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
 });
