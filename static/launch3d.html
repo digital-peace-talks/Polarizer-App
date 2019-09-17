@@ -482,12 +482,16 @@
       			input.color = "white";
       			input.background = "gray";
       			input.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+				input.onPointerUpObservable.add(function() {
+					alert('kungfu')
+				});
       			advancedTexture.addControl(input);
       			var inputLabel = new BABYLON.GUI.TextBlock
 				inputLabel.text = "Click here to start typing!";
 				inputLabel.isVisible = false;
 				inputLabel.paddingBottom = 100;
       			inputLabel.color = "white";
+				inputLabel.isHitTestVisible=false;
       			advancedTexture.addControl(inputLabel);
 
 
@@ -538,7 +542,6 @@
       			button3.top = "86";
       			advancedTexture.addControl(button3);
       			button3.onPointerUpObservable.add( function(){
-      				//alert('kungfu')
       				input.isVisible = true;
 					inputLabel.isVisible = true;
 
