@@ -62,6 +62,20 @@ jQuery(document).ready(function() {
 				jQuery('.hide').css({"visibility": "hidden", "line-height": "0%"});
 			}
 		}
+
+		else if(restObj.path == '/dialog/listAll/' && restObj.method == 'get') {
+
+			console.log(restObj.data);
+			var dialog = '';
+			var dialogs = restObj.data.data;
+			jQuery('div.col.right').html('<h2>Dialogs</h2>');
+			for(var i=0; i < dialogs.length; i++) {
+				dialog = '<div class="dialog"><i>proposition:</i> '+dialogs[i].opinionProposition+"<br>";
+				dialog += `<div class="dialogInfo" style="visibility: hidden; line-height: 0px; font-size: 0px;">${JSON.stringify(dialogs[i])}</div>`;
+				jQuery('div.col.right').append(dialog+"<br></div>");
+				jQuery('.hide').css({"visibility": "hidden", "line-height": "0%"});
+			}
+		}
 	});
 
 	socket.on('private', function(restObj) {
@@ -74,7 +88,7 @@ jQuery(document).ready(function() {
 	        	if(restObj.data.message == 'logged in') {
 
 	        		whoami.user = restObj.data.user;
-	        		dpt.getDialogList();
+	        		dpt.getDialogListAll();
 	        	}
 	        }
 	    }

@@ -302,6 +302,21 @@ match.push({
 });
 
 match.push({
+	path: "/dialog/listAll/",
+	method: "get",
+	fun: async function(data, dptUUID) {
+		console.log("get all dialogs list");
+		var user = userRegistered(dptUUID);
+		var ret;
+		if(user) {
+			ret = await dialogService.getDialogListAll({userId: mongoose.Types.ObjectId(user.user.id)});
+			return({data: ret});
+		}
+		return(data);
+	}
+});
+
+match.push({
 	path: "/dialog/"+dialogIdReg+"/",
 	method: "get",
 	fun: async function(data, dptUUID, socket) {

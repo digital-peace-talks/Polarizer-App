@@ -162,6 +162,14 @@ class DPT {
 			data: {},
 		});
 	}
+
+	getDialogListAll() {
+		this.socket.emit('api', {
+			method: 'get',
+			path:'/dialog/listAll/',
+			data: {},
+		});
+	}
 	
 	getDialog(dialogId) {
 		this.socket.emit('api', {
