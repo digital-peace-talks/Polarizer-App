@@ -555,8 +555,12 @@
       			button3.top = "86";
       			advancedTexture.addControl(button3);
       			button3.onPointerUpObservable.add( function(){
-      				input.isVisible = true;
-					inputLabel.isVisible = true;
+					if(button3.textBlock.text=='New Topic'){  
+					input.isVisible = true;
+					inputLabel.isVisible = true;}
+					else{//the topic input field contains a new topic and clicking button3 should add it to topics:
+						// dpt.topicPost(userTopicInput);
+					}
 
       			});
 
@@ -720,9 +724,15 @@
       					}
       				}
       			}
-      		});
-
-      		socket.on("error", function(e) {
+			  });
+			  
+			// socket.on("topicPost", function(restObj){
+			// 	if(restObj.method == "post"){
+			// 		dpt.topicPost(userTopicInput);
+			// 	}
+			// })
+			  
+			socket.on("error", function(e) {
       			console.log("System", e ? e : "A unknown error occurred");
       			document.location.reload(true);
       			window.location.reload(true);
