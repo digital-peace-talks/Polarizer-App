@@ -466,6 +466,7 @@
 		}
 		
 		var advancedTexture;
+		var myDialogsVisible = false;
 		var createGUIScene = function(dptMode) {
 		    // GUI
 		    if(advancedTexture) {
@@ -499,13 +500,12 @@
             button2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
             button2.top = "39";
             button2.onPointerClickObservable.add((pointerInfo) => {
-            	/*
-            	if(myDialogSV.isVisible) {
-            		myDialogSV.isVisible = false;
+            	if(myDialogsVisible) {
+            		myDialogsVisible = false;
             	} else {
-            		myDialogSV.isVisible = true;
+            		myDialogsVisible = true;
             	}
-            	*/
+            	myDialogSV.isVisible = myDialogsVisible;
             });
 			advancedTexture.addControl(button2); 
 
@@ -517,7 +517,7 @@
 		    myDialogSV.background = "#0000003f";
             myDialogSV.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
             myDialogSV.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-		    //myDialogSV.isVisible = false;
+		    myDialogSV.isVisible = myDialogsVisible;
 		    advancedTexture.addControl(myDialogSV);
 
 		    myDialogSP = new BABYLON.GUI.StackPanel();
