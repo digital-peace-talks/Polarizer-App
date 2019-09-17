@@ -65,6 +65,7 @@
 	<script>
 	
 		var canvas = document.getElementById("renderCanvas");
+		var myDialogsSV;
 		var myDialogsSP;
 		var myDialogMenu=[];
 
@@ -118,20 +119,17 @@
 				tb.text = menuEntry;
 
             	tb.onPointerEnterObservable.add((pointerInfo) => {
-//				jQuery('#misc').append('<div style="position: absolute; padding: 10px; margin-left: 37% '
-				jQuery('body').append('<div id="bla" style="position: absolute; padding: 20px; margin-left: 25%; '
-					+'border: #fff; border-style: solid; border-width: 1px; color: #000;'
-					+'width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px; background-color: #00ccffcc;">'
-					+myDialogMenu[pointerInfo.name].description+'</div>');
-//					+'<div style="background-color: #00000049;">'+myDialogMenu[pointerInfo.name].description
-//					+'</div></div>');
-					pointerInfo.background = "#00ccff";
 
-            	});
+					jQuery('body').append('<div id="bla" style="position: absolute; padding: 20px;'
+						+'margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;'
+						+'color: #000; width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;'
+						+'background-color: #00ccffcc;">'+myDialogMenu[pointerInfo.name].description+'</div>');
+            		});
+
             	tb.onPointerOutObservable.add((pointerInfo) => {
             		jQuery('#bla').remove();
-					pointerInfo.background = "#00ccff00";
             	});
+
 				myDialogSP.addControl(tb);
 			}
 		}
@@ -237,11 +235,11 @@
 				var mat = new BABYLON.StandardMaterial("mat", currentScene);
 				mat.diffuseColor = new BABYLON.Color3(1, 0, 0);
 				//mat.specularColor = new BABYLON.Color3(.5, .5, 1);
-				mat.alpha = 0.75;
+				mat.alpha = 0.95;
 				mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 				//mat.emissiveColor = new BABYLON.Color3(196, 196, 196);
 				tube.material = mat;
-				mat.freeze();
+				//mat.freeze();
 				console.log(`from: ${initiatorOpinionPosition} to: ${recipientOpinionPosition}`);
 			}
 		}
@@ -368,15 +366,15 @@
 
 			//apply material
 			plane.material = mat;
-			mat.freeze();
+			//mat.freeze();
 
 			// set the position
 			plane.position.x = x;
 			plane.position.y = y;
 			plane.position.z = z;
 			plane.showBoundingBox = false;
-			plane.doNotSyncBoundingInfo = true
-			plane.freezeWorldMatrix();
+			//plane.doNotSyncBoundingInfo = true
+			//plane.freezeWorldMatrix();
 			return(plane);
 		}
 
@@ -397,7 +395,7 @@
 
 			//apply material
 			box.material = mat;
-			mat.freeze();
+			//mat.freeze();
 
 			return(box);
 		}
@@ -466,6 +464,9 @@
 			}
 			return(nodes);
 		}
+		
+		var createGUIScene = function(dptMode) {
+		}
 
 		var createGenericScene = function(dptMode) {
 			var genericScene = new BABYLON.Scene(engine);
@@ -516,28 +517,18 @@
             button2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP+100;
             button2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
             button2.top = "39";
-            button2.onPointerEnterObservable.add((pointerInfo) => {
-            	console.log('bla');
-				jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
-					+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">'
-					+'Please enter your proposition:<br><form id="proposition">'
-					+'<input type="text" name="proposition" size="50" class="proposition">'
-					+'<input type="hidden" id="opinionId" name="opinionId" value="'+0+'"</form></div>');
-
-				jQuery(".proposition").focus();
-		
-            });
-            button2.onPointerOutObservable.add((pointerInfo) => {
-            	console.log('fasel');
-            	jQuery('#misc').empty();
+            button2.onPointerClickObservable.add((pointerInfo) => {
+            	/*
+            	if(myDialogSV.isVisible) {
+            		myDialogSV.isVisible = false;
+            	} else {
+            		myDialogSV.isVisible = true;
+            	}
+            	*/
             });
 			advancedTexture.addControl(button2); 
-		    /*
-		    button2.onPointerClickObservable.add((pointerInfo) => {
-		    });		    
-		    */
 
-		    var myDialogSV = new BABYLON.GUI.ScrollViewer();
+		    myDialogSV = new BABYLON.GUI.ScrollViewer();
 		    myDialogSV.thickness = 1;
 		    myDialogSV.color = "white";
 		    myDialogSV.width = 0.2;
@@ -545,6 +536,7 @@
 		    myDialogSV.background = "#0000003f";
             myDialogSV.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
             myDialogSV.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
+		    //myDialogSV.isVisible = false;
 		    advancedTexture.addControl(myDialogSV);
 
 		    myDialogSP = new BABYLON.GUI.StackPanel();
@@ -605,11 +597,11 @@
 			});
 
 
-			genericScene.autoClear = false; // Color buffer
-			genericScene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
-			genericScene.getAnimationRatio();
-			genericScene.clearCachedVertexData();
-			genericScene.cleanCachedTextureBuffer();
+			//genericScene.autoClear = false; // Color buffer
+			//genericScene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
+			//genericScene.getAnimationRatio();
+			//genericScene.clearCachedVertexData();
+			//genericScene.cleanCachedTextureBuffer();
 			dpt.getDialogList();
 			return genericScene;
 	}
@@ -641,8 +633,8 @@
 		};
 
 		engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
-		engine.doNotHandleContextLost = true;
-		engine.enableOfflineSupport = false;
+		//engine.doNotHandleContextLost = true;
+		//engine.enableOfflineSupport = false;
 
 		__topicScene = createGenericScene;
 		__opinionScene = createGenericScene;
