@@ -42,6 +42,7 @@ jQuery(document).ready(function() {
 			return;
 
 		} else if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/' && restObj.method == 'get') {
+
 			var old = currentDialog;
 			currentDialog = restObj.data;
 			currentDialog.topic = old.topic;
@@ -57,13 +58,10 @@ jQuery(document).ready(function() {
 			jQuery('div.col.right').html('<h2>Dialogs</h2>');
 			for(var i=0; i < dialogs.length; i++) {
 				dialog = '<div class="dialog"><i>proposition:</i> '+dialogs[i].opinionProposition+"<br>";
-				dialog += `<div class="dialogInfo" style="visibility: hidden; line-height: 0px; font-size: 0px;">${JSON.stringify(dialogs[i])}</div>`;
+				dialog += `<div class="dialogInfo">${JSON.stringify(dialogs[i])}</div>`;
 				jQuery('div.col.right').append(dialog+"<br></div>");
-				jQuery('.hide').css({"visibility": "hidden", "line-height": "0%"});
 			}
-		}
-
-		else if(restObj.path == '/dialog/listAll/' && restObj.method == 'get') {
+		} else if(restObj.path == '/dialog/listAll/' && restObj.method == 'get') {
 
 			console.log(restObj.data);
 			var dialog = '';
@@ -71,9 +69,8 @@ jQuery(document).ready(function() {
 			jQuery('div.col.right').html('<h2>Dialogs</h2>');
 			for(var i=0; i < dialogs.length; i++) {
 				dialog = '<div class="dialog"><i>proposition:</i> '+dialogs[i].opinionProposition+"<br>";
-				dialog += `<div class="dialogInfo" style="visibility: hidden; line-height: 0px; font-size: 0px;">${JSON.stringify(dialogs[i])}</div>`;
+				dialog += `<div class="dialogInfo">${JSON.stringify(dialogs[i])}</div>`;
 				jQuery('div.col.right').append(dialog+"<br></div>");
-				jQuery('.hide').css({"visibility": "hidden", "line-height": "0%"});
 			}
 		}
 	});
@@ -100,37 +97,6 @@ jQuery(document).ready(function() {
 		window.location.reload(true);
 	});
 
-	function propositionForm(opinionId) {
-
-		jQuery('#misc').append(`<div style="position: absolute; padding: 10px; left: 37%;
-				border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">
-				Please enter your proposition:<br><form id="proposition">
-				<input type="text" name="proposition" size="50" class="proposition">
-				<input type="hidden" id="opinionId" name="opinionId" value="'+opinionId+'"</form></div>`);
-
-		jQuery(".proposition").focus();
-
-		jQuery(document).one('keyup', '#proposition', function(event) {
-		    if (event.keyCode == 27) {
-				jQuery('#misc').empty();
-				event.preventDefault();
-		    }
-		});
-
-		jQuery(document).on('submit', 'form#proposition', function(event) {
-			event.stopImmediatePropagation();
-			var proposition = jQuery('.proposition').val();
-			var opinionId = jQuery('#opinionId').val();
-			if(proposition) {
-				dpt.postDialog(proposition, whoami.dptUUID, opinionId);
-			}
-			jQuery('.proposition').val('');
-			jQuery('#misc').empty();
-			event.preventDefault();
-			return(0);
-		});
-	}
-
 	function crisisForm(messageId) {
 
 		var message = '';
@@ -142,19 +108,18 @@ jQuery(document).ready(function() {
 			}
 		}
 		jQuery('#misc2').append(`
-			<div style="position: absolute; padding: 10px; left: 37%;
-			border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="crisis">
+			<div id="crisis">
 			<u>End of discussion, appraisal of results.</u><br><br>
 			Finish the dialog under Topic:<br><b>${currentDialog.topic}</b><br><br>
 			Most impressive message:<br><b>${message}</b><br><br>
 			Please enter the reason:<br>
 			<form id="crisis">
-			<input type="text" name="reason" size="50" class="reason"><br><br>
-			<label style="color: #f00;">[-1: <input type="radio" name="rating" value="-1">]</label>
-			<label style="color: #77f;">[0: <input type="radio" name="rating" value="0" checked>]</label>
-			<label style="color: #0f0;">[1: <input type="radio" name="rating" value="1">]</label><br>
-			<input type="submit" name="send" value="send">
-			<input type="button" value="close window" name="close window" id="crisisCloseWindow">
+				<input type="text" name="reason" size="50" class="reason"><br><br>
+				<label id="negative">[-1: <input type="radio" name="rating" value="-1">]</label>
+				<label id="neutral">[0: <input type="radio" name="rating" value="0" checked>]</label>
+				<label id="positive">[1: <input type="radio" name="rating" value="1">]</label><br>
+				<input type="submit" name="send" value="send">
+				<input type="button" value="close window" name="close window" id="crisisCloseWindow">
 			</form>
 			</div>
 		`);
@@ -202,7 +167,7 @@ jQuery(document).ready(function() {
 		}
 		
 		if(currentDialog.messages.length == 0) {
-			dialog = '<i style="line-height: 0px">&nbsp;</i>';
+			dialog = '<i id="props">&nbsp;</i>';
 		}
 
 		for(var i=0; i < currentDialog.crisises.length; i++) {
@@ -249,10 +214,8 @@ jQuery(document).ready(function() {
 			}
 		}
 
-		var html = `<div style="position: absolute; padding: 10px;
-				border: #666; border-style: solid; border-width: 5px;
-				background: #0a120a; margin-left: 10%; margin-right: 10%;
-				min-height: 80%; min-width: 80%" id="dialogFrame">
+		var html = `
+				<div id="dialogFrame">
 				<div class="table">
 				<div class="top">
 				<center>
@@ -260,10 +223,10 @@ jQuery(document).ready(function() {
 				</center>
 				</div>
 				<div class="middle">
-				<div style="position: absolute; text-align: justify; text-justify: inter-word;" id="c1">
+				<div id="c1">
 				<b>Others opinion:</b><br>${opinion1}<br><br>${otherReadyToEnd}</div>
-				<div style="position: absolute; overflow-y: auto; margin-left: 20%; max-height: 80%; width: 53%; padding-left: 30px; padding-right: 30px; height: 100%; overflow-y: auto;" id="c2">${dialog}</div>
-				<div style="position: absolute; margin-left: 80%; text-align:justify; text-justify:inter-word;" id="c3">
+				<div id="c2">${dialog}</div>
+				<div id="c3">
 				<b>My opinion:</b><br>${opinion2}<br><br>${meReadyToEnd}<br><br>${extensionRequest}</div>
 				</div>
 			`;
@@ -272,7 +235,7 @@ jQuery(document).ready(function() {
 
 			if(viewOnly) {
 				html += `
-					<div style="bottom: 10px; position: absolute; min-width: 98%">
+					<div class="status">
 					<center>
 					<form id="dialogFrame">
 					<input type="button" value="close window" name="close window" id="dialogClose">
@@ -282,7 +245,7 @@ jQuery(document).ready(function() {
 				`;
 			} else {
 				html += `
-					<div style="bottom: 10px; position: absolute; min-width: 98%">
+					<div class="status">
 					<center>
 					<form id="dialogFrame">
 					<input type="text" name="message" size="120" id="dialogInput">
@@ -310,7 +273,7 @@ jQuery(document).ready(function() {
 
 			if(currentDialog.initiator == 'me') {
 				html += `
-					<div style="bottom: 10px; position: absolute; min-width: 98%">
+					<div class="status">
 						<center>
 							Please wait for the other to accept the dialog.
 							<input type="button" value="close window" name="close window" size="120" id="dialogClose">
@@ -326,7 +289,7 @@ jQuery(document).ready(function() {
 			} else {
 
 				html += `
-					<div style="bottom: 10px; position: absolute; min-width: 98%">
+					<div class="status">
 						<center id="actionSpace">
 							<input type="button" value="accept dialog" name="accept dialog" size="120" id="dialogAccept">
 							<input type="button" value="ask me later" name="accept dialog" size="120" id="dialogCloseWindow">
@@ -362,7 +325,7 @@ jQuery(document).ready(function() {
 		} else if(currentDialog.status == 'CLOSED') {
 
 			html += `
-				<div style="bottom: 10px; position: absolute; min-width: 98%">
+				<div class="status">
 					<center>
 						<b>This dialog is closed.</b>
 						<input type="button" value="close window" name="close window" size="120" id="dialogCloseWindow">
@@ -433,9 +396,5 @@ jQuery(document).ready(function() {
 		event.preventDefault();
 	});
 
-	jQuery('#main').height("100%").width("100%")
-	.append(`<div class="row"><div class="col right"><h2>Dialogs</h2></div></div>`);
-	jQuery('div.col').css({float: "left", 'padding-left': "20px", height: "100%", 'overflow-y': "auto"});
-	jQuery('div.col').css({ width: "30%", "max-width": "30%"});
-	//jQuery('div.row:after').css({content: "", display: "table", clear: "both"});
+	jQuery('#main').append(`<div class="row"><div class="col right"><h2>Dialogs</h2></div></div>`);
 });
