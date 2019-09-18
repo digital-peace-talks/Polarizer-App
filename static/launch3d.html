@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -19,8 +18,8 @@
 	<script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
 	<script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
 	-->
-	<script src="https://preview.babylonjs.com/babylon.js"></script>
-	<!--
+		<script src="https://preview.babylonjs.com/babylon.js"></script>
+		<!--
 	<script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
 	<script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"/>
 	<script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
@@ -32,9 +31,7 @@
 			font-family: "AldoSemiBold";
 			src: url("/font.ttf") format("truetype");
 		}
-
-		html,
-		body {
+		html, body {
 			font-family: "AldoSemiBold";
 			overflow: hidden;
 			width: 100%;
@@ -59,7 +56,6 @@
 		}
 	</style>
 </head>
-
 <body>
 	<canvas id="renderCanvas"></canvas>
 	<div id="misc"></div>
@@ -69,21 +65,21 @@
 		var canvas = document.getElementById("renderCanvas");
 		var myDialogsSV;
 		var myDialogsSP;
-		var myDialogMenu = [];
+		var myDialogMenu=[];
 
 		function loadDialogList(restObj) {
 			var dialog = '';
 			var menuEntry = '';
 			var dialogs = restObj.data.data;
 
-			for (var i = 0; i < dialogs.length; i++) {
+			for(var i=0; i < dialogs.length; i++) {
 
 				menuEntry = `proposition: ${dialogs[i].opinionProposition}`;
 
 				dialog = `<u style="font-size: 32px">Dialog Info</u><br><br><i>proposition:</i><br>${dialogs[i].opinionProposition}<br><br>
 						<i>topic:</i><br>${dialogs[i].topic}<br><br>`;
 
-				if (dialogs[i].initiator == 'me') {
+				if(dialogs[i].initiator == 'me') {
 
 					dialog += `<i>my opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
 							<i>other's opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>
@@ -99,7 +95,7 @@
 
 				dialog += `<i>status:</i> ${dialogs[i].status}`;
 
-				myDialogMenu.push({ dialogId: dialogs[i].dialog, menuEntry: menuEntry, description: dialog });
+				myDialogMenu.push({dialogId: dialogs[i].dialog, menuEntry: menuEntry, description: dialog});
 
 				var tb = new BABYLON.GUI.TextBlock();
 				tb.textWrapping = BABYLON.GUI.TextWrapping.WordWrap;
@@ -116,20 +112,20 @@
 				tb.background = "transparent";
 				tb.fontSize = "18px";
 				tb.fontFamily = "AldoSemiBold";
-				tb.name = i;
+				tb.name=i;
 
 				tb.text = menuEntry;
 
 				tb.onPointerEnterObservable.add((pointerInfo) => {
 
-					jQuery('body').append('<div id="bla" style="position: absolute; padding: 20px;'
-						+ 'margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;'
-						+ 'color: #000; width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;'
-						+ 'background-color: #00ccffcc;">' + myDialogMenu[pointerInfo.name].description + '</div>');
-				});
+					jQuery('body').append('<div id="dialogInfo" style="position: absolute; padding: 20px;'
+						+'margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;'
+						+'color: #000; width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;'
+						+'background-color: #00ccffcc;">'+myDialogMenu[pointerInfo.name].description+'</div>');
+					});
 
 				tb.onPointerOutObservable.add((pointerInfo) => {
-					jQuery('#bla').remove();
+					jQuery('#dialogInfo').remove();
 				});
 
 				myDialogSP.addControl(tb);
@@ -140,11 +136,11 @@
 			var options = '';
 
 			var n = Math.floor((Math.sqrt(restObj.data.length)));
-			var x = 0 - Math.floor(n / 2) * 4.8, xstart = x; xmax = (n - 1) * 4.8;
-			var y = ymax = (n - 1) * 3.2; ystart = ymax; y = ystart;
+			var x = 0 - Math.floor(n/2)*4.8, xstart = x; xmax = (n-1)*4.8;
+			var y = ymax = (n-1)*3.2; ystart = ymax; y = ystart;
 
 			for (var i in restObj.data) {
-				if (restObj.data[i].user == 'mine') {
+				if(restObj.data[i].user == 'mine') {
 					options = '<span class="editTopic" id="'
 						+ restObj.data[i]._id
 						+ '">&#128393;</span>';
@@ -155,21 +151,21 @@
 					x, y, 0,
 					`{"context": "topicMap", "topicId": "${restObj.data[i]._id}", "topic": "${restObj.data[i].content}"}`,
 					`${restObj.data[i].content} [ ${restObj.data[i].opinions.length} ]`);
-				x += 4.8;
-				if (x > xmax) {
+				x+=4.8;
+				if(x > xmax) {
 					y -= 3.2;
-					x = xstart;
+					x=xstart;
 				}
-				/*
-								jQuery('div.col.left').append(
-									'<li> <a class="opinionlist" id="'
-									+ restObj.data[i]._id
-									+ '" href="#">'
-									+ restObj.data[i].content
-									+ "</a>"
-									+ ' [' + restObj.data[i].opinions.length + '] '
-									+ options+"</li><br>");
-				*/
+/*
+				jQuery('div.col.left').append(
+					'<li> <a class="opinionlist" id="'
+					+ restObj.data[i]._id
+					+ '" href="#">'
+					+ restObj.data[i].content
+					+ "</a>"
+					+ ' [' + restObj.data[i].opinions.length + '] '
+					+ options+"</li><br>");
+*/
 			}
 			//topicEdit();
 			//topicForm();
@@ -247,57 +243,57 @@
 		function beamMeUp() {
 			var initiatorOpinionPosition = null;
 			var recipientOpinionPosition = null;
-			for (var i in opinionDialogConnections) {
-				for (var j in currentScene.meshes) {
-					if ('dpt' in currentScene.meshes[j]
-						&& currentScene.meshes[j].dpt.context == 'opinionMap'
-						&& currentScene.meshes[j].dpt.opinionId == i) {
+			for(var i in opinionDialogConnections) {
+				for(var j in currentScene.meshes) {
+					if('dpt' in currentScene.meshes[j]
+					&& currentScene.meshes[j].dpt.context == 'opinionMap'
+					&& currentScene.meshes[j].dpt.opinionId == i) {
 						initiatorOpinionPosition = currentScene.meshes[j].position;
 					}
 				}
-				for (var j in opinionDialogConnections[i].leafs.negative) {
+				for(var j in opinionDialogConnections[i].leafs.negative) {
 					var opinionId = opinionDialogConnections[i].leafs.negative[j];
-					if (opinionId != i) {
-						for (var k in currentScene.meshes) {
-							if ('dpt' in currentScene.meshes[k]
-								&& currentScene.meshes[k].dpt.context == 'opinionMap'
-								&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+					if(opinionId != i) {
+						for(var k in currentScene.meshes) {
+							if('dpt' in currentScene.meshes[k]
+							&& currentScene.meshes[k].dpt.context == 'opinionMap'
+							&& currentScene.meshes[k].dpt.opinionId == opinionId) {
 								recipientOpinionPosition = currentScene.meshes[k].position;
 							}
 						}
 					}
 				}
-				for (var j in opinionDialogConnections[i].leafs.neutral) {
+				for(var j in opinionDialogConnections[i].leafs.neutral) {
 					var opinionId = opinionDialogConnections[i].leafs.negative[j];
-					if (opinionId != i) {
-						for (var k in currentScene.meshes) {
-							if ('dpt' in currentScene.meshes[k]
-								&& currentScene.meshes[k].dpt.context == 'opinionMap'
-								&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+					if(opinionId != i) {
+						for(var k in currentScene.meshes) {
+							if('dpt' in currentScene.meshes[k]
+							&& currentScene.meshes[k].dpt.context == 'opinionMap'
+							&& currentScene.meshes[k].dpt.opinionId == opinionId) {
 								recipientOpinionPosition = currentScene.meshes[k].position;
 							}
 						}
 					}
 				}
-				for (var j in opinionDialogConnections[i].leafs.positive) {
+				for(var j in opinionDialogConnections[i].leafs.positive) {
 					var opinionId = opinionDialogConnections[i].leafs.positive[j];
-					if (opinionId != i) {
-						for (var k in currentScene.meshes) {
-							if ('dpt' in currentScene.meshes[k]
-								&& currentScene.meshes[k].dpt.context == 'opinionMap'
-								&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+					if(opinionId != i) {
+						for(var k in currentScene.meshes) {
+							if('dpt' in currentScene.meshes[k]
+							&& currentScene.meshes[k].dpt.context == 'opinionMap'
+							&& currentScene.meshes[k].dpt.opinionId == opinionId) {
 								recipientOpinionPosition = currentScene.meshes[k].position;
 							}
 						}
 					}
 				}
-				for (var j in opinionDialogConnections[i].leafs.unset) {
+				for(var j in opinionDialogConnections[i].leafs.unset) {
 					var opinionId = opinionDialogConnections[i].leafs.unset[j];
-					if (opinionId != i) {
-						for (var k in currentScene.meshes) {
-							if ('dpt' in currentScene.meshes[k]
-								&& currentScene.meshes[k].dpt.context == 'opinionMap'
-								&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+					if(opinionId != i) {
+						for(var k in currentScene.meshes) {
+							if('dpt' in currentScene.meshes[k]
+							&& currentScene.meshes[k].dpt.context == 'opinionMap'
+							&& currentScene.meshes[k].dpt.opinionId == opinionId) {
 								recipientOpinionPosition = currentScene.meshes[k].position;
 							}
 						}
@@ -310,8 +306,8 @@
 				sv.y = initiatorOpinionPosition.y + 1.2;
 				ev.x = recipientOpinionPosition.x - 2.4;
 				ev.y = recipientOpinionPosition.y + 1.2;
-				var tube = BABYLON.MeshBuilder.CreateTube("tube", { path: [sv, ev], radius: 0.06, updatable: true, }, currentScene);
-				//				BABYLON.MeshBuilder.CreateLines("lines", {points: [sv, ev]}, currentScene);
+				var tube = BABYLON.MeshBuilder.CreateTube("tube", {path: [sv, ev], radius: 0.06, updatable: true, }, currentScene);
+//				BABYLON.MeshBuilder.CreateLines("lines", {points: [sv, ev]}, currentScene);
 				//create material
 				var mat = new BABYLON.StandardMaterial("mat", currentScene);
 				mat.diffuseColor = new BABYLON.Color3(1, 0, 0);
@@ -331,35 +327,35 @@
 			var canInvite = false;
 
 			var n = Math.floor((Math.sqrt(restObj.data.length)));
-			var x = 0 - Math.floor(n / 2) * 10, xstart = x; xmax = (n - 1) * 10;
-			var y = ymax = (n - 1) * 2.5; ystart = ymax; y = ystart;
+			var x = 0 - Math.floor(n/2)*10, xstart = x; xmax = (n-1)*10;
+			var y = ymax = (n-1)*2.5; ystart = ymax; y = ystart;
 
 			opinionDialogConnections = {};
-			for (var i in restObj.data) {
+			for(var i in restObj.data) {
 				opinionDialogConnections[restObj.data[i].topo.opinionId] = restObj.data[i].topo;
 			}
 			for (var i in restObj.data) {
-				if (restObj.data[i].user == 'mine') {
+				if(restObj.data[i].user == 'mine') {
 					canInvite = true;
 				}
 			}
 
-			var nodes = circlePoints(restObj.data.length, 5, { X: 4, Y: 0 });
+			var nodes = circlePoints(restObj.data.length, 5, {X: 4, Y: 0});
 			for (i in restObj.data) {
 				options = '';
 
-				if (restObj.data[i].user == 'mine') {
+				if(restObj.data[i].user == 'mine') {
 					options = '<span class="editOpinion" id="'
-						+ restObj.data[i]._id
-						+ '">&#128393;</span>';
+					+ restObj.data[i]._id
+					+ '">&#128393;</span>';
 				} else {
-					if (restObj.data[i].blocked == 0
-						&& canInvite) {
+					if(restObj.data[i].blocked == 0
+					&& canInvite) {
 						options = '<span class="inviteToDialog" id="'
-							+ restObj.data[i]._id
-							+ '">'
-							+ '&#128172;'
-							+ '</span>';
+						+ restObj.data[i]._id
+						+ '">'
+				 		+ '&#128172;'
+						+ '</span>';
 					}
 				}
 
@@ -368,17 +364,18 @@
 					`{"context": "opinionMap", "opinionId": "${restObj.data[i]._id}"}`,
 					`${restObj.data[i].content}`);
 
+//				if(canInvite 
 				var mat = new BABYLON.StandardMaterial("icon", currentScene);
 				mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png", currentScene);
-				mat.emissiveColor = new BABYLON.Color3(0, 0.7, 1);
+				mat.emissiveColor = new BABYLON.Color3(0,0.7,1);
 				mat.alpha = 0.95;
 				mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
-
-				var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.25, height: 0.25 }, currentScene);
+			
+				var icon = BABYLON.MeshBuilder.CreatePlane("icon", {width: 0.35, height: 0.25}, currentScene);
 				icon.position.x = plane.position.x - plane.geometry.extend.maximum.x - 0.2;
 				icon.position.y = plane.position.y + plane.geometry.extend.maximum.y - 0.4;
 				icon.position.z = plane.position.z - 0.05;
-				icon.material = mat;
+				icon.material = mat;	
 				icon.dpt = { context: 'dialogInvitation', opinionId: restObj.data[i]._id };
 
 				/*
@@ -394,14 +391,14 @@
 			}
 
 
-			if (restObj.data.length > 0) {
-				//				dpt.opinionPostAllowed(restObj.data[0].topic);
+			if(restObj.data.length > 0) {
+//				dpt.opinionPostAllowed(restObj.data[0].topic);
 			} else {
-				//				opinionForm();
+//				opinionForm();
 			}
-			//			opinionEdit();
+//			opinionEdit();
 
-			circleTextPlane(1.3, 1.2, 0, 'bla', currentTopicStr + " * ");
+			circleTextPlane(1.5, 1.2, 0, 'bla', currentTopicStr + " * ");
 			beamMeUp();
 		}
 
@@ -409,7 +406,7 @@
 		function wrapText(context, text, x, y, maxWidth, lineHeight) {
 			var words = text.split(' ');
 			var line = '';
-			for (var n = 0; n < words.length; n++) {
+			for(var n = 0; n < words.length; n++) {
 				var testLine = line + words[n] + ' ';
 				var metrics = context.measureText(testLine);
 				var testWidth = metrics.width;
@@ -430,14 +427,14 @@
 			var planeHeight = 3.2; //10;
 
 			//Create plane
-			var plane = BABYLON.MeshBuilder.CreatePlane(name, { width: planeWidth, height: planeHeight }, currentScene);
+			var plane = BABYLON.MeshBuilder.CreatePlane(name, {width:planeWidth, height:planeHeight}, currentScene);
 			plane.dpt = JSON.parse(name);
 
 			//Set width and height for dynamic texture using same multiplier
 			var DTWidth = planeWidth * 100; //64;
 			var DTHeight = planeHeight * 100; //64
 
-			var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", { width: DTWidth, height: DTHeight }, currentScene);
+			var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", {width:DTWidth, height:DTHeight}, currentScene);
 
 			//Check width of text for given font type at any size of font
 			var ctx = dynamicTexture.getContext();
@@ -472,7 +469,7 @@
 			plane.showBoundingBox = false;
 			//plane.doNotSyncBoundingInfo = true
 			//plane.freezeWorldMatrix();
-			return (plane);
+			return(plane);
 		}
 
 		function getCollisionBox() {
@@ -487,28 +484,28 @@
 			box.position = new BABYLON.Vector3(7.5, 2.5, -19.99);
 			//create material
 			var mat = new BABYLON.StandardMaterial("mat", currentScene);
-			mat.diffuseColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
-			mat.emissiveColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+			mat.diffuseColor = new BABYLON.Color3(10/255, 80/255, 119/255);
+			mat.emissiveColor = new BABYLON.Color3(10/255, 80/255, 119/255);
 
 			//apply material
 			box.material = mat;
 			//mat.freeze();
 
-			return (box);
+			return(box);
 		}
 
 		function getCamera() {
 			// camera
-			if (currentScene.dptMode == "topicScene") {
+			if(currentScene.dptMode == "topicScene") {
 				console.log('ts cam');
 				var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(2.5, 4.5, -15), currentScene);
 			}
-			if (currentScene.dptMode == "opinionScene") {
+			if(currentScene.dptMode == "opinionScene") {
 				console.log('os cam');
 				var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(4.5, 1.0, -15), currentScene);
 			}
-			//			var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 0, -10), currentScene);
-			//			var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, -10), currentScene);
+//			var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 0, -10), currentScene);
+//			var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, -10), currentScene);
 
 			camera.inputs.add(new BABYLON.FreeCameraTouchInput());
 
@@ -519,18 +516,18 @@
 			camera.keysUp.push(38);
 			camera.keysRight.push(39);
 			camera.keysDown.push(40);
-			/*
-			*/
-			/*
-						camera.rollCorrect = 10;
-						camera.bankedTurn = true;
-						camera.bankedTurnLimit = Math.PI / 8;
-						camera.bankedTurnMultiplier = 1;
-			*/
+/*
+*/
+/*
+			camera.rollCorrect = 10;
+			camera.bankedTurn = true;
+			camera.bankedTurnLimit = Math.PI / 8;
+			camera.bankedTurnMultiplier = 1;
+*/
 			camera.acceleration = 0.01;
 			camera.speed = 0.5;
 
-			return (camera);
+			return(camera);
 		}
 
 		function circlePoints(points, radius, center) {
@@ -538,40 +535,40 @@
 			var nodes = [];
 			for (var i = 0; i < points; i++) {
 				var angle = slice * i;
-				var newX = center.X + radius * Math.cos(angle);
-				var newY = center.Y + radius * Math.sin(angle);
-				nodes.push({ x: newX, y: newY });
-				/*
-								var box = new BABYLON.MeshBuilder.CreateBox("box", {
-									width: 0.1,
-									height: 0.1,
-									depth: 0.1,
-									sideOrientation: 1
-								}, currentScene);
-								box.position = new BABYLON.Vector3(newX, newY, -1);
-								//create material
-								var mat = new BABYLON.StandardMaterial("mat", currentScene);
-								mat.diffuseColor = new BABYLON.Color3(1,.5,0);
-								mat.emissiveColor = new BABYLON.Color3(1,.5,0);
-				
-								//apply material
-								box.material = mat;
-								mat.freeze();
-				*/
+					var newX = center.X + radius * Math.cos(angle);
+					var newY = center.Y + radius * Math.sin(angle);
+					nodes.push({x: newX, y: newY});
+/*
+				var box = new BABYLON.MeshBuilder.CreateBox("box", {
+					width: 0.1,
+					height: 0.1,
+					depth: 0.1,
+					sideOrientation: 1
+				}, currentScene);
+				box.position = new BABYLON.Vector3(newX, newY, -1);
+				//create material
+				var mat = new BABYLON.StandardMaterial("mat", currentScene);
+				mat.diffuseColor = new BABYLON.Color3(1,.5,0);
+				mat.emissiveColor = new BABYLON.Color3(1,.5,0);
+
+				//apply material
+				box.material = mat;
+				mat.freeze();
+*/
 			}
-			return (nodes);
+			return(nodes);
 		}
 
 		var advancedTexture;
 		var myDialogsVisible = false;
-		var createGUIScene = function (dptMode) {
+		var createGUIScene = function(dptMode) {
 			// GUI
-			if (advancedTexture) {
+			if(advancedTexture) {
 				advancedTexture.dispose();
 			}
 			advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
-			/*Input TextField for adding a new Topic. Visibile when "button3" (newTopicbutton) Click detected.*/var input = new BABYLON.GUI.InputText();
+			/*Input TextField for adding a new Topic. Visibile when "button3" (newTopicbutton) Click detected.*/var input=new BABYLON.GUI.InputText();
 			input.isVisible = false;
 			input.width = 0.2;
 			input.maxWidth = 0.2;
@@ -579,25 +576,19 @@
 			input.text = "";
 			input.color = "white";
 			input.background = "gray";
-			input.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER; input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-			input.onPointerUpObservable.add(function () {
+			input.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_CENTER;input.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
+			input.onPointerUpObservable.add(function() {
 				// alert(userTopicInput)
 			});
-		
-			input.processKeyboard= function(evt) {this.processKey(evt.keyCode, evt.key);
-			// console.log(evt.keyCode, +" " + evt.key)
-			if (evt.keyCode == 13 && input.text !=""){
-				addNewTopic()
-			}}
 			var userTopicInput = '';
-			input.onTextChangedObservable.add(function () {
+			input.onTextChangedObservable.add(function() {
 				userTopicInput = input.text
-				if (userTopicInput != '') {
-					button3.background = 'green';
-					button3.textBlock.text = 'Okay!';
+				if(userTopicInput != ''){
+					button3.background='green';
+					button3.textBlock.text='Okay!';
 				} else {
 					button3.background = "#0000003f";
-					button3.textBlock.text = 'New Topic';
+					button3.textBlock.text='New Topic';
 
 				}
 			});
@@ -608,7 +599,7 @@
 			inputLabel.isVisible = false;
 			inputLabel.paddingBottom = 100;
 			inputLabel.color = "white";
-			inputLabel.isHitTestVisible = false;
+			inputLabel.isHitTestVisible=false;
 			advancedTexture.addControl(inputLabel);
 
 
@@ -635,11 +626,11 @@
 			button2.color = "white";
 			button2.fontFamily = "AldoSemiBold";
 			button2.background = "#0000003f";
-			button2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP + 100;
+			button2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP+100;
 			button2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
 			button2.top = "39";
 			button2.onPointerClickObservable.add((pointerInfo) => {
-				if (myDialogsVisible) {
+				if(myDialogsVisible) {
 					myDialogsVisible = false;
 				} else {
 					myDialogsVisible = true;
@@ -654,23 +645,20 @@
 			button3.color = "white";
 			button3.fontFamily = "AldoSemiBold";
 			button3.background = "#0000003f";
-			button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP+100;
+			button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
 			button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
 			button3.top = "86";
 			advancedTexture.addControl(button3);
-			button3.onPointerUpObservable.add(function () {
-				if (button3.textBlock.text == 'New Topic') {
+			button3.onPointerUpObservable.add( function() {
+				if(button3.textBlock.text=='New Topic') {	
 					input.isVisible = true;
 					inputLabel.isVisible = true;
 				} else {
-					addNewTopic()
+					//the topic input field contains a new topic and clicking button3 should add it to topics:
+					// dpt.topicPost(userTopicInput);
 				}
 
 			});
-			function addNewTopic() {
-			alert("enter")
-
-			}
 
 			myDialogSV = new BABYLON.GUI.ScrollViewer();
 			myDialogSV.thickness = 1;
@@ -690,30 +678,30 @@
 
 		}
 
-		var createGenericScene = function (dptMode) {
+		var createGenericScene = function(dptMode) {
 			var genericScene = new BABYLON.Scene(engine);
-
+	
 			currentScene = genericScene;
 			currentScene.dptMode = dptMode;
-
+	
 			// lights - no light!!
 			var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
 			light.intensity = 0.1;
-
-			genericScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
-
+	
+			genericScene.clearColor = new BABYLON.Color3(10/255, 80/255, 119/255);
+	
 			var camera = getCamera();
 			camera.attachControl(canvas, true);
-
+	
 			var box = getCollisionBox();
-
+	
 			// Enable Collisions
 			box.checkCollisions = true;
 			camera.checkCollisions = true;
 			genericScene.collisionsEnabled = true;
-
+	
 			createGUIScene();
-
+	
 			genericScene.onPointerObservable.add((pointerInfo) => {
 				switch (pointerInfo.type) {
 					case BABYLON.PointerEventTypes.POINTERDOWN:
@@ -722,9 +710,36 @@
 					case BABYLON.PointerEventTypes.POINTERUP:
 						//console.log("POINTER UP");
 
-						if ('dpt' in pointerInfo.pickInfo.pickedMesh
-							&& pointerInfo.pickInfo.pickedMesh.dpt.context == "dialogInvitation") {
+						if('dpt' in pointerInfo.pickInfo.pickedMesh
+						&& pointerInfo.pickInfo.pickedMesh.dpt.context == "dialogInvitation") {
 							console.log('enter proposition');
+							jQuery('body').append(`<div id="proposition" style="position: absolute; padding: 20px;
+								margin-left: 25%; margin-top: 25% border: #fff; border-style: solid; border-width: 1px;
+								color: #000; width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;
+								background-color: #00ccffcc;">Please enter your proposition:<br><form id="proposition">
+								<input type="text" name="proposition" size="50" class="proposition">
+								<input type="hidden" id="opinionId" name="opinionId" value="${pointerInfo.pickInfo.pickedMesh.dpt.opinionId}"</form></div>`
+							);
+							jQuery(".proposition").focus();
+							
+							jQuery(document).on('keyup', '#proposition', function(event) {
+							    if (event.keyCode == 27) {
+									jQuery('#proposition').remove();
+									event.preventDefault();
+							    }
+							});
+
+							jQuery(document).on('submit', 'form#proposition', function(event) {
+								event.stopImmediatePropagation();
+								event.preventDefault();
+								var proposition = jQuery('.proposition').val();
+								var opinionId = jQuery('#opinionId').val();
+								if(proposition) {
+									dpt.postDialog(proposition, whoami.dptUUID, opinionId);
+								}
+								jQuery('.proposition').val('');
+								jQuery('#proposition').remove();
+							});
 						}
 
 						break;
@@ -739,31 +754,31 @@
 						break;
 					case BABYLON.PointerEventTypes.POINTERTAP:
 						//console.log("POINTER TAP");
-
+	
 						break;
 					case BABYLON.PointerEventTypes.POINTERDOUBLETAP:
 						//console.log("POINTER DOUBLE-TAP");
-
-						if ('dpt' in pointerInfo.pickInfo.pickedMesh
-							&& pointerInfo.pickInfo.pickedMesh.dpt.context == "topicMap") {
+	
+						if('dpt' in pointerInfo.pickInfo.pickedMesh
+						&& pointerInfo.pickInfo.pickedMesh.dpt.context == "topicMap") {
 							//console.log("hit topicId: "+pointerInfo.pickInfo.pickedMesh.dpt.topicId);
-
+	
 							pointerInfo.pickInfo.pickedMesh.showBoundingBox = true;
-							setTimeout(function () {
+							setTimeout(function() {
 								pointerInfo.pickInfo.pickedMesh.showBoundingBox = false;
 							}, 250);
-
+	
 							currentTopic = pointerInfo.pickInfo.pickedMesh.dpt.topicId;
 							currentTopicStr = pointerInfo.pickInfo.pickedMesh.dpt.topic;
 							currentScene.dispose();
 							currentScene = __opinionScene("opinionScene");
 							dpt.getOpinionByTopic(currentTopic);
 						}
-
+						
 						break;
 				}
 			});
-
+	
 			genericScene.onKeyboardObservable.add((kbInfo) => {
 				switch (kbInfo.type) {
 					case BABYLON.KeyboardEventTypes.KEYDOWN:
@@ -782,8 +797,8 @@
 						break;
 				}
 			});
-
-
+	
+	
 			//genericScene.autoClear = false; // Color buffer
 			//genericScene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
 			//genericScene.getAnimationRatio();
@@ -792,9 +807,9 @@
 			dpt.getDialogList();
 			return genericScene;
 		}
-
-		//	__createScene = createTopicScene;
-
+	
+	//	__createScene = createTopicScene;
+	
 		var engine;
 		var currentScene;
 		var __topicScene;
@@ -804,30 +819,30 @@
 		var currentTopicStr;
 		var opinionDialogConnections = {};
 		var dpt;
-
-		document.addEventListener("DOMContentLoaded", function (event) {
+	
+		document.addEventListener("DOMContentLoaded", function(event) {
 			var socket = io.connect(
-				window.location.protocol + "//" + window.location.host,
+			window.location.protocol + "//" + window.location.host,
 				{
 					transports: ["websocket"],
 				}
 			);
-
+		
 			dpt = new DPT(socket);
 			var restObj = {};
 			var whoami = {
 				dptUUID: "",
 				user: {},
 			};
-
+		
 			engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
 			//engine.doNotHandleContextLost = true;
 			//engine.enableOfflineSupport = false;
-
+		
 			__topicScene = createGenericScene;
 			__opinionScene = createGenericScene;
 			currentScene = createGenericScene("topicScene");
-
+		
 			// Handle the incomming websocket trafic
 			socket.on("connect", () => {
 				// if needed, we could keep socket.id somewhere
@@ -835,8 +850,8 @@
 					dpt.userLogin(document.cookie);
 				}
 			});
-
-			socket.on("private", function (restObj) {
+		
+			socket.on("private", function(restObj) {
 				if (restObj.method == "post") {
 					if (restObj.path == "/user/login/") {
 						whoami.dptUUID = restObj.data.dptUUID;
@@ -850,54 +865,53 @@
 					}
 				}
 			});
-
+			
 			// socket.on("topicPost", function(restObj){
 			// 	if(restObj.method == "post"){
 			// 		dpt.topicPost(userTopicInput);
 			// 	}
 			// })
-
-			socket.on("error", function (e) {
+			
+			socket.on("error", function(e) {
 				console.log("System", e ? e : "A unknown error occurred");
 				document.location.reload(true);
 				window.location.reload(true);
 			});
-
-			socket.on("api", function (restObj) {
-				if (!restObj || !restObj.path || !restObj.method) {
+		
+			socket.on("api", function(restObj) {
+				if(!restObj || !restObj.path || !restObj.method) {
 					return;
 				}
-				if (restObj.path == '/topic/'
-					&& restObj.method == 'get') {
+				if(restObj.path == '/topic/'
+				&& restObj.method == 'get') {
 					loadTopics(restObj);
-				} else if (restObj.path == "/opinion/" + currentTopic + "/"
-					&& restObj.method == "get") {
+				} else if(restObj.path == "/opinion/"+currentTopic+"/"
+						&& restObj.method == "get") {
 					loadOpinions(restObj);
-				} else if (restObj.path == '/dialog/list/'
-					&& restObj.method == 'get') {
+				} else if(restObj.path == '/dialog/list/'
+						&& restObj.method == 'get') {
 					loadDialogList(restObj);
 				}
 			});
-
+		
 			//circlePoints(4, 2, {X: 0, Y: 0});
-
+		
 			engine.runRenderLoop(function () {
-				if (currentScene) {
+				if(currentScene) {
 					currentScene.render();
 				}
 			});
-
+		
 			// Resize
 			window.addEventListener("resize", function () {
 				engine.resize();
 			});
-
+	
 		});
-	</script>
-</body>
-<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<!--	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script> -->
-<script src="dpt-client.js"></script>
-
+		</script>
+	</body>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	<!--	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script> -->
+	<script src="dpt-client.js"></script>
 </html>
