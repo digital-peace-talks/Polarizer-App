@@ -9,7 +9,7 @@ jQuery(document).ready(function() {
 	var dialogFormOpen = 0;
 
 	var whoami = { dptUUID: '', user: {}};
-	
+
 	// Handle the incomming websocket trafic
 	socket.on('connect', () => {
 		// if needed, we could keep socket.id somewhere
@@ -57,7 +57,7 @@ jQuery(document).ready(function() {
 			var dialogs = restObj.data.data;
 			jQuery('div.col.right').html('<h2>Dialogs</h2>');
 			for(var i=0; i < dialogs.length; i++) {
-				dialog = '<div class="dialog"><i>proposition:</i> '+dialogs[i].opinionProposition+"<br>";
+				dialog = `<div class="dialog"><i>proposition:</i>${dialogs[i].opinionProposition}<br>`;
 				dialog += `<div class="dialogInfo">${JSON.stringify(dialogs[i])}</div>`;
 				jQuery('div.col.right').append(dialog+"<br></div>");
 			}
@@ -68,7 +68,7 @@ jQuery(document).ready(function() {
 			var dialogs = restObj.data.data;
 			jQuery('div.col.right').html('<h2>Dialogs</h2>');
 			for(var i=0; i < dialogs.length; i++) {
-				dialog = '<div class="dialog"><i>proposition:</i> '+dialogs[i].opinionProposition+"<br>";
+				dialog = `<div class="dialog"><i>proposition:</i>${dialogs[i].opinionProposition}<br>`;
 				dialog += `<div class="dialogInfo">${JSON.stringify(dialogs[i])}</div>`;
 				jQuery('div.col.right').append(dialog+"<br></div>");
 			}
@@ -79,18 +79,15 @@ jQuery(document).ready(function() {
 
 	    if(restObj.method == 'post') {
 	        if(restObj.path == '/user/login/') {
-
 	        	whoami.dptUUID = restObj.data.dptUUID;
-
 	        	if(restObj.data.message == 'logged in') {
-
 	        		whoami.user = restObj.data.user;
 	        		dpt.getDialogListAll();
 	        	}
 	        }
 	    }
 	});
-	
+
 	socket.on('error', function (err) {
 		console.log('System', err ? err : 'A unknown error occurred');
 		document.location.reload(true);
@@ -109,18 +106,19 @@ jQuery(document).ready(function() {
 		}
 		jQuery('#misc2').append(`
 			<div id="crisis">
-			<u>End of discussion, appraisal of results.</u><br><br>
-			Finish the dialog under Topic:<br><b>${currentDialog.topic}</b><br><br>
-			Most impressive message:<br><b>${message}</b><br><br>
-			Please enter the reason:<br>
-			<form id="crisis">
-				<input type="text" name="reason" size="50" class="reason"><br><br>
-				<label id="negative">[-1: <input type="radio" name="rating" value="-1">]</label>
-				<label id="neutral">[0: <input type="radio" name="rating" value="0" checked>]</label>
-				<label id="positive">[1: <input type="radio" name="rating" value="1">]</label><br>
-				<input type="submit" name="send" value="send">
-				<input type="button" value="close window" name="close window" id="crisisCloseWindow">
-			</form>
+				<u>End of discussion, appraisal of results.</u><br><br>
+				Finish the dialog under Topic:<br><b>${currentDialog.topic}</b><br><br>
+				Most impressive message:<br><b>${message}</b><br><br>
+				Please enter the reason:<br>
+
+				<form id="crisis">
+					<input type="text" name="reason" size="50" class="reason"><br><br>
+					<label id="negative">[-1: <input type="radio" name="rating" value="-1">]</label>
+					<label id="neutral">[0: <input type="radio" name="rating" value="0" checked>]</label>
+					<label id="positive">[1: <input type="radio" name="rating" value="1">]</label><br>
+					<input type="submit" name="send" value="send">
+					<input type="button" value="close window" name="close window" id="crisisCloseWindow">
+				</form>
 			</div>
 		`);
 
@@ -216,19 +214,18 @@ jQuery(document).ready(function() {
 
 		var html = `
 				<div id="dialogFrame">
-				<div class="table">
-				<div class="top">
-				<center>
-					<h3>${currentDialog.topic}</h3><hr>Messages: <b>${currentDialog.messages.length} of ${maxMessages}</b>
-				</center>
-				</div>
-				<div class="middle">
-				<div id="c1">
-				<b>Others opinion:</b><br>${opinion1}<br><br>${otherReadyToEnd}</div>
-				<div id="c2">${dialog}</div>
-				<div id="c3">
-				<b>My opinion:</b><br>${opinion2}<br><br>${meReadyToEnd}<br><br>${extensionRequest}</div>
-				</div>
+					<div class="table">
+						<div class="top">
+							<center>
+								<h3>${currentDialog.topic}</h3>
+								<hr>
+								Messages: <b>${currentDialog.messages.length} of ${maxMessages}</b>
+							</center>
+						</div>
+					<div class="middle">
+					<div id="c1"><b>Others opinion:</b><br>${opinion1}<br><br>${otherReadyToEnd}</div>
+					<div id="c2">${dialog}</div>
+					<div id="c3"><b>My opinion:</b><br>${opinion2}<br><br>${meReadyToEnd}<br><br>${extensionRequest}</div></div>
 			`;
 
 		if(currentDialog.status == 'ACTIVE') {
@@ -237,22 +234,22 @@ jQuery(document).ready(function() {
 				html += `
 					<div class="status">
 					<center>
-					<form id="dialogFrame">
-					<input type="button" value="close window" name="close window" id="dialogClose">
-					</form>
+						<form id="dialogFrame">
+							<input type="button" value="close window" name="close window" id="dialogClose">
+						</form>
 			   		</center>
 					</div>
 				`;
 			} else {
 				html += `
 					<div class="status">
-					<center>
-					<form id="dialogFrame">
-					<input type="text" name="message" size="120" id="dialogInput">
-					<input type="submit" name="send" value="send">
-					<input type="button" value="close window" name="close window" id="dialogClose">
-					</form>
-					</center>
+						<center>
+							<form id="dialogFrame">
+								<input type="text" name="message" size="120" id="dialogInput">
+								<input type="submit" name="send" value="send">
+								<input type="button" value="close window" name="close window" id="dialogClose">
+							</form>
+						</center>
 					</div>
 				`;
 			}
@@ -301,7 +298,7 @@ jQuery(document).ready(function() {
 				jQuery(document).one('click', "#dialogAccept", function(event) {
 					jQuery('center#actionSpace').html(`
 						<form id="dialogFrame">
-						<input type="text" name="message" size="120" id="dialogInput">
+							<input type="text" name="message" size="120" id="dialogInput">
 						</form>
 					`);
 					dpt.putDialog(currentDialog.dialog, "status", "ACTIVE");
@@ -367,8 +364,6 @@ jQuery(document).ready(function() {
 			event.stopImmediatePropagation();
 			event.preventDefault();
 		});
-
-		jQuery("#dialogFrame").css({"background-color": "rgba(10,24,10, 0.9)"});
 
 		jQuery(document).on('keyup', '#dialogInput', function(event) {
 		    if (event.keyCode == 27) {
