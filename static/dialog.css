@@ -3,13 +3,34 @@ body {
 	color: #fee;font-family: sans;
 }
 
+#main {
+	height: 100%;
+	width: 100%;  
+}
+
 i { 
 	font-style: italic;
 	color: #4a624a;
  }
 
+ i#props {
+	line-height: 0px;
+ }
+
  a { color: #fd0;
 	text-decoration: none;
+}
+
+label#negative {
+	color: #f00;
+}
+
+label#neutral {
+	color: #77f;
+}
+
+label#positive {
+	color: #0f0
 }
 
 input[type=text] {
@@ -23,20 +44,6 @@ input[type=text] {
 	min-height: 100%;
 	height: 100%;
 	min-width: 100%;
-}
-
-div.top {
-	height: 100%;
-}
-
-div.middle {
-	height: 100%;
-}
-
-div.bottom {
-	height: 100%;
-	position: center;
-	bottom: 0px;
 }
 
 p.left {
@@ -59,21 +66,102 @@ p.right {
 	background-color: rgba(0,63,127,.5);
 }
 
+div.top {
+	height: 100%;
+}
+
+div.middle {
+	height: 100%;
+}
+
+div.bottom {
+	height: 100%;
+	position: center;
+	bottom: 0px;
+}
+
+div.dialogInfo {
+	visibility: hidden;
+	line-height: 0px;
+	font-size: 0px;
+}
+
+div.col {
+	float: left;
+	padding-left: 20px;
+	height:100%;
+	width: 30%;
+	max-width:30%;
+	overflow-y: auto;
+}
+
+div.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+div.hide {
+	visibility: hidden;
+	line-height: 0%;
+}
+
+div.status {
+	bottom: 10px;
+	position: absolute;
+	min-width: 98%
+}
+
+
 div#c1 {
 	text-align: justify;
 	text-justify: inter-word;
 	width: 19%;
 	float: left;
+	position: absolute;
 }
 
 div#c2 {
-	width: 56%;
+	position: absolute;
+	overflow-y: auto;
 	float: left;
+	width: 53%;
+	height: 100%;
+	margin-left: 20%;
+	max-height: 80%;
+	padding-left: 30px;
+	padding-right: 30px;
+	overflow-y: auto;
 }
 
 div#c3 {
-	text-align: justify;
-	text-justify: inter-word;
 	width: 19%;
 	float: left;
+	position: absolute;
+	margin-left: 80%;
+	text-align:justify;
+	text-justify:inter-word;
+}
+
+div#crisis {
+	position: absolute;
+	 padding: 10px;
+	 left: 37%;
+	 border: #fff;
+	 border-style: solid;
+	 border-width: 5px;
+	 background: #0a120a
+}
+
+div#dialogFrame {
+	position: absolute;
+	padding: 10px;
+	border: #666;
+	border-style: solid;
+	border-width: 5px;
+	background: #0a120a;
+	margin-left: 10%;
+	margin-right: 10%;
+	min-height: 80%;
+	min-width: 80%
 }
