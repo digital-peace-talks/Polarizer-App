@@ -71,6 +71,15 @@ router.get('/dpt-client.js', async (req, res, next) => {
 	}
 });
 
+router.get('/Interrobang.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/Interrobang.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
 router.get('/nav-top-logo.png', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/nav-top-logo.png');
