@@ -26,6 +26,7 @@
 	-->
 	<script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
 
+	<link rel="stylesheet" href="/dialog.css" />
 	<style>
 		@font-face {
 			font-family: "AldoSemiBold";
@@ -66,15 +67,21 @@
 		var myDialogsSV;
 		var myDialogsSP;
 		var myDialogMenu=[];
+		var currentDialog;
 
 		function loadDialogList(restObj) {
 			var dialog = '';
 			var menuEntry = '';
 			var dialogs = restObj.data.data;
 
+			jQuery('body').append(`<div id="dialogMenu" style="position: relative; padding: 10px;
+				float: right; top: 0px; border: #fff; border-style: solid; border-width: 1px;
+				color: #fff; width: 280px; height: 33%; overflow-y: auto; z-index: 2; font-family: AldoSemiBold; font-size: 18px;
+				background-color: #00000039; visibility: hidden;"></div>`);
+
 			for(var i=0; i < dialogs.length; i++) {
 
-				menuEntry = `proposition: ${dialogs[i].opinionProposition}`;
+				menuEntry = `<span class="myDialogs" id="${dialogs[i].dialog}"><i>proposition</i>: ${dialogs[i].opinionProposition}<br><br></span>`;
 
 				dialog = `<u style="font-size: 32px">Dialog Info</u><br><br><i>proposition:</i><br>${dialogs[i].opinionProposition}<br><br>
 						<i>topic:</i><br>${dialogs[i].topic}<br><br>`;
@@ -95,40 +102,14 @@
 
 				dialog += `<i>status:</i> ${dialogs[i].status}`;
 
-				myDialogMenu.push({dialogId: dialogs[i].dialog, menuEntry: menuEntry, description: dialog});
-
-				var tb = new BABYLON.GUI.TextBlock();
-				tb.textWrapping = BABYLON.GUI.TextWrapping.WordWrap;
-				tb.resizeToFit = true;
-				tb.paddingTop = "10px";
-				tb.paddingLeft = "10px";
-				tb.paddingRight = "10px"
-				tb.paddingBottom = "10px";
-				tb.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-				tb.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-				tb.textHorizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-				tb.textVerticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-				tb.color = "white";
-				tb.background = "transparent";
-				tb.fontSize = "18px";
-				tb.fontFamily = "AldoSemiBold";
-				tb.name=i;
-
-				tb.text = menuEntry;
-
-				tb.onPointerEnterObservable.add((pointerInfo) => {
-
-					jQuery('body').append('<div id="dialogInfo" style="position: absolute; padding: 20px;'
-						+'margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;'
-						+'color: #000; width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;'
-						+'background-color: #00ccffcc;">'+myDialogMenu[pointerInfo.name].description+'</div>');
-					});
-
-				tb.onPointerOutObservable.add((pointerInfo) => {
-					jQuery('#dialogInfo').remove();
-				});
-
-				myDialogSP.addControl(tb);
+				myDialogMenu[dialogs[i].dialog] = {
+					dialog: dialogs[i].dialog,
+					topic: dialogs[i].topic,
+					initiatorOpinion: dialogs[i].initiatorOpinion,
+					recipientOpinion: dialogs[i].recipientOpinion,
+					menuEntry: menuEntry, description: dialog
+				};
+				jQuery('#dialogMenu').append(menuEntry);
 			}
 		}
 
@@ -561,7 +542,7 @@
 		}
 
 		var advancedTexture;
-		var myDialogsVisible = false;
+		var myDialogsVisible = 'hidden';
 		var createGUIScene = function(dptMode) {
 			// GUI
 			if(advancedTexture) {
@@ -631,12 +612,12 @@
 			button2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
 			button2.top = "39";
 			button2.onPointerClickObservable.add((pointerInfo) => {
-				if(myDialogsVisible) {
-					myDialogsVisible = false;
+				if(myDialogsVisible == 'visible') {
+					myDialogsVisible = 'hidden';
 				} else {
-					myDialogsVisible = true;
+					myDialogsVisible = 'visible';
 				}
-				myDialogSV.isVisible = myDialogsVisible;
+				jQuery('#dialogMenu').css({visibility: myDialogsVisible});
 			});
 			advancedTexture.addControl(button2);
 
@@ -660,23 +641,6 @@
 				}
 
 			});
-
-			myDialogSV = new BABYLON.GUI.ScrollViewer();
-			myDialogSV.thickness = 1;
-			myDialogSV.color = "white";
-			myDialogSV.width = 0.2;
-			myDialogSV.height = "40%";
-			myDialogSV.background = "#0000003f";
-			myDialogSV.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-			myDialogSV.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
-			myDialogSV.isVisible = myDialogsVisible;
-			advancedTexture.addControl(myDialogSV);
-
-			myDialogSP = new BABYLON.GUI.StackPanel();
-			myDialogSP.isVertical = true;
-			myDialogSP.ignoreLayoutWarnings = true;
-			myDialogSV.addControl(myDialogSP);
-
 		}
 
 		var createGenericScene = function(dptMode) {
@@ -774,7 +738,6 @@
 						break;
 					case BABYLON.PointerEventTypes.POINTERTAP:
 						//console.log("POINTER TAP");
-	
 						break;
 					case BABYLON.PointerEventTypes.POINTERDOUBLETAP:
 						//console.log("POINTER DOUBLE-TAP");
@@ -824,7 +787,6 @@
 			//genericScene.getAnimationRatio();
 			//genericScene.clearCachedVertexData();
 			//genericScene.cleanCachedTextureBuffer();
-			dpt.getDialogList();
 			return genericScene;
 		}
 	
@@ -879,6 +841,7 @@
 						if (restObj.data.message == "logged in") {
 							whoami.user = restObj.data.user;
 							dpt.getTopic();
+							dpt.getDialogList();
 						}
 						if (restObj.data.message == "user unknown") {
 							whoami.user = {};
@@ -903,15 +866,37 @@
 				if(!restObj || !restObj.path || !restObj.method) {
 					return;
 				}
+
+				if('status' in restObj && restObj.status > 399) {
+
+					alert(restObj.data);
+					return;
+
+				} else if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/' && restObj.method == 'get') {
+
+					var old = currentDialog;
+					currentDialog = restObj.data;
+					currentDialog.topic = old.topic;
+					currentDialog.initiatorOpinion = old.initiatorOpinion;
+					currentDialog.recipientOpinion = old.recipientOpinion;
+					dialogForm();
+
+				}
 				if(restObj.path == '/topic/'
 				&& restObj.method == 'get') {
+
 					loadTopics(restObj);
+
 				} else if(restObj.path == "/opinion/"+currentTopic+"/"
 						&& restObj.method == "get") {
+
 					loadOpinions(restObj);
+
 				} else if(restObj.path == '/dialog/list/'
 						&& restObj.method == 'get') {
+
 					loadDialogList(restObj);
+
 				}
 			});
 		
@@ -927,6 +912,27 @@
 			window.addEventListener("resize", function () {
 				engine.resize();
 			});
+			jQuery(document).on("mouseenter touchstart", "span.myDialogs", function(event) {
+				jQuery('body').append(`<div id="dialogInfo" style="position: absolute; padding: 20px;
+					margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;
+					color: #000; width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;
+					background-color: #00ccffcc;">${myDialogMenu[event.currentTarget.id].description}</div>`);
+				event.stopImmediatePropagation();
+				event.preventDefault();
+			});
+			jQuery(document).on("click", "span.myDialogs", function(event) {
+				jQuery('#dialogInfo').remove();
+				jQuery('#dialogForm').remove();
+				currentDialog = myDialogMenu[event.currentTarget.id];
+				dpt.getDialog(currentDialog.dialog);
+				event.stopImmediatePropagation();
+				event.preventDefault();
+			});
+			jQuery(document).on("mouseleave touchend", "span.myDialogs", function(event) {
+				jQuery('#dialogInfo').remove();
+				event.stopImmediatePropagation();
+				event.preventDefault();
+			});
 	
 		});
 		</script>
@@ -935,4 +941,5 @@
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 	<!--	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script> -->
 	<script src="dpt-client.js"></script>
+	<script src="/dialog.js"></script>
 </html>

@@ -11,13 +11,17 @@ body {
 i { 
 	font-style: italic;
 	color: #4a624a;
- }
+}
 
- i#props {
+div#dialogMenu > i {
+	color: 00ccff !important;
+}
+
+i#props {
 	line-height: 0px;
- }
-
- a { color: #fd0;
+}
+ 
+a { color: #fd0;
 	text-decoration: none;
 }
 

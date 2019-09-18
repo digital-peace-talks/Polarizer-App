@@ -1,3 +1,4 @@
+/*
 jQuery(document).ready(function() {
 	var socket = io.connect(window.location.protocol
 		+ '//' + window.location.host, {transports: ['websocket']});
@@ -94,6 +95,7 @@ jQuery(document).ready(function() {
 		window.location.reload(true);
 	});
 
+*/	
 	function crisisForm(messageId) {
 
 		var message = '';
@@ -137,7 +139,7 @@ jQuery(document).ready(function() {
 			event.preventDefault();
 		})
 	}
-	
+
 	function dialogForm() {
 
 		var opinion1;
@@ -256,7 +258,7 @@ jQuery(document).ready(function() {
 
 			jQuery(document).one('click', "#dialogClose", function(event) {
 				dialogFormOpen = 0;
-				jQuery('#misc').empty();
+				jQuery('#dialogForm').remove();
 				event.preventDefault();
 			});
 
@@ -279,7 +281,7 @@ jQuery(document).ready(function() {
 				`;
 				jQuery(document).one('click', "#dialogClose", function(event) {
 					dialogFormOpen = 0;
-					jQuery('#misc').empty();
+					jQuery('#dialogForm').remove();
 					event.preventDefault();
 				});
 
@@ -307,13 +309,13 @@ jQuery(document).ready(function() {
 
 				jQuery(document).one('click', "#dialogCloseWindow", function(event) {
 					dialogFormOpen = 0;
-					jQuery('#misc').empty();
+					jQuery('#dialogForm').remove();
 					event.preventDefault();
 				});
 
 				jQuery(document).one('click', "#dialogReject", function(event) {
 					dialogFormOpen = 0;
-					jQuery('#misc').empty();
+					jQuery('#dialogForm').remove();
 					dpt.putDialog(currentDialog.dialog, "status", "CLOSED");
 					event.preventDefault();
 				});
@@ -332,14 +334,18 @@ jQuery(document).ready(function() {
 
 			jQuery(document).one('click', "#dialogCloseWindow", function(event) {
 				dialogFormOpen = 0;
-				jQuery('#misc').empty();
+				jQuery('#dialogForm').remove();
 				event.preventDefault();
 			});
 		}
 
 		html += '</div></div>';
 		
-		jQuery('#misc').append(html);
+//		jQuery('#misc').append(html);
+		jQuery('body').append(`<div id="dialogForm" style="position: absolute; padding: 20px;
+				margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;
+				color: #000; width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;
+				background-color: #00ccffcc;">${html}</div>`);
 		
 		if(currentDialog.status == 'CLOSED') {
 			for(var i=0; i < currentDialog.crisises.length; i++) {
@@ -367,7 +373,7 @@ jQuery(document).ready(function() {
 
 		jQuery(document).on('keyup', '#dialogInput', function(event) {
 		    if (event.keyCode == 27) {
-				jQuery('#misc').empty();
+				jQuery('#dialogForm').remove();
 				event.preventDefault();
 		    }
 		});
@@ -375,6 +381,7 @@ jQuery(document).ready(function() {
 		jQuery("#dialogInput").focus();
 	}
 
+	/*
 	jQuery(document).on('mouseleave touchend', 'li.connector', (event) => {
 		var root = event.currentTarget.id;
 //		jQuery(event.currentTarget).children("span.connector").html('');
@@ -393,3 +400,4 @@ jQuery(document).ready(function() {
 
 	jQuery('#main').append(`<div class="row"><div class="col right"><h2>Dialogs</h2></div></div>`);
 });
+	*/
