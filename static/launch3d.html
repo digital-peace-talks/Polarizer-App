@@ -364,19 +364,20 @@
 					`{"context": "opinionMap", "opinionId": "${restObj.data[i]._id}"}`,
 					`${restObj.data[i].content}`);
 
-//				if(canInvite 
-				var mat = new BABYLON.StandardMaterial("icon", currentScene);
-				mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png", currentScene);
-				mat.emissiveColor = new BABYLON.Color3(0,0.7,1);
-				mat.alpha = 0.95;
-				mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
-			
-				var icon = BABYLON.MeshBuilder.CreatePlane("icon", {width: 0.35, height: 0.25}, currentScene);
-				icon.position.x = plane.position.x - plane.geometry.extend.maximum.x - 0.2;
-				icon.position.y = plane.position.y + plane.geometry.extend.maximum.y - 0.4;
-				icon.position.z = plane.position.z - 0.05;
-				icon.material = mat;	
-				icon.dpt = { context: 'dialogInvitation', opinionId: restObj.data[i]._id };
+				if(canInvite && restObj.data[i].user != 'mine') {
+					var mat = new BABYLON.StandardMaterial("icon", currentScene);
+					mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png", currentScene);
+					mat.emissiveColor = new BABYLON.Color3(0,0.7,1);
+					mat.alpha = 0.95;
+					mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
+				
+					var icon = BABYLON.MeshBuilder.CreatePlane("icon", {width: 0.35, height: 0.25}, currentScene);
+					icon.position.x = plane.position.x - plane.geometry.extend.maximum.x - 0.2;
+					icon.position.y = plane.position.y + plane.geometry.extend.maximum.y - 0.4;
+					icon.position.z = plane.position.z - 0.05;
+					icon.material = mat;	
+					icon.dpt = { context: 'dialogInvitation', opinionId: restObj.data[i]._id };
+				}
 
 				/*
 				x+=10;
@@ -714,19 +715,39 @@
 						&& pointerInfo.pickInfo.pickedMesh.dpt.context == "dialogInvitation") {
 							console.log('enter proposition');
 							jQuery('body').append(`<div id="proposition" style="position: absolute; padding: 20px;
-								margin-left: 25%; margin-top: 25% border: #fff; border-style: solid; border-width: 1px;
-								color: #000; width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;
+								margin-left: 37.5%; border: #fff; border-style: solid; border-width: 1px;
+								color: #000; width: 25%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;
 								background-color: #00ccffcc;">Please enter your proposition:<br><form id="proposition">
-								<input type="text" name="proposition" size="50" class="proposition">
-								<input type="hidden" id="opinionId" name="opinionId" value="${pointerInfo.pickInfo.pickedMesh.dpt.opinionId}"</form></div>`
+								<textarea style="font-family: AldoSemiBold; font-size: 18px;" name="proposition" cols="64" rows="4" class="proposition"></textarea>
+								<input type="hidden" id="opinionId" name="opinionId" value="${pointerInfo.pickInfo.pickedMesh.dpt.opinionId}"
+								<br><input style="font-family: AldoSemiBold; font-size: 18px;" type="submit" value="Send"></form></div>`
 							);
 							jQuery(".proposition").focus();
 							
-							jQuery(document).on('keyup', '#proposition', function(event) {
+							jQuery(document).on('keydown', '.proposition', function(event) {
+								var n = jQuery('.proposition').val().length;
+								if(n >= 512) {
+									jQuery('.proposition').css({"background-color": "#f88"});
+									if(event.keyCode != 8
+									&& event.keyCode != 127
+									&& event.keyCode != 37
+									&& event.keyCode != 38
+									&& event.keyCode != 39
+									&& event.keyCode != 40) {
+										event.preventDefault();
+									}
+								} else {
+									jQuery('.proposition').css({"background-color": "#fff"});
+								}
 							    if (event.keyCode == 27) {
 									jQuery('#proposition').remove();
 									event.preventDefault();
 							    }
+							    /*
+							    if(event.keyCode == 10 || event.keyCode == 13) {
+									event.preventDefault();
+							    }
+							    */
 							});
 
 							jQuery(document).on('submit', 'form#proposition', function(event) {
@@ -737,7 +758,6 @@
 								if(proposition) {
 									dpt.postDialog(proposition, whoami.dptUUID, opinionId);
 								}
-								jQuery('.proposition').val('');
 								jQuery('#proposition').remove();
 							});
 						}
@@ -819,6 +839,7 @@
 		var currentTopicStr;
 		var opinionDialogConnections = {};
 		var dpt;
+		var whoami;
 	
 		document.addEventListener("DOMContentLoaded", function(event) {
 			var socket = io.connect(
@@ -830,7 +851,7 @@
 		
 			dpt = new DPT(socket);
 			var restObj = {};
-			var whoami = {
+			whoami = {
 				dptUUID: "",
 				user: {},
 			};
