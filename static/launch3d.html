@@ -385,8 +385,8 @@
 			plane.dpt = JSON.parse(name);
 
 			//Set width and height for dynamic texture using same multiplier
-			var DTWidth = planeWidth * 100; //64;
-			var DTHeight = planeHeight * 100; //64
+			var DTWidth = planeWidth * 200; //64;
+			var DTHeight = planeHeight * 200; //64
 
 			var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", {width:DTWidth, height:DTHeight}, currentScene);
 
@@ -397,7 +397,7 @@
 			ctx.fillStyle = 'transparent';
 
 			textureContext = dynamicTexture.getContext();
-			textureContext.font = "28px DPTFont";
+			textureContext.font = "56px DPTFont";
 			textureContext.save();
 			textureContext.fillStyle = "#00ccff";
 
