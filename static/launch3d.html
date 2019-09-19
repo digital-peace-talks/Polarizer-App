@@ -401,7 +401,7 @@
 			textureContext.save();
 			textureContext.fillStyle = "#00ccff";
 
-			wrapText(textureContext, text, 5, 20, 475, 25);
+			wrapText(textureContext, text, 5, 20, 475, 60);
 			textureContext.restore();
 
 			dynamicTexture.update();
@@ -590,7 +590,6 @@
 				}
 				jQuery('#dialogMenu').css({visibility: myDialogsVisible});
 			});
-
 			advancedTexture.addControl(button2);
 
 			var button3 = BABYLON.GUI.Button.CreateImageButton("newtopicbutton","New Topic","/Interrobang.png");
