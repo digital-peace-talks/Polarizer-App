@@ -9,6 +9,7 @@ body {
 }
 
 i { 
+	font-family: "DPTFontDin";
 	font-style: inherit;
 	color: #eeeeee;
 	font-weight: 700;
@@ -131,7 +132,6 @@ div#c1 {
 }
 
 div#c2 {
-	position: absolute;
 	overflow-y: auto;
 	float: left;
 	width: 53%;
