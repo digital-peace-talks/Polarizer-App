@@ -105,11 +105,19 @@ router.get('/font.ttf', async (req, res, next) => {
 	} catch (err) {
 		next(err);
 	}
+})
+router.get('/bitter.ttf', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/bitter.ttf');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
 });
 
-router.get('/fontdin.ttf', async (req, res, next) => {
+router.get('/din.ttf', async (req, res, next) => {
 	try {
-		await res.sendFile(process.env.DPT_PATH+'/static/fontdin.ttf');
+		await res.sendFile(process.env.DPT_PATH+'/static/din.ttf');
 		res.status(200);
 	} catch (err) {
 		next(err);
