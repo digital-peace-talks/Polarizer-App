@@ -12,14 +12,8 @@ function sleep(milliseconds) {
 }
 
 //-----------------------------------
-// Der Test(args) (siehe DPT-openapi)
-function postDialogTest(newDialog, topicID, user) {
+function postDialogTest(proposition, publicKey, opinionID) {
 //-----------------------------------
-
-var user = util.inspect(whoami.dptUUID);
-
-console.log(util.inspect(whoami.dptUUID));
-console.log("topicID " + topicID);
 
 
 	describe('request', function() {
@@ -28,22 +22,33 @@ console.log("topicID " + topicID);
 			await socket.emit("api", {
 				
 				//------------------------------------
-				method: 'post',	// siehe DTP-openapi			 
-				path: '/opinion/', // siehe DTP-openapi 
-				data: {content:  newDialog, topic:topicID, user: user}	// args für die function
+				method: 'post',
+				path: '/dialog/',
+				data: {
+					dptUUID:publicKey,
+					body:  {
+						opinion: opinionID,
+						opinionProposition: proposition,
+						}
+					}
 				//------------------------------------
 
 			});
 		});
-
 	    it('it should receive an anwer', function(done) {
 			this.timeout(10000);
 			socket.on('api', async function(payload) {
-				console.log('output: '+util.inspect(payload));
-		
+			console.log('output: '+util.inspect(payload));
+
 				//----------------------------------------------------------------------
-				assert.equal(payload.data.content,newDialog,topicID,user);
+				//assert.equal(payload.data.content,proposition,publicKey,opinionID);
 				//----------------------------------------------------------------------
+
+var user = whoami.dptUUID;
+
+// -------------------------------------------------------------
+fs.writeFileSync("test/-dialogID.txt",(payload.data.user));
+//--------------------------------------------------------------
 
 				done();
 				socket.disconnect();		
@@ -56,7 +61,9 @@ console.log("topicID " + topicID);
 
 async function main() {
 	describe('connect and login', function() {
-		it('it will connect to the server', function(done) {
+		it('it will connect to the server', function(done)
+		{
+			this.timeout(10000);
 		    socket = io.connect(
 				"ws://localhost:3100",
 				{
@@ -67,22 +74,22 @@ async function main() {
 			);
 			done();
 		});
-		it('it will send the cookie to the server', (done) => {
+		it('it will send the cookie to the server', (done) => 
+		{
+			this.timeout(10000);
 			socket.on('connect', async () => {
 				assert.equal(socket.connected, true);
 				await socket.emit("login", {
-					method: 'post', // siehe DPT-openapi
-					path: '/user/login/', // siehe DTP-openapi
-					data: {
-						publicKey: dptcookie,
-					}
+					method: 'post',
+					path: '/user/login/',
+					data: {publicKey: publicKey,}
 				});
-				//console.log("dptcookie " + dptcookie);
-
 				done();
 			});
 		});
-		it('it will receive a login message', (done) => {
+		it('it will receive a login message', (done) => 
+		{
+			this.timeout(10000);
 			socket.on('private', function(restObj) {
 				try {
 					assert.equal(restObj.data.message, 'logged in');
@@ -96,7 +103,7 @@ async function main() {
 							whoami.user = restObj.data.user;
 
 							//--------------------------
-							postDialogTest("newDialog",topicID,whoami.user); // aufruf der function (args siehe DPT-openapi) 
+							postDialogTest("newProposition",publicKey,opinionID);
 							//--------------------------
 
 						}
@@ -112,6 +119,7 @@ async function main() {
 }
 
 const fs = require("fs");
-const dptcookie = fs.readFileSync("test/dptcookie.txt").toString();
-const topicID = fs.readFileSync("test/topicID.txt").toString();
+const publicKey = fs.readFileSync("test/dptcookie.txt").toString();
+const opinionID = fs.readFileSync("test/-opinionID.txt").toString();
+
 main();

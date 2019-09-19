@@ -221,7 +221,7 @@
 			return(plane);
 		}
 
-		function beamMeUp() {
+		function dialogRelations() {
 			var initiatorOpinionPosition = null;
 			var recipientOpinionPosition = null;
 			for(var i in opinionDialogConnections) {
@@ -380,8 +380,8 @@
 			}
 //			opinionEdit();
 
-			circleTextPlane(1.5, 1.2, 0, 'bla', currentTopicStr + " * ");
-			beamMeUp();
+//			circleTextPlane(1.5, 1.2, 0, 'bla', currentTopicStr + " * ");
+			dialogRelations();
 		}
 
 
@@ -429,7 +429,6 @@
 			textureContext.save();
 			textureContext.fillStyle = "#00ccff";
 
-			//wrapText(textureContext, text, 112, 112, 480, 25);
 			wrapText(textureContext, text, 5, 20, 475, 25);
 			textureContext.restore();
 
@@ -448,7 +447,7 @@
 			plane.position.x = x;
 			plane.position.y = y;
 			plane.position.z = z;
-			plane.showBoundingBox = false;
+			plane.showBoundingBox = true;
 			//plane.doNotSyncBoundingInfo = true
 			//plane.freezeWorldMatrix();
 			return(plane);
@@ -666,7 +665,8 @@
 			genericScene.collisionsEnabled = true;
 	
 			createGUIScene();
-	
+			
+			
 			genericScene.onPointerObservable.add((pointerInfo) => {
 				switch (pointerInfo.type) {
 					case BABYLON.PointerEventTypes.POINTERDOWN:
