@@ -12,7 +12,6 @@ function sleep(milliseconds) {
 }
 
 //-----------------------------------
-// Der Test(args) (siehe DPT-openapi)
 function postTopicTest(newTopic) {
 //-----------------------------------
 
@@ -22,9 +21,11 @@ function postTopicTest(newTopic) {
 			await socket.emit("api", {
 				
 				//------------------------------------
-				method: 'post',	// siehe DTP-openapi			 
-				path: '/topic/', // siehe DTP-openapi 
-				data: {content: newTopic}	// args für die function
+				method: 'post',
+				path: '/topic/',
+				data: {
+					content:newTopic
+					}
 				//------------------------------------
 
 			});
@@ -34,10 +35,14 @@ function postTopicTest(newTopic) {
 			this.timeout(10000);
 			socket.on('api', async function(payload) {
 				console.log('output: '+util.inspect(payload));
-		
+
 				//----------------------------------------------------------------------
 				assert.equal(payload.data.content, newTopic);
 				//----------------------------------------------------------------------
+
+// ------------------------------------------------------				
+fs.writeFileSync("test/-topicID.txt",(payload.data.user));
+// ------------------------------------------------------
 
 				done();
 				socket.disconnect();		
@@ -67,11 +72,9 @@ async function main() {
 			socket.on('connect', async () => {
 				assert.equal(socket.connected, true);
 				await socket.emit("login", {
-					method: 'post', // siehe DPT-openapi
-					path: '/user/login/', // siehe DTP-openapi
-					data: {
-						publicKey: dptcookie,
-					}
+					method: 'post',
+					path: '/user/login/',
+					data: {publicKey: dptcookie,}
 				});
 				done();
 			});
@@ -91,7 +94,7 @@ async function main() {
 							whoami.user = restObj.data.user;
 
 							//--------------------------
-							postTopicTest("newTopic"); // aufruf der function (args siehe DPT-openapi) 
+							postTopicTest("newTopic");
 							//--------------------------
 
 						}
@@ -108,5 +111,4 @@ async function main() {
 
 const fs = require("fs");
 const dptcookie = fs.readFileSync("test/dptcookie.txt").toString();
-
 main();
