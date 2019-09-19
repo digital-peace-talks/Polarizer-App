@@ -4,9 +4,12 @@
 }
 @font-face {
 	font-family: "DPTFontDin";
-	src: url("/fontdin.ttf") format("truetype");
+	src: url("/din.ttf") format("truetype");
 }
-
+@font-face {
+	font-family: "bitter";
+	src: url("/bitter.ttf") format("truetype");
+}
 
 
 html, body {
@@ -32,7 +35,7 @@ html, body {
 }
 
 i { 
-	font-family: "DPTFontDin";
+	font-family: "Bitter";
 	font-style: inherit;
 	color: #eeeeee;
 	font-weight: 700;
@@ -163,6 +166,7 @@ div#c1 {
 }
 
 div#c2 {
+	font-family: "DPTFont";
 	overflow-y: auto;
 	float: left;
 	width: 53%;
@@ -175,6 +179,7 @@ div#c2 {
 }
 
 div#c3 {
+	font-family: "Bitter";
 	width: 19%;
 	float: left;
 	position: absolute;
