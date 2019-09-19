@@ -345,7 +345,7 @@
 					`{"context": "opinionMap", "opinionId": "${restObj.data[i]._id}"}`,
 					`${restObj.data[i].content}`);
 
-				if(canInvite && restObj.data[i].user != 'mine') {
+				if(canInvite && restObj.data[i].user != 'mine' && restObj.data[i].blocked == 0) {
 					var mat = new BABYLON.StandardMaterial("icon", currentScene);
 					mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png", currentScene);
 					mat.emissiveColor = new BABYLON.Color3(0,0.7,1);
