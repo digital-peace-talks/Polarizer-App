@@ -23,7 +23,10 @@ router.get('/', async (req, res, next) => {
 					<a href=/babylon.html>babylon sample</a><br><br>
 					<a href=/launch3d.html>launch3D sample</a><br><br>
 					<a href=/dialog.html>dialog sample</a><br><br>
+					<!--
 					<a onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
+					-->
+					<a onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';location.reload(true);">delete cookie</a>
 			`);
 		}
 		res.status(200);
