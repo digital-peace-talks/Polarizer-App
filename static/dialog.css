@@ -9,8 +9,8 @@ body {
 }
 
 i { 
-	font-style: italic;
-	color: #4a624a;
+	font-style: inherit;
+	color: #eeeeee;
 }
 
 div#dialogMenu > i {
@@ -56,7 +56,7 @@ p.left {
 	padding: 5px;
 	text-align: justify;
 	text-justify: inter-word;
-	background-color: rgba(0,127,63,.5);
+	background-color: rgba(50, 250, 0, 0.5);
 }
 
 p.right {
@@ -67,15 +67,19 @@ p.right {
 	text-align:justify;*/
 	text-align: justify-right;
 	text-justify: inter-word;
-	background-color: rgba(0,63,127,.5);
+	background-color: rgba(0, 128, 255, 0.5);
 }
 
 div.top {
 	height: 100%;
+	top: -20px;
+	position: relative;
 }
 
 div.middle {
 	height: 100%;
+	position: relative;
+    top: -40px;
 }
 
 div.bottom {
@@ -92,7 +96,7 @@ div.dialogInfo {
 
 div.col {
 	float: left;
-	padding-left: 20px;
+	padding-left: 10px;
 	height:100%;
 	width: 30%;
 	max-width:30%;
@@ -160,7 +164,7 @@ div#crisis {
 
 div#dialogFrame {
 	border-width: 0px;
-	background: #0a120a;
+	background: #0061e0;
 	background-color: rgba(10, 24, 40, 0.0);
 	margin-left: 0%;
 	margin-right: 0%;
