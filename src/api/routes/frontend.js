@@ -22,8 +22,9 @@ router.get('/', async (req, res, next) => {
 			res.send(`homepage<hr><br><br><a href=/launch>start dpt protype</a><br><br>
 					<a href=/babylon.html>babylon sample</a><br><br>
 					<a href=/launch3d.html>launch3D sample</a><br><br>
-					<a href=/dialog.html>dialog sample</a>`
-			);
+					<a href=/dialog.html>dialog sample</a><br><br>
+					<a onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname;location.reload(true);">delete cookie</a>
+			`);
 		}
 		res.status(200);
 	} catch(err) {
