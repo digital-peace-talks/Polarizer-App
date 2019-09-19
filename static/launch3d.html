@@ -29,11 +29,11 @@
 	<link rel="stylesheet" href="/dialog.css" />
 	<style>
 		@font-face {
-			font-family: "AldoSemiBold";
+			font-family: "DPTFont";
 			src: url("/font.ttf") format("truetype");
 		}
 		html, body {
-			font-family: "AldoSemiBold";
+			font-family: "DPTFont";
 			overflow: hidden;
 			width: 100%;
 			height: 100%;
@@ -58,7 +58,7 @@
 	</style>
 </head>
 <body>
-	<canvas id="renderCanvas"></canvas>
+	<canvas id="renderCanvas" tabindex="1"></canvas>
 	<div id="misc"></div>
 	<div id="misc2"></div>
 	<script>
@@ -76,7 +76,7 @@
 
 			jQuery('body').append(`<div id="dialogMenu" style="position: relative; padding: 10px;
 				float: right; top: 0px; border: #fff; border-style: solid; border-width: 1px;
-				color: #fff; width: 280px; height: 33%; overflow-y: auto; z-index: 2; font-family: AldoSemiBold; font-size: 18px;
+				color: #fff; width: 280px; height: 33%; overflow-y: auto; z-index: 2; font-family: DPTFont; font-size: 18px;
 				background-color: #00000039; visibility: hidden;"></div>`);
 
 			for(var i=0; i < dialogs.length; i++) {
@@ -190,7 +190,7 @@
 			ctx.fillStyle = 'transparent';
 
 			textureContext = dynamicTexture.getContext();
-			textureContext.font = "28px AldoSemiBold";
+			textureContext.font = "28px DPTFont";
 			textureContext.save();
 			textureContext.fillStyle = "#00ccff";
 
@@ -321,7 +321,7 @@
 				}
 			}
 
-			var nodes = circlePoints(restObj.data.length, 5, {X: 4, Y: 0});
+			var nodes = circlePoints(restObj.data.length, 2, {X: 4, Y: 0});
 			for (i in restObj.data) {
 				options = '';
 
@@ -425,7 +425,7 @@
 			ctx.fillStyle = 'transparent';
 
 			textureContext = dynamicTexture.getContext();
-			textureContext.font = "28px AldoSemiBold";
+			textureContext.font = "28px DPTFont";
 			textureContext.save();
 			textureContext.fillStyle = "#00ccff";
 
@@ -589,7 +589,7 @@
 			button.width = 0.1;
 			button.height = "40px";
 			button.color = "white";
-			button.fontFamily = "AldoSemiBold";
+			button.fontFamily = "DPTFont";
 			button.background = "#0000003f";
 			button.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
 			button.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
@@ -605,7 +605,7 @@
 			button2.width = 0.1;
 			button2.height = "48px";
 			button2.color = "white";
-			button2.fontFamily = "AldoSemiBold";
+			button2.fontFamily = "DPTFont";
 			button2.background = "#0000003f";
 			button2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP+100;
 			button2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
@@ -624,7 +624,7 @@
 			button3.width = 0.1;
 			button3.height = "48px";
 			button3.color = "white";
-			button3.fontFamily = "AldoSemiBold";
+			button3.fontFamily = "DPTFont";
 			button3.background = "#0000003f";
 			button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
 			button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
@@ -680,11 +680,11 @@
 							console.log('enter proposition');
 							jQuery('body').append(`<div id="proposition" style="position: absolute; padding: 20px;
 								margin-left: 37.5%; border: #fff; border-style: solid; border-width: 1px;
-								color: #000; width: 25%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;
+								color: #000; width: 25%; z-index: 2; font-family: DPTFont; font-size: 18px;
 								background-color: #00ccffcc;">Please enter your proposition:<br><form id="proposition">
-								<textarea style="font-family: AldoSemiBold; font-size: 18px;" name="proposition" cols="64" rows="4" class="proposition"></textarea>
+								<textarea style="font-family: DPTFont; font-size: 18px;" name="proposition" cols="64" rows="4" class="proposition"></textarea>
 								<input type="hidden" id="opinionId" name="opinionId" value="${pointerInfo.pickInfo.pickedMesh.dpt.opinionId}"
-								<br><input style="font-family: AldoSemiBold; font-size: 18px;" type="submit" value="Send"></form></div>`
+								<br><input style="font-family: DPTFont; font-size: 18px;" type="submit" value="Send"></form></div>`
 							);
 							jQuery(".proposition").focus();
 							
@@ -804,6 +804,8 @@
 		var whoami;
 	
 		document.addEventListener("DOMContentLoaded", function(event) {
+			document.getElementById('renderCanvas').focus();
+			//jQuery('canvas#renderCanvas').focus();
 			var socket = io.connect(
 			window.location.protocol + "//" + window.location.host,
 				{
@@ -915,7 +917,7 @@
 			jQuery(document).on("mouseenter touchstart", "span.myDialogs", function(event) {
 				jQuery('body').append(`<div id="dialogInfo" style="position: absolute; padding: 20px;
 					margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;
-					color: #000; width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;
+					color: #000; width: 50%; z-index: 2; font-family: DPTFont; font-size: 18px;
 					background-color: #00ccffcc;">${myDialogMenu[event.currentTarget.id].description}</div>`);
 				event.stopImmediatePropagation();
 				event.preventDefault();
