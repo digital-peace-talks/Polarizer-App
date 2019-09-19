@@ -81,7 +81,8 @@ paths:
       summary: Check registered user by publicKey
       tags:
       - user
-      
+
+
   /user/online/:
     get:
       description: Get a list of all users currently online.
@@ -178,6 +179,7 @@ paths:
       summary: Delete user
       tags:
       - user
+
     put:
       description: This can only be done by the logged in user.
       operationId: updateUser
@@ -242,16 +244,36 @@ paths:
         content:
           application/json:
             schema:
-              {}
+              type: object
+              properties:
+                phraseGuess:
+                  type: string
+                publicKey:
+                  type: string
+              required:
+              - phraseGuess
+              - publicKey
         description: data we need
         required: true
       responses:
-        default:
+        200:
           content:
             application/json:
               schema:
-                {}
+                type: object
+                properties:
+                  newCookie:
+                    type: string
           description: all fine
+        400:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+          description: can't reclaim the account
       summary: reclaim an account
       tags:
       - user
@@ -272,6 +294,7 @@ paths:
       summary: Gets all topics
       tags:
       - topic
+
     post:
       operationId: postTopics
       requestBody:
@@ -387,6 +410,7 @@ paths:
       summary: Get a list of all opinion
       tags:
       - opinion
+
     post:
       operationId: postOpinion
       requestBody:
@@ -511,12 +535,9 @@ paths:
       tags:
       - dialog
     summary: Main dialog endpoint
-<<<<<<< HEAD
 
 
-=======
-    
->>>>>>> branch 'master' of git@github.com:digital-peace-talks/DPT-server.git
+
   /dialog/list/:
     get:
       description: Get a list of dialogs associated with the user.
@@ -568,6 +589,7 @@ paths:
       summary: Gets a specific dialog by its ID
       tags:
       - dialog
+
     put:
       operationId: updateDialog
       parameters:
@@ -716,6 +738,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/inline_object'
+
   schemas:
 
     Topic:
@@ -1026,6 +1049,7 @@ components:
           pattern: ^[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$
           type: string
       type: object
+
     inline_object:
       properties:
         publicKey:

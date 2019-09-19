@@ -23,7 +23,7 @@ router.get('/', async (req, res, next) => {
 					<a href=/babylon.html>babylon sample</a><br><br>
 					<a href=/launch3d.html>launch3D sample</a><br><br>
 					<a href=/dialog.html>dialog sample</a><br><br>
-					<a onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname;location.reload(true);alert(window.location.hostname);">delete cookie</a>
+					<a onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
 			`);
 		}
 		res.status(200);
@@ -93,6 +93,15 @@ router.get('/nav-top-logo.png', async (req, res, next) => {
 router.get('/font.ttf', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/font.ttf');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/fontdin.ttf', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/fontdin.ttf');
 		res.status(200);
 	} catch (err) {
 		next(err);
