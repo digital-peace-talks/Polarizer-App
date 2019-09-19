@@ -397,11 +397,11 @@
 			ctx.fillStyle = 'transparent';
 
 			textureContext = dynamicTexture.getContext();
-			textureContext.font = "28px DPTFont";
+			textureContext.font = "22px DPTFont";
 			textureContext.save();
 			textureContext.fillStyle = "#00ccff";
 
-			wrapText(textureContext, text, 5, 20, 475, 25);
+			wrapText(textureContext, text, 5, 20, 479, 22);
 			textureContext.restore();
 
 			dynamicTexture.update();
@@ -628,9 +628,43 @@
 	
 			var camera = getCamera();
 			camera.attachControl(canvas, true);
-	
+			
+		    var leftJoystick = new BABYLON.VirtualJoystick(true);
+		    var rightJoystick = new BABYLON.VirtualJoystick(false);
+		    BABYLON.VirtualJoystick.Canvas.style.zIndex = "4";
+
+		    // Game/Render loop
+			var movespeed = 5
+			currentScene.onBeforeRenderObservable.add(() => {
+				if(leftJoystick.pressed) {
+					moveX = leftJoystick.deltaPosition.x * (engine.getDeltaTime()/1000) * movespeed;
+					moveZ = leftJoystick.deltaPosition.y * (engine.getDeltaTime()/1000) * movespeed;
+					camera.position.x+=moveX
+					camera.position.z+=moveZ
+				}
+				if(rightJoystick.pressed) {
+					moveY = rightJoystick.deltaPosition.y * (engine.getDeltaTime()/1000) * movespeed;
+					camera.position.y+=moveY
+				}
+			})
+		    var btn = document.createElement("button")
+		    btn.innerText = "Enable/Disable Joystick"
+		    btn.style.zIndex = 10;
+			btn.style.position = "absolute"
+			btn.style.bottom = "50px"
+			btn.style.right = "0px"
+			btn.style.zIndex = "10"
+			document.body.appendChild(btn)	
 			var box = getCollisionBox();
-	
+
+		    // Button toggle logic
+		    btn.onclick = ()=>{
+		        if(BABYLON.VirtualJoystick.Canvas.style.zIndex == "-1"){
+		            BABYLON.VirtualJoystick.Canvas.style.zIndex = "4";
+		        }else{
+		            BABYLON.VirtualJoystick.Canvas.style.zIndex = "-1";
+		        }
+		    }
 			// Enable Collisions
 			box.checkCollisions = true;
 			camera.checkCollisions = true;
