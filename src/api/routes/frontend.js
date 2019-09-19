@@ -99,6 +99,15 @@ router.get('/font.ttf', async (req, res, next) => {
 	}
 });
 
+router.get('/fontdin.ttf', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/fontdin.ttf');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
 router.get('/babylon.html', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/babylon.html');
