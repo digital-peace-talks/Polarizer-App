@@ -10,14 +10,18 @@ body {
 
 i { 
 	font-style: italic;
-	color: #ffae00;
- }
+	color: #4a624a;
+}
 
- i#props {
+div#dialogMenu > i {
+	color: 00ccff !important;
+}
+
+i#props {
 	line-height: 0px;
- }
-
- a { color: #fd0;
+}
+ 
+a { color: #fd0;
 	text-decoration: none;
 }
 
@@ -139,29 +143,29 @@ div#c3 {
 	float: left;
 	position: absolute;
 	margin-left: 80%;
-	text-align:justify;
+	text-align:left;
+	left: -50px;
 	text-justify:inter-word;
 }
 
 div#crisis {
 	position: absolute;
-	 padding: 10px;
-	 left: 37%;
-	 border: #fff;
-	 border-style: solid;
-	 border-width: 5px;
-	 background: #0a120a
+	padding: 10px;
+	left: 37%;
+	border: #fff;
+	border-style: solid;
+	border-width: 5px;
+	background: #0a120a
 }
 
 div#dialogFrame {
-	position: absolute;
-	padding: 10px;
-	border: #666;
-	border-style: solid;
-	border-width: 5px;
+	border-width: 0px;
 	background: #0a120a;
-	margin-left: 10%;
-	margin-right: 10%;
-	min-height: 80%;
-	min-width: 80%
+	background-color: rgba(10, 24, 40, 0.0);
+	margin-left: 0%;
+	margin-right: 0%;
+	min-height: 340px;
+	min-width: 80%;
+	top: 0px;
+	left: 0px
 }
