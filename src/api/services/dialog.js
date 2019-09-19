@@ -54,12 +54,49 @@ module.exports.getDialog = async (options) => {
 	});
 }
 
+module.exports.getDialogListAll = async (options) => {
+	var result = [];
+	try {
+		var worker = [];
+		worker = await Dialog.find({});
+		for(var i = 0; i < worker.length; i++) {
+			var collection = {};
+			collection.dialog = worker[i].id;
+			collection.opinionProposition = worker[i].opinionProposition;
+			collection.recipientOpinion = worker[i].opinion.content;
+			collection.status = worker[i].status;
+
+			if(worker[i].recipient == options.userId) {
+				collection.recipient = 'me';
+			} else {
+				collection.recipient = 'notme';
+			}
+			if(worker[i].initiator == options.userId) {
+				collection.initiator = 'me';
+			} else {
+				collection.initiator = 'notme';
+			}
+			result.push(collection);
+		}
+	} catch(error) {
+		throw {
+			status: 500,
+			data: error.message,
+		};
+	}
+	
+	return({
+		status: 200,
+		data: result,
+	});
+} 
+
 /**
  * @param {Object} options
  * @param {String} options.dialogId ID of dialog to return
  * @throws {Error}
  * @return {Promise}
- */
+ */ 
 module.exports.getDialogList = async (options) => {
 	var result = [];
 	try {
