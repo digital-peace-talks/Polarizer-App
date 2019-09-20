@@ -105,7 +105,17 @@ router.get('/font.ttf', async (req, res, next) => {
 	} catch (err) {
 		next(err);
 	}
-})
+});
+
+router.get('/joystickIcon.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/joystickIcon.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
 router.get('/bitter.ttf', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/bitter.ttf');
@@ -136,6 +146,15 @@ router.get('/babylon.html', async (req, res, next) => {
 router.get('/launch3d.html', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/launch3d.html');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/launch3d.js', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/launch3d.js');
 		res.status(200);
 	} catch (err) {
 		next(err);
