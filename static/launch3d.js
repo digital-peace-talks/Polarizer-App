@@ -240,16 +240,12 @@ function dialogRelations(opinionDialogConnections) {
 			}
 		}
 
-		/*
 		var sv = new BABYLON.Vector3(0, 0, -0.0);
 		var ev = new BABYLON.Vector3(0, 0, -0.0);
 		sv.x = initiatorOpinionPosition.x - 2.4;
 		sv.y = initiatorOpinionPosition.y + 1.2;
 		ev.x = recipientOpinionPosition.x - 2.4;
 		ev.y = recipientOpinionPosition.y + 1.2;
-		*/
-		var sv = initiatorOpinionPosition;
-		var ev = recipientOpinionPosition;
 
 		var colors = [ new BABYLON.Color4(1,0,0,0.5), new BABYLON.Color4(0,1,0,.5) ];
 		//var tube = BABYLON.MeshBuilder.CreateTube("tube", {path: [sv, ev], radius: 0.06, updatable: true, }, currentScene);
@@ -339,7 +335,7 @@ function loadOpinions(restObj) {
 			var meshLocal = ev.meshUnderPointer;
 			meshLocal.scaling.x *= 1.5;
 			meshLocal.scaling.y *= 1.5;
-			meshLocal.position.y += 2;
+			//meshLocal.position.y += 2;
 		 	canvas.style.cursor = "move";
 		}, false));
 		
@@ -347,7 +343,7 @@ function loadOpinions(restObj) {
 		plane.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, function(ev){
 			var meshLocal = ev.meshUnderPointer;
 			meshLocal.scaling.x /= 1.5;
-			meshLocal.position.y -= 2;
+			//meshLocal.position.y -= 2;
 			meshLocal.scaling.y /= 1.5;
 			canvas.style.cursor = "default";
 		},false));
@@ -455,7 +451,7 @@ function textBlock(x, y, z, name, text) {
 	plane.position.x = x;
 	plane.position.y = y;
 	plane.position.z = z;
-	plane.showBoundingBox = true;
+	plane.showBoundingBox = false;
 	//plane.doNotSyncBoundingInfo = true
 	//plane.freezeWorldMatrix();
 	return(plane);
