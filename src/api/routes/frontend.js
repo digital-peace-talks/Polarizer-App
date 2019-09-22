@@ -189,6 +189,15 @@ router.get('/dialog.js', async (req, res, next) => {
 	}
 });
 
+router.get('/sleep.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/sleep.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
 router.get('/launch.js', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/launch.js');

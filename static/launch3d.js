@@ -4,6 +4,8 @@ var advancedTexture;
 var currentScene;
 var __topicScene;
 var __opinionScene;
+var topicCamState;
+var opinionCamState;
 
 var myDialogMenu=[];
 var currentDialog;
@@ -14,6 +16,8 @@ var currentTopicStr;
 
 var dpt;
 var whoami;
+
+var powerSave = false;
 
 
 function loadDialogList(restObj) {
@@ -236,22 +240,39 @@ function dialogRelations(opinionDialogConnections) {
 			}
 		}
 
-		var sv = new BABYLON.Vector3(0, 0, 0);
-		var ev = new BABYLON.Vector3(0, 0, 0);
+		/*
+		var sv = new BABYLON.Vector3(0, 0, -0.0);
+		var ev = new BABYLON.Vector3(0, 0, -0.0);
 		sv.x = initiatorOpinionPosition.x - 2.4;
 		sv.y = initiatorOpinionPosition.y + 1.2;
 		ev.x = recipientOpinionPosition.x - 2.4;
 		ev.y = recipientOpinionPosition.y + 1.2;
-		var tube = BABYLON.MeshBuilder.CreateTube("tube", {path: [sv, ev], radius: 0.06, updatable: true, }, currentScene);
+		*/
+		var sv = initiatorOpinionPosition;
+		var ev = recipientOpinionPosition;
+
+		var colors = [ new BABYLON.Color4(1,0,0,0.5), new BABYLON.Color4(0,1,0,.5) ];
+		//var tube = BABYLON.MeshBuilder.CreateTube("tube", {path: [sv, ev], radius: 0.06, updatable: true, }, currentScene);
+		var tube = BABYLON.MeshBuilder.CreateLineSystem("tube", {lines: [[sv, ev]], colors: [colors], updatable: true, }, currentScene);
 //				BABYLON.MeshBuilder.CreateLines("lines", {points: [sv, ev]}, currentScene);
 		//create material
+
+		var gradientMaterial = new BABYLON.GradientMaterial("grad", currentScene);
+		gradientMaterial.topColor = BABYLON.Color3.Red(); // Set the gradient top color
+		gradientMaterial.bottomColor = BABYLON.Color3.Blue(); // Set the gradient bottom color
+		gradientMaterial.offset = 0.5;
+		gradientMaterial.wireframe = true;
+
+
 		var mat = new BABYLON.StandardMaterial("mat", currentScene);
-		mat.diffuseColor = new BABYLON.Color3(1, 0, 0);
+//		mat.diffuseColor = new BABYLON.Color3(1, 0, 0);
 		//mat.specularColor = new BABYLON.Color3(.5, .5, 1);
 		mat.alpha = 0.95;
 		mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
-		//mat.emissiveColor = new BABYLON.Color3(196, 196, 196);
+		mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+		//tube.material = gradientMaterial;
 		tube.material = mat;
+
 		//mat.freeze();
 		console.log(`from: ${initiatorOpinionPosition} to: ${recipientOpinionPosition}`);
 	}
@@ -261,6 +282,17 @@ function loadOpinions(restObj) {
 	var i;
 	var options = '';
 	var canInvite = false;
+	
+	if(currentScene == 'opinionMap') {
+		for(var i in currentScene.meshes) {
+			if('dpt' in currentScene.meshes[i]
+			&& currentScene.meshes[i].dpt.context == 'opinionMap') {
+				currentScene.meshes[i].remove();
+			} else if(currentScene.meshes[i].name == 'tube') {
+				currentScene.meshes[i].remove();
+			}
+		}
+	}
 
 	var n = Math.floor((Math.sqrt(restObj.data.length)));
 	var x = 0 - Math.floor(n/2)*10, xstart = x; xmax = (n-1)*10;
@@ -299,7 +331,28 @@ function loadOpinions(restObj) {
 			nodes[i].x, nodes[i].y, 0,
 			`{"context": "opinionMap", "opinionId": "${restObj.data[i]._id}"}`,
 			`${restObj.data[i].content}`);
+		
+		plane.actionManager = new BABYLON.ActionManager(currentScene);
+		
+		//ON MOUSE ENTER
+		plane.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger, function(ev){	
+			var meshLocal = ev.meshUnderPointer;
+			meshLocal.scaling.x *= 1.5;
+			meshLocal.scaling.y *= 1.5;
+			meshLocal.position.y += 2;
+		 	canvas.style.cursor = "move";
+		}, false));
+		
+		//ON MOUSE EXIT
+		plane.actionManager.registerAction(new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger, function(ev){
+			var meshLocal = ev.meshUnderPointer;
+			meshLocal.scaling.x /= 1.5;
+			meshLocal.position.y -= 2;
+			meshLocal.scaling.y /= 1.5;
+			canvas.style.cursor = "default";
+		},false));
 
+		
 		if(canInvite && restObj.data[i].user != 'mine' && restObj.data[i].blocked == 0) {
 			var mat = new BABYLON.StandardMaterial("icon", currentScene);
 			mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png", currentScene);
@@ -308,9 +361,10 @@ function loadOpinions(restObj) {
 			mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 		
 			var icon = BABYLON.MeshBuilder.CreatePlane("icon", {width: 0.35, height: 0.25}, currentScene);
-			icon.position.x = plane.position.x - plane.geometry.extend.maximum.x - 0.2;
-			icon.position.y = plane.position.y + plane.geometry.extend.maximum.y - 0.4;
-			icon.position.z = plane.position.z - 0.05;
+			icon.parent = plane;
+			icon.position.x -= plane.geometry.extend.maximum.x + 0.2;
+			icon.position.y += plane.geometry.extend.maximum.y - 0.4;
+			icon.position.z = plane.position.z - 0.10;
 			icon.material = mat;	
 			icon.dpt = { context: 'dialogInvitation', opinionId: restObj.data[i]._id };
 		}
@@ -401,7 +455,7 @@ function textBlock(x, y, z, name, text) {
 	plane.position.x = x;
 	plane.position.y = y;
 	plane.position.z = z;
-	plane.showBoundingBox = false;
+	plane.showBoundingBox = true;
 	//plane.doNotSyncBoundingInfo = true
 	//plane.freezeWorldMatrix();
 	return(plane);
@@ -434,10 +488,20 @@ function getCamera() {
 	if(currentScene.dptMode == "topicScene") {
 		console.log('ts cam');
 		var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(2.5, 4.5, -15), currentScene);
+		if(topicCamState) {
+			camera.position = topicCamState.position;
+			camera.rotation = topicCamState.rotation;
+			camera.direction = topicCamState.direction;
+		}
 	}
 	if(currentScene.dptMode == "opinionScene") {
 		console.log('os cam');
 		var camera = new BABYLON.FlyCamera("FlyCamera", new BABYLON.Vector3(4.5, 1.0, -15), currentScene);
+		if(opinionCamState) {
+			camera.position = opinionCamState.position;
+			camera.rotation = opinionCamState.rotation;
+			camera.direction = opinionCamState.direction;
+		}
 	}
 //			var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 0, -10), currentScene);
 //			var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, -10), currentScene);
@@ -512,6 +576,7 @@ var createGUIScene = function(dptMode) {
 	button.top = "0px";
 	advancedTexture.addControl(button);
 	button.onPointerClickObservable.add((pointerInfo) => {
+		opinionCamState = currentScene.cameras[0].storeState();
 		currentScene.dispose();
 		currentScene = __topicScene("topicScene");
 		dpt.getTopic();
@@ -536,45 +601,81 @@ var createGUIScene = function(dptMode) {
 	});
 	advancedTexture.addControl(button2);
 
-	var button3 = BABYLON.GUI.Button.CreateImageButton("newtopicbutton","New Topic","/Interrobang.png");
-	button3.width = 0.1;
-	button3.height = "48px";
-	button3.color = "white";
-	button3.fontFamily = "DPTFont";
-	button3.background = "#0000003f";
-	button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
-	button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-	button3.top = "86";
-	advancedTexture.addControl(button3);
-	button3.onPointerUpObservable.add( function() {
-		if(button3.textBlock.text=='New Topic') {	
+	if(dptMode == 'topicScene') {
+		var button3 = BABYLON.GUI.Button.CreateImageButton("newTopicButton","New Topic","/Interrobang.png");
+		button3.width = 0.1;
+		button3.height = "48px";
+		button3.color = "white";
+		button3.fontFamily = "DPTFont";
+		button3.background = "#0000003f";
+		button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
+		button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+		button3.top = "86";
+		advancedTexture.addControl(button3);
+		button3.onPointerUpObservable.add( function() {
 			topicForm();
-		} else {
-			//the topic input field contains a new topic and clicking button3 should add it to topics:
-			// dpt.topicPost(userTopicInput);
-		}
-
-	});
+		});
+	} else if(dptMode == 'opinionScene') {
+		var button3 = BABYLON.GUI.Button.CreateImageButton("newOpinionButton","New Opinion","/Interrobang.png");
+		button3.width = 0.1;
+		button3.height = "48px";
+		button3.color = "white";
+		button3.fontFamily = "DPTFont";
+		button3.background = "#0000003f";
+		button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
+		button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+		button3.top = "86";
+		advancedTexture.addControl(button3);
+		button3.onPointerUpObservable.add( function() {
+			opinionForm();
+		});
+	}
 	
+}
+
+function pauseEngine() {
+    var btn = document.createElement("input");
+//		    btn.innerText = "Enable/Disable Joystick";
+    btn.style.zIndex = 10;
+	btn.style.position = "absolute";
+	btn.style.bottom = "50px";
+	btn.style.right = "150px";
+	btn.width = "50";
+	btn.height = "50";
+	btn.type = "image";
+	btn.src = "/sleep.png";
+	btn.style.color = "#f00";
+	document.body.appendChild(btn);
+
+    // Button toggle logic
+    btn.onclick = () => {
+       	powerSave = !powerSave;
+    }
 }
 
 function initVirtJoysticks() {
     var leftJoystick = new BABYLON.VirtualJoystick(true);
     var rightJoystick = new BABYLON.VirtualJoystick(false);
+    leftJoystick.setJoystickColor("#ff7f003f");
+    rightJoystick.setJoystickColor("#ff007f3f");
     BABYLON.VirtualJoystick.Canvas.style.zIndex = "-1";
 
     // Game/Render loop
-	var movespeed = 5
+	var movespeed = 5;
+	var camVec = currentScene.cameras[0].position;
 	currentScene.onBeforeRenderObservable.add(() => {
 		if(leftJoystick.pressed) {
-			moveZ = leftJoystick.deltaPosition.y * (engine.getDeltaTime()/1500) * movespeed;
-			currentScene.cameras[0].position.z+=moveZ
+			camVec.z+=leftJoystick.deltaPosition.y * (engine.getDeltaTime()/(1000 - 2*camVec.z*camVec.z)) * movespeed;
+			if(camVec.z > 0) {
+				camVec.z = -15;
+			}
+			if(camVec.z < -20) {
+				camVec.z = -1;
+			}
 		}
 		if(rightJoystick.pressed) {
-			moveX = rightJoystick.deltaPosition.x * (engine.getDeltaTime()/1000) * movespeed;
-			moveY = rightJoystick.deltaPosition.y * (engine.getDeltaTime()/1000) * movespeed;
-			currentScene.cameras[0].position.x+=moveX
-			currentScene.cameras[0].position.y+=moveY
+			camVec.x+=rightJoystick.deltaPosition.x * (engine.getDeltaTime()/(2000 - camVec.z*camVec.z)) * movespeed;
+			camVec.y+=rightJoystick.deltaPosition.y * (engine.getDeltaTime()/(2000 - camVec.z*camVec.z)) * movespeed;
 		}
 	})
     var btn = document.createElement("input");
@@ -582,7 +683,9 @@ function initVirtJoysticks() {
     btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "50px";
-	btn.style.right = "0px";
+	btn.style.right = "50px";
+	btn.width = "42";
+	btn.height = "50";
 	btn.type = "image";
 	btn.src = "/joystickIcon.png";
 	btn.style.color = "#f00";
@@ -653,8 +756,8 @@ function propositionForm(opinionId) {
 function topicForm() {
 	console.log('enter topic');
 	jQuery('body').append(`<div id="topicForm" style="position: absolute; padding: 20px;
-		margin-left: 30%; border: #fff; border-style: solid; border-width: 1px;
-		color: #000; width: 40%; z-index: 2; font-family: DPTFont; font-size: 18px;
+		margin-left: 33%; border: #fff; border-style: solid; border-width: 1px;
+		color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
 		background-color: #00ccffcc;">Please enter a new topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic" cols="64" rows="4" class="topic"></textarea>
 		<br><input style="font-family: DPTFont; font-size: 18px;" type="submit" value="Send"></form></div>`
@@ -698,6 +801,54 @@ function topicForm() {
 	});
 }
 
+function opinionForm() {
+	console.log('enter opinion');
+	jQuery('body').append(`<div id="opinionForm" style="position: absolute; padding: 20px;
+		margin-left: 33%; border: #fff; border-style: solid; border-width: 1px;
+		color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
+		background-color: #00ccffcc;">Please enter a new opinion:<br><form id="opinion">
+		<textarea style="font-family: DPTFont; font-size: 18px;" name="opinion" cols="64" rows="4" class="opinion"></textarea>
+		<br><input style="font-family: DPTFont; font-size: 18px;" type="submit" value="Send"></form></div>`
+	);
+	jQuery(".opinion").focus();
+	
+	jQuery(document).on('keydown', '.opinion', function(event) {
+		var n = jQuery('.opinion').val().length;
+		if(n >= 512) {
+			jQuery('.opinion').css({"background-color": "#f88"});
+			if(event.keyCode != 8
+			&& event.keyCode != 127
+			&& event.keyCode != 37
+			&& event.keyCode != 38
+			&& event.keyCode != 39
+			&& event.keyCode != 40) {
+				event.preventDefault();
+			}
+		} else {
+			jQuery('.opinion').css({"background-color": "#fff"});
+		}
+	    if (event.keyCode == 27) {
+			jQuery('#opinionForm').remove();
+			event.preventDefault();
+	    }
+	    /*
+	    if(event.keyCode == 10 || event.keyCode == 13) {
+			event.preventDefault();
+	    }
+	    */
+	});
+
+	jQuery(document).on('submit', 'form#opinion', function(event) {
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		var opinion = jQuery('.opinion').val();
+		if(opinion) {
+			dpt.postOpinion(currentTopic, opinion);
+		}
+		jQuery('#opinionForm').remove();
+	});
+}
+
 var createGenericScene = function(dptMode) {
 	var genericScene = new BABYLON.Scene(engine);
 
@@ -714,6 +865,7 @@ var createGenericScene = function(dptMode) {
 	camera.attachControl(canvas, true);
 	
 	initVirtJoysticks();
+	pauseEngine();
 
 	// Enable Collisions
 	var box = getCollisionBox();
@@ -721,7 +873,7 @@ var createGenericScene = function(dptMode) {
 	camera.checkCollisions = true;
 	genericScene.collisionsEnabled = true;
 
-	createGUIScene();
+	createGUIScene(dptMode);
 	
 	
 	genericScene.onPointerObservable.add((pointerInfo) => {
@@ -739,7 +891,19 @@ var createGenericScene = function(dptMode) {
 
 				break;
 			case BABYLON.PointerEventTypes.POINTERMOVE:
+				/*
+				for(i in currentScene.meshes) {
+					if(pointerInfo.pickInfo.ray.intersectsMesh(currentScene.meshes[i])
+					&& 'dpt' in currentScene.meshes[i]) {
+						var bla = currentScene.meshes[i];
+						console.log('hit');
+					}
+				}
+				*/
 				//console.log("POINTER MOVE");
+				//if('dpt' in pointerInfo.pickInfo.pickedMesh) {
+				//	console.log("POINTER MOVE");
+				//}
 				break;
 			case BABYLON.PointerEventTypes.POINTERWHEEL:
 				//console.log("POINTER WHEEL");
@@ -762,6 +926,7 @@ var createGenericScene = function(dptMode) {
 						pointerInfo.pickInfo.pickedMesh.showBoundingBox = false;
 					}, 250);
 
+					topicCamState = currentScene.cameras[0].storeState();
 					currentTopic = pointerInfo.pickInfo.pickedMesh.dpt.topicId;
 					currentTopicStr = pointerInfo.pickInfo.pickedMesh.dpt.topic;
 					currentScene.dispose();
@@ -939,7 +1104,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	//circlePoints(4, 2, {X: 0, Y: 0});
 
 	engine.runRenderLoop(function () {
-		if(currentScene) {
+		if(currentScene && !powerSave) {
 			currentScene.render();
 		}
 	});
