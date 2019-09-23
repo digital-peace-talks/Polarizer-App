@@ -60,7 +60,7 @@ router.post('/recover', async (req, res, next) => {
 	if(ret.newCookie)  {
 		res.cookie('dptUUID', ret.newCookie, cookieOptions);
 		await res.writeHead(302, {
-		  'Location': '/launch'
+		  'Location': '/launch3d.html'
 		  //'Location': '/'
 		  //add other headers here...
 		});
@@ -92,6 +92,15 @@ router.get('/Interrobang.png', async (req, res, next) => {
 router.get('/nav-top-logo.png', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/nav-top-logo.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/red-green.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/red-green.png');
 		res.status(200);
 	} catch (err) {
 		next(err);
