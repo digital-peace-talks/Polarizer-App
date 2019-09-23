@@ -27,7 +27,7 @@ function loadDialogList(restObj) {
 
 	jQuery('body').append(`<div id="dialogMenu" style="position: relative;
 		padding: 10px; float: right; top: 0px; border: #fff; border-style: solid;
-		border-width: 1px; color: #fff; width: 280px; height: 33%;
+		border-width: 1px; color: #fff; width: 280px; height: 70%;
 		overflow-y: auto; z-index: 2; font-family: DPTFontDin; font-size: 16px;
 		background-color: #00000039; visibility: hidden;"></div>`);
 

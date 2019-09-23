@@ -34,7 +34,7 @@ html, body {
 }
 
 i { 
-	font-family: "DPTFont";
+	font-family: "DPTFontDin";
 	font-style: inherit;
 	color: #F0F3F5;
 	font-weight: 700;
@@ -50,6 +50,7 @@ h3 {
 
 div#dialogMenu > i {
 	color: 00ccff !important;
+	
 }
 
 i#props {
@@ -162,6 +163,7 @@ div.top {
 div.middle {
 	height: 100%;
 	position: relative;
+	top: -10px;
 }
 
 div.bottom {
@@ -198,8 +200,10 @@ div.hide {
 
 div.status {
 	bottom: 10px;
-	position: absolute;
-	min-width: 98%
+	min-width: 98%;
+	position: relative;
+	left: -15px;
+	bottom: 0px;
 }
 
 div#c1 {
@@ -223,7 +227,6 @@ div#c2 {
 	padding-left: 10px;
 	padding-right: 30px;
 	overflow-y: auto;
-
 }
 
 div#c3 {
@@ -248,8 +251,8 @@ div#crisis {
 }
 
 div#dialogFrame {
+	font-family: "DPTFont";
 	border-width: 0px;
-	background: #0061e0;
 	background-color: rgba(10, 24, 40, 0.0);
 	margin-left: 0%;
 	margin-right: 0%;
