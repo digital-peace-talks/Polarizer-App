@@ -220,7 +220,6 @@ jQuery(document).ready(function() {
 						<div class="top">
 							<center>
 								<h3>${currentDialog.topic}</h3>
-								<hr>
 								Messages: <b>${currentDialog.messages.length} of ${maxMessages}</b>
 							</center>
 						</div>
@@ -247,7 +246,8 @@ jQuery(document).ready(function() {
 					<div class="status">
 						<center>
 							<form id="dialogFrame">
-								<input type="text" name="message" size="120" id="dialogInput">
+								<input type="text" name="message" size="60" id="dialogInput">
+								<br>
 								<input type="submit" name="send" value="send">
 								<input type="button" value="close window" name="close window" id="dialogClose">
 							</form>
@@ -300,8 +300,8 @@ jQuery(document).ready(function() {
 				jQuery(document).one('click', "#dialogAccept", function(event) {
 					jQuery('center#actionSpace').html(`
 						<form id="dialogFrame">
-							<input type="text" name="message" size="120" id="dialogInput">
-						</form>
+							<input type="text" name="message" size="60" id="dialogInput">
+						</form><br>
 					`);
 					dpt.putDialog(currentDialog.dialog, "status", "ACTIVE");
 					event.preventDefault();
@@ -344,8 +344,8 @@ jQuery(document).ready(function() {
 //		jQuery('#misc').append(html);
 		jQuery('body').append(`<div id="dialogForm" style="position: absolute; padding: 20px;
 				margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;
-				color: #000; width: 50%; z-index: 2; font-family: AldoSemiBold; font-size: 18px;
-				background-color: #00ccffcc;">${html}</div>`);
+				color: #000; width: 50%; z-index: 2; font-family: DPTFontDin; font-size: 18px;
+				background-color: #28A9E1;">${html}</div>`);
 		
 		if(currentDialog.status == 'CLOSED') {
 			for(var i=0; i < currentDialog.crisises.length; i++) {
