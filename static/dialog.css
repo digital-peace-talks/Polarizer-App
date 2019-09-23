@@ -35,7 +35,7 @@ html, body {
 }
 
 i { 
-	font-family: "Bitter";
+	font-family: "DPTFont";
 	font-style: inherit;
 	color: #eeeeee;
 	font-weight: 700;
@@ -166,7 +166,6 @@ div#c1 {
 }
 
 div#c2 {
-	font-family: "DPTFont";
 	overflow-y: auto;
 	float: left;
 	width: 53%;
@@ -179,7 +178,6 @@ div#c2 {
 }
 
 div#c3 {
-	font-family: "Bitter";
 	width: 19%;
 	float: left;
 	position: absolute;
