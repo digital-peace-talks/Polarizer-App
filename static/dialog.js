@@ -246,7 +246,7 @@ jQuery(document).ready(function() {
 					<div class="status">
 						<center>
 							<form id="dialogFrame">
-								<input type="text" name="message" size="60" id="dialogInput">
+							<textarea rows="4" cols="41" type="text" name="message"  id="dialogInput"></textarea>
 								<br>
 								<input type="submit" name="send" value="send">
 								<input type="button" value="close window" name="close window" id="dialogClose">
@@ -344,7 +344,7 @@ jQuery(document).ready(function() {
 //		jQuery('#misc').append(html);
 		jQuery('body').append(`<div id="dialogForm" style="position: absolute; padding: 20px;
 				margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;
-				color: #000; width: 50%; z-index: 2; font-family: DPTFontDin; font-size: 18px;
+				color: #000; width: 50%; z-index: 2; font-family: DPTFont; font-size: 18px;
 				background-color: #28A9E1;">${html}</div>`);
 		
 		if(currentDialog.status == 'CLOSED') {
