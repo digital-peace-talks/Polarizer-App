@@ -118,7 +118,7 @@ p.left {
     position: relative;
     width: 300px;
     color: #F0F3F5;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 p.left:before {
@@ -146,7 +146,7 @@ p.right {
     position: relative;
     width: 300px;
     color: #F0F3F5;
-    font-size: 14px;
+    font-size: 18px;
 }
 
 p.right:before {
@@ -210,7 +210,7 @@ div.hide {
 div.status {
     bottom: 10px;
     min-width: 98%;
-    position: absolute;
+    position: relative;
     left: -15px;
     bottom: 0px;
 }
