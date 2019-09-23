@@ -92,7 +92,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 					if(crisisRecipient && 'rating' in crisisRecipient) {
 						if(crisisRecipient.rating > 0) {
 							topo.leafs.positive.push(opinionInitiator._id.toString());
-						} else if (crisisInitiator.rating < 0) {
+						} else if (crisisRecipient.rating < 0) {
 							topo.leafs.negative.push(opinionInitiator._id.toString());
 						} else {
 							topo.leafs.neutral.push(opinionInitiator._id.toString());
