@@ -600,12 +600,14 @@ var createGUIScene = function(dptMode) {
 	var homeBtn = jQuery('#home-btn');
 	homeBtn.show();
 	homeBtn.on('click touch', function () {
-		// opinionCamState = currentScene.cameras[0].storeState();
-	// 	currentScene.dispose();
-	// 	currentScene = __topicScene("topicScene");
-	// 	dpt.getTopic();
+		opinionCamState = currentScene.cameras[0].storeState();
+		currentScene.dispose();
+		currentScene = __topicScene("topicScene");
+		dpt.getTopic();
 
 	});
+
+	
 	var button2 = BABYLON.GUI.Button.CreateImageButton("blind", "Own Dialogs", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png");
 	button2.width = 0.1;
 	button2.height = "48px";
