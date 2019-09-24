@@ -16,10 +16,10 @@ html, body {
 	/* margin:5%; */
 	position: fixed;
 	display:grid;
-	height:50%;
-	width:90%;
+	height:180px;
+	width:210px;
 	background-color:rgba(0,0,0,0);
-border:1px solid snow;
+/* border:1px solid snow; */
 	z-index:5000;
 	  /* grid-auto-flow: column; */
 	grid-template-columns: 210px;
