@@ -18,7 +18,7 @@ body {
     position: fixed;
     display: grid;
     background-color: rgba(0, 0, 0, 0);
-    border: 1px solid snow;
+    border: 1px solid #F0F3F5;
     z-index: 5000;
     /* grid-auto-flow: column; */
     grid-template-columns: 210px;
@@ -31,11 +31,11 @@ body {
     display: none;
     font-family: "DPTFont";
     font-size: 1em;
-    width: 210px;
-    /* height:40px; */
-    border: 1px solid white;
-    background-color: #0000003f;
-    color: white;
+    width: 280px;
+    height: 53px;
+    border: 1px solid #F0F3F5;
+    background-color: #002C4B;
+    color: #F0F3F5;
     justify-content: center;
     text-align: center;
     background-size: cover;
