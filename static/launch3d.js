@@ -574,28 +574,38 @@ function circlePoints(points, radius, center) {
 
 var createGUIScene = function(dptMode) {
 	// GUI
-	if(advancedTexture) {
-		advancedTexture.dispose();
-	}
-	advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+	// if(advancedTexture) {
+	// 	advancedTexture.dispose();
+	// }
+	// advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
-	var button = BABYLON.GUI.Button.CreateImageButton("homebutton", "Home", "/nav-top-logo.png");
-	button.width = 0.1;
-	button.height = "40px";
-	button.color = "white";
-	button.fontFamily = "DPTFont";
-	button.background = "#0000003f";
-	button.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-	button.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-	button.top = "0px";
-	advancedTexture.addControl(button);
-	button.onPointerClickObservable.add((pointerInfo) => {
-		opinionCamState = currentScene.cameras[0].storeState();
-		currentScene.dispose();
-		currentScene = __topicScene("topicScene");
-		dpt.getTopic();
+	// var button = BABYLON.GUI.Button.CreateImageButton("homebutton", "Home", "/nav-top-logo.png");
+	// button.width = 0.1;
+	// button.height = "40px";
+	// button.color = "white";
+	// button.fontFamily = "DPTFont";
+	// button.background = "#0000003f";
+	// button.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
+	// button.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+	// button.top = "0px";
+	// advancedTexture.addControl(button);
+	
+	// button.onPointerClickObservable.add((pointerInfo) => {
+	// 	opinionCamState = currentScene.cameras[0].storeState();
+	// 	currentScene.dispose();
+	// 	currentScene = __topicScene("topicScene");
+	// 	dpt.getTopic();
+	// });
+
+	var homeBtn = jQuery('#home-btn');
+	homeBtn.show();
+	homeBtn.on('click touch', function () {
+		// opinionCamState = currentScene.cameras[0].storeState();
+	// 	currentScene.dispose();
+	// 	currentScene = __topicScene("topicScene");
+	// 	dpt.getTopic();
+
 	});
-
 	var button2 = BABYLON.GUI.Button.CreateImageButton("blind", "Own Dialogs", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png");
 	button2.width = 0.1;
 	button2.height = "48px";
@@ -613,7 +623,7 @@ var createGUIScene = function(dptMode) {
 		}
 		jQuery('#dialogMenu').css({visibility: myDialogsVisible});
 	});
-	advancedTexture.addControl(button2);
+	// advancedTexture.addControl(button2);
 
 	if(dptMode == 'topicScene') {
 		var button3 = BABYLON.GUI.Button.CreateImageButton("newTopicButton","New Topic","/Interrobang.png");
@@ -625,7 +635,7 @@ var createGUIScene = function(dptMode) {
 		button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
 		button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
 		button3.top = "86";
-		advancedTexture.addControl(button3);
+		// advancedTexture.addControl(button3);
 		button3.onPointerUpObservable.add( function() {
 			topicForm();
 		});
