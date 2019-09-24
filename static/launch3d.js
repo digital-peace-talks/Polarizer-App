@@ -472,12 +472,15 @@ function loadOpinions(restObj) {
         if (canInvite && restObj.data[i].user != 'mine' &&
             restObj.data[i].blocked == 0) {
             var mat = new BABYLON.StandardMaterial("icon", currentScene);
-            mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png", currentScene);
-            mat.emissiveColor = new BABYLON.Color3(0, 0.7, 1);
-            mat.alpha = 0.95;
-            mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
+            mat.diffuseTexture = new BABYLON.Texture("/chatbubble.png", currentScene);
+//            mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png", currentScene);
+            mat.emissiveColor = new BABYLON.Color3(0.0, 0.8, 1);
+//            mat.alpha = .95;
+            mat.alphaMode = BABYLON.Engine.ALPHA_ADD;
+            mat.opacityTexture = mat.diffuseTexture;
 
-            var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.35, height: 0.25 }, currentScene);
+//            var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.35, height: 0.25 }, currentScene);
+            var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.35, height: 0.35 }, currentScene);
             icon.parent = plane;
             icon.position.x -= plane.geometry.extend.maximum.x + 0.2;
             icon.position.y += plane.geometry.extend.maximum.y - 0.4;
@@ -510,7 +513,6 @@ function loadOpinions(restObj) {
     dialogRelations(opinionDialogConnections);
 }
 
-
 function wrapText(context, text, x, y, maxWidth, lineHeight) {
     var words = text.split(' ');
     var line = '';
@@ -528,7 +530,6 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
     }
     context.fillText(line, x, y);
 }
-
 
 function textBlock(x, y, z, name, text) {
     //Set width an height for plane
@@ -580,7 +581,6 @@ function textBlock(x, y, z, name, text) {
     return (plane);
 }
 
-
 function getCollisionBox() {
     //Simple box
     var box = new BABYLON.MeshBuilder.CreateBox("collisionBox", {
@@ -602,7 +602,6 @@ function getCollisionBox() {
 
     return (box);
 }
-
 
 function getCamera() {
     // camera
@@ -652,7 +651,6 @@ function getCamera() {
     return (camera);
 }
 
-
 function circlePoints(points, radius, center) {
     var slice = 2 * Math.PI / points;
     var nodes = [];
@@ -681,7 +679,6 @@ function circlePoints(points, radius, center) {
     }
     return (nodes);
 }
-
 
 var createGUIScene = function(dptMode) {
 
@@ -728,7 +725,6 @@ var createGUIScene = function(dptMode) {
     }
 }
 
-
 function pauseEngine() {
     var btn = document.createElement("input");
     //		    btn.innerText = "Enable/Disable Joystick";
@@ -748,7 +744,6 @@ function pauseEngine() {
         powerSave = !powerSave;
     }
 }
-
 
 function initVirtJoysticks() {
     var leftJoystick = new BABYLON.VirtualJoystick(false);
