@@ -1,7 +1,13 @@
 <!doctype html>
 <html>
 	<head>
-		<title></title>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="theme-color" content="#008000"/>
+		<title>Digital Peace Talks</title>
+		<link rel="manifest" href="manifest.json">
+
 		<style>
 			i {font-style: italic; color: #4a624a; }
 			a { color: #fd0; text-decoration: none; }
@@ -55,6 +61,15 @@
 	<div id="main"></div>
 	<div id="misc"></div>
 	<div id="misc2"></div>
+
+	<script>
+		if('serviceWorker' in navigator) {
+			navigator.serviceWorker.register('/sw.js')
+			.then(function() {
+					console.log('Service Worker Registered');
+			});
+		}
+	</script>
 	</body>
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
