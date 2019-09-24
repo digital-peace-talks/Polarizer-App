@@ -107,6 +107,60 @@ router.get('/red-green.png', async (req, res, next) => {
 	}
 });
 
+router.get('/red-blue.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/red-ble.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/blue-green.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/blue-green.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/green-green.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/green-green.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/blue-blue.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/blue-blue.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/red-red.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/red-red.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/grey-grey.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/grey-grey.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
 router.get('/font.ttf', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/font.ttf');

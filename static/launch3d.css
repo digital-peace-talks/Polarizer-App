@@ -1,34 +1,32 @@
 @font-face {
-	font-family: "DPTFont";
-	src: url("/font.ttf") format("truetype");
+    font-family: "DPTFont";
+    src: url("/font.ttf") format("truetype");
 }
 
-html, body {
-	font-family: "DPTFont";
-	overflow: hidden;
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
+html,
+body {
+    font-family: "DPTFont";
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 #overlay {
-	/* margin:5%; */
-	position: fixed;
-	display:-ms-grid;
-	display:grid;
-	height:180px;
-	width:210px;
-	background-color:rgba(0,0,0,0);
-/* border:1px solid snow; */
-	z-index:5000;
-	  /* grid-auto-flow: column; */
-	-ms-grid-columns: 210px;
-	grid-template-columns: 210px;
-	/* pointer-events: none; */
+    /* margin:5%; */
+    position: fixed;
+    display: grid;
+    background-color: rgba(0, 0, 0, 0);
+    border: 0px;
+    z-index: 100;
+    /* grid-auto-flow: column; */
+    grid-template-columns: 210px;
+    /* pointer-events: none; */
 }
-  
+
 .menu-btn {
+<<<<<<< HEAD
 	padding:10px;
 	padding-left:20px;
 	display:none;
@@ -45,11 +43,11 @@ html, body {
 	text-align: center;
 	background-size: cover;
 }
-.btn-icon{
-	height:35px;
-	position: relative;
-	margin-left:-10px;
-	margin-right:20px;
-	float:left;
 
+.btn-icon {
+    height: 35px;
+    position: relative;
+    margin-left: -10px;
+    margin-right: 20px;
+    float: left;
 }
