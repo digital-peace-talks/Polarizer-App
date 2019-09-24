@@ -37,7 +37,7 @@ html, body {
 	width:210px;
 	/* height:40px; */
 	border:1px solid white;
-	background-color:#0000003f;
+	background-color:rgba(0,0,0,0.25);
 	color:white;
 	-webkit-box-pack: center;
 	    -ms-flex-pack: center;
