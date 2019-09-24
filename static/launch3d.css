@@ -15,6 +15,7 @@ html, body {
 #overlay {
 	/* margin:5%; */
 	position: fixed;
+	display:-ms-grid;
 	display:grid;
 	height:180px;
 	width:210px;
@@ -22,6 +23,7 @@ html, body {
 /* border:1px solid snow; */
 	z-index:5000;
 	  /* grid-auto-flow: column; */
+	-ms-grid-columns: 210px;
 	grid-template-columns: 210px;
 	/* pointer-events: none; */
 }
@@ -37,7 +39,9 @@ html, body {
 	border:1px solid white;
 	background-color:#0000003f;
 	color:white;
-	justify-content: center;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
 	text-align: center;
 	background-size: cover;
 }
