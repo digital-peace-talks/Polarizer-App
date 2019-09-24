@@ -33,26 +33,39 @@
     <script>
         // Testpage for different Browsers
         // http://www.quirksmode.org/m/tests/widthtest_vpdevice.html
+        /* 
         function fixZoom() {
-            var relation = 100 / window.devicePixelRatio;
-            document.body.style.MozTransform = 'scale(' + relation / 100 + ')';
-            document.body.style.zoom = relation + '%';
+               var relation = 100 / window.devicePixelRatio;
+                document.body.style.MozTransform = 'scale(' + relation / 100 + ')';
+                document.body.style.zoom = relation + '%';
 
-            document.body.style.webkitTransform = 'scale(' + relation / 100 + ')'; // Chrome, Opera, Safari
-            document.body.style.msTransform = 'scale(' + relation / 100 + ')'; // IE 9
-            document.body.style.transform = 'scale(' + relation / 100 + ')'; // General
+                document.body.style.webkitTransform = 'scale(' + relation / 100 + ')'; // Chrome, Opera, Safari
+                document.body.style.msTransform = 'scale(' + relation / 100 + ')'; // IE 9
+                document.body.style.transform = 'scale(' + relation / 100 + ')'; // General
 
-            $('body').offset({
-                top: 0,
-                left: 0
-            });
+                $('body').offset({
+                    top: 0,
+                    left: 0
+                });
 
-            document.getElementById('status').innerHTML = Math.round(window.devicePixelRatio * 100);
-        }
+                document.getElementById('status').innerHTML = Math.round(window.devicePixelRatio * 100);
+            } */
     </script>
 </head>
 
+
 <body onload="fixZoom();" onresize="fixZoom();">
+	<div id="overlay">
+		<div id="button-menu">
+			<button class="menu-btn" id="home-btn"><img class= "btn-icon"src="nav-top-logo.png" >Home</button>
+		
+			<button class="menu-btn" id="dialogues-btn"><img class="btn-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png">Own-Dialogues</button>
+		
+			<button class="menu-btn" id="new-topic-btn"><img class="btn-icon" src="/Interrobang.png">New-Topic </button>
+		</div>
+	</div>
+			
+		
     <canvas id="renderCanvas" tabindex="1"></canvas>
     <div id="misc"></div>
     <div id="misc2"></div>
@@ -64,4 +77,5 @@
 <script src="dpt-client.js"></script>
 <script src="/dialog.js"></script>
 
+>>>>>>> 685b113c3a6e7a939e9d73208133e8be7993565e
 </html>

@@ -95,18 +95,18 @@ jQuery(document).ready(function() {
 		window.location.reload(true);
 	});
 
-*/	
-	function crisisForm(messageId) {
+*/
+function crisisForm(messageId) {
 
-		var message = '';
+    var message = '';
 
-		for(var i=0; i < currentDialog.messages.length; i++) {
-			if(currentDialog.messages[i].messageId == messageId) {
-				message = currentDialog.messages[i].content;
-				break;
-			}
-		}
-		jQuery('#misc2').append(`
+    for (var i = 0; i < currentDialog.messages.length; i++) {
+        if (currentDialog.messages[i].messageId == messageId) {
+            message = currentDialog.messages[i].content;
+            break;
+        }
+    }
+    jQuery('#misc2').append(`
 			<div id="crisis">
 				<u>End of discussion, appraisal of results.</u><br><br>
 				Finish the dialog under Topic:<br><b>${currentDialog.topic}</b><br><br>
@@ -124,97 +124,97 @@ jQuery(document).ready(function() {
 			</div>
 		`);
 
-		jQuery(".crisis").focus();
+    jQuery(".crisis").focus();
 
-		jQuery("#crisis").submit(function(event) {
-			event.stopImmediatePropagation();
-			event.preventDefault();
-			dpt.postCrisis(jQuery('.reason').val(), jQuery("input[name='rating']:checked").val(), currentDialog.dialog, messageId, whoami.dptUUID);
-			jQuery('#misc2').empty();
-		});
-		
-		jQuery(document).one('click', "#crisisCloseWindow", function(event) {
-			dialogFormOpen = 0;
-			jQuery('#misc2').empty();
-			event.preventDefault();
-		})
-	}
+    jQuery("#crisis").submit(function(event) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        dpt.postCrisis(jQuery('.reason').val(), jQuery("input[name='rating']:checked").val(), currentDialog.dialog, messageId, whoami.dptUUID);
+        jQuery('#misc2').empty();
+    });
 
-	function dialogForm() {
+    jQuery(document).one('click', "#crisisCloseWindow", function(event) {
+        dialogFormOpen = 0;
+        jQuery('#misc2').empty();
+        event.preventDefault();
+    })
+}
 
-		var opinion1;
-		var opinion2;
-		var dialog = '';
-		var meReadyToEnd = '';
-		var otherReadyToEnd = '';
-		var viewOnly = true;
-		
-		const maxMessages = currentDialog.extension * 10;
+function dialogForm() {
 
-		dialogFormOpen = 1;
+    var opinion1;
+    var opinion2;
+    var dialog = '';
+    var meReadyToEnd = '';
+    var otherReadyToEnd = '';
+    var viewOnly = true;
 
-		if(currentDialog.initiator == 'me') {
+    const maxMessages = currentDialog.extension * 10;
 
-			opinion1 = currentDialog.recipientOpinion;
-			opinion2 = currentDialog.initiatorOpinion;
-			opinion2 += "<br><br><b>Initiators proposition:</b><br>" + currentDialog.opinionProposition
+    dialogFormOpen = 1;
 
-		} else {
+    if (currentDialog.initiator == 'me') {
 
-			opinion1 = currentDialog.initiatorOpinion;
-			opinion1 += "<br><br><b>Initiators proposition:</b><br>" + currentDialog.opinionProposition
-			opinion2 = currentDialog.recipientOpinion;
-		}
-		
-		if(currentDialog.messages.length == 0) {
-			dialog = '<i id="props">&nbsp;</i>';
-		}
+        opinion1 = currentDialog.recipientOpinion;
+        opinion2 = currentDialog.initiatorOpinion;
+        opinion2 += "<br><br><b>Initiators proposition:</b><br>" + currentDialog.opinionProposition
 
-		for(var i=0; i < currentDialog.crisises.length; i++) {
+    } else {
 
-			if(currentDialog.status == 'CLOSED') {
-				if(currentDialog.crisises[i].initiator == 'me') {
-					meReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
-				} else if(currentDialog.crisises[i].initiator == 'notme') {
-					otherReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
-				}
-			} else {
-				if(currentDialog.crisises[i].initiator == 'me') {
-					meReadyToEnd = 'Ready to End';
-				} else if(currentDialog.crisises[i].initiator == 'notme') {
-					otherReadyToEnd = 'Ready to End';
-				}
-			}
-		}
-		
-		var extensionRequest = '';
-		if(currentDialog.status == 'ACTIVE') {
-			extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest">`;
-			for(var i=0; i < currentDialog.extensionRequests.length; i++) {
-				if(currentDialog.extensionRequests[i].sender == 'me') {
-					extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest" checked>`;
-				}
-			}
-		}
-		
-		if(meReadyToEnd == '') {
-			viewOnly = false;
-		}
+        opinion1 = currentDialog.initiatorOpinion;
+        opinion1 += "<br><br><b>Initiators proposition:</b><br>" + currentDialog.opinionProposition
+        opinion2 = currentDialog.recipientOpinion;
+    }
 
-		for(var i=0; i < currentDialog.messages.length; i++) {
+    if (currentDialog.messages.length == 0) {
+        dialog = '<i id="props">&nbsp;</i>';
+    }
 
-			if(currentDialog.messages[i].sender == 'me') {
-				dialog += '<p class="right">' + currentDialog.messages[i].content + '</p>';
-			} else {
-				var option = '';
-				if(viewOnly == false) {
-					option = ' <span class="crisis" id="'+ currentDialog.messages[i].messageId +'">&#9878;</span>';
-				}
-				dialog += '<p class="left">' + currentDialog.messages[i].content + option + '</p>';
-			}
-		}
+    for (var i = 0; i < currentDialog.crisises.length; i++) {
 
-		var html = `
+        if (currentDialog.status == 'CLOSED') {
+            if (currentDialog.crisises[i].initiator == 'me') {
+                meReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
+            } else if (currentDialog.crisises[i].initiator == 'notme') {
+                otherReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
+            }
+        } else {
+            if (currentDialog.crisises[i].initiator == 'me') {
+                meReadyToEnd = 'Ready to End';
+            } else if (currentDialog.crisises[i].initiator == 'notme') {
+                otherReadyToEnd = 'Ready to End';
+            }
+        }
+    }
+
+    var extensionRequest = '';
+    if (currentDialog.status == 'ACTIVE') {
+        extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest">`;
+        for (var i = 0; i < currentDialog.extensionRequests.length; i++) {
+            if (currentDialog.extensionRequests[i].sender == 'me') {
+                extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest" checked>`;
+            }
+        }
+    }
+
+    if (meReadyToEnd == '') {
+        viewOnly = false;
+    }
+
+    for (var i = 0; i < currentDialog.messages.length; i++) {
+
+        if (currentDialog.messages[i].sender == 'me') {
+            dialog += '<p class="right">' + currentDialog.messages[i].content + '</p>';
+        } else {
+            var option = '';
+            if (viewOnly == false) {
+                option = ' <span class="crisis" id="' + currentDialog.messages[i].messageId + '">&#9878;</span>';
+            }
+            dialog += '<p class="left">' + currentDialog.messages[i].content + option + '</p>';
+        }
+    }
+
+    var html = `
 				<div id="dialogFrame">
 					<div class="table">
 						<div class="top">
@@ -229,10 +229,10 @@ jQuery(document).ready(function() {
 					<div id="c3"><b>My opinion:</b><br>${opinion2}<br><br>${meReadyToEnd}<br><br>${extensionRequest}</div></div>
 			`;
 
-		if(currentDialog.status == 'ACTIVE') {
+    if (currentDialog.status == 'ACTIVE') {
 
-			if(viewOnly) {
-				html += `
+        if (viewOnly) {
+            html += `
 					<div class="status">
 					<center>
 						<form id="dialogFrame">
@@ -241,8 +241,8 @@ jQuery(document).ready(function() {
 			   		</center>
 					</div>
 				`;
-			} else {
-				html += `
+        } else {
+            html += `
 					<div class="status">
 						<center>
 							<form id="dialogFrame">
@@ -254,24 +254,24 @@ jQuery(document).ready(function() {
 						</center>
 					</div>
 				`;
-			}
+        }
 
-			jQuery(document).one('click', "#dialogClose", function(event) {
-				dialogFormOpen = 0;
-				jQuery('#dialogForm').remove();
-				event.preventDefault();
-			});
+        jQuery(document).one('click', "#dialogClose", function(event) {
+            dialogFormOpen = 0;
+            jQuery('#dialogForm').remove();
+            event.preventDefault();
+        });
 
-			jQuery(document).one('click', "#extensionRequest", function(event) {
-				if(jQuery("#extensionRequest").is(':checked')) {
-					dpt.extensionRequest(currentDialog.dialog, whoami.dptUUID);
-				}
-			});
+        jQuery(document).one('click', "#extensionRequest", function(event) {
+            if (jQuery("#extensionRequest").is(':checked')) {
+                dpt.extensionRequest(currentDialog.dialog, whoami.dptUUID);
+            }
+        });
 
-		} else if(currentDialog.status == 'PENDING') {
+    } else if (currentDialog.status == 'PENDING') {
 
-			if(currentDialog.initiator == 'me') {
-				html += `
+        if (currentDialog.initiator == 'me') {
+            html += `
 					<div class="status">
 						<center>
 							Please wait for the other to accept the dialog.
@@ -279,15 +279,15 @@ jQuery(document).ready(function() {
 			   			</center>
 					</div>
 				`;
-				jQuery(document).one('click', "#dialogClose", function(event) {
-					dialogFormOpen = 0;
-					jQuery('#dialogForm').remove();
-					event.preventDefault();
-				});
+            jQuery(document).one('click', "#dialogClose", function(event) {
+                dialogFormOpen = 0;
+                jQuery('#dialogForm').remove();
+                event.preventDefault();
+            });
 
-			} else {
+        } else {
 
-				html += `
+            html += `
 					<div class="status">
 						<center id="actionSpace">
 							<input type="button" value="accept dialog" name="accept dialog" size="120" id="dialogAccept">
@@ -297,33 +297,33 @@ jQuery(document).ready(function() {
 					</div>
 				`;
 
-				jQuery(document).one('click', "#dialogAccept", function(event) {
-					jQuery('center#actionSpace').html(`
+            jQuery(document).one('click', "#dialogAccept", function(event) {
+                jQuery('center#actionSpace').html(`
 						<form id="dialogFrame">
 							<input type="text" name="message" size="60" id="dialogInput">
 						</form><br>
 					`);
-					dpt.putDialog(currentDialog.dialog, "status", "ACTIVE");
-					event.preventDefault();
-				});
+                dpt.putDialog(currentDialog.dialog, "status", "ACTIVE");
+                event.preventDefault();
+            });
 
-				jQuery(document).one('click', "#dialogCloseWindow", function(event) {
-					dialogFormOpen = 0;
-					jQuery('#dialogForm').remove();
-					event.preventDefault();
-				});
+            jQuery(document).one('click', "#dialogCloseWindow", function(event) {
+                dialogFormOpen = 0;
+                jQuery('#dialogForm').remove();
+                event.preventDefault();
+            });
 
-				jQuery(document).one('click', "#dialogReject", function(event) {
-					dialogFormOpen = 0;
-					jQuery('#dialogForm').remove();
-					dpt.putDialog(currentDialog.dialog, "status", "CLOSED");
-					event.preventDefault();
-				});
-			}
+            jQuery(document).one('click', "#dialogReject", function(event) {
+                dialogFormOpen = 0;
+                jQuery('#dialogForm').remove();
+                dpt.putDialog(currentDialog.dialog, "status", "CLOSED");
+                event.preventDefault();
+            });
+        }
 
-		} else if(currentDialog.status == 'CLOSED') {
+    } else if (currentDialog.status == 'CLOSED') {
 
-			html += `
+        html += `
 				<div class="status">
 					<center>
 						<b>This dialog is closed.</b>
@@ -332,56 +332,56 @@ jQuery(document).ready(function() {
 				</div>
 			`;
 
-			jQuery(document).one('click', "#dialogCloseWindow", function(event) {
-				dialogFormOpen = 0;
-				jQuery('#dialogForm').remove();
-				event.preventDefault();
-			});
-		}
+        jQuery(document).one('click', "#dialogCloseWindow", function(event) {
+            dialogFormOpen = 0;
+            jQuery('#dialogForm').remove();
+            event.preventDefault();
+        });
+    }
 
-		html += '</div></div>';
-		
-//		jQuery('#misc').append(html);
-		jQuery('body').append(`<div id="dialogForm" style="position: absolute; padding: 20px;
+    html += '</div></div>';
+
+    //		jQuery('#misc').append(html);
+    jQuery('body').append(`<div id="dialogForm" style="position: absolute; top:0px; left 0px; padding: 20px;
 				margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;
 				color: #000; width: 50%; z-index: 2; font-family: DPTFont; font-size: 18px;
-				background-color: #28A9E1;">${html}</div>`);
-		
-		if(currentDialog.status == 'CLOSED') {
-			for(var i=0; i < currentDialog.crisises.length; i++) {
-				if(currentDialog.crisises[i].sender == 'me') {
-					jQuery('#c3', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
-				} else {
-					jQuery('#c1', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
-				}
-			}
-		}
+				background-color: #28A9E1; height: 640px">${html}</div>`);
 
-		jQuery(document).one('submit', '#dialogFrame', function(event) {
-			event.stopImmediatePropagation();
-			event.preventDefault();
-			var message = this[0].value;
-			dpt.postMessage(message, whoami.dptUUID, currentDialog.dialog);
-			jQuery("#dialogInput").focus();
-		});
+    if (currentDialog.status == 'CLOSED') {
+        for (var i = 0; i < currentDialog.crisises.length; i++) {
+            if (currentDialog.crisises[i].sender == 'me') {
+                jQuery('#c3', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
+            } else {
+                jQuery('#c1', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
+            }
+        }
+    }
 
-		jQuery(document).on('click', '.crisis', function(event) {
-			crisisForm(this.id);
-			event.stopImmediatePropagation();
-			event.preventDefault();
-		});
+    jQuery(document).one('submit', '#dialogFrame', function(event) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        var message = this[0].value;
+        dpt.postMessage(message, whoami.dptUUID, currentDialog.dialog);
+        jQuery("#dialogInput").focus();
+    });
 
-		jQuery(document).on('keyup', '#dialogInput', function(event) {
-		    if (event.keyCode == 27) {
-				jQuery('#dialogForm').remove();
-				event.preventDefault();
-		    }
-		});
+    jQuery(document).on('click', '.crisis', function(event) {
+        crisisForm(this.id);
+        event.stopImmediatePropagation();
+        event.preventDefault();
+    });
 
-		jQuery("#dialogInput").focus();
-	}
+    jQuery(document).on('keyup', '#dialogInput', function(event) {
+        if (event.keyCode == 27) {
+            jQuery('#dialogForm').remove();
+            event.preventDefault();
+        }
+    });
 
-	/*
+    jQuery("#dialogInput").focus();
+}
+
+/*
 	jQuery(document).on('mouseleave touchend', 'li.connector', (event) => {
 		var root = event.currentTarget.id;
 //		jQuery(event.currentTarget).children("span.connector").html('');
