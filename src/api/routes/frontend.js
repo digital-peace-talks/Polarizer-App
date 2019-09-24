@@ -71,6 +71,74 @@ router.post('/recover', async (req, res, next) => {
 	}
 });
 
+/* PWA ++++++++++ ++++++++++ ++++++++++ ++++++++++ ++++++++++ */
+
+router.get('/manifest.json', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/manifest.json');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/sw.js', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/sw.js');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/icon-128x128.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/icon-128x128.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/icon-144x144.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/icon-144x144.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+
+router.get('/icon-152x152.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/icon-152x152.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/icon-192x192.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/icon-192x192.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+router.get('/icon-512x512.png', async (req, res, next) => {
+	try {
+		await res.sendFile(process.env.DPT_PATH+'/static/icon-512x512.png');
+		res.status(200);
+	} catch (err) {
+		next(err);
+	}
+});
+
+/* PWA ++++++++++ ++++++++++ ++++++++++ ++++++++++ ++++++++++ */
+
 router.get('/dpt-client.js', async (req, res, next) => {
 	try {
 		await res.sendFile(process.env.DPT_PATH+'/static/dpt-client.js');
