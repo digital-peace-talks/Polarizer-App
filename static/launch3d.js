@@ -285,7 +285,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion) {
 	};
 
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
-	mat.alpha = 0.25;
+	mat.alpha = 0.95;
 	mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 	mat.diffuseTexture = dynamicTexture;
 //	mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
