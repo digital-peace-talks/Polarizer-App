@@ -27,7 +27,7 @@ function loadDialogList(restObj) {
 
 	jQuery('body').append(`<div id="dialogMenu" style="position: relative;
 		padding: 10px; float: right; top: 0px; border: #fff; border-style: solid;
-		border-width: 1px; color: #fff; width: 280px; height: 33%;
+		border-width: 1px; color: #fff; width: 280px; height: 70%;
 		overflow-y: auto; z-index: 2; font-family: DPTFontDin; font-size: 16px;
 		background-color: #00000039; visibility: hidden;"></div>`);
 
@@ -186,8 +186,15 @@ function circleTextPlane(x, y, z, name, text) {
 	return(plane);
 }
 
-function createBiColorTube(sv, ev) {
-	var tube = BABYLON.MeshBuilder.CreateTube("tube",
+function createBiColorTube(initiatorOpinion, recipientOpinion) {
+	var sv = new BABYLON.Vector3(initiatorOpinion.position);
+	var ev = new BABYLON.Vector3(recipientOpinion.position);
+	sv.x = initiatorOpinion.position.x - 2.4;
+	sv.y = initiatorOpinion.position.y + 1.2;
+	ev.x = recipientOpinion.position.x - 2.4;
+	ev.y = recipientOpinion.position.y + 1.2;
+	
+	var tube = new BABYLON.MeshBuilder.CreateTube("tube",
 		{path: [sv, ev], radius: 0.06, updatable: true, }, currentScene);
 
 	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 32, currentScene);
@@ -209,19 +216,32 @@ function createBiColorTube(sv, ev) {
 	mat.diffuseTexture = dynamicTexture;
 //	mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
 	tube.material = mat;
+	
+	//return(tube);
 }
 
 function dialogRelations(opinionDialogConnections) {
-	var initiatorOpinionPosition = null;
-	var recipientOpinionPosition = null;
+	var initiatorOpinion = {};
+	var recipientOpinion = {};
 	for(var i in opinionDialogConnections) {
 		for(var j in currentScene.meshes) {
 			if('dpt' in currentScene.meshes[j]
 			&& currentScene.meshes[j].dpt.context == 'opinionMap'
 			&& currentScene.meshes[j].dpt.opinionId == i) {
-				initiatorOpinionPosition = currentScene.meshes[j].position;
+				initiatorOpinion.position = currentScene.meshes[j].position;
+				initiatorOpinion.opinionId = i;
+				if(i in opinionDialogConnections[i].leafs.negative) {
+					initiatorOpinion.rating = 'negative';
+				} else if(i in opinionDialogConnections[i].leafs.neutral) {
+					initiatorOpinion.rating = 'neutral';
+				} else if(i in opinionDialogConnections[i].leafs.positive) {
+					initiatorOpinion.rating = 'positive';
+				} else if(i in opinionDialogConnections[i].leafs.unset) {
+					initiatorOpinion.rating = 'unset';
+				}
 			}
 		}
+		
 		for(var j in opinionDialogConnections[i].leafs.negative) {
 			var opinionId = opinionDialogConnections[i].leafs.negative[j];
 			if(opinionId != i) {
@@ -229,19 +249,23 @@ function dialogRelations(opinionDialogConnections) {
 					if('dpt' in currentScene.meshes[k]
 					&& currentScene.meshes[k].dpt.context == 'opinionMap'
 					&& currentScene.meshes[k].dpt.opinionId == opinionId) {
-						recipientOpinionPosition = currentScene.meshes[k].position;
+						recipientOpinion.position = currentScene.meshes[k].position;
+						recipientOpinion.opinionId = opinionId;
+						recipientOpinion.rating = 'negative';
 					}
 				}
 			}
 		}
 		for(var j in opinionDialogConnections[i].leafs.neutral) {
-			var opinionId = opinionDialogConnections[i].leafs.negative[j];
+			var opinionId = opinionDialogConnections[i].leafs.neutral[j];
 			if(opinionId != i) {
 				for(var k in currentScene.meshes) {
 					if('dpt' in currentScene.meshes[k]
 					&& currentScene.meshes[k].dpt.context == 'opinionMap'
 					&& currentScene.meshes[k].dpt.opinionId == opinionId) {
-						recipientOpinionPosition = currentScene.meshes[k].position;
+						recipientOpinion.position = currentScene.meshes[k].position;
+						recipientOpinion.opinionId = opinionId;
+						recipientOpinion.rating = 'neutral';
 					}
 				}
 			}
@@ -253,7 +277,9 @@ function dialogRelations(opinionDialogConnections) {
 					if('dpt' in currentScene.meshes[k]
 					&& currentScene.meshes[k].dpt.context == 'opinionMap'
 					&& currentScene.meshes[k].dpt.opinionId == opinionId) {
-						recipientOpinionPosition = currentScene.meshes[k].position;
+						recipientOpinion.position = currentScene.meshes[k].position;
+						recipientOpinion.opinionId = opinionId;
+						recipientOpinion.rating = 'positive';
 					}
 				}
 			}
@@ -265,20 +291,25 @@ function dialogRelations(opinionDialogConnections) {
 					if('dpt' in currentScene.meshes[k]
 					&& currentScene.meshes[k].dpt.context == 'opinionMap'
 					&& currentScene.meshes[k].dpt.opinionId == opinionId) {
-						recipientOpinionPosition = currentScene.meshes[k].position;
+						recipientOpinion.position = currentScene.meshes[k].position;
+						recipientOpinion.opinionId = opinionId;
+						recipientOpinion.rating = 'unset';
 					}
 				}
 			}
 		}
 
-		var sv = new BABYLON.Vector3(0, 0, -0.0);
-		var ev = new BABYLON.Vector3(0, 0, -0.0);
-		sv.x = initiatorOpinionPosition.x - 2.4;
-		sv.y = initiatorOpinionPosition.y + 1.2;
-		ev.x = recipientOpinionPosition.x - 2.4;
-		ev.y = recipientOpinionPosition.y + 1.2;
+		/*
+		initiatorOpinion.position.x -= 2.4;
+		initiatorOpinion.position.y += 1.2;
+		recipientOpinion.position.x -= 2.4;
+		recipientOpinion.position.y += 1.2;
+		*/
 		
-		createBiColorTube(sv, ev);
+		if('position' in initiatorOpinion  && 'position' in recipientOpinion) {
+			createBiColorTube(initiatorOpinion, recipientOpinion);
+		}
+//		return(createBiColorTube(currentScene.meshes[k].dpt.opinionId, sv, ev));
 	}
 }
 
@@ -302,20 +333,19 @@ function loadOpinions(restObj) {
 	var x = 0 - Math.floor(n/2)*10, xstart = x; xmax = (n-1)*10;
 	var y = ymax = (n-1)*2.5; ystart = ymax; y = ystart;
 
-	opinionDialogConnections = {};
-	for(var i in restObj.data) {
+	var opinionDialogConnections = {};
+	for(var i=0; i < restObj.data.length; i++) {
 		opinionDialogConnections[restObj.data[i].topo.opinionId] = restObj.data[i].topo;
 	}
-	for (var i in restObj.data) {
+	for(var i=0; i < restObj.data.length; i++) {
 		if(restObj.data[i].user == 'mine') {
 			canInvite = true;
 		}
 	}
 
 	var nodes = circlePoints(restObj.data.length, 5, {X: 4, Y: 0});
-	for (i in restObj.data) {
-		options = '';
-
+	for(var i=0; i < restObj.data.length; i++) {
+		options = ''; 
 		if(restObj.data[i].user == 'mine') {
 			options = '<span class="editOpinion" id="'
 			+ restObj.data[i]._id

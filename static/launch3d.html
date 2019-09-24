@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-	<title>Babylon.js sample code</title>
+    <title>Babylon.js sample code</title>
 
-	<!-- Babylon.js -->
-	<script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
-	<!--
+    <!-- Babylon.js -->
+    <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+    <!--
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
 	<script src="https://preview.babylonjs.com/ammo.js"></script>
 	<script src="https://preview.babylonjs.com/cannon.js"></script>
@@ -18,39 +19,63 @@
 	<script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
 	<script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
 	-->
-		<script src="https://preview.babylonjs.com/babylon.js"></script>
-	<script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
-		<!--
+    <script src="https://preview.babylonjs.com/babylon.js"></script>
+    <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <!--
 	<script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
 	<script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"/>
 	-->
-	<script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
-	<script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+    <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
 
-	<link rel="stylesheet" href="/dialog.css" />
-	<link rel="stylesheet" href="/launch3d.css" />
+    <link rel="stylesheet" href="/dialog.css" />
+    <link rel="stylesheet" href="/launch3d.css" />
+    <script>
+        // Testpage for different Browsers
+        // http://www.quirksmode.org/m/tests/widthtest_vpdevice.html
+        /* 
+        function fixZoom() {
+               var relation = 100 / window.devicePixelRatio;
+                document.body.style.MozTransform = 'scale(' + relation / 100 + ')';
+                document.body.style.zoom = relation + '%';
 
+                document.body.style.webkitTransform = 'scale(' + relation / 100 + ')'; // Chrome, Opera, Safari
+                document.body.style.msTransform = 'scale(' + relation / 100 + ')'; // IE 9
+                document.body.style.transform = 'scale(' + relation / 100 + ')'; // General
+
+                $('body').offset({
+                    top: 0,
+                    left: 0
+                });
+
+                document.getElementById('status').innerHTML = Math.round(window.devicePixelRatio * 100);
+            } */
+    </script>
 </head>
-<body>
+
+
+<body onload="fixZoom();" onresize="fixZoom();">
 	<div id="overlay">
-<div id="button-menu">
-	<button class="menu-btn" id="home-btn"><img class= "btn-icon"src="nav-top-logo.png" >Home</button>
-
-	<button class="menu-btn" id="test-button2"><img class="btn-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png">Own-Dialogues</button>
-
-	<button class="menu-btn" id="test-button3"><img class="btn-icon" src="/Interrobang.png">New-Topic </button>
-</div>
-	
-
+		<div id="button-menu">
+			<button class="menu-btn" id="home-btn"><img class= "btn-icon"src="nav-top-logo.png" >Home</button>
+		
+			<button class="menu-btn" id="test-button2"><img class="btn-icon" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png">Own-Dialogues</button>
+		
+			<button class="menu-btn" id="test-button3"><img class="btn-icon" src="/Interrobang.png">New-Topic </button>
+		</div>
 	</div>
-	<canvas id="renderCanvas" tabindex="1"></canvas>
-	<div id="misc"></div>
-	<div id="misc2"></div>
-	</body>
-	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-	<!--	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script> -->
-	<script src="/launch3d.js"></script>
-	<script src="dpt-client.js"></script>
-	<script src="/dialog.js"></script>
+			
+		
+    <canvas id="renderCanvas" tabindex="1"></canvas>
+    <div id="misc"></div>
+    <div id="misc2"></div>
+</body>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<!--	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script> -->
+<script src="/launch3d.js"></script>
+<script src="dpt-client.js"></script>
+<script src="/dialog.js"></script>
+
+>>>>>>> 685b113c3a6e7a939e9d73208133e8be7993565e
 </html>

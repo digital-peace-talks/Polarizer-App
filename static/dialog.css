@@ -1,214 +1,271 @@
 @font-face {
-	font-family: "DPTFont";
-	src: url("/font.ttf") format("truetype");
-}
-@font-face {
-	font-family: "DPTFontDin";
-	src: url("/din.ttf") format("truetype");
-}
-@font-face {
-	font-family: "bitter";
-	src: url("/bitter.ttf") format("truetype");
+    font-family: "DPTFont";
+    src: url("/font.ttf") format("truetype");
 }
 
+@font-face {
+    font-family: "DPTFontDin";
+    src: url("/din.ttf") format("truetype");
+}
 
-html, body {
-	font-family: "DPTFont";
-	overflow: hidden;
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
+@font-face {
+    font-family: "bitter";
+    src: url("/bitter.ttf") format("truetype");
+}
+
+html,
+body {
+    font-family: "DPTFont";
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 #renderCanvas {
-	width: 100%;
-	height: 100%;
-	touch-action: none;
-	position: absolute;
-	z-index: 1;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+    position: absolute;
+    z-index: 1;
 }
 
 #main {
-	height: 100%;
-	width: 100%;  
+    height: 100%;
+    width: 100%;
 }
 
-i { 
-	font-family: "Bitter";
-	font-style: inherit;
-	color: #eeeeee;
-	font-weight: 700;
+i {
+    font-family: "DPTFontDin";
+    font-style: inherit;
+    color: #F0F3F5;
+    font-weight: 700;
 }
 
-div#dialogMenu > i {
-	color: 00ccff !important;
+h3 {
+    font-family: "DPTFontDin";
+    color: #F0F3F5;
+    border-color: transparent;
+    border-bottom: 1px solid #F0F3F5;
+    padding-bottom: 20px;
+}
+
+div#dialogMenu>i {
+    color: 00ccff !important;
 }
 
 i#props {
-	line-height: 0px;
+    line-height: 0px;
 }
- 
-a { color: #fd0;
-	text-decoration: none;
+
+a {
+    color: #fd0;
+    text-decoration: none;
 }
 
 label#negative {
-	color: #f00;
+    color: #f00;
 }
 
 label#neutral {
-	color: #77f;
+    color: #66D1FF;
 }
 
 label#positive {
-	color: #0f0
+    color: #0f0
 }
 
 input[type=text] {
-	background: #0a120a;
-	color: #fd0;
-	font-weight: bold;
-	padding: 4px;
+    background: #0a120a;
+    border-color: #005B98;
+    color: #005B98;
+    font-weight: bold;
+    padding: 4px;
 }
 
-.table { 
-	min-height: 100%;
-	height: 100%;
-	min-width: 100%;
+.table {
+    min-height: 100%;
+    height: 100%;
+    min-width: 100%;
 }
-
 
 #misc {
-	position: absolute;
-	z-index: 1;
-	background: red;
-	margin: 0 auto;
+    position: absolute;
+    z-index: 1;
+    background: red;
+    margin: 0 auto;
+}
+
+#misc2 {
+    position: absolute;
+    z-index: 10;
+    background: rgb(0, 255, 0);
+    margin: 0 auto;
 }
 
 p.left {
-	margin: 1px;
-	margin-right: 20%;
-	padding: 5px;
-	text-align: justify;
-	text-justify: inter-word;
-	background-color: rgba(50, 250, 0, 0.5);
+    margin: 5px;
+    margin-bottom: 15px;
+    margin-right: 10%;
+    padding: 5px;
+    text-align: justify;
+    text-justify: inter-word;
+    background-color: #66D1FF;
+    border-color: #28A9E1;
+    border-style: solid;
+    border-width: 1px;
+    position: relative;
+    color: #F0F3F5;
+    font-size: 18px;
+}
+
+p.left:before {
+    content: ' ';
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    left: 0px;
+    bottom: -10px;
+    border: 5px solid;
+    border-color: #66D1FF transparent transparent #66D1FF;
 }
 
 p.right {
-	margin: 1px;
-	margin-left: 20%;
-	padding: 5px;
-	/* direction:rtl;
-	text-align:justify;*/
-	text-align: justify-right;
-	text-justify: inter-word;
-	background-color: rgba(0, 128, 255, 0.5);
+    margin: 5px;
+    margin-bottom: 15px;
+    margin-left: 10%;
+    padding: 5px;
+    text-align: justify-right;
+    text-justify: inter-word;
+    background-color: #005B98;
+    border-color: #28A9E1;
+    border-style: solid;
+    border-width: 1px;
+    position: relative;
+    color: #F0F3F5;
+    font-size: 18px;
+}
+
+p.right:before {
+    content: ' ';
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    right: 0px;
+    bottom: -10px;
+    border: 5px solid;
+    border-left: 5px solid transparent;
+    border-right: 5px solid #005B98;
+    border-top: 5px solid #005B98;
+    border-bottom: 5px solid transparent;
 }
 
 div.top {
-	height: 100%;
-	top: -20px;
-	position: relative;
+    height: 100%;
+    top: -20px;
+    position: relative;
 }
 
 div.middle {
-	height: 100%;
-	position: relative;
-    top: -40px;
+    height: 100%;
+    position: relative;
+    top: -10px;
+    z-index: 10;
 }
 
 div.bottom {
-	height: 100%;
-	position: center;
-	bottom: 0px;
+    height: 100%;
+    position: center;
+    bottom: 0px;
 }
 
 div.dialogInfo {
-	visibility: hidden;
-	line-height: 0px;
-	font-size: 0px;
+    visibility: hidden;
+    line-height: 0px;
+    font-size: 0px;
 }
 
 div.col {
-	float: left;
-	padding-left: 10px;
-	height:100%;
-	width: 30%;
-	max-width:30%;
-	overflow-y: auto;
+    float: left;
+    padding-left: 10px;
+    height: 100%;
+    width: 30%;
+    max-width: 30%;
+    overflow-y: auto;
 }
 
 div.row:after {
-	content: "";
-	display: table;
-	clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
 
 div.hide {
-	visibility: hidden;
-	line-height: 0%;
+    visibility: hidden;
+    line-height: 0%;
 }
 
 div.status {
-	bottom: 10px;
-	position: absolute;
-	min-width: 98%
+    top: 560px;
+    min-width: 98%;
+    position: absolute;
+    left: -15px;
+    z-index: 30;
 }
 
-
 div#c1 {
-	text-align: justify;
-	text-justify: inter-word;
-	width: 19%;
-	float: left;
-	position: absolute;
+    font-family: "DPTFont";
+    text-align: justify;
+    text-justify: inter-word;
+    width: 19%;
+    float: left;
+    position: absolute;
+    font-size: 14px;
 }
 
 div#c2 {
-	font-family: "DPTFont";
-	overflow-y: auto;
-	float: left;
-	width: 53%;
-	height: 100%;
-	margin-left: 20%;
-	max-height: 80%;
-	padding-left: 30px;
-	padding-right: 30px;
-	overflow-y: auto;
+    font-family: "DPTFont";
+    overflow-y: auto;
+    float: left;
+    width: 47%;
+    height: 100%;
+    margin-left: 20%;
+    max-height: 400px;
+    padding-left: 10px;
+    padding-right: 20px;
+    overflow-y: auto;
 }
 
 div#c3 {
-	font-family: "Bitter";
-	width: 19%;
-	float: left;
-	position: absolute;
-	margin-left: 80%;
-	text-align:left;
-	left: -50px;
-	text-justify:inter-word;
+    font-family: "DPTFont";
+    float: left;
+    position: absolute;
+    margin-left: 75%;
+    text-align: left;
+    text-justify: inter-word;
+    font-size: 14px;
 }
 
 div#crisis {
-	position: absolute;
-	padding: 10px;
-	left: 37%;
-	border: #fff;
-	border-style: solid;
-	border-width: 5px;
-	background: #0a120a
+    font-family: "DPTFont";
+    padding: 10px;
+    top: 0px;
+    border: #F0F3F5;
+    color: #F0F3F5;
+    background: #28A9E1;
+    border-style: solid;
+    border-width: 5px;
 }
 
 div#dialogFrame {
-	border-width: 0px;
-	background: #0061e0;
-	background-color: rgba(10, 24, 40, 0.0);
-	margin-left: 0%;
-	margin-right: 0%;
-	min-height: 340px;
-	min-width: 80%;
-	top: 0px;
-	left: 0px
+    font-family: "DPTFont";
+    border-width: 0px;
+    color: #F0F3F5;
+    margin-left: 0%;
+    margin-right: 0%;
+    min-height: 340px;
+    min-width: 80%;
+    top: 0px;
+    left: 0px;
 }
-
-
