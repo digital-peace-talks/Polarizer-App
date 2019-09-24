@@ -603,30 +603,8 @@ function circlePoints(points, radius, center) {
 }
 
 var createGUIScene = function(dptMode) {
-	// GUI
-	// if(advancedTexture) {
-	// 	advancedTexture.dispose();
-	// }
-	// advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
-	// var button = BABYLON.GUI.Button.CreateImageButton("homebutton", "Home", "/nav-top-logo.png");
-	// button.width = 0.1;
-	// button.height = "40px";
-	// button.color = "white";
-	// button.fontFamily = "DPTFont";
-	// button.background = "#0000003f";
-	// button.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP;
-	// button.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-	// button.top = "0px";
-	// advancedTexture.addControl(button);
-	
-	// button.onPointerClickObservable.add((pointerInfo) => {
-	// 	opinionCamState = currentScene.cameras[0].storeState();
-	// 	currentScene.dispose();
-	// 	currentScene = __topicScene("topicScene");
-	// 	dpt.getTopic();
-	// });
-
+//create home button
 	var homeBtn = jQuery('#home-btn');
 	homeBtn.show();
 	homeBtn.on('click touch', function () {
@@ -637,7 +615,7 @@ var createGUIScene = function(dptMode) {
 
 	});
 
-	
+	//create dialogue button
 	var dialoguesBtn = jQuery('#dialogues-btn');
 	dialoguesBtn.show();
 	dialoguesBtn.on('click touch', function () {
@@ -649,69 +627,28 @@ var createGUIScene = function(dptMode) {
 		}
 		jQuery('#dialogMenu').css({visibility: myDialogsVisible});
 	});
-
+	//create topic button 
 	var newTopicBtn = jQuery('#new-topic-btn');
 	newTopicBtn.show();
-	newTopicBtn.on('click touch', function () {
 	if(dptMode == 'topicScene') {	
-		topicForm();
+		newTopicBtn.html(`<img class="btn-icon" src="/Interrobang.png">New-Topic`); 
+
+		newTopicBtn.on('click touch', function () {
+			topicForm();
+		})
+	}
+	else if(dptMode == 'opinionScene'){
+		newTopicBtn.html(`<img class="btn-icon" src="/Interrobang.png">New-Opinion`); 
+		
+				newTopicBtn.on('click touch', function () {
+			
+				opinionForm();
+				});
+	}
 	}
 	
-	else if(dptMode == 'opinionScene'){
-		opinionForm();
-		};
-	});
 	
-	// var button2 = BABYLON.GUI.Button.CreateImageButton("blind", "Own Dialogs", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png");
-	// button2.width = 0.1;
-	// button2.height = "48px";
-	// button2.color = "white";
-	// button2.fontFamily = "DPTFont";
-	// button2.background = "#0000003f";
-	// button2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP+100;
-	// button2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-	// button2.top = "39";
-	// button2.onPointerClickObservable.add((pointerInfo) => {
-	// 	if(myDialogsVisible == 'visible') {
-	// 		myDialogsVisible = 'hidden';
-	// 	} else {
-	// 		myDialogsVisible = 'visible';
-	// 	}
-	// 	jQuery('#dialogMenu').css({visibility: myDialogsVisible});
-	// });
-	// advancedTexture.addControl(button2);
 
-	// if(dptMode == 'topicScene') {
-		// var button3 = BABYLON.GUI.Button.CreateImageButton("newTopicButton","New Topic","/Interrobang.png");
-		// button3.width = 0.1;
-		// button3.height = "48px";
-		// button3.color = "white";
-		// button3.fontFamily = "DPTFont";
-		// button3.background = "#0000003f";
-		// button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
-		// button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-		// button3.top = "86";
-		// // advancedTexture.addControl(button3);
-		// button3.onPointerUpObservable.add( function() {
-		// 	topicForm();
-		// });
-	// } else if(dptMode == 'opinionScene') {
-	// 	var button3 = BABYLON.GUI.Button.CreateImageButton("newOpinionButton","New Opinion","/Interrobang.png");
-	// 	button3.width = 0.1;
-	// 	button3.height = "48px";
-	// 	button3.color = "white";
-	// 	button3.fontFamily = "DPTFont";
-	// 	button3.background = "#0000003f";
-	// 	button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
-	// 	button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-	// 	button3.top = "86";
-	// 	advancedTexture.addControl(button3);
-	// 	button3.onPointerUpObservable.add( function() {
-	// 		opinionForm();
-	// 	});
-	// }
-	
-}
 
 function pauseEngine() {
     var btn = document.createElement("input");
