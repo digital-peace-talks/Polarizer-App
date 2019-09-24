@@ -18,8 +18,8 @@ body {
     position: fixed;
     display: grid;
     background-color: rgba(0, 0, 0, 0);
-    border: 1px solid #F0F3F5;
-    z-index: 5000;
+    border: 0px;
+    z-index: 100;
     /* grid-auto-flow: column; */
     grid-template-columns: 210px;
     /* pointer-events: none; */
