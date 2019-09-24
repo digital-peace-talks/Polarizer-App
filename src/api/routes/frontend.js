@@ -157,6 +157,14 @@ router.get('/Interrobang.png', async(req, res, next) => {
     }
 });
 
+router.get('/chatbubble.png', async(req, res, next) => {
+    try {
+        await res.sendFile(process.env.DPT_PATH + '/static/chatbubble.png');
+        res.status(200);
+    } catch (err) {
+        next(err);
+    }
+});
 
 router.get('/nav-top-logo.png', async(req, res, next) => {
     try {
