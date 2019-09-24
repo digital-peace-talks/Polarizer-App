@@ -641,28 +641,7 @@ var createGUIScene = function(dptMode) {
 	var dialoguesBtn = jQuery('#dialogues-btn');
 	dialoguesBtn.show();
 	dialoguesBtn.on('click touch', function () {
-		alert('test')
-	});
-
-	
-	var newTopicBtn = jQuery('#new-topic-btn');
-	newTopicBtn.show();
-	newTopicBtn.on('click touch', function () {
-		alert('test')
-		
-	});
-
-	
-	var button2 = BABYLON.GUI.Button.CreateImageButton("blind", "Own Dialogs", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png");
-	button2.width = 0.1;
-	button2.height = "48px";
-	button2.color = "white";
-	button2.fontFamily = "DPTFont";
-	button2.background = "#0000003f";
-	button2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP+100;
-	button2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-	button2.top = "39";
-	button2.onPointerClickObservable.add((pointerInfo) => {
+		// alert('test')
 		if(myDialogsVisible == 'visible') {
 			myDialogsVisible = 'hidden';
 		} else {
@@ -670,37 +649,67 @@ var createGUIScene = function(dptMode) {
 		}
 		jQuery('#dialogMenu').css({visibility: myDialogsVisible});
 	});
+
+	var newTopicBtn = jQuery('#new-topic-btn');
+	newTopicBtn.show();
+	newTopicBtn.on('click touch', function () {
+	if(dptMode == 'topicScene') {	
+		topicForm();
+	}
+	
+	else if(dptMode == 'opinionScene'){
+		opinionForm();
+		};
+	});
+	
+	// var button2 = BABYLON.GUI.Button.CreateImageButton("blind", "Own Dialogs", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png");
+	// button2.width = 0.1;
+	// button2.height = "48px";
+	// button2.color = "white";
+	// button2.fontFamily = "DPTFont";
+	// button2.background = "#0000003f";
+	// button2.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP+100;
+	// button2.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+	// button2.top = "39";
+	// button2.onPointerClickObservable.add((pointerInfo) => {
+	// 	if(myDialogsVisible == 'visible') {
+	// 		myDialogsVisible = 'hidden';
+	// 	} else {
+	// 		myDialogsVisible = 'visible';
+	// 	}
+	// 	jQuery('#dialogMenu').css({visibility: myDialogsVisible});
+	// });
 	// advancedTexture.addControl(button2);
 
-	if(dptMode == 'topicScene') {
-		var button3 = BABYLON.GUI.Button.CreateImageButton("newTopicButton","New Topic","/Interrobang.png");
-		button3.width = 0.1;
-		button3.height = "48px";
-		button3.color = "white";
-		button3.fontFamily = "DPTFont";
-		button3.background = "#0000003f";
-		button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
-		button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-		button3.top = "86";
-		// advancedTexture.addControl(button3);
-		button3.onPointerUpObservable.add( function() {
-			topicForm();
-		});
-	} else if(dptMode == 'opinionScene') {
-		var button3 = BABYLON.GUI.Button.CreateImageButton("newOpinionButton","New Opinion","/Interrobang.png");
-		button3.width = 0.1;
-		button3.height = "48px";
-		button3.color = "white";
-		button3.fontFamily = "DPTFont";
-		button3.background = "#0000003f";
-		button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
-		button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-		button3.top = "86";
-		advancedTexture.addControl(button3);
-		button3.onPointerUpObservable.add( function() {
-			opinionForm();
-		});
-	}
+	// if(dptMode == 'topicScene') {
+		// var button3 = BABYLON.GUI.Button.CreateImageButton("newTopicButton","New Topic","/Interrobang.png");
+		// button3.width = 0.1;
+		// button3.height = "48px";
+		// button3.color = "white";
+		// button3.fontFamily = "DPTFont";
+		// button3.background = "#0000003f";
+		// button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
+		// button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+		// button3.top = "86";
+		// // advancedTexture.addControl(button3);
+		// button3.onPointerUpObservable.add( function() {
+		// 	topicForm();
+		// });
+	// } else if(dptMode == 'opinionScene') {
+	// 	var button3 = BABYLON.GUI.Button.CreateImageButton("newOpinionButton","New Opinion","/Interrobang.png");
+	// 	button3.width = 0.1;
+	// 	button3.height = "48px";
+	// 	button3.color = "white";
+	// 	button3.fontFamily = "DPTFont";
+	// 	button3.background = "#0000003f";
+	// 	button3.verticalAlignment = BABYLON.GUI.Control.VERTICAL_ALIGNMENT_TOP100;
+	// 	button3.horizontalAlignment = BABYLON.GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+	// 	button3.top = "86";
+	// 	advancedTexture.addControl(button3);
+	// 	button3.onPointerUpObservable.add( function() {
+	// 		opinionForm();
+	// 	});
+	// }
 	
 }
 
