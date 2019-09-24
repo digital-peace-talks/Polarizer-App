@@ -259,6 +259,7 @@ function dialogForm() {
         jQuery(document).one('click', "#dialogClose", function(event) {
             dialogFormOpen = 0;
             jQuery('#dialogForm').remove();
+            focusAtCanvas();
             event.preventDefault();
         });
 
@@ -282,6 +283,7 @@ function dialogForm() {
             jQuery(document).one('click', "#dialogClose", function(event) {
                 dialogFormOpen = 0;
                 jQuery('#dialogForm').remove();
+                focusAtCanvas();
                 event.preventDefault();
             });
 
@@ -310,12 +312,14 @@ function dialogForm() {
             jQuery(document).one('click', "#dialogCloseWindow", function(event) {
                 dialogFormOpen = 0;
                 jQuery('#dialogForm').remove();
+                focusAtCanvas();
                 event.preventDefault();
             });
 
             jQuery(document).one('click', "#dialogReject", function(event) {
                 dialogFormOpen = 0;
                 jQuery('#dialogForm').remove();
+                focusAtCanvas();
                 dpt.putDialog(currentDialog.dialog, "status", "CLOSED");
                 event.preventDefault();
             });
@@ -335,6 +339,7 @@ function dialogForm() {
         jQuery(document).one('click', "#dialogCloseWindow", function(event) {
             dialogFormOpen = 0;
             jQuery('#dialogForm').remove();
+            focusAtCanvas();
             event.preventDefault();
         });
     }
@@ -374,6 +379,7 @@ function dialogForm() {
     jQuery(document).on('keyup', '#dialogInput', function(event) {
         if (event.keyCode == 27) {
             jQuery('#dialogForm').remove();
+            focusAtCanvas();
             event.preventDefault();
         }
     });
