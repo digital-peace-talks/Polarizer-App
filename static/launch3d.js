@@ -200,23 +200,95 @@ function createBiColorTube(initiatorOpinion, recipientOpinion) {
 	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 32, currentScene);
 	var ctx = dynamicTexture.getContext();
 
+	var combination = '';
+	if(initiatorOpinion.rating == 'negative') {
+		combination = 'red-';
+		if(recipientOpinion.rating == 'negative') {
+			combination = 'red';
+		} else if(recipientOpinion.rating == 'neutral') {
+			combination = 'blue';
+		} else if(recipientOpinion.rating == 'positive') {
+			combination = 'green';
+		} else if(recipientOpinion.rating == 'unset') {
+			combination = 'grey';
+		}
+
+	} else if(initiatorOpinion.rating == 'neutral') {
+		combination = 'blue-';
+		if(recipientOpinion.rating == 'negative') {
+			combination += 'red';
+		} else if(recipientOpinion.rating == 'neutral') {
+			combination += 'blue';
+		} else if(recipientOpinion.rating == 'positive') {
+			combination += 'green';
+		} else if(recipientOpinion.rating == 'unset') {
+			combination += 'grey';
+		}
+
+	} else if(initiatorOpinion.rating == 'positive') {
+		combination = 'green-';
+		if(recipientOpinion.rating == 'negative') {
+			combination += 'red';
+		} else if(recipientOpinion.rating == 'neutral') {
+			combination += 'blue';
+		} else if(recipientOpinion.rating == 'positive') {
+			combination += 'green';
+		} else if(recipientOpinion.rating == 'unset') {
+			combination += 'grey';
+		}
+
+	} else if(initiatorOpinion.rating == 'unset') {
+		combination += 'grey-';
+		if(recipientOpinion.rating == 'negative') {
+			combination += 'red';
+		} else if(recipientOpinion.rating == 'neutral') {
+			combination += 'blue';
+		} else if(recipientOpinion.rating == 'positive') {
+			combination += 'green';
+		} else if(recipientOpinion.rating == 'unset') {
+			combination += 'grey';
+		}
+	}
+
+	console.log('image is : '+combination);
+	var reverse = 0;
+	if(combination == 'green-blue') {
+		var reverse = 1;
+		combination = 'blue-green';
+	} else if(combination == 'green-red') {
+		var reverse = 1;
+		combination = 'red-green';
+	} else if(combination == 'blue-red') {
+		var reverse = 1;
+		combination = 'red-blue';
+	}
+	
+	console.log('image is : '+combination);
 	image = new Image();
-	image.src = '/red-green.png';
+	image.src = '/'+combination+'.png';
+
 	image.onload = function() {
-		ctx.translate(16, -16);
-		ctx.rotate(90 * (Math.PI/180));
-		ctx.translate(16, -16);
+
+		if(reverse || 1) {
+			ctx.translate(-16, 16);
+			ctx.rotate(-90 * (Math.PI/180));
+			ctx.translate(-16, 16);
+		} else {
+			ctx.translate(16, -16);
+			ctx.rotate(90 * (Math.PI/180));
+			ctx.translate(16, -16);
+		}
 		ctx.drawImage(this, 0, 0);
 		dynamicTexture.update();
 	};
 
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
-	mat.alpha = 0.95;
+	mat.alpha = 0.25;
 	mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 	mat.diffuseTexture = dynamicTexture;
 //	mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
 	tube.material = mat;
-	
+
 	//return(tube);
 }
 
@@ -230,13 +302,13 @@ function dialogRelations(opinionDialogConnections) {
 			&& currentScene.meshes[j].dpt.opinionId == i) {
 				initiatorOpinion.position = currentScene.meshes[j].position;
 				initiatorOpinion.opinionId = i;
-				if(i in opinionDialogConnections[i].leafs.negative) {
+				if(jQuery.inArray(i, opinionDialogConnections[i].leafs.negative) >= 0) {
 					initiatorOpinion.rating = 'negative';
-				} else if(i in opinionDialogConnections[i].leafs.neutral) {
+				} else if(jQuery.inArray(i, opinionDialogConnections[i].leafs.neutral) >= 0) {
 					initiatorOpinion.rating = 'neutral';
-				} else if(i in opinionDialogConnections[i].leafs.positive) {
+				} else if(jQuery.inArray(i, opinionDialogConnections[i].leafs.positive) >= 0) {
 					initiatorOpinion.rating = 'positive';
-				} else if(i in opinionDialogConnections[i].leafs.unset) {
+				} else if(jQuery.inArray(i, opinionDialogConnections[i].leafs.unset) >= 0) {
 					initiatorOpinion.rating = 'unset';
 				}
 			}
@@ -433,6 +505,7 @@ function loadOpinions(restObj) {
 	dialogRelations(opinionDialogConnections);
 }
 
+
 function wrapText(context, text, x, y, maxWidth, lineHeight) {
 	var words = text.split(' ');
 	var line = '';
@@ -450,6 +523,7 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
 	}
 	context.fillText(line, x, y);
 }
+
 
 function textBlock(x, y, z, name, text) {
 	//Set width an height for plane
@@ -503,6 +577,7 @@ function textBlock(x, y, z, name, text) {
 	return(plane);
 }
 
+
 function getCollisionBox() {
 	//Simple box
 	var box = new BABYLON.MeshBuilder.CreateBox("collisionBox", {
@@ -524,6 +599,7 @@ function getCollisionBox() {
 
 	return(box);
 }
+
 
 function getCamera() {
 	// camera
@@ -573,6 +649,7 @@ function getCamera() {
 	return(camera);
 }
 
+
 function circlePoints(points, radius, center) {
 	var slice = 2 * Math.PI / points;
 	var nodes = [];
@@ -601,6 +678,7 @@ function circlePoints(points, radius, center) {
 	}
 	return(nodes);
 }
+
 
 var createGUIScene = function(dptMode) {
 	// GUI
@@ -677,6 +755,7 @@ var createGUIScene = function(dptMode) {
 	
 }
 
+
 function pauseEngine() {
     var btn = document.createElement("input");
 //		    btn.innerText = "Enable/Disable Joystick";
@@ -697,9 +776,10 @@ function pauseEngine() {
     }
 }
 
+
 function initVirtJoysticks() {
-    var leftJoystick = new BABYLON.VirtualJoystick(true);
-    var rightJoystick = new BABYLON.VirtualJoystick(false);
+    var leftJoystick = new BABYLON.VirtualJoystick(false);
+    var rightJoystick = new BABYLON.VirtualJoystick(true);
     leftJoystick.setJoystickColor("#ff7f003f");
     rightJoystick.setJoystickColor("#ff007f3f");
     BABYLON.VirtualJoystick.Canvas.style.zIndex = "-1";
