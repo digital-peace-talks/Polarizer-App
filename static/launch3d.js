@@ -638,6 +638,21 @@ var createGUIScene = function(dptMode) {
 	});
 
 	
+	var dialoguesBtn = jQuery('#dialogues-btn');
+	dialoguesBtn.show();
+	dialoguesBtn.on('click touch', function () {
+		alert('test')
+	});
+
+	
+	var newTopicBtn = jQuery('#new-topic-btn');
+	newTopicBtn.show();
+	newTopicBtn.on('click touch', function () {
+		alert('test')
+		
+	});
+
+	
 	var button2 = BABYLON.GUI.Button.CreateImageButton("blind", "Own Dialogs", "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png");
 	button2.width = 0.1;
 	button2.height = "48px";
