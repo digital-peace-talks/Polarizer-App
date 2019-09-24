@@ -199,6 +199,9 @@ function createBiColorTube(initiatorOpinion, recipientOpinion) {
 
     var tube = new BABYLON.MeshBuilder.CreateTube("tube", { path: [sv, ev], radius: 0.06, updatable: true, }, currentScene);
 
+    var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 32, currentScene);
+    var ctx = dynamicTexture.getContext();
+
 	var combination = '';
 	if(initiatorOpinion.rating == 'negative') {
 		combination = 'red-';
