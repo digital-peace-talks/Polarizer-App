@@ -341,7 +341,7 @@ function circleTextPlane(x, y, z, name, text) {
 	return (plane);
 }
 
-function createBiColorTube(initiatorOpinion, recipientOpinion, dialogId) {
+function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections) {
 	var sv = new BABYLON.Vector3(initiatorOpinion.position);
 	var ev = new BABYLON.Vector3(recipientOpinion.position);
 	sv.x = initiatorOpinion.position.x - 2.4;
@@ -358,7 +358,12 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, dialogId) {
 		},
 		currentScene);
 	
-	tube.dpt = { context: 'tubeConnection', dialogId: dialogId };
+	tube.dpt = {
+		context: 'tubeConnection',
+		dialogId: opinionDialogConnections[initiatorOpinion.opinionId].dialogId,
+		initiatorsOpinion: opinionDialogConnections[initiatorOpinion.opinionId].initiatorsOpinion,
+		recipientsOpinion: opinionDialogConnections[initiatorOpinion.opinionId].recipientsOpinion,
+	};
 
 	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 32, currentScene);
 	var ctx = dynamicTexture.getContext();
@@ -546,7 +551,7 @@ function dialogRelations(opinionDialogConnections) {
 		*/
 
 		if ('position' in initiatorOpinion && 'position' in recipientOpinion) {
-			createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections[initiatorOpinion.opinionId].dialogId);
+			createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections);
 		}
 		//		return(createBiColorTube(currentScene.meshes[k].dpt.opinionId, sv, ev));
 	}
@@ -1033,10 +1038,12 @@ var createGenericScene = function(dptMode) {
 						propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId);
 					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "tubeConnection") {
 
-						currentDialog = { dialog: pointerInfo.pickInfo.pickedMesh.dpt.dialogId };
-//						currentDialog.topic = currentTopic;
-//						currentDialog.initiatorOpinion = old.initiatorOpinion;
-//						currentDialog.recipientOpinion = old.recipientOpinion;
+						currentDialog = {
+							dialog: pointerInfo.pickInfo.pickedMesh.dpt.dialogId,
+							topic: currentTopicStr,
+							initiatorOpinion: pointerInfo.pickInfo.pickedMesh.dpt.initiatorsOpinion,
+							recipientOpinion: pointerInfo.pickInfo.pickedMesh.dpt.recipientsOpinion,
+						};
 						dpt.getDialog(currentDialog.dialog);
 
 					}
