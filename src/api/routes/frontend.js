@@ -320,6 +320,24 @@ router.get('/joystickIcon.png', async(req, res, next) => {
     }
 });
 
+router.get('/topic_white.png', async(req, res, next) => {
+    try {
+        await res.sendFile(process.env.DPT_PATH + '/static/topic_white.png');
+        res.status(200);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/dialog_white.png', async(req, res, next) => {
+    try {
+        await res.sendFile(process.env.DPT_PATH + '/static/dialog_white.png');
+        res.status(200);
+    } catch (err) {
+        next(err);
+    }
+});
+
 router.get('/bitter.ttf', async(req, res, next) => {
     try {
         await res.sendFile(process.env.DPT_PATH + '/static/bitter.ttf');

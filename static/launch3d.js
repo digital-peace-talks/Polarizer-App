@@ -871,7 +871,7 @@ var createGUIScene = function(dptMode) {
         var newTopicBtn = jQuery('#new-topic-btn');
         newTopicBtn.show();
 
-        newTopicBtn.html(`<img class="btn-icon" src="/Interrobang.png">New-Topic`);
+        newTopicBtn.html(`<img class="btn-icon" src="/topic_white.png">New-Topic`);
 
         newTopicBtn.on('click touch', function(event) {
             jQuery('#topicForm').remove();
@@ -888,7 +888,7 @@ var createGUIScene = function(dptMode) {
         var newOpinionBtn = jQuery('#new-opinion-btn');
         newOpinionBtn.show();
 
-        newOpinionBtn.html(`<img class="btn-icon" src="/Interrobang.png">New-Opinion`);
+        newOpinionBtn.html(`<img class="btn-icon" src="/opinion_white.png">New-Opinion`);
         newOpinionBtn.on('click touch', function(event) {
             jQuery('#opinionForm').remove();
 

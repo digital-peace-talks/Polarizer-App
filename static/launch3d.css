@@ -35,11 +35,11 @@ body {
     height: 48px;
     border: 1px solid white;
     background-color: #002C4B88;
-    color: white;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    text-align: center;
+    color: #F0F3F5;
+    -webkit-box-pack: left;
+    -ms-flex-pack: left;
+    justify-content: left;
+    text-align: left;
     background-size: cover;
 }
 

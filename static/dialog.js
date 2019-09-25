@@ -236,7 +236,8 @@ function dialogForm() {
 					<div class="status">
 					<center>
 						<form id="dialogFrame">
-							<input type="button" value="close window" name="close window" id="dialogClose">
+                            <input type="button" value="close window" name="close window" id="dialogClose">
+                            <input type="button" value="end dialog" name="end dialog" id="dialogClose">
 						</form>
 			   		</center>
 					</div>
@@ -249,7 +250,8 @@ function dialogForm() {
 							<textarea rows="4" cols="41" type="text" name="message"  id="dialogInput"></textarea>
 								<br>
 								<input type="submit" name="send" value="send">
-								<input type="button" value="close window" name="close window" id="dialogClose">
+                                <input type="button" value="close window" name="close window" id="dialogClose">
+                                <input type="button" value="end dialog" name="end dialog" id="dialogClose">
 							</form>
 						</center>
 					</div>
