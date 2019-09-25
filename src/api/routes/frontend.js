@@ -166,6 +166,70 @@ router.get('/chatbubble.png', async(req, res, next) => {
     }
 });
 
+router.get('/1message_white.png', async(req, res, next) => {
+    try {
+        await res.sendFile(process.env.DPT_PATH + '/static/1message_white.png');
+        res.status(200);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/2message_white.png', async(req, res, next) => {
+    try {
+        await res.sendFile(process.env.DPT_PATH + '/static/2message_white.png');
+        res.status(200);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/joypad_white.png', async(req, res, next) => {
+    try {
+        await res.sendFile(process.env.DPT_PATH + '/static/joypad_white.png');
+        res.status(200);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/message_big_white.png', async(req, res, next) => {
+    try {
+        await res.sendFile(process.env.DPT_PATH + '/static/message_big_white.png');
+        res.status(200);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/message_small_white.png', async(req, res, next) => {
+    try {
+        await res.sendFile(process.env.DPT_PATH + '/static/message_small_white.png');
+        res.status(200);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/scale_white.png', async(req, res, next) => {
+    try {
+        await res.sendFile(process.env.DPT_PATH + '/static/scale_white.png');
+        res.status(200);
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('/sleep_white.png', async(req, res, next) => {
+    try {
+        await res.sendFile(process.env.DPT_PATH + '/static/sleep_white.png');
+        res.status(200);
+    } catch (err) {
+        next(err);
+    }
+});
+
+
 router.get('/nav-top-logo.png', async(req, res, next) => {
     try {
         await res.sendFile(process.env.DPT_PATH + '/static/nav-top-logo.png');
