@@ -845,6 +845,9 @@ var createGUIScene = function(dptMode) {
 		dpt.getTopic();
 		event.stopImmediatePropagation();
 		event.preventDefault();
+		jQuery('#opinionForm').remove();
+		jQuery('#topicForm').remove();
+
 
 	});
 
