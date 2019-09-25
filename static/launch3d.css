@@ -26,23 +26,21 @@ body {
 }
 
 .menu-btn {
-
-	padding:10px;
-	padding-left:20px;
-	display:none;
-	font-family: "DPTFont";
-	font-size: 1em;
-	width:210px;
-	/* height:40px; */
-	border:1px solid white;
-	background-color:rgba(0,0,0,0.25);
-	color:white;
-	-webkit-box-pack: center;
-	    -ms-flex-pack: center;
-	        justify-content: center;
-	text-align: center;
-	background-size: cover;
-
+    padding: 10px;
+    padding-left: 20px;
+    display: none;
+    font-family: "DPTFont";
+    font-size: 1em;
+    width: 280px;
+    /* height:40px; */
+    border: 1px solid white;
+    background-color: rgba(0, 0, 0, 0.25);
+    color: white;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    background-size: cover;
 }
 
 .btn-icon {
