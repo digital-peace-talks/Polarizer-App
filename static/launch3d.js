@@ -847,7 +847,7 @@ var createGUIScene = function(dptMode) {
         event.preventDefault();
         jQuery('#opinionForm').remove();
         jQuery('#topicForm').remove();
-
+        focusAtCanvas();
 
     });
 
@@ -981,6 +981,7 @@ function initVirtJoysticks() {
 
 var createGenericScene = function(dptMode) {
     var genericScene = new BABYLON.Scene(engine);
+    BABYLON.Scene.DoubleClickDelay = 500;
 
     currentScene = genericScene;
     currentScene.dptMode = dptMode;
