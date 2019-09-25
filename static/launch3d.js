@@ -890,6 +890,7 @@ var createGUIScene = function(dptMode) {
 
 		newOpinionBtn.html(`<img class="btn-icon" src="/Interrobang.png">New-Opinion`);
 		newOpinionBtn.on('click touch', function(event) {
+			jQuery('#opinionForm').remove();
 
 			dpt.opinionPostAllowed(currentTopic);
 			// alert(dpt.opinionPostAllowed(currentTopic)) <- returns undefined
