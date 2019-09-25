@@ -79,7 +79,7 @@ function topicForm() {
 		color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
 		background-color: #00ccffcc;">Please enter a new topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
-		cols="64" rows="4" class="topic"></textarea><br><input style="font-family: DPTFont;
+		cols="51" rows="4" class="topic"></textarea><br><input style="font-family: DPTFont;
 		font-size: 18px;" type="submit" value="Send"></form></div>`);
     jQuery(".topic").focus();
 
