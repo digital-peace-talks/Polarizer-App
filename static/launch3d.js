@@ -550,7 +550,9 @@ function dialogRelations(opinionDialogConnections) {
 		recipientOpinion.position.y += 1.2;
 		*/
 
-		if ('position' in initiatorOpinion && 'position' in recipientOpinion) {
+		if('position' in initiatorOpinion
+		&& 'position' in recipientOpinion
+		&& opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus == 'CLOSED') {
 			createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections);
 		}
 		//		return(createBiColorTube(currentScene.meshes[k].dpt.opinionId, sv, ev));
