@@ -18,7 +18,7 @@ var dpt;
 var whoami;
 
 var powerSave = false;
-
+var topicFormOpen = false;
 
 function propositionForm(opinionId) {
 	console.log('enter proposition');
@@ -74,6 +74,7 @@ function propositionForm(opinionId) {
 }
 
 function topicForm() {
+	topicFormOpen = true;
 	console.log('enter topic');
 	jQuery('body').append(`<div id="topicForm" style="position: absolute; top: 0px; left: 0px; padding: 20px;
 		margin-left: 33%; border: #fff; border-style: solid; border-width: 1px;
@@ -101,6 +102,7 @@ function topicForm() {
 		}
 		if (event.keyCode == 27) {
 			jQuery('#topicForm').remove();
+			topicFormOpen = false;
 			focusAtCanvas();
 			event.preventDefault();
 		}
@@ -120,6 +122,8 @@ function topicForm() {
 		}
 		jQuery('#topicForm').remove();
 		focusAtCanvas();
+		topicFormOpen = false;
+
 	});
 }
 
@@ -871,9 +875,11 @@ var createGUIScene = function(dptMode) {
 		newTopicBtn.html(`<img class="btn-icon" src="/Interrobang.png">New-Topic`);
 
 		newTopicBtn.on('click touch', function(event) {
-			topicForm();
-			event.stopImmediatePropagation();
-			event.preventDefault();
+			if(topicFormOpen == false){ //check to see if topic form is already visible
+				topicForm();
+				event.stopImmediatePropagation();
+				event.preventDefault();
+			}
 		})
 
 	} else if (dptMode == 'opinionScene') {
@@ -886,6 +892,8 @@ var createGUIScene = function(dptMode) {
 		newOpinionBtn.on('click touch', function(event) {
 
 			dpt.opinionPostAllowed(currentTopic);
+			// alert(dpt.opinionPostAllowed(currentTopic)) <- returns undefined
+			
 			event.stopImmediatePropagation();
 			event.preventDefault();
 
