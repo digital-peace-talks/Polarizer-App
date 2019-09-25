@@ -893,7 +893,7 @@ var createGUIScene = function(dptMode) {
 
 			dpt.opinionPostAllowed(currentTopic);
 			// alert(dpt.opinionPostAllowed(currentTopic)) <- returns undefined
-			
+
 			event.stopImmediatePropagation();
 			event.preventDefault();
 
@@ -1061,6 +1061,7 @@ var createGenericScene = function(dptMode) {
 					currentScene.dispose();
 					currentScene = __opinionScene("opinionScene");
 					dpt.getOpinionByTopic(currentTopic);
+					jQuery('#topicForm').remove();
 				}
 
 				break;
