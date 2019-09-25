@@ -888,7 +888,7 @@ var createGUIScene = function(dptMode) {
         var newOpinionBtn = jQuery('#new-opinion-btn');
         newOpinionBtn.show();
 
-        newOpinionBtn.html(`<img class="btn-icon" src="/opinion_white.png">New-Opinion`);
+        newOpinionBtn.html(`<img class="btn-icon" src="/dialog_white.png">New-Opinion`);
         newOpinionBtn.on('click touch', function(event) {
             jQuery('#opinionForm').remove();
 
