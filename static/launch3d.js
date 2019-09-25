@@ -426,6 +426,10 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, dialogId) {
 		combination = 'red-blue';
 	}
 
+	if(combination.indexOf('grey') >= 0) {
+		combination = 'grey-grey';
+	}
+	
 	console.log('image is : ' + combination);
 	image = new Image();
 	image.src = '/' + combination + '.png';
