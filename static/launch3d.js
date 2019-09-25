@@ -181,7 +181,7 @@ function loadDialogList(restObj) {
 		padding: 10px; top: 170px; border: #fff; border-style: solid;
 		border-width: 1px; color: #fff; width: 258px; height: 100%;
 		overflow-y: auto; z-index: 2; font-family: DPTFontDin; font-size: 16px;
-		background-color: #00000039; visibility: hidden;"></div>`);
+		background-color: ##002C4B88; visibility: hidden;"></div>`);
 
     for (var i = 0; i < dialogs.length; i++) {
 
