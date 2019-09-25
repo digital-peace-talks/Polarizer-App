@@ -128,9 +128,9 @@ function opinionForm() {
     jQuery('body').append(`<div id="opinionForm" style="position: relative; top: -620px; left: -20px;
 		padding: 20px; margin-left: 33%; border: #fff; border-style: solid;
 		border-width: 1px; color: #000; width: 33%; z-index: 2; font-family: DPTFont;
-		font-size: 18px; background-color: #00ccffcc;">Please enter a new opinion:<br>
+		font-size: 18px; background-color: #005B9888;">Please enter a new opinion:<br>
 		<form id="opinion"><textarea style="font-family: DPTFont; font-size: 18px;"
-		name="opinion" cols="64" rows="4" class="opinion"></textarea><br>
+		name="opinion" cols="52" rows="4" class="opinion"></textarea><br>
 		<input style="font-family: DPTFont; font-size: 18px;" type="submit"
 		value="Send"></form></div>`);
     jQuery(".opinion").focus();
