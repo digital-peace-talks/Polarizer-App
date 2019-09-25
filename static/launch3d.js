@@ -686,18 +686,20 @@ var createGUIScene = function(dptMode) {
 	//create home button
 	var homeBtn = jQuery('#home-btn');
 	homeBtn.show();
-	homeBtn.on('click touch', function() {
+	homeBtn.on('click touch', function(event) {
 		opinionCamState = currentScene.cameras[0].storeState();
 		currentScene.dispose();
 		currentScene = __topicScene("topicScene");
 		dpt.getTopic();
+		event.stopImmediatePropagation();
+		event.preventDefault();
 
 	});
 
 	//create dialogue button
 	var dialoguesBtn = jQuery('#dialogues-btn');
 	dialoguesBtn.show();
-	dialoguesBtn.on('click touch', function() {
+	dialoguesBtn.on('click touch', function(event) {
 		// alert('test')
 		if (myDialogsVisible == 'visible') {
 			myDialogsVisible = 'hidden';
@@ -705,22 +707,31 @@ var createGUIScene = function(dptMode) {
 			myDialogsVisible = 'visible';
 		}
 		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+		event.stopImmediatePropagation();
+		event.preventDefault();
 	});
 	//create topic button 
 	var newTopicBtn = jQuery('#new-topic-btn');
 	newTopicBtn.show();
 	if (dptMode == 'topicScene') {
+
 		newTopicBtn.html(`<img class="btn-icon" src="/Interrobang.png">New-Topic`);
 
-		newTopicBtn.on('click touch', function() {
+		newTopicBtn.on('click touch', function(event) {
 			topicForm();
+			event.stopImmediatePropagation();
+			event.preventDefault();
 		})
-	} else if (dptMode == 'opinionScene') {
-		newTopicBtn.html(`<img class="btn-icon" src="/Interrobang.png">New-Opinion`);
 
-		newTopicBtn.on('click touch', function() {
+	} else if (dptMode == 'opinionScene') {
+
+		newTopicBtn.html(`<img class="btn-icon" src="/Interrobang.png">New-Opinion`);
+		newTopicBtn.on('click touch', function(event) {
 
 			opinionForm();
+			event.stopImmediatePropagation();
+			event.preventDefault();
+
 		});
 	}
 }
@@ -1243,6 +1254,14 @@ function main() {
 			focusAtCanvas();
 			event.stopImmediatePropagation();
 			event.preventDefault();
+		});
+		jQuery(window).blur(function(){
+			console.log('window inactive');
+			powerSave = true;
+		});
+		jQuery(window).focus(function(){
+			console.log('window active');
+			powerSave = false;
 		});
 	});
 }
