@@ -882,6 +882,11 @@ var createGUIScene = function(dptMode) {
 		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
 		event.stopImmediatePropagation();
 		event.preventDefault();
+		if(isMobile){
+			console.log("mobile behavior!")
+			hideMenu();
+		}
+
 	});
 	//create topic button 
 	if (dptMode == 'topicScene') {
@@ -897,6 +902,10 @@ var createGUIScene = function(dptMode) {
 				topicForm();
 				event.stopImmediatePropagation();
 				event.preventDefault();
+				if(isMobile){
+					console.log("mobile behavior!")
+					hideMenu();
+				}
 			
 		})
 
@@ -915,7 +924,11 @@ var createGUIScene = function(dptMode) {
 
 			event.stopImmediatePropagation();
 			event.preventDefault();
-
+			if(isMobile){
+				console.log("mobile behavior!")
+				hideMenu();
+			}
+	
 		});
 	}
 }
