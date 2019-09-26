@@ -291,8 +291,8 @@ div#dialogFrame {
     width: 280px;
     height: 48px;
     border: 1px solid #F0F3F5;
-    background-color: rgba(#005B9888);
-    color: white;
+    background-color: #005B9888;
+    color: #F0F3F5;
     -webkit-box-pack: left;
     -ms-flex-pack: left;
     justify-content: left;
