@@ -946,25 +946,7 @@ var createGUIScene = function(dptMode) {
 
     });
 
-    //create dialogue button
-    var dialoguesBtn = jQuery('#dialogues-btn');
-    dialoguesBtn.show();
-    dialoguesBtn.on('click touch', function(event) {
-        // alert('test')
-        if (myDialogsVisible == 'visible') {
-            myDialogsVisible = 'hidden';
-        } else {
-            myDialogsVisible = 'visible';
-        }
-        jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
-        event.stopImmediatePropagation();
-        event.preventDefault();
-        if (isMobile) {
-            console.log("mobile behavior!")
-            hideMenu();
-        }
 
-    });
     //create topic button 
     if (dptMode == 'topicScene') {
         jQuery('#new-opinion-btn').hide();
@@ -974,19 +956,19 @@ var createGUIScene = function(dptMode) {
         newTopicBtn.html(`<img class="btn-icon" src="/topic_white.png">New-Topic`);
 
         newTopicBtn.on('click touch', function(event) {
-            jQuery('#topicForm').remove();
+                jQuery('#topicForm').remove();
 
-            topicForm();
-            event.stopImmediatePropagation();
-            event.preventDefault();
-            if (isMobile) {
-                console.log("mobile behavior!")
-                hideMenu();
-            }
+                topicForm();
+                event.stopImmediatePropagation();
+                event.preventDefault();
+                if (isMobile) {
+                    console.log("mobile behavior!")
+                    hideMenu();
+                }
 
 
-        })
-
+            })
+            //create opinion button 
     } else if (dptMode == 'opinionScene') {
 
         jQuery('#new-topic-btn').hide();
@@ -1009,6 +991,26 @@ var createGUIScene = function(dptMode) {
 
         });
     }
+    //create dialogue button
+    var dialoguesBtn = jQuery('#dialogues-btn');
+    dialoguesBtn.show();
+    dialoguesBtn.on('click touch', function(event) {
+        // alert('test')
+        if (myDialogsVisible == 'visible') {
+            myDialogsVisible = 'hidden';
+        } else {
+            myDialogsVisible = 'visible';
+        }
+        jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        if (isMobile) {
+            console.log("mobile behavior!")
+            hideMenu();
+        }
+
+    });
+
 }
 
 function pauseEngine() {
