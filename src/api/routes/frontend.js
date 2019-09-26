@@ -14,12 +14,12 @@ router.get('/', async(req, res, next) => {
             var phrase = await getPhrase();
             console.log("no cookie found, set new one");
             // The client need to get the uuid for the first time, it needs to send it back.
-            res.send('you are a new user?<br><br>thats your phrase:<br>' + phrase +
+            res.send('<center>you are a new user?<br><br>thats your phrase:<br>' + phrase +
                 '<br><br>you are user on another browser?<br><br>enter your pass phrase<br>' +
                 '<form method="post" action="/recover"><input type=text name=phraseinput>' +
-                '<input type="hidden" name="phrase" value="' + phrase + '"></form>');
+                '<input type="hidden" name="phrase" value="' + phrase + '"></form></center>');
         } else {
-            res.send(`homepage<hr><br><br><a href=/launch>start dpt protype</a><br><br>
+            res.send(`<center>homepage<hr><br><br><a href=/launch>start dpt protype</a><br><br>
 					<a href=/babylon.html>babylon sample</a><br><br>
 					<a href=/launch3d.html>launch3D sample</a><br><br>
 					<a href=/dialog.html>dialog sample</a><br><br>
@@ -31,7 +31,7 @@ router.get('/', async(req, res, next) => {
 						return (b ? b.pop():'')
 					}
 					document.cookie='dptUUID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-					location.reload(true);">delete cookie</a>
+					location.reload(true);">delete cookie</a></center>
 			`);
         }
         res.status(200);
