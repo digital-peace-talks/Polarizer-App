@@ -36,7 +36,7 @@ function hideMenu() {
 
 function propositionForm(opinionId) {
     console.log('enter proposition');
-    jQuery('body').append(`<div id="propositionForm" style="position: absolute; top:0px; left: 0px;
+    jQuery('body').append(`<div id="propositionForm" style="position: relative; top:0px; left: 0px;
 		padding: 20px; margin-left: 30%; border: #fff; border-style: solid;
 		border-width: 1px; color: #000; width: 40%; z-index: 30; font-family: DPTFont;
 		font-size: 18px; background-color: #00ccffcc;">Please enter your proposition:
