@@ -14,6 +14,7 @@ const Lo_ = require("lodash");
  */
 module.exports.createDialog = async (options) => {
 	console.log(options);
+	var result;
 	if(options.opinionProposition.length > config.api.maxContentLength) {
 		throw {
 			status: 500,
@@ -23,7 +24,7 @@ module.exports.createDialog = async (options) => {
 	try {
 		const opinion = await Opinion.findOne({"_id": mongoose.Types.ObjectId(options.opinion)});
 		options.recipient = opinion.user;
-		const result = await Dialog.create(options);
+		result = await Dialog.create(options);
 	} catch(error) {
 		throw {
 			status: 500,
