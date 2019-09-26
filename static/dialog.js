@@ -189,10 +189,10 @@ function dialogForm() {
 
     var extensionRequest = '';
     if (currentDialog.status == 'ACTIVE') {
-        extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest">`;
+        // extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest">`;
         for (var i = 0; i < currentDialog.extensionRequests.length; i++) {
             if (currentDialog.extensionRequests[i].sender == 'me') {
-                extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest" checked>`;
+                // extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest" checked>`;
             }
         }
     }
@@ -243,7 +243,7 @@ function dialogForm() {
 					</div>
 				`;
         } else {
-        	//if(otherReadyToEnd != 'Ready to End') {
+        	if(otherReadyToEnd != 'Ready to End') {
         		html += `
 					<div class="status">
 						<center>
@@ -257,7 +257,7 @@ function dialogForm() {
 						</center>
 					</div>
 				`;
-        	//}
+        	}
         }
 
         jQuery(document).one('click', "#dialogClose", function(event) {
