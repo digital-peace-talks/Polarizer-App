@@ -243,7 +243,8 @@ function dialogForm() {
 					</div>
 				`;
         } else {
-            html += `
+        	if(otherReadyToEnd != '') {
+        		html += `
 					<div class="status">
 						<center>
 							<form id="dialogFrame">
@@ -256,6 +257,7 @@ function dialogForm() {
 						</center>
 					</div>
 				`;
+        	}
         }
 
         jQuery(document).one('click', "#dialogClose", function(event) {
