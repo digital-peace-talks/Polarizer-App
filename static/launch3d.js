@@ -1286,6 +1286,16 @@ function main() {
 			focusAtCanvas();
 			powerSave = false;
 		});
+
+		//mobile version menu details
+		jQuery('#overlay').on('click touch',function(){
+			if(jQuery('#button-menu').is(":hidden")){
+				jQuery('#button-menu').fadeIn();
+				jQuery('#overlay').css("background-image","url()");
+
+			}
+
+		})
 	});
 }
 
