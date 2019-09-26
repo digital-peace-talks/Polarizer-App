@@ -187,6 +187,7 @@ function dialogForm() {
         }
     }
 
+    /*
     var extensionRequest = '';
     if (currentDialog.status == 'ACTIVE') {
         extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest">`;
@@ -196,6 +197,7 @@ function dialogForm() {
             }
         }
     }
+    */
 
     if (meReadyToEnd == '') {
         viewOnly = false;
