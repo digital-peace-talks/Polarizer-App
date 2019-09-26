@@ -91,9 +91,9 @@ function topicForm() {
 	jQuery('body').append(`<div id="topicForm" style="position: absolute; top: 0px; left: 0px; padding: 20px;
 		margin-left: 33%; border: #fff; border-style: solid; border-width: 1px;
 		color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
-		background-color: #00ccffcc;">Please enter a new topic:<br><form id="topic">
+		background-color: #005B9888;">Please enter a new topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
-		cols="64" rows="4" class="topic"></textarea><br><input style="font-family: DPTFont;
+		cols="51" rows="4" class="topic"></textarea><br><input style="font-family: DPTFont;
 		font-size: 18px;" type="submit" value="Send"></form></div>`);
 	jQuery(".topic").focus();
 
@@ -142,9 +142,9 @@ function opinionForm() {
 	jQuery('body').append(`<div id="opinionForm" style="position: relative; top: -620px; left: -20px;
 		padding: 20px; margin-left: 33%; border: #fff; border-style: solid;
 		border-width: 1px; color: #000; width: 33%; z-index: 2; font-family: DPTFont;
-		font-size: 18px; background-color: #00ccffcc;">Please enter a new opinion:<br>
+		font-size: 18px; background-color: #005B9888;">Please enter a new opinion:<br>
 		<form id="opinion"><textarea style="font-family: DPTFont; font-size: 18px;"
-		name="opinion" cols="64" rows="4" class="opinion"></textarea><br>
+		name="opinion" cols="52" rows="4" class="opinion"></textarea><br>
 		<input style="font-family: DPTFont; font-size: 18px;" type="submit"
 		value="Send"></form></div>`);
 	jQuery(".opinion").focus();
@@ -192,10 +192,10 @@ function loadDialogList(restObj) {
 	var dialogs = restObj.data.data;
 
 	jQuery('body').append(`<div id="dialogMenu" style="position: relative;
-		padding: 10px; top: 124px; border: #fff; border-style: solid;
+		padding: 10px; top: 144px; border: #fff; border-style: solid;
 		border-width: 1px; color: #fff; width: 258px; height: 100%;
 		overflow-y: auto; z-index: 2; font-family: DPTFontDin; font-size: 16px;
-		background-color: #00000039; visibility: hidden;"></div>`);
+		background-color: #002C4B88; visibility: hidden;"></div>`);
 
 	for (var i = 0; i < dialogs.length; i++) {
 
@@ -263,8 +263,8 @@ function loadTopics(restObj) {
 		}
 		var plane = textBlock(
 			x, y, 0,
-			`{"context": "topicMap", "topicId": "${restObj.data[i]._id}",
-				"topic": "${restObj.data[i].content}"}`,
+			JSON.stringify({"context": "topicMap", "topicId": restObj.data[i]._id,
+				"topic": restObj.data[i].content}),
 			`${restObj.data[i].content} [ ${restObj.data[i].opinions.length} ]`);
 		x += 4.8;
 		if (x > xmax) {
@@ -272,14 +272,14 @@ function loadTopics(restObj) {
 			x = xstart;
 		}
 		/*
-						jQuery('div.col.left').append(
-							'<li> <a class="opinionlist" id="'
-							+ restObj.data[i]._id
-							+ '" href="#">'
-							+ restObj.data[i].content
-							+ "</a>"
-							+ ' [' + restObj.data[i].opinions.length + '] '
-							+ options+"</li><br>");
+			jQuery('div.col.left').append(
+				'<li> <a class="opinionlist" id="'
+				+ restObj.data[i]._id
+				+ '" href="#">'
+				+ restObj.data[i].content
+				+ "</a>"
+				+ ' [' + restObj.data[i].opinions.length + '] '
+				+ options+"</li><br>");
 		*/
 	}
 	//topicEdit();
@@ -355,7 +355,7 @@ function circleTextPlane(x, y, z, name, text) {
 	return (plane);
 }
 
-function createBiColorTube(initiatorOpinion, recipientOpinion) {
+function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections) {
 	var sv = new BABYLON.Vector3(initiatorOpinion.position);
 	var ev = new BABYLON.Vector3(recipientOpinion.position);
 	sv.x = initiatorOpinion.position.x - 2.4;
@@ -363,87 +363,105 @@ function createBiColorTube(initiatorOpinion, recipientOpinion) {
 	ev.x = recipientOpinion.position.x - 2.4;
 	ev.y = recipientOpinion.position.y + 1.2;
 
-	var tube = new BABYLON.MeshBuilder.CreateTube("tube", { path: [sv, ev], radius: 0.1, updatable: true, }, currentScene);
+	var tube = new BABYLON.MeshBuilder.CreateTube(
+		"tube",
+		{
+			path: [sv, ev],
+			radius: 0.1,
+			updatable: true,
+		},
+		currentScene);
+	
+	tube.dpt = {
+		context: 'tubeConnection',
+		dialogId: opinionDialogConnections[initiatorOpinion.opinionId].dialogId,
+		initiatorsOpinion: opinionDialogConnections[initiatorOpinion.opinionId].initiatorsOpinion,
+		recipientsOpinion: opinionDialogConnections[initiatorOpinion.opinionId].recipientsOpinion,
+	};
 
 	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 32, currentScene);
 	var ctx = dynamicTexture.getContext();
 
 	var combination = '';
-	if(initiatorOpinion.rating == 'negative') {
+	if (initiatorOpinion.rating == 'negative') {
 		combination = 'red-';
-		if(recipientOpinion.rating == 'negative') {
+		if (recipientOpinion.rating == 'negative') {
 			combination = 'red';
-		} else if(recipientOpinion.rating == 'neutral') {
+		} else if (recipientOpinion.rating == 'neutral') {
 			combination = 'blue';
-		} else if(recipientOpinion.rating == 'positive') {
+		} else if (recipientOpinion.rating == 'positive') {
 			combination = 'green';
-		} else if(recipientOpinion.rating == 'unset') {
+		} else if (recipientOpinion.rating == 'unset') {
 			combination = 'grey';
 		}
 
-	} else if(initiatorOpinion.rating == 'neutral') {
+	} else if (initiatorOpinion.rating == 'neutral') {
 		combination = 'blue-';
-		if(recipientOpinion.rating == 'negative') {
+		if (recipientOpinion.rating == 'negative') {
 			combination += 'red';
-		} else if(recipientOpinion.rating == 'neutral') {
+		} else if (recipientOpinion.rating == 'neutral') {
 			combination += 'blue';
-		} else if(recipientOpinion.rating == 'positive') {
+		} else if (recipientOpinion.rating == 'positive') {
 			combination += 'green';
-		} else if(recipientOpinion.rating == 'unset') {
+		} else if (recipientOpinion.rating == 'unset') {
 			combination += 'grey';
 		}
 
-	} else if(initiatorOpinion.rating == 'positive') {
+	} else if (initiatorOpinion.rating == 'positive') {
 		combination = 'green-';
-		if(recipientOpinion.rating == 'negative') {
+		if (recipientOpinion.rating == 'negative') {
 			combination += 'red';
-		} else if(recipientOpinion.rating == 'neutral') {
+		} else if (recipientOpinion.rating == 'neutral') {
 			combination += 'blue';
-		} else if(recipientOpinion.rating == 'positive') {
+		} else if (recipientOpinion.rating == 'positive') {
 			combination += 'green';
-		} else if(recipientOpinion.rating == 'unset') {
+		} else if (recipientOpinion.rating == 'unset') {
 			combination += 'grey';
 		}
 
-	} else if(initiatorOpinion.rating == 'unset') {
+	} else if (initiatorOpinion.rating == 'unset') {
 		combination += 'grey-';
-		if(recipientOpinion.rating == 'negative') {
+		if (recipientOpinion.rating == 'negative') {
 			combination += 'red';
-		} else if(recipientOpinion.rating == 'neutral') {
+		} else if (recipientOpinion.rating == 'neutral') {
 			combination += 'blue';
-		} else if(recipientOpinion.rating == 'positive') {
+		} else if (recipientOpinion.rating == 'positive') {
 			combination += 'green';
-		} else if(recipientOpinion.rating == 'unset') {
+		} else if (recipientOpinion.rating == 'unset') {
 			combination += 'grey';
 		}
 	}
 
-	console.log('image is : '+combination);
+	console.log('image is : ' + combination);
 	var reverse = 0;
-	if(combination == 'green-blue') {
+	if (combination == 'green-blue') {
 		var reverse = 1;
 		combination = 'blue-green';
-	} else if(combination == 'green-red') {
+	} else if (combination == 'green-red') {
 		var reverse = 1;
 		combination = 'red-green';
-	} else if(combination == 'blue-red') {
+	} else if (combination == 'blue-red') {
 		var reverse = 1;
 		combination = 'red-blue';
 	}
+
+	if(combination.indexOf('grey') >= 0) {
+		combination = 'grey-grey';
+	}
 	
-	console.log('image is : '+combination);
+	console.log('image is : ' + combination);
 	image = new Image();
-	image.src = '/'+combination+'.png';
+	image.src = '/' + combination + '.png';
 
 	image.onload = function() {
 
-		if(reverse || 1) {
+		if (reverse || 1) {
 			ctx.translate(-16, 16);
-			ctx.rotate(-90 * (Math.PI/180));
+			ctx.rotate(-90 * (Math.PI / 180));
 			ctx.translate(-16, 16);
 		} else {
 			ctx.translate(16, -16);
-			ctx.rotate(90 * (Math.PI/180));
+			ctx.rotate(90 * (Math.PI / 180));
 			ctx.translate(16, -16);
 		}
 		ctx.drawImage(this, 0, 0);
@@ -451,10 +469,11 @@ function createBiColorTube(initiatorOpinion, recipientOpinion) {
 	};
 
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
-	mat.alpha = 0.95;
-	mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
+	mat.alpha = 0.25;
+	//mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
+	mat.alphaMode = BABYLON.Engine.ALPHA_COMBINE;
 	mat.diffuseTexture = dynamicTexture;
-//	mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+	mat.emissiveColor = new BABYLON.Color3(.5, .5, .5);
 	tube.material = mat;
 
 	//return(tube);
@@ -463,32 +482,32 @@ function createBiColorTube(initiatorOpinion, recipientOpinion) {
 function dialogRelations(opinionDialogConnections) {
 	var initiatorOpinion = {};
 	var recipientOpinion = {};
-	for(var i in opinionDialogConnections) {
-		for(var j in currentScene.meshes) {
-			if('dpt' in currentScene.meshes[j]
-			&& currentScene.meshes[j].dpt.context == 'opinionMap'
-			&& currentScene.meshes[j].dpt.opinionId == i) {
+	for (var i in opinionDialogConnections) {
+		for (var j in currentScene.meshes) {
+			if ('dpt' in currentScene.meshes[j] &&
+				currentScene.meshes[j].dpt.context == 'opinionMap' &&
+				currentScene.meshes[j].dpt.opinionId == i) {
 				initiatorOpinion.position = currentScene.meshes[j].position;
 				initiatorOpinion.opinionId = i;
-				if(jQuery.inArray(i, opinionDialogConnections[i].leafs.negative) >= 0) {
+				if (jQuery.inArray(i, opinionDialogConnections[i].leafs.negative) >= 0) {
 					initiatorOpinion.rating = 'negative';
-				} else if(jQuery.inArray(i, opinionDialogConnections[i].leafs.neutral) >= 0) {
+				} else if (jQuery.inArray(i, opinionDialogConnections[i].leafs.neutral) >= 0) {
 					initiatorOpinion.rating = 'neutral';
-				} else if(jQuery.inArray(i, opinionDialogConnections[i].leafs.positive) >= 0) {
+				} else if (jQuery.inArray(i, opinionDialogConnections[i].leafs.positive) >= 0) {
 					initiatorOpinion.rating = 'positive';
-				} else if(jQuery.inArray(i, opinionDialogConnections[i].leafs.unset) >= 0) {
+				} else if (jQuery.inArray(i, opinionDialogConnections[i].leafs.unset) >= 0) {
 					initiatorOpinion.rating = 'unset';
 				}
 			}
 		}
-		
-		for(var j in opinionDialogConnections[i].leafs.negative) {
+
+		for (var j in opinionDialogConnections[i].leafs.negative) {
 			var opinionId = opinionDialogConnections[i].leafs.negative[j];
-			if(opinionId != i) {
-				for(var k in currentScene.meshes) {
-					if('dpt' in currentScene.meshes[k]
-					&& currentScene.meshes[k].dpt.context == 'opinionMap'
-					&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+			if (opinionId != i) {
+				for (var k in currentScene.meshes) {
+					if ('dpt' in currentScene.meshes[k] &&
+						currentScene.meshes[k].dpt.context == 'opinionMap' &&
+						currentScene.meshes[k].dpt.opinionId == opinionId) {
 						recipientOpinion.position = currentScene.meshes[k].position;
 						recipientOpinion.opinionId = opinionId;
 						recipientOpinion.rating = 'negative';
@@ -496,13 +515,13 @@ function dialogRelations(opinionDialogConnections) {
 				}
 			}
 		}
-		for(var j in opinionDialogConnections[i].leafs.neutral) {
+		for (var j in opinionDialogConnections[i].leafs.neutral) {
 			var opinionId = opinionDialogConnections[i].leafs.neutral[j];
-			if(opinionId != i) {
-				for(var k in currentScene.meshes) {
-					if('dpt' in currentScene.meshes[k]
-					&& currentScene.meshes[k].dpt.context == 'opinionMap'
-					&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+			if (opinionId != i) {
+				for (var k in currentScene.meshes) {
+					if ('dpt' in currentScene.meshes[k] &&
+						currentScene.meshes[k].dpt.context == 'opinionMap' &&
+						currentScene.meshes[k].dpt.opinionId == opinionId) {
 						recipientOpinion.position = currentScene.meshes[k].position;
 						recipientOpinion.opinionId = opinionId;
 						recipientOpinion.rating = 'neutral';
@@ -510,13 +529,13 @@ function dialogRelations(opinionDialogConnections) {
 				}
 			}
 		}
-		for(var j in opinionDialogConnections[i].leafs.positive) {
+		for (var j in opinionDialogConnections[i].leafs.positive) {
 			var opinionId = opinionDialogConnections[i].leafs.positive[j];
-			if(opinionId != i) {
-				for(var k in currentScene.meshes) {
-					if('dpt' in currentScene.meshes[k]
-					&& currentScene.meshes[k].dpt.context == 'opinionMap'
-					&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+			if (opinionId != i) {
+				for (var k in currentScene.meshes) {
+					if ('dpt' in currentScene.meshes[k] &&
+						currentScene.meshes[k].dpt.context == 'opinionMap' &&
+						currentScene.meshes[k].dpt.opinionId == opinionId) {
 						recipientOpinion.position = currentScene.meshes[k].position;
 						recipientOpinion.opinionId = opinionId;
 						recipientOpinion.rating = 'positive';
@@ -524,13 +543,13 @@ function dialogRelations(opinionDialogConnections) {
 				}
 			}
 		}
-		for(var j in opinionDialogConnections[i].leafs.unset) {
+		for (var j in opinionDialogConnections[i].leafs.unset) {
 			var opinionId = opinionDialogConnections[i].leafs.unset[j];
-			if(opinionId != i) {
-				for(var k in currentScene.meshes) {
-					if('dpt' in currentScene.meshes[k]
-					&& currentScene.meshes[k].dpt.context == 'opinionMap'
-					&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+			if (opinionId != i) {
+				for (var k in currentScene.meshes) {
+					if ('dpt' in currentScene.meshes[k] &&
+						currentScene.meshes[k].dpt.context == 'opinionMap' &&
+						currentScene.meshes[k].dpt.opinionId == opinionId) {
 						recipientOpinion.position = currentScene.meshes[k].position;
 						recipientOpinion.opinionId = opinionId;
 						recipientOpinion.rating = 'unset';
@@ -546,8 +565,10 @@ function dialogRelations(opinionDialogConnections) {
 		recipientOpinion.position.y += 1.2;
 		*/
 
-		if ('position' in initiatorOpinion && 'position' in recipientOpinion) {
-			createBiColorTube(initiatorOpinion, recipientOpinion);
+		if('position' in initiatorOpinion
+		&& 'position' in recipientOpinion
+		&& opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus == 'CLOSED') {
+			createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections);
 		}
 		//		return(createBiColorTube(currentScene.meshes[k].dpt.opinionId, sv, ev));
 	}
@@ -607,7 +628,7 @@ function loadOpinions(restObj) {
 
 		var plane = textBlock(
 			nodes[i].x, nodes[i].y, 0,
-			`{"context": "opinionMap", "opinionId": "${restObj.data[i]._id}"}`,
+			JSON.stringify({"context": "opinionMap", "opinionId": restObj.data[i]._id}),
 			`${restObj.data[i].content}`);
 
 		plane.actionManager = new BABYLON.ActionManager(currentScene);
@@ -639,13 +660,13 @@ function loadOpinions(restObj) {
 			restObj.data[i].blocked == 0) {
 			var mat = new BABYLON.StandardMaterial("icon", currentScene);
 			mat.diffuseTexture = new BABYLON.Texture("/chatbubble.png", currentScene);
-//			mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png", currentScene);
+			//			mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png", currentScene);
 			mat.emissiveColor = new BABYLON.Color3(0.0, 0.8, 1);
-//			mat.alpha = .95;
+			//			mat.alpha = .95;
 			mat.alphaMode = BABYLON.Engine.ALPHA_ADD;
 			mat.opacityTexture = mat.diffuseTexture;
 
-//			var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.35, height: 0.25 }, currentScene);
+			//			var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.35, height: 0.25 }, currentScene);
 			var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.35, height: 0.35 }, currentScene);
 			icon.parent = plane;
 			icon.position.x -= plane.geometry.extend.maximum.x + 0.2;
@@ -680,22 +701,63 @@ function loadOpinions(restObj) {
 }
 
 function wrapText(context, text, x, y, maxWidth, lineHeight) {
-	var words = text.split(' ');
-	var line = '';
-	for (var n = 0; n < words.length; n++) {
-		var testLine = line + words[n] + ' ';
-		var metrics = context.measureText(testLine);
-		var testWidth = metrics.width;
-		if (testWidth > maxWidth && n > 0) {
-			context.fillText(line, x, y);
-			line = words[n] + ' ';
-			y += lineHeight;
-		} else {
-			line = testLine;
+
+    var lines = text.split("\n");
+    for (var i = 0; i < lines.length; i++) {
+        var words = lines[i].split(' ');
+        var line = '';
+        for (var n = 0; n < words.length; n++) {
+            var testLine = line + words[n] + ' ';
+            var metrics = context.measureText(testLine);
+            var testWidth = metrics.width;
+            if (testWidth > maxWidth && n > 0) {
+                context.fillText(line, x, y);
+                line = words[n] + ' ';
+                y += lineHeight;
+            } else {
+                line = testLine;
+            }
+        }
+        context.fillText(line, x, y);
+        y += lineHeight;
+    }
+};
+
+
+
+function cropImage(ctx, canvas) {
+	var w = canvas.width;
+	var h = canvas.height;
+	var pix = {x:[], y:[]};
+	var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+	var x;
+	var y;
+	var index;
+
+	for (y = 0; y < h; y++) {
+		for (x = 0; x < w; x++) {
+			index = (y * w + x) * 4;
+			if (imageData.data[index+3] > 0) {
+				pix.x.push(x);
+				pix.y.push(y);
+
+			}   
 		}
 	}
-	context.fillText(line, x, y);
+	pix.x.sort(function(a,b){return a-b});
+	pix.y.sort(function(a,b){return a-b});
+	var n = pix.x.length-1;
+
+	w = pix.x[n] - pix.x[0];
+	h = pix.y[n] - pix.y[0];
+	var cut = ctx.getImageData(pix.x[0], pix.y[0], w, h);
+
+	canvas.width = w;
+	canvas.height = h;
+	ctx.putImageData(cut, 0, 0);
+	return(ctx);
 }
+
 
 function textBlock(x, y, z, name, text) {
 	//Set width an height for plane
@@ -713,10 +775,7 @@ function textBlock(x, y, z, name, text) {
 	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", { width: DTWidth, height: DTHeight }, currentScene);
 
 	//Check width of text for given font type at any size of font
-	var ctx = dynamicTexture.getContext();
-
 	dynamicTexture.hasAlpha = true;
-	ctx.fillStyle = 'transparent';
 
 	textureContext = dynamicTexture.getContext();
 	textureContext.font = "22px DPTFont";
@@ -724,7 +783,7 @@ function textBlock(x, y, z, name, text) {
 	textureContext.fillStyle = "#00ccff";
 
 	wrapText(textureContext, text, 5, 20, 479, 22);
-	textureContext.restore();
+//	textureContext = cropImage(textureContext, textureContext.canvas);
 
 	dynamicTexture.update();
 
@@ -861,11 +920,15 @@ var createGUIScene = function(dptMode) {
 		event.preventDefault();
 		jQuery('#opinionForm').remove();
 		jQuery('#topicForm').remove();
+<<<<<<< HEAD
 		
 		if(isMobile){
 			console.log("mobile behavior!")
 			hideMenu();
 		}
+=======
+		focusAtCanvas();
+>>>>>>> 958f01d9e18c441c8d32830e1d4fd2228305f9d7
 
 	});
 
@@ -894,10 +957,11 @@ var createGUIScene = function(dptMode) {
 		var newTopicBtn = jQuery('#new-topic-btn');
 		newTopicBtn.show();
 
-		newTopicBtn.html(`<img class="btn-icon" src="/Interrobang.png">New-Topic`);
+		newTopicBtn.html(`<img class="btn-icon" src="/topic_white.png">New-Topic`);
 
 		newTopicBtn.on('click touch', function(event) {
 			jQuery('#topicForm').remove();
+<<<<<<< HEAD
 			
 				topicForm();
 				event.stopImmediatePropagation();
@@ -907,6 +971,13 @@ var createGUIScene = function(dptMode) {
 					hideMenu();
 				}
 			
+=======
+
+			topicForm();
+			event.stopImmediatePropagation();
+			event.preventDefault();
+
+>>>>>>> 958f01d9e18c441c8d32830e1d4fd2228305f9d7
 		})
 
 	} else if (dptMode == 'opinionScene') {
@@ -915,7 +986,7 @@ var createGUIScene = function(dptMode) {
 		var newOpinionBtn = jQuery('#new-opinion-btn');
 		newOpinionBtn.show();
 
-		newOpinionBtn.html(`<img class="btn-icon" src="/Interrobang.png">New-Opinion`);
+		newOpinionBtn.html(`<img class="btn-icon" src="/opinion_white.png">New-Opinion`);
 		newOpinionBtn.on('click touch', function(event) {
 			jQuery('#opinionForm').remove();
 
@@ -943,7 +1014,7 @@ function pauseEngine() {
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
-	btn.src = "/sleep.png";
+	btn.src = "/sleep_white.png";
 	btn.style.color = "#f00";
 	document.body.appendChild(btn);
 
@@ -990,10 +1061,10 @@ function initVirtJoysticks() {
 	btn.style.position = "absolute";
 	btn.style.bottom = "50px";
 	btn.style.right = "50px";
-	btn.width = "42";
+	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
-	btn.src = "/joystickIcon.png";
+	btn.src = "/joypad_white.png";
 	btn.style.color = "#f00";
 	document.body.appendChild(btn);
 
@@ -1012,6 +1083,7 @@ function initVirtJoysticks() {
 
 var createGenericScene = function(dptMode) {
 	var genericScene = new BABYLON.Scene(engine);
+	BABYLON.Scene.DoubleClickDelay = 500;
 
 	currentScene = genericScene;
 	currentScene.dptMode = dptMode;
@@ -1045,9 +1117,20 @@ var createGenericScene = function(dptMode) {
 			case BABYLON.PointerEventTypes.POINTERUP:
 				//console.log("POINTER UP");
 
-				if ('dpt' in pointerInfo.pickInfo.pickedMesh &&
-					pointerInfo.pickInfo.pickedMesh.dpt.context == "dialogInvitation") {
-					propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId);
+				if ('dpt' in pointerInfo.pickInfo.pickedMesh) {
+					if(pointerInfo.pickInfo.pickedMesh.dpt.context == "dialogInvitation") {
+						propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId);
+					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "tubeConnection") {
+
+						currentDialog = {
+							dialog: pointerInfo.pickInfo.pickedMesh.dpt.dialogId,
+							topic: currentTopicStr,
+							initiatorOpinion: pointerInfo.pickInfo.pickedMesh.dpt.initiatorsOpinion,
+							recipientOpinion: pointerInfo.pickInfo.pickedMesh.dpt.recipientsOpinion,
+						};
+						dpt.getDialog(currentDialog.dialog);
+
+					}
 				}
 
 				break;
@@ -1239,12 +1322,12 @@ function main() {
 				restObj.path == '/dialog/' + currentDialog.dialog + '/' &&
 				restObj.method == 'get') {
 
-				var old = currentDialog;
-				currentDialog = restObj.data;
-				currentDialog.topic = old.topic;
-				currentDialog.initiatorOpinion = old.initiatorOpinion;
-				currentDialog.recipientOpinion = old.recipientOpinion;
-				dialogForm();
+					var old = currentDialog;
+					currentDialog = restObj.data;
+					currentDialog.topic = old.topic;
+					currentDialog.initiatorOpinion = old.initiatorOpinion;
+					currentDialog.recipientOpinion = old.recipientOpinion;
+					dialogForm();
 
 			}
 			if (restObj.path == '/topic/' &&
@@ -1257,8 +1340,8 @@ function main() {
 
 				loadOpinions(restObj);
 
-			} else if(restObj.path == '/opinion/postAllowed/') {
-				if(restObj.data.value == true) {
+			} else if (restObj.path == '/opinion/postAllowed/') {
+				if (restObj.data.value == true) {
 					opinionForm();
 				} else {
 					alert('Only one opinion per topic.');
@@ -1284,7 +1367,8 @@ function main() {
 			engine.resize();
 		});
 
-		jQuery(document).on("mouseenter touchstart", "span.myDialogs", function(event) {
+//		jQuery(document).on("mouseenter touchstart", "span.myDialogs", function(event) {
+		jQuery(document).on("mouseenter", "span.myDialogs", function(event) {
 			jQuery('body').append(`<div id="dialogInfo" style="position: absolute;
 				padding: 20px; margin-left: 25%; border: #fff; border-style: solid;
 				border-width: 1px; color: #000; width: 50%; z-index: 2;
@@ -1293,7 +1377,14 @@ function main() {
 			event.stopImmediatePropagation();
 			event.preventDefault();
 		});
-		jQuery(document).on("click", "span.myDialogs", function(event) {
+//		jQuery(document).on("mouseleave touchend", "span.myDialogs", function(event) {
+		jQuery(document).on("mouseleave", "span.myDialogs", function(event) {
+			jQuery('#dialogInfo').remove();
+			focusAtCanvas();
+			event.stopImmediatePropagation();
+			event.preventDefault();
+		});
+		jQuery(document).on("click touch", "span.myDialogs", function(event) {
 			jQuery('#dialogInfo').remove();
 			jQuery('#dialogForm').remove();
 			focusAtCanvas();
@@ -1302,17 +1393,11 @@ function main() {
 			event.stopImmediatePropagation();
 			event.preventDefault();
 		});
-		jQuery(document).on("mouseleave touchend", "span.myDialogs", function(event) {
-			jQuery('#dialogInfo').remove();
-			focusAtCanvas();
-			event.stopImmediatePropagation();
-			event.preventDefault();
-		});
-		jQuery(window).blur(function(){
+		jQuery(window).blur(function() {
 			console.log('window inactive');
 			powerSave = true;
 		});
-		jQuery(window).focus(function(){
+		jQuery(window).focus(function() {
 			console.log('window active');
 			focusAtCanvas();
 			powerSave = false;

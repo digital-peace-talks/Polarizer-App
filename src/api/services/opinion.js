@@ -49,6 +49,9 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 				var topo = {
 					dialogId: '',
 					objectId: '',
+					initiatorsOpinion: '',
+					recipientsOpinion: '',
+					dialogStatus: '',
 					leafs: {
 						positive: [],
 						negative: [],
@@ -75,7 +78,10 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 					var crisisRecipient = Lo_.find(dialogarr[j].crisises, { initiator: dialogarr[j].recipient});
 					
 					topo.dialogId = dialogarr[j]._id.toString();
+					topo.dialogStatus = dialogarr[j].status;
 					topo.opinionId = opinionInitiator._id.toString();
+					topo.initiatorsOpinion = opinionInitiator.content;
+					topo.recipientsOpinion = opinionRecipient.content;
 					
 					if(crisisInitiator && 'rating' in crisisInitiator) {
 						if(crisisInitiator.rating > 0) {

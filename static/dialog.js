@@ -187,6 +187,7 @@ function dialogForm() {
         }
     }
 
+    /*
     var extensionRequest = '';
     if (currentDialog.status == 'ACTIVE') {
         extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest">`;
@@ -196,6 +197,7 @@ function dialogForm() {
             }
         }
     }
+    */
 
     if (meReadyToEnd == '') {
         viewOnly = false;
@@ -236,7 +238,8 @@ function dialogForm() {
 					<div class="status">
 					<center>
 						<form id="dialogFrame">
-							<input type="button" value="close window" name="close window" id="dialogClose">
+                            <input type="button" value="close window" name="close window" id="dialogClose">
+                            <input type="button" value="end dialog" name="end dialog" id="dialogClose">
 						</form>
 			   		</center>
 					</div>
@@ -249,7 +252,8 @@ function dialogForm() {
 							<textarea rows="4" cols="41" type="text" name="message"  id="dialogInput"></textarea>
 								<br>
 								<input type="submit" name="send" value="send">
-								<input type="button" value="close window" name="close window" id="dialogClose">
+                                <input type="button" value="close window" name="close window" id="dialogClose">
+                                <input type="button" value="end dialog" name="end dialog" id="dialogClose">
 							</form>
 						</center>
 					</div>
@@ -347,7 +351,7 @@ function dialogForm() {
     html += '</div></div>';
 
     //		jQuery('#misc').append(html);
-    jQuery('body').append(`<div id="dialogForm" style="position: absolute; top:0px; left 0px; padding: 20px;
+    jQuery('body').append(`<div id="dialogForm" style="position: absolute; top: 0px; left: -63px; padding: 20px;
 				margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;
 				color: #000; width: 50%; z-index: 2; font-family: DPTFont; font-size: 18px;
 				background-color: #28A9E1; height: 640px">${html}</div>`);
