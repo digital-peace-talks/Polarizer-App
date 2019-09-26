@@ -313,7 +313,7 @@ jQuery(document).ready(function() {
 
     function propositionForm(opinionId) {
 
-        jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 0px; top: 0px;' +
+        jQuery('#misc').append('<div style="position: absolute; padding: 10px;' +
             'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">' +
             'Please enter your proposition:<br><form id="proposition">' +
             '<input type="text" name="proposition" size="50" class="proposition">' +
