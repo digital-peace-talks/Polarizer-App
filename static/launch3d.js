@@ -44,8 +44,16 @@ function propositionForm(opinionId) {
 		font-size: 18px;" name="proposition" cols="40" rows="4" class="proposition"></textarea>
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
 		<br><input style="font-family: DPTFont; font-size: 18px;"
-		type="submit" value="Send"></form></div>`);
+        type="submit" value="Send">
+        <input type="button" value="close window" name="close window" id="ClosePropositionForm"></form></div>`);
     jQuery(".proposition").focus();
+
+    jQuery(document).one('click', "#ClosePropositionForm", function(event) {
+        propositionFormOpen = 0;
+        jQuery('#propositionForm').remove();
+        focusAtCanvas();
+        event.preventDefault();
+    });
 
     jQuery(document).on('keydown', '.proposition', function(event) {
         var n = jQuery('.proposition').val().length;
@@ -97,7 +105,8 @@ function topicForm() {
 		background-color: #005B9888;">New topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
 		 cols="43" rows="12" class="topic"   margin: 0 auto;></textarea><br><input style="font-family: DPTFont;
-		font-size: 18px;" type="submit" width="90%" value="Send"></form></div>`);
+        font-size: 18px;" type="submit" width="90%" value="Send">
+        <input type="button" value="close window" name="close window" id="CloseTopicForm"></form></div>`);
 
     } else {
         jQuery('body').append(`<div id="topicForm" style="position: absolute; top: 0px; left: 0px; padding: 20px;
@@ -106,9 +115,17 @@ function topicForm() {
 		background-color: #005B9888;">Please enter a new topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
 		cols="51" rows="4" class="topic"></textarea><br><input style="font-family: DPTFont;
-		font-size: 18px;" type="submit" value="Send"></form></div>`);
+        font-size: 18px;" type="submit" value="Sddfffssend">
+        <input type="button" value="close window" name="close window" id="CloseTopicForm"></form></div>`);
     }
     jQuery(".topic").focus();
+
+    jQuery(document).one('click', "#CloseTopicForm", function(event) {
+        topicFormOpen = 0;
+        jQuery('#topicForm').remove();
+        focusAtCanvas();
+        event.preventDefault();
+    });
 
     jQuery(document).on('keydown', '.topic', function(event) {
         var n = jQuery('.topic').val().length;
@@ -159,8 +176,16 @@ function opinionForm() {
 		<form id="opinion"><textarea style="font-family: DPTFont; font-size: 18px;"
 		name="opinion" cols="52" rows="4" class="opinion"></textarea><br>
 		<input style="font-family: DPTFont; font-size: 18px;" type="submit"
-		value="Send"></form></div>`);
+        value="Send">
+        <input type="button" value="close window" name="close window" id="CloseOpinionForm"></form></div>`);
     jQuery(".opinion").focus();
+
+    jQuery(document).one('click', "#CloseOpinionForm", function(event) {
+        opinionFormOpen = 0;
+        jQuery('#opinionForm').remove();
+        focusAtCanvas();
+        event.preventDefault();
+    });
 
     jQuery(document).on('keydown', '.opinion', function(event) {
         var n = jQuery('.opinion').val().length;
