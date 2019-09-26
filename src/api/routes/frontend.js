@@ -440,6 +440,15 @@ router.get('/sleep.png', async(req, res, next) => {
     }
 });
 
+router.get('/touch_white.png', async(req, res, next) => {
+    try {
+        await res.sendFile(process.env.DPT_PATH + '/static/touch_white.png');
+        res.status(200);
+    } catch (err) {
+        next(err);
+    }
+});
+
 router.get('/launch.js', async(req, res, next) => {
     try {
         await res.sendFile(process.env.DPT_PATH + '/static/launch.js');
