@@ -88,13 +88,24 @@ function propositionForm(opinionId) {
 
 function topicForm() {
 	console.log('enter topic');
+
+	if(isMobile){
+		jQuery('body').append(`<div id="topicForm" style="position: fixed; top: 0px; left: 0px; padding: 0px;  margin-left: 5%;
+		margin-top: 25%; 
+		color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
+		background-color: #005B9888;">New topic:<br><form id="topic">
+		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
+		 cols="43" rows="12" class="topic"   margin: 0 auto;></textarea><br><input style="font-family: DPTFont;
+		font-size: 18px;" type="submit" width="90%" value="Send"></form></div>`);
+
+	}else{
 	jQuery('body').append(`<div id="topicForm" style="position: absolute; top: 0px; left: 0px; padding: 20px;
 		margin-left: 33%; border: #fff; border-style: solid; border-width: 1px;
 		color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
 		background-color: #005B9888;">Please enter a new topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
 		cols="51" rows="4" class="topic"></textarea><br><input style="font-family: DPTFont;
-		font-size: 18px;" type="submit" value="Send"></form></div>`);
+		font-size: 18px;" type="submit" value="Send"></form></div>`);}
 	jQuery(".topic").focus();
 
 	jQuery(document).on('keydown', '.topic', function(event) {

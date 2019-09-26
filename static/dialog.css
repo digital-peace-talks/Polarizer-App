@@ -332,5 +332,11 @@ div#dialogFrame {
     background-repeat:no-repeat;
     background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png');
 }
+#topicForm, #topic{
+    width:100%;
+    height:100%;
+    top:10%;
+    left:0;
+}
 
 }
