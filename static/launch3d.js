@@ -36,12 +36,12 @@ function hideMenu() {
 
 function propositionForm(opinionId) {
     console.log('enter proposition');
-    jQuery('body').append(`<div id="propositionForm" style="position: absolute; 
+    jQuery('body').append(`<div id="propositionForm" style="position: absolute; top:0; left: 0px;
 		padding: 20px; margin-left: 30%; border: #fff; border-style: solid;
 		border-width: 1px; color: #000; width: 40%; z-index: 30; font-family: DPTFont;
 		font-size: 18px; background-color: #00ccffcc;">Please enter your proposition:
 		<br><form id="proposition"><textarea style="font-family: DPTFont;
-		font-size: 18px;" name="proposition" cols="64" rows="4" class="proposition"></textarea>
+		font-size: 18px;" name="proposition" cols="40" rows="4" class="proposition"></textarea>
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
 		<br><input style="font-family: DPTFont; font-size: 18px;"
 		type="submit" value="Send"></form></div>`);
