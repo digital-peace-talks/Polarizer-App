@@ -29,6 +29,8 @@ body {
     touch-action: none;
     position: absolute;
     z-index: 1;
+    
+
 }
 
 #main {
@@ -268,4 +270,26 @@ div#dialogFrame {
     min-width: 80%;
     top: 0px;
     left: 0px;
+}
+
+
+@media all and (max-width: 500px) {
+
+
+    /* #renderCanvas{
+    border:5px solid red;
+} */
+
+#button-menu{
+    display:none;
+}
+#overlay{
+    height:100px;
+    width:100px;
+    display:block;
+    border:5px solid greenyellow;
+    background-size:cover;
+    background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png');
+}
+
 }
