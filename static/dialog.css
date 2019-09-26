@@ -306,7 +306,8 @@ div#dialogFrame {
     padding: 10px;
     padding-left: 20px;
     display: none;
-    font-family: "DPTFont";
+    font-family: "DPTFontDin";
+    text-transform: uppercase;
     font-size: 20px;
     width: 280px;
     height: 48px;
