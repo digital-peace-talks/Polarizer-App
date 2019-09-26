@@ -455,10 +455,11 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	};
 
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
-	mat.alpha = 0.95;
-	mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
+	mat.alpha = 0.25;
+	//mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
+	mat.alphaMode = BABYLON.Engine.ALPHA_COMBINE;
 	mat.diffuseTexture = dynamicTexture;
-	//	mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+	mat.emissiveColor = new BABYLON.Color3(.5, .5, .5);
 	tube.material = mat;
 
 	//return(tube);
@@ -686,24 +687,6 @@ function loadOpinions(restObj) {
 }
 
 function wrapText(context, text, x, y, maxWidth, lineHeight) {
-	var words = text.split(' ');
-	var line = '';
-	for (var n = 0; n < words.length; n++) {
-		var testLine = line + words[n] + ' ';
-		var metrics = context.measureText(testLine);
-		var testWidth = metrics.width;
-		if (testWidth > maxWidth && n > 0) {
-			context.fillText(line, x, y);
-			line = words[n] + ' ';
-			y += lineHeight;
-		} else {
-			line = testLine;
-		}
-	}
-	context.fillText(line, x, y);
-}
-
-function wrapTextNew(context, text, x, y, maxWidth, lineHeight) {
 
     var lines = text.split("\n");
     for (var i = 0; i < lines.length; i++) {
@@ -711,7 +694,7 @@ function wrapTextNew(context, text, x, y, maxWidth, lineHeight) {
         var line = '';
         for (var n = 0; n < words.length; n++) {
             var testLine = line + words[n] + ' ';
-            var metrics = this.measureText(testLine);
+            var metrics = context.measureText(testLine);
             var testWidth = metrics.width;
             if (testWidth > maxWidth && n > 0) {
                 context.fillText(line, x, y);
@@ -725,6 +708,42 @@ function wrapTextNew(context, text, x, y, maxWidth, lineHeight) {
         y += lineHeight;
     }
 };
+
+
+
+function cropImage(ctx, canvas) {
+	var w = canvas.width;
+	var h = canvas.height;
+	var pix = {x:[], y:[]};
+	var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+	var x;
+	var y;
+	var index;
+
+	for (y = 0; y < h; y++) {
+		for (x = 0; x < w; x++) {
+			index = (y * w + x) * 4;
+			if (imageData.data[index+3] > 0) {
+				pix.x.push(x);
+				pix.y.push(y);
+
+			}   
+		}
+	}
+	pix.x.sort(function(a,b){return a-b});
+	pix.y.sort(function(a,b){return a-b});
+	var n = pix.x.length-1;
+
+	w = pix.x[n] - pix.x[0];
+	h = pix.y[n] - pix.y[0];
+	var cut = ctx.getImageData(pix.x[0], pix.y[0], w, h);
+
+	canvas.width = w;
+	canvas.height = h;
+	ctx.putImageData(cut, 0, 0);
+	return(ctx);
+}
+
 
 function textBlock(x, y, z, name, text) {
 	//Set width an height for plane
@@ -742,10 +761,7 @@ function textBlock(x, y, z, name, text) {
 	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", { width: DTWidth, height: DTHeight }, currentScene);
 
 	//Check width of text for given font type at any size of font
-	var ctx = dynamicTexture.getContext();
-
 	dynamicTexture.hasAlpha = true;
-	ctx.fillStyle = 'transparent';
 
 	textureContext = dynamicTexture.getContext();
 	textureContext.font = "22px DPTFont";
@@ -753,7 +769,7 @@ function textBlock(x, y, z, name, text) {
 	textureContext.fillStyle = "#00ccff";
 
 	wrapText(textureContext, text, 5, 20, 479, 22);
-	textureContext.restore();
+//	textureContext = cropImage(textureContext, textureContext.canvas);
 
 	dynamicTexture.update();
 
