@@ -29,6 +29,8 @@ body {
     touch-action: none;
     position: absolute;
     z-index: 1;
+    
+
 }
 
 #main {
@@ -268,4 +270,73 @@ div#dialogFrame {
     min-width: 80%;
     top: 0px;
     left: 0px;
+}
+
+#overlay {
+    /* margin:5%; */
+    position: fixed;
+    display: grid;
+    background-color: rgba(0, 0, 0, 0);
+    border: 0px;
+    z-index: 100;
+    /* grid-auto-flow: column; */
+    grid-template-columns: 210px;
+    /* pointer-events: none; */
+}
+
+.menu-btn {
+
+	padding:10px;
+	padding-left:20px;
+	display:none;
+	font-family: "DPTFont";
+	font-size: 1em;
+	width:210px;
+	/* height:40px; */
+	border:1px solid white;
+	background-color:rgba(0,0,0,0.25);
+	color:white;
+	-webkit-box-pack: center;
+	    -ms-flex-pack: center;
+	        justify-content: center;
+	text-align: center;
+	background-size: cover;
+
+}
+
+.btn-icon {
+    height: 35px;
+    position: relative;
+    margin-left: -10px;
+    margin-right: 20px;
+    float: left;
+}
+/* button menu style for mobile */
+@media all and (max-width: 500px) {
+.menu-btn{
+	width:90%;
+    margin-top:10%;
+    margin-left:10px;
+	background-color:rgba(0,0,0,0.55);
+    
+}
+
+#button-menu{
+    display:none;
+}
+#overlay{
+    height:100px;
+    width:100%;
+    display:block;
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png');
+}
+#topicForm, #topic{
+    width:100%;
+    height:100%;
+    top:10%;
+    left:0;
+}
+
 }
