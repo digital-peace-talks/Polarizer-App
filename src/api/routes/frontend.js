@@ -15,8 +15,8 @@ router.get('/', async(req, res, next) => {
             var phrase = await getPhrase();
             console.log("no cookie found, set new one");
             // The client need to get the uuid for the first time, it needs to send it back.
-            res.send('<body bgcolor="#0071bc"><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="400" width="400"><br>you are a new user?<br><br>thats your phrase:<br>' + phrase +
-                '<br><br>you are user on another browser?<br><br>enter your pass phrase<br>' +
+            res.send('<body bgcolor="#0071bc"><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="400" width="400"><br>you are a new user?<br><br>thats could be your phrase:<br><br><h3><b>' + phrase +
+                '</b></h3><br><br>you are user on another browser?<br><br>enter your pass phrase<br>' +
                 '<form method="post" action="/recover"><input type=text name=phraseinput>' +
                 '<input type="hidden" name="phrase" value="' + phrase + '"></form></center>');
         } else {
