@@ -372,13 +372,13 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	if (initiatorOpinion.rating == 'negative') {
 		combination = 'red-';
 		if (recipientOpinion.rating == 'negative') {
-			combination = 'red';
+			combination += 'red';
 		} else if (recipientOpinion.rating == 'neutral') {
-			combination = 'blue';
+			combination += 'blue';
 		} else if (recipientOpinion.rating == 'positive') {
-			combination = 'green';
+			combination += 'green';
 		} else if (recipientOpinion.rating == 'unset') {
-			combination = 'grey';
+			combination += 'grey';
 		}
 
 	} else if (initiatorOpinion.rating == 'neutral') {
@@ -459,7 +459,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	//mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 	mat.alphaMode = BABYLON.Engine.ALPHA_COMBINE;
 	mat.diffuseTexture = dynamicTexture;
-	mat.emissiveColor = new BABYLON.Color3(.5, .5, .5);
+	mat.emissiveColor = new BABYLON.Color3(.7, .7, .7);
 	tube.material = mat;
 
 	//return(tube);
