@@ -74,6 +74,11 @@ a {
     text-decoration: none;
 }
 
+button {
+    font-family: DPTFont;
+    font-size: 18px;
+}
+
 label#negative {
     color: #f00;
 }
@@ -219,9 +224,9 @@ div.hide {
 
 div.status {
     bottom: 60px;
-    min-width: 98%;
+    min-width: 95%;
     position: absolute;
-    left: -15px;
+    left: 15px;
     z-index: 30;
 }
 
