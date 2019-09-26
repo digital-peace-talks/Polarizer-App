@@ -243,8 +243,8 @@ function dialogForm() {
 					</div>
 				`;
         } else {
-        	//if(otherReadyToEnd != 'Ready to End') {
-        		html += `
+            //if(otherReadyToEnd != 'Ready to End') {
+            html += `
 					<div class="status">
 						<center>
 							<form id="dialogFrame">
@@ -257,7 +257,7 @@ function dialogForm() {
 						</center>
 					</div>
 				`;
-        	//}
+            //}
         }
 
         jQuery(document).one('click', "#dialogClose", function(event) {
@@ -354,7 +354,7 @@ function dialogForm() {
     jQuery('body').append(`<div id="dialogForm" style="position: absolute; top: 0px; left: -63px; padding: 20px;
 				margin-left: 25%; border: #fff; border-style: solid; border-width: 1px;
 				color: #000; width: 50%; z-index: 2; font-family: DPTFont; font-size: 18px;
-				background-color: #28A9E1; height: 640px">${html}</div>`);
+				background-color: #66D1FF; height: 640px">${html}</div>`);
 
     if (currentDialog.status == 'CLOSED') {
         for (var i = 0; i < currentDialog.crisises.length; i++) {
