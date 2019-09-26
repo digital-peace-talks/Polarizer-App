@@ -313,10 +313,10 @@ jQuery(document).ready(function() {
 
     function propositionForm(opinionId) {
 
-        jQuery('#misc').append('<div style="position: absolute; padding: 10px;' +
+        jQuery('#misc').append('<div style="position: absolute; padding: 10px; top: 0px;' +
             'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">' +
             'Please enter your proposition:<br><form id="proposition">' +
-            '<input type="text" name="proposition" size="50" class="proposition">' +
+            '<input type="text" name="proposition" size="40" class="proposition">' +
             '<input type="hidden" id="opinionId" name="opinionId" value="' + opinionId + '"</form></div>');
 
         jQuery(".proposition").focus();

@@ -36,12 +36,12 @@ function hideMenu() {
 
 function propositionForm(opinionId) {
     console.log('enter proposition');
-    jQuery('body').append(`<div id="propositionForm" style="position: absolute; 
+    jQuery('body').append(`<div id="propositionForm" style="position: absolute; top:0; left: 0px;
 		padding: 20px; margin-left: 30%; border: #fff; border-style: solid;
-		border-width: 1px; color: #000; width: 40%; z-index: 30; font-family: DPTFont;
+		border-width: 1px; color: #000; z-index: 30; font-family: DPTFont;
 		font-size: 18px; background-color: #00ccffcc;">Please enter your proposition:
 		<br><form id="proposition"><textarea style="font-family: DPTFont;
-		font-size: 18px;" name="proposition" cols="64" rows="4" class="proposition"></textarea>
+		font-size: 18px;" name="proposition" cols="40" rows="4" class="proposition"></textarea>
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
 		<br><input style="font-family: DPTFont; font-size: 18px;"
 		type="submit" value="Send"></form></div>`);
@@ -93,7 +93,7 @@ function topicForm() {
     if (isMobile) {
         jQuery('body').append(`<div id="topicForm" style="position: fixed; top: 0px; left: 0px; padding: 0px;  margin-left: 5%;
 		margin-top: 25%; 
-		color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
+		color: #000; z-index: 2; font-family: DPTFont; font-size: 18px;
 		background-color: #005B9888;">New topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
 		 cols="43" rows="12" class="topic"   margin: 0 auto;></textarea><br><input style="font-family: DPTFont;
@@ -102,7 +102,7 @@ function topicForm() {
     } else {
         jQuery('body').append(`<div id="topicForm" style="position: absolute; top: 0px; left: 0px; padding: 20px;
 		margin-left: 33%; border: #fff; border-style: solid; border-width: 1px;
-		color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
+		color: #000; z-index: 2; font-family: DPTFont; font-size: 18px;
 		background-color: #005B9888;">Please enter a new topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
 		cols="51" rows="4" class="topic"></textarea><br><input style="font-family: DPTFont;
@@ -154,7 +154,7 @@ function opinionForm() {
     console.log('enter opinion');
     jQuery('body').append(`<div id="opinionForm" style="position: relative; top: -620px; left: -20px;
 		padding: 20px; margin-left: 33%; border: #fff; border-style: solid;
-		border-width: 1px; color: #000; width: 33%; z-index: 2; font-family: DPTFont;
+		border-width: 1px; color: #000; z-index: 2; font-family: DPTFont;
 		font-size: 18px; background-color: #005B9888;">Please enter a new opinion:<br>
 		<form id="opinion"><textarea style="font-family: DPTFont; font-size: 18px;"
 		name="opinion" cols="52" rows="4" class="opinion"></textarea><br>
