@@ -243,7 +243,7 @@ function dialogForm() {
 					</div>
 				`;
         } else {
-        	if(otherReadyToEnd != '') {
+        	if(otherReadyToEnd != 'Ready to End') {
         		html += `
 					<div class="status">
 						<center>
