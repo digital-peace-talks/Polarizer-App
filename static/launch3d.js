@@ -1079,9 +1079,10 @@ function initVirtJoysticks() {
     btn.onclick = () => {
         if (BABYLON.VirtualJoystick.Canvas.style.zIndex == "-1") {
             BABYLON.VirtualJoystick.Canvas.style.zIndex = "4";
-            btn.background = "green";
+            btn.src = "/touch_white.png";
         } else {
             BABYLON.VirtualJoystick.Canvas.style.zIndex = "-1";
+            btn.src = "/joypad_white.png";
             btn.background = "transparent";
         }
     }
