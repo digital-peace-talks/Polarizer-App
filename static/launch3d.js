@@ -115,7 +115,7 @@ function topicForm() {
 		background-color: #005B9888;">Please enter a new topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
 		cols="51" rows="4" class="topic"></textarea><br><input style="font-family: DPTFont;
-        font-size: 18px;" type="submit" value="Sddfffssend">
+        font-size: 18px;" type="submit" value="Send">
         <input type="button" value="close window" name="close window" id="CloseTopicForm"></form></div>`);
     }
     jQuery(".topic").focus();
