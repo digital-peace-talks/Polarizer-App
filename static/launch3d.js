@@ -1368,6 +1368,7 @@ function main() {
 			engine.resize();
 		});
 
+/*
 //		jQuery(document).on("mouseenter touchstart", "span.myDialogs", function(event) {
 		jQuery(document).on("mouseenter", "span.myDialogs", function(event) {
 			jQuery('body').append(`<div id="dialogInfo" style="position: absolute;
@@ -1385,6 +1386,7 @@ function main() {
 			event.stopImmediatePropagation();
 			event.preventDefault();
 		});
+*/
 		jQuery(document).on("click touch", "span.myDialogs", function(event) {
 			jQuery('#dialogInfo').remove();
 			jQuery('#dialogForm').remove();
