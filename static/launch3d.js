@@ -554,6 +554,7 @@ function dialogRelations(opinionDialogConnections) {
 				}
 			}
 		}
+		/*
 		for (var j in opinionDialogConnections[i].leafs.unset) {
 			var opinionId = opinionDialogConnections[i].leafs.unset[j];
 			if (opinionId != i) {
@@ -568,6 +569,7 @@ function dialogRelations(opinionDialogConnections) {
 				}
 			}
 		}
+		*/
 
 		/*
 		initiatorOpinion.position.x -= 2.4;
