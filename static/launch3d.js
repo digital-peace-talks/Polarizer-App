@@ -37,9 +37,9 @@ function hideMenu() {
 function propositionForm(opinionId) {
     console.log('enter proposition');
     jQuery('body').append(`<div id="propositionForm" style="position: absolute; top:0; left: 0px;
-		padding: 20px; margin-left: 30%; border: #fff; border-style: solid;
-		border-width: 1px; color: #000; z-index: 30; font-family: DPTFont;
-		font-size: 18px; background-color: #00ccffcc;">Please enter your proposition:
+		padding: 20px; margin-left: 300px; border: #fff; border-style: solid;
+		border-width: 1px; color: #F0F3F5; z-index: 30; font-family: DPTFont;
+		font-size: 18px; background-color: #005B9888;">Please enter your proposition:
 		<br><form id="proposition"><textarea style="font-family: DPTFont;
 		font-size: 18px;" name="proposition" cols="40" rows="4" class="proposition"></textarea>
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
@@ -93,7 +93,7 @@ function topicForm() {
     if (isMobile) {
         jQuery('body').append(`<div id="topicForm" style="position: fixed; top: 0px; left: 0px; padding: 0px;  margin-left: 5%;
 		margin-top: 25%; 
-		color: #000; z-index: 2; font-family: DPTFont; font-size: 18px;
+		color: #F0F3F5; z-index: 2; font-family: DPTFont; font-size: 18px;
 		background-color: #005B9888;">New topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
 		 cols="43" rows="12" class="topic"   margin: 0 auto;></textarea><br><input style="font-family: DPTFont;
@@ -101,8 +101,8 @@ function topicForm() {
 
     } else {
         jQuery('body').append(`<div id="topicForm" style="position: absolute; top: 0px; left: 0px; padding: 20px;
-		margin-left: 33%; border: #fff; border-style: solid; border-width: 1px;
-		color: #000; z-index: 2; font-family: DPTFont; font-size: 18px;
+		margin-left: 300px; border: #fff; border-style: solid; border-width: 1px;
+		color: #F0F3F5; z-index: 2; font-family: DPTFont; font-size: 18px;
 		background-color: #005B9888;">Please enter a new topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
 		cols="51" rows="4" class="topic"></textarea><br><input style="font-family: DPTFont;
@@ -152,9 +152,9 @@ function topicForm() {
 
 function opinionForm() {
     console.log('enter opinion');
-    jQuery('body').append(`<div id="opinionForm" style="position: relative; top: -620px; left: -20px;
-		padding: 20px; margin-left: 33%; border: #fff; border-style: solid;
-		border-width: 1px; color: #000; z-index: 2; font-family: DPTFont;
+    jQuery('body').append(`<div id="opinionForm" style="position: absolute; top: 0px; left: 0px;
+		padding: 20px; margin-left: 300px; border: #fff; border-style: solid;
+		border-width: 1px; color: #F0F3F5; z-index: 2; font-family: DPTFont;
 		font-size: 18px; background-color: #005B9888;">Please enter a new opinion:<br>
 		<form id="opinion"><textarea style="font-family: DPTFont; font-size: 18px;"
 		name="opinion" cols="52" rows="4" class="opinion"></textarea><br>
@@ -206,29 +206,29 @@ function loadDialogList(restObj) {
 
     jQuery('body').append(`<div id="dialogMenu" style="position: relative;
 		padding: 10px; top: 144px; border: #fff; border-style: solid;
-		border-width: 1px; color: #fff; width: 258px; height: 100%;
+		border-width: 1px; color: #005B98; width: 258px; height: 100%;
 		overflow-y: auto; z-index: 2; font-family: DPTFontDin; font-size: 16px;
-		background-color: #002C4B88; visibility: hidden;"></div>`);
+		background-color: #002C4BDD; visibility: hidden;"></div>`);
 
     for (var i = 0; i < dialogs.length; i++) {
 
         menuEntry = `<span class="myDialogs" id="${dialogs[i].dialog}"><i>proposition:</i>
-			${dialogs[i].opinionProposition}<br><br></span>`;
+        <h2>${dialogs[i].opinionProposition}</h2></span>`;
 
         dialog = `<u style="font-size: 32px">Dialog Info</u><br><br><i>proposition:</i>
-				<br>${dialogs[i].opinionProposition}<br><br>
+				<br><h2>${dialogs[i].opinionProposition}<h2>
 				<i>topic:</i><br>${dialogs[i].topic}<br><br>`;
 
         if (dialogs[i].initiator == 'me') {
 
             dialog += `<i>my opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
-					<i>other's opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>
+					<i>other's opinion:</i><br><h2>${dialogs[i].recipientOpinion}<h2>
 					<i>initiator:</i> me<br><br>`;
 
         } else {
 
             dialog += `<i>my opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>
-					 <i>other's opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
+					 <i>other's opinion:</i><br><h2>${dialogs[i].initiatorOpinion}<h2>
 					 <i>initiator:</i> other<br><br>`;
 
         }

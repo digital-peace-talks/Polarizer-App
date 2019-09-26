@@ -39,16 +39,26 @@ body {
 i {
     font-family: "DPTFontDin";
     font-style: inherit;
-    color: #F0F3F5;
+    color: #66D1FF;
     font-weight: 700;
+    font-size: 18px;
 }
 
 h3 {
     font-family: "DPTFontDin";
-    color: #F0F3F5;
+    font-size: 32px;
+    color: #005b98;
     border-color: transparent;
-    border-bottom: 1px solid #F0F3F5;
+    border-bottom: 1px solid #66D1FF;
     padding-bottom: 20px;
+}
+
+h2 {
+    font-family: "DPTFont";
+    color: #F0F3F5;
+    font-size: 16px;
+    font-weight: 300;
+    padding-bottom: 15px;
 }
 
 div#dialogMenu>i {
@@ -99,25 +109,26 @@ input[type=text] {
 
 #misc2 {
     position: absolute;
-    z-index: 110;
+    z-index: 220;
     background: rgb(0, 255, 0);
     margin: 0 auto;
+    left: 440px;
+    top: 140px;
 }
 
 p.left {
     margin: 5px;
     margin-bottom: 15px;
-    margin-right: 10%;
     padding: 5px;
-    text-align: justify;
     text-justify: inter-word;
-    background-color: #66D1FF;
-    border-color: #28A9E1;
+    background-color: #005B98;
+    border-color: #005B98;
     border-style: solid;
     border-width: 1px;
     position: relative;
     color: #F0F3F5;
     font-size: 18px;
+    margin-left: 20px;
 }
 
 p.left:before {
@@ -125,26 +136,26 @@ p.left:before {
     position: absolute;
     width: 0px;
     height: 0px;
-    left: 0px;
+    left: 10px;
     bottom: -10px;
     border: 5px solid;
-    border-color: #66D1FF transparent transparent #66D1FF;
+    border-color: #005B98 transparent transparent #005B98;
 }
 
 p.right {
     margin: 5px;
     margin-bottom: 15px;
-    margin-left: 10%;
     padding: 5px;
     text-align: justify-right;
     text-justify: inter-word;
-    background-color: #005B98;
-    border-color: #28A9E1;
+    background-color: #002C4B;
+    border-color: #002C4B;
     border-style: solid;
     border-width: 1px;
     position: relative;
     color: #F0F3F5;
     font-size: 18px;
+    margin-left: 20px;
 }
 
 p.right:before {
@@ -152,12 +163,12 @@ p.right:before {
     position: absolute;
     width: 0px;
     height: 0px;
-    right: 0px;
+    right: 10px;
     bottom: -10px;
     border: 5px solid;
     border-left: 5px solid transparent;
-    border-right: 5px solid #005B98;
-    border-top: 5px solid #005B98;
+    border-right: 5px solid #002C4B;
+    border-top: 5px solid #002C4B;
     border-bottom: 5px solid transparent;
 }
 
@@ -207,7 +218,7 @@ div.hide {
 }
 
 div.status {
-    top: 560px;
+    bottom: 60px;
     min-width: 98%;
     position: absolute;
     left: -15px;
@@ -222,13 +233,15 @@ div#c1 {
     float: left;
     position: absolute;
     font-size: 14px;
+    background-color: #005b98;
+    padding: 10px;
 }
 
 div#c2 {
     font-family: "DPTFont";
     overflow-y: auto;
     float: left;
-    width: 47%;
+    width: 51%;
     height: 100%;
     margin-left: 20%;
     max-height: 400px;
@@ -245,6 +258,8 @@ div#c3 {
     text-align: left;
     text-justify: inter-word;
     font-size: 14px;
+    background-color: #005b98;
+    padding: 10px;
 }
 
 div#crisis {
@@ -261,7 +276,7 @@ div#crisis {
 div#dialogFrame {
     font-family: "DPTFont";
     border-width: 0px;
-    color: #00111D;
+    color: #F0F3F5;
     margin-left: 0%;
     margin-right: 0%;
     min-height: 340px;
@@ -313,10 +328,10 @@ div#dialogFrame {
 
 @media all and (max-width: 500px) {
     .menu-btn {
-        width: 90%;
-        margin-top: 10%;
-        margin-left: 10px;
-        background-color: rgba(0, 0, 0, 0.55);
+        width: 100%;
+        margin-top: 0px;
+        margin-left: 0px;
+        background-color: #005B9888;
     }
     #button-menu {
         display: none;
