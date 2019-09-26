@@ -249,8 +249,8 @@ function loadTopics(restObj) {
 		}
 		var plane = textBlock(
 			x, y, 0,
-			`{"context": "topicMap", "topicId": "${restObj.data[i]._id}",
-				"topic": "${restObj.data[i].content}"}`,
+			JSON.stringify({"context": "topicMap", "topicId": "${restObj.data[i]._id}",
+				"topic": "${restObj.data[i].content}"}),
 			`${restObj.data[i].content} [ ${restObj.data[i].opinions.length} ]`);
 		x += 4.8;
 		if (x > xmax) {
@@ -258,14 +258,14 @@ function loadTopics(restObj) {
 			x = xstart;
 		}
 		/*
-						jQuery('div.col.left').append(
-							'<li> <a class="opinionlist" id="'
-							+ restObj.data[i]._id
-							+ '" href="#">'
-							+ restObj.data[i].content
-							+ "</a>"
-							+ ' [' + restObj.data[i].opinions.length + '] '
-							+ options+"</li><br>");
+			jQuery('div.col.left').append(
+				'<li> <a class="opinionlist" id="'
+				+ restObj.data[i]._id
+				+ '" href="#">'
+				+ restObj.data[i].content
+				+ "</a>"
+				+ ' [' + restObj.data[i].opinions.length + '] '
+				+ options+"</li><br>");
 		*/
 	}
 	//topicEdit();
@@ -613,7 +613,7 @@ function loadOpinions(restObj) {
 
 		var plane = textBlock(
 			nodes[i].x, nodes[i].y, 0,
-			`{"context": "opinionMap", "opinionId": "${restObj.data[i]._id}"}`,
+			JSON.stringify({"context": "opinionMap", "opinionId": "${restObj.data[i]._id}"}),
 			`${restObj.data[i].content}`);
 
 		plane.actionManager = new BABYLON.ActionManager(currentScene);
@@ -686,22 +686,27 @@ function loadOpinions(restObj) {
 }
 
 function wrapText(context, text, x, y, maxWidth, lineHeight) {
-	var words = text.split(' ');
-	var line = '';
-	for (var n = 0; n < words.length; n++) {
-		var testLine = line + words[n] + ' ';
-		var metrics = context.measureText(testLine);
-		var testWidth = metrics.width;
-		if (testWidth > maxWidth && n > 0) {
-			context.fillText(line, x, y);
-			line = words[n] + ' ';
-			y += lineHeight;
-		} else {
-			line = testLine;
-		}
-	}
-	context.fillText(line, x, y);
-}
+
+    var lines = text.split("\n");
+    for (var i = 0; i < lines.length; i++) {
+        var words = lines[i].split(' ');
+        var line = '';
+        for (var n = 0; n < words.length; n++) {
+            var testLine = line + words[n] + ' ';
+            var metrics = context.measureText(testLine);
+            var testWidth = metrics.width;
+            if (testWidth > maxWidth && n > 0) {
+                context.fillText(line, x, y);
+                line = words[n] + ' ';
+                y += lineHeight;
+            } else {
+                line = testLine;
+            }
+        }
+        context.fillText(line, x, y);
+        y += lineHeight;
+    }
+};
 
 function textBlock(x, y, z, name, text) {
 	//Set width an height for plane
