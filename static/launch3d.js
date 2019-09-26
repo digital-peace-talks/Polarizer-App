@@ -920,15 +920,12 @@ var createGUIScene = function(dptMode) {
 		event.preventDefault();
 		jQuery('#opinionForm').remove();
 		jQuery('#topicForm').remove();
-<<<<<<< HEAD
 		
 		if(isMobile){
 			console.log("mobile behavior!")
 			hideMenu();
 		}
-=======
 		focusAtCanvas();
->>>>>>> 958f01d9e18c441c8d32830e1d4fd2228305f9d7
 
 	});
 
@@ -961,7 +958,6 @@ var createGUIScene = function(dptMode) {
 
 		newTopicBtn.on('click touch', function(event) {
 			jQuery('#topicForm').remove();
-<<<<<<< HEAD
 			
 				topicForm();
 				event.stopImmediatePropagation();
@@ -971,13 +967,7 @@ var createGUIScene = function(dptMode) {
 					hideMenu();
 				}
 			
-=======
 
-			topicForm();
-			event.stopImmediatePropagation();
-			event.preventDefault();
-
->>>>>>> 958f01d9e18c441c8d32830e1d4fd2228305f9d7
 		})
 
 	} else if (dptMode == 'opinionScene') {
