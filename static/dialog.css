@@ -395,6 +395,7 @@ div#dialogFrame {
     font-family: DPTFontDin;
     font-size: 16px;
     background-color: #002C4BDD;
+    visibility: hidden;
 }
 
 

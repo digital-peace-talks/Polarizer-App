@@ -34,6 +34,7 @@ function hideMenu() {
     jQuery('#overlay').css("background-image", "url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png')");
 
 }
+
 function propositionForm(opinionId) {
 
     console.log('enter proposition');
@@ -234,7 +235,7 @@ function loadDialogList(restObj) {
     var dialogs = restObj.data.data;
 
 
-    jQuery('body').append(`<div id="dialogMenu" visibility: hidden;"></div>`);
+    jQuery('body').append(`<div id="dialogMenu"></div>`);
 
     jQuery('#dialogMenu').empty();
 
@@ -1470,7 +1471,7 @@ function main() {
             if (jQuery('#button-menu').is(":hidden")) {
                 jQuery('#button-menu').fadeIn();
                 jQuery('#overlay').css("background-image", "url()");
-jQuery('#topicForm').remove();
+                jQuery('#topicForm').remove();
             }
 
         })
