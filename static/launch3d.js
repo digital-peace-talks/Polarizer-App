@@ -46,9 +46,7 @@ function propositionForm(opinionId) {
 		font-size: 18px;" name="proposition" cols="64" rows="4"   width= "500px";
 		height="150px";class="proposition"></textarea>
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
-		<br><input style="font-family: DPTFont; font-size: 18px;"
-
-		type="submit" value="Send">
+		<br><input type="submit" value="Send">
 		<input type="button" value="close window" name="close window" id="ClosePropositionForm"></form></div>`);
     jQuery(".proposition").focus();
 
@@ -108,8 +106,7 @@ function topicForm() {
 		color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
 		background-color: #005B9888;">New topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
-		 cols="43" rows="12" class="topic"   margin: 0 auto;></textarea><br><input style="font-family: DPTFont;
-		font-size: 18px;" type="submit"  value="Send"></form></div>`);
+		 cols="43" rows="12" class="topic"   margin: 0 auto;></textarea><br><input type="submit" value="Send"></form></div>`);
 
 
     } else {
@@ -118,8 +115,7 @@ function topicForm() {
 		color: #F0F3F5; z-index: 2; font-family: DPTFont; font-size: 18px;
 		background-color: #005B9888;">Please enter a new topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
-		cols="51" rows="4" class="topic"></textarea><br><input style="font-family: DPTFont;
-		font-size: 18px;" type="submit" value="Send">
+		cols="51" rows="4" class="topic"></textarea><br><input type="submit" value="Send">
 		<input type="button" value="close window" name="close window" id="CloseTopicForm"></form></div>`);
     }
     jQuery(".topic").focus();
@@ -179,9 +175,7 @@ function opinionForm() {
 		font-size: 18px; background-color: #005B9888;">Please enter a new opinion:<br>
 		<form id="opinion"><textarea style="font-family: DPTFont; font-size: 18px;"
 		name="opinion" cols="52" rows="4" class="opinion"></textarea><br>
-		<input style="font-family: DPTFont; font-size: 18px;" type="submit"
-
-		value="Send">
+		<input type="submit" value="Send">
 		<input type="button" value="close window" name="close window" id="CloseOpinionForm"></form></div>`);
     jQuery(".opinion").focus();
 
