@@ -442,4 +442,9 @@ div#dialogFrame {
     #dialogMenu {
         width: 100%;
     }
+    #misc2 {
+        top: 0px;
+        left: 0px;
+        width: 100%
+    }
 }
