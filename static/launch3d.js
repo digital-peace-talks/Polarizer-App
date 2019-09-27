@@ -396,7 +396,7 @@ function circleTextPlane(x, y, z, name, text) {
     return (plane);
 }
 
-function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections) {
+function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections, status) {
 
     var sv = new BABYLON.Vector3(initiatorOpinion.position);
     var ev = new BABYLON.Vector3(recipientOpinion.position);
@@ -405,10 +405,16 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
     ev.x = recipientOpinion.position.x - 2.4;
     ev.y = recipientOpinion.position.y + 1.2;
 
+    var radius = 0.05;
+    var occupacy = 0.85;
+    if(status == "CLOSED") {
+    	radius = 0.08;
+    	occupacy = 0.15;
+    }
     var tube = new BABYLON.MeshBuilder.CreateTube(
         "tube", {
             path: [sv, ev],
-            radius: 0.1,
+            radius: radius,
             updatable: true,
         },
         currentScene);
@@ -418,6 +424,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
         dialogId: opinionDialogConnections[initiatorOpinion.opinionId].dialogId,
         initiatorsOpinion: opinionDialogConnections[initiatorOpinion.opinionId].initiatorsOpinion,
         recipientsOpinion: opinionDialogConnections[initiatorOpinion.opinionId].recipientsOpinion,
+        status: status,
     };
 
     var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 32, currentScene);
@@ -511,10 +518,13 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 
     var mat = new BABYLON.StandardMaterial("mat", currentScene);
     mat.alpha = 0.25;
-    //mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
-    mat.alphaMode = BABYLON.Engine.ALPHA_COMBINE;
+    mat.alpha = occupacy;
+    mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
+    if(status == 'CLOSED') {
+    	mat.alphaMode = BABYLON.Engine.ALPHA_COMBINE;
+    }
     mat.diffuseTexture = dynamicTexture;
-    mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+    //mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
     tube.material = mat;
 
     //return(tube);
@@ -556,6 +566,9 @@ function dialogRelations(opinionDialogConnections) {
                 }
             }
         }
+        if ('position' in initiatorOpinion && 'position' in recipientOpinion) {
+            createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections);
+        }
         for (var j in opinionDialogConnections[i].leafs.neutral) {
             var opinionId = opinionDialogConnections[i].leafs.neutral[j];
             if (opinionId != i) {
@@ -569,6 +582,9 @@ function dialogRelations(opinionDialogConnections) {
                     }
                 }
             }
+        }
+        if ('position' in initiatorOpinion && 'position' in recipientOpinion) {
+            createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections);
         }
         for (var j in opinionDialogConnections[i].leafs.positive) {
             var opinionId = opinionDialogConnections[i].leafs.positive[j];
@@ -584,7 +600,9 @@ function dialogRelations(opinionDialogConnections) {
                 }
             }
         }
-        /*
+        if ('position' in initiatorOpinion && 'position' in recipientOpinion) {
+            createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections);
+        }
         for(var j in opinionDialogConnections[i].leafs.unset) {
         	var opinionId = opinionDialogConnections[i].leafs.unset[j];
         	if(opinionId != i) {
@@ -599,7 +617,6 @@ function dialogRelations(opinionDialogConnections) {
         		}
         	}
         }
-        */
 
         /*
         initiatorOpinion.position.x -= 2.4;
@@ -608,10 +625,11 @@ function dialogRelations(opinionDialogConnections) {
         recipientOpinion.position.y += 1.2;
         */
 
-        if ('position' in initiatorOpinion &&
-            'position' in recipientOpinion &&
-            opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus == 'CLOSED') {
-            createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections);
+        if ('position' in initiatorOpinion
+        && 'position' in recipientOpinion
+        ) {
+        //&&    opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus == 'CLOSED') {
+            createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections, opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus);
         }
         //		return(createBiColorTube(currentScene.meshes[k].dpt.opinionId, sv, ev));
     }
@@ -1170,13 +1188,15 @@ var createGenericScene = function(dptMode) {
                         propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId);
                     } else if (pointerInfo.pickInfo.pickedMesh.dpt.context == "tubeConnection") {
 
-                        currentDialog = {
-                            dialog: pointerInfo.pickInfo.pickedMesh.dpt.dialogId,
-                            topic: currentTopicStr,
-                            initiatorOpinion: pointerInfo.pickInfo.pickedMesh.dpt.initiatorsOpinion,
-                            recipientOpinion: pointerInfo.pickInfo.pickedMesh.dpt.recipientsOpinion,
-                        };
-                        dpt.getDialog(currentDialog.dialog);
+                    	if(pointerInfo.pickInfo.pickedMesh.dpt.status == "CLOSED") {
+                        	currentDialog = {
+                        	    dialog: pointerInfo.pickInfo.pickedMesh.dpt.dialogId,
+                        	    topic: currentTopicStr,
+                        	    initiatorOpinion: pointerInfo.pickInfo.pickedMesh.dpt.initiatorsOpinion,
+                        	    recipientOpinion: pointerInfo.pickInfo.pickedMesh.dpt.recipientsOpinion,
+                        	};
+                        	dpt.getDialog(currentDialog.dialog);
+                    	}
 
                     }
                 }
