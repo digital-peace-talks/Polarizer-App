@@ -43,8 +43,8 @@ function propositionForm(opinionId) {
 		border-width: 1px; color: #F0F3F5; z-index: 30; font-family: DPTFont;
 		font-size: 18px; background-color: #005B9888;">Please enter your proposition:
 		<br><form id="proposition"><textarea style="font-family: DPTFont;
-		font-size: 18px;" name="proposition" cols="64" rows="4"   width= "500px";
-		height="150px";class="proposition"></textarea>
+		font-size: 18px;" name="proposition" cols="64" rows="4" width= "500px"
+		height="150px" class="proposition"></textarea>
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
 		<br><input type="submit" value="Send">
 		<input type="button" value="close window" name="close window" id="ClosePropositionForm"></form></div>`);
