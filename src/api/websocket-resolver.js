@@ -51,6 +51,17 @@ async function publishDialogUpdate(dialogId) {
 	}
 }
 
+async function publishDialogListUpdate(dialogId) {
+	var dialog = await dialogService.getDialog({body: {dialogId: dialogId}});
+	for(var i = 0; i < global.dptNS.online.length; i++) {
+		if(global.dptNS.online[i].registered
+		&& (global.dptNS.online[i].user.id == dialog.data.initiator.toString()
+		|| global.dptNS.online[i].user.id == dialog.data.recipient.toString())) {
+			global.dptNS.online[i].socket.emit('update', {path: '/dialog/list/', method: 'get'});
+		}
+	}
+}
+
 /*
 	from here on we setup the match array, which will be used in the
 	apiBroker function. this array defines each api entry point. the associated
@@ -396,7 +407,10 @@ match.push({
 		if(user) {
 			data.body.initiator = user.user.id;
 			const ret = await dialogService.createDialog(data.body);
-			socket.emit('update', {path: '/dialog/list/', method: 'get'});
+			//socket.emit('update', {path: '/dialog/list/', method: 'get'});
+			if(ret.status == 200) {
+				publishDialogListUpdate(ret.data.id);
+			}
 			return({data: ret});
 		}
 	}
