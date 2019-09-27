@@ -96,6 +96,8 @@ jQuery(document).ready(function() {
 	});
 
 */
+
+
 function crisisForm(messageId) {
 
     var message = '';
@@ -216,17 +218,27 @@ function dialogForm() {
 
     var html = `
 				<div id="dialogFrame">
-					<div class="table">
 						<div class="top">
 							<center>
-								<h3>${currentDialog.topic}</h3>
-								Messages: <b>${currentDialog.messages.length} of ${maxMessages}</b>
-							</center>
-						</div>
+                                <h3>${currentDialog.topic}</h3>
+                                <div class="table">
+                                    <div class="dialogleft">
+                                        <p><b>Others opinion:</b><br>${opinion1}<br>${otherReadyToEnd}</p>
+                                    </div>
+                                    <div class="dialogcenter">
+                                        vs.
+                                    </div>
+                                    <div class="dialogright">
+                                        <p><b>Your opinion:</b><br>${opinion2}<br>${meReadyToEnd}</p>
+                                    </div>
+                                </div>
+                            </center>
+                            
+                        </div>
 					<div class="middle">
-					<div id="c1"><b>Others opinion:</b><br>${opinion1}<br><br>${otherReadyToEnd}</div>
-					<div id="c2">${dialog}</div>
-					<div id="c3"><b>My opinion:</b><br>${opinion2}<br><br>${meReadyToEnd}<br><br>${extensionRequest}</div></div>
+                        <div id="c2">${dialog}</div>
+                    </div>
+                </div>
 			`;
 
     if (currentDialog.status == 'ACTIVE') {
@@ -238,7 +250,8 @@ function dialogForm() {
 						<form id="dialogFrame">
                             <input type="button" value="close window" name="close window" id="dialogClose">
                             <input type="button" value="end dialog" name="end dialog" id="dialogClose">
-						</form>
+                        </form>
+                        <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
 			   		</center>
 					</div>
 				`;
@@ -253,7 +266,9 @@ function dialogForm() {
 								<input type="submit" name="send" value="send">
                                 <input type="button" value="close window" name="close window" id="dialogClose">
                                 <input type="button" value="end dialog" name="end dialog" id="dialogClose">
-							</form>
+                            </form>
+                            <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
+                        
 						</center>
 					</div>
 				`;
@@ -280,7 +295,7 @@ function dialogForm() {
 					<div class="status">
 						<center>
 							Please wait for the other to accept the dialog.
-							<input type="button" value="close window" name="close window" size="120" id="dialogClose">
+                            <input type="button" value="close window" name="close window" size="120" id="dialogClose">
 			   			</center>
 					</div>
 				`;
@@ -351,9 +366,9 @@ function dialogForm() {
     html += '</div></div>';
 
     //		jQuery('#misc').append(html);
-    jQuery('body').append(`<div id="dialogForm" style="position: absolute; top: 0px; left: 280px; padding: 20px;
+    jQuery('body').append(`<div id="dialogForm" style="position: absolute; top: 0px; left: 280px; padding: 10px;
 				margin-left: 0px; border: #F0F3F5; border-style: solid; border-width: 1px;
-				color: #F0F3F5; width: 50%; z-index: 200; font-family: DPTFont; font-size: 18px;
+				color: #F0F3F5; width: 600px; z-index: 200; font-family: DPTFont; font-size: 18px;
 				background-color: #28A9E1DD; height: 100%">${html}</div>`);
 
     if (currentDialog.status == 'CLOSED') {
