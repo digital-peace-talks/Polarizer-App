@@ -1413,9 +1413,7 @@ function main() {
 
 				if(jQuery('#dialogMenu').is(":visible")){
 					// jQuery('#dialogMenu').remove();
-				
 				}
-	
 			}
 	
 			if(jQuery('#topicForm').is(":visible")){
