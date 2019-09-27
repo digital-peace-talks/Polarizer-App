@@ -15,24 +15,29 @@ router.get('/', async(req, res, next) => {
             var phrase = await getPhrase();
             console.log("no cookie found, set new one");
             // The client need to get the uuid for the first time, it needs to send it back.
-            res.send('<body bgcolor="#0071bc"><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="400" width="400"><br>you are a new user?<br><br>thats could be your phrase:<br><br><h3><b>' + phrase +
-                '</b></h3><br><br>you are user on another browser?<br><br>enter your pass phrase<br>' +
-                '<form method="post" action="/recover"><input type=text name=phraseinput>' +
-                '<input type="hidden" name="phrase" value="' + phrase + '"></form></center>');
+            res.send(`<body bgcolor="#0071bc"><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="400" width="400">
+                <br>Are you a new user?<br><br>
+                <fieldset style="text-align:center; width:400px">
+                <legend style="text-align:center">This could be your pass-phrase:</legend>
+                <h3><b>${phrase}</b>
+                </fieldset>
+                </h3><br><br>Are you also on another browser?<br><br>Enter your pass-phrase:<br>
+                <form method="post" action="/recover"><input type=text name=phraseinput>
+                <input type="hidden" name="phrase" value="${phrase}"></form></center>`);
         } else {
             res.send(`<body bgcolor="#0071bc"><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="400" width="400">
-            <br><br> 
-					<a href=/launch3d.html>Start</a><br><br>
-				
-					<!--
-					<a onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
-					-->
-					<a onClick="function gcv(a){
-						var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');
-						return (b ? b.pop():'')
-					}
-					document.cookie='dptUUID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-					location.reload(true);">delete cookie</a></center>
+                <br><br> 
+                <a href=/launch3d.html>Start</a>
+                <br><br>
+                <!--
+                <a onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
+                -->
+                <a onClick="function gcv(a){
+                    var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');
+                    return (b ? b.pop():'')
+                }
+                document.cookie='dptUUID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                location.reload(true);">delete cookie</a></center>
 			`);
         }
         res.status(200);
