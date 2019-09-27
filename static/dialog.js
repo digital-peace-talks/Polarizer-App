@@ -159,13 +159,13 @@ function dialogForm() {
 
         opinion1 = currentDialog.recipientOpinion;
         opinion2 = currentDialog.initiatorOpinion;
-        opinion2 += "<br><br><b>Initiators proposition:</b><br>" + currentDialog.opinionProposition
+        //  opinion2 += "<br><br><b>Initiators proposition:</b><br>" + currentDialog.opinionProposition
 
     } else {
 
         opinion1 = currentDialog.initiatorOpinion;
         opinion1 += "<br><br><b>Initiators proposition:</b><br>" + currentDialog.opinionProposition
-        opinion2 = currentDialog.recipientOpinion;
+            //   opinion2 = currentDialog.recipientOpinion;
     }
 
     if (currentDialog.messages.length == 0) {
