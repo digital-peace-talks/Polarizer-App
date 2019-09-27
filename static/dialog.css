@@ -380,6 +380,23 @@ div#dialogFrame {
     /* The width is 45%, by default */
 }
 
+#dialogMenu {
+    position: relative;
+    padding: 10px;
+    top: 144px;
+    border: #fff;
+    border-style: solid;
+    border-width: 1px;
+    color: #005B98;
+    width: 280px;
+    max-height: 480px;
+    overflow-y: auto;
+    z-index: 2;
+    font-family: DPTFontDin;
+    font-size: 16px;
+    background-color: #002C4BDD;
+}
+
 
 /* button menu style for mobile */
 
@@ -420,5 +437,8 @@ div#dialogFrame {
     }
     h3 {
         font-size: 16px;
+    }
+    #dialogMenu {
+        width: 100%;
     }
 }
