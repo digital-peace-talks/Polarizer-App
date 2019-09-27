@@ -43,8 +43,9 @@ function userRegistered(dptUUID) {
 async function publishDialogUpdate(dialogId) {
 	var dialog = await dialogService.getDialog({body: {dialogId: dialogId}});
 	for(var i = 0; i < global.dptNS.online.length; i++) {
-		if(global.dptNS.online[i].user.id == dialog.data.initiator.toString()
-		|| global.dptNS.online[i].user.id == dialog.data.recipient.toString()) {
+		if(global.dptNS.online[i].registered
+		&& (global.dptNS.online[i].user.id == dialog.data.initiator.toString()
+		|| global.dptNS.online[i].user.id == dialog.data.recipient.toString())) {
 			global.dptNS.online[i].socket.emit('update', {path: '/dialog/'+dialogId+'/', method: 'get'});
 		}
 	}

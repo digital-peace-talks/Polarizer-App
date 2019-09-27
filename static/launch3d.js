@@ -234,6 +234,8 @@ function loadDialogList(restObj) {
 		border-width: 1px; color: #005B98; width: 258px; max-height: 480px;
 		overflow-y: auto; z-index: 2; font-family: DPTFontDin; font-size: 16px;
 		background-color: #002C4BDD; visibility: hidden;"></div>`);
+    
+    jQuery('#dialogMenu').empty();
 
     for (var i = 0; i < dialogs.length; i++) {
 
@@ -283,11 +285,11 @@ function loadTopics(restObj) {
     ystart = ymax;
     y = ystart;
 
-    if (currentScene == 'topicMap') {
+    if (currentScene.name == 'topicScene') {
         for (var i in currentScene.meshes) {
             if ('dpt' in currentScene.meshes[i] &&
-                currentScene.meshes[i].dpt.context == 'topicMap') {
-                currentScene.meshes[i].remove();
+                currentScene.meshes[i].dpt.context == 'topicScene') {
+                currentScene.meshes[i].dispose();
             }
         }
     }
@@ -302,7 +304,7 @@ function loadTopics(restObj) {
         var plane = textBlock(
             x, y, 0,
             JSON.stringify({
-                "context": "topicMap",
+                "context": "topicScene",
                 "topicId": restObj.data[i]._id,
                 "topic": restObj.data[i].content
             }),
@@ -525,7 +527,7 @@ function dialogRelations(opinionDialogConnections) {
     for (var i in opinionDialogConnections) {
         for (var j in currentScene.meshes) {
             if ('dpt' in currentScene.meshes[j] &&
-                currentScene.meshes[j].dpt.context == 'opinionMap' &&
+                currentScene.meshes[j].dpt.context == 'opinionScene' &&
                 currentScene.meshes[j].dpt.opinionId == i) {
                 initiatorOpinion.position = currentScene.meshes[j].position;
                 initiatorOpinion.opinionId = i;
@@ -546,7 +548,7 @@ function dialogRelations(opinionDialogConnections) {
             if (opinionId != i) {
                 for (var k in currentScene.meshes) {
                     if ('dpt' in currentScene.meshes[k] &&
-                        currentScene.meshes[k].dpt.context == 'opinionMap' &&
+                        currentScene.meshes[k].dpt.context == 'opinionScene' &&
                         currentScene.meshes[k].dpt.opinionId == opinionId) {
                         recipientOpinion.position = currentScene.meshes[k].position;
                         recipientOpinion.opinionId = opinionId;
@@ -560,7 +562,7 @@ function dialogRelations(opinionDialogConnections) {
             if (opinionId != i) {
                 for (var k in currentScene.meshes) {
                     if ('dpt' in currentScene.meshes[k] &&
-                        currentScene.meshes[k].dpt.context == 'opinionMap' &&
+                        currentScene.meshes[k].dpt.context == 'opinionScene' &&
                         currentScene.meshes[k].dpt.opinionId == opinionId) {
                         recipientOpinion.position = currentScene.meshes[k].position;
                         recipientOpinion.opinionId = opinionId;
@@ -574,7 +576,7 @@ function dialogRelations(opinionDialogConnections) {
             if (opinionId != i) {
                 for (var k in currentScene.meshes) {
                     if ('dpt' in currentScene.meshes[k] &&
-                        currentScene.meshes[k].dpt.context == 'opinionMap' &&
+                        currentScene.meshes[k].dpt.context == 'opinionScene' &&
                         currentScene.meshes[k].dpt.opinionId == opinionId) {
                         recipientOpinion.position = currentScene.meshes[k].position;
                         recipientOpinion.opinionId = opinionId;
@@ -589,7 +591,7 @@ function dialogRelations(opinionDialogConnections) {
         	if (opinionId != i) {
         		for (var k in currentScene.meshes) {
         			if ('dpt' in currentScene.meshes[k] &&
-        				currentScene.meshes[k].dpt.context == 'opinionMap' &&
+        				currentScene.meshes[k].dpt.context == 'opinionScene' &&
         				currentScene.meshes[k].dpt.opinionId == opinionId) {
         				recipientOpinion.position = currentScene.meshes[k].position;
         				recipientOpinion.opinionId = opinionId;
@@ -621,13 +623,13 @@ function loadOpinions(restObj) {
     var options = '';
     var canInvite = false;
 
-    if (currentScene == 'opinionMap') {
+    if (currentScene == 'opinionScene') {
         for (var i in currentScene.meshes) {
             if ('dpt' in currentScene.meshes[i] &&
-                currentScene.meshes[i].dpt.context == 'opinionMap') {
-                currentScene.meshes[i].remove();
+                currentScene.meshes[i].dpt.context == 'opinionScene') {
+                currentScene.meshes[i].dispose();
             } else if (currentScene.meshes[i].name == 'tube') {
-                currentScene.meshes[i].remove();
+                currentScene.meshes[i].dispose();
             }
         }
     }
@@ -670,7 +672,7 @@ function loadOpinions(restObj) {
 
         var plane = textBlock(
             nodes[i].x, nodes[i].y, 0,
-            JSON.stringify({ "context": "opinionMap", "opinionId": restObj.data[i]._id }),
+            JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id }),
             `${restObj.data[i].content}`);
 
         plane.actionManager = new BABYLON.ActionManager(currentScene);
@@ -957,6 +959,7 @@ var createGUIScene = function(dptMode) {
         opinionCamState = currentScene.cameras[0].storeState();
         currentScene.dispose();
         currentScene = __topicScene("topicScene");
+        currentScene.name = "topicScene";
         dpt.getTopic();
         event.stopImmediatePropagation();
         event.preventDefault();
@@ -1197,7 +1200,7 @@ var createGenericScene = function(dptMode) {
                 //console.log("POINTER DOUBLE-TAP");
 
                 if ('dpt' in pointerInfo.pickInfo.pickedMesh &&
-                    pointerInfo.pickInfo.pickedMesh.dpt.context == "topicMap") {
+                    pointerInfo.pickInfo.pickedMesh.dpt.context == "topicScene") {
                     //console.log("hit topicId: "+pointerInfo.pickInfo.pickedMesh.dpt.topicId);
 
                     pointerInfo.pickInfo.pickedMesh.showBoundingBox = true;
@@ -1210,6 +1213,7 @@ var createGenericScene = function(dptMode) {
                     currentTopicStr = pointerInfo.pickInfo.pickedMesh.dpt.topic;
                     currentScene.dispose();
                     currentScene = __opinionScene("opinionScene");
+                    currentScene.name = "opinionScene";
                     dpt.getOpinionByTopic(currentTopic);
                     jQuery('#topicForm').remove();
                 }
@@ -1272,11 +1276,11 @@ function main() {
         //engine.enableOfflineSupport = false;
 
         __topicScene = createGenericScene;
-        __topicScene.name = 'topicMap';
+        __topicScene.name = 'topicScene';
         __opinionScene = createGenericScene;
-        __opinionScene.name = 'opinionMap';
+        __opinionScene.name = 'opinionScene';
         currentScene = createGenericScene("topicScene");
-        currentScene.name = 'topicMap';
+        currentScene.name = 'topicScene';
 
         // Handle the incomming websocket trafic
         socket.on("connect", () => {
@@ -1323,16 +1327,19 @@ function main() {
             }
 
             if (restObj.path == '/topic/' && restObj.method == 'get') {
-                dpt.getTopic();
+            	if(currentScene.name == 'topicScene') {
+            		dpt.getTopic();
+            	}
             }
 
             if (restObj.path == '/dialog/list/' && restObj.method == 'get') {
-                dpt.getDialogList();
+            	dpt.getDialogList();
             }
 
-            if (restObj.path.startsWith('/opinion/') &&
-                restObj.data.id == currentTopic &&
-                restObj.method == 'get') {
+            if (restObj.path.startsWith('/opinion/')
+            && restObj.data.id == currentTopic
+            && restObj.method == 'get'
+            && currentScene.name == 'opinionScene') {
                 dpt.getOpinionByTopic(currentTopic);
             }
 

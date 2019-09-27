@@ -57,11 +57,12 @@ async function apiBroker(obj, dptUUID, socket) {
 	try {
 		var ret;
 		var user = await userService.whoamiByDptUUID({body: { dptUUID: dptUUID}});
-		if(obj.method == "post"
+		if((obj.method == "post"
 		|| obj.method == "get"
 		|| obj.method == "put"
 		|| obj.method == "update"
-		|| obj.method == "delete") {
+		|| obj.method == "delete")
+		&& user) {
 			for(var i=0; i < match.length; i++) {
 			    if(obj.path.match('^'+match[i].path+'$')
 			    && obj.method == match[i].method) {
