@@ -233,12 +233,8 @@ function loadDialogList(restObj) {
     var menuEntry = '';
     var dialogs = restObj.data.data;
 
-    jQuery('body').append(`<div id="dialogMenu" style="position: relative;
-		padding: 10px; top: 144px; border: #fff; border-style: solid;
 
-		border-width: 1px; color: #005B98; width: 280px; max-height: 480px;
-		overflow-y: auto; z-index: 2; font-family: DPTFontDin; font-size: 16px;
-		background-color: #002C4BDD; visibility: hidden;"></div>`);
+    jQuery('body').append(`<div id="dialogMenu" visibility: hidden;"></div>`);
 
     jQuery('#dialogMenu').empty();
 
