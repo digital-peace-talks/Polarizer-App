@@ -23,43 +23,35 @@ var powerSave = false;
 
 var isMobile = false; //initiate as false
 // device detection
-if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) ||
-	/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0, 4))) {
-	isMobile = true;
+if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
+    || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4))) { 
+    isMobile = true;
 }
 
-function hideMenu() {
+function hideMenu(){
 	jQuery('#button-menu').fadeOut();
-	jQuery('#overlay').css("background-image", "url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png')");
+	jQuery('#overlay').css("background-image","url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png')");
 
 }
-
 function propositionForm(opinionId) {
 	console.log('enter proposition');
-	jQuery('body').append(`<div id="propositionForm" style="position: absolute; top:0; left: 0px;
-		padding: 20px; margin-left: 300px; border: #fff; border-style: solid;
-		border-width: 1px; color: #F0F3F5; z-index: 30; font-family: DPTFont;
-		font-size: 18px; background-color: #005B9888;">Please enter your proposition:
+	jQuery('body').append(`<div id="propositionForm" style="position: absolute;
+		padding: 20px; margin-left: 30%; border: #fff; border-style: solid;
+		border-width: 1px; color: #000; width: 40%; z-index: 2; font-family: DPTFont;
+		font-size: 18px; background-color: #00ccffcc;">Please enter your proposition:
 		<br><form id="proposition"><textarea style="font-family: DPTFont;
-		font-size: 18px;" name="proposition" cols="40" rows="4" class="proposition"></textarea>
+		font-size: 18px;" name="proposition" cols="64" rows="4"   width= "500px";
+		height="150px";class="proposition"></textarea>
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
 		<br><input style="font-family: DPTFont; font-size: 18px;"
-		type="submit" value="Send">
-		<input type="button" value="close window" name="close window" id="ClosePropositionForm"></form></div>`);
+		type="submit" value="Send"></form></div>`);
 	jQuery(".proposition").focus();
-
-	jQuery(document).one('click', "#ClosePropositionForm", function(event) {
-		propositionFormOpen = 0;
-		jQuery('#propositionForm').remove();
-		focusAtCanvas();
-		event.preventDefault();
-	});
 
 	jQuery(document).on('keydown', '.proposition', function(event) {
 		var n = jQuery('.proposition').val().length;
-		if(n >= 512) {
+		if (n >= 512) {
 			jQuery('.proposition').css({ "background-color": "#f88" });
-			if(event.keyCode != 8 &&
+			if (event.keyCode != 8 &&
 				event.keyCode != 127 &&
 				event.keyCode != 37 &&
 				event.keyCode != 38 &&
@@ -70,7 +62,7 @@ function propositionForm(opinionId) {
 		} else {
 			jQuery('.proposition').css({ "background-color": "#fff" });
 		}
-		if(event.keyCode == 27) {
+		if (event.keyCode == 27) {
 			jQuery('#propositionForm').remove();
 			focusAtCanvas();
 			event.preventDefault();
@@ -87,7 +79,7 @@ function propositionForm(opinionId) {
 		event.preventDefault();
 		var proposition = jQuery('.proposition').val();
 		var opinionId = jQuery('#opinionId').val();
-		if(proposition) {
+		if (proposition) {
 			dpt.postDialog(proposition, whoami.dptUUID, opinionId);
 		}
 		jQuery('#propositionForm').remove();
@@ -98,40 +90,30 @@ function propositionForm(opinionId) {
 function topicForm() {
 	console.log('enter topic');
 
-	if(isMobile) {
+	if(isMobile){
 		jQuery('body').append(`<div id="topicForm" style="position: fixed; top: 0px; left: 0px; padding: 0px;  margin-left: 5%;
 		margin-top: 25%; 
-		color: #F0F3F5; z-index: 2; font-family: DPTFont; font-size: 18px;
+		color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
 		background-color: #005B9888;">New topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
 		 cols="43" rows="12" class="topic"   margin: 0 auto;></textarea><br><input style="font-family: DPTFont;
-		font-size: 18px;" type="submit" width="90%" value="Send">
-		<input type="button" value="close window" name="close window" id="CloseTopicForm"></form></div>`);
+		font-size: 18px;" type="submit"  value="Send"></form></div>`);
 
-	} else {
-		jQuery('body').append(`<div id="topicForm" style="position: absolute; top: 0px; left: 0px; padding: 20px;
-		margin-left: 300px; border: #fff; border-style: solid; border-width: 1px;
-		color: #F0F3F5; z-index: 2; font-family: DPTFont; font-size: 18px;
+	}else{
+	jQuery('body').append(`<div id="topicForm" style="position: absolute; top: 0px; left: 0px; padding: 20px;
+		margin-left: 33%; border: #fff; border-style: solid; border-width: 1px;
+		color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
 		background-color: #005B9888;">Please enter a new topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
 		cols="51" rows="4" class="topic"></textarea><br><input style="font-family: DPTFont;
-		font-size: 18px;" type="submit" value="Send">
-		<input type="button" value="close window" name="close window" id="CloseTopicForm"></form></div>`);
-	}
+		font-size: 18px;" type="submit" value="Send"></form></div>`);}
 	jQuery(".topic").focus();
-
-	jQuery(document).one('click', "#CloseTopicForm", function(event) {
-		topicFormOpen = 0;
-		jQuery('#topicForm').remove();
-		focusAtCanvas();
-		event.preventDefault();
-	});
 
 	jQuery(document).on('keydown', '.topic', function(event) {
 		var n = jQuery('.topic').val().length;
-		if(n >= 512) {
+		if (n >= 512) {
 			jQuery('.topic').css({ "background-color": "#f88" });
-			if(event.keyCode != 8 &&
+			if (event.keyCode != 8 &&
 				event.keyCode != 127 &&
 				event.keyCode != 37 &&
 				event.keyCode != 38 &&
@@ -142,7 +124,7 @@ function topicForm() {
 		} else {
 			jQuery('.topic').css({ "background-color": "#fff" });
 		}
-		if(event.keyCode == 27) {
+		if (event.keyCode == 27) {
 			jQuery('#topicForm').remove();
 			focusAtCanvas();
 			event.preventDefault();
@@ -158,7 +140,7 @@ function topicForm() {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		var topic = jQuery('.topic').val();
-		if(topic) {
+		if (topic) {
 			dpt.postTopic(topic);
 		}
 		jQuery('#topicForm').remove();
@@ -169,40 +151,32 @@ function topicForm() {
 
 function opinionForm() {
 	console.log('enter opinion');
-	jQuery('body').append(`<div id="opinionForm" style="position: absolute; top: 0px; left: 0px;
-		padding: 20px; margin-left: 300px; border: #fff; border-style: solid;
-		border-width: 1px; color: #F0F3F5; z-index: 2; font-family: DPTFont;
+	jQuery('body').append(`<div id="opinionForm" style="position: relative; top: -620px; left: -20px;
+		padding: 20px; margin-left: 33%; border: #fff; border-style: solid;
+		border-width: 1px; color: #000; width: 33%; z-index: 2; font-family: DPTFont;
 		font-size: 18px; background-color: #005B9888;">Please enter a new opinion:<br>
 		<form id="opinion"><textarea style="font-family: DPTFont; font-size: 18px;"
 		name="opinion" cols="52" rows="4" class="opinion"></textarea><br>
 		<input style="font-family: DPTFont; font-size: 18px;" type="submit"
-		value="Send">
-		<input type="button" value="close window" name="close window" id="CloseOpinionForm"></form></div>`);
+		value="Send"></form></div>`);
 	jQuery(".opinion").focus();
-
-	jQuery(document).one('click', "#CloseOpinionForm", function(event) {
-		opinionFormOpen = 0;
-		jQuery('#opinionForm').remove();
-		focusAtCanvas();
-		event.preventDefault();
-	});
 
 	jQuery(document).on('keydown', '.opinion', function(event) {
 		var n = jQuery('.opinion').val().length;
-		if(n >= 512) {
+		if (n >= 512) {
 			jQuery('.opinion').css({ "background-color": "#f88" });
-			if(event.keyCode != 8
-			&& event.keyCode != 127
-			&& event.keyCode != 37
-			&& event.keyCode != 38
-			&& event.keyCode != 39
-			&& event.keyCode != 40) {
+			if (event.keyCode != 8 &&
+				event.keyCode != 127 &&
+				event.keyCode != 37 &&
+				event.keyCode != 38 &&
+				event.keyCode != 39 &&
+				event.keyCode != 40) {
 				event.preventDefault();
 			}
 		} else {
 			jQuery('.opinion').css({ "background-color": "#fff" });
 		}
-		if(event.keyCode == 27) {
+		if (event.keyCode == 27) {
 			jQuery('#opinionForm').remove();
 			event.preventDefault();
 		}
@@ -217,7 +191,7 @@ function opinionForm() {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		var opinion = jQuery('.opinion').val();
-		if(opinion) {
+		if (opinion) {
 			dpt.postOpinion(currentTopic, opinion);
 		}
 		jQuery('#opinionForm').remove();
@@ -231,31 +205,29 @@ function loadDialogList(restObj) {
 
 	jQuery('body').append(`<div id="dialogMenu" style="position: relative;
 		padding: 10px; top: 144px; border: #fff; border-style: solid;
-		border-width: 1px; color: #005B98; width: 258px; max-height: 480px;
+		border-width: 1px; color: #fff; width: 258px; height: 100%;
 		overflow-y: auto; z-index: 2; font-family: DPTFontDin; font-size: 16px;
-		background-color: #002C4BDD; visibility: hidden;"></div>`);
-	
-	jQuery('#dialogMenu').empty();
+		background-color: #002C4B88; visibility: hidden;"></div>`);
 
-	for(var i = 0; i < dialogs.length; i++) {
+	for (var i = 0; i < dialogs.length; i++) {
 
 		menuEntry = `<span class="myDialogs" id="${dialogs[i].dialog}"><i>proposition:</i>
-		<h2>${dialogs[i].opinionProposition}</h2></span>`;
+			${dialogs[i].opinionProposition}<br><br></span>`;
 
 		dialog = `<u style="font-size: 32px">Dialog Info</u><br><br><i>proposition:</i>
-				<br><h2>${dialogs[i].opinionProposition}<h2>
+				<br>${dialogs[i].opinionProposition}<br><br>
 				<i>topic:</i><br>${dialogs[i].topic}<br><br>`;
 
-		if(dialogs[i].initiator == 'me') {
+		if (dialogs[i].initiator == 'me') {
 
 			dialog += `<i>my opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
-					<i>other's opinion:</i><br><h2>${dialogs[i].recipientOpinion}<h2>
+					<i>other's opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>
 					<i>initiator:</i> me<br><br>`;
 
 		} else {
 
 			dialog += `<i>my opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>
-					 <i>other's opinion:</i><br><h2>${dialogs[i].initiatorOpinion}<h2>
+					 <i>other's opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
 					 <i>initiator:</i> other<br><br>`;
 
 		}
@@ -285,16 +257,16 @@ function loadTopics(restObj) {
 	ystart = ymax;
 	y = ystart;
 
-	if(currentScene.name == 'topicScene') {
-		for(var i in currentScene.meshes) {
-			if('dpt' in currentScene.meshes[i]
-			&& currentScene.meshes[i].dpt.context == 'topicScene') {
-				currentScene.meshes[i].dispose();
+	if (currentScene == 'topicMap') {
+		for (var i in currentScene.meshes) {
+			if ('dpt' in currentScene.meshes[i] &&
+				currentScene.meshes[i].dpt.context == 'topicMap') {
+				currentScene.meshes[i].remove();
 			}
 		}
 	}
-	for(var i in restObj.data) {
-		if(restObj.data[i].user == 'mine') {
+	for (var i in restObj.data) {
+		if (restObj.data[i].user == 'mine') {
 			options = '<span class="editTopic" id="' +
 				restObj.data[i]._id +
 				'">&#128393;</span>';
@@ -303,14 +275,11 @@ function loadTopics(restObj) {
 		}
 		var plane = textBlock(
 			x, y, 0,
-			JSON.stringify({
-				"context": "topicScene",
-				"topicId": restObj.data[i]._id,
-				"topic": restObj.data[i].content
-			}),
+			JSON.stringify({"context": "topicMap", "topicId": restObj.data[i]._id,
+				"topic": restObj.data[i].content}),
 			`${restObj.data[i].content} [ ${restObj.data[i].opinions.length} ]`);
 		x += 4.8;
-		if(x > xmax) {
+		if (x > xmax) {
 			y -= 3.2;
 			x = xstart;
 		}
@@ -335,7 +304,7 @@ function circleText(ctx, text, x, y, radius, angle) {
 	ctx.translate(x, y);
 	ctx.rotate(angle);
 
-	for(var i = 0; i < text.length; i++) {
+	for (var i = 0; i < text.length; i++) {
 		ctx.save();
 		ctx.rotate(i * numRadsPerLetter);
 
@@ -407,13 +376,14 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	ev.y = recipientOpinion.position.y + 1.2;
 
 	var tube = new BABYLON.MeshBuilder.CreateTube(
-		"tube", {
+		"tube",
+		{
 			path: [sv, ev],
 			radius: 0.1,
 			updatable: true,
 		},
 		currentScene);
-
+	
 	tube.dpt = {
 		context: 'tubeConnection',
 		dialogId: opinionDialogConnections[initiatorOpinion.opinionId].dialogId,
@@ -425,64 +395,64 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	var ctx = dynamicTexture.getContext();
 
 	var combination = '';
-	if(initiatorOpinion.rating == 'negative') {
+	if (initiatorOpinion.rating == 'negative') {
 		combination = 'red-';
-		if(recipientOpinion.rating == 'negative') {
-			combination += 'red';
-		} else if(recipientOpinion.rating == 'neutral') {
-			combination += 'blue';
-		} else if(recipientOpinion.rating == 'positive') {
-			combination += 'green';
-		} else if(recipientOpinion.rating == 'unset') {
-			combination += 'grey';
+		if (recipientOpinion.rating == 'negative') {
+			combination = 'red';
+		} else if (recipientOpinion.rating == 'neutral') {
+			combination = 'blue';
+		} else if (recipientOpinion.rating == 'positive') {
+			combination = 'green';
+		} else if (recipientOpinion.rating == 'unset') {
+			combination = 'grey';
 		}
 
-	} else if(initiatorOpinion.rating == 'neutral') {
+	} else if (initiatorOpinion.rating == 'neutral') {
 		combination = 'blue-';
-		if(recipientOpinion.rating == 'negative') {
+		if (recipientOpinion.rating == 'negative') {
 			combination += 'red';
-		} else if(recipientOpinion.rating == 'neutral') {
+		} else if (recipientOpinion.rating == 'neutral') {
 			combination += 'blue';
-		} else if(recipientOpinion.rating == 'positive') {
+		} else if (recipientOpinion.rating == 'positive') {
 			combination += 'green';
-		} else if(recipientOpinion.rating == 'unset') {
+		} else if (recipientOpinion.rating == 'unset') {
 			combination += 'grey';
 		}
 
-	} else if(initiatorOpinion.rating == 'positive') {
+	} else if (initiatorOpinion.rating == 'positive') {
 		combination = 'green-';
-		if(recipientOpinion.rating == 'negative') {
+		if (recipientOpinion.rating == 'negative') {
 			combination += 'red';
-		} else if(recipientOpinion.rating == 'neutral') {
+		} else if (recipientOpinion.rating == 'neutral') {
 			combination += 'blue';
-		} else if(recipientOpinion.rating == 'positive') {
+		} else if (recipientOpinion.rating == 'positive') {
 			combination += 'green';
-		} else if(recipientOpinion.rating == 'unset') {
+		} else if (recipientOpinion.rating == 'unset') {
 			combination += 'grey';
 		}
 
-	} else if(initiatorOpinion.rating == 'unset') {
+	} else if (initiatorOpinion.rating == 'unset') {
 		combination += 'grey-';
-		if(recipientOpinion.rating == 'negative') {
+		if (recipientOpinion.rating == 'negative') {
 			combination += 'red';
-		} else if(recipientOpinion.rating == 'neutral') {
+		} else if (recipientOpinion.rating == 'neutral') {
 			combination += 'blue';
-		} else if(recipientOpinion.rating == 'positive') {
+		} else if (recipientOpinion.rating == 'positive') {
 			combination += 'green';
-		} else if(recipientOpinion.rating == 'unset') {
+		} else if (recipientOpinion.rating == 'unset') {
 			combination += 'grey';
 		}
 	}
 
 	console.log('image is : ' + combination);
 	var reverse = 0;
-	if(combination == 'green-blue') {
+	if (combination == 'green-blue') {
 		var reverse = 1;
 		combination = 'blue-green';
-	} else if(combination == 'green-red') {
+	} else if (combination == 'green-red') {
 		var reverse = 1;
 		combination = 'red-green';
-	} else if(combination == 'blue-red') {
+	} else if (combination == 'blue-red') {
 		var reverse = 1;
 		combination = 'red-blue';
 	}
@@ -490,14 +460,14 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	if(combination.indexOf('grey') >= 0) {
 		combination = 'grey-grey';
 	}
-
+	
 	console.log('image is : ' + combination);
 	image = new Image();
 	image.src = '/' + combination + '.png';
 
 	image.onload = function() {
 
-		if(reverse || 1) {
+		if (reverse || 1) {
 			ctx.translate(-16, 16);
 			ctx.rotate(-90 * (Math.PI / 180));
 			ctx.translate(-16, 16);
@@ -515,7 +485,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	//mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 	mat.alphaMode = BABYLON.Engine.ALPHA_COMBINE;
 	mat.diffuseTexture = dynamicTexture;
-	mat.emissiveColor = new BABYLON.Color3(1,1,1);
+	mat.emissiveColor = new BABYLON.Color3(.5, .5, .5);
 	tube.material = mat;
 
 	//return(tube);
@@ -524,32 +494,32 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 function dialogRelations(opinionDialogConnections) {
 	var initiatorOpinion = {};
 	var recipientOpinion = {};
-	for(var i in opinionDialogConnections) {
-		for(var j in currentScene.meshes) {
-			if('dpt' in currentScene.meshes[j]
-			&& currentScene.meshes[j].dpt.context == 'opinionScene'
-			&& currentScene.meshes[j].dpt.opinionId == i) {
+	for (var i in opinionDialogConnections) {
+		for (var j in currentScene.meshes) {
+			if ('dpt' in currentScene.meshes[j] &&
+				currentScene.meshes[j].dpt.context == 'opinionMap' &&
+				currentScene.meshes[j].dpt.opinionId == i) {
 				initiatorOpinion.position = currentScene.meshes[j].position;
 				initiatorOpinion.opinionId = i;
-				if(jQuery.inArray(i, opinionDialogConnections[i].leafs.negative) >= 0) {
+				if (jQuery.inArray(i, opinionDialogConnections[i].leafs.negative) >= 0) {
 					initiatorOpinion.rating = 'negative';
-				} else if(jQuery.inArray(i, opinionDialogConnections[i].leafs.neutral) >= 0) {
+				} else if (jQuery.inArray(i, opinionDialogConnections[i].leafs.neutral) >= 0) {
 					initiatorOpinion.rating = 'neutral';
-				} else if(jQuery.inArray(i, opinionDialogConnections[i].leafs.positive) >= 0) {
+				} else if (jQuery.inArray(i, opinionDialogConnections[i].leafs.positive) >= 0) {
 					initiatorOpinion.rating = 'positive';
-				} else if(jQuery.inArray(i, opinionDialogConnections[i].leafs.unset) >= 0) {
+				} else if (jQuery.inArray(i, opinionDialogConnections[i].leafs.unset) >= 0) {
 					initiatorOpinion.rating = 'unset';
 				}
 			}
 		}
 
-		for(var j in opinionDialogConnections[i].leafs.negative) {
+		for (var j in opinionDialogConnections[i].leafs.negative) {
 			var opinionId = opinionDialogConnections[i].leafs.negative[j];
-			if(opinionId != i) {
-				for(var k in currentScene.meshes) {
-					if('dpt' in currentScene.meshes[k]
-					&& currentScene.meshes[k].dpt.context == 'opinionScene'
-					&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+			if (opinionId != i) {
+				for (var k in currentScene.meshes) {
+					if ('dpt' in currentScene.meshes[k] &&
+						currentScene.meshes[k].dpt.context == 'opinionMap' &&
+						currentScene.meshes[k].dpt.opinionId == opinionId) {
 						recipientOpinion.position = currentScene.meshes[k].position;
 						recipientOpinion.opinionId = opinionId;
 						recipientOpinion.rating = 'negative';
@@ -557,13 +527,13 @@ function dialogRelations(opinionDialogConnections) {
 				}
 			}
 		}
-		for(var j in opinionDialogConnections[i].leafs.neutral) {
+		for (var j in opinionDialogConnections[i].leafs.neutral) {
 			var opinionId = opinionDialogConnections[i].leafs.neutral[j];
-			if(opinionId != i) {
-				for(var k in currentScene.meshes) {
-					if('dpt' in currentScene.meshes[k]
-					&& currentScene.meshes[k].dpt.context == 'opinionScene'
-					&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+			if (opinionId != i) {
+				for (var k in currentScene.meshes) {
+					if ('dpt' in currentScene.meshes[k] &&
+						currentScene.meshes[k].dpt.context == 'opinionMap' &&
+						currentScene.meshes[k].dpt.opinionId == opinionId) {
 						recipientOpinion.position = currentScene.meshes[k].position;
 						recipientOpinion.opinionId = opinionId;
 						recipientOpinion.rating = 'neutral';
@@ -571,13 +541,13 @@ function dialogRelations(opinionDialogConnections) {
 				}
 			}
 		}
-		for(var j in opinionDialogConnections[i].leafs.positive) {
+		for (var j in opinionDialogConnections[i].leafs.positive) {
 			var opinionId = opinionDialogConnections[i].leafs.positive[j];
-			if(opinionId != i) {
-				for(var k in currentScene.meshes) {
-					if('dpt' in currentScene.meshes[k]
-					&& currentScene.meshes[k].dpt.context == 'opinionScene'
-					&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+			if (opinionId != i) {
+				for (var k in currentScene.meshes) {
+					if ('dpt' in currentScene.meshes[k] &&
+						currentScene.meshes[k].dpt.context == 'opinionMap' &&
+						currentScene.meshes[k].dpt.opinionId == opinionId) {
 						recipientOpinion.position = currentScene.meshes[k].position;
 						recipientOpinion.opinionId = opinionId;
 						recipientOpinion.rating = 'positive';
@@ -585,13 +555,12 @@ function dialogRelations(opinionDialogConnections) {
 				}
 			}
 		}
-		/*
-		for(var j in opinionDialogConnections[i].leafs.unset) {
+		for (var j in opinionDialogConnections[i].leafs.unset) {
 			var opinionId = opinionDialogConnections[i].leafs.unset[j];
-			if(opinionId != i) {
-				for(var k in currentScene.meshes) {
-					if('dpt' in currentScene.meshes[k] &&
-						currentScene.meshes[k].dpt.context == 'opinionScene' &&
+			if (opinionId != i) {
+				for (var k in currentScene.meshes) {
+					if ('dpt' in currentScene.meshes[k] &&
+						currentScene.meshes[k].dpt.context == 'opinionMap' &&
 						currentScene.meshes[k].dpt.opinionId == opinionId) {
 						recipientOpinion.position = currentScene.meshes[k].position;
 						recipientOpinion.opinionId = opinionId;
@@ -600,7 +569,6 @@ function dialogRelations(opinionDialogConnections) {
 				}
 			}
 		}
-		*/
 
 		/*
 		initiatorOpinion.position.x -= 2.4;
@@ -623,21 +591,14 @@ function loadOpinions(restObj) {
 	var options = '';
 	var canInvite = false;
 
-	if(currentScene.name == 'opinionScene') {
-		for(var i in currentScene.meshes) {
-			/*
-			if('dpt' in currentScene.meshes[i]) {
-				if(currentScene.meshes[i].dpt.context == 'opinionScene'
-				|| currentScene.meshes[i].name == 'tube'
-				|| currentScene.meshes[i].name == 'icon') {
-				*/
-			if(currentScene.meshes[i] != 'collisionBox') {
-					currentScene.meshes[i].dispose();
+	if (currentScene == 'opinionMap') {
+		for (var i in currentScene.meshes) {
+			if ('dpt' in currentScene.meshes[i] &&
+				currentScene.meshes[i].dpt.context == 'opinionMap') {
+				currentScene.meshes[i].remove();
+			} else if (currentScene.meshes[i].name == 'tube') {
+				currentScene.meshes[i].remove();
 			}
-					/*
-				}
-			}
-				*/
 		}
 	}
 
@@ -650,25 +611,25 @@ function loadOpinions(restObj) {
 	y = ystart;
 
 	var opinionDialogConnections = {};
-	for(var i = 0; i < restObj.data.length; i++) {
+	for (var i = 0; i < restObj.data.length; i++) {
 		opinionDialogConnections[restObj.data[i].topo.opinionId] = restObj.data[i].topo;
 	}
-	for(var i = 0; i < restObj.data.length; i++) {
-		if(restObj.data[i].user == 'mine') {
+	for (var i = 0; i < restObj.data.length; i++) {
+		if (restObj.data[i].user == 'mine') {
 			canInvite = true;
 		}
 	}
 
 	var nodes = circlePoints(restObj.data.length, 5, { X: 4, Y: 0 });
-	for(var i = 0; i < restObj.data.length; i++) {
+	for (var i = 0; i < restObj.data.length; i++) {
 		options = '';
-		if(restObj.data[i].user == 'mine') {
+		if (restObj.data[i].user == 'mine') {
 			options = '<span class="editOpinion" id="' +
 				restObj.data[i]._id +
 				'">&#128393;</span>';
 		} else {
-			if(restObj.data[i].blocked == 0
-			&& canInvite) {
+			if (restObj.data[i].blocked == 0 &&
+				canInvite) {
 				options = '<span class="inviteToDialog" id="' +
 					restObj.data[i]._id +
 					'">' +
@@ -679,7 +640,7 @@ function loadOpinions(restObj) {
 
 		var plane = textBlock(
 			nodes[i].x, nodes[i].y, 0,
-			JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id }),
+			JSON.stringify({"context": "opinionMap", "opinionId": restObj.data[i]._id}),
 			`${restObj.data[i].content}`);
 
 		plane.actionManager = new BABYLON.ActionManager(currentScene);
@@ -707,7 +668,8 @@ function loadOpinions(restObj) {
 				}, false));
 
 
-		if(canInvite && restObj.data[i].user != 'mine' && restObj.data[i].blocked == 0) {
+		if (canInvite && restObj.data[i].user != 'mine' &&
+			restObj.data[i].blocked == 0) {
 			var mat = new BABYLON.StandardMaterial("icon", currentScene);
 			mat.diffuseTexture = new BABYLON.Texture("/chatbubble.png", currentScene);
 			//			mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png", currentScene);
@@ -739,7 +701,7 @@ function loadOpinions(restObj) {
 	}
 
 
-	if(restObj.data.length > 0) {
+	if (restObj.data.length > 0) {
 		//				dpt.opinionPostAllowed(restObj.data[0].topic);
 	} else {
 		//				opinionForm();
@@ -752,25 +714,25 @@ function loadOpinions(restObj) {
 
 function wrapText(context, text, x, y, maxWidth, lineHeight) {
 
-	var lines = text.split("\n");
-	for(var i = 0; i < lines.length; i++) {
-		var words = lines[i].split(' ');
-		var line = '';
-		for(var n = 0; n < words.length; n++) {
-			var testLine = line + words[n] + ' ';
-			var metrics = context.measureText(testLine);
-			var testWidth = metrics.width;
-			if(testWidth > maxWidth && n > 0) {
-				context.fillText(line, x, y);
-				line = words[n] + ' ';
-				y += lineHeight;
-			} else {
-				line = testLine;
-			}
-		}
-		context.fillText(line, x, y);
-		y += lineHeight;
-	}
+    var lines = text.split("\n");
+    for (var i = 0; i < lines.length; i++) {
+        var words = lines[i].split(' ');
+        var line = '';
+        for (var n = 0; n < words.length; n++) {
+            var testLine = line + words[n] + ' ';
+            var metrics = context.measureText(testLine);
+            var testWidth = metrics.width;
+            if (testWidth > maxWidth && n > 0) {
+                context.fillText(line, x, y);
+                line = words[n] + ' ';
+                y += lineHeight;
+            } else {
+                line = testLine;
+            }
+        }
+        context.fillText(line, x, y);
+        y += lineHeight;
+    }
 };
 
 
@@ -778,25 +740,25 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
 function cropImage(ctx, canvas) {
 	var w = canvas.width;
 	var h = canvas.height;
-	var pix = { x: [], y: [] };
-	var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+	var pix = {x:[], y:[]};
+	var imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
 	var x;
 	var y;
 	var index;
 
-	for(y = 0; y < h; y++) {
-		for(x = 0; x < w; x++) {
+	for (y = 0; y < h; y++) {
+		for (x = 0; x < w; x++) {
 			index = (y * w + x) * 4;
-			if(imageData.data[index + 3] > 0) {
+			if (imageData.data[index+3] > 0) {
 				pix.x.push(x);
 				pix.y.push(y);
 
-			}
+			}   
 		}
 	}
-	pix.x.sort(function(a, b) { return a - b });
-	pix.y.sort(function(a, b) { return a - b });
-	var n = pix.x.length - 1;
+	pix.x.sort(function(a,b){return a-b});
+	pix.y.sort(function(a,b){return a-b});
+	var n = pix.x.length-1;
 
 	w = pix.x[n] - pix.x[0];
 	h = pix.y[n] - pix.y[0];
@@ -805,7 +767,7 @@ function cropImage(ctx, canvas) {
 	canvas.width = w;
 	canvas.height = h;
 	ctx.putImageData(cut, 0, 0);
-	return (ctx);
+	return(ctx);
 }
 
 
@@ -833,7 +795,7 @@ function textBlock(x, y, z, name, text) {
 	textureContext.fillStyle = "#00ccff";
 
 	wrapText(textureContext, text, 5, 20, 479, 22);
-	//	textureContext = cropImage(textureContext, textureContext.canvas);
+//	textureContext = cropImage(textureContext, textureContext.canvas);
 
 	dynamicTexture.update();
 
@@ -880,23 +842,23 @@ function getCollisionBox() {
 
 function getCamera() {
 	// camera
-	if(currentScene.dptMode == "topicScene") {
+	if (currentScene.dptMode == "topicScene") {
 		console.log('ts cam');
 		var camera = new BABYLON.FlyCamera("FlyCamera",
 			new BABYLON.Vector3(2.5, 4.5, -15), currentScene);
 
-		if(topicCamState) {
+		if (topicCamState) {
 			camera.position = topicCamState.position;
 			camera.rotation = topicCamState.rotation;
 			camera.direction = topicCamState.direction;
 		}
 	}
-	if(currentScene.dptMode == "opinionScene") {
+	if (currentScene.dptMode == "opinionScene") {
 		console.log('os cam');
 		var camera = new BABYLON.FlyCamera("FlyCamera",
 			new BABYLON.Vector3(4.5, 1.0, -15), currentScene);
 
-		if(opinionCamState) {
+		if (opinionCamState) {
 			camera.position = opinionCamState.position;
 			camera.rotation = opinionCamState.rotation;
 			camera.direction = opinionCamState.direction;
@@ -929,7 +891,7 @@ function getCamera() {
 function circlePoints(points, radius, center) {
 	var slice = 2 * Math.PI / points;
 	var nodes = [];
-	for(var i = 0; i < points; i++) {
+	for (var i = 0; i < points; i++) {
 		var angle = slice * i;
 		var newX = center.X + radius * Math.cos(angle);
 		var newY = center.Y + radius * Math.sin(angle);
@@ -965,14 +927,13 @@ var createGUIScene = function(dptMode) {
 		opinionCamState = currentScene.cameras[0].storeState();
 		currentScene.dispose();
 		currentScene = __topicScene("topicScene");
-		currentScene.name = "topicScene";
 		dpt.getTopic();
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		jQuery('#opinionForm').remove();
 		jQuery('#topicForm').remove();
-
-		if(isMobile) {
+		
+		if(isMobile){
 			console.log("mobile behavior!")
 			hideMenu();
 		}
@@ -980,9 +941,26 @@ var createGUIScene = function(dptMode) {
 
 	});
 
+	//create dialogue button
+	var dialoguesBtn = jQuery('#dialogues-btn');
+	dialoguesBtn.show();
+	dialoguesBtn.on('click touch', function(event) {
+		if (myDialogsVisible == 'visible') {
+			myDialogsVisible = 'hidden';
+		} else {
+			myDialogsVisible = 'visible';
+		}
+		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		if(isMobile){
+			console.log("mobile behavior!")
+			hideMenu();
+		}
 
+	});
 	//create topic button 
-	if(dptMode == 'topicScene') {
+	if (dptMode == 'topicScene') {
 		jQuery('#new-opinion-btn').hide();
 		var newTopicBtn = jQuery('#new-topic-btn');
 		newTopicBtn.show();
@@ -990,20 +968,20 @@ var createGUIScene = function(dptMode) {
 		newTopicBtn.html(`<img class="btn-icon" src="/topic_white.png">New-Topic`);
 
 		newTopicBtn.on('click touch', function(event) {
-				jQuery('#topicForm').remove();
-
+			jQuery('#topicForm').remove();
+			
 				topicForm();
 				event.stopImmediatePropagation();
 				event.preventDefault();
-				if(isMobile) {
+				if(isMobile){
 					console.log("mobile behavior!")
 					hideMenu();
 				}
+			
 
+		})
 
-			})
-			//create opinion button 
-	} else if(dptMode == 'opinionScene') {
+	} else if (dptMode == 'opinionScene') {
 
 		jQuery('#new-topic-btn').hide();
 		var newOpinionBtn = jQuery('#new-opinion-btn');
@@ -1014,37 +992,16 @@ var createGUIScene = function(dptMode) {
 			jQuery('#opinionForm').remove();
 
 			dpt.opinionPostAllowed(currentTopic);
-			// alert(dpt.opinionPostAllowed(currentTopic)) <- returns undefined
 
 			event.stopImmediatePropagation();
 			event.preventDefault();
-			if(isMobile) {
+			if(isMobile){
 				console.log("mobile behavior!")
 				hideMenu();
 			}
-
+	
 		});
 	}
-	//create dialogue button
-	var dialoguesBtn = jQuery('#dialogues-btn');
-	dialoguesBtn.show();
-	dialoguesBtn.on('click touch', function(event) {
-		// alert('test')
-		if(myDialogsVisible == 'visible') {
-			myDialogsVisible = 'hidden';
-		} else {
-			myDialogsVisible = 'visible';
-		}
-		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
-		event.stopImmediatePropagation();
-		event.preventDefault();
-		if(isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
-		}
-
-	});
-
 }
 
 function pauseEngine() {
@@ -1078,18 +1035,18 @@ function initVirtJoysticks() {
 	var movespeed = 5;
 	var camVec = currentScene.cameras[0].position;
 	currentScene.onBeforeRenderObservable.add(() => {
-		if(leftJoystick.pressed) {
+		if (leftJoystick.pressed) {
 			camVec.z += leftJoystick.deltaPosition.y *
 				(engine.getDeltaTime() / (1000 - 2 * camVec.z * camVec.z)) *
 				movespeed;
-			if(camVec.z > 0) {
+			if (camVec.z > 0) {
 				camVec.z = -15;
 			}
-			if(camVec.z < -20) {
+			if (camVec.z < -20) {
 				camVec.z = -1;
 			}
 		}
-		if(rightJoystick.pressed) {
+		if (rightJoystick.pressed) {
 			camVec.x += rightJoystick.deltaPosition.x *
 				(engine.getDeltaTime() / (2000 - camVec.z * camVec.z)) *
 				movespeed;
@@ -1113,12 +1070,11 @@ function initVirtJoysticks() {
 
 	// Button toggle logic
 	btn.onclick = () => {
-		if(BABYLON.VirtualJoystick.Canvas.style.zIndex == "-1") {
+		if (BABYLON.VirtualJoystick.Canvas.style.zIndex == "-1") {
 			BABYLON.VirtualJoystick.Canvas.style.zIndex = "4";
-			btn.src = "/touch_white.png";
+			btn.background = "green";
 		} else {
 			BABYLON.VirtualJoystick.Canvas.style.zIndex = "-1";
-			btn.src = "/joypad_white.png";
 			btn.background = "transparent";
 		}
 	}
@@ -1161,7 +1117,7 @@ var createGenericScene = function(dptMode) {
 			case BABYLON.PointerEventTypes.POINTERUP:
 				//console.log("POINTER UP");
 
-				if('dpt' in pointerInfo.pickInfo.pickedMesh) {
+				if ('dpt' in pointerInfo.pickInfo.pickedMesh) {
 					if(pointerInfo.pickInfo.pickedMesh.dpt.context == "dialogInvitation") {
 						propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId);
 					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "tubeConnection") {
@@ -1205,8 +1161,8 @@ var createGenericScene = function(dptMode) {
 			case BABYLON.PointerEventTypes.POINTERDOUBLETAP:
 				//console.log("POINTER DOUBLE-TAP");
 
-				if('dpt' in pointerInfo.pickInfo.pickedMesh
-				&& pointerInfo.pickInfo.pickedMesh.dpt.context == "topicScene") {
+				if ('dpt' in pointerInfo.pickInfo.pickedMesh &&
+					pointerInfo.pickInfo.pickedMesh.dpt.context == "topicMap") {
 					//console.log("hit topicId: "+pointerInfo.pickInfo.pickedMesh.dpt.topicId);
 
 					pointerInfo.pickInfo.pickedMesh.showBoundingBox = true;
@@ -1219,7 +1175,6 @@ var createGenericScene = function(dptMode) {
 					currentTopicStr = pointerInfo.pickInfo.pickedMesh.dpt.topic;
 					currentScene.dispose();
 					currentScene = __opinionScene("opinionScene");
-					currentScene.name = "opinionScene";
 					dpt.getOpinionByTopic(currentTopic);
 					jQuery('#topicForm').remove();
 				}
@@ -1234,7 +1189,7 @@ var createGenericScene = function(dptMode) {
 				/*
 				console.log("KEY DOWN: ", kbInfo.event.key);
 				var speed = camera._computeLocalCameraSpeed() * 20;
-				if(kbInfo.event.key == 'PageUp') {
+				if (kbInfo.event.key == 'PageUp') {
 					camera._localDirection.copyFromFloats(0, 0, speed);
 					camera.position.z += speed;
 					console.log('fuck: '+speed);
@@ -1282,30 +1237,30 @@ function main() {
 		//engine.enableOfflineSupport = false;
 
 		__topicScene = createGenericScene;
-		__topicScene.name = 'topicScene';
+		__topicScene.name = 'topicMap';
 		__opinionScene = createGenericScene;
-		__opinionScene.name = 'opinionScene';
+		__opinionScene.name = 'opinionMap';
 		currentScene = createGenericScene("topicScene");
-		currentScene.name = 'topicScene';
+		currentScene.name = 'topicMap';
 
 		// Handle the incomming websocket trafic
 		socket.on("connect", () => {
 			// if needed, we could keep socket.id somewhere
-			if(document.cookie) {
+			if (document.cookie) {
 				dpt.userLogin(document.cookie);
 			}
 		});
 
 		socket.on("private", function(restObj) {
-			if(restObj.method == "post") {
-				if(restObj.path == "/user/login/") {
+			if (restObj.method == "post") {
+				if (restObj.path == "/user/login/") {
 					whoami.dptUUID = restObj.data.dptUUID;
-					if(restObj.data.message == "logged in") {
+					if (restObj.data.message == "logged in") {
 						whoami.user = restObj.data.user;
 						dpt.getTopic();
 						dpt.getDialogList();
 					}
-					if(restObj.data.message == "user unknown") {
+					if (restObj.data.message == "user unknown") {
 						whoami.user = {};
 					}
 				}
@@ -1321,9 +1276,9 @@ function main() {
 		// server says it has some updates for client
 		socket.on('update', function(restObj) {
 
-			if(restObj.method == 'post') {
+			if (restObj.method == 'post') {
 
-				if(restObj.path == '/info/') {
+				if (restObj.path == '/info/') {
 					jQuery('#messages')
 						.append(jQuery('<li>')
 							.text(restObj.data.message));
@@ -1332,73 +1287,67 @@ function main() {
 				}
 			}
 
-			if(restObj.path == '/topic/' && restObj.method == 'get') {
-				if(currentScene.name == 'topicScene') {
-					dpt.getTopic();
-				}
+			if (restObj.path == '/topic/' && restObj.method == 'get') {
+				dpt.getTopic();
 			}
 
-			if(restObj.path == '/dialog/list/' && restObj.method == 'get') {
+			if (restObj.path == '/dialog/list/' && restObj.method == 'get') {
 				dpt.getDialogList();
 			}
 
-			if(restObj.path.startsWith('/opinion/')
-			&& restObj.data.id == currentTopic
-			&& restObj.method == 'get'
-			&& currentScene.name == 'opinionScene') {
+			if (restObj.path.startsWith('/opinion/') &&
+				restObj.data.id == currentTopic &&
+				restObj.method == 'get') {
 				dpt.getOpinionByTopic(currentTopic);
 			}
 
-			if(currentDialog
-			&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
-			&& restObj.method == 'get'
-			&& dialogFormOpen == 1) {
+			if (currentDialog && restObj.path == '/dialog/' + currentDialog.dialog + '/' &&
+				restObj.method == 'get' &&
+				dialogFormOpen == 1) {
 				dpt.getDialog(currentDialog.dialog);
 			}
 		});
 
 		socket.on("api", function(restObj) {
-			if(!restObj || !restObj.path || !restObj.method) {
+			if (!restObj || !restObj.path || !restObj.method) {
 				return;
 			}
 
-			if('status' in restObj && restObj.status > 399) {
+			if ('status' in restObj && restObj.status > 399) {
 
 				alert(restObj.data);
 				return;
 
-			} else if(currentDialog
-					&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
-					&& restObj.method == 'get') {
+			} else if (currentDialog &&
+				restObj.path == '/dialog/' + currentDialog.dialog + '/' &&
+				restObj.method == 'get') {
 
-				var old = currentDialog;
-				currentDialog = restObj.data;
-				currentDialog.topic = old.topic;
-				currentDialog.initiatorOpinion = old.initiatorOpinion;
-				currentDialog.recipientOpinion = old.recipientOpinion;
-				dialogForm();
+					var old = currentDialog;
+					currentDialog = restObj.data;
+					currentDialog.topic = old.topic;
+					currentDialog.initiatorOpinion = old.initiatorOpinion;
+					currentDialog.recipientOpinion = old.recipientOpinion;
+					dialogForm();
 
 			}
-			if(restObj.path == '/topic/'
-			&& restObj.method == 'get') {
-				if(currentScene.name == 'topicScene') {
-					loadTopics(restObj);
-				}
+			if (restObj.path == '/topic/' &&
+				restObj.method == 'get') {
 
-			} else if(restObj.path == "/opinion/" + currentTopic + "/"
-					&& restObj.method == "get") {
-				if(currentScene.name == 'opinionScene') {
-					loadOpinions(restObj);
-				}
+				loadTopics(restObj);
 
-			} else if(restObj.path == '/opinion/postAllowed/') {
-				if(restObj.data.value == true) {
+			} else if (restObj.path == "/opinion/" + currentTopic + "/" &&
+				restObj.method == "get") {
+
+				loadOpinions(restObj);
+
+			} else if (restObj.path == '/opinion/postAllowed/') {
+				if (restObj.data.value == true) {
 					opinionForm();
 				} else {
 					alert('Only one opinion per topic.');
 				}
-			} else if(restObj.path == '/dialog/list/'
-					&& restObj.method == 'get') {
+			} else if (restObj.path == '/dialog/list/' &&
+				restObj.method == 'get') {
 
 				loadDialogList(restObj);
 
@@ -1408,7 +1357,7 @@ function main() {
 		//circlePoints(4, 2, {X: 0, Y: 0});
 
 		engine.runRenderLoop(function() {
-			if(currentScene && !powerSave) {
+			if (currentScene && !powerSave) {
 				currentScene.render();
 			}
 		});
@@ -1418,23 +1367,23 @@ function main() {
 			engine.resize();
 		});
 
-		/*
-				jQuery(document).on("mouseenter touchstart", "span.myDialogs", function(event) {
-					jQuery('body').append(`<div id="dialogInfo" style="position: absolute;
-						padding: 20px; margin-left: 25%; border: #fff; border-style: solid;
-						border-width: 1px; color: #000; width: 50%; z-index: 2;
-						font-family: DPTFont; font-size: 18px; background-color: #00ccffcc;">
-						${myDialogMenu[event.currentTarget.id].description}</div>`);
-					event.stopImmediatePropagation();
-					event.preventDefault();
-				});
-				jQuery(document).on("mouseleave touchend", "span.myDialogs", function(event) {
-					jQuery('#dialogInfo').remove();
-					focusAtCanvas();
-					event.stopImmediatePropagation();
-					event.preventDefault();
-				});
-		*/
+//		jQuery(document).on("mouseenter touchstart", "span.myDialogs", function(event) {
+		jQuery(document).on("mouseenter", "span.myDialogs", function(event) {
+			jQuery('body').append(`<div id="dialogInfo" style="position: absolute;
+				padding: 20px; margin-left: 25%; border: #fff; border-style: solid;
+				border-width: 1px; color: #000; width: 50%; z-index: 2;
+				font-family: DPTFont; font-size: 18px; background-color: #00ccffcc;">
+				${myDialogMenu[event.currentTarget.id].description}</div>`);
+			event.stopImmediatePropagation();
+			event.preventDefault();
+		});
+//		jQuery(document).on("mouseleave touchend", "span.myDialogs", function(event) {
+		jQuery(document).on("mouseleave", "span.myDialogs", function(event) {
+			jQuery('#dialogInfo').remove();
+			focusAtCanvas();
+			event.stopImmediatePropagation();
+			event.preventDefault();
+		});
 		jQuery(document).on("click touch", "span.myDialogs", function(event) {
 			jQuery('#dialogInfo').remove();
 			jQuery('#dialogForm').remove();
@@ -1456,14 +1405,32 @@ function main() {
 
 		//mobile version menu details
 
-		jQuery('#overlay').on('click touch', function() {
-			if(jQuery('#button-menu').is(":hidden")) {
+		jQuery('#overlay').on('click touch',function(){
+			
+			if(jQuery('#button-menu').is(":hidden")){
 				jQuery('#button-menu').fadeIn();
-				jQuery('#overlay').css("background-image", "url()");
+				jQuery('#overlay').css("background-image","url()");
+
+				if(jQuery('#dialogMenu').is(":visible")){
+					// jQuery('#dialogMenu').remove();
+				
+				}
+	
+			}
+	
+			if(jQuery('#topicForm').is(":visible")){
+				jQuery('#topicForm').remove();
+
+			}
+
+			if(jQuery('#opinionForm').is(":visible")){
+				jQuery('#opinionForm').remove();
 
 			}
 
 		})
+
+
 	});
 }
 
