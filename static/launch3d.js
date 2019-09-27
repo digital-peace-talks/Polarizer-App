@@ -515,7 +515,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	//mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 	mat.alphaMode = BABYLON.Engine.ALPHA_COMBINE;
 	mat.diffuseTexture = dynamicTexture;
-	mat.emissiveColor = new BABYLON.Color3(.7, .7, .7);
+	mat.emissiveColor = new BABYLON.Color3(1,1,1);
 	tube.material = mat;
 
 	//return(tube);
@@ -623,14 +623,21 @@ function loadOpinions(restObj) {
 	var options = '';
 	var canInvite = false;
 
-	if(currentScene == 'opinionScene') {
+	if(currentScene.name == 'opinionScene') {
 		for(var i in currentScene.meshes) {
-			if('dpt' in currentScene.meshes[i]
-			&& currentScene.meshes[i].dpt.context == 'opinionScene') {
-				currentScene.meshes[i].dispose();
-			} else if(currentScene.meshes[i].name == 'tube') {
-				currentScene.meshes[i].dispose();
+			/*
+			if('dpt' in currentScene.meshes[i]) {
+				if(currentScene.meshes[i].dpt.context == 'opinionScene'
+				|| currentScene.meshes[i].name == 'tube'
+				|| currentScene.meshes[i].name == 'icon') {
+				*/
+			if(currentScene.meshes[i] != 'collisionBox') {
+					currentScene.meshes[i].dispose();
 			}
+					/*
+				}
+			}
+				*/
 		}
 	}
 
