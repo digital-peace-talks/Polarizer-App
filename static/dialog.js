@@ -366,10 +366,7 @@ function dialogForm() {
     html += '</div></div>';
 
     //		jQuery('#misc').append(html);
-    jQuery('body').append(`<div id="dialogForm" style="position: absolute; top: 0px; left: 280px; padding: 10px;
-				margin-left: 0px; border: #F0F3F5; border-style: solid; border-width: 1px;
-				color: #F0F3F5; width: 600px; z-index: 200; font-family: DPTFont; font-size: 18px;
-				background-color: #28A9E1DD; height: 100%">${html}</div>`);
+    jQuery('body').append(`<div id="dialogForm">${html}</div>`);
 
     if (currentDialog.status == 'CLOSED') {
         for (var i = 0; i < currentDialog.crisises.length; i++) {
