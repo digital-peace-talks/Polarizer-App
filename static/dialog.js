@@ -349,9 +349,10 @@ function dialogForm() {
         html += `
 				<div class="status">
 					<center>
-						<b>This dialog is closed.</b>
+						
 						<input type="button" value="close window" name="close window" size="120" id="dialogCloseWindow">
-		   			</center>
+                        <b>This dialog is closed.</b>   
+                        </center>
 				</div>
 			`;
 
