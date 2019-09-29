@@ -398,6 +398,7 @@ function circleTextPlane(x, y, z, name, text) {
 
 function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections, status) {
 
+    status = opinionDialogConnections.dialogStatus;
     var sv = new BABYLON.Vector3(initiatorOpinion.position);
     var ev = new BABYLON.Vector3(recipientOpinion.position);
     sv.x = initiatorOpinion.position.x - 2.4;

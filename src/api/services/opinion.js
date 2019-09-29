@@ -84,6 +84,8 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 							} else if(crisisInitiator.rating < 0) {
 								topo.leafs.negative.push(opinionInitiator._id);
 							}
+						} else {
+							topo.leafs.unset.push(opinionInitiator._id);
 						}
 						if(crisisRecipient) {
 							if(crisisRecipient.rating > 0) {
@@ -93,6 +95,8 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 							} else if(crisisRecipient.rating < 0) {
 								topo.leafs.negative.push(opinionRecipient._id);
 							}
+						} else {
+							topo.leafs.unset.push(opinionRecipient._id);
 						}
 
 					}
