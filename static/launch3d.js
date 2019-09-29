@@ -599,6 +599,7 @@ function dialogRelations(opinionDialogConnections) {
         if ('position' in initiatorOpinion && 'position' in recipientOpinion) {
             createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections, opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus);
         }
+        */
         for(var j in opinionDialogConnections[i].leafs.unset) {
         	var opinionId = opinionDialogConnections[i].leafs.unset[j];
         	if(opinionId != i) {
@@ -613,7 +614,6 @@ function dialogRelations(opinionDialogConnections) {
         		}
         	}
         }
-        */
 
         /*
         initiatorOpinion.position.x -= 2.4;
