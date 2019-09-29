@@ -649,7 +649,7 @@ function loadOpinions(restObj) {
             	|| currentScene.meshes[i].name == 'tube'
             	|| currentScene.meshes[i].name == 'icon') {
             	*/
-            if (currentScene.meshes[i] != 'collisionBox') {
+            if (currentScene.meshes[i].name != 'collisionBox') {
                 currentScene.meshes[i].dispose();
             }
             /*
