@@ -40,20 +40,83 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 			}
 
 			var dialogs = [];
+			var results = [];
+			
 			for(var i in opinions) {
-				var dialog = await Dialog.findOne({opinion: opinions[i]._id});
-				opinions[i]._doc.blocked = 0;
-				opinions[i]._doc.topo = { leafs: [] };
-				if(dialog) {
+				dialogs = await Dialog.find({opinion: opinions[i]._id});
+				opinions[i]._doc.topos = [];
+				for(var j in dialogs) {
+					dialog = dialogs[j];
+					if(dialog) {
+	
+						var topo = {
+							dialogId: dialog._id,
+							opinionId: opinions[i]._id,
+							initiatorsOpinion: '',
+							recipientsOpinion: '',
+							dialogStatus: dialog.status,
+							leafs: {
+								positive: [],
+								negative: [],
+								neutral: [],
+								unset: [],
+						} };
+	
+						var opinionInitiator = Lo_.find(opinions, { user: dialog.initiator});
+	
+						var opinionRecipient = Lo_.find(opinions, { user: dialog.recipient});
+						
+						
+						var crisisInitiator = Lo_.find(dialog.crisises, { initiator: dialog.initiator});
+						var crisisRecipient = Lo_.find(dialog.crisises, { initiator: dialog.recipient});
+						
+						if(opinionInitiator)
+							topo.initiatorsOpinion = opinionInitiator.content;
+						
+						if(opinionRecipient)
+							topo.recipientsOpinion = opinionRecipient.content;
+	
+						if(crisisInitiator) {
+							if(crisisInitiator.rating > 0) {
+								topo.leafs.positive.push(opinionInitiator._id);
+							} else if(crisisInitiator.rating == 0) {
+								topo.leafs.neutral.push(opinionInitiator._id);
+							} else if(crisisInitiator.rating < 0) {
+								topo.leafs.negative.push(opinionInitiator._id);
+							}
+						}
+						if(crisisRecipient) {
+							if(crisisRecipient.rating > 0) {
+								topo.leafs.positive.push(opinionRecipient._id);
+							} else if(crisisRecipient.rating == 0) {
+								topo.leafs.neutral.push(opinionRecipient._id);
+							} else if(crisisRecipient.rating < 0) {
+								topo.leafs.negative.push(opinionRecipient._id);
+							}
+						}
 
-					console.log(topic.content);
-					console.log(dialog.status);
+					}
+					opinions[i]._doc.blocked = 1;
+					opinions[i]._doc.topos.push(topo);
+					console.log(util.inspect(opinions[i], {depth: 4}));
+					console.log('\n\n');
+
+				}	
+			}
+			
+			
+				/*
+			for(var i in opinions) {
+				dialogs = await Dialog.find({opinion: opinions[i]._id});
+				for(var j in dialogs) {
+				dialog = dialogs[j];
+				if(dialog) {
 
 					var topo = {
 						dialogId: dialog._id,
-						opinionId: opinions[i]._id,
 						initiatorsOpinion: '',
 						recipientsOpinion: '',
+						opinionId: opinions[i]._id,
 						dialogStatus: dialog.status,
 						leafs: {
 							positive: [],
@@ -63,14 +126,16 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 					} };
 
 					var opinionInitiator = Lo_.find(opinions, { user: dialog.initiator});
+
 					var opinionRecipient = Lo_.find(opinions, { user: dialog.recipient});
-				
+					
+					
 					var crisisInitiator = Lo_.find(dialog.crisises, { initiator: dialog.initiator});
 					var crisisRecipient = Lo_.find(dialog.crisises, { initiator: dialog.recipient});
-				
+					
 					if(opinionInitiator)
 						topo.initiatorsOpinion = opinionInitiator.content;
-				
+					
 					if(opinionRecipient)
 						topo.recipientsOpinion = opinionRecipient.content;
 
@@ -82,8 +147,6 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 						} else if(crisisInitiator.rating < 0) {
 							topo.leafs.negative.push(opinionInitiator._id);
 						}
-					} else {
-						topo.leafs.unset.push(opinionInitiator._id.toString());
 					}
 					if(crisisRecipient) {
 						if(crisisRecipient.rating > 0) {
@@ -93,21 +156,21 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 						} else if(crisisRecipient.rating < 0) {
 							topo.leafs.negative.push(opinionRecipient._id);
 						}
-					} else {
-						topo.leafs.unset.push(opinionRecipient._id.toString());
 					}
-
-
-					console.log(util.inspect(topo));
-					console.log('\n\n');
 
 					opinions[i]._doc.blocked = 1;
 					opinions[i]._doc.topo = topo;
+					console.log(util.inspect(opinions[i], {depth: 3}));
+					console.log('\n\n');
+					results.push(opinions[i]);
+
+				}
 				}
 			}
+			*/
 			return({
 				status: 200,
-				data: opinions
+				data: opinions,
 			});
 		} catch(error) {
 			throw({

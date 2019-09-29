@@ -256,7 +256,7 @@ router.get('/red-green.png', async(req, res, next) => {
 
 router.get('/red-blue.png', async(req, res, next) => {
     try {
-        await res.sendFile(process.env.DPT_PATH + '/static/red-ble.png');
+        await res.sendFile(process.env.DPT_PATH + '/static/red-blue.png');
         res.status(200);
     } catch (err) {
         next(err);

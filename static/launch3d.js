@@ -405,11 +405,11 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
     ev.x = recipientOpinion.position.x - 2.4;
     ev.y = recipientOpinion.position.y + 1.2;
 
-    var radius = 0.05;
+    var radius = 0.04;
     var occupacy = 0.85;
     if(status == "CLOSED") {
     	radius = 0.08;
-    	occupacy = 0.55;
+    	occupacy = 0.85;
     }
     var tube = new BABYLON.MeshBuilder.CreateTube(
         "tube", {
@@ -421,10 +421,10 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 
     tube.dpt = {
         context: 'tubeConnection',
-        dialogId: opinionDialogConnections[initiatorOpinion.opinionId].dialogId,
-        initiatorsOpinion: opinionDialogConnections[initiatorOpinion.opinionId].initiatorsOpinion,
-        recipientsOpinion: opinionDialogConnections[initiatorOpinion.opinionId].recipientsOpinion,
-        status: status,
+        dialogId: opinionDialogConnections.dialogId,
+        initiatorsOpinion: opinionDialogConnections.initiatorsOpinion,
+        recipientsOpinion: opinionDialogConnections.recipientsOpinion,
+        status: opinionDialogConnections.dialogStatus,
     };
 
     var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 32, currentScene);
@@ -521,7 +521,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
     mat.alpha = occupacy;
     mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
     if(status == 'CLOSED') {
-    	mat.alphaMode = BABYLON.Engine.ALPHA_ONEONE;
+    	mat.alphaMode = BABYLON.Engine.ALPHA_ADD;
     }
     mat.diffuseTexture = dynamicTexture;
     //mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
@@ -534,28 +534,30 @@ function dialogRelations(opinionDialogConnections) {
     var initiatorOpinion = {};
     var i;
     var recipientOpinion = {};
-    for (i in opinionDialogConnections) {
+    for(var h in opinionDialogConnections) {
+    	var odc = opinionDialogConnections[h];
+    for (i in odc) {
         for (var j in currentScene.meshes) {
             if ('dpt' in currentScene.meshes[j] &&
                 currentScene.meshes[j].dpt.context == 'opinionScene' &&
-                currentScene.meshes[j].dpt.opinionId == i) {
+                currentScene.meshes[j].dpt.opinionId == h) {
                 initiatorOpinion.position = currentScene.meshes[j].position;
-                initiatorOpinion.opinionId = i;
-                if (jQuery.inArray(i, opinionDialogConnections[i].leafs.negative) >= 0) {
+                initiatorOpinion.opinionId = h;
+                if (jQuery.inArray(h, odc[i].leafs.negative) >= 0) {
                     initiatorOpinion.rating = 'negative';
-                } else if (jQuery.inArray(i, opinionDialogConnections[i].leafs.neutral) >= 0) {
+                } else if (jQuery.inArray(h, odc[i].leafs.neutral) >= 0) {
                     initiatorOpinion.rating = 'neutral';
-                } else if (jQuery.inArray(i, opinionDialogConnections[i].leafs.positive) >= 0) {
+                } else if (jQuery.inArray(h, odc[i].leafs.positive) >= 0) {
                     initiatorOpinion.rating = 'positive';
-                } else if (jQuery.inArray(i, opinionDialogConnections[i].leafs.unset) >= 0) {
+                } else if (jQuery.inArray(h, odc[i].leafs.unset) >= 0) {
                     initiatorOpinion.rating = 'unset';
                 }
             }
         }
 
-        for (var j in opinionDialogConnections[i].leafs.negative) {
-            var opinionId = opinionDialogConnections[i].leafs.negative[j];
-            if (opinionId != i) {
+        for (var j in odc[i].leafs.negative) {
+            var opinionId = odc[i].leafs.negative[j];
+            if (opinionId != h) {
                 for (var k in currentScene.meshes) {
                     if ('dpt' in currentScene.meshes[k] &&
                         currentScene.meshes[k].dpt.context == 'opinionScene' &&
@@ -567,9 +569,9 @@ function dialogRelations(opinionDialogConnections) {
                 }
             }
         }
-        for (var j in opinionDialogConnections[i].leafs.neutral) {
-            var opinionId = opinionDialogConnections[i].leafs.neutral[j];
-            if (opinionId != i) {
+        for (var j in odc[i].leafs.neutral) {
+            var opinionId = odc[i].leafs.neutral[j];
+            if (opinionId != h) {
                 for (var k in currentScene.meshes) {
                     if ('dpt' in currentScene.meshes[k] &&
                         currentScene.meshes[k].dpt.context == 'opinionScene' &&
@@ -581,9 +583,9 @@ function dialogRelations(opinionDialogConnections) {
                 }
             }
         }
-        for (var j in opinionDialogConnections[i].leafs.positive) {
-            var opinionId = opinionDialogConnections[i].leafs.positive[j];
-            if (opinionId != i) {
+        for (var j in odc[i].leafs.positive) {
+            var opinionId = odc[i].leafs.positive[j];
+            if (opinionId != h) {
                 for (var k in currentScene.meshes) {
                     if ('dpt' in currentScene.meshes[k] &&
                         currentScene.meshes[k].dpt.context == 'opinionScene' &&
@@ -600,9 +602,9 @@ function dialogRelations(opinionDialogConnections) {
             createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections, opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus);
         }
         */
-        for(var j in opinionDialogConnections[i].leafs.unset) {
-        	var opinionId = opinionDialogConnections[i].leafs.unset[j];
-        	if(opinionId != i) {
+        for(var j in odc[i].leafs.unset) {
+        	var opinionId = odc[i].leafs.unset[j];
+        	if(opinionId != h) {
         		for(var k in currentScene.meshes) {
         			if('dpt' in currentScene.meshes[k] &&
         				currentScene.meshes[k].dpt.context == 'opinionScene' &&
@@ -626,10 +628,11 @@ function dialogRelations(opinionDialogConnections) {
         && 'position' in recipientOpinion
         ) {
         //&&    opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus == 'CLOSED') {
-            createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections, opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus);
+            createBiColorTube(initiatorOpinion, recipientOpinion, odc[i], h);
         }
         //		return(createBiColorTube(currentScene.meshes[k].dpt.opinionId, sv, ev));
     }
+}
 }
 
 function loadOpinions(restObj) {
@@ -665,7 +668,9 @@ function loadOpinions(restObj) {
 
     var opinionDialogConnections = {};
     for (var i = 0; i < restObj.data.length; i++) {
-        opinionDialogConnections[restObj.data[i].topo.opinionId] = restObj.data[i].topo;
+    	if('topos' in restObj.data[i]) {
+    		opinionDialogConnections[restObj.data[i]._id] = restObj.data[i].topos;
+    	}
     }
     for (var i = 0; i < restObj.data.length; i++) {
         if (restObj.data[i].user == 'mine') {
@@ -721,7 +726,7 @@ function loadOpinions(restObj) {
                 }, false));
 
 
-        if (canInvite && restObj.data[i].user != 'mine' && restObj.data[i].blocked == 0) {
+        if (canInvite && restObj.data[i].user != 'mine' && restObj.data[i].blocked == 1) {
             var mat = new BABYLON.StandardMaterial("icon", currentScene);
             mat.diffuseTexture = new BABYLON.Texture("/chatbubble.png", currentScene);
             //			mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png", currentScene);
