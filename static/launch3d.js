@@ -409,7 +409,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
     var occupacy = 0.85;
     if(status == "CLOSED") {
     	radius = 0.08;
-    	occupacy = 0.15;
+    	occupacy = 0.55;
     }
     var tube = new BABYLON.MeshBuilder.CreateTube(
         "tube", {
@@ -517,11 +517,11 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
     };
 
     var mat = new BABYLON.StandardMaterial("mat", currentScene);
-    mat.alpha = 0.25;
+    //mat.alpha = 0.25;
     mat.alpha = occupacy;
     mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
     if(status == 'CLOSED') {
-    	mat.alphaMode = BABYLON.Engine.ALPHA_COMBINE;
+    	mat.alphaMode = BABYLON.Engine.ALPHA_ONEONE;
     }
     mat.diffuseTexture = dynamicTexture;
     //mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
