@@ -532,8 +532,9 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 
 function dialogRelations(opinionDialogConnections) {
     var initiatorOpinion = {};
+    var i;
     var recipientOpinion = {};
-    for (var i in opinionDialogConnections) {
+    for (i in opinionDialogConnections) {
         for (var j in currentScene.meshes) {
             if ('dpt' in currentScene.meshes[j] &&
                 currentScene.meshes[j].dpt.context == 'opinionScene' &&
@@ -566,9 +567,6 @@ function dialogRelations(opinionDialogConnections) {
                 }
             }
         }
-        if ('position' in initiatorOpinion && 'position' in recipientOpinion) {
-            createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections);
-        }
         for (var j in opinionDialogConnections[i].leafs.neutral) {
             var opinionId = opinionDialogConnections[i].leafs.neutral[j];
             if (opinionId != i) {
@@ -582,9 +580,6 @@ function dialogRelations(opinionDialogConnections) {
                     }
                 }
             }
-        }
-        if ('position' in initiatorOpinion && 'position' in recipientOpinion) {
-            createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections);
         }
         for (var j in opinionDialogConnections[i].leafs.positive) {
             var opinionId = opinionDialogConnections[i].leafs.positive[j];
@@ -600,8 +595,9 @@ function dialogRelations(opinionDialogConnections) {
                 }
             }
         }
+        /*
         if ('position' in initiatorOpinion && 'position' in recipientOpinion) {
-            createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections);
+            createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections, opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus);
         }
         for(var j in opinionDialogConnections[i].leafs.unset) {
         	var opinionId = opinionDialogConnections[i].leafs.unset[j];
@@ -617,6 +613,7 @@ function dialogRelations(opinionDialogConnections) {
         		}
         	}
         }
+        */
 
         /*
         initiatorOpinion.position.x -= 2.4;
@@ -1183,7 +1180,8 @@ var createGenericScene = function(dptMode) {
             case BABYLON.PointerEventTypes.POINTERUP:
                 //console.log("POINTER UP");
 
-                if ('dpt' in pointerInfo.pickInfo.pickedMesh) {
+                if (pointerInfo.pickInfo.pickedMesh
+                && 'dpt' in pointerInfo.pickInfo.pickedMesh) {
                     if (pointerInfo.pickInfo.pickedMesh.dpt.context == "dialogInvitation") {
                         propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId);
                     } else if (pointerInfo.pickInfo.pickedMesh.dpt.context == "tubeConnection") {
