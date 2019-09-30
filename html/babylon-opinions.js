@@ -126,8 +126,8 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	mat.alpha = occupacy;
 	mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 	if(status == 'CLOSED') {
-		if(combined == 'green-green') {
-			mat.alpha = 1;
+		if(combination == 'green-green') {
+			mat.alpha = 0;
 		}
 		mat.alphaMode = BABYLON.Engine.ALPHA_COMBINED;
 	}
