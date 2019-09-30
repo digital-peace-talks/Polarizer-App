@@ -20,17 +20,17 @@ router.get('/', async(req, res, next) => {
                 <br>Are you a new user?<br><br>
                 <fieldset style="text-align:center; width:400px">
                 <legend style="text-align:center">This could be your pass-phrase, remember it:</legend>
-                <h3><b>${phrase}</b>
-                <br><a href=/recover?phrase=${encodeURIComponent(phrase)}>Start</a>
+                <h3><b>${phrase}</b><br>
+                <br><a style="color: #fff; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">Start &#9655;</a>
                 </fieldset>
                 </h3><br><br>Lost your cookie? A new browser? Recover here.<br><br>Enter your pass-phrase:<br>
                 <form method="post" action="/recover"><input type=text name=phraseinput>
                 <input type="hidden" name="phrase" value="${phrase}"></form></center>`);
         } else {
             res.send(`<body bgcolor="#0071bc"><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="400" width="400">
-                <br><br> 
-                <a href=/launch3d.html>Start</a>
-                <br><br>
+                <br><br><h3><b>
+                <a style="color: #fff; text-decoration: none;" href=/launch3d.html>Start &#9655;</a>
+                </b></h3><br><br>
                 <!--
                 <a onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
                 -->
