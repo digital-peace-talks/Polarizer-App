@@ -32,7 +32,10 @@ app.use("/topic", require("./routes/topic"));
 app.use("/opinion", require("./routes/opinion"));
 app.use("/dialog", require("./routes/dialog"));
 app.use("/misc", require("./routes/misc"));
+app.use(express.static("static"));
+app.use(express.static("html"));
 app.use("/", require("./routes/frontend"));
+
 
 // catch 404
 app.use((req, res, next) => {
