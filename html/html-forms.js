@@ -1,4 +1,3 @@
-
 var isMobile = false; //initiate as false
 // device detection
 
@@ -10,13 +9,14 @@ if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine
 function hideMenu() {
 	jQuery('#button-menu').fadeOut();
 	jQuery('#overlay').css("background-image", "url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png')");
-
 }
 
 function propositionForm(opinionId) {
-
+	
 	console.log('enter proposition');
-	jQuery('body').append(`<div id="propositionForm" style="position: absolute; top:0; left: 0px;
+
+	jQuery('body').append(`
+		<div id="propositionForm" style="position: absolute; top:0; left: 0px;
 		padding: 20px; margin-left: 300px; border: #fff; border-style: solid;
 		border-width: 1px; color: #F0F3F5; z-index: 30; font-family: DPTFont;
 		font-size: 18px; background-color: #005B9888;">Please enter your proposition:
@@ -25,7 +25,9 @@ function propositionForm(opinionId) {
 		height="150px" class="proposition"></textarea>
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
 		<br><input type="submit" value="Send">
-		<input type="button" value="close window" name="close window" id="ClosePropositionForm"></form></div>`);
+		<input type="button" value="close window" name="close window" id="ClosePropositionForm"></form></div>
+	`);
+	
 	jQuery(".proposition").focus();
 
 	jQuery(document).one('click', "#ClosePropositionForm", function(event) {
@@ -79,25 +81,28 @@ function topicForm() {
 	console.log('enter topic');
 
 	if(isMobile) {
-		jQuery('body').append(`<div id="topicForm" style="position: fixed;
-				top: 0px; left: 0px; padding: 0px;  margin-left: 5%; margin-top: 25%; 
-				color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
-		background-color: #005B9888;">New topic:<br><form id="topic">
-		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
-		 cols="43" rows="12" class="topic"   margin: 0 auto;></textarea><br>
-		 <input type="submit" value="Send"></form></div>`);
-
+		jQuery('body').append(`
+			<div id="topicForm" style="position: fixed;
+			top: 0px; left: 0px; padding: 0px;  margin-left: 5%; margin-top: 25%; 
+			color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
+			background-color: #005B9888;">New topic:<br><form id="topic">
+			<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
+			cols="43" rows="12" class="topic"   margin: 0 auto;></textarea><br>
+			<input type="submit" value="Send"></form></div>
+		`);
 
 	} else {
-		jQuery('body').append(`<div id="topicForm" style="position: absolute;
-		top: 0px; left: 0px; padding: 20px; margin-left: 300px; border: #fff;
-		border-style: solid; border-width: 1px; color: #F0F3F5; z-index: 2;
-		font-family: DPTFont; font-size: 18px; background-color: #005B9888;">
-		Please enter a new topic:<br><form id="topic">
-		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
-		cols="51" rows="4" class="topic"></textarea><br><input type="submit" value="Send">
-		<input type="button" value="close window" name="close window"
-		id="CloseTopicForm"></form></div>`);
+		jQuery('body').append(`
+			<div id="topicForm" style="position: absolute;
+			top: 0px; left: 0px; padding: 20px; margin-left: 300px; border: #fff;
+			border-style: solid; border-width: 1px; color: #F0F3F5; z-index: 2;
+			font-family: DPTFont; font-size: 18px; background-color: #005B9888;">
+			Please enter a new topic:<br><form id="topic">
+			<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
+			cols="51" rows="4" class="topic"></textarea><br><input type="submit" value="Send">
+			<input type="button" value="close window" name="close window"
+			id="CloseTopicForm"></form></div>
+		`);
 	}
 	jQuery(".topic").focus();
 
@@ -150,7 +155,9 @@ function topicForm() {
 
 function opinionForm() {
 	console.log('enter opinion');
-	jQuery('body').append(`<div id="opinionForm" style="position: absolute;
+
+	jQuery('body').append(`
+		<div id="opinionForm" style="position: absolute;
 		top: 0px; left: 0px; padding: 20px; margin-left: 300px; border: #fff;
 		border-style: solid; border-width: 1px; color: #F0F3F5; z-index: 2;
 		font-family: DPTFont; font-size: 18px; background-color: #005B9888;">
@@ -158,7 +165,9 @@ function opinionForm() {
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="opinion"
 		cols="52" rows="4" class="opinion"></textarea><br><input type="submit"
 		value="Send"> <input type="button" value="close window" name="close window"
-		id="CloseOpinionForm"></form></div>`);
+		id="CloseOpinionForm"></form></div>
+	`);
+
 	jQuery(".opinion").focus();
 
 	jQuery(document).one('click', "#CloseOpinionForm", function(event) {
@@ -217,26 +226,32 @@ function loadDialogList(restObj) {
 
 	for(var i = 0; i < dialogs.length; i++) {
 
-		menuEntry = `<span class="myDialogs" id="${dialogs[i].dialog}">
-			<i>proposition:</i><h2>${dialogs[i].opinionProposition}</h2></span>`;
+		menuEntry = `
+			<span class="myDialogs" id="${dialogs[i].dialog}">
+			<i>proposition:</i><h2>${dialogs[i].opinionProposition}</h2></span>
+		`;
 
-		dialog = `<u style="font-size: 32px">Dialog Info</u><br><br>
+		dialog = `
+			<u style="font-size: 32px">Dialog Info</u><br><br>
 			<i>proposition:</i><br><h2>${dialogs[i].opinionProposition}<h2>
-			<i>topic:</i><br>${dialogs[i].topic}<br><br>`;
+			<i>topic:</i><br>${dialogs[i].topic}<br><br>
+		`;
 
 		if(dialogs[i].initiator == 'me') {
-
-			dialog += `<i>my opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
-					<i>other's opinion:</i><br><h2>${dialogs[i].recipientOpinion}<h2>
-					<i>initiator:</i> me<br><br>`;
+			
+			dialog += `
+				<i>my opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
+				<i>other's opinion:</i><br><h2>${dialogs[i].recipientOpinion}<h2>
+				<i>initiator:</i> me<br><br>
+			`;
 
 		} else {
 
-
-			dialog += `<i>my opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>
-					 <i>other's opinion:</i><br><h2>${dialogs[i].initiatorOpinion}<h2>
-					 <i>initiator:</i> other<br><br>`;
-
+			dialog += `
+				<i>my opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>		
+				<i>other's opinion:</i><br><h2>${dialogs[i].initiatorOpinion}<h2>
+				<i>initiator:</i> other<br><br>
+			`;
 		}
 
 		dialog += `<i>status:</i> ${dialogs[i].status}`;
@@ -249,6 +264,7 @@ function loadDialogList(restObj) {
 			menuEntry: menuEntry,
 			description: dialog
 		};
+
 		jQuery('#dialogMenu').append(menuEntry);
 	}
 }
@@ -275,7 +291,6 @@ var createGUIScene = function(dptMode) {
 			hideMenu();
 		}
 		focusAtCanvas();
-
 	});
 
 
@@ -298,8 +313,9 @@ var createGUIScene = function(dptMode) {
 				hideMenu();
 			}
 
+		});
 
-		})
+
 		//create opinion button 
 	} else if(dptMode == 'opinionScene') {
 
@@ -324,6 +340,7 @@ var createGUIScene = function(dptMode) {
 		});
 	}
 
+	
 	//create dialogue button
 	var dialoguesBtn = jQuery('#dialogues-btn');
 	dialoguesBtn.show();

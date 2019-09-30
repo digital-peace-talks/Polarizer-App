@@ -22,7 +22,8 @@ var powerSave = false;
 
 function getCollisionBox() {
 	//Simple box
-	var box = new BABYLON.MeshBuilder.CreateBox("collisionBox", {
+	var box = new BABYLON.MeshBuilder.CreateBox("collisionBox", 
+	{
 		width: 100,
 		height: 30,
 		depth: 40,
@@ -77,8 +78,7 @@ function getCamera() {
 	camera.keysUp.push(38);
 	camera.keysRight.push(39);
 	camera.keysDown.push(40);
-	/*
-	 */
+
 	/*
 				camera.rollCorrect = 10;
 				camera.bankedTurn = true;
@@ -91,7 +91,6 @@ function getCamera() {
 	return (camera);
 }
 
-
 function initVirtJoysticks() {
 
 	var leftJoystick = new BABYLON.VirtualJoystick(false);
@@ -101,6 +100,7 @@ function initVirtJoysticks() {
 	BABYLON.VirtualJoystick.Canvas.style.zIndex = "-1";
 
 	// Game/Render loop
+
 	var movespeed = 5;
 	var camVec = currentScene.cameras[0].position;
 	currentScene.onBeforeRenderObservable.add(() => {
@@ -428,11 +428,11 @@ function main() {
 				} else {
 					alert('Only one opinion per topic.');
 				}
+			
 			} else if(restObj.path == '/dialog/list/'
 					&& restObj.method == 'get') {
 
 				loadDialogList(restObj);
-
 			}
 		});
 
@@ -454,6 +454,7 @@ function main() {
 		console.log('window inactive');
 		powerSave = true;
 	});
+	
 	jQuery(window).focus(function() {
 		console.log('window active');
 		focusAtCanvas();
