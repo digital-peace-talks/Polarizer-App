@@ -20,7 +20,7 @@ router.get('/', async(req, res, next) => {
                 <br>Are you a new user?<br><br>
                 <fieldset style="text-align:center; width:400px">
                 <legend style="text-align:center">This could be your pass-phrase, remember it:</legend>
-                <h3><b>${phrase}</b><br>
+                <h3><b style="margin: 20px; white-space: nowrap;">${phrase}</b><br>
                 <br><a style="color: #fff; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">Start &#9655;</a>
                 </fieldset>
                 </h3><br><br>Lost your cookie? A new browser? Recover here.<br><br>Enter your pass-phrase:<br>
