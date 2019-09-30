@@ -81,7 +81,7 @@ router.post('/recover', async(req, res, next) => {
 
 router.get('/manifest.json', async(req, res, next) => {
     try {
-        await res.sendFile(process.env.DPT_PATH + '/static/manifest.json');
+        await res.sendFile(process.env.DPT_PATH + '/html/manifest.json');
         res.status(200);
     } catch (err) {
         next(err);
@@ -90,7 +90,7 @@ router.get('/manifest.json', async(req, res, next) => {
 
 router.get('/sw.js', async(req, res, next) => {
     try {
-        await res.sendFile(process.env.DPT_PATH + '/static/sw.js');
+        await res.sendFile(process.env.DPT_PATH + '/html/sw.js');
         res.status(200);
     } catch (err) {
         next(err);
@@ -147,7 +147,7 @@ router.get('/icon-512x512.png', async(req, res, next) => {
 
 router.get('/dpt-client.js', async(req, res, next) => {
     try {
-        await res.sendFile(process.env.DPT_PATH + '/static/dpt-client.js');
+        await res.sendFile(process.env.DPT_PATH + '/html/dpt-client.js');
         res.status(200);
     } catch (err) {
         next(err);
@@ -373,7 +373,7 @@ router.get('/din.ttf', async(req, res, next) => {
 
 router.get('/babylon.html', async(req, res, next) => {
     try {
-        await res.sendFile(process.env.DPT_PATH + '/static/babylon.html');
+        await res.sendFile(process.env.DPT_PATH + '/html/babylon.html');
         res.status(200);
     } catch (err) {
         next(err);
@@ -382,7 +382,7 @@ router.get('/babylon.html', async(req, res, next) => {
 
 router.get('/launch3d.html', async(req, res, next) => {
     try {
-        await res.sendFile(process.env.DPT_PATH + '/static/launch3d.html');
+        await res.sendFile(process.env.DPT_PATH + '/html/launch3d.html');
         res.status(200);
     } catch (err) {
         next(err);
@@ -391,7 +391,7 @@ router.get('/launch3d.html', async(req, res, next) => {
 
 router.get('/launch3d.js', async(req, res, next) => {
     try {
-        await res.sendFile(process.env.DPT_PATH + '/static/launch3d.js');
+        await res.sendFile(process.env.DPT_PATH + '/html/launch3d.js');
         res.status(200);
     } catch (err) {
         next(err);
@@ -401,7 +401,7 @@ router.get('/launch3d.js', async(req, res, next) => {
 
 router.get('/dialog.html', async(req, res, next) => {
     try {
-        await res.sendFile(process.env.DPT_PATH + '/static/dialog.html');
+        await res.sendFile(process.env.DPT_PATH + '/html/dialog.html');
         res.status(200);
     } catch (err) {
         next(err);
@@ -410,7 +410,7 @@ router.get('/dialog.html', async(req, res, next) => {
 
 router.get('/dialog.css', async(req, res, next) => {
     try {
-        await res.sendFile(process.env.DPT_PATH + '/static/dialog.css');
+        await res.sendFile(process.env.DPT_PATH + '/html/dialog.css');
         res.status(200);
     } catch (err) {
         next(err);
@@ -420,7 +420,7 @@ router.get('/dialog.css', async(req, res, next) => {
 
 router.get('/launch3d.css', async(req, res, next) => {
     try {
-        await res.sendFile(process.env.DPT_PATH + '/static/launch3d.css');
+        await res.sendFile(process.env.DPT_PATH + '/html/launch3d.css');
         res.status(200);
     } catch (err) {
         next(err);
@@ -429,7 +429,7 @@ router.get('/launch3d.css', async(req, res, next) => {
 
 router.get('/dialog.js', async(req, res, next) => {
     try {
-        await res.sendFile(process.env.DPT_PATH + '/static/dialog.js');
+        await res.sendFile(process.env.DPT_PATH + '/html/dialog.js');
         res.status(200);
     } catch (err) {
         next(err);
@@ -456,7 +456,7 @@ router.get('/touch_white.png', async(req, res, next) => {
 
 router.get('/launch.js', async(req, res, next) => {
     try {
-        await res.sendFile(process.env.DPT_PATH + '/static/launch.js');
+        await res.sendFile(process.env.DPT_PATH + '/html/launch.js');
         res.status(200);
     } catch (err) {
         next(err);
@@ -487,7 +487,7 @@ router.get('/launch', async(req, res, next) => {
             res.cookie('dptUUID', dptUUID, cookieOptions)
         }
         console.log('session tagged with dptUUID ' + dptUUID);
-        res.sendFile(process.env.DPT_PATH + '/static/launch.html');
+        res.sendFile(process.env.DPT_PATH + '/html/launch.html');
         res.end;
     } catch (err) {
         next(err);
@@ -518,7 +518,7 @@ router.get('/dialog', async(req, res, next) => {
             res.cookie('dptUUID', dptUUID, cookieOptions)
         }
         console.log('session tagged with dptUUID ' + dptUUID);
-        res.sendFile(process.env.DPT_PATH + '/static/dialog.html');
+        res.sendFile(process.env.DPT_PATH + '/html/dialog.html');
         res.end;
     } catch (err) {
         next(err);
@@ -549,7 +549,7 @@ router.get('/babylon', async(req, res, next) => {
             res.cookie('dptUUID', dptUUID, cookieOptions)
         }
         console.log('session tagged with dptUUID ' + dptUUID);
-        res.sendFile(process.env.DPT_PATH + '/static/babylon.html');
+        res.sendFile(process.env.DPT_PATH + '/html/babylon.html');
         res.end;
     } catch (err) {
         next(err);
@@ -580,7 +580,7 @@ router.get('/justTheTopics.html', async(req, res, next) => {
             res.cookie('dptUUID', dptUUID, cookieOptions)
         }
         console.log('session tagged with dptUUID ' + dptUUID);
-        res.sendFile(process.env.DPT_PATH + '/static/justTheTopics.html');
+        res.sendFile(process.env.DPT_PATH + '/html/justTheTopics.html');
         res.end;
     } catch (err) {
         next(err);
