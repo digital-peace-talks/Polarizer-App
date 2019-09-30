@@ -8,11 +8,6 @@
     src: url("/din.ttf") format("truetype");
 }
 
-@font-face {
-    font-family: "bitter";
-    src: url("/bitter.ttf") format("truetype");
-}
-
 html,
 body {
     font-family: "DPTFont";
