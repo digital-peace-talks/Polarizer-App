@@ -126,7 +126,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	mat.alpha = occupacy;
 	mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 	if(status == 'CLOSED') {
-		mat.alphaMode = BABYLON.Engine.ALPHA_ADD;
+		mat.alphaMode = BABYLON.Engine.ALPHA_COMBINED;
 	}
 	mat.diffuseTexture = dynamicTexture;
 	//mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
