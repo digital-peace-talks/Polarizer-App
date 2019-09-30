@@ -371,10 +371,12 @@ function dialogForm() {
 
     if (currentDialog.status == 'CLOSED') {
         for (var i = 0; i < currentDialog.crisises.length; i++) {
-            if (currentDialog.crisises[i].sender == 'me') {
-                jQuery('#c3', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
+            if (currentDialog.crisises[i].initiator == 'me') {
+//                jQuery('#c3', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
+                jQuery('div.dialogleft>p').append(`Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}<br>`);
             } else {
-                jQuery('#c1', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
+//                jQuery('#c1', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
+                jQuery('div.dialogright>p').append(`Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}<br>`);
             }
         }
     }

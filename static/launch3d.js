@@ -544,13 +544,13 @@ function dialogRelations(opinionDialogConnections) {
                 currentScene.meshes[j].dpt.opinionId == h) {
                 initiatorOpinion.position = currentScene.meshes[j].position;
                 initiatorOpinion.opinionId = h;
-                if (jQuery.inArray(h, odc[i].leafs.negative) >= 0) {
+                if(odc[i].leafs.negative.includes(h)) {
                     initiatorOpinion.rating = 'negative';
-                } else if (jQuery.inArray(h, odc[i].leafs.neutral) >= 0) {
+                } else if(odc[i].leafs.neutral.includes(h)) {
                     initiatorOpinion.rating = 'neutral';
-                } else if (jQuery.inArray(h, odc[i].leafs.positive) >= 0) {
+                } else if(odc[i].leafs.positive.includes(h)) {
                     initiatorOpinion.rating = 'positive';
-                } else if (jQuery.inArray(h, odc[i].leafs.unset) >= 0) {
+                } else if(odc[i].leafs.unset.includes(h)) {
                     initiatorOpinion.rating = 'unset';
                 }
             }
