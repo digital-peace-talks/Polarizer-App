@@ -10,16 +10,16 @@ function loadTopics(restObj) {
 	ystart = ymax;
 	y = ystart;
 
-	if (currentScene.name == 'topicScene') {
-		for (var i in currentScene.meshes) {
-			if ('dpt' in currentScene.meshes[i] &&
-				currentScene.meshes[i].dpt.context == 'topicScene') {
+	if(currentScene.name == 'topicScene') {
+		for(var i in currentScene.meshes) {
+			if('dpt' in currentScene.meshes[i]
+			&& currentScene.meshes[i].dpt.context == 'topicScene') {
 				currentScene.meshes[i].dispose();
 			}
 		}
 	}
-	for (var i in restObj.data) {
-		if (restObj.data[i].user == 'mine') {
+	for(var i in restObj.data) {
+		if(restObj.data[i].user == 'mine') {
 			options = '<span class="editTopic" id="' +
 				restObj.data[i]._id +
 				'">&#128393;</span>';
@@ -35,7 +35,7 @@ function loadTopics(restObj) {
 			}),
 			`${restObj.data[i].content} [ ${restObj.data[i].opinions.length} ]`);
 		x += 4.8;
-		if (x > xmax) {
+		if(x > xmax) {
 			y -= 3.2;
 			x = xstart;
 		}

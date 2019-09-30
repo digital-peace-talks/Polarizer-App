@@ -45,23 +45,23 @@ function getCollisionBox() {
 function getCamera() {
 
 	// camera
-	if (currentScene.dptMode == "topicScene") {
+	if(currentScene.dptMode == "topicScene") {
 		console.log('ts cam');
 		var camera = new BABYLON.FlyCamera("FlyCamera",
 			new BABYLON.Vector3(2.5, 4.5, -15), currentScene);
 
-		if (topicCamState) {
+		if(topicCamState) {
 			camera.position = topicCamState.position;
 			camera.rotation = topicCamState.rotation;
 			camera.direction = topicCamState.direction;
 		}
 	}
-	if (currentScene.dptMode == "opinionScene") {
+	if(currentScene.dptMode == "opinionScene") {
 		console.log('os cam');
 		var camera = new BABYLON.FlyCamera("FlyCamera",
 			new BABYLON.Vector3(4.5, 1.0, -15), currentScene);
 
-		if (opinionCamState) {
+		if(opinionCamState) {
 			camera.position = opinionCamState.position;
 			camera.rotation = opinionCamState.rotation;
 			camera.direction = opinionCamState.direction;
@@ -104,18 +104,18 @@ function initVirtJoysticks() {
 	var movespeed = 5;
 	var camVec = currentScene.cameras[0].position;
 	currentScene.onBeforeRenderObservable.add(() => {
-		if (leftJoystick.pressed) {
+		if(leftJoystick.pressed) {
 			camVec.z += leftJoystick.deltaPosition.y *
 				(engine.getDeltaTime() / (1000 - 2 * camVec.z * camVec.z)) *
 				movespeed;
-			if (camVec.z > 0) {
+			if(camVec.z > 0) {
 				camVec.z = -15;
 			}
-			if (camVec.z < -20) {
+			if(camVec.z < -20) {
 				camVec.z = -1;
 			}
 		}
-		if (rightJoystick.pressed) {
+		if(rightJoystick.pressed) {
 			camVec.x += rightJoystick.deltaPosition.x *
 				(engine.getDeltaTime() / (2000 - camVec.z * camVec.z)) *
 				movespeed;
@@ -139,7 +139,7 @@ function initVirtJoysticks() {
 
 	// Button toggle logic
 	btn.onclick = () => {
-		if (BABYLON.VirtualJoystick.Canvas.style.zIndex == "-1") {
+		if(BABYLON.VirtualJoystick.Canvas.style.zIndex == "-1") {
 			BABYLON.VirtualJoystick.Canvas.style.zIndex = "4";
 			btn.src = "/touch_white.png";
 		} else {
@@ -188,11 +188,11 @@ var createGenericScene = function(dptMode) {
 			case BABYLON.PointerEventTypes.POINTERUP:
 				//console.log("POINTER UP");
 
-				if (pointerInfo.pickInfo.pickedMesh
+				if(pointerInfo.pickInfo.pickedMesh
 				&& 'dpt' in pointerInfo.pickInfo.pickedMesh) {
-					if (pointerInfo.pickInfo.pickedMesh.dpt.context == "dialogInvitation") {
+					if(pointerInfo.pickInfo.pickedMesh.dpt.context == "dialogInvitation") {
 						propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId);
-					} else if (pointerInfo.pickInfo.pickedMesh.dpt.context == "tubeConnection") {
+					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "tubeConnection") {
 
 						if(pointerInfo.pickInfo.pickedMesh.dpt.status == "CLOSED") {
 							currentDialog = {
@@ -235,8 +235,8 @@ var createGenericScene = function(dptMode) {
 			case BABYLON.PointerEventTypes.POINTERDOUBLETAP:
 				//console.log("POINTER DOUBLE-TAP");
 
-				if ('dpt' in pointerInfo.pickInfo.pickedMesh &&
-					pointerInfo.pickInfo.pickedMesh.dpt.context == "topicScene") {
+				if('dpt' in pointerInfo.pickInfo.pickedMesh
+				&& pointerInfo.pickInfo.pickedMesh.dpt.context == "topicScene") {
 					//console.log("hit topicId: "+pointerInfo.pickInfo.pickedMesh.dpt.topicId);
 
 					pointerInfo.pickInfo.pickedMesh.showBoundingBox = true;
@@ -322,21 +322,21 @@ function main() {
 		// Handle the incomming websocket trafic
 		socket.on("connect", () => {
 			// if needed, we could keep socket.id somewhere
-			if (document.cookie) {
+			if(document.cookie) {
 				dpt.userLogin(document.cookie);
 			}
 		});
 
 		socket.on("private", function(restObj) {
-			if (restObj.method == "post") {
-				if (restObj.path == "/user/login/") {
+			if(restObj.method == "post") {
+				if(restObj.path == "/user/login/") {
 					whoami.dptUUID = restObj.data.dptUUID;
-					if (restObj.data.message == "logged in") {
+					if(restObj.data.message == "logged in") {
 						whoami.user = restObj.data.user;
 						dpt.getTopic();
 						dpt.getDialogList();
 					}
-					if (restObj.data.message == "user unknown") {
+					if(restObj.data.message == "user unknown") {
 						whoami.user = {};
 					}
 				}
@@ -352,9 +352,9 @@ function main() {
 		// server says it has some updates for client
 		socket.on('update', function(restObj) {
 
-			if (restObj.method == 'post') {
+			if(restObj.method == 'post') {
 
-				if (restObj.path == '/info/') {
+				if(restObj.path == '/info/') {
 					jQuery('#messages')
 						.append(jQuery('<li>')
 							.text(restObj.data.message));
@@ -363,44 +363,44 @@ function main() {
 				}
 			}
 
-			if (restObj.path == '/topic/' && restObj.method == 'get') {
-				if (currentScene.name == 'topicScene') {
+			if(restObj.path == '/topic/' && restObj.method == 'get') {
+				if(currentScene.name == 'topicScene') {
 					dpt.getTopic();
 				}
 			}
 
-			if (restObj.path == '/dialog/list/' && restObj.method == 'get') {
+			if(restObj.path == '/dialog/list/' && restObj.method == 'get') {
 				dpt.getDialogList();
 			}
 
-			if (restObj.path.startsWith('/opinion/') &&
-				restObj.data.id == currentTopic &&
-				restObj.method == 'get' &&
-				currentScene.name == 'opinionScene') {
+			if(restObj.path.startsWith('/opinion/')
+			&& restObj.data.id == currentTopic
+			&& restObj.method == 'get'
+			&& currentScene.name == 'opinionScene') {
 				dpt.getOpinionByTopic(currentTopic);
 			}
 
-			if (currentDialog &&
-				restObj.path == '/dialog/' + currentDialog.dialog + '/' &&
-				restObj.method == 'get' &&
-				dialogFormOpen == 1) {
+			if(currentDialog
+			&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
+			&& restObj.method == 'get'
+			&& dialogFormOpen == 1) {
 				dpt.getDialog(currentDialog.dialog);
 			}
 		});
 
 		socket.on("api", function(restObj) {
-			if (!restObj || !restObj.path || !restObj.method) {
+			if(!restObj || !restObj.path || !restObj.method) {
 				return;
 			}
 
-			if ('status' in restObj && restObj.status > 399) {
+			if('status' in restObj && restObj.status > 399) {
 
 				alert(restObj.data);
 				return;
 
-			} else if (currentDialog &&
-				restObj.path == '/dialog/' + currentDialog.dialog + '/' &&
-				restObj.method == 'get') {
+			} else if(currentDialog
+					&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
+					&& restObj.method == 'get') {
 
 				var old = currentDialog;
 				currentDialog = restObj.data;
@@ -410,26 +410,26 @@ function main() {
 				dialogForm();
 
 			}
-			if (restObj.path == '/topic/' &&
-				restObj.method == 'get') {
-				if (currentScene.name == 'topicScene') {
+			if(restObj.path == '/topic/'
+			&& restObj.method == 'get') {
+				if(currentScene.name == 'topicScene') {
 					loadTopics(restObj);
 				}
 
-			} else if (restObj.path == "/opinion/" + currentTopic + "/" &&
-				restObj.method == "get") {
-				if (currentScene.name == 'opinionScene') {
+			} else if(restObj.path == "/opinion/" + currentTopic + "/"
+					&& restObj.method == "get") {
+				if(currentScene.name == 'opinionScene') {
 					loadOpinions(restObj);
 				}
 
-			} else if (restObj.path == '/opinion/postAllowed/') {
-				if (restObj.data.value == true) {
+			} else if(restObj.path == '/opinion/postAllowed/') {
+				if(restObj.data.value == true) {
 					opinionForm();
 				} else {
 					alert('Only one opinion per topic.');
 				}
-			} else if (restObj.path == '/dialog/list/' &&
-				restObj.method == 'get') {
+			} else if(restObj.path == '/dialog/list/'
+					&& restObj.method == 'get') {
 
 				loadDialogList(restObj);
 
@@ -439,7 +439,7 @@ function main() {
 		//circlePoints(4, 2, {X: 0, Y: 0});
 
 		engine.runRenderLoop(function() {
-			if (currentScene && !powerSave) {
+			if(currentScene && !powerSave) {
 				currentScene.render();
 			}
 		});

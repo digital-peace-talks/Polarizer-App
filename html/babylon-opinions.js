@@ -36,69 +36,69 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	var ctx = dynamicTexture.getContext();
 
 	var combination = '';
-	if (initiatorOpinion.rating == 'negative') {
+	if(initiatorOpinion.rating == 'negative') {
 		combination = 'red-';
-		if (recipientOpinion.rating == 'negative') {
+		if(recipientOpinion.rating == 'negative') {
 			combination += 'red';
-		} else if (recipientOpinion.rating == 'neutral') {
+		} else if(recipientOpinion.rating == 'neutral') {
 			combination += 'blue';
-		} else if (recipientOpinion.rating == 'positive') {
+		} else if(recipientOpinion.rating == 'positive') {
 			combination += 'green';
-		} else if (recipientOpinion.rating == 'unset') {
+		} else if(recipientOpinion.rating == 'unset') {
 			combination += 'grey';
 		}
 
-	} else if (initiatorOpinion.rating == 'neutral') {
+	} else if(initiatorOpinion.rating == 'neutral') {
 		combination = 'blue-';
-		if (recipientOpinion.rating == 'negative') {
+		if(recipientOpinion.rating == 'negative') {
 			combination += 'red';
-		} else if (recipientOpinion.rating == 'neutral') {
+		} else if(recipientOpinion.rating == 'neutral') {
 			combination += 'blue';
-		} else if (recipientOpinion.rating == 'positive') {
+		} else if(recipientOpinion.rating == 'positive') {
 			combination += 'green';
-		} else if (recipientOpinion.rating == 'unset') {
+		} else if(recipientOpinion.rating == 'unset') {
 			combination += 'grey';
 		}
 
-	} else if (initiatorOpinion.rating == 'positive') {
+	} else if(initiatorOpinion.rating == 'positive') {
 		combination = 'green-';
-		if (recipientOpinion.rating == 'negative') {
+		if(recipientOpinion.rating == 'negative') {
 			combination += 'red';
-		} else if (recipientOpinion.rating == 'neutral') {
+		} else if(recipientOpinion.rating == 'neutral') {
 			combination += 'blue';
-		} else if (recipientOpinion.rating == 'positive') {
+		} else if(recipientOpinion.rating == 'positive') {
 			combination += 'green';
-		} else if (recipientOpinion.rating == 'unset') {
+		} else if(recipientOpinion.rating == 'unset') {
 			combination += 'grey';
 		}
 
-	} else if (initiatorOpinion.rating == 'unset') {
+	} else if(initiatorOpinion.rating == 'unset') {
 		combination += 'grey-';
-		if (recipientOpinion.rating == 'negative') {
+		if(recipientOpinion.rating == 'negative') {
 			combination += 'red';
-		} else if (recipientOpinion.rating == 'neutral') {
+		} else if(recipientOpinion.rating == 'neutral') {
 			combination += 'blue';
-		} else if (recipientOpinion.rating == 'positive') {
+		} else if(recipientOpinion.rating == 'positive') {
 			combination += 'green';
-		} else if (recipientOpinion.rating == 'unset') {
+		} else if(recipientOpinion.rating == 'unset') {
 			combination += 'grey';
 		}
 	}
 
 	console.log('image is : ' + combination);
 	var reverse = 0;
-	if (combination == 'green-blue') {
+	if(combination == 'green-blue') {
 		var reverse = 1;
 		combination = 'blue-green';
-	} else if (combination == 'green-red') {
+	} else if(combination == 'green-red') {
 		var reverse = 1;
 		combination = 'red-green';
-	} else if (combination == 'blue-red') {
+	} else if(combination == 'blue-red') {
 		var reverse = 1;
 		combination = 'red-blue';
 	}
 
-	if (combination.indexOf('grey') >= 0) {
+	if(combination.indexOf('grey') >= 0) {
 		combination = 'grey-grey';
 	}
 
@@ -108,7 +108,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 
 	image.onload = function() {
 
-		if (reverse || 1) {
+		if(reverse || 1) {
 			ctx.translate(-16, 16);
 			ctx.rotate(-90 * (Math.PI / 180));
 			ctx.translate(-16, 16);
@@ -141,103 +141,102 @@ function dialogRelations(opinionDialogConnections) {
 	var recipientOpinion = {};
 	for(var h in opinionDialogConnections) {
 		var odc = opinionDialogConnections[h];
-	for (i in odc) {
-		for (var j in currentScene.meshes) {
-			if ('dpt' in currentScene.meshes[j] &&
-				currentScene.meshes[j].dpt.context == 'opinionScene' &&
-				currentScene.meshes[j].dpt.opinionId == h) {
-				initiatorOpinion.position = currentScene.meshes[j].position;
-				initiatorOpinion.opinionId = h;
-				if(odc[i].leafs.negative.includes(h)) {
-					initiatorOpinion.rating = 'negative';
-				} else if(odc[i].leafs.neutral.includes(h)) {
-					initiatorOpinion.rating = 'neutral';
-				} else if(odc[i].leafs.positive.includes(h)) {
-					initiatorOpinion.rating = 'positive';
-				} else if(odc[i].leafs.unset.includes(h)) {
-					initiatorOpinion.rating = 'unset';
-				}
-			}
-		}
-
-		for (var j in odc[i].leafs.negative) {
-			var opinionId = odc[i].leafs.negative[j];
-			if (opinionId != h) {
-				for (var k in currentScene.meshes) {
-					if ('dpt' in currentScene.meshes[k] &&
-						currentScene.meshes[k].dpt.context == 'opinionScene' &&
-						currentScene.meshes[k].dpt.opinionId == opinionId) {
-						recipientOpinion.position = currentScene.meshes[k].position;
-						recipientOpinion.opinionId = opinionId;
-						recipientOpinion.rating = 'negative';
+		for(i in odc) {
+			for(var j in currentScene.meshes) {
+				if('dpt' in currentScene.meshes[j]
+				&& currentScene.meshes[j].dpt.context == 'opinionScene'
+				&& currentScene.meshes[j].dpt.opinionId == h) {
+					initiatorOpinion.position = currentScene.meshes[j].position;
+					initiatorOpinion.opinionId = h;
+					if(odc[i].leafs.negative.includes(h)) {
+						initiatorOpinion.rating = 'negative';
+					} else if(odc[i].leafs.neutral.includes(h)) {
+						initiatorOpinion.rating = 'neutral';
+					} else if(odc[i].leafs.positive.includes(h)) {
+						initiatorOpinion.rating = 'positive';
+					} else if(odc[i].leafs.unset.includes(h)) {
+						initiatorOpinion.rating = 'unset';
 					}
 				}
 			}
-		}
-		for (var j in odc[i].leafs.neutral) {
-			var opinionId = odc[i].leafs.neutral[j];
-			if (opinionId != h) {
-				for (var k in currentScene.meshes) {
-					if ('dpt' in currentScene.meshes[k] &&
-						currentScene.meshes[k].dpt.context == 'opinionScene' &&
-						currentScene.meshes[k].dpt.opinionId == opinionId) {
-						recipientOpinion.position = currentScene.meshes[k].position;
-						recipientOpinion.opinionId = opinionId;
-						recipientOpinion.rating = 'neutral';
+	
+			for(var j in odc[i].leafs.negative) {
+				var opinionId = odc[i].leafs.negative[j];
+				if(opinionId != h) {
+					for(var k in currentScene.meshes) {
+						if('dpt' in currentScene.meshes[k]
+						&& currentScene.meshes[k].dpt.context == 'opinionScene'
+						&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+							recipientOpinion.position = currentScene.meshes[k].position;
+							recipientOpinion.opinionId = opinionId;
+							recipientOpinion.rating = 'negative';
+						}
 					}
 				}
 			}
-		}
-		for (var j in odc[i].leafs.positive) {
-			var opinionId = odc[i].leafs.positive[j];
-			if (opinionId != h) {
-				for (var k in currentScene.meshes) {
-					if ('dpt' in currentScene.meshes[k] &&
-						currentScene.meshes[k].dpt.context == 'opinionScene' &&
-						currentScene.meshes[k].dpt.opinionId == opinionId) {
-						recipientOpinion.position = currentScene.meshes[k].position;
-						recipientOpinion.opinionId = opinionId;
-						recipientOpinion.rating = 'positive';
+			for(var j in odc[i].leafs.neutral) {
+				var opinionId = odc[i].leafs.neutral[j];
+				if(opinionId != h) {
+					for(var k in currentScene.meshes) {
+						if('dpt' in currentScene.meshes[k]
+						&& currentScene.meshes[k].dpt.context == 'opinionScene'
+						&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+							recipientOpinion.position = currentScene.meshes[k].position;
+							recipientOpinion.opinionId = opinionId;
+							recipientOpinion.rating = 'neutral';
+						}
 					}
 				}
 			}
-		}
-		/*
-		if ('position' in initiatorOpinion && 'position' in recipientOpinion) {
-			createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections, opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus);
-		}
-		*/
-		for(var j in odc[i].leafs.unset) {
-			var opinionId = odc[i].leafs.unset[j];
-			if(opinionId != h) {
-				for(var k in currentScene.meshes) {
-					if('dpt' in currentScene.meshes[k] &&
-						currentScene.meshes[k].dpt.context == 'opinionScene' &&
-						currentScene.meshes[k].dpt.opinionId == opinionId) {
-						recipientOpinion.position = currentScene.meshes[k].position;
-						recipientOpinion.opinionId = opinionId;
-						recipientOpinion.rating = 'unset';
+			for(var j in odc[i].leafs.positive) {
+				var opinionId = odc[i].leafs.positive[j];
+				if(opinionId != h) {
+					for(var k in currentScene.meshes) {
+						if('dpt' in currentScene.meshes[k]
+						&& currentScene.meshes[k].dpt.context == 'opinionScene'
+						&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+							recipientOpinion.position = currentScene.meshes[k].position;
+							recipientOpinion.opinionId = opinionId;
+							recipientOpinion.rating = 'positive';
+						}
 					}
 				}
 			}
+			/*
+			if('position' in initiatorOpinion && 'position' in recipientOpinion) {
+				createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections, opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus);
+			}
+			*/
+			for(var j in odc[i].leafs.unset) {
+				var opinionId = odc[i].leafs.unset[j];
+				if(opinionId != h) {
+					for(var k in currentScene.meshes) {
+						if('dpt' in currentScene.meshes[k]
+						&& currentScene.meshes[k].dpt.context == 'opinionScene'
+						&& currentScene.meshes[k].dpt.opinionId == opinionId) {
+							recipientOpinion.position = currentScene.meshes[k].position;
+							recipientOpinion.opinionId = opinionId;
+							recipientOpinion.rating = 'unset';
+						}
+					}
+				}
+			}
+	
+			/*
+			initiatorOpinion.position.x -= 2.4;
+			initiatorOpinion.position.y += 1.2;
+			recipientOpinion.position.x -= 2.4;
+			recipientOpinion.position.y += 1.2;
+			*/
+	
+			if('position' in initiatorOpinion
+			&& 'position' in recipientOpinion) {
+			//&&	opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus == 'CLOSED') {
+				createBiColorTube(initiatorOpinion, recipientOpinion, odc[i], h);
+			}
+			//		return(createBiColorTube(currentScene.meshes[k].dpt.opinionId, sv, ev));
 		}
-
-		/*
-		initiatorOpinion.position.x -= 2.4;
-		initiatorOpinion.position.y += 1.2;
-		recipientOpinion.position.x -= 2.4;
-		recipientOpinion.position.y += 1.2;
-		*/
-
-		if ('position' in initiatorOpinion
-		&& 'position' in recipientOpinion
-		) {
-		//&&	opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus == 'CLOSED') {
-			createBiColorTube(initiatorOpinion, recipientOpinion, odc[i], h);
-		}
-		//		return(createBiColorTube(currentScene.meshes[k].dpt.opinionId, sv, ev));
 	}
-}
 }
 
 
@@ -248,15 +247,15 @@ function loadOpinions(restObj) {
 	var options = '';
 	var canInvite = false;
 
-	if (currentScene.name == 'opinionScene') {
-		for (var i in currentScene.meshes) {
+	if(currentScene.name == 'opinionScene') {
+		for(var i in currentScene.meshes) {
 			/*
 			if('dpt' in currentScene.meshes[i]) {
 				if(currentScene.meshes[i].dpt.context == 'opinionScene'
 				|| currentScene.meshes[i].name == 'tube'
 				|| currentScene.meshes[i].name == 'icon') {
 				*/
-			if (currentScene.meshes[i].name != 'collisionBox') {
+			if(currentScene.meshes[i].name != 'collisionBox') {
 				currentScene.meshes[i].dispose();
 			}
 			/*
@@ -275,26 +274,26 @@ function loadOpinions(restObj) {
 	y = ystart;
 
 	var opinionDialogConnections = {};
-	for (var i = 0; i < restObj.data.length; i++) {
+	for(var i = 0; i < restObj.data.length; i++) {
 		if('topos' in restObj.data[i]) {
 			opinionDialogConnections[restObj.data[i]._id] = restObj.data[i].topos;
 		}
 	}
-	for (var i = 0; i < restObj.data.length; i++) {
-		if (restObj.data[i].user == 'mine') {
+	for(var i = 0; i < restObj.data.length; i++) {
+		if(restObj.data[i].user == 'mine') {
 			canInvite = true;
 		}
 	}
 
 	var nodes = circlePoints(restObj.data.length, 5, { X: 4, Y: 0 });
-	for (var i = 0; i < restObj.data.length; i++) {
+	for(var i = 0; i < restObj.data.length; i++) {
 		options = '';
-		if (restObj.data[i].user == 'mine') {
+		if(restObj.data[i].user == 'mine') {
 			options = '<span class="editOpinion" id="' +
 				restObj.data[i]._id +
 				'">&#128393;</span>';
 		} else {
-			if (restObj.data[i].blocked == 0 &&
+			if(restObj.data[i].blocked == 0 &&
 				canInvite) {
 				options = '<span class="inviteToDialog" id="' +
 					restObj.data[i]._id +
@@ -334,17 +333,22 @@ function loadOpinions(restObj) {
 				}, false));
 
 
-		if (canInvite && restObj.data[i].user != 'mine' && restObj.data[i].blocked == 1) {
+		if(canInvite && restObj.data[i].user != 'mine'
+		&& restObj.data[i].blocked == 1) {
 			var mat = new BABYLON.StandardMaterial("icon", currentScene);
 			mat.diffuseTexture = new BABYLON.Texture("/chatbubble.png", currentScene);
-			//			mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Rpb_dialog_icon.svg/120px-Rpb_dialog_icon.svg.png", currentScene);
 			mat.emissiveColor = new BABYLON.Color3(0.0, 0.8, 1);
-			//			mat.alpha = .95;
+			//	mat.alpha = .95;
 			mat.alphaMode = BABYLON.Engine.ALPHA_ADD;
 			mat.opacityTexture = mat.diffuseTexture;
 
-			//			var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.35, height: 0.25 }, currentScene);
-			var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.35, height: 0.35 }, currentScene);
+			//	var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.35, height: 0.25 }, currentScene);
+			var icon = BABYLON.MeshBuilder.CreatePlane(
+				"icon",
+				{
+					width: 0.35,
+					height: 0.35
+				}, currentScene);
 			icon.parent = plane;
 			icon.position.x -= plane.geometry.extend.maximum.x + 0.2;
 			icon.position.y += plane.geometry.extend.maximum.y - 0.4;
@@ -362,11 +366,11 @@ function loadOpinions(restObj) {
 		jQuery('div.col.mid').append('<li class="connector" id="'+ restObj.data[i]._id +'"><span class="text">'
 			+ restObj.data[i].content
 			+ "</span> " +options+ ' <span class="connector" id="'+ restObj.data[i]._id +'"></span></li><br>');
-			*/
+		*/
 	}
 
 
-	if (restObj.data.length > 0) {
+	if(restObj.data.length > 0) {
 		//				dpt.opinionPostAllowed(restObj.data[0].topic);
 	} else {
 		//				opinionForm();

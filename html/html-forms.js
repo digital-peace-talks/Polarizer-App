@@ -79,22 +79,25 @@ function topicForm() {
 	console.log('enter topic');
 
 	if(isMobile) {
-		jQuery('body').append(`<div id="topicForm" style="position: fixed; top: 0px; left: 0px; padding: 0px;  margin-left: 5%;
-		margin-top: 25%; 
-		color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
+		jQuery('body').append(`<div id="topicForm" style="position: fixed;
+				top: 0px; left: 0px; padding: 0px;  margin-left: 5%; margin-top: 25%; 
+				color: #000; width: 33%; z-index: 2; font-family: DPTFont; font-size: 18px;
 		background-color: #005B9888;">New topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
-		 cols="43" rows="12" class="topic"   margin: 0 auto;></textarea><br><input type="submit" value="Send"></form></div>`);
+		 cols="43" rows="12" class="topic"   margin: 0 auto;></textarea><br>
+		 <input type="submit" value="Send"></form></div>`);
 
 
 	} else {
-		jQuery('body').append(`<div id="topicForm" style="position: absolute; top: 0px; left: 0px; padding: 20px;
-		margin-left: 300px; border: #fff; border-style: solid; border-width: 1px;
-		color: #F0F3F5; z-index: 2; font-family: DPTFont; font-size: 18px;
-		background-color: #005B9888;">Please enter a new topic:<br><form id="topic">
+		jQuery('body').append(`<div id="topicForm" style="position: absolute;
+		top: 0px; left: 0px; padding: 20px; margin-left: 300px; border: #fff;
+		border-style: solid; border-width: 1px; color: #F0F3F5; z-index: 2;
+		font-family: DPTFont; font-size: 18px; background-color: #005B9888;">
+		Please enter a new topic:<br><form id="topic">
 		<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
 		cols="51" rows="4" class="topic"></textarea><br><input type="submit" value="Send">
-		<input type="button" value="close window" name="close window" id="CloseTopicForm"></form></div>`);
+		<input type="button" value="close window" name="close window"
+		id="CloseTopicForm"></form></div>`);
 	}
 	jQuery(".topic").focus();
 
@@ -147,14 +150,15 @@ function topicForm() {
 
 function opinionForm() {
 	console.log('enter opinion');
-	jQuery('body').append(`<div id="opinionForm" style="position: absolute; top: 0px; left: 0px;
-		padding: 20px; margin-left: 300px; border: #fff; border-style: solid;
-		border-width: 1px; color: #F0F3F5; z-index: 2; font-family: DPTFont;
-		font-size: 18px; background-color: #005B9888;">Please enter a new opinion:<br>
-		<form id="opinion"><textarea style="font-family: DPTFont; font-size: 18px;"
-		name="opinion" cols="52" rows="4" class="opinion"></textarea><br>
-		<input type="submit" value="Send">
-		<input type="button" value="close window" name="close window" id="CloseOpinionForm"></form></div>`);
+	jQuery('body').append(`<div id="opinionForm" style="position: absolute;
+		top: 0px; left: 0px; padding: 20px; margin-left: 300px; border: #fff;
+		border-style: solid; border-width: 1px; color: #F0F3F5; z-index: 2;
+		font-family: DPTFont; font-size: 18px; background-color: #005B9888;">
+		Please enter a new opinion:<br> <form id="opinion">
+		<textarea style="font-family: DPTFont; font-size: 18px;" name="opinion"
+		cols="52" rows="4" class="opinion"></textarea><br><input type="submit"
+		value="Send"> <input type="button" value="close window" name="close window"
+		id="CloseOpinionForm"></form></div>`);
 	jQuery(".opinion").focus();
 
 	jQuery(document).one('click', "#CloseOpinionForm", function(event) {
@@ -213,12 +217,12 @@ function loadDialogList(restObj) {
 
 	for(var i = 0; i < dialogs.length; i++) {
 
-		menuEntry = `<span class="myDialogs" id="${dialogs[i].dialog}"><i>proposition:</i>
-		<h2>${dialogs[i].opinionProposition}</h2></span>`;
+		menuEntry = `<span class="myDialogs" id="${dialogs[i].dialog}">
+			<i>proposition:</i><h2>${dialogs[i].opinionProposition}</h2></span>`;
 
-		dialog = `<u style="font-size: 32px">Dialog Info</u><br><br><i>proposition:</i>
-				<br><h2>${dialogs[i].opinionProposition}<h2>
-				<i>topic:</i><br>${dialogs[i].topic}<br><br>`;
+		dialog = `<u style="font-size: 32px">Dialog Info</u><br><br>
+			<i>proposition:</i><br><h2>${dialogs[i].opinionProposition}<h2>
+			<i>topic:</i><br>${dialogs[i].topic}<br><br>`;
 
 		if(dialogs[i].initiator == 'me') {
 

@@ -4,7 +4,7 @@ function circleText(ctx, text, x, y, radius, angle) {
 	ctx.translate(x, y);
 	ctx.rotate(angle);
 
-	for (var i = 0; i < text.length; i++) {
+	for(var i = 0; i < text.length; i++) {
 		ctx.save();
 		ctx.rotate(i * numRadsPerLetter);
 
@@ -20,14 +20,23 @@ function circleTextPlane(x, y, z, name, text) {
 	var planeHeight = 12; //10;
 
 	//Create plane
-	var plane = BABYLON.MeshBuilder.CreatePlane(name, { width: planeWidth, height: planeHeight }, currentScene);
+	var plane = BABYLON.MeshBuilder.CreatePlane(
+		name, {
+			width: planeWidth,
+			height: planeHeight
+		}, currentScene);
 	plane.dpt = JSON.parse('{"context": "topicCircle"}');
 
 	//Set width and height for dynamic texture using same multiplier
 	var DTWidth = planeWidth * 100; //64;
 	var DTHeight = planeHeight * 100; //64
 
-	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", { width: DTWidth, height: DTHeight }, currentScene);
+	var dynamicTexture = new BABYLON.DynamicTexture(
+		"DynamicTexture",
+		{
+			width: DTWidth,
+			height: DTHeight
+		}, currentScene);
 
 	//Check width of text for given font type at any size of font
 	var ctx = dynamicTexture.getContext();
@@ -70,7 +79,7 @@ function circleTextPlane(x, y, z, name, text) {
 function circlePoints(points, radius, center) {
 	var slice = 2 * Math.PI / points;
 	var nodes = [];
-	for (var i = 0; i < points; i++) {
+	for(var i = 0; i < points; i++) {
 		var angle = slice * i;
 		var newX = center.X + radius * Math.cos(angle);
 		var newY = center.Y + radius * Math.sin(angle);
@@ -99,14 +108,14 @@ function circlePoints(points, radius, center) {
 function wrapText(context, text, x, y, maxWidth, lineHeight) {
 
 	var lines = text.split("\n");
-	for (var i = 0; i < lines.length; i++) {
+	for(var i = 0; i < lines.length; i++) {
 		var words = lines[i].split(' ');
 		var line = '';
-		for (var n = 0; n < words.length; n++) {
+		for(var n = 0; n < words.length; n++) {
 			var testLine = line + words[n] + ' ';
 			var metrics = context.measureText(testLine);
 			var testWidth = metrics.width;
-			if (testWidth > maxWidth && n > 0) {
+			if(testWidth > maxWidth && n > 0) {
 				context.fillText(line, x, y);
 				line = words[n] + ' ';
 				y += lineHeight;
@@ -131,10 +140,10 @@ function cropImage(ctx, canvas) {
 	var y;
 	var index;
 
-	for (y = 0; y < h; y++) {
-		for (x = 0; x < w; x++) {
+	for(y = 0; y < h; y++) {
+		for(x = 0; x < w; x++) {
 			index = (y * w + x) * 4;
-			if (imageData.data[index + 3] > 0) {
+			if(imageData.data[index + 3] > 0) {
 				pix.x.push(x);
 				pix.y.push(y);
 
@@ -163,14 +172,24 @@ function textBlock(x, y, z, name, text) {
 	var planeHeight = 3.2; //10;
 
 	//Create plane
-	var plane = BABYLON.MeshBuilder.CreatePlane(name, { width: planeWidth, height: planeHeight }, currentScene);
+	var plane = BABYLON.MeshBuilder.CreatePlane(
+			name,
+			{
+				width: planeWidth,
+				height: planeHeight
+			}, currentScene);
 	plane.dpt = JSON.parse(name);
 
 	//Set width and height for dynamic texture using same multiplier
 	var DTWidth = planeWidth * 100; //64;
 	var DTHeight = planeHeight * 100; //64
 
-	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", { width: DTWidth, height: DTHeight }, currentScene);
+	var dynamicTexture = new BABYLON.DynamicTexture(
+			"DynamicTexture",
+			{
+				width: DTWidth,
+				height: DTHeight
+			}, currentScene);
 
 	//Check width of text for given font type at any size of font
 	dynamicTexture.hasAlpha = true;
@@ -199,6 +218,7 @@ function textBlock(x, y, z, name, text) {
 	plane.position.y = y;
 	plane.position.z = z;
 	plane.showBoundingBox = false;
+
 	//plane.doNotSyncBoundingInfo = true
 	//plane.freezeWorldMatrix();
 	return (plane);
