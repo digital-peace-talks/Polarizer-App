@@ -206,7 +206,6 @@ jQuery(document).ready(function() {
 			}
 			
 			
-
 			if(restObj.data.length > 0) {
 				dpt.opinionPostAllowed(restObj.data[0].topic);
 			} else {
@@ -251,7 +250,6 @@ jQuery(document).ready(function() {
 	        		dpt.getMetadataUser(whoami.dptUUID);
 	        		dpt.getTopic();
 	        		dpt.getDialogList();
-
 	        	}
 
 				if(restObj.data.message == 'user unknown') {
@@ -295,11 +293,13 @@ jQuery(document).ready(function() {
 	
 	function phraseForm(dptUUID) {
 
-		jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
-				+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="phrase">'
-				+'This device seems not registered, yet.<br>'
-				+'Please enter your phrase:<br><form id="phrase">'
-				+'<input type="text" name="phrase" size="50" class="phrase"></form></div>');
+		jQuery('#misc').append(`
+			<div style="position: absolute; padding: 10px; left: 37%;
+			border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="phrase">
+			This device seems not registered, yet.<br>
+			Please enter your phrase:<br><form id="phrase">
+			<input type="text" name="phrase" size="50" class="phrase"></form></div>
+		`);
 
 		jQuery(".phrase").focus();
 
@@ -313,11 +313,13 @@ jQuery(document).ready(function() {
 	
 	function propositionForm(opinionId) {
 
-		jQuery('#misc').append('<div style="position: absolute; padding: 10px; left: 37%;'
-				+'border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">'
-				+'Please enter your proposition:<br><form id="proposition">'
-				+'<input type="text" name="proposition" size="50" class="proposition">'
-				+'<input type="hidden" id="opinionId" name="opinionId" value="'+opinionId+'"</form></div>');
+		jQuery('#misc').append(`
+			<div style="position: absolute; padding: 10px; left: 37%;
+			border: #fff; border-style: solid; border-width: 5px; background: #0a120a;" id="proposition">
+			Please enter your proposition:<br><form id="proposition">
+			<input type="text" name="proposition" size="50" class="proposition">
+			<input type="hidden" id="opinionId" name="opinionId" value="'+opinionId+'"</form></div>
+		`);
 
 		jQuery(".proposition").focus();
 		
@@ -344,10 +346,10 @@ jQuery(document).ready(function() {
 
 	function topicForm() {
 
-		jQuery('div.col.left').append(
-			'<br><hr style="border-color: #5a825a; border-style: solid;">Your topic:<br><form id="newTopic">'
-			+'<input class="anewtopic" type=text size=50 name="newTopic"></form>'
-		);
+		jQuery('div.col.left').append(`
+			<br><hr style="border-color: #5a825a; border-style: solid;">Your topic:<br><form id="newTopic">
+			<input class="anewtopic" type=text size=50 name="newTopic"></form>
+		`);
 
 		jQuery("#newTopic").submit(function(event) {
 			dpt.postTopic(jQuery('.anewtopic').val());
@@ -359,10 +361,10 @@ jQuery(document).ready(function() {
 
 	function opinionForm() {
 
-		jQuery('div.col.mid').append(
-			'<br><hr style="border-color: #5a825a; border-style: solid;">Your opinion:<br><form id="newOpinion">'
-			+'<input class="anewopinion" type=text size=50 name="newOpinion"></form>'
-		);
+		jQuery('div.col.mid').append(`
+			<br><hr style="border-color: #5a825a; border-style: solid;">Your opinion:<br><form id="newOpinion">
+			<input class="anewopinion" type=text size=50 name="newOpinion"></form>
+		`);
 
 		jQuery("#newOpinion").submit(function(event) {
 			dpt.postOpinion(currentTopic, jQuery('.anewopinion').val());
@@ -371,7 +373,6 @@ jQuery(document).ready(function() {
 		});
 
 	}
-
 
 	function topicEdit() {
 
@@ -432,12 +433,12 @@ jQuery(document).ready(function() {
 			Most impressive message:<br><b>${message}</b><br><br>
 			Please enter the reason:<br>
 			<form id="crisis">
-			<input type="text" name="reason" size="50" class="reason"><br><br>
-			<label style="color: #f00;">[-1: <input type="radio" name="rating" value="-1">]</label>
-			<label style="color: #77f;">[0: <input type="radio" name="rating" value="0" checked>]</label>
-			<label style="color: #0f0;">[1: <input type="radio" name="rating" value="1">]</label><br>
-			<input type="submit" name="send" value="send">
-			<input type="button" value="close window" name="close window" id="crisisCloseWindow">
+				<input type="text" name="reason" size="50" class="reason"><br><br>
+				<label style="color: #f00;">[-1: <input type="radio" name="rating" value="-1">]</label>
+				<label style="color: #77f;">[0: <input type="radio" name="rating" value="0" checked>]</label>
+				<label style="color: #0f0;">[1: <input type="radio" name="rating" value="1">]</label><br>
+				<input type="submit" name="send" value="send">
+				<input type="button" value="close window" name="close window" id="crisisCloseWindow">
 			</form>
 			</div>
 		`);
@@ -622,11 +623,13 @@ jQuery(document).ready(function() {
 				`;
 
 				jQuery(document).one('click', "#dialogAccept", function(event) {
+					
 					jQuery('center#actionSpace').html(`
 						<form id="dialogFrame">
 						<input type="text" name="message" size="120" id="dialogInput">
 						</form>
 					`);
+
 					dpt.putDialog(currentDialog.dialog, "status", "ACTIVE");
 					event.preventDefault();
 				});
@@ -747,11 +750,14 @@ jQuery(document).ready(function() {
 		}
 		event.preventDefault();
 	});
+
 	jQuery(document).on('mouseleave touchend', 'li.connector', (event) => {
+		
 		var root = event.currentTarget.id;
 //		jQuery(event.currentTarget).children("span.connector").html('');
 		jQuery("span.connector").text('');
 		event.preventDefault();
+	
 	});
 
 	jQuery(document).on('mouseenter touchstart', '.dialog', (event) => {
@@ -780,12 +786,14 @@ jQuery(document).ready(function() {
 
 	});
 
-	jQuery('#main').height("100%").width("100%")
-	.append('<div style="border-bottom-style: solid; border-bottom-width: 5px; border-color: #5a825a;">'
-			+'<h1 style="letter-spacing: 30px">version 0.1</h1></div><div class="row">'
-			+'<div class="col left"><h2>Topics</h2></div>'
-			+'<div class="col mid"><h2>Opinions</h2></div>'
-			+'<div class="col right"><h2>Dialogs</h2></div></div>');
+	jQuery('#main').height("100%").width("100%").append(`
+		<div style="border-bottom-style: solid; border-bottom-width: 5px; border-color: #5a825a;">
+		<h1 style="letter-spacing: 30px">version 0.1</h1></div><div class="row">
+		<div class="col left"><h2>Topics</h2></div>
+		<div class="col mid"><h2>Opinions</h2></div>
+		<div class="col right"><h2>Dialogs</h2></div></div>
+	`);
+	
 	jQuery('div.col').css({float: "left", 'padding-left': "20px", height: "100%", 'overflow-y': "auto"});
 	jQuery('div.col').css({ width: "30%", "max-width": "30%"});
 	jQuery('div.row:after').css({content: "", display: "table", clear: "both"});

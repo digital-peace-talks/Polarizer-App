@@ -114,7 +114,6 @@ function crisisForm(messageId) {
 				Finish the dialog under Topic:<br><b>${currentDialog.topic}</b><br><br>
 				Most impressive message:<br><b>${message}</b><br><br>
 				Please enter the reason:<br>
-
 				<form id="crisis">
 					<input type="text" name="reason" size="50" class="reason"><br><br>
 					<label id="negative">[-1: <input type="radio" name="rating" value="-1">]</label>
@@ -217,44 +216,44 @@ function dialogForm() {
     }
 
     var html = `
-				<div id="dialogFrame">
-						<div class="top">
-							<center>
-                                <h3>${currentDialog.topic}</h3>
-                                <div class="table">
-                                    <div class="dialogleft">
-                                        <p><b>Others opinion:</b><br>${opinion1}<br>${otherReadyToEnd}</p>
-                                    </div>
-                                    <div class="dialogcenter">
-                                        vs.
-                                    </div>
-                                    <div class="dialogright">
-                                        <p><b>Your opinion:</b><br>${opinion2}<br>${meReadyToEnd}</p>
-                                    </div>
-                                </div>
-                            </center>
-                            
+        <div id="dialogFrame">
+            <div class="top">
+                <center>
+                    <h3>${currentDialog.topic}</h3>
+                    <div class="table">
+                        <div class="dialogleft">
+                            <p><b>Others opinion:</b><br>${opinion1}<br>${otherReadyToEnd}</p>
                         </div>
-					<div class="middle">
-                        <div id="c2">${dialog}</div>
+                        <div class="dialogcenter">
+                            vs.
+                        </div>
+                        <div class="dialogright">
+                            <p><b>Your opinion:</b><br>${opinion2}<br>${meReadyToEnd}</p>
+                        </div>
                     </div>
-                </div>
-			`;
+                </center>
+            </div>
+            <div class="middle">
+                <div id="c2">${dialog}</div>
+            </div>
+        </div>
+    `;
 
     if (currentDialog.status == 'ACTIVE') {
 
         if (viewOnly) {
             html += `
-					<div class="status">
-					<center>
-						<form id="dialogFrame">
-                            <input type="button" value="close window" name="close window" id="dialogClose">
-                            <input type="button" value="end dialog" name="end dialog" id="dialogClose">
-                        </form>
-                        <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
-			   		</center>
-					</div>
-				`;
+                <div class="status">
+                <center>
+                    <form id="dialogFrame">
+                        <input type="button" value="close window" name="close window" id="dialogClose">
+                        <input type="button" value="end dialog" name="end dialog" id="dialogClose">
+                    </form>
+                    <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
+                </center>
+                </div>
+            `;
+
         } else {
             if (otherReadyToEnd != 'Ready to End') {
                 html += `
@@ -298,7 +297,8 @@ function dialogForm() {
                             <input type="button" value="close window" name="close window" size="120" id="dialogClose">
 			   			</center>
 					</div>
-				`;
+                `;
+                
             jQuery(document).one('click', "#dialogClose", function(event) {
                 dialogFormOpen = 0;
                 jQuery('#dialogForm').remove();
