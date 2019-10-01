@@ -386,7 +386,7 @@ function loadOpinions(restObj) {
 
 	//			circleTextPlane(1.5, 1.2, 0, 'bla', currentTopicStr + " * ");
 	var plane = textBlock(
-			12.8/2, -19.2/8, 3.001,
+			12.8/3, -19.2/8, 3.001,
 			JSON.stringify({ "context": "opinionTopic" }),
 			currentTopicStr, {fontSize: 128, width: 19.2, height: 12.8, color: "#550033"});
 	dialogRelations(opinionDialogConnections);

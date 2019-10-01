@@ -37,7 +37,7 @@ function getCollisionBox() {
 	mat.specularColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
 	//mat.Color = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
 	mat.emissiveColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
-	mat.alpha = 0.25;
+	mat.alpha = 0.45;
 	
 	//mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 	
