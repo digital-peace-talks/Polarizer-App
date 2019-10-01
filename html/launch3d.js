@@ -22,7 +22,8 @@ var powerSave = false;
 
 function getCollisionBox() {
 	//Simple box
-	var box = new BABYLON.MeshBuilder.CreateBox("collisionBox", {
+	var box = new BABYLON.MeshBuilder.CreateBox("collisionBox", 
+	{
 		width: 100,
 		height: 30,
 		depth: 40,
@@ -33,7 +34,13 @@ function getCollisionBox() {
 	//create material
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
 	mat.diffuseColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	mat.specularColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	//mat.Color = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
 	mat.emissiveColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	mat.alpha = 0.45;
+	
+	//mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
+	
 
 	//apply material
 	box.material = mat;
@@ -77,20 +84,19 @@ function getCamera() {
 	camera.keysUp.push(38);
 	camera.keysRight.push(39);
 	camera.keysDown.push(40);
-	/*
-	 */
-	/*
-				camera.rollCorrect = 10;
-				camera.bankedTurn = true;
-				camera.bankedTurnLimit = Math.PI / 8;
-				camera.bankedTurnMultiplier = 1;
-	*/
+
+	/**/
+	camera.rollCorrect = 10;
+	camera.bankedTurn = true;
+	camera.bankedTurnLimit = Math.PI / 8;
+	camera.bankedTurnMultiplier = 1;
+	/**/
+
 	camera.acceleration = 0.01;
 	camera.speed = 0.5;
 
 	return (camera);
 }
-
 
 function initVirtJoysticks() {
 
@@ -101,17 +107,17 @@ function initVirtJoysticks() {
 	BABYLON.VirtualJoystick.Canvas.style.zIndex = "-1";
 
 	// Game/Render loop
+
 	var movespeed = 5;
 	var camVec = currentScene.cameras[0].position;
 	currentScene.onBeforeRenderObservable.add(() => {
 		if(leftJoystick.pressed) {
 			camVec.z += leftJoystick.deltaPosition.y *
-				(engine.getDeltaTime() / (1000 - 2 * camVec.z * camVec.z)) *
-				movespeed;
+				(engine.getDeltaTime() / (1000 - 1 * camVec.z * camVec.z)) * movespeed;
+//				(engine.getDeltaTime() / (1000 - 2 * camVec.z * camVec.z)) * movespeed;
 			if(camVec.z > 0) {
-				camVec.z = -15;
-			}
-			if(camVec.z < -20) {
+				camVec.z = -30;
+			} else if(camVec.z < -35) {
 				camVec.z = -1;
 			}
 		}
@@ -161,7 +167,8 @@ var createGenericScene = function(dptMode) {
 
 	// lights - no light!!
 	var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
-	light.intensity = 0.1;
+	light.radius = 10;
+	light.intensity = 0.3;
 
 	genericScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
 
@@ -428,11 +435,11 @@ function main() {
 				} else {
 					alert('Only one opinion per topic.');
 				}
+			
 			} else if(restObj.path == '/dialog/list/'
 					&& restObj.method == 'get') {
 
 				loadDialogList(restObj);
-
 			}
 		});
 
@@ -454,6 +461,7 @@ function main() {
 		console.log('window inactive');
 		powerSave = true;
 	});
+	
 	jQuery(window).focus(function() {
 		console.log('window active');
 		focusAtCanvas();

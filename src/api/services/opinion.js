@@ -45,6 +45,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 			for(var i in opinions) {
 				dialogs = await Dialog.find({opinion: opinions[i]._id});
 				opinions[i]._doc.topos = [];
+				opinions[i]._doc.blocked = 1;
 				for(var j in dialogs) {
 					dialog = dialogs[j];
 					if(dialog) {
@@ -100,12 +101,11 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 						}
 
 					}
-					opinions[i]._doc.blocked = 1;
 					opinions[i]._doc.topos.push(topo);
 					console.log(util.inspect(opinions[i], {depth: 4}));
 					console.log('\n\n');
 
-				}	
+				}
 			}
 			
 			

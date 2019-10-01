@@ -114,7 +114,6 @@ function crisisForm(messageId) {
 				Finish the dialog under Topic:<br><b>${currentDialog.topic}</b><br><br>
 				Most impressive message:<br><b>${message}</b><br><br>
 				Please enter the reason:<br>
-
 				<form id="crisis">
 					<input type="text" name="reason" size="50" class="reason"><br><br>
 					<label id="negative">[-1: <input type="radio" name="rating" value="-1">]</label>
@@ -175,13 +174,15 @@ function dialogForm() {
     for (var i = 0; i < currentDialog.crisises.length; i++) {
 
         if (currentDialog.status == 'CLOSED') {
-            if (currentDialog.crisises[i].initiator == 'me') {
+            if (currentDialog.crisises[i].initiator == 'me'
+            || currentDialog.crisises[i].recipient == 'notme2') {
                 meReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
             } else if (currentDialog.crisises[i].initiator == 'notme') {
                 otherReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
             }
         } else {
-            if (currentDialog.crisises[i].initiator == 'me') {
+            if (currentDialog.crisises[i].initiator == 'me'
+            || currentDialog.crisises[i].recipient == 'notme2') {
                 meReadyToEnd = 'Ready to End';
             } else if (currentDialog.crisises[i].initiator == 'notme') {
                 otherReadyToEnd = 'Ready to End';
@@ -205,7 +206,8 @@ function dialogForm() {
 
     for (var i = 0; i < currentDialog.messages.length; i++) {
 
-        if (currentDialog.messages[i].sender == 'me') {
+        if (currentDialog.messages[i].sender == 'me'
+        || currentDialog.messages[i].sender == 'notme2') {
             dialog += '<p class="right">' + currentDialog.messages[i].content + '</p>';
         } else {
             var option = '';
@@ -216,45 +218,51 @@ function dialogForm() {
         }
     }
 
+    var opinionLabel1 = "Others opinion";
+    var opinionLabel2 = "Your opinion";
+    if(currentDialog.recipient == 'notme2') {
+    	var opinionLabel1 = "Opinion A";
+    	var opinionLabel2 = "Opinion B";
+    }
     var html = `
-				<div id="dialogFrame">
-						<div class="top">
-							<center>
-                                <h3>${currentDialog.topic}</h3>
-                                <div class="table">
-                                    <div class="dialogleft">
-                                        <p><b>Others opinion:</b><br>${opinion1}<br>${otherReadyToEnd}</p>
-                                    </div>
-                                    <div class="dialogcenter">
-                                        vs.
-                                    </div>
-                                    <div class="dialogright">
-                                        <p><b>Your opinion:</b><br>${opinion2}<br>${meReadyToEnd}</p>
-                                    </div>
-                                </div>
-                            </center>
-                            
+        <div id="dialogFrame">
+            <div class="top">
+                <center>
+                    <h3>${currentDialog.topic}</h3>
+                    <div class="table">
+                        <div class="dialogleft">
+                            <p><b>${opinionLabel1}:</b><br>${opinion1}<br>${otherReadyToEnd}</p>
                         </div>
-					<div class="middle">
-                        <div id="c2">${dialog}</div>
+                        <div class="dialogcenter">
+                            vs.
+                        </div>
+                        <div class="dialogright">
+                            <p><b>${opinionLabel2}:</b><br>${opinion2}<br>${meReadyToEnd}</p>
+                        </div>
                     </div>
-                </div>
-			`;
+                </center>
+            </div>
+            <div class="middle">
+                <div id="c2">${dialog}</div>
+            </div>
+        </div>
+    `;
 
     if (currentDialog.status == 'ACTIVE') {
 
         if (viewOnly) {
             html += `
-					<div class="status">
-					<center>
-						<form id="dialogFrame">
-                            <input type="button" value="close window" name="close window" id="dialogClose">
-                            <input type="button" value="end dialog" name="end dialog" id="dialogClose">
-                        </form>
-                        <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
-			   		</center>
-					</div>
-				`;
+                <div class="status">
+                <center>
+                    <form id="dialogFrame">
+                        <input type="button" value="close window" name="close window" id="dialogClose">
+                        <input type="button" value="end dialog" name="end dialog" id="dialogClose">
+                    </form>
+                    <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
+                </center>
+                </div>
+            `;
+
         } else {
             if (otherReadyToEnd != 'Ready to End') {
                 html += `
@@ -298,7 +306,8 @@ function dialogForm() {
                             <input type="button" value="close window" name="close window" size="120" id="dialogClose">
 			   			</center>
 					</div>
-				`;
+                `;
+                
             jQuery(document).one('click', "#dialogClose", function(event) {
                 dialogFormOpen = 0;
                 jQuery('#dialogForm').remove();
@@ -371,9 +380,11 @@ function dialogForm() {
 
     if (currentDialog.status == 'CLOSED') {
         for (var i = 0; i < currentDialog.crisises.length; i++) {
-            if (currentDialog.crisises[i].initiator == 'me') {
+            if (currentDialog.crisises[i].initiator == 'me'
+            || currentDialog.crisises[i].recipient == 'notme2') {
 //                jQuery('#c3', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
                 jQuery('div.dialogleft>p').append(`Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}<br>`);
+                break;
             } else {
 //                jQuery('#c1', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
                 jQuery('div.dialogright>p').append(`Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}<br>`);
