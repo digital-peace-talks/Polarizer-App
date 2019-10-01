@@ -335,6 +335,9 @@ match.push({
 		console.log("get a dialog");
 		var user = userRegistered(dptUUID);
 		var dialog = {};
+		var me = '';
+		var notme = '';
+		var notme2 = '';
 		dialog.messages = [];
 		dialog.crisises = [];
 		dialog.extensionRequests = [];
@@ -348,11 +351,20 @@ match.push({
 			dialog.dialog = ret._id.toString();
 			
 			if(ret.initiator.toString() == user.user.id) {
+				me = ret.initiator.toString();
+				notme = ret.recipient.toString();
 				dialog.initiator = 'me';
 				dialog.recipient = 'notme';
-			} else {
+			} else if(ret.recipient.toString() == user.user.id) {
+				me = ret.recipient.toString();
+				notme = ret.initiator.toString();
 				dialog.initiator = 'notme';
 				dialog.recipient = 'me';
+			} else {
+				dialog.initiator = 'notme';
+				dialog.recipient = 'notme2';
+				notme = ret.initiator.toString();
+				notme2 = dialog.recipient;
 			}
 
 			for(var i=0; i < ret.crisises.length; i++) {
@@ -360,6 +372,9 @@ match.push({
 				crisis.crisisesId = ret.crisises[i]._id.toString();
 				if(ret.crisises[i].initiator.toString() == user.user.id) {
 					crisis.initiator = 'me';
+				} else if(dialog.recipient == "notme2") {
+					crisis.initiator = 'notme';
+					crisis.recipient = 'notme2';
 				} else {
 					crisis.initiator = 'notme';
 				}
@@ -376,8 +391,10 @@ match.push({
 				message.content = ret.messages[i].content;
 				if(ret.messages[i].sender.toString() == user.user.id) {
 					message.sender = 'me';
+				} else if(ret.messages[i].sender.toString() == notme && notme2 == "notme2") {
+					message.sender = notme2;
 				} else {
-					message.sender = 'notme';
+					message.sender = "notme";
 				}
 				dialog.messages.push(message);
 			}

@@ -113,12 +113,11 @@ function initVirtJoysticks() {
 	currentScene.onBeforeRenderObservable.add(() => {
 		if(leftJoystick.pressed) {
 			camVec.z += leftJoystick.deltaPosition.y *
-				(engine.getDeltaTime() / (1000 - 2 * camVec.z * camVec.z)) *
-				movespeed;
+				(engine.getDeltaTime() / (1000 - 1 * camVec.z * camVec.z)) * movespeed;
+//				(engine.getDeltaTime() / (1000 - 2 * camVec.z * camVec.z)) * movespeed;
 			if(camVec.z > 0) {
-				camVec.z = -15;
-			}
-			if(camVec.z < -20) {
+				camVec.z = -30;
+			} else if(camVec.z < -35) {
 				camVec.z = -1;
 			}
 		}

@@ -174,13 +174,15 @@ function dialogForm() {
     for (var i = 0; i < currentDialog.crisises.length; i++) {
 
         if (currentDialog.status == 'CLOSED') {
-            if (currentDialog.crisises[i].initiator == 'me') {
+            if (currentDialog.crisises[i].initiator == 'me'
+            || currentDialog.crisises[i].recipient == 'notme2') {
                 meReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
             } else if (currentDialog.crisises[i].initiator == 'notme') {
                 otherReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
             }
         } else {
-            if (currentDialog.crisises[i].initiator == 'me') {
+            if (currentDialog.crisises[i].initiator == 'me'
+            || currentDialog.crisises[i].recipient == 'notme2') {
                 meReadyToEnd = 'Ready to End';
             } else if (currentDialog.crisises[i].initiator == 'notme') {
                 otherReadyToEnd = 'Ready to End';
@@ -204,7 +206,8 @@ function dialogForm() {
 
     for (var i = 0; i < currentDialog.messages.length; i++) {
 
-        if (currentDialog.messages[i].sender == 'me') {
+        if (currentDialog.messages[i].sender == 'me'
+        || currentDialog.messages[i].sender == 'notme2') {
             dialog += '<p class="right">' + currentDialog.messages[i].content + '</p>';
         } else {
             var option = '';
@@ -215,6 +218,12 @@ function dialogForm() {
         }
     }
 
+    var opinionLabel1 = "Others opinion";
+    var opinionLabel2 = "Your opinion";
+    if(currentDialog.recipient == 'notme2') {
+    	var opinionLabel1 = "Opinion A";
+    	var opinionLabel2 = "Opinion B";
+    }
     var html = `
         <div id="dialogFrame">
             <div class="top">
@@ -222,13 +231,13 @@ function dialogForm() {
                     <h3>${currentDialog.topic}</h3>
                     <div class="table">
                         <div class="dialogleft">
-                            <p><b>Others opinion:</b><br>${opinion1}<br>${otherReadyToEnd}</p>
+                            <p><b>${opinionLabel1}:</b><br>${opinion1}<br>${otherReadyToEnd}</p>
                         </div>
                         <div class="dialogcenter">
                             vs.
                         </div>
                         <div class="dialogright">
-                            <p><b>Your opinion:</b><br>${opinion2}<br>${meReadyToEnd}</p>
+                            <p><b>${opinionLabel2}:</b><br>${opinion2}<br>${meReadyToEnd}</p>
                         </div>
                     </div>
                 </center>
@@ -371,9 +380,11 @@ function dialogForm() {
 
     if (currentDialog.status == 'CLOSED') {
         for (var i = 0; i < currentDialog.crisises.length; i++) {
-            if (currentDialog.crisises[i].initiator == 'me') {
+            if (currentDialog.crisises[i].initiator == 'me'
+            || currentDialog.crisises[i].recipient == 'notme2') {
 //                jQuery('#c3', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
                 jQuery('div.dialogleft>p').append(`Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}<br>`);
+                break;
             } else {
 //                jQuery('#c1', `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`);
                 jQuery('div.dialogright>p').append(`Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}<br>`);
