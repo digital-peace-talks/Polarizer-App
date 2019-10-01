@@ -34,7 +34,13 @@ function getCollisionBox() {
 	//create material
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
 	mat.diffuseColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	mat.specularColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	//mat.Color = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
 	mat.emissiveColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	mat.alpha = 0.25;
+	
+	//mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
+	
 
 	//apply material
 	box.material = mat;
@@ -79,12 +85,13 @@ function getCamera() {
 	camera.keysRight.push(39);
 	camera.keysDown.push(40);
 
-	/*
-				camera.rollCorrect = 10;
-				camera.bankedTurn = true;
-				camera.bankedTurnLimit = Math.PI / 8;
-				camera.bankedTurnMultiplier = 1;
-	*/
+	/**/
+	camera.rollCorrect = 10;
+	camera.bankedTurn = true;
+	camera.bankedTurnLimit = Math.PI / 8;
+	camera.bankedTurnMultiplier = 1;
+	/**/
+
 	camera.acceleration = 0.01;
 	camera.speed = 0.5;
 
@@ -161,7 +168,8 @@ var createGenericScene = function(dptMode) {
 
 	// lights - no light!!
 	var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
-	light.intensity = 0.1;
+	light.radius = 10;
+	light.intensity = 0.3;
 
 	genericScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
 

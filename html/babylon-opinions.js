@@ -14,7 +14,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	var occupacy = 0.85;
 	if(status == "CLOSED") {
 		radius = 0.08;
-		occupacy = 0.85;
+		occupacy = 0.95;
 	}
 	var tube = new BABYLON.MeshBuilder.CreateTube(
 		"tube", {
@@ -126,7 +126,11 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	mat.alpha = occupacy;
 	mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 	if(status == 'CLOSED') {
-		mat.alphaMode = BABYLON.Engine.ALPHA_COMBINED;
+		// mat.alphaMode = BABYLON.Engine.ALPHA_COMBINED;
+		// mat.alphaMode = BABYLON.Engine.ALPHA_ONEONE;
+		mat.alphaMode = BABYLON.Engine.ALPHA_ADD;
+		// mat.alphaMode = BABYLON.Engine.ALPHA_MULTIPLY;
+		// mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 	}
 	mat.diffuseTexture = dynamicTexture;
 	//mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
@@ -289,6 +293,9 @@ function loadOpinions(restObj) {
 	for(var i = 0; i < restObj.data.length; i++) {
 		options = '';
 		if(restObj.data[i].user == 'mine') {
+			canInvite = true;
+		}
+		if(restObj.data[i].user == 'mine') {
 			options = '<span class="editOpinion" id="' +
 				restObj.data[i]._id +
 				'">&#128393;</span>';
@@ -378,6 +385,10 @@ function loadOpinions(restObj) {
 	//			opinionEdit();
 
 	//			circleTextPlane(1.5, 1.2, 0, 'bla', currentTopicStr + " * ");
+	var plane = textBlock(
+			12.8/2, -19.2/8, 3.001,
+			JSON.stringify({ "context": "opinionTopic" }),
+			currentTopicStr, {fontSize: 128, width: 19.2, height: 12.8, color: "#550033"});
 	dialogRelations(opinionDialogConnections);
 }
 

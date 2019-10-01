@@ -165,11 +165,14 @@ function cropImage(ctx, canvas) {
 }
 
 
-function textBlock(x, y, z, name, text) {
+function textBlock(x, y, z, name, text, options) {
 
+	if(!options) {
+		options = {};
+	}
 	//Set width an height for plane
-	var planeWidth = 4.8;
-	var planeHeight = 3.2; //10;
+	var planeWidth = options.width || 4.8;
+	var planeHeight = options.height || 3.2; //10;
 
 	//Create plane
 	var plane = BABYLON.MeshBuilder.CreatePlane(
@@ -181,8 +184,8 @@ function textBlock(x, y, z, name, text) {
 	plane.dpt = JSON.parse(name);
 
 	//Set width and height for dynamic texture using same multiplier
-	var DTWidth = planeWidth * 100; //64;
-	var DTHeight = planeHeight * 100; //64
+	var DTWidth = planeWidth * 200; //64;
+	var DTHeight = planeHeight * 200; //64
 
 	var dynamicTexture = new BABYLON.DynamicTexture(
 			"DynamicTexture",
@@ -195,11 +198,11 @@ function textBlock(x, y, z, name, text) {
 	dynamicTexture.hasAlpha = true;
 
 	textureContext = dynamicTexture.getContext();
-	textureContext.font = "22px DPTFont";
+	textureContext.font = (options.fontSize || "44") + "px DPTFont";
 	textureContext.save();
-	textureContext.fillStyle = "#00ccff";
+	textureContext.fillStyle = options.color || "#00ccff";
 
-	wrapText(textureContext, text, 5, 20, 479, 22);
+	wrapText(textureContext, text, 5, options.fontSize || 44, DTWidth -1, options.fontSize || 44);
 	//	textureContext = cropImage(textureContext, textureContext.canvas);
 
 	dynamicTexture.update();
@@ -208,6 +211,7 @@ function textBlock(x, y, z, name, text) {
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
 	mat.diffuseTexture = dynamicTexture;
 	mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+	mat.specularColor = new BABYLON.Color3(0.1, 0.1, 0.1);
 
 	//apply material
 	plane.material = mat;
