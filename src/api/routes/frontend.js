@@ -97,7 +97,7 @@ router.post('/recover', async(req, res, next) => {
         dptUUID = cookieParser.signedCookie(req.signedCookies.dptUUID, process.env.DPT_SECRET);
     }
     var ret = await userService.userReclaim({ body: { phraseGuess: req.body.phraseinput, newPhrase: req.body.phrase, dptUUID: dptUUID } });
-    if (ret.newCookie && rest.status==200) {
+    if (ret.newCookie && ret.status==200) {
         res.cookie('dptUUID', ret.newCookie, cookieOptions);
         await res.writeHead(302, {
             'Location': '/launch3d.html'
