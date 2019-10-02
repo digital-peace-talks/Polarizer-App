@@ -49,6 +49,66 @@ function getCollisionBox() {
 	return (box);
 }
 
+function createAvatar(avatarInfo, camera) {
+	var name;
+	if(!avatarInfo && camera) {
+		var name = dpt.getSocketId();
+	} else {
+		name = avatarInfo.avatar;
+	}
+	var avatar = BABYLON.MeshBuilder.CreateBox(
+		name,
+		{
+			width: 0.35,
+			height: 0.35,
+			depth: 0.35
+		}, currentScene);
+	if(camera) {
+		avatar.position = new BABYLON.Vector3(0,0,0);
+		avatar.parent = camera;
+		avatar.position.z = camera.position.z - 1.3;
+//		avatar.position.z = camera.position.y + 1.3;
+		var socket = dpt.getSocket();
+		socket.emit('3d', { event: 'connect', avatar: name, avatarPos: avatar.position });
+		setInterval(() => {
+			socket.emit('3d', { event: 'update', avatar: name, avatarPos: currentScene.cameras[0].position });
+		}, 1000);
+	} else {
+		avatar.position = avatarInfo.avatarPos;
+	}
+//	avatar.position = camera.position;
+	var mat = new BABYLON.StandardMaterial("avatar", currentScene);
+	mat.diffuseColor = new BABYLON.Color3(1,1,0);
+	mat.emissiveColor = new BABYLON.Color3(1,1,0);
+	avatar.material = mat;
+}
+
+function disposeAvatar(avatarInfo) {
+	for(var i in currentScene.meshes) {
+		if(currentScene.meshes[i].name == avatarInfo.avatar) {
+			currentScene.meshes[i].dispose();
+			break;
+		}
+	}
+}
+
+function updateAvatar(avatarInfo) {
+	var mySocketId = dpt.getSocketId();
+	var done = false;
+	if(avatarInfo.avatar != mySocketId) {
+		for(var i in currentScene.meshes) {
+			if(currentScene.meshes[i].name == avatarInfo.avatar) {
+				currentScene.meshes[i].position = avatarInfo.avatarPos;
+				done = true;
+				break;
+			}
+		}
+		if(!done) {
+			createAvatar(avatarInfo);
+		}
+	}
+}
+
 function getCamera() {
 
 	// camera
@@ -94,6 +154,8 @@ function getCamera() {
 
 	camera.acceleration = 0.01;
 	camera.speed = 0.5;
+	
+	// createAvatar(false, camera);
 
 	return (camera);
 }
@@ -280,6 +342,11 @@ var createGenericScene = function(dptMode) {
 				break;
 			case BABYLON.KeyboardEventTypes.KEYUP:
 				//console.log("KEY UP: ", kbInfo.event.keyCode);
+				/*
+				var socket = dpt.getSocket();
+				socket.emit('3d', { event: 'update', avatar: socket.id, avatarPos: currentScene.cameras[0].position });
+				console.log('sended');
+				*/
 				break;
 		}
 	});
@@ -323,15 +390,28 @@ function main() {
 		__topicScene.name = 'topicScene';
 		__opinionScene = createGenericScene;
 		__opinionScene.name = 'opinionScene';
-		currentScene = createGenericScene("topicScene");
-		currentScene.name = 'topicScene';
 
 		// Handle the incomming websocket trafic
 		socket.on("connect", () => {
 			// if needed, we could keep socket.id somewhere
+			console.log('we are: '+socket.id);
+			currentScene = createGenericScene("topicScene");
+			currentScene.name = 'topicScene';
 			if(document.cookie) {
 				dpt.userLogin(document.cookie);
 			}
+		});
+
+		socket.on("3d", function(update) {
+			if(update.event == 'connect'
+			&& update.avatar != socket.id) {
+				createAvatar(update, false);
+			} else if(update.event == 'disconnect') {
+				disposeAvatar(update);
+			} else if(update.event == 'update') {
+				updateAvatar(update);
+			}
+			console.log(update);
 		});
 
 		socket.on("private", function(restObj) {

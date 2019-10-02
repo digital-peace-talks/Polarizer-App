@@ -208,6 +208,11 @@ io.on('connection', function(socket) {
 		socket.emit('api', ret);
 		log.debug('answer sio request: '+util.inspect(ret, {depth: 6}));
 	});
+	
+	socket.on('3d', async (payload) => {
+		log.debug('sio request: '+util.inspect(payload));
+		io.emit('3d', payload);
+	});
 
 	/*
 		let a user disconnect. remove it from the table of
@@ -215,6 +220,7 @@ io.on('connection', function(socket) {
 	 */
 	socket.on('disconnect', async (reason) => {
 		log.info(socket.id+" disconnected, reason: "+reason);
+		io.emit('3d', { event: 'disconnect', avatar: socket.id });
 		var user = Lo_.find(global.dptNS.online, {socketid: socket.id});
 		if(user.user) {
 			var updateUser = await User.userModel.findById(user.user.id);

@@ -7,6 +7,14 @@ class DPT {
 	
 	// user
 
+	getSocket() {
+		return(this.socket);
+	}
+
+	getSocketId() {
+		return(this.socket.id);
+	}
+	
 	getMetadataUser(publicKey) {
 		this.socket.emit("api", {
 			method: 'get',
