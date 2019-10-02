@@ -16,10 +16,7 @@ function propositionForm(opinionId) {
     console.log('enter proposition');
 
     jQuery('body').append(`
-		<div id="propositionForm" style="position: absolute; top:0; left: 0px;
-		padding: 20px; margin-left: 300px; border: #fff; border-style: solid;
-		border-width: 1px; color: #F0F3F5; z-index: 30; font-family: DPTFont;
-		font-size: 18px; background-color: #005B9888;">Please enter your proposition:
+		<div id="propositionForm">Please enter your proposition:
 		<br><form id="proposition"><textarea style="font-family: DPTFont;
 		font-size: 18px;" name="proposition" cols="64" rows="4" width= "500px"
 		height="150px" class="proposition"></textarea>
