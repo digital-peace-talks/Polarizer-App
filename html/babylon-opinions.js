@@ -85,7 +85,6 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 		}
 	}
 
-	console.log('image is : ' + combination);
 	var reverse = 0;
 	if(combination == 'green-blue') {
 		var reverse = 1;
@@ -102,7 +101,6 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 		combination = 'grey-grey';
 	}
 
-	console.log('image is : ' + combination);
 	image = new Image();
 	image.src = '/' + combination + '.png';
 

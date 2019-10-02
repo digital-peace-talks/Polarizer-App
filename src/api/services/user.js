@@ -38,6 +38,14 @@ module.exports.userReclaim = async (options) => {
 
 	 */
 
+	// recover only.
+	if(userByPhraseGuess == null && options.body.phraseGuess.length > 0) {
+		return {
+			status: 401,
+			data: "Can't reclaim the account."
+		};
+	}
+
 	// case A + D
 	if(userByPhraseGuess != null
 	&& userBydptUUID === null) {

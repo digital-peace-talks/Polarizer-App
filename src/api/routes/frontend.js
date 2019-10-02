@@ -97,7 +97,7 @@ router.post('/recover', async(req, res, next) => {
         dptUUID = cookieParser.signedCookie(req.signedCookies.dptUUID, process.env.DPT_SECRET);
     }
     var ret = await userService.userReclaim({ body: { phraseGuess: req.body.phraseinput, newPhrase: req.body.phrase, dptUUID: dptUUID } });
-    if (ret.newCookie) {
+    if (ret.newCookie && rest.status==200) {
         res.cookie('dptUUID', ret.newCookie, cookieOptions);
         await res.writeHead(302, {
             'Location': '/launch3d.html'
@@ -106,7 +106,12 @@ router.post('/recover', async(req, res, next) => {
         });
         res.end();
     } else {
-        res.send('bla ' + req.body.phraseinput);
+        res.send(`<body bgcolor="#0071bc"><center>
+        		<img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="400" width="400">
+        		<br><br><br>
+        		${ret.status}<br><br>
+        		${ret.data}
+        		</center></body>`);
         res.status(201);
     }
 });
