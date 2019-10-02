@@ -59,6 +59,14 @@ h2 {
     border-bottom-width: 1px;
 }
 
+h4 {
+    font-family: "DPTFontDin";
+    font-size: 18px;
+    color: #F0F3F5;
+    font-weight: 300;
+    padding: 5px;
+}
+
 div#dialogMenu>i {
     color: 00ccff !important;
 }
@@ -393,6 +401,53 @@ div#dialogFrame {
     visibility: hidden;
 }
 
+#topicForm1 {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    padding: 0px;
+    margin-left: 5%;
+    margin-top: 25%;
+    color: #000;
+    width: 33%;
+    z-index: 2;
+    font-family: DPTFont;
+    font-size: 18px;
+    background-color: #005B9888;
+}
+
+#topicForm {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 20px;
+    margin-left: 300px;
+    border: #fff;
+    border-style: solid;
+    border-width: 1px;
+    color: #F0F3F5;
+    z-index: 2;
+    font-family: DPTFont;
+    font-size: 18px;
+    background-color: #005B9888;
+}
+
+#opinionForm {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 20px;
+    margin-left: 300px;
+    border: #fff;
+    border-style: solid;
+    border-width: 1px;
+    color: #F0F3F5;
+    z-index: 2;
+    font-family: DPTFont;
+    font-size: 18px;
+    background-color: #005B9888;
+}
+
 
 /* button menu style for mobile */
 
@@ -414,12 +469,33 @@ div#dialogFrame {
         background-repeat: no-repeat;
         background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png');
     }
-    #topicForm,
+    #topicForm1 {
+        width: 100%;
+        height: 100%;
+        top: 144px;
+        left: 0;
+        margin-left: 0px;
+    }
+    #topicForm {
+        width: 100%;
+        height: 100%;
+        top: 144px;
+        left: 0;
+        margin-left: 0px;
+    }
     #topic {
         width: 100%;
         height: 100%;
         top: 10%;
         left: 0;
+        margin: 0px;
+    }
+    #opinionForm {
+        width: 100%;
+        height: 100%;
+        top: 144px;
+        left: 0;
+        margin-left: 0px;
     }
     .dialogleft,
     .dialogcenter,
@@ -430,6 +506,7 @@ div#dialogFrame {
         width: 100%;
         height: 100%;
         left: 0px;
+        margin-left: 0px;
     }
     h3 {
         font-size: 16px;
