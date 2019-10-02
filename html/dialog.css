@@ -448,6 +448,22 @@ div#dialogFrame {
     background-color: #005B9888;
 }
 
+#propositionForm {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    padding: 20px;
+    margin-left: 300px;
+    border: #fff;
+    border-style: solid;
+    border-width: 1px;
+    color: #F0F3F5;
+    z-index: 30;
+    font-family: DPTFont;
+    font-size: 18px;
+    background-color: #005B9888;
+}
+
 
 /* button menu style for mobile */
 
@@ -508,6 +524,12 @@ div#dialogFrame {
         left: 0px;
         margin-left: 0px;
         top: 0px;
+    }
+    #propositionForm {
+        top: 0;
+        left: 0px;
+        padding: 20px;
+        margin-left: 0px;
     }
     h3 {
         font-size: 16px;
