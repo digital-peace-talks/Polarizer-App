@@ -507,6 +507,7 @@ div#dialogFrame {
         height: 100%;
         left: 0px;
         margin-left: 0px;
+        top: 0px;
     }
     h3 {
         font-size: 16px;
