@@ -513,6 +513,10 @@ div#dialogFrame {
     }
     #dialogMenu {
         width: 100%;
+        height: 100%;
+        top: 144px;
+        left: 0px;
+        margin-left: 0px;
     }
     #misc2 {
         top: 0px;
