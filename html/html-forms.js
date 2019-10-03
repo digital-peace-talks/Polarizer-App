@@ -369,9 +369,19 @@ function requestFeedback() {
     btn.onclick = () => {
 	    jQuery('body').append(`
     		<div id="propositionForm" style="width: 40%; height: 80%;">
-	    		 <iframe style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
+	    		 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
     		</div>
     	`);
+	    window.addEventListener('message', event => {
+	        // IMPORTANT: check the origin of the data! 
+	        if (event.origin.startsWith('https://simple-feedback.dpt.world')
+	        && event.data == 'simple-feedback-finished') { 
+	        	jQuery('#feedbackIframe').remove();
+	        	jQuery('#propositionForm').remove();
+	        } else {
+	            return; 
+	        } 
+	    }); 
     }
     /*
     btn.onclick = () => {
