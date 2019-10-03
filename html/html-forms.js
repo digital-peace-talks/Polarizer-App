@@ -328,7 +328,6 @@ var createGUIScene = function(dptMode) {
         });
     }
 
-
     //create dialogue button
     var dialoguesBtn = jQuery('#dialogues-btn');
     dialoguesBtn.show();
@@ -348,7 +347,52 @@ var createGUIScene = function(dptMode) {
         }
 
     });
+
+    requestFeedback();
 }
+
+function requestFeedback() {
+    var btn = document.createElement("input");
+    //			btn.innerText = "Enable/Disable Joystick";
+    btn.style.zIndex = 10;
+    btn.style.position = "absolute";
+    btn.style.bottom = "50px";
+    btn.style.right = "150px";
+    btn.width = "50";
+    btn.height = "50";
+    btn.type = "image";
+    btn.src = "/sleep_white.png";
+    btn.style.color = "#f00";
+    document.body.appendChild(btn);
+
+    // Button toggle logic
+    btn.onclick = () => {
+	    jQuery('body').append(`
+    		<div id="propositionForm" style="width: 40%; height: 80%;">
+	    		 <iframe style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world:10711/"></iframe> 
+    		</div>
+    	`);
+    }
+    /*
+    btn.onclick = () => {
+		jQuery.ajax({ 
+			url: 'http://192.168.23.101:8011',
+			type: 'GET',
+			cache: false, 
+			success: function(data){
+			    jQuery('body').append(`
+			    		<div id="propositionForm">
+			    		${data}
+			    		</div>
+			    	`);
+			},
+			error: function(jqXHR, status, err) {
+				alert('text status '+status+', err '+err);
+			},
+		});
+    }
+    */
+};
 
 function pauseEngine() {
     var btn = document.createElement("input");
