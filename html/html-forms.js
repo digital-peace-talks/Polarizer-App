@@ -361,7 +361,7 @@ function requestFeedback() {
     btn.width = "50";
     btn.height = "50";
     btn.type = "image";
-    btn.src = "/sleep_white.png";
+    btn.src = "/survey_white.png";
     btn.style.color = "#f00";
     document.body.appendChild(btn);
 
@@ -414,7 +414,7 @@ function pauseEngine() {
     btn.width = "50";
     btn.height = "50";
     btn.type = "image";
-    btn.src = "/sleep_white.png";
+    btn.src = "/survey_white.png";
     btn.style.color = "#f00";
     document.body.appendChild(btn);
 
