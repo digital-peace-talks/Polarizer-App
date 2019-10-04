@@ -368,7 +368,7 @@ function requestFeedback() {
     // Button toggle logic
     btn.onclick = () => {
 	    jQuery('body').append(`
-    		<div id="propositionForm" style="width: 40%; height: 80%;">
+    		<div id="propositionForm" style="min-width: 40%; height: 80%;">
 	    		 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
     		</div>
     	`);
