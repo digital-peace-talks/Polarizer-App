@@ -108,6 +108,7 @@ function onWebSocketAPI(restObj) {
 
 		loadDialogList(restObj);
 	}	
+}
 
 function main() {
 
