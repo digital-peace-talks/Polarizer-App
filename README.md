@@ -22,11 +22,15 @@ You can also set criteria for the kind of offers you get for one-on-one dialogue
 
 Find more details on our [homepage](https://www.digitalpeacetalks.com). To see Digital Peace Talks in action, you can try it out at our self-cleaning [sandbox](https://sandbox.dpt.world/).
 
+## Conceptual
+
+The digital peace talks project creates a anonymous communication space. The users are able to create and view topics, they can invite each other in message limited dialogs and they can rate the dialog. A topic can specify a problem or question. A opinion is a personal opinion related to the topic. A dialog is the exchange of messages between two users. The opinions related to a topic will be arranged in a three dimensional space based on an algorithm which will use the text input and by the dialogs rating results. All the information gathered in this process will be transparent available to all users.
+
 ## Technical status (brief)
 
 We are in an early alpha release mode now. There is no machine learning component yet. The 3D world has still a flat look. This means, that all components (topics, opinions and edges) are arranged on a x-y plane.
 
-The server implements a RESTful API. It is written in nodejs, using express. The mongo database get accessed via mongoose.The API can be examined via the [swagger api interface](http://dpt.world:2088/). The client uses babylon.js as a webgl render engine.
+The server implements a RESTful API. It is written in nodejs, using express. The mongo database get accessed via mongoose. The API can be examined via the [swagger api interface](http://dpt.world:2088/). The client uses babylon.js as a webgl render engine.
 
 The way we get a running instance, is, to get a docker container build. Find a Dockerfile and all needed components in the docs/docker directory. The only file you need to update / create is the .env file. There is a .env.example file which works as a template.
 
@@ -49,11 +53,11 @@ $ vi .env
 $ npm install
 $ node src/bin/www
 ```
-In .env file you update the absolut path to the directory of the cloned repository and a secret for identifying the session cookie.
+In .env file you update the absolute path to the directory of the cloned repository and a secret for identifying the session cookie.
 
 #### Note
 
-Please keep in mind: This project is under developement and is far from major or done. Things can change dramaticaly. Everytime. It's up to the user community to influence the way we go. And keep in mind: this is just a tool, not the solution to get conflicts solved.
+Please keep in mind: This project is under development and is far from major or done. Things can change dramatically. Every time. It's up to the user community to influence the way we go. And keep in mind: this is just a tool, not the solution to get conflicts solved.
 
 Feel free to try it out at our [sandbox](https://sandbox.dpt.world/). There is still a lot to do, if you have suggestions or patches or like to join the active dev team, get in contact. Please use this github to report any feedback.
 
