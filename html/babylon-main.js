@@ -1,54 +1,3 @@
-var canvas = document.getElementById("renderCanvas");
-var engine;
-var advancedTexture;
-var currentScene;
-var __topicScene;
-var __opinionScene;
-var topicCamState;
-var opinionCamState;
-
-var myDialogMenu = [];
-var currentDialog;
-var myDialogsVisible = 'hidden';
-
-var currentTopic;
-var currentTopicStr;
-
-var dpt;
-var whoami;
-
-var powerSave = false;
-
-
-function getCollisionBox() {
-	//Simple box
-	var box = new BABYLON.MeshBuilder.CreateBox("collisionBox", 
-	{
-		width: 100,
-		height: 30,
-		depth: 40,
-		sideOrientation: 1
-	}, currentScene);
-
-	box.position = new BABYLON.Vector3(7.5, 2.5, -19.99);
-	//create material
-	var mat = new BABYLON.StandardMaterial("mat", currentScene);
-	mat.diffuseColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
-	mat.specularColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
-	//mat.Color = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
-	mat.emissiveColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
-	mat.alpha = 0.45;
-	
-	//mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
-	
-
-	//apply material
-	box.material = mat;
-	//mat.freeze();
-
-	return (box);
-}
-
 function createAvatar(avatarInfo, camera) {
 	var name;
 	if(!avatarInfo && camera) {
@@ -108,6 +57,36 @@ function updateAvatar(avatarInfo) {
 		}
 	}
 }
+
+function getCollisionBox() {
+	//Simple box
+	var box = new BABYLON.MeshBuilder.CreateBox("collisionBox", 
+	{
+		width: 100,
+		height: 30,
+		depth: 40,
+		sideOrientation: 1
+	}, currentScene);
+
+	box.position = new BABYLON.Vector3(7.5, 2.5, -19.99);
+	//create material
+	var mat = new BABYLON.StandardMaterial("mat", currentScene);
+	mat.diffuseColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	mat.specularColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	//mat.Color = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	mat.emissiveColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	mat.alpha = 0.45;
+	
+	//mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
+	
+
+	//apply material
+	box.material = mat;
+	//mat.freeze();
+
+	return (box);
+}
+
 
 function getCamera() {
 
@@ -359,194 +338,3 @@ var createGenericScene = function(dptMode) {
 	//genericScene.cleanCachedTextureBuffer();
 	return genericScene;
 }
-
-function focusAtCanvas() {
-	document.getElementById('renderCanvas').focus();
-}
-
-function main() {
-
-	document.addEventListener("DOMContentLoaded", function(event) {
-		focusAtCanvas();
-		//jQuery('canvas#renderCanvas').focus();
-		var socket = io.connect(
-			window.location.protocol + "//" + window.location.host, {
-				transports: ["websocket"],
-			}
-		);
-
-		dpt = new DPT(socket);
-		var restObj = {};
-		whoami = {
-			dptUUID: "",
-			user: {},
-		};
-
-		engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
-		//engine.doNotHandleContextLost = true;
-		//engine.enableOfflineSupport = false;
-
-		__topicScene = createGenericScene;
-		__topicScene.name = 'topicScene';
-		__opinionScene = createGenericScene;
-		__opinionScene.name = 'opinionScene';
-
-		// Handle the incomming websocket trafic
-		socket.on("connect", () => {
-			// if needed, we could keep socket.id somewhere
-			console.log('we are: '+socket.id);
-			currentScene = createGenericScene("topicScene");
-			currentScene.name = 'topicScene';
-			if(document.cookie) {
-				dpt.userLogin(document.cookie);
-			}
-		});
-
-		socket.on("3d", function(update) {
-			if(update.event == 'connect'
-			&& update.avatar != socket.id) {
-				createAvatar(update, false);
-			} else if(update.event == 'disconnect') {
-				disposeAvatar(update);
-			} else if(update.event == 'update') {
-				updateAvatar(update);
-			}
-			console.log(update);
-		});
-
-		socket.on("private", function(restObj) {
-			if(restObj.method == "post") {
-				if(restObj.path == "/user/login/") {
-					whoami.dptUUID = restObj.data.dptUUID;
-					if(restObj.data.message == "logged in") {
-						whoami.user = restObj.data.user;
-						dpt.getTopic();
-						dpt.getDialogList();
-					}
-					if(restObj.data.message == "user unknown") {
-						whoami.user = {};
-					}
-				}
-			}
-		});
-
-		socket.on("error", function(e) {
-			console.log("System", e ? e : "A unknown error occurred");
-			document.location.reload(true);
-			window.location.reload(true);
-		});
-
-		// server says it has some updates for client
-		socket.on('update', function(restObj) {
-
-			if(restObj.method == 'post') {
-
-				if(restObj.path == '/info/') {
-					jQuery('#messages')
-						.append(jQuery('<li>')
-							.text(restObj.data.message));
-
-					window.scrollTo(0, document.body.scrollHeight);
-				}
-			}
-
-			if(restObj.path == '/topic/' && restObj.method == 'get') {
-				if(currentScene.name == 'topicScene') {
-					dpt.getTopic();
-				}
-			}
-
-			if(restObj.path == '/dialog/list/' && restObj.method == 'get') {
-				dpt.getDialogList();
-			}
-
-			if(restObj.path.startsWith('/opinion/')
-			&& restObj.data.id == currentTopic
-			&& restObj.method == 'get'
-			&& currentScene.name == 'opinionScene') {
-				dpt.getOpinionByTopic(currentTopic);
-			}
-
-			if(currentDialog
-			&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
-			&& restObj.method == 'get'
-			&& dialogFormOpen == 1) {
-				dpt.getDialog(currentDialog.dialog);
-			}
-		});
-
-		socket.on("api", function(restObj) {
-			if(!restObj || !restObj.path || !restObj.method) {
-				return;
-			}
-
-			if('status' in restObj && restObj.status > 399) {
-
-				alert(restObj.data);
-				return;
-
-			} else if(currentDialog
-					&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
-					&& restObj.method == 'get') {
-
-				var old = currentDialog;
-				currentDialog = restObj.data;
-				currentDialog.topic = old.topic;
-				currentDialog.initiatorOpinion = old.initiatorOpinion;
-				currentDialog.recipientOpinion = old.recipientOpinion;
-				dialogForm();
-
-			}
-			if(restObj.path == '/topic/'
-			&& restObj.method == 'get') {
-				if(currentScene.name == 'topicScene') {
-					loadTopics(restObj);
-				}
-
-			} else if(restObj.path == "/opinion/" + currentTopic + "/"
-					&& restObj.method == "get") {
-				if(currentScene.name == 'opinionScene') {
-					loadOpinions(restObj);
-				}
-
-			} else if(restObj.path == '/opinion/postAllowed/') {
-				if(restObj.data.value == true) {
-					opinionForm();
-				} else {
-					alert('Only one opinion per topic.');
-				}
-			
-			} else if(restObj.path == '/dialog/list/'
-					&& restObj.method == 'get') {
-
-				loadDialogList(restObj);
-			}
-		});
-
-		//circlePoints(4, 2, {X: 0, Y: 0});
-
-		engine.runRenderLoop(function() {
-			if(currentScene && !powerSave) {
-				currentScene.render();
-			}
-		});
-
-		// Resize
-		window.addEventListener("resize", function() {
-			engine.resize();
-		});
-	});
-
-	jQuery(window).blur(function() {
-		console.log('window inactive');
-		powerSave = true;
-	});
-	
-	jQuery(window).focus(function() {
-		console.log('window active');
-		focusAtCanvas();
-		powerSave = false;
-	});
-}
-
-main();

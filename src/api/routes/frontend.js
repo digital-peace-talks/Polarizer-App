@@ -29,7 +29,7 @@ router.get('/', async(req, res, next) => {
         } else {
             res.send(`<body bgcolor="#0071bc"><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="400" width="400">
                 <br><br><h3><b>
-                <a style="color: #fff; text-decoration: none;" href=/launch3d.html>Start &#9655;</a>
+                <a style="color: #fff; text-decoration: none;" href=/dpt3d.html>Start &#9655;</a>
                 </b></h3><br><br>
                 <!--
                 <a onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
@@ -69,7 +69,7 @@ router.get('/recover', async(req, res, next) => {
     if (ret.newCookie) {
         res.cookie('dptUUID', ret.newCookie, cookieOptions);
         await res.writeHead(302, {
-            'Location': '/launch3d.html'
+            'Location': '/dpt3d.html'
                 //'Location': '/'
                 //add other headers here...
         });
@@ -100,7 +100,7 @@ router.post('/recover', async(req, res, next) => {
     if (ret.newCookie && ret.status==200) {
         res.cookie('dptUUID', ret.newCookie, cookieOptions);
         await res.writeHead(302, {
-            'Location': '/launch3d.html'
+            'Location': '/dpt3d.html'
                 //'Location': '/'
                 //add other headers here...
         });
