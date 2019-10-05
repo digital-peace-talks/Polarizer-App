@@ -1,6 +1,6 @@
-## Digital Peace Talks
+# Digital Peace Talks
 
-# About
+## About
 
 Digital Peace Talks is (and always will be) a free and open web app that maps opinions via an artificial intelligence and uncovers high quality dialogues. The Digital Peace Talks offer:
 
@@ -19,3 +19,40 @@ Every dialogue is published. The result is a three-dimensional space, where ever
 Now you can filter all the opinions and dialogues, for example by only showing the dialogues that are rated positively or negatively. That way you can see where bridges between camps have already been built and where they haven't.
 
 You can also set criteria for the kind of offers you get for one-on-one dialogues.
+
+## Technical status (brief)
+
+We are in an early alpha release mode now. There is no machine learning component yet. The 3D world has still a flat look. This means, that all components (topics, opinions and edges) are arranged on a x-y plane.
+
+The server implements a RESTful API. It is written in nodejs, using express. The mongo database get accessed via mongoose.The API can be examined via the [swagger api interface](http://dpt.world:2088/). The client uses babylon.js as a webgl render engine.
+
+The way we get a running instance, is, to get a docker container build. Find a Dockerfile and all needed components in the docs/docker directory. The only file you need to update / create is the .env file. There is a .env.example file which works as a template.
+
+For testing, the easiest way to get it up & running:
+
+#### Prerequist:
+
+   * A git client
+   * A mongo database server
+   * A node environment
+   * A recent npm
+
+With this components ready, you can follow these instructions to get it running:
+
+```shell
+$ git clone https://github.com/digital-peace-talks/DPT-server.git
+$ cd DPT-server
+$ cp .env.example .env
+$ vi .env
+$ npm install
+$ node src/bin/www
+```
+In .env file you update the absolut path to the directory of the cloned repository and a secret for identifying the session cookie.
+
+#### Note
+
+Please keep in mind: This project is under developement and is far from major or done. Things can change dramaticaly. Everytime. It's up to the user community to influence the way we go. And keep in mind: this is just a tool, not the solution to get conflicts solved.
+
+Feel free to try it out at our [sandbox](https://sandbox.dpt.world/). There is still a lot to do, if you have suggestions or patches or like to join the active dev team, get in contact. Please use this github to report any feedback.
+
+Thank you.
