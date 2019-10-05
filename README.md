@@ -20,6 +20,8 @@ Now you can filter all the opinions and dialogues, for example by only showing t
 
 You can also set criteria for the kind of offers you get for one-on-one dialogues.
 
+Find more details on our [homepage](https://www.digitalpeacetalks.com). To see Digital Peace Talks in action, you can try it out at our self-cleaning [sandbox](https://sandbox.dpt.world/).
+
 ## Technical status (brief)
 
 We are in an early alpha release mode now. There is no machine learning component yet. The 3D world has still a flat look. This means, that all components (topics, opinions and edges) are arranged on a x-y plane.
