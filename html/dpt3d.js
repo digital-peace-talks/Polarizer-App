@@ -204,12 +204,10 @@ function main() {
 	});
 
 	jQuery(window).blur(function() {
-		console.log('window inactive');
 		powerSave = true;
 	});
 	
 	jQuery(window).focus(function() {
-		console.log('window active');
 		focusAtCanvas();
 		powerSave = false;
 	});
