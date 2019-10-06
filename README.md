@@ -36,8 +36,7 @@ The way we get a running instance, is, to get a docker container build. Find a D
 
 For testing, the easiest way to get it up & running:
 
-#### Prerequist:
-
+#### Prerequisite:
    * A git client
    * A mongo database server
    * A node environment
