@@ -48,8 +48,10 @@ Where getIntersection is:
 	
 	sv.x = p1[0];
 	sv.y = p1[1];
+	sv.z = 0.2;
 	ev.x = p2[0];
 	ev.y = p2[1];
+	ev.z = 0.2;
 	
 
 	var radius = 0.04;
@@ -287,27 +289,25 @@ function dialogRelations(opinionDialogConnections) {
 
 function loadOpinions(restObj) {
 	var i;
-	var options = '';
 	var canInvite = false;
 
 	if(currentScene.name == 'opinionScene') {
 		for(var i in currentScene.meshes) {
-			/*
 			if('dpt' in currentScene.meshes[i]) {
-				if(currentScene.meshes[i].dpt.context == 'opinionScene'
-				|| currentScene.meshes[i].name == 'tube'
-				|| currentScene.meshes[i].name == 'icon') {
-				*/
-			if(currentScene.meshes[i].name != 'collisionBox') {
-				currentScene.meshes[i].dispose();
+				//if(currentScene.meshes[i].dpt.context == 'opinionScene'
+				//&&(currentScene.meshes[i].dpt.name == 'tube'
+				//|| currentScene.meshes[i].dpt.name == 'icon')) {
+					//if(currentScene.meshes[i].name != 'collisionBox') {
+						currentScene.meshes[i].dispose();
+					//}
+				//}
 			}
-			/*
-				}
-			}
-				*/
 		}
+	} else {
+		return;
 	}
 
+	/*
 	var n = Math.floor((Math.sqrt(restObj.data.length)));
 	var x = 0 - Math.floor(n / 2) * 10,
 		xstart = x;
@@ -315,6 +315,7 @@ function loadOpinions(restObj) {
 	var y = ymax = (n - 1) * 2.5;
 	ystart = ymax;
 	y = ystart;
+	*/
 
 	var opinionDialogConnections = {};
 	for(var i = 0; i < restObj.data.length; i++) {
@@ -322,33 +323,22 @@ function loadOpinions(restObj) {
 			opinionDialogConnections[restObj.data[i]._id] = restObj.data[i].topos;
 		}
 	}
+	/*
 	for(var i = 0; i < restObj.data.length; i++) {
 		if(restObj.data[i].user == 'mine') {
 			canInvite = true;
 		}
 	}
+	*/
 
 	var nodes = circlePoints(restObj.data.length, 5, { X: 4, Y: 0 });
 	for(var i = 0; i < restObj.data.length; i++) {
-		options = '';
+
 		if(restObj.data[i].user == 'mine') {
 			canInvite = true;
 		}
-		if(restObj.data[i].user == 'mine') {
-			options = '<span class="editOpinion" id="' +
-				restObj.data[i]._id +
-				'">&#128393;</span>';
-		} else {
-			if(restObj.data[i].blocked == 0 &&
-				canInvite) {
-				options = '<span class="inviteToDialog" id="' +
-					restObj.data[i]._id +
-					'">' +
-					'&#128172;' +
-					'</span>';
-			}
-		}
 
+		// paint the opinion
 		var plane = textBlock(
 			nodes[i].x, nodes[i].y, 0,
 			JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id }),
@@ -356,7 +346,7 @@ function loadOpinions(restObj) {
 
 		plane.actionManager = new BABYLON.ActionManager(currentScene);
 
-		//ON MOUSE ENTER
+		// enlarge ON MOUSE ENTER
 		plane.actionManager.registerAction(
 			new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
 				function(ev) {
@@ -367,7 +357,7 @@ function loadOpinions(restObj) {
 					canvas.style.cursor = "move";
 				}, false));
 
-		//ON MOUSE EXIT
+		// normal size ON MOUSE EXIT
 		plane.actionManager.registerAction(
 			new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
 				function(ev) {
@@ -379,6 +369,7 @@ function loadOpinions(restObj) {
 				}, false));
 
 
+		// add 'can invite' identicator
 		if(canInvite && restObj.data[i].user != 'mine'
 		&& restObj.data[i].blocked == 1) {
 			var mat = new BABYLON.StandardMaterial("icon", currentScene);
@@ -402,17 +393,6 @@ function loadOpinions(restObj) {
 			icon.material = mat;
 			icon.dpt = { context: 'dialogInvitation', opinionId: restObj.data[i]._id };
 		}
-
-		/*
-		x+=10;
-		if(x > xmax) {
-			y -= 2.5;
-			x=xstart;
-		}
-		jQuery('div.col.mid').append('<li class="connector" id="'+ restObj.data[i]._id +'"><span class="text">'
-			+ restObj.data[i].content
-			+ "</span> " +options+ ' <span class="connector" id="'+ restObj.data[i]._id +'"></span></li><br>');
-		*/
 	}
 
 
@@ -424,10 +404,13 @@ function loadOpinions(restObj) {
 	//			opinionEdit();
 
 	//			circleTextPlane(1.5, 1.2, 0, 'bla', currentTopicStr + " * ");
+	
+	// paint the topic
 	var plane = textBlock(
-			12.8/3, -19.2/8, 3.001,
+			19.2/4, 12.8/6, 3.001,
 			JSON.stringify({ "context": "opinionTopic" }),
 			currentTopicStr, {fontSize: 128, width: 19.2, height: 12.8, color: "#550033"});
+
 	dialogRelations(opinionDialogConnections);
 }
 

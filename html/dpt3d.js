@@ -16,6 +16,7 @@ var currentTopicStr;
 
 var dpt;
 var whoami;
+var idleSince = 0;
 
 var powerSave = false;
 
@@ -187,16 +188,23 @@ function main() {
 			onWebSocketAPI(restObj);
 		});
 
+		jQuery('body').append(`<div id="debug" style="position: absolute;
+			color: white; height: 20px; width: 90px; right: 90px; z-index:999; bottom: 30px">FPS</div>
+		`);
 		engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
 		//engine.doNotHandleContextLost = true;
 		//engine.enableOfflineSupport = false;
 		
 		engine.runRenderLoop(function() {
+			if(BABYLON.Tools.Now - idleSince > 3000.0) {
+				//powerSave = true;
+			}
 			if(currentScene && !powerSave) {
+				jQuery('#debug').text(engine.getFps()+"\n"+(BABYLON.Tools.Now - idleSince));
 				currentScene.render();
 			}
 		});
-
+		
 		// Resize
 		window.addEventListener("resize", function() {
 			engine.resize();
