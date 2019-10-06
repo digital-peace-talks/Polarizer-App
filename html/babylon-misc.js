@@ -128,8 +128,6 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
 	}
 };
 
-
-
 function cropImage(ctx, canvas) {
 
 	var w = canvas.width;
@@ -164,7 +162,6 @@ function cropImage(ctx, canvas) {
 	return (ctx);
 }
 
-
 function textBlock(x, y, z, name, text, options) {
 
 	if(!options) {
@@ -181,11 +178,12 @@ function textBlock(x, y, z, name, text, options) {
 				width: planeWidth,
 				height: planeHeight
 			}, currentScene);
+
 	plane.dpt = JSON.parse(name);
 
 	//Set width and height for dynamic texture using same multiplier
-	var DTWidth = planeWidth * 200; //64;
-	var DTHeight = planeHeight * 200; //64
+	var DTWidth = planeWidth * 100; //64;
+	var DTHeight = planeHeight * 100; //64
 
 	var dynamicTexture = new BABYLON.DynamicTexture(
 			"DynamicTexture",
@@ -198,12 +196,18 @@ function textBlock(x, y, z, name, text, options) {
 	dynamicTexture.hasAlpha = true;
 
 	textureContext = dynamicTexture.getContext();
-	textureContext.font = (options.fontSize || "44") + "px DPTFont";
+	textureContext.font = (options.fontSize || "22") + "px DPTFont";
 	textureContext.save();
 	textureContext.fillStyle = options.color || "#00ccff";
 
-	wrapText(textureContext, text, 5, options.fontSize || 44, DTWidth -1, options.fontSize || 44);
-	//	textureContext = cropImage(textureContext, textureContext.canvas);
+	wrapText(textureContext, text, 5, options.fontSize || 22, DTWidth -1, options.fontSize || 22);
+	textureContext = cropImage(textureContext, textureContext.canvas);
+
+    var pngBase64 = textureContext.canvas.toDataURL("image/gif", 0.99);
+
+    plane.bjs = { x: 1/DTWidth * textureContext.canvas.width * 2.4, y: 1/DTHeight * textureContext.canvas.height * 1.6 }; 
+    plane.scaling.x = plane.bjs.x;
+    plane.scaling.y = plane.bjs.y;
 
 	dynamicTexture.update();
 

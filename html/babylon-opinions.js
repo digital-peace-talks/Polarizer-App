@@ -5,10 +5,52 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	status = opinionDialogConnections.dialogStatus;
 	var sv = new BABYLON.Vector3(initiatorOpinion.position);
 	var ev = new BABYLON.Vector3(recipientOpinion.position);
-	sv.x = initiatorOpinion.position.x - 2.4;
-	sv.y = initiatorOpinion.position.y + 1.2;
-	ev.x = recipientOpinion.position.x - 2.4;
-	ev.y = recipientOpinion.position.y + 1.2;
+	sv.x = initiatorOpinion.position.x;
+	sv.y = initiatorOpinion.position.y;
+	ev.x = recipientOpinion.position.x;
+	ev.y = recipientOpinion.position.y;
+	
+	/*
+https://stackoverflow.com/questions/50252070/svg-draw-connection-line-between-two-rectangles
+
+Say you have two rects and you know the center of them (cx1, cy1) and (cx2, cy2).
+You also have the width and height divided by 2 (i.e. the distance from the center
+to the sides): (w1, h1) and (w2, h2).
+
+The distance between them is:
+
+var dx = cx2 - cx1;
+var dy = cy2 - cy1;
+
+Then you can calculate the intersection point for the two rects with:
+
+var p1 = getIntersection(dx, dy, cx1, cy1, w1, h1);
+var p2 = getIntersection(-dx, -dy, cx2, cy2, w2, h2);
+
+Where getIntersection is:
+	 */
+
+	function getIntersection(dx, dy, cx, cy, w, h) {
+		if (Math.abs(dy / dx) < h / w) {
+			// Hit vertical edge of box1
+			return [cx + (dx > 0 ? w : -w), cy + dy * w / Math.abs(dx)];
+		} else {
+			// Hit horizontal edge of box1
+			return [cx + dx * h / Math.abs(dy), cy + (dy > 0 ? h : -h)];
+		}
+	};
+
+	var dx = ev.x - sv.x;
+	var dy = ev.y - sv.y
+
+	var p1 = getIntersection(dx, dy, sv.x, sv.y, initiatorOpinion.size.x, initiatorOpinion.size.y);
+	var p2 = getIntersection(-dx, -dy, ev.x, ev.y, recipientOpinion.size.x, recipientOpinion.size.y);
+	
+	sv.x = p1[0];
+	sv.y = p1[1];
+	ev.x = p2[0];
+	ev.y = p2[1];
+	
 
 	var radius = 0.04;
 	var occupacy = 0.85;
@@ -150,6 +192,8 @@ function dialogRelations(opinionDialogConnections) {
 				&& currentScene.meshes[j].dpt.opinionId == h) {
 					initiatorOpinion.position = currentScene.meshes[j].position;
 					initiatorOpinion.opinionId = h;
+					var bla = currentScene.meshes[j].getBoundingInfo();
+					initiatorOpinion.size = currentScene.meshes[j].bjs;
 					if(odc[i].leafs.negative.includes(h)) {
 						initiatorOpinion.rating = 'negative';
 					} else if(odc[i].leafs.neutral.includes(h)) {
@@ -171,6 +215,7 @@ function dialogRelations(opinionDialogConnections) {
 						&& currentScene.meshes[k].dpt.opinionId == opinionId) {
 							recipientOpinion.position = currentScene.meshes[k].position;
 							recipientOpinion.opinionId = opinionId;
+							recipientOpinion.size = currentScene.meshes[k].bjs;
 							recipientOpinion.rating = 'negative';
 						}
 					}
@@ -185,6 +230,7 @@ function dialogRelations(opinionDialogConnections) {
 						&& currentScene.meshes[k].dpt.opinionId == opinionId) {
 							recipientOpinion.position = currentScene.meshes[k].position;
 							recipientOpinion.opinionId = opinionId;
+							recipientOpinion.size = currentScene.meshes[k].bjs;
 							recipientOpinion.rating = 'neutral';
 						}
 					}
@@ -199,6 +245,7 @@ function dialogRelations(opinionDialogConnections) {
 						&& currentScene.meshes[k].dpt.opinionId == opinionId) {
 							recipientOpinion.position = currentScene.meshes[k].position;
 							recipientOpinion.opinionId = opinionId;
+							recipientOpinion.size = currentScene.meshes[k].bjs;
 							recipientOpinion.rating = 'positive';
 						}
 					}
@@ -218,18 +265,12 @@ function dialogRelations(opinionDialogConnections) {
 						&& currentScene.meshes[k].dpt.opinionId == opinionId) {
 							recipientOpinion.position = currentScene.meshes[k].position;
 							recipientOpinion.opinionId = opinionId;
+							recipientOpinion.size = currentScene.meshes[k].bjs;
 							recipientOpinion.rating = 'unset';
 						}
 					}
 				}
 			}
-	
-			/*
-			initiatorOpinion.position.x -= 2.4;
-			initiatorOpinion.position.y += 1.2;
-			recipientOpinion.position.x -= 2.4;
-			recipientOpinion.position.y += 1.2;
-			*/
 	
 			if('position' in initiatorOpinion
 			&& 'position' in recipientOpinion) {

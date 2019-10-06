@@ -31,7 +31,7 @@ function onWebSocketUpdate(restObj) {
 		if(restObj.path == '/info/') {
 			jQuery('#messages')
 				.append(jQuery('<li>')
-					.text(restObj.data.message));
+				.text(restObj.data.message));
 
 			window.scrollTo(0, document.body.scrollHeight);
 		}
@@ -128,10 +128,6 @@ function main() {
 			user: {},
 		};
 
-		engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
-		//engine.doNotHandleContextLost = true;
-		//engine.enableOfflineSupport = false;
-
 		__topicScene = createGenericScene;
 		__topicScene.name = 'topicScene';
 		__opinionScene = createGenericScene;
@@ -191,6 +187,10 @@ function main() {
 			onWebSocketAPI(restObj);
 		});
 
+		engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
+		//engine.doNotHandleContextLost = true;
+		//engine.enableOfflineSupport = false;
+		
 		engine.runRenderLoop(function() {
 			if(currentScene && !powerSave) {
 				currentScene.render();
