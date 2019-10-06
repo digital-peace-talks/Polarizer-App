@@ -178,7 +178,6 @@ function textBlock(x, y, z, name, text, options) {
 				width: planeWidth,
 				height: planeHeight
 			}, currentScene);
-
 	plane.dpt = JSON.parse(name);
 
 	//Set width and height for dynamic texture using same multiplier
@@ -206,8 +205,8 @@ function textBlock(x, y, z, name, text, options) {
     var pngBase64 = textureContext.canvas.toDataURL("image/gif", 0.99);
 
     plane.bjs = { x: 1/DTWidth * textureContext.canvas.width * 2.4, y: 1/DTHeight * textureContext.canvas.height * 1.6 }; 
-    plane.scaling.x = plane.bjs.x;
-    plane.scaling.y = plane.bjs.y;
+    plane.scaling.x = 1/DTWidth * textureContext.canvas.width;
+    plane.scaling.y = 1/DTHeight * textureContext.canvas.height;
 
 	dynamicTexture.update();
 
