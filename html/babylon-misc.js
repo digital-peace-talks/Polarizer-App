@@ -176,6 +176,7 @@ function textBlock(x, y, z, name, text, options) {
 	var planeHeight = options.height || 3.2; //10;
 
 	//Create plane
+	/*
 	var plane = BABYLON.MeshBuilder.CreatePlane(
 			name,
 			{
@@ -183,6 +184,7 @@ function textBlock(x, y, z, name, text, options) {
 				height: planeHeight
 			}, currentScene);
 	plane.dpt = JSON.parse(name);
+	*/
 
 	//Set width and height for dynamic texture using same multiplier
 	var DTWidth = planeWidth * 100; //64;
@@ -198,19 +200,33 @@ function textBlock(x, y, z, name, text, options) {
 	//Check width of text for given font type at any size of font
 	dynamicTexture.hasAlpha = true;
 
-	textureContext = dynamicTexture.getContext();
+	var textureContext = dynamicTexture.getContext();
 	textureContext.font = (options.fontSize || "22") + "px DPTFont";
 	textureContext.save();
 	textureContext.fillStyle = options.color || "#00ccff";
 
 	wrapText(textureContext, text, 5, options.fontSize || 22, DTWidth -1, options.fontSize || 22);
 	textureContext = cropImage(textureContext, textureContext.canvas);
+	
+
+
+	var plane = BABYLON.MeshBuilder.CreatePlane(
+			name,
+			{
+				width: textureContext.canvas.width/100,
+				height: textureContext.canvas.height/100,
+			}, currentScene);
+	plane.dpt = JSON.parse(name);
 
     var pngBase64 = textureContext.canvas.toDataURL("image/gif", 0.99);
 
     plane.bjs = { x: 1/DTWidth * textureContext.canvas.width * 2.4, y: 1/DTHeight * textureContext.canvas.height * 1.6 }; 
-    plane.scaling.x = 1/DTWidth * textureContext.canvas.width;
-    plane.scaling.y = 1/DTHeight * textureContext.canvas.height;
+//    plane.bjs = { x: 1/DTWidth * textureContext.canvas.width * 2.4, y: 1/DTHeight * textureContext.canvas.height * 1.6 }; 
+    //plane._boundingInfo = new BoundingInfo(, max)
+//    plane._bound﻿ingInfo()._update(BABYLON.Matrix.Scaling(new BABYLON.Vector3(plane.bjs.x, plane.bjs.y, 0));
+//    plane.scaling.x = 1/DTWidth * textureContext.canvas.width;
+//    plane.scaling.y = 1/DTHeight * textureContext.canvas.height;
+//    plane._boundingInfo.update(BABYLON.Matrix.Scaling(new BABYLON.Vector3(plane.bjs.x, plane.bjs.y, 0)));
 
 	dynamicTexture.update();
 
@@ -229,8 +245,12 @@ function textBlock(x, y, z, name, text, options) {
 	plane.position.y = y;
 	plane.position.z = z;
 	plane.showBoundingBox = false;
+	
 
-	//plane.doNotSyncBoundingInfo = true
+
+	//plane.bakeCurrentTransformIntoVertices();
+
+	plane.doNotSyncBoundingInfo = false;
 	//plane.freezeWorldMatrix();
 	return (plane);
 }

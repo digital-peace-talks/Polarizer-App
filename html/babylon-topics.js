@@ -11,7 +11,7 @@ function loadTopics(restObj) {
 	y = ystart;
 
 	if(currentScene.name == 'topicScene') {
-		for(var i in currentScene.meshes) {
+		for(var i = currentScene.meshes.length - 1; i >= 0; i--) {
 			if('dpt' in currentScene.meshes[i]
 			&& currentScene.meshes[i].dpt.context == 'topicScene') {
 				currentScene.meshes[i].dispose();

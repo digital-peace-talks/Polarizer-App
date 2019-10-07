@@ -202,7 +202,6 @@ function dialogRelations(opinionDialogConnections) {
 				&& currentScene.meshes[j].dpt.opinionId == h) {
 					initiatorOpinion.position = currentScene.meshes[j].position;
 					initiatorOpinion.opinionId = h;
-					var bla = currentScene.meshes[j].getBoundingInfo();
 					initiatorOpinion.size = currentScene.meshes[j].bjs;
 					if(odc[i].leafs.negative.includes(h)) {
 						initiatorOpinion.rating = 'negative';
@@ -300,15 +299,10 @@ function loadOpinions(restObj) {
 	var canInvite = false;
 
 	if(currentScene.name == 'opinionScene') {
-		for(var i in currentScene.meshes) {
+		for(var i = currentScene.meshes.length - 1; i >= 0; i--) {
 			if('dpt' in currentScene.meshes[i]) {
-				//if(currentScene.meshes[i].dpt.context == 'opinionScene'
-				//&&(currentScene.meshes[i].dpt.name == 'tube'
-				//|| currentScene.meshes[i].dpt.name == 'icon')) {
-					//if(currentScene.meshes[i].name != 'collisionBox') {
-						currentScene.meshes[i].dispose();
-					//}
-				//}
+				console.log("dispose: "+currentScene.meshes[i].dpt.context);
+				currentScene.meshes[i].dispose();
 			}
 		}
 	} else {
@@ -320,14 +314,13 @@ function loadOpinions(restObj) {
 		if('topos' in restObj.data[i]) {
 			opinionDialogConnections[restObj.data[i]._id] = restObj.data[i].topos;
 		}
+		if(restObj.data[i].user == 'mine') {
+			canInvite = true;
+		}
 	}
 
 	var nodes = circlePoints(restObj.data.length, 5, { X: 4, Y: 0 });
 	for(var i = 0; i < restObj.data.length; i++) {
-
-		if(restObj.data[i].user == 'mine') {
-			canInvite = true;
-		}
 
 		// paint the opinion
 		var plane = textBlock(
@@ -378,9 +371,11 @@ function loadOpinions(restObj) {
 					height: 0.35
 				}, currentScene);
 			icon.parent = plane;
+
 			icon.position.x -= plane.geometry.extend.maximum.x + 0.2;
 			icon.position.y += plane.geometry.extend.maximum.y - 0.4;
 			icon.position.z = plane.position.z - 0.10;
+
 			icon.material = mat;
 			icon.dpt = { context: 'dialogInvitation', opinionId: restObj.data[i]._id };
 		}
