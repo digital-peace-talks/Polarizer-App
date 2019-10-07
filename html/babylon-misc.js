@@ -79,8 +79,12 @@ function circleTextPlane(x, y, z, name, text) {
 function circlePoints(points, radius, center) {
 	var slice = 2 * Math.PI / points;
 	var nodes = [];
+	var startAngle = 0;
+	if(points % 2 == 0) {
+		startAngle = (1/2*Math.PI) * 45;
+	}
 	for(var i = 0; i < points; i++) {
-		var angle = slice * i;
+		var angle = slice * i + startAngle;
 		var newX = center.X + radius * Math.cos(angle);
 		var newY = center.Y + radius * Math.sin(angle);
 		nodes.push({ x: newX, y: newY });

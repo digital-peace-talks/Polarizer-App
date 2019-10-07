@@ -144,6 +144,14 @@ Where getIntersection is:
 	if(combination.indexOf('grey') >= 0) {
 		combination = 'grey-grey';
 	}
+	
+	// dominant color scheme
+	if(combination.indexOf('red') >= 0) {
+		combination = 'red-red';
+	}
+	if(combination.indexOf('green') >= 0) {
+		combination = 'green-green';
+	}
 
 	image = new Image();
 	image.src = '/' + combination + '.png';
@@ -307,29 +315,12 @@ function loadOpinions(restObj) {
 		return;
 	}
 
-	/*
-	var n = Math.floor((Math.sqrt(restObj.data.length)));
-	var x = 0 - Math.floor(n / 2) * 10,
-		xstart = x;
-	xmax = (n - 1) * 10;
-	var y = ymax = (n - 1) * 2.5;
-	ystart = ymax;
-	y = ystart;
-	*/
-
 	var opinionDialogConnections = {};
 	for(var i = 0; i < restObj.data.length; i++) {
 		if('topos' in restObj.data[i]) {
 			opinionDialogConnections[restObj.data[i]._id] = restObj.data[i].topos;
 		}
 	}
-	/*
-	for(var i = 0; i < restObj.data.length; i++) {
-		if(restObj.data[i].user == 'mine') {
-			canInvite = true;
-		}
-	}
-	*/
 
 	var nodes = circlePoints(restObj.data.length, 5, { X: 4, Y: 0 });
 	for(var i = 0; i < restObj.data.length; i++) {
