@@ -57,8 +57,8 @@ Where getIntersection is:
 	var radius = 0.04;
 	var occupacy = 0.85;
 	if(status == "CLOSED") {
-		radius = 0.08;
-		occupacy = 0.95;
+		radius = 0.06;
+		occupacy = 0.85;
 	}
 	var tube = new BABYLON.MeshBuilder.CreateTube(
 		"tube", {
@@ -183,6 +183,7 @@ Where getIntersection is:
 		// mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 	}
 	mat.diffuseTexture = dynamicTexture;
+	mat.specularColor = new BABYLON.Color3.Black;
 	//mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
 	tube.material = mat;
 
@@ -393,7 +394,7 @@ function loadOpinions(restObj) {
 	
 	// paint the topic
 	var plane = textBlock(
-			19.2/4, 12.8/6, 3.001,
+			19.2/8, 12.8/6, 8.001,
 			JSON.stringify({ "context": "opinionTopic" }),
 			currentTopicStr, {fontSize: 128, width: 19.2, height: 12.8, color: "#550033"});
 
