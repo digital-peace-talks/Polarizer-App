@@ -115,9 +115,10 @@ function onWebSocketAPI(restObj) {
 function main() {
 
 	document.addEventListener("DOMContentLoaded", function(event) {
-		if(('ontouchstart' in window)
-		|| (navigator.MaxTouchPoints > 0)
-		|| (navigator.msMaxTouchPoints > 0)) {
+		if('ontouchstart' in window
+		|| window.DocumentTouch && document instanceof window.DocumentTouch
+		|| navigator.maxTouchPoints > 0
+		|| window.navigator.msMaxTouchPoints) {
 			touchScreen = true;
 		}
 
