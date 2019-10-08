@@ -19,6 +19,7 @@ var whoami;
 var idleSince = 0;
 
 var powerSave = false;
+var touchScreen = false;
 
 
 function focusAtCanvas() {
@@ -114,6 +115,12 @@ function onWebSocketAPI(restObj) {
 function main() {
 
 	document.addEventListener("DOMContentLoaded", function(event) {
+		if(('ontouchstart' in window)
+		|| (navigator.MaxTouchPoints > 0)
+		|| (navigator.msMaxTouchPoints > 0)) {
+			touchScreen = true;
+		}
+
 		focusAtCanvas();
 		//jQuery('canvas#renderCanvas').focus();
 		var socket = io.connect(

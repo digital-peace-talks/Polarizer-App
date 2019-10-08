@@ -87,14 +87,39 @@ function getCollisionBox() {
 	return (box);
 }
 
+function getCamera(rotate) {
 
-function getCamera() {
-
+	var camera;
 	// camera
 	if(currentScene.dptMode == "topicScene") {
 		console.log('ts cam');
-		var camera = new BABYLON.FlyCamera("FlyCamera",
-			new BABYLON.Vector3(2.5, 4.5, -15), currentScene);
+		if(touchScreen) {
+			
+			camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/2, 0, new BABYLON.Vector3(0, 0, 0), currentScene);
+
+		    // This positions the camera
+		    camera.setPosition(new BABYLON.Vector3(0, 0, -15));
+		    
+			camera.panningSensibility = 600;
+
+			camera.lowerRadiusLimit = 1;
+			camera.upperRadiusLimit = 35;
+				
+			camera.lowerAlphaLimit = 0.0174533 * -105;
+			camera.upperAlphaLimit = 0.0174533 * -75;
+			camera.lowerBetaLimit = 0.0174533 * 75;
+			camera.upperBetaLimit = 0.0174533 * 105;
+
+			camera.panningAxis = new BABYLON.Vector3(1, 1, 0);
+
+			// This targets the camera to scene origin
+		    camera.setTarget(BABYLON.Vector3.Zero());
+			
+			
+		} else {
+			camera = new BABYLON.FlyCamera("FlyCamera",
+				new BABYLON.Vector3(2.5, 4.5, -15), currentScene);
+		}
 
 		if(topicCamState) {
 			camera.position = topicCamState.position;
@@ -104,8 +129,32 @@ function getCamera() {
 	}
 	if(currentScene.dptMode == "opinionScene") {
 		console.log('os cam');
-		var camera = new BABYLON.FlyCamera("FlyCamera",
-			new BABYLON.Vector3(4.5, 1.0, -15), currentScene);
+		if(touchScreen) {
+			
+			camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/2, 0, new BABYLON.Vector3(0, 0, 0), currentScene);
+
+		    // This positions the camera
+		    camera.setPosition(new BABYLON.Vector3(0, 0, -15));
+		    
+			camera.panningSensibility = 600;
+
+			camera.lowerRadiusLimit = 1;
+			camera.upperRadiusLimit = 35;
+				
+			camera.lowerAlphaLimit = 0.0174533 * -105;
+			camera.upperAlphaLimit = 0.0174533 * -75;
+			camera.lowerBetaLimit = 0.0174533 * 75;
+			camera.upperBetaLimit = 0.0174533 * 105;
+
+			camera.panningAxis = new BABYLON.Vector3(1, 1, 0);
+
+			// This targets the camera to scene origin
+		    camera.setTarget(BABYLON.Vector3.Zero());
+
+		} else {
+			camera = new BABYLON.FlyCamera("FlyCamera",
+				new BABYLON.Vector3(4.5, 1.0, -15), currentScene);
+		}
 
 		if(opinionCamState) {
 			camera.position = opinionCamState.position;
@@ -114,6 +163,7 @@ function getCamera() {
 		}
 	}
 
+	if(!touchScreen) {
 	camera.inputs.add(new BABYLON.FreeCameraTouchInput());
 
 	camera.keysForward.push(33);
@@ -133,6 +183,8 @@ function getCamera() {
 
 	camera.acceleration = 0.01;
 	camera.speed = 0.5;
+	
+	}
 	
 	// createAvatar(false, camera);
 

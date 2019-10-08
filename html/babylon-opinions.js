@@ -394,7 +394,7 @@ function loadOpinions(restObj) {
 	
 	// paint the topic
 	var plane = textBlock(
-			19.2/8, 12.8/6, 8.001,
+			19.2/6, 12.8/6, 4.001,
 			JSON.stringify({ "context": "opinionTopic" }),
 			currentTopicStr, {fontSize: 128, width: 19.2, height: 12.8, color: "#550033"});
 
