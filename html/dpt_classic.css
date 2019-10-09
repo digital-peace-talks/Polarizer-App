@@ -400,22 +400,24 @@ div#dialogFrame {
     visibility: hidden;
 }
 
-#topicForm1 {
-    position: fixed;
+#form {
+    position: absolute;
     top: 0px;
     left: 0px;
-    padding: 0px;
-    margin-left: 5%;
-    margin-top: 25%;
-    color: #000;
-    width: 33%;
+    width: 320px;
+    padding: 20px;
+    margin-left: 300px;
+    border: #fff;
+    border-style: solid;
+    border-width: 1px;
+    color: #002C4B;
     z-index: 2;
     font-family: DPTFont;
     font-size: 18px;
-    background-color: #005B9888;
+    background-color: #28A9E1;
 }
 
-#topicForm {
+#closeX {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -425,42 +427,29 @@ div#dialogFrame {
     border-style: solid;
     border-width: 1px;
     color: #F0F3F5;
-    z-index: 2;
+    z-index: 200;
     font-family: DPTFont;
     font-size: 18px;
-    background-color: #005B9888;
 }
 
-#opinionForm {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    padding: 20px;
-    margin-left: 300px;
-    border: #fff;
-    border-style: solid;
-    border-width: 1px;
-    color: #F0F3F5;
-    z-index: 2;
+textarea {
     font-family: DPTFont;
+    color: #005B98;
     font-size: 18px;
-    background-color: #005B9888;
+    width: 80%;
+    height: 80px;
+    margin: 0 auto;
 }
 
-#propositionForm {
-    position: absolute;
-    top: 0;
-    left: 0px;
-    padding: 20px;
-    margin-left: 300px;
-    border: #fff;
-    border-style: solid;
-    border-width: 1px;
+.button {
+    font-family: DPTFontDin;
     color: #F0F3F5;
-    z-index: 30;
-    font-family: DPTFont;
+    background-color: #005B98;
+    border: none;
     font-size: 18px;
-    background-color: #005B9888;
+    width: 120px;
+    height: 40px;
+    margin: 5 auto;
 }
 
 
@@ -478,19 +467,22 @@ div#dialogFrame {
         width: 100%;
         display: block;
     }
-    #topicForm1 {
+    #form {
         width: 100%;
-        height: 100%;
+        height: 200px;
         top: 144px;
         left: 0;
         margin-left: 0px;
-    }
-    #topicForm {
-        width: 100%;
-        height: 100%;
-        top: 144px;
-        left: 0;
-        margin-left: 0px;
+        position: absolute;
+        padding: 20px;
+        border: #fff;
+        border-style: solid;
+        border-width: 1px;
+        color: #002C4B;
+        z-index: 2;
+        font-family: DPTFont;
+        font-size: 18px;
+        background-color: #28A9E1;
     }
     #topic {
         width: 100%;
@@ -498,13 +490,6 @@ div#dialogFrame {
         top: 10%;
         left: 0;
         margin: 0px;
-    }
-    #opinionForm {
-        width: 100%;
-        height: 100%;
-        top: 144px;
-        left: 0;
-        margin-left: 0px;
     }
     .dialogleft,
     .dialogcenter,
@@ -517,12 +502,6 @@ div#dialogFrame {
         left: 0px;
         margin-left: 0px;
         top: 0px;
-    }
-    #propositionForm {
-        top: 0;
-        left: 0px;
-        padding: 20px;
-        margin-left: 0px;
     }
     h3 {
         font-size: 16px;
