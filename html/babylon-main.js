@@ -268,7 +268,7 @@ var createGenericScene = function(dptMode) {
 	var camera = getCamera();
 	camera.attachControl(canvas, true);
 
-	initVirtJoysticks();
+	//initVirtJoysticks();
 	//pauseEngine();
 
 	// Enable Collisions

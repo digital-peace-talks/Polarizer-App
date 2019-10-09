@@ -359,9 +359,9 @@ function loadOpinions(restObj) {
 		&& restObj.data[i].blocked == 1) {
 			var mat = new BABYLON.StandardMaterial("icon", currentScene);
 			mat.diffuseTexture = new BABYLON.Texture("/chatbubble.png", currentScene);
-			mat.emissiveColor = new BABYLON.Color3(0.0, 0.8, 1);
+			mat.emissiveColor = new BABYLON.Color3(0, 0.5, 1);
 			//	mat.alpha = .95;
-			mat.alphaMode = BABYLON.Engine.ALPHA_ADD;
+			//mat.alphaMode = BABYLON.Engine.ALPHA_ADD;
 			mat.opacityTexture = mat.diffuseTexture;
 
 			//	var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.35, height: 0.25 }, currentScene);

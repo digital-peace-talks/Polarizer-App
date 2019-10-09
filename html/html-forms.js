@@ -356,8 +356,8 @@ function requestFeedback() {
     //			btn.innerText = "Enable/Disable Joystick";
     btn.style.zIndex = 10;
     btn.style.position = "absolute";
-    btn.style.bottom = "50px";
-    btn.style.right = "150px";
+    btn.style.bottom = "5px";
+    btn.style.right = "5px";
     btn.width = "50";
     btn.height = "50";
     btn.type = "image";
