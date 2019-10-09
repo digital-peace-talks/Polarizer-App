@@ -404,7 +404,7 @@ div#dialogFrame {
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 320px;
+    width: 400px;
     padding: 20px;
     margin-left: 300px;
     border: #fff;
@@ -436,7 +436,7 @@ textarea {
     font-family: DPTFont;
     color: #005B98;
     font-size: 18px;
-    width: 80%;
+    width: 100%;
     height: 80px;
     margin: 0 auto;
 }
@@ -447,15 +447,16 @@ textarea {
     background-color: #005B98;
     border: none;
     font-size: 18px;
-    width: 120px;
+    width: 160px;
     height: 40px;
-    margin: 5 auto;
+    margin: 5px auto;
+    padding: 5px;
 }
 
 
 /* button menu style for mobile */
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 640px) {
     .menu-btn {
         width: 100%;
         margin-top: 0px;
