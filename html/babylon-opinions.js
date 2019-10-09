@@ -50,17 +50,17 @@ Where getIntersection is:
 	
 	sv.x = p1[0];
 	sv.y = p1[1];
-	sv.z = 0.2;
+	//sv.z = 0.2;
 	ev.x = p2[0];
 	ev.y = p2[1];
-	ev.z = 0.2;
+	//ev.z = 0.2;
 	
 
 	var radius = 0.04;
 	var occupacy = 0.85;
 	if(status == "CLOSED") {
 		radius = 0.06;
-		occupacy = 0.85;
+		occupacy = .99;
 	}
 	var tube = new BABYLON.MeshBuilder.CreateTube(
 		"tube", {
@@ -327,7 +327,8 @@ function loadOpinions(restObj) {
 
 		// paint the opinion
 		var plane = textBlock(
-			nodes[i].x, nodes[i].y, 0,
+//			nodes[i].x, nodes[i].y, 0,
+			nodes[i].x, nodes[i].y, Math.random() * 10 - 10,
 			JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id }),
 			`${restObj.data[i].content}`);
 
@@ -372,11 +373,11 @@ function loadOpinions(restObj) {
 					width: 0.35,
 					height: 0.35
 				}, currentScene);
-			icon.parent = plane;
 
+			icon.parent = plane;
 			icon.position.x -= plane.geometry.extend.maximum.x + 0.2;
 			icon.position.y += plane.geometry.extend.maximum.y - 0.4;
-			icon.position.z = plane.position.z - 0.10;
+			//icon.position.z = plane.position.z - 0.10;
 
 			icon.material = mat;
 			icon.dpt = { context: 'dialogInvitation', opinionId: restObj.data[i]._id };
