@@ -7,8 +7,10 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	var ev = new BABYLON.Vector3(recipientOpinion.position);
 	sv.x = initiatorOpinion.position.x;
 	sv.y = initiatorOpinion.position.y;
+	sv.z = initiatorOpinion.position.z;
 	ev.x = recipientOpinion.position.x;
 	ev.y = recipientOpinion.position.y;
+	ev.z = recipientOpinion.position.z;
 	
 	/*
 https://stackoverflow.com/questions/50252070/svg-draw-connection-line-between-two-rectangles
@@ -48,10 +50,10 @@ Where getIntersection is:
 	
 	sv.x = p1[0];
 	sv.y = p1[1];
-	sv.z = 0.2;
+	//sv.z = 0.2;
 	ev.x = p2[0];
 	ev.y = p2[1];
-	ev.z = 0.2;
+	//ev.z = 0.2;
 	
 
 	var radius = 0.04;
@@ -325,7 +327,7 @@ function loadOpinions(restObj) {
 
 		// paint the opinion
 		var plane = textBlock(
-			nodes[i].x, nodes[i].y, 0,
+			nodes[i].x, nodes[i].y, 0),
 			JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id }),
 			`${restObj.data[i].content}`);
 
