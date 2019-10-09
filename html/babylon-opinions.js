@@ -50,10 +50,10 @@ Where getIntersection is:
 	
 	sv.x = p1[0];
 	sv.y = p1[1];
-	//sv.z = 0.2;
+	sv.z = 0.2;
 	ev.x = p2[0];
 	ev.y = p2[1];
-	//ev.z = 0.2;
+	ev.z = 0.2;
 	
 
 	var radius = 0.04;
