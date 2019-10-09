@@ -226,7 +226,7 @@ function dialogForm() {
     }
     var html = `
         <div id="dialogFrame">
-        <div class="closeX">X</div>
+       
             <div class="top">
                 <center>
                     <h3>${currentDialog.topic}</h3>
