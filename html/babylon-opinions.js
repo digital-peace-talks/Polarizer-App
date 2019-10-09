@@ -7,8 +7,10 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	var ev = new BABYLON.Vector3(recipientOpinion.position);
 	sv.x = initiatorOpinion.position.x;
 	sv.y = initiatorOpinion.position.y;
+	sv.z = initiatorOpinion.position.z;
 	ev.x = recipientOpinion.position.x;
 	ev.y = recipientOpinion.position.y;
+	ev.z = recipientOpinion.position.z;
 	
 	/*
 https://stackoverflow.com/questions/50252070/svg-draw-connection-line-between-two-rectangles

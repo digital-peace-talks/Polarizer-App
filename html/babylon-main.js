@@ -289,13 +289,16 @@ var createGenericScene = function(dptMode) {
 			case BABYLON.PointerEventTypes.POINTERDOWN:
 				//console.log("POINTER DOWN");
 				break;
-			case BABYLON.PointerEventTypes.POINTERUP:
-				//console.log("POINTER UP");
+			case BABYLON.PointerEventTypes.POINTERTAP:
+				//console.log("POINTER TAP");
 
 				if(pointerInfo.pickInfo.pickedMesh
 				&& 'dpt' in pointerInfo.pickInfo.pickedMesh) {
+
 					if(pointerInfo.pickInfo.pickedMesh.dpt.context == "dialogInvitation") {
+
 						propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId);
+
 					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "tubeConnection") {
 
 						if(pointerInfo.pickInfo.pickedMesh.dpt.status == "CLOSED") {
@@ -308,6 +311,22 @@ var createGenericScene = function(dptMode) {
 							dpt.getDialog(currentDialog.dialog);
 						}
 
+					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "topicScene") {
+
+						//console.log("hit topicId: "+pointerInfo.pickInfo.pickedMesh.dpt.topicId);
+						pointerInfo.pickInfo.pickedMesh.showBoundingBox = true;
+						setTimeout(function() {
+							pointerInfo.pickInfo.pickedMesh.showBoundingBox = false;
+						}, 250);
+
+						topicCamState = currentScene.cameras[0].storeState();
+						currentTopic = pointerInfo.pickInfo.pickedMesh.dpt.topicId;
+						currentTopicStr = pointerInfo.pickInfo.pickedMesh.dpt.topic;
+						currentScene.dispose();
+						currentScene = __opinionScene("opinionScene");
+						currentScene.name = "opinionScene";
+						dpt.getOpinionByTopic(currentTopic);
+						jQuery('#topicForm').remove();
 					}
 				}
 
@@ -333,31 +352,11 @@ var createGenericScene = function(dptMode) {
 			case BABYLON.PointerEventTypes.POINTERPICK:
 				//console.log("POINTER PICK");
 				break;
-			case BABYLON.PointerEventTypes.POINTERTAP:
-				//console.log("POINTER TAP");
+			case BABYLON.PointerEventTypes.POINTERUP:
+				//console.log("POINTER UP");
 				break;
 			case BABYLON.PointerEventTypes.POINTERDOUBLETAP:
 				//console.log("POINTER DOUBLE-TAP");
-
-				if('dpt' in pointerInfo.pickInfo.pickedMesh
-				&& pointerInfo.pickInfo.pickedMesh.dpt.context == "topicScene") {
-					//console.log("hit topicId: "+pointerInfo.pickInfo.pickedMesh.dpt.topicId);
-
-					pointerInfo.pickInfo.pickedMesh.showBoundingBox = true;
-					setTimeout(function() {
-						pointerInfo.pickInfo.pickedMesh.showBoundingBox = false;
-					}, 250);
-
-					topicCamState = currentScene.cameras[0].storeState();
-					currentTopic = pointerInfo.pickInfo.pickedMesh.dpt.topicId;
-					currentTopicStr = pointerInfo.pickInfo.pickedMesh.dpt.topic;
-					currentScene.dispose();
-					currentScene = __opinionScene("opinionScene");
-					currentScene.name = "opinionScene";
-					dpt.getOpinionByTopic(currentTopic);
-					jQuery('#topicForm').remove();
-				}
-
 				break;
 		}
 	});
