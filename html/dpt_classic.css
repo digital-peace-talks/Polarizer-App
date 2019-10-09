@@ -469,7 +469,7 @@ textarea {
     }
     #form {
         width: 100%;
-        height: 100%;
+        height: 200px;
         top: 144px;
         left: 0;
         margin-left: 0px;
@@ -484,33 +484,12 @@ textarea {
         font-size: 18px;
         background-color: #28A9E1;
     }
-    #topicForm1 {
-        width: 100%;
-        height: 100%;
-        top: 144px;
-        left: 0;
-        margin-left: 0px;
-    }
-    #topicForm {
-        width: 100%;
-        height: 100%;
-        top: 144px;
-        left: 0;
-        margin-left: 0px;
-    }
     #topic {
         width: 100%;
         height: 100%;
         top: 10%;
         left: 0;
         margin: 0px;
-    }
-    #opinionForm {
-        width: 100%;
-        height: 100%;
-        top: 144px;
-        left: 0;
-        margin-left: 0px;
     }
     .dialogleft,
     .dialogcenter,
@@ -523,12 +502,6 @@ textarea {
         left: 0px;
         margin-left: 0px;
         top: 0px;
-    }
-    #propositionForm {
-        top: 0;
-        left: 0px;
-        padding: 20px;
-        margin-left: 0px;
     }
     h3 {
         font-size: 16px;
