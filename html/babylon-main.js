@@ -285,6 +285,8 @@ var createGenericScene = function(dptMode) {
 
 
 	genericScene.onPointerObservable.add((pointerInfo) => {
+		idleSince = BABYLON.Tools.Now;
+		powerSave = false;
 		switch (pointerInfo.type) {
 			case BABYLON.PointerEventTypes.POINTERDOWN:
 				//console.log("POINTER DOWN");
@@ -362,6 +364,8 @@ var createGenericScene = function(dptMode) {
 	});
 
 	genericScene.onKeyboardObservable.add((kbInfo) => {
+		idleSince = BABYLON.Tools.Now;
+		powerSave = false;
 		switch (kbInfo.type) {
 			case BABYLON.KeyboardEventTypes.KEYDOWN:
 				/*

@@ -234,8 +234,6 @@ function textBlock(x, y, z, name, text, options) {
 	plane.position.z = z;
 	plane.showBoundingBox = false;
 	
-
-
 	//plane.bakeCurrentTransformIntoVertices();
 
 	plane.doNotSyncBoundingInfo = false;
