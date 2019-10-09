@@ -327,7 +327,7 @@ function loadOpinions(restObj) {
 
 		// paint the opinion
 		var plane = textBlock(
-			nodes[i].x, nodes[i].y, 0),
+			nodes[i].x, nodes[i].y, 0,
 			JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id }),
 			`${restObj.data[i].content}`);
 
