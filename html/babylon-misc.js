@@ -175,17 +175,6 @@ function textBlock(x, y, z, name, text, options) {
 	var planeWidth = options.width || 4.8;
 	var planeHeight = options.height || 3.2; //10;
 
-	//Create plane
-	/*
-	var plane = BABYLON.MeshBuilder.CreatePlane(
-			name,
-			{
-				width: planeWidth,
-				height: planeHeight
-			}, currentScene);
-	plane.dpt = JSON.parse(name);
-	*/
-
 	//Set width and height for dynamic texture using same multiplier
 	var DTWidth = planeWidth * 100; //64;
 	var DTHeight = planeHeight * 100; //64
@@ -208,8 +197,7 @@ function textBlock(x, y, z, name, text, options) {
 	wrapText(textureContext, text, 5, options.fontSize || 22, DTWidth -1, options.fontSize || 22);
 	textureContext = cropImage(textureContext, textureContext.canvas);
 	
-
-
+	//Create plane
 	var plane = BABYLON.MeshBuilder.CreatePlane(
 			name,
 			{

@@ -348,7 +348,6 @@ function loadOpinions(restObj) {
 				function(ev) {
 					var meshLocal = ev.meshUnderPointer;
 					meshLocal.scaling.x /= 1.5;
-					//meshLocal.position.y -= 2;
 					meshLocal.scaling.y /= 1.5;
 					canvas.style.cursor = "default";
 				}, false));

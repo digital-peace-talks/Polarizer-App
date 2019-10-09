@@ -100,7 +100,9 @@ function getCamera(rotate) {
 		    // This positions the camera
 		    camera.setPosition(new BABYLON.Vector3(0, 0, -15));
 		    
-			camera.panningSensibility = 600;
+			camera.panningSensibility = 300;
+		    camera.pinchDeltaPercentage = 0.001;
+		    camera.pinchToPanMaxDistance = 124;
 
 			camera.lowerRadiusLimit = 1;
 			camera.upperRadiusLimit = 35;
@@ -136,7 +138,9 @@ function getCamera(rotate) {
 		    // This positions the camera
 		    camera.setPosition(new BABYLON.Vector3(0, 0, -15));
 		    
-			camera.panningSensibility = 600;
+			camera.panningSensibility = 300;
+		    camera.pinchDeltaPercentage = 0.001;
+		    camera.pinchToPanMaxDistance = 124;
 
 			camera.lowerRadiusLimit = 1;
 			camera.upperRadiusLimit = 35;
