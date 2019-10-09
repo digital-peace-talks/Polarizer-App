@@ -16,7 +16,7 @@ var currentTopicStr;
 
 var dpt;
 var whoami;
-var idleSince = 0;
+var idleSince = 100000;
 
 var powerSave = false;
 var touchScreen = false;
@@ -218,16 +218,20 @@ function main() {
 		
 		// Resize
 		window.addEventListener("resize", function() {
+			idleSince = BABYLON.Tools.Now;
+			powerSave = false;
 			engine.resize();
 		});
 	});
 
 	jQuery(window).blur(function() {
+		idleSince = BABYLON.Tools.Now;
 		powerSave = true;
 	});
 	
 	jQuery(window).focus(function() {
 		focusAtCanvas();
+		idleSince = BABYLON.Tools.Now;
 		powerSave = false;
 	});
 }
