@@ -16,20 +16,18 @@ function propositionForm(opinionId) {
     console.log('enter proposition');
 
     jQuery('body').append(`
-		<div id="propositionForm">Please enter your proposition:
-		<br><form id="proposition"><textarea style="font-family: DPTFont;
-		font-size: 18px;" name="proposition" cols="64" rows="4" width= "500px"
-		height="150px" class="proposition"></textarea>
+		<div id="form">Please enter your proposition:
+		<br><form id="proposition"><textarea name="proposition" class="proposition"></textarea>
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
-		<br><input type="submit" value="Send">
-		<input type="button" value="close window" name="close window" id="ClosePropositionForm"></form></div>
+		<br><input class="button" type="submit" value="Send">
+		<input class="button" type="button" value="close window" name="close window" id="ClosePropositionForm"></form></div>
 	`);
 
     jQuery(".proposition").focus();
 
     jQuery(document).one('click', "#ClosePropositionForm", function(event) {
         propositionFormOpen = 0;
-        jQuery('#propositionForm').remove();
+        jQuery('#form').remove();
         focusAtCanvas();
         event.preventDefault();
     });
@@ -50,7 +48,7 @@ function propositionForm(opinionId) {
             jQuery('.proposition').css({ "background-color": "#fff" });
         }
         if (event.keyCode == 27) {
-            jQuery('#propositionForm').remove();
+            jQuery('#form').remove();
             focusAtCanvas();
             event.preventDefault();
         }
@@ -69,7 +67,7 @@ function propositionForm(opinionId) {
         if (proposition) {
             dpt.postDialog(proposition, whoami.dptUUID, opinionId);
         }
-        jQuery('#propositionForm').remove();
+        jQuery('#form').remove();
         focusAtCanvas();
     });
 }
@@ -79,19 +77,19 @@ function topicForm() {
 
     if (isMobile) {
         jQuery('body').append(`
-			<div id="topicForm1">New topic:<br><form id="topic">
-			<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
-			cols="43" rows="12" class="topic" margin: 0 auto;></textarea><br>
-			<input type="submit" value="Send"></form></div>
+			<div id="form">New topic:<br><form id="topic">
+			<textarea name="topic"
+			class="topic"></textarea><br>
+			<input class="button" type="submit" value="send"></form></div>
 		`);
 
     } else {
         jQuery('body').append(`
-			<div id="topicForm">
+			<div id="form">
 			Please enter a new topic:<br><form id="topic">
-			<textarea style="font-family: DPTFont; font-size: 18px;" name="topic"
-			cols="51" rows="4" class="topic"></textarea><br><input type="submit" value="Send">
-			<input type="button" value="close window" name="close window"
+            <textarea name="topic" class="topic"></textarea><br>
+            <input class="button" type="submit" value="send">
+			<input class="button" type="button" value="close window" name="close window"
 			id="CloseTopicForm"></form></div>
 		`);
     }
@@ -99,7 +97,7 @@ function topicForm() {
 
     jQuery(document).on('click', "#CloseTopicForm", function(event) {
         topicFormOpen = 0;
-        jQuery('#topicForm').remove();
+        jQuery('#form').remove();
         focusAtCanvas();
         event.preventDefault();
     });
@@ -120,7 +118,7 @@ function topicForm() {
             jQuery('.topic').css({ "background-color": "#fff" });
         }
         if (event.keyCode == 27) {
-            jQuery('#topicForm').remove();
+            jQuery('#form').remove();
             focusAtCanvas();
             event.preventDefault();
         }
@@ -138,7 +136,7 @@ function topicForm() {
         if (topic) {
             dpt.postTopic(topic);
         }
-        jQuery('#topicForm').remove();
+        jQuery('#form').remove();
         focusAtCanvas();
 
     });
@@ -148,11 +146,11 @@ function opinionForm() {
     console.log('enter opinion');
 
     jQuery('body').append(`
-		<div id="opinionForm">
+		<div id="form">
 		Please enter a new opinion:<br> <form id="opinion">
-		<textarea style="font-family: DPTFont; font-size: 18px;" name="opinion"
-		cols="52" rows="4" class="opinion"></textarea><br><input type="submit"
-		value="Send"> <input type="button" value="close window" name="close window"
+        <textarea name="opinion" class="opinion"></textarea><br>
+        <input class="button" type="submit" value="Send"> 
+        <input class="button" type="button" value="close window" name="close window"
 		id="CloseOpinionForm"></form></div>
 	`);
 
@@ -160,7 +158,7 @@ function opinionForm() {
 
     jQuery(document).one('click', "#CloseOpinionForm", function(event) {
         opinionFormOpen = 0;
-        jQuery('#opinionForm').remove();
+        jQuery('#form').remove();
         focusAtCanvas();
         event.preventDefault();
     });
@@ -181,7 +179,7 @@ function opinionForm() {
             jQuery('.opinion').css({ "background-color": "#fff" });
         }
         if (event.keyCode == 27) {
-            jQuery('#opinionForm').remove();
+            jQuery('#form').remove();
             event.preventDefault();
         }
         /*
@@ -198,7 +196,7 @@ function opinionForm() {
         if (opinion) {
             dpt.postOpinion(currentTopic, opinion);
         }
-        jQuery('#opinionForm').remove();
+        jQuery('#form').remove();
     });
 }
 
@@ -271,8 +269,7 @@ var createGUIScene = function(dptMode) {
         dpt.getTopic();
         event.stopImmediatePropagation();
         event.preventDefault();
-        jQuery('#opinionForm').remove();
-        jQuery('#topicForm').remove();
+        jQuery('#form').remove();
 
         if (isMobile) {
             console.log("mobile behavior!")
@@ -291,7 +288,7 @@ var createGUIScene = function(dptMode) {
         newTopicBtn.html(`<img class="btn-icon" src="/topic_white.png">New-Topic`);
 
         newTopicBtn.on('click touch', function(event) {
-            jQuery('#topicForm').remove();
+            jQuery('#form').remove();
 
             topicForm();
             event.stopImmediatePropagation();
@@ -313,7 +310,7 @@ var createGUIScene = function(dptMode) {
 
         newOpinionBtn.html(`<img class="btn-icon" src="/opinion_white.png">New-Opinion`);
         newOpinionBtn.on('click touch', function(event) {
-            jQuery('#opinionForm').remove();
+            jQuery('#form').remove();
 
             dpt.opinionPostAllowed(currentTopic);
             // alert(dpt.opinionPostAllowed(currentTopic)) <- returns undefined
@@ -368,7 +365,7 @@ function requestFeedback() {
     // Button toggle logic
     btn.onclick = () => {
             jQuery('body').append(`
-    		<div id="propositionForm" style="min-width: 40%; height: 80%;">
+    		<div id="form" style="min-width: 40%; height: 80%;">
 	    		 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
     		</div>
     	`);
@@ -377,7 +374,7 @@ function requestFeedback() {
                 if (event.origin.startsWith('https://simple-feedback.dpt.world') &&
                     event.data == 'simple-feedback-finished') {
                     jQuery('#feedbackIframe').remove();
-                    jQuery('#propositionForm').remove();
+                    jQuery('#form').remove();
                 } else {
                     return;
                 }
@@ -427,7 +424,7 @@ function pauseEngine() {
 
 jQuery(document).on("click touch", "span.myDialogs", function(event) {
     jQuery('#dialogInfo').remove();
-    jQuery('#dialogForm').remove();
+    jQuery('#form').remove();
     focusAtCanvas();
     currentDialog = myDialogMenu[event.currentTarget.id];
     dpt.getDialog(currentDialog.dialog);

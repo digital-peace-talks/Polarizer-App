@@ -24,7 +24,7 @@ router.get('/', async(req, res, next) => {
                 <h3><b style="margin: 20px; white-space: nowrap;">${phrase}</b><br>
                 <br><a style="color: #F0F3F5; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">Start &#9655;</a>
                 </fieldset>
-                </h3><br><br><div style="color: #F0F3F5">Lost your cookie? A new browser? Recover here.</div><br><br><div style="color: #F0F3F5">Enter your pass-phrase:</div><br>
+                </h3><br><br><div style="color: #F0F3F5">Lost your cookie? A new browser?</div><br><br><div style="color: #F0F3F5">Enter your pass-phrase:</div><br>
                 <form method="post" action="/recover"><input type=text name=phraseinput>
                 <input type="hidden" name="phrase" value="${phrase}"></form></center>`);
         } else {
