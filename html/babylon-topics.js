@@ -1,14 +1,10 @@
 function loadTopics(restObj) {
 
-	var options = '';
+	var len = restObj.data.length;
+	var cols = Math.ceil(Math.sqrt(len));
 
-	var n = Math.floor((Math.sqrt(restObj.data.length)));
-	var x = 0 - Math.floor(n / 2) * 4.8,
-		xstart = x;
-	xmax = (n / 2) * 4.8;
-	var y = ymax = (n - 1) * 3.2;
-	ystart = ymax;
-	y = ystart;
+	var xstart = -Math.ceil(cols / 2) * 4.8 + 4.8;
+	var ystart = (cols - 1) * 3.2;
 
 	if(currentScene.name == 'topicScene') {
 		for(var i = currentScene.meshes.length - 1; i >= 0; i--) {
@@ -18,38 +14,23 @@ function loadTopics(restObj) {
 			}
 		}
 	}
+	x = xstart;
+	y = ystart;
 	for(var i in restObj.data) {
-		if(restObj.data[i].user == 'mine') {
-			options = '<span class="editTopic" id="' +
-				restObj.data[i]._id +
-				'">&#128393;</span>';
+		if(i % cols == 0) {
+			x = xstart;
+			y -= 3.2;
 		} else {
-			options = '';
+			x += 4.8;
 		}
+		var l = len - 1 - i;
 		var plane = textBlock(
 			x, y, 0,
 			JSON.stringify({
 				"context": "topicScene",
-				"topicId": restObj.data[i]._id,
-				"topic": restObj.data[i].content
+				"topicId": restObj.data[l]._id,
+				"topic": restObj.data[l].content
 			}),
-			`${restObj.data[i].content} [ ${restObj.data[i].opinions.length} ]`);
-		x += 4.8;
-		if(x > xmax) {
-			y -= 3.2;
-			x = xstart;
-		}
-		/*
-			jQuery('div.col.left').append(
-				'<li> <a class="opinionlist" id="'
-				+ restObj.data[i]._id
-				+ '" href="#">'
-				+ restObj.data[i].content
-				+ "</a>"
-				+ ' [' + restObj.data[i].opinions.length + '] '
-				+ options+"</li><br>");
-		*/
+			`${restObj.data[l].content} [ ${restObj.data[l].opinions.length} ]`);
 	}
-	//topicEdit();
-	//topicForm();
 }
