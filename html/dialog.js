@@ -378,8 +378,7 @@ function dialogForm() {
 
     //		jQuery('#misc').append(html);
     jQuery('body').append(`<div id="dialogForm">${html}</div>`);
-    var objDiv = document.getElementById("c2");
-    objDiv.scrollTop = objDiv.scrollHeight;
+
 
     if (currentDialog.status == 'CLOSED') {
         for (var i = 0; i < currentDialog.crisises.length; i++) {
@@ -418,6 +417,8 @@ function dialogForm() {
     });
 
     jQuery("#dialogInput").focus();
+    var objDiv = document.getElementById("c2");
+    objDiv.scrollTop = objDiv.scrollHeight;
 }
 
 
