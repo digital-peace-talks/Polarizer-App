@@ -258,8 +258,9 @@ function dialogForm() {
                 <div class="status">
                 <center>
                     <form id="dialogFrame">
+                    
                         <input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
-                        <input type="button" class="buttondialog" value="end dialog" name="end dialog" id="dialogClose">
+                        <input type="button" class="crisis" value="end dialog" name="end dialog" id="crisis">
                     </form>
                     <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
                 </center>
@@ -277,7 +278,7 @@ function dialogForm() {
 								<br>
 								<input type="submit" class="buttondialog" name="send" value="send">
                                 <input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
-                                <input type="button" class="buttondialog" value="end dialog" name="end dialog" id="dialogClose">
+                                <input type="button" class="crisis" value="end dialog" name="end dialog" id="crisis">
                             </form>
                             <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
                         
@@ -403,7 +404,7 @@ function dialogForm() {
         var message = this[0].value;
         dpt.postMessage(message, whoami.dptUUID, currentDialog.dialog);
         jQuery("#dialogInput").focus();
-        var objDiv = document.getElementById("c2");
+        var objDiv = document.getElementById("dialogForm");
         objDiv.scrollTop = objDiv.scrollHeight;
     });
 
@@ -420,8 +421,10 @@ function dialogForm() {
             event.preventDefault();
         }
     });
-
+    var objDiv = document.getElementById("dialogForm");
+    objDiv.scrollTop = objDiv.scrollHeight;
     jQuery("#dialogInput").focus();
+
 
 }
 
