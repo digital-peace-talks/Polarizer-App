@@ -276,11 +276,10 @@ div#crisis {
     font-family: "DPTFont";
     padding: 10px;
     top: 0px;
-    border: #F0F3F5;
     color: #F0F3F5;
     background: #28A9E1;
-    border-style: solid;
-    border-width: 5px;
+    width: 480px;
+    box-shadow: 0px 0px 10px #002C4B;
 }
 
 div#dialogFrame {
@@ -456,8 +455,8 @@ textarea#dialog {
     color: #F0F3F5;
     background-color: #002C4B;
     border: none;
-    font-size: 18px;
-    width: 140px;
+    font-size: 16px;
+    width: 120px;
     height: 40px;
     margin: 5px auto;
     margin-left: 10px;
@@ -470,11 +469,25 @@ textarea#dialog {
     color: #F0F3F5;
     background-color: #002C4B;
     border: none;
-    font-size: 18px;
-    width: 140px;
+    font-size: 16px;
+    width: 120px;
     height: 40px;
     margin: 5px auto;
     margin-left: 10px;
+    -webkit-appearance: none;
+}
+
+.crisis {
+    font-family: DPTFontDin;
+    color: #F0F3F5;
+    background-color: #002C4B;
+    border: none;
+    font-size: 16px;
+    width: 120px;
+    height: 40px;
+    margin: 5px auto;
+    margin-left: 10px;
+    -webkit-appearance: none;
 }
 
 
@@ -554,5 +567,8 @@ textarea#dialog {
     div#c3 {
         width: 100%;
         left: 0px;
+    }
+    div#crisis {
+        width: 100%;
     }
 }

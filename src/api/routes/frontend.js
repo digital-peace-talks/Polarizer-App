@@ -16,21 +16,32 @@ router.get('/', async(req, res, next) => {
             console.log("new phrase: " + phrase);
             // The client need to get the uuid for the first time, it needs to send it back.
             res.send(`<head><link rel="stylesheet" href="dpt_start.css" /></head>
-            <body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="400" width="400">
-                            
+            <body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="300" width="300">
+                <br>
+                <div class="text">Digital peace talks is currently in private beta!
+                Only a minimum viable product is viable at the moment, and our primary goal is to get direct feedback from a small set of users to evaluate our core design. 
+                Only later, once we feel comfortable the app can handle more users, we will open up to general public. 
+                Thank you.</div>
+                <br>
                 <br><div style="color: #F0F3F5;">Are you a new user?</div><br><br>
                 <fieldset style="text-align:center; width:400px;  border-style: solid; border-width: 1px;">
                 <legend style="text-align:center; color: #F0F3F5;">This could be your pass-phrase, remember it:</legend>
                 <h3><b style="margin: 20px; white-space: nowrap;">${phrase}</b><br>
                 <br><a style="color: #F0F3F5; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">Start &#9655;</a>
                 </fieldset>
-                </h3><br><br><div style="color: #F0F3F5">Lost your cookie? A new browser?</div><br><br><div style="color: #F0F3F5">Enter your pass-phrase:</div><br>
+                </h3><br><div style="color: #F0F3F5">Lost your cookie? A new browser?</div><br><br><div style="color: #F0F3F5">Enter your pass-phrase:</div><br>
                 <form method="post" action="/recover"><input type=text name=phraseinput>
                 <input type="hidden" name="phrase" value="${phrase}"></form></center>`);
         } else {
             res.send(`<head><link rel="stylesheet" href="dpt_start.css" /></head>
-            <body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="400" width="400">
-                <br><br><h3><b>
+            <body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="300" width="300">
+            <br>
+            <div class="text">Digital peace talks is currently in private beta!
+            Only a minimum viable product is viable at the moment, and our primary goal is to get direct feedback from a small set of users to evaluate our core design. 
+            Only later, once we feel comfortable the app can handle more users, we will open up to general public. 
+            Thank you.</div>
+            <br>    
+            <br><br><h3><b>
                 <a style="color: #F0F3F5; text-decoration: none;" href=/dpt3d.html>Start &#9655;</a>
                 </b></h3><br><br>
                 <!--
