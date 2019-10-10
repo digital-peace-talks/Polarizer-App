@@ -475,6 +475,7 @@ textarea#dialog {
     height: 40px;
     margin: 5px auto;
     margin-left: 10px;
+    -webkit-appearance: none;
 }
 
 
