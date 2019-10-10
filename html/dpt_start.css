@@ -15,11 +15,12 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
+    width: 100%;
 }
 
 h3 {
     font-family: "DPTFontDin";
-    font-size: 28px;
+    font-size: 20px;
     color: #B8EAFF;
 }
 
@@ -41,6 +42,13 @@ input[type=text] {
     border-color: #005B98;
     color: #005B98;
     padding: 4px;
+}
+
+.text {
+    font-family: "DPTFont";
+    text-align: center;
+    color: #F0F3F5;
+    width: 50%;
 }
 
 
