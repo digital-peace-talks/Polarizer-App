@@ -422,7 +422,7 @@ function pauseEngine() {
 }
 
 
-jQuery(document).on("click touch", "span.myDialogs", function(event) {
+jQuery(document).on("click touch touchend", "span.myDialogs", function(event) {
     jQuery('#dialogInfo').remove();
     jQuery('#form').remove();
     focusAtCanvas();
