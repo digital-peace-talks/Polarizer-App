@@ -59,7 +59,7 @@ Where getIntersection is:
 	var radius = 0.04;
 	var occupacy = 0.85;
 	if(status == "CLOSED") {
-		radius = 0.06;
+		radius = 0.08;
 		occupacy = .99;
 	}
 	var tube = new BABYLON.MeshBuilder.CreateTube(
@@ -327,8 +327,8 @@ function loadOpinions(restObj) {
 
 		// paint the opinion
 		var plane = textBlock(
-//			nodes[i].x, nodes[i].y, 0,
-			nodes[i].x, nodes[i].y, Math.random() * 10 - 10,
+			nodes[i].x, nodes[i].y, 0,
+//			nodes[i].x, nodes[i].y, Math.random() * 10 - 10,
 			JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id }),
 			`${restObj.data[i].content}`);
 
