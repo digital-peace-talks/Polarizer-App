@@ -229,11 +229,12 @@ div.hide {
 }
 
 div.status {
-    bottom: 60px;
-    min-width: 95%;
-    position: absolute;
-    left: 15px;
+    bottom: 35px;
+    width: 582px;
+    position: fixed;
+    left: 280px;
     z-index: 30;
+    background-color: #28A9E1;
 }
 
 div#c1 {
@@ -254,21 +255,21 @@ div#c2 {
     top: 80px;
     float: left;
     width: 100%;
-    max-height: 240px;
     padding-right: 30px;
-    overflow-y: auto;
+    padding-bottom: 160px;
 }
 
 div#c3 {
     font-family: "DPTFont";
     float: left;
-    position: absolute;
+    position: fixed;
     text-align: left;
     font-size: 14px;
     background-color: #005b98;
     padding: 10px;
-    width: 100%;
-    bottom: -50px;
+    width: 600px;
+    left: 280px;
+    bottom: 0px;
 }
 
 div#crisis {
@@ -288,10 +289,10 @@ div#dialogFrame {
     color: #F0F3F5;
     margin-left: 0%;
     margin-right: 0%;
-    min-height: 340px;
     min-width: 80%;
-    top: 0px;
+    bottom: 40px;
     left: 0px;
+    background-color: #28A9E1;
 }
 
 #overlay {
@@ -312,16 +313,15 @@ div#dialogFrame {
     left: 280px;
     padding: 10px;
     margin-left: 0px;
-    border: #F0F3F5;
-    border-style: solid;
-    border-width: 1px;
     color: #F0F3F5;
     width: 600px;
+    height: 100%;
     z-index: 200;
     font-family: DPTFont;
     font-size: 18px;
     background-color: #28A9E1;
-    height: 100%;
+    overflow-y: auto;
+    box-shadow: 0px 0px 10px #002C4B;
 }
 
 .menu-btn {
@@ -441,6 +441,16 @@ textarea {
     resize: none;
 }
 
+textarea#dialog {
+    font-family: DPTFont;
+    color: #005B98;
+    font-size: 18px;
+    width: 300px;
+    height: 20px;
+    margin: 0 auto;
+    resize: none;
+}
+
 .button {
     font-family: DPTFontDin;
     color: #F0F3F5;
@@ -452,6 +462,18 @@ textarea {
     margin: 5px auto;
     margin-left: 10px;
     float: right;
+}
+
+.buttondialog {
+    font-family: DPTFontDin;
+    color: #F0F3F5;
+    background-color: #002C4B;
+    border: none;
+    font-size: 18px;
+    width: 140px;
+    height: 40px;
+    margin: 5px auto;
+    margin-left: 10px;
 }
 
 
@@ -505,6 +527,11 @@ textarea {
         margin-left: 0px;
         top: 0px;
     }
+    div.status {
+        width: 100%;
+        left: 0px;
+        margin-left: 0px;
+    }
     h3 {
         font-size: 16px;
     }
@@ -522,5 +549,9 @@ textarea {
     }
     textarea {
         width: 100%;
+    }
+    div#c3 {
+        width: 100%;
+        left: 0px;
     }
 }
