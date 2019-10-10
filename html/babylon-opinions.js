@@ -322,12 +322,12 @@ function loadOpinions(restObj) {
 		}
 	}
 
-	var nodes = circlePoints(restObj.data.length, 5, { X: 4, Y: 0 });
+	//var nodes = circlePoints(restObj.data.length, 5, { X: 4, Y: 0 });
 	for(var i = 0; i < restObj.data.length; i++) {
 
 		// paint the opinion
 		var plane = textBlock(
-			nodes[i].x, nodes[i].y, 0,
+			restObj.data[i].position.x, restObj.data[i].position.y, restObj.data[i].position.z, 
 //			nodes[i].x, nodes[i].y, Math.random() * 10 - 10,
 			JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id }),
 			`${restObj.data[i].content}`);

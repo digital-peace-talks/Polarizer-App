@@ -1,6 +1,7 @@
 
 const ServerError = require("../../lib/error");
 const config = require("../../lib/config");
+const backEngine = require("../../lib/backengine");
 const Opinion = require("../models/opinion").opinionModel;
 const User = require("../models/user").userModel;
 const Topic = require("../models/topic").topicModel;
@@ -33,7 +34,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 
 			var opinions = [];
 			for(var i in topic.opinions) {
-				var opinion = await Opinion.findOne({_id: topic.opinions[i]});
+				var opinion = await Opinion.findOne({_id: topic.opinions[i]}).populate('topic', {"content": 1});
 				if(opinion) {
 					opinions.push(opinion);
 				}
@@ -108,6 +109,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 				}
 			}
 			
+			opinions = await backEngine.calculatePositions(opinions);
 			
 			return({
 				status: 200,
