@@ -285,6 +285,22 @@ function dialogForm() {
 						</center>
 					</div>
 				`;
+            } else {
+                html += `
+					<div class="status">
+						<center>
+							<form id="dialogFrame">
+							<textarea class="dialog" type="text" name="message"  id="dialogInput"></textarea>
+								<br>
+								<input type="submit" class="buttondialog" name="send" value="send">
+                                <input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
+                                <input type="button" class="crisis" value="end dialog" name="end dialog" id="crisis">
+                            </form>
+                            <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
+                        
+						</center>
+					</div>
+				`;
             }
         }
 
