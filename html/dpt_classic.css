@@ -390,7 +390,7 @@ div#dialogFrame {
     color: #005B98;
     width: 280px;
     max-height: 480px;
-    overflow-y: scroll;
+    overflow-y: auto;
     z-index: 2;
     font-family: DPTFontDin;
     font-size: 16px;
@@ -404,15 +404,16 @@ div#dialogFrame {
     left: 0px;
     width: 400px;
     padding: 20px;
-    margin-left: 300px;
-    border: #fff;
+    margin-left: 280px;
+    border: #F0F3F5;
     border-style: solid;
     border-width: 1px;
     color: #002C4B;
     z-index: 2;
-    font-family: DPTFont;
+    font-family: DPTFontDin;
     font-size: 18px;
     background-color: #28A9E1;
+    box-shadow: 0px 0px 10px #002C4B;
 }
 
 #closeX {
@@ -434,9 +435,10 @@ textarea {
     font-family: DPTFont;
     color: #005B98;
     font-size: 18px;
-    width: 100%;
+    width: 360px;
     height: 80px;
     margin: 0 auto;
+    resize: none;
 }
 
 .button {
@@ -516,5 +518,8 @@ textarea {
         top: 0px;
         left: 0px;
         width: 100%
+    }
+    textarea {
+        width: 100%;
     }
 }

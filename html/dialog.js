@@ -218,6 +218,7 @@ function dialogForm() {
         }
     }
 
+
     var opinionLabel1 = "Others opinion";
     var opinionLabel2 = "Your opinion";
     if (currentDialog.recipient == 'notme2') {
@@ -263,6 +264,7 @@ function dialogForm() {
                 </center>
                 </div>
             `;
+
 
         } else {
             if (otherReadyToEnd != '<h4>Ready to End</h4>') {
@@ -400,6 +402,8 @@ function dialogForm() {
         var message = this[0].value;
         dpt.postMessage(message, whoami.dptUUID, currentDialog.dialog);
         jQuery("#dialogInput").focus();
+        var objDiv = document.getElementById("c2");
+        objDiv.scrollTop = objDiv.scrollHeight;
     });
 
     jQuery(document).on('click', '.crisis', function(event) {
@@ -420,7 +424,6 @@ function dialogForm() {
     var objDiv = document.getElementById("c2");
     objDiv.scrollTop = objDiv.scrollHeight;
 }
-
 
 /*
 	jQuery(document).on('mouseleave touchend', 'li.connector', (event) => {
