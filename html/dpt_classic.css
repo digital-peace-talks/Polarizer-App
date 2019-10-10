@@ -38,15 +38,6 @@ i {
     font-size: 18px;
 }
 
-h3 {
-    font-family: "DPTFontDin";
-    font-size: 32px;
-    color: #005b98;
-    border-color: transparent;
-    border-bottom: 1px solid #66D1FF;
-    padding-bottom: 20px;
-}
-
 h2 {
     font-family: "DPTFont";
     color: #F0F3F5;
@@ -56,6 +47,15 @@ h2 {
     border-bottom: #F0F3F5;
     border-bottom-style: solid;
     border-bottom-width: 1px;
+}
+
+h3 {
+    font-family: "DPTFontDin";
+    font-size: 32px;
+    color: #005b98;
+    border-color: transparent;
+    border-bottom: 1px solid #66D1FF;
+    padding-bottom: 20px;
 }
 
 h4 {
@@ -256,7 +256,7 @@ div#c2 {
     width: 100%;
     max-height: 240px;
     padding-right: 30px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 div#c3 {
