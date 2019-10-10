@@ -444,13 +444,14 @@ textarea {
 .button {
     font-family: DPTFontDin;
     color: #F0F3F5;
-    background-color: #005B98;
+    background-color: #002C4B;
     border: none;
     font-size: 18px;
-    width: 160px;
+    width: 140px;
     height: 40px;
     margin: 5px auto;
-    padding: 5px;
+    margin-left: 10px;
+    float: right;
 }
 
 
