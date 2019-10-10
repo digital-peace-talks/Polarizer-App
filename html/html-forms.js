@@ -423,7 +423,6 @@ function pauseEngine() {
 
 
 jQuery(document).on("click touch touchend", "span.myDialogs", function(event) {
-	alert('blubb')
     jQuery('#dialogInfo').remove();
     jQuery('#form').remove();
     focusAtCanvas();
