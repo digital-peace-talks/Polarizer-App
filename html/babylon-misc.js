@@ -156,12 +156,12 @@ function cropImage(ctx, canvas) {
 	pix.y.sort(function(a, b) { return a - b });
 	var n = pix.x.length - 1;
 
-	w = pix.x[n] - pix.x[0];
-	h = pix.y[n] - pix.y[0];
-	var cut = ctx.getImageData(pix.x[0], pix.y[0], w+1, h+1);
+	w = pix.x[n] - pix.x[0] + 1;
+	h = pix.y[n] - pix.y[0] + 1;
+	var cut = ctx.getImageData(pix.x[0], pix.y[0], w, h);
 
-	canvas.width = w+1;
-	canvas.height = h+1;
+	canvas.width = w;
+	canvas.height = h;
 	ctx.putImageData(cut, 0, 0);
 	return (ctx);
 }

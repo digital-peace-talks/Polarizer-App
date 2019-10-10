@@ -2,6 +2,7 @@ defaults: &defaults
   api:
     port: 3100
     maxContentLength: 512
+    maxMessages: 25
 
   logger:
     name: dpt-server
