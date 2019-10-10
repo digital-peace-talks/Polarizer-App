@@ -153,7 +153,7 @@ function dialogForm() {
     const maxMessages = currentDialog.extension * 10;
 
     dialogFormOpen = 1;
-
+alert('alert from dialogForm');
     if (currentDialog.initiator == 'me') {
 
         opinion1 = currentDialog.recipientOpinion;
