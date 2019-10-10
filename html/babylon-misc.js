@@ -160,8 +160,8 @@ function cropImage(ctx, canvas) {
 	h = pix.y[n] - pix.y[0];
 	var cut = ctx.getImageData(pix.x[0], pix.y[0], w, h);
 
-	canvas.width = w + 4;
-	canvas.height = h + 4;
+	ctx.width = w + 4;
+	ctx.height = h + 4;
 	ctx.putImageData(cut, 2, 2);
 	return (ctx);
 }
