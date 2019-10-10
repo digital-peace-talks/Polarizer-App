@@ -23,10 +23,15 @@ var touchScreen = false;
 
 
 function focusAtCanvas() {
+	idleSince = BABYLON.Tools.Now;
+	powerSave = false;
 	document.getElementById('renderCanvas').focus();
 }
 
 function onWebSocketUpdate(restObj) {
+
+	idleSince = BABYLON.Tools.Now;
+	powerSave = false;
 
 	if(restObj.method == 'post') {
 
@@ -68,6 +73,9 @@ function onWebSocketAPI(restObj) {
 	if(!restObj || !restObj.path || !restObj.method) {
 		return;
 	}
+
+	idleSince = BABYLON.Tools.Now;
+	powerSave = false;
 
 	if('status' in restObj && restObj.status > 399) {
 
