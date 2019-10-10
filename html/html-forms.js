@@ -329,7 +329,7 @@ var createGUIScene = function(dptMode) {
     var dialoguesBtn = jQuery('#dialogues-btn');
     dialoguesBtn.show();
     dialoguesBtn.on('click touch', function(event) {
-        // alert('test')
+        alert('test 23')
         if (myDialogsVisible == 'visible') {
             myDialogsVisible = 'hidden';
         } else {
@@ -344,6 +344,23 @@ var createGUIScene = function(dptMode) {
         }
 
     });
+    dialoguesBtn.on('touchend', function(event) {
+        alert('test 42')
+        if (myDialogsVisible == 'visible') {
+            myDialogsVisible = 'hidden';
+        } else {
+            myDialogsVisible = 'visible';
+        }
+        jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+        event.stopImmediatePropagation();
+        event.preventDefault();
+        if (isMobile) {
+            console.log("mobile behavior!")
+            hideMenu();
+        }
+
+    });
+    
 
     requestFeedback();
 }
