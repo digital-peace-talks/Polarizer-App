@@ -46,6 +46,7 @@ app.use("/user", require("./routes/user"));
 app.use("/topic", require("./routes/topic"));
 app.use("/opinion", require("./routes/opinion"));
 app.use("/dialog", require("./routes/dialog"));
+app.use("/canvas", require("./routes/canvas"));
 app.use("/misc", require("./routes/misc"));
 app.use(express.static("static"));
 app.use(express.static("html"));

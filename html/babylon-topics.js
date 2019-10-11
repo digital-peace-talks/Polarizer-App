@@ -4,7 +4,7 @@ function loadTopics(restObj) {
 	var cols = Math.ceil(Math.sqrt(len));
 
 	var xstart = -Math.ceil(cols / 2) * 4.8 + 4.8;
-	var ystart = (cols - 1) * 3.2 - 3.2;
+	var ystart = (cols - 1) * 3.2 + 3.2 * 1.5;
 
 	if(currentScene.name == 'topicScene') {
 		for(var i = currentScene.meshes.length - 1; i >= 0; i--) {

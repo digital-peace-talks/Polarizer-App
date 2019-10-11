@@ -1,3 +1,7 @@
+function mapRange(num, in_min, in_max, out_min, out_max) {
+  return ((num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
+}
+
 function circlePoints(opinions, radius, center) {
 	var points = opinions.length;
 	var slice = 2 * Math.PI / points;
@@ -11,7 +15,7 @@ function circlePoints(opinions, radius, center) {
 		var angle = slice * i + startAngle;
 		var newX = center.X + radius * Math.cos(angle);
 		var newY = center.Y + radius * Math.sin(angle);
-		var newZ = 0;
+		var newZ = Math.sin(1/Math.PI * mapRange(i, 0, points, 0, 359)) * 2 - 2;
 		nodes.push({ "x": newX, "y": newY, "z": newZ });
 	}
 	return (nodes);
