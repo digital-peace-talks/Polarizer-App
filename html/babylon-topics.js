@@ -3,8 +3,10 @@ function loadTopics(restObj) {
 	var len = restObj.data.length;
 	var cols = Math.ceil(Math.sqrt(len));
 
-	var xstart = -Math.ceil(cols / 2) * 4.8 + 4.8;
-	var ystart = (cols - 1) * 3.2 + 3.2 * 1.5;
+	var xstart = -cols/2 * 4.8/2;
+	var ystart = cols/2 * 3.2/2 + 3.2;
+var box = new BABYLON.MeshBuilder.CreateBox("box", {width: 1, height: 1, depth: 1,}, currentScene);
+box.position = new BABYLON.Vector3(0,0,0);
 
 	if(currentScene.name == 'topicScene') {
 		for(var i = currentScene.meshes.length - 1; i >= 0; i--) {
