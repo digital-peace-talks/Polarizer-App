@@ -189,6 +189,27 @@ Where getIntersection is:
 	//mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
 	tube.material = mat;
 
+	tube.actionManager = new BABYLON.ActionManager(currentScene);
+
+	// enlarge ON MOUSE ENTER
+	tube.actionManager.registerAction(
+		new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
+			function(ev) {
+				var meshLocal = ev.meshUnderPointer;
+				meshLocal.material.emissiveColor = new BABYLON.Color3(0.7, 0.7, 0.7);
+				//meshLocal.position.y += 2;
+				canvas.style.cursor = "move";
+			}, false));
+
+	// normal size ON MOUSE EXIT
+	tube.actionManager.registerAction(
+		new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
+			function(ev) {
+				var meshLocal = ev.meshUnderPointer;
+				meshLocal.material.emissiveColor = new BABYLON.Color3(0, 0, 0);
+				canvas.style.cursor = "default";
+			}, false));
+
 	//return(tube);
 }
 
@@ -322,12 +343,12 @@ function loadOpinions(restObj) {
 		}
 	}
 
-	var nodes = circlePoints(restObj.data.length, 5, { X: 4, Y: 0 });
+	//var nodes = circlePoints(restObj.data.length, 5, { X: 4, Y: 0 });
 	for(var i = 0; i < restObj.data.length; i++) {
 
 		// paint the opinion
 		var plane = textBlock(
-			nodes[i].x, nodes[i].y, 0,
+			restObj.data[i].position.x, restObj.data[i].position.y, restObj.data[i].position.z, 
 //			nodes[i].x, nodes[i].y, Math.random() * 10 - 10,
 			JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id }),
 			`${restObj.data[i].content}`);

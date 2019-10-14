@@ -19,7 +19,12 @@ const topicSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: "Opinion",
     required: true,
-  } ]
+  } ],
+	timestamp: {
+		type: Date,
+		required: true,
+		default: Date.now,
+	},
 });
 
 topicSchema.post("save", async doc => {

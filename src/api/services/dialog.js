@@ -216,7 +216,7 @@ module.exports.postMessage = async (options) => {
 
 		dialog = await Dialog.findById(options.dialogId);
 		
-		if(dialog.messages.length+1 > 10 * dialog.extension) {
+		if(dialog.messages.length+1 > config.api.maxMessages * dialog.extension) {
 			throw {
 				status: 500,
 				data: "Message limit exceeded.",

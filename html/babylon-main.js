@@ -68,7 +68,7 @@ function getCollisionBox() {
 		sideOrientation: 1
 	}, currentScene);
 
-	box.position = new BABYLON.Vector3(7.5, 2.5, -19.85);
+	box.position = new BABYLON.Vector3(0, 0, -19.85);
 	//create material
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
 	mat.diffuseColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
@@ -120,7 +120,7 @@ function getCamera(rotate) {
 			
 		} else {
 			camera = new BABYLON.FlyCamera("FlyCamera",
-				new BABYLON.Vector3(2.5, 4.5, -15), currentScene);
+				new BABYLON.Vector3(0, 0, -15), currentScene);
 		}
 
 		if(topicCamState) {

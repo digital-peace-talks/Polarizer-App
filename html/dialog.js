@@ -1,102 +1,3 @@
-/*
-jQuery(document).ready(function() {
-	var socket = io.connect(window.location.protocol
-		+ '//' + window.location.host, {transports: ['websocket']});
-
-	var dpt = new DPT(socket);
-	var colors = {};
-	//var currentTopic = 0;
-	var currentDialog;
-	var dialogFormOpen = 0;
-
-	var whoami = { dptUUID: '', user: {}};
-
-	// Handle the incomming websocket trafic
-	socket.on('connect', () => {
-		// if needed, we could keep socket.id somewhere
-		if(document.cookie) {
-			dpt.userLogin(document.cookie);
-		}
-	});
-
-	// server says it has some updates for client
-	socket.on('update', function(restObj){
-
-        if(restObj.path == '/dialog/list/' && restObj.method == 'get') {
-        	dpt.getDialogList();
-        }
-        
-        if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/'
-        && restObj.method == 'get'
-        && dialogFormOpen == 1) {
-        	dpt.getDialog(currentDialog.dialog);
-        }
-	});
-
-	socket.on('api', function(restObj) {
-		if(!restObj) {
-			return;
-		}
-		if('status' in restObj && restObj.status > 399) {
-
-			alert(restObj.data);
-			return;
-
-		} else if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog +'/' && restObj.method == 'get') {
-
-			var old = currentDialog;
-			currentDialog = restObj.data;
-			currentDialog.topic = old.topic;
-			currentDialog.initiatorOpinion = old.initiatorOpinion;
-			currentDialog.recipientOpinion = old.recipientOpinion;
-			dialogForm();
-
-		} else if(restObj.path == '/dialog/list/' && restObj.method == 'get') {
-
-			console.log(restObj.data);
-			var dialog = '';
-			var dialogs = restObj.data.data;
-			jQuery('div.col.right').html('<h2>Dialogs</h2>');
-			for(var i=0; i < dialogs.length; i++) {
-				dialog = `<div class="dialog"><i>proposition:</i>${dialogs[i].opinionProposition}<br>`;
-				dialog += `<div class="dialogInfo">${JSON.stringify(dialogs[i])}</div>`;
-				jQuery('div.col.right').append(dialog+"<br></div>");
-			}
-		} else if(restObj.path == '/dialog/listAll/' && restObj.method == 'get') {
-
-			console.log(restObj.data);
-			var dialog = '';
-			var dialogs = restObj.data.data;
-			jQuery('div.col.right').html('<h2>Dialogs</h2>');
-			for(var i=0; i < dialogs.length; i++) {
-				dialog = `<div class="dialog"><i>proposition:</i>${dialogs[i].opinionProposition}<br>`;
-				dialog += `<div class="dialogInfo">${JSON.stringify(dialogs[i])}</div>`;
-				jQuery('div.col.right').append(dialog+"<br></div>");
-			}
-		}
-	});
-
-	socket.on('private', function(restObj) {
-
-	    if(restObj.method == 'post') {
-	        if(restObj.path == '/user/login/') {
-	        	whoami.dptUUID = restObj.data.dptUUID;
-	        	if(restObj.data.message == 'logged in') {
-	        		whoami.user = restObj.data.user;
-	        		dpt.getDialogListAll();
-	        	}
-	        }
-	    }
-	});
-
-	socket.on('error', function (err) {
-		console.log('System', err ? err : 'A unknown error occurred');
-		document.location.reload(true);
-		window.location.reload(true);
-	});
-
-*/
-
 
 function crisisForm(messageId) {
 
@@ -150,7 +51,7 @@ function dialogForm() {
     var otherReadyToEnd = '';
     var viewOnly = true;
 
-    const maxMessages = currentDialog.extension * 10;
+    const maxMessages = currentDialog.extension * 25;
 
     dialogFormOpen = 1;
     if (currentDialog.initiator == 'me') {
@@ -442,24 +343,3 @@ function dialogForm() {
 
 
 }
-
-/*
-	jQuery(document).on('mouseleave touchend', 'li.connector', (event) => {
-		var root = event.currentTarget.id;
-//		jQuery(event.currentTarget).children("span.connector").html('');
-		jQuery("span.connector").text('');
-		event.preventDefault();
-	});
-
-	jQuery(document).on('touchend click', '.dialog', (event) => {
-
-		currentDialog = jQuery(event.currentTarget).children('div.dialogInfo');
-		currentDialog = JSON.parse(currentDialog[0].textContent);
-		dpt.getDialog(currentDialog.dialog);
-		event.stopImmediatePropagation();
-		event.preventDefault();
-	});
-
-	jQuery('#main').append(`<div class="row"><div class="col right"><h2>Dialogs</h2></div></div>`);
-});
-	*/

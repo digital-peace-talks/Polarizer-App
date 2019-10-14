@@ -70,6 +70,10 @@ function onWebSocketUpdate(restObj) {
 }
 
 function onWebSocketAPI(restObj) {
+	if('status' in restObj && restObj.status > 399) {
+		alert(restObj.data);
+		return;
+	}
 	if(!restObj || !restObj.path || !restObj.method) {
 		return;
 	}
@@ -77,12 +81,7 @@ function onWebSocketAPI(restObj) {
 	idleSince = BABYLON.Tools.Now;
 	powerSave = false;
 
-	if('status' in restObj && restObj.status > 399) {
-
-		alert(restObj.data);
-		return;
-
-	} else if(currentDialog
+	if(currentDialog
 			&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
 			&& restObj.method == 'get') {
 
@@ -205,10 +204,10 @@ function main() {
 		});
 
 		/*
-		*/
 		jQuery('body').append(`<div id="debug" style="position: absolute;
 			color: white; height: 20px; width: 90px; right: 90px; z-index:999; bottom: 30px">FPS</div>
 		`);
+		*/
 		
 		engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
 		//engine.doNotHandleContextLost = true;
@@ -219,7 +218,7 @@ function main() {
 				powerSave = true;
 			}
 			if(currentScene && !powerSave) {
-				jQuery('#debug').text(engine.getFps()+"\n"+(BABYLON.Tools.Now - idleSince));
+//				jQuery('#debug').text(engine.getFps()+"\n"+(BABYLON.Tools.Now - idleSince));
 				currentScene.render();
 			}
 		});
