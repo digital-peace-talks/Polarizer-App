@@ -69,6 +69,20 @@ module.exports.topicPost = async (topic) => {
 			data: "Topic text is to long",
 		};
 	}
+	var interval = Date.now() - 86400000 * config.api.topicInterval;
+	var userTopics = await Topic.find(
+		{
+			user: topic.body.user,
+			timestamp: {
+				$gt: new Date(interval)
+			}
+		});
+	if(userTopics.length > config.api.topicLimit) {
+		throw {
+			status: 500,
+			data: `Only ${config.api.topicLimit} topic(s) per ${config.api.topicInterval} day(s).`,
+		};
+	}
 	try {
 		result = await Topic.create(topic.body);
 	} catch(error) {

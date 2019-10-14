@@ -189,6 +189,27 @@ Where getIntersection is:
 	//mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
 	tube.material = mat;
 
+	tube.actionManager = new BABYLON.ActionManager(currentScene);
+
+	// enlarge ON MOUSE ENTER
+	tube.actionManager.registerAction(
+		new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
+			function(ev) {
+				var meshLocal = ev.meshUnderPointer;
+				meshLocal.material.emissiveColor = new BABYLON.Color3(0.7, 0.7, 0.7);
+				//meshLocal.position.y += 2;
+				canvas.style.cursor = "move";
+			}, false));
+
+	// normal size ON MOUSE EXIT
+	tube.actionManager.registerAction(
+		new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
+			function(ev) {
+				var meshLocal = ev.meshUnderPointer;
+				meshLocal.material.emissiveColor = new BABYLON.Color3(0, 0, 0);
+				canvas.style.cursor = "default";
+			}, false));
+
 	//return(tube);
 }
 

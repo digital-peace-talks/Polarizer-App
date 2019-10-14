@@ -70,6 +70,10 @@ function onWebSocketUpdate(restObj) {
 }
 
 function onWebSocketAPI(restObj) {
+	if('status' in restObj && restObj.status > 399) {
+		alert(restObj.data);
+		return;
+	}
 	if(!restObj || !restObj.path || !restObj.method) {
 		return;
 	}
@@ -77,12 +81,7 @@ function onWebSocketAPI(restObj) {
 	idleSince = BABYLON.Tools.Now;
 	powerSave = false;
 
-	if('status' in restObj && restObj.status > 399) {
-
-		alert(restObj.data);
-		return;
-
-	} else if(currentDialog
+	if(currentDialog
 			&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
 			&& restObj.method == 'get') {
 

@@ -1,8 +1,15 @@
 defaults: &defaults
   api:
     port: 3100
+    # longer topics are possible, shorter ones too
+    maxContentLengthTopic: 256
+    # all other inputs can be:
     maxContentLength: 512
+    # maximale messages per dialog
     maxMessages: 25
+    # topic rule, default: two topics per day
+    topicInterval: 1
+    topicLimit: 2
 
   logger:
     name: dpt-server

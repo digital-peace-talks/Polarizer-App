@@ -14,7 +14,12 @@ const opinionSchema = mongoose.Schema({
 		type: Schema.Types.ObjectId,
 		ref: "Topic",
 		required: true,
-	}
+	},
+	timestamp: {
+		type: Date,
+		required: true,
+		default: Date.now,
+	},
 });
 
 opinionSchema.post("save", async doc => {
