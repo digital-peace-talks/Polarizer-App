@@ -1,574 +1,578 @@
+/* Easy theming */
 @font-face {
-    font-family: "DPTFont";
-    src: url("/font.ttf") format("truetype");
+  font-family: "DPTFont";
+  src: url("/font.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: "DPTFontDin";
-    src: url("/din.ttf") format("truetype");
+  font-family: "DPTFontDin";
+  src: url("/din.ttf") format("truetype");
 }
 
 html,
 body {
-    font-family: "DPTFont";
-    width: 100%;
-    height: 100%;
-    margin: 0px;
-    overflow: hidden;
+  font-family: "DPTFont";
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  overflow: hidden;
 }
 
 #renderCanvas {
-    width: 100%;
-    height: 100%;
-    touch-action: none;
-    position: absolute;
-    z-index: 1;
+  width: 100%;
+  height: 100%;
+  -ms-touch-action: none;
+      touch-action: none;
+  position: absolute;
+  z-index: 1;
 }
 
 #main {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 i {
-    font-family: "DPTFontDin";
-    font-style: inherit;
-    color: #66D1FF;
-    font-weight: 700;
-    font-size: 18px;
+  font-family: "DPTFontDin";
+  font-style: inherit;
+  color: #66D1FF;
+  font-weight: 700;
+  font-size: 18px;
 }
 
 h2 {
-    font-family: "DPTFont";
-    color: #F0F3F5;
-    font-size: 16px;
-    font-weight: 300;
-    padding-bottom: 15px;
-    border-bottom: #F0F3F5;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
+  font-family: "DPTFont";
+  color: #F0F3F5;
+  font-size: 16px;
+  font-weight: 300;
+  padding-bottom: 15px;
+  border-bottom: #F0F3F5;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
 }
 
 h3 {
-    font-family: "DPTFontDin";
-    font-size: 32px;
-    color: #005b98;
-    border-color: transparent;
-    border-bottom: 1px solid #66D1FF;
-    padding-bottom: 20px;
+  font-family: "DPTFontDin";
+  font-size: 32px;
+  color: #005B98;
+  border-color: transparent;
+  border-bottom: 1px solid #66D1FF;
+  padding-bottom: 20px;
 }
 
 h4 {
-    font-family: "DPTFontDin";
-    font-size: 18px;
-    color: #F0F3F5;
-    font-weight: 300;
-    padding: 5px;
+  font-family: "DPTFontDin";
+  font-size: 18px;
+  color: #F0F3F5;
+  font-weight: 300;
+  padding: 5px;
 }
 
-div#dialogMenu>i {
-    color: 00ccff !important;
+div#dialogMenu > i {
+  color: 00ccff !important;
 }
 
 i#props {
-    line-height: 0px;
+  line-height: 0px;
 }
 
 a {
-    color: #fd0;
-    text-decoration: none;
+  text-decoration: none;
 }
 
 input {
-    font-family: DPTFont;
-    font-size: 18px;
+  font-family: DPTFont;
+  font-size: 18px;
 }
 
 label#negative {
-    color: #f00;
+  color: #FF6666;
 }
 
 label#neutral {
-    color: #66D1FF;
+  color: #66D1FF;
 }
 
 label#positive {
-    color: #0f0
+  color: #15B76A;
 }
 
 input[type=text] {
-    background: #0a120a;
-    border-color: #005B98;
-    color: #005B98;
-    font-weight: bold;
-    padding: 4px;
+  background: #0a120a;
+  border-color: #005B98;
+  color: #005B98;
+  font-weight: bold;
+  padding: 4px;
 }
 
 .table {
-    min-height: 100%;
-    height: 100%;
-    min-width: 100%;
-    background: #005B98;
+  min-height: 100%;
+  height: 100%;
+  min-width: 100%;
+  background: #005B98;
 }
 
 #misc {
-    position: absolute;
-    z-index: 1;
-    background: red;
-    margin: 0 auto;
+  position: absolute;
+  z-index: 1;
+  margin: 0 auto;
 }
 
 #misc2 {
-    position: absolute;
-    z-index: 220;
-    background: rgb(0, 255, 0);
-    margin: 0 auto;
-    left: 440px;
-    top: 140px;
+  position: absolute;
+  z-index: 220;
+  margin: 0 auto;
+  left: 440px;
+  top: 140px;
 }
 
 p.left {
-    margin: 5px;
-    margin-bottom: 15px;
-    padding: 5px;
-    text-justify: inter-word;
-    background-color: #005B98;
-    border-color: #005B98;
-    border-style: solid;
-    border-width: 1px;
-    position: relative;
-    color: #F0F3F5;
-    font-size: 18px;
-    margin-left: 20px;
+  margin: 5px;
+  margin-bottom: 15px;
+  padding: 5px;
+  text-justify: inter-word;
+  background-color: #005B98;
+  border-color: #005B98;
+  border-style: solid;
+  border-width: 1px;
+  position: relative;
+  color: #F0F3F5;
+  font-size: 18px;
+  margin-left: 20px;
 }
 
 p.left:before {
-    content: ' ';
-    position: absolute;
-    width: 0px;
-    height: 0px;
-    left: 10px;
-    bottom: -10px;
-    border: 5px solid;
-    border-color: #005B98 transparent transparent #005B98;
+  content: ' ';
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  left: 10px;
+  bottom: -10px;
+  border: 5px solid;
+  border-color: #005B98 transparent transparent #005B98;
 }
 
 p.right {
-    margin: 5px;
-    margin-bottom: 15px;
-    padding: 5px;
-    text-align: justify-right;
-    text-justify: inter-word;
-    background-color: #002C4B;
-    border-color: #002C4B;
-    border-style: solid;
-    border-width: 1px;
-    position: relative;
-    color: #F0F3F5;
-    font-size: 18px;
-    margin-left: 20px;
+  margin: 5px;
+  margin-bottom: 15px;
+  padding: 5px;
+  text-align: justify-right;
+  text-justify: inter-word;
+  background-color: #002C4B;
+  border-color: #002C4B;
+  border-style: solid;
+  border-width: 1px;
+  position: relative;
+  color: #F0F3F5;
+  font-size: 18px;
+  margin-left: 20px;
 }
 
 p.right:before {
-    content: ' ';
-    position: absolute;
-    width: 0px;
-    height: 0px;
-    right: 10px;
-    bottom: -10px;
-    border: 5px solid;
-    border-left: 5px solid transparent;
-    border-right: 5px solid #002C4B;
-    border-top: 5px solid #002C4B;
-    border-bottom: 5px solid transparent;
+  content: ' ';
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  right: 10px;
+  bottom: -10px;
+  border: 5px solid;
+  border-left: 5px solid transparent;
+  border-right: 5px solid #002C4B;
+  border-top: 5px solid #002C4B;
+  border-bottom: 5px solid transparent;
 }
 
 div.top {
-    height: 100%;
-    position: relative;
-    top: 0px;
+  height: 100%;
+  position: relative;
+  top: 0px;
 }
 
 div.middle {
-    z-index: 10;
-    position: relative;
-    bottom: 80px;
-    width: 100%;
+  z-index: 10;
+  position: relative;
+  bottom: 80px;
+  width: 100%;
 }
 
 div.bottom {
-    height: 100%;
-    position: center;
-    bottom: 0px;
+  height: 100%;
+  position: center;
+  bottom: 0px;
 }
 
 div.dialogInfo {
-    visibility: hidden;
-    line-height: 0px;
-    font-size: 0px;
+  visibility: hidden;
+  line-height: 0px;
+  font-size: 0px;
 }
 
 div.col {
-    float: left;
-    padding-left: 10px;
-    height: 100%;
-    width: 30%;
-    max-width: 30%;
-    overflow-y: auto;
+  float: left;
+  padding-left: 10px;
+  height: 100%;
+  width: 30%;
+  max-width: 30%;
+  overflow-y: auto;
 }
 
 div.row:after {
-    content: "";
-    display: table;
-    clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 div.hide {
-    visibility: hidden;
-    line-height: 0%;
+  visibility: hidden;
+  line-height: 0%;
 }
 
 div.status {
-    bottom: 35px;
-    width: 582px;
-    position: fixed;
-    left: 280px;
-    z-index: 30;
-    background-color: #28A9E1;
+  bottom: 35px;
+  width: 582px;
+  position: fixed;
+  left: 280px;
+  z-index: 30;
+  background-color: #28A9E1;
 }
 
 div#c1 {
-    font-family: "DPTFont";
-    text-justify: inter-word;
-    width: 100%;
-    float: left;
-    position: absolute;
-    font-size: 14px;
-    background-color: #005b98;
-    padding: 5px;
-    bottom: 0px;
+  font-family: "DPTFont";
+  text-justify: inter-word;
+  width: 100%;
+  float: left;
+  position: absolute;
+  font-size: 14px;
+  background-color: #005B98;
+  padding: 5px;
+  bottom: 0px;
 }
 
 div#c2 {
-    font-family: "DPTFont";
-    position: relative;
-    top: 80px;
-    float: left;
-    width: 100%;
-    padding-right: 30px;
-    padding-bottom: 160px;
+  font-family: "DPTFont";
+  position: relative;
+  top: 80px;
+  float: left;
+  width: 100%;
+  padding-right: 30px;
+  padding-bottom: 160px;
 }
 
 div#c3 {
-    font-family: "DPTFont";
-    float: left;
-    position: fixed;
-    text-align: left;
-    font-size: 14px;
-    background-color: #005b98;
-    padding: 10px;
-    width: 600px;
-    left: 280px;
-    bottom: 0px;
+  font-family: "DPTFont";
+  float: left;
+  position: fixed;
+  text-align: left;
+  font-size: 14px;
+  background-color: #005B98;
+  padding: 10px;
+  width: 600px;
+  left: 280px;
+  bottom: 0px;
 }
 
 div#crisis {
-    font-family: "DPTFont";
-    padding: 10px;
-    top: 0px;
-    color: #F0F3F5;
-    background: #28A9E1;
-    width: 480px;
-    box-shadow: 0px 0px 10px #002C4B;
+  font-family: "DPTFont";
+  padding: 10px;
+  top: 0px;
+  color: #F0F3F5;
+  background: #28A9E1;
+  width: 480px;
+  -webkit-box-shadow: 0px 0px 10px #002C4B;
+          box-shadow: 0px 0px 10px #002C4B;
 }
 
 div#dialogFrame {
-    font-family: "DPTFont";
-    border-width: 0px;
-    color: #F0F3F5;
-    margin-left: 0%;
-    margin-right: 0%;
-    min-width: 80%;
-    bottom: 40px;
-    left: 0px;
-    background-color: #28A9E1;
+  font-family: "DPTFont";
+  border-width: 0px;
+  color: #F0F3F5;
+  margin-left: 0%;
+  margin-right: 0%;
+  min-width: 80%;
+  bottom: 40px;
+  left: 0px;
+  background-color: #28A9E1;
 }
 
 #overlay {
-    /* margin:5%; */
-    position: fixed;
-    display: grid;
-    background-color: rgba(0, 0, 0, 0);
-    border: 0px;
-    z-index: 100;
-    /* grid-auto-flow: column; */
-    grid-template-columns: 210px;
-    /* pointer-events: none; */
+  /* margin:5%; */
+  position: fixed;
+  display: -ms-grid;
+  display: grid;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0px;
+  z-index: 100;
+  /* grid-auto-flow: column; */
+  -ms-grid-columns: 210px;
+      grid-template-columns: 210px;
+  /* pointer-events: none; */
 }
 
 #dialogForm {
-    position: absolute;
-    top: 0px;
-    left: 280px;
-    padding: 10px;
-    margin-left: 0px;
-    color: #F0F3F5;
-    width: 600px;
-    height: 100%;
-    z-index: 200;
-    font-family: DPTFont;
-    font-size: 18px;
-    background-color: #28A9E1;
-    overflow-y: auto;
-    box-shadow: 0px 0px 10px #002C4B;
+  position: absolute;
+  top: 0px;
+  left: 280px;
+  padding: 10px;
+  margin-left: 0px;
+  color: #F0F3F5;
+  width: 600px;
+  height: 100%;
+  z-index: 200;
+  font-family: DPTFont;
+  font-size: 18px;
+  background-color: #28A9E1;
+  overflow-y: auto;
+  -webkit-box-shadow: 0px 0px 10px #002C4B;
+          box-shadow: 0px 0px 10px #002C4B;
 }
 
 .menu-btn {
-    padding: 10px;
-    padding-left: 20px;
-    display: none;
-    font-family: "DPTFontDin";
-    text-transform: uppercase;
-    font-size: 20px;
-    width: 280px;
-    height: 48px;
-    border: 1px solid #F0F3F5;
-    background-color: #005B9888;
-    color: #F0F3F5;
-    -webkit-box-pack: left;
-    -ms-flex-pack: left;
-    justify-content: left;
-    text-align: left;
-    background-size: cover;
+  padding: 10px;
+  padding-left: 20px;
+  display: none;
+  font-family: "DPTFontDin";
+  text-transform: uppercase;
+  font-size: 20px;
+  width: 280px;
+  height: 48px;
+  border: 1px solid #F0F3F5;
+  background-color: #005B9888;
+  color: #F0F3F5;
+  -webkit-box-pack: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  text-align: left;
+  background-size: cover;
 }
 
 .btn-icon {
-    height: 35px;
-    position: relative;
-    margin-left: -10px;
-    margin-right: 20px;
-    float: left;
+  height: 35px;
+  position: relative;
+  margin-left: -10px;
+  margin-right: 20px;
+  float: left;
 }
 
 * {
-    box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .dialogleft {
-    padding: 5px;
-    float: left;
-    width: 45%;
-    font-size: 14px;
-    /* The width is 45%, by default */
+  padding: 5px;
+  float: left;
+  width: 45%;
+  font-size: 14px;
+  /* The width is 45%, by default */
 }
 
 .dialogcenter {
-    padding: 20px;
-    float: left;
-    width: 10%;
-    font-size: 36px;
-    text-align: center;
-    /* The width is 10%, by default */
+  padding: 20px;
+  float: left;
+  width: 10%;
+  font-size: 36px;
+  text-align: center;
+  /* The width is 10%, by default */
 }
 
 .dialogright {
-    padding: 5px;
-    float: left;
-    width: 45%;
-    font-size: 14px;
-    /* The width is 45%, by default */
+  padding: 5px;
+  float: left;
+  width: 45%;
+  font-size: 14px;
+  /* The width is 45%, by default */
 }
 
 #dialogMenu {
-    position: relative;
-    padding: 10px;
-    top: 144px;
-    border: #fff;
-    border-style: solid;
-    border-width: 1px;
-    color: #005B98;
-    width: 280px;
-    max-height: 480px;
-    overflow-y: auto;
-    z-index: 2;
-    font-family: DPTFontDin;
-    font-size: 16px;
-    background-color: #002C4BDD;
-    visibility: hidden;
+  position: relative;
+  padding: 10px;
+  top: 144px;
+  border: #F0F3F5;
+  border-style: solid;
+  border-width: 1px;
+  color: #005B98;
+  width: 280px;
+  max-height: 480px;
+  overflow-y: auto;
+  z-index: 2;
+  font-family: DPTFontDin;
+  font-size: 16px;
+  background-color: #002C4B;
+  visibility: hidden;
 }
 
 #form {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 400px;
+  padding: 20px;
+  margin-left: 280px;
+  border: #F0F3F5;
+  border-style: solid;
+  border-width: 1px;
+  color: #002C4B;
+  z-index: 2;
+  font-family: DPTFontDin;
+  font-size: 18px;
+  background-color: #28A9E1;
+  -webkit-box-shadow: 0px 0px 10px #002C4B;
+          box-shadow: 0px 0px 10px #002C4B;
+}
+
+#closeX {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding: 20px;
+  margin-left: 300px;
+  border: #F0F3F5;
+  border-style: solid;
+  border-width: 1px;
+  color: #F0F3F5;
+  z-index: 200;
+  font-family: DPTFont;
+  font-size: 18px;
+}
+
+textarea {
+  font-family: DPTFont;
+  color: #005B98;
+  font-size: 18px;
+  width: 360px;
+  height: 80px;
+  margin: 0 auto;
+  resize: none;
+}
+
+textarea#dialog {
+  font-family: DPTFont;
+  color: #005B98;
+  font-size: 18px;
+  width: 300px;
+  height: 20px;
+  margin: 0 auto;
+  resize: none;
+}
+
+.button {
+  font-family: DPTFontDin;
+  color: #F0F3F5;
+  background-color: #002C4B;
+  border: none;
+  font-size: 16px;
+  width: 120px;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  float: right;
+  -webkit-appearance: none;
+}
+
+.buttondialog {
+  font-family: DPTFontDin;
+  color: #F0F3F5;
+  background-color: #002C4B;
+  border: none;
+  font-size: 16px;
+  width: 120px;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+}
+
+.crisis {
+  font-family: DPTFontDin;
+  color: #F0F3F5;
+  background-color: #002C4B;
+  border: none;
+  font-size: 16px;
+  width: 120px;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+}
+
+/* button menu style for mobile */
+@media all and (max-width: 640px) {
+  .menu-btn {
+    width: 100%;
+    margin-top: 0px;
+    margin-left: 0px;
+    background-color: #005B9888;
+  }
+  #overlay {
+    height: 144px;
+    width: 100%;
+    display: block;
+  }
+  #form {
+    width: 100%;
+    height: 200px;
+    top: 144px;
+    left: 0;
+    margin-left: 0px;
     position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 400px;
     padding: 20px;
-    margin-left: 280px;
     border: #F0F3F5;
     border-style: solid;
     border-width: 1px;
     color: #002C4B;
     z-index: 2;
-    font-family: DPTFontDin;
+    font-family: DPTFont;
     font-size: 18px;
     background-color: #28A9E1;
-    box-shadow: 0px 0px 10px #002C4B;
-}
-
-#closeX {
-    position: absolute;
+  }
+  #topic {
+    width: 100%;
+    height: 100%;
+    top: 10%;
+    left: 0;
+    margin: 0px;
+  }
+  .dialogleft,
+  .dialogcenter,
+  .dialogright {
+    width: 100%;
+  }
+  #dialogForm {
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    margin-left: 0px;
+    top: 0px;
+  }
+  div.status {
+    width: 100%;
+    left: 0px;
+    margin-left: 0px;
+  }
+  h3 {
+    font-size: 16px;
+  }
+  #dialogMenu {
+    width: 100%;
+    height: 100%;
+    top: 144px;
+    left: 0px;
+    margin-left: 0px;
+  }
+  #misc2 {
     top: 0px;
     left: 0px;
-    padding: 20px;
-    margin-left: 300px;
-    border: #fff;
-    border-style: solid;
-    border-width: 1px;
-    color: #F0F3F5;
-    z-index: 200;
-    font-family: DPTFont;
-    font-size: 18px;
+    width: 100%;
+  }
+  textarea {
+    width: 100%;
+  }
+  div#c3 {
+    width: 100%;
+    left: 0px;
+  }
+  div#crisis {
+    width: 100%;
+  }
 }
-
-textarea {
-    font-family: DPTFont;
-    color: #005B98;
-    font-size: 18px;
-    width: 360px;
-    height: 80px;
-    margin: 0 auto;
-    resize: none;
-}
-
-textarea#dialog {
-    font-family: DPTFont;
-    color: #005B98;
-    font-size: 18px;
-    width: 300px;
-    height: 20px;
-    margin: 0 auto;
-    resize: none;
-}
-
-.button {
-    font-family: DPTFontDin;
-    color: #F0F3F5;
-    background-color: #002C4B;
-    border: none;
-    font-size: 16px;
-    width: 120px;
-    height: 40px;
-    margin: 5px auto;
-    margin-left: 10px;
-    float: right;
-    -webkit-appearance: none;
-}
-
-.buttondialog {
-    font-family: DPTFontDin;
-    color: #F0F3F5;
-    background-color: #002C4B;
-    border: none;
-    font-size: 16px;
-    width: 120px;
-    height: 40px;
-    margin: 5px auto;
-    margin-left: 10px;
-    -webkit-appearance: none;
-}
-
-.crisis {
-    font-family: DPTFontDin;
-    color: #F0F3F5;
-    background-color: #002C4B;
-    border: none;
-    font-size: 16px;
-    width: 120px;
-    height: 40px;
-    margin: 5px auto;
-    margin-left: 10px;
-    -webkit-appearance: none;
-}
-
-
-/* button menu style for mobile */
-
-@media all and (max-width: 640px) {
-    .menu-btn {
-        width: 100%;
-        margin-top: 0px;
-        margin-left: 0px;
-        background-color: #005B9888;
-    }
-    #overlay {
-        height: 144px;
-        width: 100%;
-        display: block;
-    }
-    #form {
-        width: 100%;
-        height: 200px;
-        top: 144px;
-        left: 0;
-        margin-left: 0px;
-        position: absolute;
-        padding: 20px;
-        border: #fff;
-        border-style: solid;
-        border-width: 1px;
-        color: #002C4B;
-        z-index: 2;
-        font-family: DPTFont;
-        font-size: 18px;
-        background-color: #28A9E1;
-    }
-    #topic {
-        width: 100%;
-        height: 100%;
-        top: 10%;
-        left: 0;
-        margin: 0px;
-    }
-    .dialogleft,
-    .dialogcenter,
-    .dialogright {
-        width: 100%;
-    }
-    #dialogForm {
-        width: 100%;
-        height: 100%;
-        left: 0px;
-        margin-left: 0px;
-        top: 0px;
-    }
-    div.status {
-        width: 100%;
-        left: 0px;
-        margin-left: 0px;
-    }
-    h3 {
-        font-size: 16px;
-    }
-    #dialogMenu {
-        width: 100%;
-        height: 100%;
-        top: 144px;
-        left: 0px;
-        margin-left: 0px;
-    }
-    #misc2 {
-        top: 0px;
-        left: 0px;
-        width: 100%
-    }
-    textarea {
-        width: 100%;
-    }
-    div#c3 {
-        width: 100%;
-        left: 0px;
-    }
-    div#crisis {
-        width: 100%;
-    }
-}
+/*# sourceMappingURL=dpt_classic.css.map */
