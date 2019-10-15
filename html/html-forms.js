@@ -72,14 +72,22 @@ function propositionForm(opinionId) {
     });
 }
 
-function topicForm() {
+function topicEdit(context) {
+	topicForm(true, context);
+}
+
+function topicForm(edit, context) {
     console.log('enter topic');
 
+    var topic = '';
+    if(edit) {
+    	topic = context.content;
+    }
     if (isMobile) {
         jQuery('body').append(`
 			<div id="form">New topic:<br><form id="topic">
 			<textarea name="topic"
-			class="topic"></textarea><br>
+			class="topic">${topic}</textarea><br>
 			<input class="button" type="submit" value="send"></form></div>
 		`);
 
@@ -87,7 +95,7 @@ function topicForm() {
         jQuery('body').append(`
 			<div id="form">
 			Please enter a new topic:<br><form id="topic">
-            <textarea name="topic" class="topic"></textarea><br>
+            <textarea name="topic" class="topic">${topic}</textarea><br>
             <input class="button" type="submit" value="send">
 			<input class="button" type="button" value="close window" name="close window"
 			id="CloseTopicForm"></form></div>
@@ -122,11 +130,9 @@ function topicForm() {
             focusAtCanvas();
             event.preventDefault();
         }
-        /*
         if(event.keyCode == 10 || event.keyCode == 13) {
         	event.preventDefault();
         }
-        */
     });
 
     jQuery(document).on('submit', 'form#topic', function(event) {
@@ -134,7 +140,11 @@ function topicForm() {
         event.preventDefault();
         var topic = jQuery('.topic').val();
         if (topic) {
-            dpt.postTopic(topic);
+        	if(edit) {
+        		dpt.putTopic(topic, context.topicId, whoami.dptUUID);
+        	} else {
+        		dpt.postTopic(topic);
+        	}
         }
         jQuery('#form').remove();
         focusAtCanvas();
@@ -142,16 +152,25 @@ function topicForm() {
     });
 }
 
-function opinionForm() {
+function opinionEdit(context) {
+	opinionForm(true, context);
+}
+function opinionForm(edit, context) {
     console.log('enter opinion');
 
+    var opinion = '';
+    var deleteButton = '';
+    if(edit) {
+    	opinion = context.content;
+    	//deleteButton = `<input class="button" type="button" value="Delete" name="Delete" id="DeleteOpinion"/>`;
+    }
     jQuery('body').append(`
 		<div id="form">
 		Please enter a new opinion:<br> <form id="opinion">
-        <textarea name="opinion" class="opinion"></textarea><br>
+        <textarea name="opinion" class="opinion">${opinion}</textarea><br>
         <input class="button" type="submit" value="Send"> 
         <input class="button" type="button" value="close window" name="close window"
-		id="CloseOpinionForm"></form></div>
+		id="CloseOpinionForm">${deleteButton}</form></div>
 	`);
 
     jQuery(".opinion").focus();
@@ -182,11 +201,9 @@ function opinionForm() {
             jQuery('#form').remove();
             event.preventDefault();
         }
-        /*
         if(event.keyCode == 10 || event.keyCode == 13) {
         	event.preventDefault();
         }
-        */
     });
 
     jQuery(document).on('submit', 'form#opinion', function(event) {
@@ -194,7 +211,11 @@ function opinionForm() {
         event.preventDefault();
         var opinion = jQuery('.opinion').val();
         if (opinion) {
-            dpt.postOpinion(currentTopic, opinion);
+        	if(edit) {
+        		dpt.putOpinion(whoami.dptUUID, context.opinionId, currentTopic, opinion);
+        	} else {
+        		dpt.postOpinion(currentTopic, opinion);
+        	}
         }
         jQuery('#form').remove();
     });

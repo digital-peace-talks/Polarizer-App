@@ -77,7 +77,8 @@ module.exports.topicPost = async (topic) => {
 				$gt: new Date(interval)
 			}
 		});
-	if(userTopics.length > config.api.topicLimit) {
+	if(userTopics.length >= config.api.topicLimit
+	&& config.api.topicLimit > 0) {
 		throw {
 			status: 500,
 			data: `Only ${config.api.topicLimit} topic(s) per ${config.api.topicInterval} day(s).`,

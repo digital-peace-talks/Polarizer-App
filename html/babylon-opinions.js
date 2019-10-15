@@ -402,6 +402,25 @@ function loadOpinions(restObj) {
 
 			icon.material = mat;
 			icon.dpt = { context: 'dialogInvitation', opinionId: restObj.data[i]._id };
+		} else if(restObj.data[i].user == 'mine') {
+			var mat = new BABYLON.StandardMaterial("icon", currentScene);
+			mat.diffuseTexture = new BABYLON.Texture("/Edit_icon.png", currentScene);
+			mat.emissiveColor = new BABYLON.Color3(0, 0.5, 1);
+			mat.opacityTexture = mat.diffuseTexture;
+
+			var icon = BABYLON.MeshBuilder.CreatePlane(
+				"icon",
+				{
+					width: 0.35,
+					height: 0.35
+				}, currentScene);
+
+			icon.parent = plane;
+			icon.position.x -= plane.geometry.extend.maximum.x + 0.2;
+			icon.position.y += plane.geometry.extend.maximum.y - 0.4;
+
+			icon.material = mat;
+			icon.dpt = { context: 'editOpinion', opinionId: restObj.data[i]._id, content: restObj.data[i].content };
 		}
 	}
 
