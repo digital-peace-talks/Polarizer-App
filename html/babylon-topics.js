@@ -32,5 +32,25 @@ function loadTopics(restObj) {
 				"topic": restObj.data[l].content
 			}),
 			`${restObj.data[l].content} [ ${restObj.data[l].opinions.length} ]`);
+		if(restObj.data[l].user == 'mine') {
+			var mat = new BABYLON.StandardMaterial("icon", currentScene);
+			mat.diffuseTexture = new BABYLON.Texture("/Edit_icon.png", currentScene);
+			mat.emissiveColor = new BABYLON.Color3(0, 0.5, 1);
+			mat.opacityTexture = mat.diffuseTexture;
+
+			var icon = BABYLON.MeshBuilder.CreatePlane(
+				"icon",
+				{
+					width: 0.35,
+					height: 0.35
+				}, currentScene);
+
+			icon.parent = plane;
+			icon.position.x -= plane.geometry.extend.maximum.x + 0.2;
+			icon.position.y += plane.geometry.extend.maximum.y - 0.4;
+
+			icon.material = mat;
+			icon.dpt = { context: 'editTopic', topicId: restObj.data[l]._id, content: restObj.data[l].content };
+		}
 	}
 }

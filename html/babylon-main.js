@@ -329,6 +329,10 @@ var createGenericScene = function(dptMode) {
 						currentScene.name = "opinionScene";
 						dpt.getOpinionByTopic(currentTopic);
 						jQuery('#topicForm').remove();
+					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "editOpinion") {
+						opinionEdit(pointerInfo.pickInfo.pickedMesh.dpt);
+					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "editTopic") {
+						topicEdit(pointerInfo.pickInfo.pickedMesh.dpt);
 					}
 				}
 
