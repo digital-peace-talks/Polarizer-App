@@ -401,6 +401,44 @@ function requestFeedback() {
     */
 };
 
+
+function requestHelp() {
+    var btnH = document.createElement("input");
+    //			btn.innerText = "Enable/Disable Joystick";
+    btnH.style.zIndex = 10;
+    btnH.style.position = "absolute";
+    btnH.style.bottom = "5px";
+    btnH.style.right = "55px";
+    btnH.width = "50";
+    btnH.height = "50";
+    btnH.type = "image";
+    btnH.src = "/help_white.png";
+    btnH.style.color = "#f00";
+    document.body.appendChild(btnH);
+
+    // Button toggle logic
+    btnH.onclick = () => {
+        jQuery('body').append(`
+    		<div id="form" style="min-width: 680px; height: 510px;">
+	    		 <iframe id="helpIframe" style="width: 100%; height: 100%;" src="help.html"></iframe> 
+    		</div>
+    	`);
+        window.addEventListener('message', event => {
+            // IMPORTANT: check the origin of the data! 
+            if (event.origin.startsWith('help.html') &&
+                event.data == 'simple-feedback-finished') {
+                jQuery('#helpIframe').remove();
+                jQuery('#form').remove();
+            } else {
+                return;
+            }
+        });
+    }
+
+
+};
+
+
 function pauseEngine() {
     var btn = document.createElement("input");
     //			btn.innerText = "Enable/Disable Joystick";
