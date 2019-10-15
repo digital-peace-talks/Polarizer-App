@@ -138,7 +138,11 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 module.exports.getOpinions = async (options) => {
 	var opinions;
 	try {
-		opinions = await Opinion.find([]);
+		if(options && 'opinionId' in options) {
+			opinions = await Opinion.find({_id: options.opinionId});
+		} else {
+			opinions = await Opinion.find([]);
+		}
 	} catch(error) {
 		throw({
 			status: 500,
