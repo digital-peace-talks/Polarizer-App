@@ -51,11 +51,20 @@ input[type=text] {
     width: 50%;
 }
 
+.tutorial {
+    width: 680px;
+    height: 510px;
+}
+
 
 /* button menu style for mobile */
 
 @media all and (max-width: 500px) {
     h3 {
         font-size: 16px;
+    }
+    .tutorial {
+        width: 100%;
+        height: auto;
     }
 }
