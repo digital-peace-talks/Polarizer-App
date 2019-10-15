@@ -70,11 +70,14 @@ function onWebSocketUpdate(restObj) {
 }
 
 function onWebSocketAPI(restObj) {
+	if(!restObj) {
+		return;
+	}
 	if('status' in restObj && restObj.status > 399) {
 		alert(restObj.data);
 		return;
 	}
-	if(!restObj || !restObj.path || !restObj.method) {
+	if(!restObj.path || !restObj.method) {
 		return;
 	}
 
