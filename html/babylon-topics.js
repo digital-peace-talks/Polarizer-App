@@ -31,7 +31,7 @@ function loadTopics(restObj) {
 				"topicId": restObj.data[l]._id,
 				"topic": restObj.data[l].content
 			}),
-			`${restObj.data[l].content} [ ${restObj.data[l].opinions.length} ]`);
+			`${restObj.data[l].content} [${restObj.data[l].opinions.length}]`);
 		if(restObj.data[l].user == 'mine') {
 			var mat = new BABYLON.StandardMaterial("icon", currentScene);
 			mat.diffuseTexture = new BABYLON.Texture("/Edit_icon.png", currentScene);
