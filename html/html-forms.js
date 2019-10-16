@@ -82,13 +82,14 @@ function topicForm(edit, context) {
     var topic = '';
     if(edit) {
     	topic = context.content;
+    	edit = `<input type="hidden" class="edit" name="edit" value="edit" />`;
     }
     if (isMobile) {
         jQuery('body').append(`
 			<div id="form">New topic:<br><form id="topic">
 			<textarea name="topic"
 			class="topic">${topic}</textarea><br>
-			<input class="button" type="submit" value="send"></form></div>
+			<input class="button" type="submit" value="send">${edit}</form></div>
 		`);
 
     } else {
@@ -98,7 +99,7 @@ function topicForm(edit, context) {
             <textarea name="topic" class="topic">${topic}</textarea><br>
             <input class="button" type="submit" value="send">
 			<input class="button" type="button" value="close window" name="close window"
-			id="CloseTopicForm"></form></div>
+			id="CloseTopicForm">${edit}</form></div>
 		`);
     }
     jQuery(".topic").focus();
@@ -133,14 +134,18 @@ function topicForm(edit, context) {
         if(event.keyCode == 10 || event.keyCode == 13) {
         	event.preventDefault();
         }
+        if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
+        	jQuery('form#topic').submit();
+        }
     });
 
     jQuery(document).on('submit', 'form#topic', function(event) {
         event.stopImmediatePropagation();
         event.preventDefault();
         var topic = jQuery('.topic').val();
+        var edit = jQuery('.edit').val();
         if (topic) {
-        	if(edit) {
+        	if(edit == "edit") {
         		dpt.putTopic(topic, context.topicId, whoami.dptUUID);
         	} else {
         		dpt.postTopic(topic);
@@ -159,9 +164,12 @@ function opinionForm(edit, context) {
     console.log('enter opinion');
 
     var opinion = '';
+    var opinionIdHidden = '';
     var deleteButton = '';
     if(edit) {
     	opinion = context.content;
+    	edit = `<input type="hidden" class="edit" name="edit" value="edit" />`;
+    	opinionIdHidden = `<input type="hidden" class="opinionId" name="opinionId" value="${context.opinionId}" />`;
     	//deleteButton = `<input class="button" type="button" value="Delete" name="Delete" id="DeleteOpinion"/>`;
     }
     jQuery('body').append(`
@@ -170,7 +178,7 @@ function opinionForm(edit, context) {
         <textarea name="opinion" class="opinion">${opinion}</textarea><br>
         <input class="button" type="submit" value="Send"> 
         <input class="button" type="button" value="close window" name="close window"
-		id="CloseOpinionForm">${deleteButton}</form></div>
+		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}</form></div>
 	`);
 
     jQuery(".opinion").focus();
@@ -204,15 +212,20 @@ function opinionForm(edit, context) {
         if(event.keyCode == 10 || event.keyCode == 13) {
         	event.preventDefault();
         }
+        if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
+        	jQuery('form#opinion').submit();
+        }
     });
 
     jQuery(document).on('submit', 'form#opinion', function(event) {
         event.stopImmediatePropagation();
         event.preventDefault();
         var opinion = jQuery('.opinion').val();
+        var opinionId = jQuery('.opinionId').val();
+        var edit = jQuery('.edit').val();
         if (opinion) {
-        	if(edit) {
-        		dpt.putOpinion(whoami.dptUUID, context.opinionId, currentTopic, opinion);
+        	if(edit == 'edit') {
+        		dpt.putOpinion(whoami.dptUUID, opinionId, currentTopic, opinion);
         	} else {
         		dpt.postOpinion(currentTopic, opinion);
         	}

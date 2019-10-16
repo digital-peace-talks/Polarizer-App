@@ -438,7 +438,15 @@ match.push({
 	method: "put",
 	fun: async function(data, dptUUID, socket) {
 		console.log("update a dialog")
-		dialogService.updateDialog(data);
+		var ret = await dialogService.updateDialog(data);
+		var opinions = await opinionService.getOpinions({opinionId: ret.data.opinion});
+		io.emit('update', {
+			path: '/opinion/'+opinions.data[0].topic+'/',
+			method: 'get',
+			data: { id: opinions.data[0].topic }
+		});
+
+		return({data: ret});
 	}
 });
 
@@ -481,6 +489,12 @@ match.push({
 					rating: data.rating,
 					initiator: user.user.id,
 				}
+			});
+			var opinions = await opinionService.getOpinions({opinionId: ret.data.opinion});
+			io.emit('update', {
+				path: '/opinion/'+opinions.data[0].topic+'/',
+				method: 'get',
+				data: { id: opinions.data[0].topic }
 			});
 			return(ret);
 		} else {

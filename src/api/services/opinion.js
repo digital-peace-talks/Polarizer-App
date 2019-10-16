@@ -103,9 +103,6 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 
 					}
 					opinions[i]._doc.topos.push(topo);
-					console.log(util.inspect(opinions[i], {depth: 4}));
-					console.log('\n\n');
-
 				}
 			}
 			
@@ -138,7 +135,11 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 module.exports.getOpinions = async (options) => {
 	var opinions;
 	try {
-		opinions = await Opinion.find([]);
+		if(options && 'opinionId' in options) {
+			opinions = await Opinion.find({_id: options.opinionId});
+		} else {
+			opinions = await Opinion.find([]);
+		}
 	} catch(error) {
 		throw({
 			status: 500,

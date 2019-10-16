@@ -70,11 +70,14 @@ function onWebSocketUpdate(restObj) {
 }
 
 function onWebSocketAPI(restObj) {
+	if(!restObj) {
+		return;
+	}
 	if('status' in restObj && restObj.status > 399) {
 		alert(restObj.data);
 		return;
 	}
-	if(!restObj || !restObj.path || !restObj.method) {
+	if(!restObj.path || !restObj.method) {
 		return;
 	}
 
@@ -157,6 +160,8 @@ function main() {
 			currentScene.name = 'topicScene';
 			if(document.cookie) {
 				dpt.userLogin(document.cookie);
+			} else {
+				alert('document cookie not set');
 			}
 		});
 
@@ -180,8 +185,8 @@ function main() {
 						whoami.user = restObj.data.user;
 						dpt.getTopic();
 						dpt.getDialogList();
-					}
-					if(restObj.data.message == "user unknown") {
+					} else if(restObj.data.message == "user unknown") {
+						alert('user unknown. please go back to the start page, delete your cookie. you can try to get your phrase recovered or get a new phrase. maybe cookies are disable?');
 						whoami.user = {};
 					}
 				}

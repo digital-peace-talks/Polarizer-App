@@ -93,72 +93,23 @@ function getCamera(rotate) {
 	// camera
 	if(currentScene.dptMode == "topicScene") {
 		console.log('ts cam');
-		if(touchScreen) {
+		camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/2, 0, new BABYLON.Vector3(0, 0, 0), currentScene);
+
+		// This positions the camera
+		camera.setPosition(new BABYLON.Vector3(0, 0, -15));
 			
-			camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/2, 0, new BABYLON.Vector3(0, 0, 0), currentScene);
-
-		    // This positions the camera
-		    camera.setPosition(new BABYLON.Vector3(0, 0, -15));
-		    
-			camera.panningSensibility = 300;
-		    camera.pinchDeltaPercentage = 0.001;
-		    camera.pinchToPanMaxDistance = 124;
-
-			camera.lowerRadiusLimit = 1;
-			camera.upperRadiusLimit = 35;
-				
-			camera.lowerAlphaLimit = 0.0174533 * -115;
-			camera.upperAlphaLimit = 0.0174533 * -65;
-			camera.lowerBetaLimit = 0.0174533 * 65;
-			camera.upperBetaLimit = 0.0174533 * 115;
-
-			camera.panningAxis = new BABYLON.Vector3(1, 1, 0);
-
-			// This targets the camera to scene origin
-		    camera.setTarget(BABYLON.Vector3.Zero());
-			
-			
-		} else {
-			camera = new BABYLON.FlyCamera("FlyCamera",
-				new BABYLON.Vector3(0, 0, -15), currentScene);
-		}
-
 		if(topicCamState) {
 			camera.position = topicCamState.position;
 			camera.rotation = topicCamState.rotation;
 			camera.direction = topicCamState.direction;
 		}
-	}
-	if(currentScene.dptMode == "opinionScene") {
+
+	} else if(currentScene.dptMode == "opinionScene") {
 		console.log('os cam');
-		if(touchScreen) {
 			
-			camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/2, 0, new BABYLON.Vector3(0, 0, 0), currentScene);
-
-		    // This positions the camera
-		    camera.setPosition(new BABYLON.Vector3(0, 0, -15));
-		    
-			camera.panningSensibility = 300;
-		    camera.pinchDeltaPercentage = 0.001;
-		    camera.pinchToPanMaxDistance = 124;
-
-			camera.lowerRadiusLimit = 1;
-			camera.upperRadiusLimit = 35;
-				
-			camera.lowerAlphaLimit = 0.0174533 * -115;
-			camera.upperAlphaLimit = 0.0174533 * -65;
-			camera.lowerBetaLimit = 0.0174533 * 65;
-			camera.upperBetaLimit = 0.0174533 * 115;
-
-			camera.panningAxis = new BABYLON.Vector3(1, 1, 0);
-
-			// This targets the camera to scene origin
-		    camera.setTarget(BABYLON.Vector3.Zero());
-
-		} else {
-			camera = new BABYLON.FlyCamera("FlyCamera",
-				new BABYLON.Vector3(4.5, 1.0, -15), currentScene);
-		}
+		camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/2, 0, new BABYLON.Vector3(0, 0, 0), currentScene);
+	    // This positions the camera
+	    camera.setPosition(new BABYLON.Vector3(-14, 0, -20));
 
 		if(opinionCamState) {
 			camera.position = opinionCamState.position;
@@ -166,30 +117,24 @@ function getCamera(rotate) {
 			camera.direction = opinionCamState.direction;
 		}
 	}
+	camera.wheelPrecision = 50;
+	camera.panningSensibility = 300;
+	camera.pinchDeltaPercentage = 0.001;
+	camera.pinchToPanMaxDistance = 124;
 
-	if(!touchScreen) {
-	camera.inputs.add(new BABYLON.FreeCameraTouchInput());
+	camera.lowerRadiusLimit = 1;
+	camera.upperRadiusLimit = 35;
+		
+	camera.lowerAlphaLimit = 0.0174533 * -115;
+	camera.upperAlphaLimit = 0.0174533 * -65;
+	camera.lowerBetaLimit = 0.0174533 * 65;
+	camera.upperBetaLimit = 0.0174533 * 115;
 
-	camera.keysForward.push(33);
-	camera.keysBackward.push(34);
+	camera.panningAxis = new BABYLON.Vector3(1, 1, 0);
 
-	camera.keysLeft.push(37);
-	camera.keysUp.push(38);
-	camera.keysRight.push(39);
-	camera.keysDown.push(40);
+	// This targets the camera to scene origin
+	camera.setTarget(BABYLON.Vector3.Zero());
 
-	/**/
-	camera.rollCorrect = 10;
-	camera.bankedTurn = true;
-	camera.bankedTurnLimit = Math.PI / 8;
-	camera.bankedTurnMultiplier = 1;
-	/**/
-
-	camera.acceleration = 0.01;
-	camera.speed = 0.5;
-	
-	}
-	
 	// createAvatar(false, camera);
 
 	return (camera);

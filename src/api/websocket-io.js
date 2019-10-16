@@ -175,7 +175,7 @@ io.on('connection', function(socket) {
 					if(dptUUID) {
 						socket.emit('private', {
 							method: 'post',
-							path: '/info/',
+							path: '/user/login/',
 							data: {
 								message: "user unknown",
 								dptUUID: dptUUID,
@@ -203,10 +203,10 @@ io.on('connection', function(socket) {
 		returns the results which will sended back to the client.
 	*/
 	socket.on('api', async (payload) => {
-		log.debug('sio request: '+util.inspect(payload));
+		//log.debug('sio request: '+util.inspect(payload));
 		var ret = await apiBroker(payload, socket.dptUUID, socket);
 		socket.emit('api', ret);
-		log.debug('answer sio request: '+util.inspect(ret, {depth: 6}));
+		//log.debug('answer sio request: '+util.inspect(ret, {depth: 6}));
 	});
 	
 	socket.on('3d', async (payload) => {
