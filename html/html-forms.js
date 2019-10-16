@@ -83,6 +83,8 @@ function topicForm(edit, context) {
     if(edit) {
     	topic = context.content;
     	edit = `<input type="hidden" class="edit" name="edit" value="edit" />`;
+    } else {
+        edit='';
     }
     if (isMobile) {
         jQuery('body').append(`
@@ -171,6 +173,8 @@ function opinionForm(edit, context) {
     	edit = `<input type="hidden" class="edit" name="edit" value="edit" />`;
     	opinionIdHidden = `<input type="hidden" class="opinionId" name="opinionId" value="${context.opinionId}" />`;
     	//deleteButton = `<input class="button" type="button" value="Delete" name="Delete" id="DeleteOpinion"/>`;
+    } else {
+        edit = '';
     }
     jQuery('body').append(`
 		<div id="form">
