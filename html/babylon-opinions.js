@@ -1,8 +1,12 @@
 
 
-function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections, status) {
+function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections) {
 
-	status = opinionDialogConnections.dialogStatus;
+	var status = opinionDialogConnections.dialogStatus;
+
+	if(status == 'PENDING') {
+		return;
+	}
 	var sv = new BABYLON.Vector3(initiatorOpinion.position);
 	var ev = new BABYLON.Vector3(recipientOpinion.position);
 	sv.x = initiatorOpinion.position.x;
@@ -307,10 +311,8 @@ function dialogRelations(opinionDialogConnections) {
 	
 			if('position' in initiatorOpinion
 			&& 'position' in recipientOpinion) {
-			//&&	opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus == 'CLOSED') {
-				createBiColorTube(initiatorOpinion, recipientOpinion, odc[i], h);
+				createBiColorTube(initiatorOpinion, recipientOpinion, odc[i]);
 			}
-			//		return(createBiColorTube(currentScene.meshes[k].dpt.opinionId, sv, ev));
 		}
 	}
 }

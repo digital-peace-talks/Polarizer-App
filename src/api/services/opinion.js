@@ -103,9 +103,6 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 
 					}
 					opinions[i]._doc.topos.push(topo);
-					console.log(util.inspect(opinions[i], {depth: 4}));
-					console.log('\n\n');
-
 				}
 			}
 			
