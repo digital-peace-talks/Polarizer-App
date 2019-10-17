@@ -115,8 +115,8 @@ function topicForm(edit, context) {
 
     jQuery(document).on('keydown', '.topic', function(event) {
         var n = jQuery('.topic').val().length;
-        if (n >= 512) {
-            jQuery('.topic').css({ "background-color": "#f88" });
+        if (n >= 256) {
+            jQuery('textarea.topic').css({ "background-color": "#f88" });
             if (event.keyCode != 8 &&
                 event.keyCode != 127 &&
                 event.keyCode != 37 &&
@@ -126,7 +126,7 @@ function topicForm(edit, context) {
                 event.preventDefault();
             }
         } else {
-            jQuery('.topic').css({ "background-color": "#fff" });
+            jQuery('textarea.topic').css({ "background-color": "#fff" });
         }
         if (event.keyCode == 27) {
             jQuery('#form').remove();
