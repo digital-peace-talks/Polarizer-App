@@ -1,3 +1,4 @@
+// Digital Peace Talks - API
 class DPT {
 
 	constructor(socket) {
@@ -191,13 +192,14 @@ class DPT {
 		});
 	}
 	
-	putDialog(dialogId, key, value) {
+	putDialog(dialogId, topic, key, value) {
 		var obj = {
 				method: 'put',
 				path: '/dialog/'+ dialogId +'/',
 				data: {
 					dialogId: dialogId,
 					body: {
+						topic: topic,
 					}
 				}
 		};
