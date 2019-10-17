@@ -35,7 +35,7 @@ function propositionForm(opinionId) {
     jQuery(document).on('keydown', '.proposition', function(event) {
         var n = jQuery('.proposition').val().length;
         if (n >= 512) {
-            jQuery('.proposition').css({ "background-color": "#ff8888" ; color: "#005B98"});
+            jQuery('.proposition').css({ "background-color": "#ff8888" , "color": "#005B98"});
             if (event.keyCode != 8 &&
                 event.keyCode != 127 &&
                 event.keyCode != 37 &&
@@ -45,7 +45,7 @@ function propositionForm(opinionId) {
                 event.preventDefault();
             }
         } else {
-            jQuery('.proposition').css({ "background-color": "#ffffff" ; color: "#005B98"});
+            jQuery('.proposition').css({ "background-color": "#ffffff" , "color": "#005B98"});
         }
         if (event.keyCode == 27) {
             jQuery('#form').remove();
