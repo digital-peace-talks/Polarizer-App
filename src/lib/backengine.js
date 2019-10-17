@@ -22,7 +22,7 @@ function circlePoints(opinions, radius, center) {
 }
 
 module.exports.calculatePositions = async (opinions) => {
-	nodes = circlePoints(opinions, 5, {X: 4, Y: 0});
+	nodes = circlePoints(opinions, 5, {X: 0, Y: 0});
 	for(var i in opinions) {
 		opinions[i].topic = opinions[i].topic._id;
 		opinions[i].position = nodes[i];

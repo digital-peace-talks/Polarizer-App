@@ -1,3 +1,4 @@
+
 function createAvatar(avatarInfo, camera) {
 	var name;
 	if(!avatarInfo && camera) {
@@ -89,35 +90,9 @@ function getCollisionBox() {
 
 function getCamera(rotate) {
 
-	var camera;
+	var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/2, 15, new BABYLON.Vector3(0, 0, 0), currentScene);
 	// camera
-	if(currentScene.dptMode == "topicScene") {
-		console.log('ts cam');
-		camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/2, 0, new BABYLON.Vector3(0, 0, 0), currentScene);
-
-		// This positions the camera
-		camera.setPosition(new BABYLON.Vector3(0, 0, -15));
-			
-		if(topicCamState) {
-			camera.position = topicCamState.position;
-			camera.rotation = topicCamState.rotation;
-			camera.direction = topicCamState.direction;
-		}
-
-	} else if(currentScene.dptMode == "opinionScene") {
-		console.log('os cam');
-			
-		camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/2, 0, new BABYLON.Vector3(0, 0, 0), currentScene);
-	    // This positions the camera
-	    camera.setPosition(new BABYLON.Vector3(-14, 0, -20));
-
-		if(opinionCamState) {
-			camera.position = opinionCamState.position;
-			camera.rotation = opinionCamState.rotation;
-			camera.direction = opinionCamState.direction;
-		}
-	}
-	camera.wheelPrecision = 50;
+	camera.wheelPrecision = 30;
 	camera.panningSensibility = 300;
 	camera.pinchDeltaPercentage = 0.001;
 	camera.pinchToPanMaxDistance = 124;
@@ -131,10 +106,37 @@ function getCamera(rotate) {
 	camera.upperBetaLimit = 0.0174533 * 115;
 
 	camera.panningAxis = new BABYLON.Vector3(1, 1, 0);
+	//camera.setTarget(BABYLON.Vector3.Zero());
 
-	// This targets the camera to scene origin
-	camera.setTarget(BABYLON.Vector3.Zero());
+	const getCircularReplacer = () => {
+	const seen = new WeakSet();
+	return (key, value) => {
+		if (typeof value === "object" && value !== null) {
+			if (seen.has(value)) {
+				return;
+			}
+			seen.add(value);
+		}
+		return value;
+	};
+};
 
+	if(currentScene.dptMode == "topicScene") {
+		//camera.setPosition(new BABYLON.Vector3(0,0,-15));
+		if(topicCamState) {
+			camera.alpha = topicCamState.alpha;
+			camera.beta = topicCamState.beta;
+			camera.radius = topicCamState.radius;
+		}
+
+	} else if(currentScene.dptMode == "opinionScene") {
+		//camera.setPosition(new BABYLON.Vector3(0,0,-20));
+		if(opinionCamState) {
+			camera.alpha = opinionCamState.alpha;
+			camera.beta = opinionCamState.beta;
+			camera.radius = opinionCamState.radius;
+		}
+	}
 	// createAvatar(false, camera);
 
 	return (camera);
