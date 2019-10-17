@@ -108,22 +108,11 @@ function getCamera(rotate) {
 	camera.panningAxis = new BABYLON.Vector3(1, 1, 0);
 	//camera.setTarget(BABYLON.Vector3.Zero());
 
-	const getCircularReplacer = () => {
-	const seen = new WeakSet();
-	return (key, value) => {
-		if (typeof value === "object" && value !== null) {
-			if (seen.has(value)) {
-				return;
-			}
-			seen.add(value);
-		}
-		return value;
-	};
-};
-
 	if(currentScene.dptMode == "topicScene") {
 		//camera.setPosition(new BABYLON.Vector3(0,0,-15));
 		if(topicCamState) {
+			camera.setPosition(topicCamState.position);
+			camera.setTarget(topicCamState.target);
 			camera.alpha = topicCamState.alpha;
 			camera.beta = topicCamState.beta;
 			camera.radius = topicCamState.radius;
@@ -132,6 +121,8 @@ function getCamera(rotate) {
 	} else if(currentScene.dptMode == "opinionScene") {
 		//camera.setPosition(new BABYLON.Vector3(0,0,-20));
 		if(opinionCamState) {
+			camera.setPosition(opinionCamState.position);
+			camera.setTarget(opinionCamState.target);
 			camera.alpha = opinionCamState.alpha;
 			camera.beta = opinionCamState.beta;
 			camera.radius = opinionCamState.radius;
