@@ -152,11 +152,13 @@ Where getIntersection is:
 	}
 	
 	// dominant color scheme
-	if(combination.indexOf('red') >= 0) {
-		combination = 'red-red';
-	}
-	if(combination.indexOf('green') >= 0) {
-		combination = 'green-green';
+	if(config.api.dominantColorScheme) {
+		if(combination.indexOf('red') >= 0) {
+			combination = 'red-red';
+		}
+		if(combination.indexOf('green') >= 0) {
+			combination = 'green-green';
+		}
 	}
 
 	image = new Image();
