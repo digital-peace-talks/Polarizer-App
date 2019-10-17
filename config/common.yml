@@ -10,6 +10,8 @@ defaults: &defaults
     # topic rule, default: two topics per day
     topicInterval: 1
     topicLimit: 2
+    # for uni-color edges
+    dominantColorScheme: true
 
   logger:
     name: dpt-server
