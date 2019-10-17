@@ -152,7 +152,7 @@ Where getIntersection is:
 	}
 	
 	// dominant color scheme
-	if(config.api.dominantColorScheme) {
+	if(1) {
 		if(combination.indexOf('red') >= 0) {
 			combination = 'red-red';
 		}
