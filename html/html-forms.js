@@ -35,7 +35,7 @@ function propositionForm(opinionId) {
     jQuery(document).on('keydown', '.proposition', function(event) {
         var n = jQuery('.proposition').val().length;
         if (n >= 512) {
-            jQuery('.proposition').css({ "background-color": "#ff8888" , "color": "#005B98"});
+            jQuery('.proposition').css({ "background-color": "#ff8888", "color": "#005B98" });
             if (event.keyCode != 8 &&
                 event.keyCode != 127 &&
                 event.keyCode != 37 &&
@@ -45,10 +45,10 @@ function propositionForm(opinionId) {
                 event.preventDefault();
             }
         } else {
-        	var bg = jQuery('textarea.proposition').css('background-color');
-        	if(bg != "rgb(255,255,255)") {
-        		jQuery('textarea.proposition').css({ "background-color": "rgb(255,255,255)" });
-        	}
+            var bg = jQuery('textarea.proposition').css('background-color');
+            if (bg != "rgb(255,255,255)") {
+                jQuery('textarea.proposition').css({ "background-color": "rgb(255,255,255)" });
+            }
         }
         if (event.keyCode == 27) {
             jQuery('#form').remove();
@@ -60,8 +60,8 @@ function propositionForm(opinionId) {
         	event.preventDefault();
         }
         */
-        if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
-        	jQuery('form#proposition').submit();
+        if (event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
+            jQuery('form#proposition').submit();
         }
     });
 
@@ -79,18 +79,18 @@ function propositionForm(opinionId) {
 }
 
 function topicEdit(context) {
-	topicForm(true, context);
+    topicForm(true, context);
 }
 
 function topicForm(edit, context) {
     console.log('enter topic');
 
     var topic = '';
-    if(edit) {
-    	topic = context.content;
-    	edit = `<input type="hidden" class="edit" name="edit" value="edit" />`;
+    if (edit) {
+        topic = context.content;
+        edit = `<input type="hidden" class="edit" name="edit" value="edit" />`;
     } else {
-        edit='';
+        edit = '';
     }
     if (isMobile) {
         jQuery('body').append(`
@@ -132,21 +132,21 @@ function topicForm(edit, context) {
                 event.preventDefault();
             }
         } else {
-        	var bg = jQuery('textarea.topic').css('background-color');
-        	if(bg != "rgb(255,255,255)") {
-        		jQuery('textarea.topic').css({ "background-color": "rgb(255,255,255)" });
-        	}
+            var bg = jQuery('textarea.topic').css('background-color');
+            if (bg != "rgb(255,255,255)") {
+                jQuery('textarea.topic').css({ "background-color": "rgb(255,255,255)" });
+            }
         }
         if (event.keyCode == 27) {
             jQuery('#form').remove();
             focusAtCanvas();
             event.preventDefault();
         }
-        if(event.keyCode == 10 || event.keyCode == 13) {
-        	event.preventDefault();
+        if (event.keyCode == 10 || event.keyCode == 13) {
+            event.preventDefault();
         }
-        if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
-        	jQuery('form#topic').submit();
+        if (event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
+            jQuery('form#topic').submit();
         }
     });
 
@@ -156,11 +156,11 @@ function topicForm(edit, context) {
         var topic = jQuery('.topic').val();
         var edit = jQuery('.edit').val();
         if (topic) {
-        	if(edit == "edit") {
-        		dpt.putTopic(topic, context.topicId, whoami.dptUUID);
-        	} else {
-        		dpt.postTopic(topic);
-        	}
+            if (edit == "edit") {
+                dpt.putTopic(topic, context.topicId, whoami.dptUUID);
+            } else {
+                dpt.postTopic(topic);
+            }
         }
         jQuery('#form').remove();
         focusAtCanvas();
@@ -169,19 +169,20 @@ function topicForm(edit, context) {
 }
 
 function opinionEdit(context) {
-	opinionForm(true, context);
+    opinionForm(true, context);
 }
+
 function opinionForm(edit, context) {
     console.log('enter opinion');
 
     var opinion = '';
     var opinionIdHidden = '';
     var deleteButton = '';
-    if(edit) {
-    	opinion = context.content;
-    	edit = `<input type="hidden" class="edit" name="edit" value="edit" />`;
-    	opinionIdHidden = `<input type="hidden" class="opinionId" name="opinionId" value="${context.opinionId}" />`;
-    	//deleteButton = `<input class="button" type="button" value="Delete" name="Delete" id="DeleteOpinion"/>`;
+    if (edit) {
+        opinion = context.content;
+        edit = `<input type="hidden" class="edit" name="edit" value="edit" />`;
+        opinionIdHidden = `<input type="hidden" class="opinionId" name="opinionId" value="${context.opinionId}" />`;
+        //deleteButton = `<input class="button" type="button" value="Delete" name="Delete" id="DeleteOpinion"/>`;
     } else {
         edit = '';
     }
@@ -216,20 +217,20 @@ function opinionForm(edit, context) {
                 event.preventDefault();
             }
         } else {
-        	var bg = jQuery('textarea.opinion').css('background-color');
-        	if(bg != "rgb(255,255,255)") {
-        		jQuery('textarea.opinion').css({ "background-color": "rgb(255,255,255)" });
-        	}
+            var bg = jQuery('textarea.opinion').css('background-color');
+            if (bg != "rgb(255,255,255)") {
+                jQuery('textarea.opinion').css({ "background-color": "rgb(255,255,255)" });
+            }
         }
         if (event.keyCode == 27) {
             jQuery('#form').remove();
             event.preventDefault();
         }
-        if(event.keyCode == 10 || event.keyCode == 13) {
-        	event.preventDefault();
+        if (event.keyCode == 10 || event.keyCode == 13) {
+            event.preventDefault();
         }
-        if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
-        	jQuery('form#opinion').submit();
+        if (event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
+            jQuery('form#opinion').submit();
         }
     });
 
@@ -240,11 +241,11 @@ function opinionForm(edit, context) {
         var opinionId = jQuery('.opinionId').val();
         var edit = jQuery('.edit').val();
         if (opinion) {
-        	if(edit == 'edit') {
-        		dpt.putOpinion(whoami.dptUUID, opinionId, currentTopic, opinion);
-        	} else {
-        		dpt.postOpinion(currentTopic, opinion);
-        	}
+            if (edit == 'edit') {
+                dpt.putOpinion(whoami.dptUUID, opinionId, currentTopic, opinion);
+            } else {
+                dpt.postOpinion(currentTopic, opinion);
+            }
         }
         jQuery('#form').remove();
     });
@@ -396,6 +397,7 @@ var createGUIScene = function(dptMode) {
     });
 
     requestFeedback();
+    requestHelp();
 }
 
 function requestFeedback() {
@@ -469,19 +471,25 @@ function requestHelp() {
     // Button toggle logic
     btnH.onclick = () => {
         jQuery('body').append(`
-    		<div id="form" style="min-width: 680px; height: 510px;">
-	    		 <iframe id="helpIframe" style="width: 100%; height: 100%;" src="help.html"></iframe> 
-    		</div>
+    		<div id="form" class="helpframe">
+            <img src="/dpt_gestures.png" alt="help" class="helpimage">
+            <button class="button" id="close-btn">close</button>
+            </div>
     	`);
         window.addEventListener('message', event => {
             // IMPORTANT: check the origin of the data! 
-            if (event.origin.startsWith('help.html') &&
-                event.data == 'simple-feedback-finished') {
-                jQuery('#helpIframe').remove();
+            if (event.data == 'simple-help-finished') {
+
                 jQuery('#form').remove();
             } else {
                 return;
             }
+        });
+
+        jQuery(document).one('click', "#close-btn", function(event) {
+            jQuery('#form').remove();
+            focusAtCanvas();
+            event.preventDefault();
         });
     }
 
