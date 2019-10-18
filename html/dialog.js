@@ -33,6 +33,11 @@ function crisisForm(messageId) {
         event.preventDefault();
         dpt.postCrisis(jQuery('.reason').val(), jQuery("input[name='rating']:checked").val(), currentDialog.dialog, messageId, whoami.dptUUID);
         jQuery('#misc2').empty();
+        jQuery('form#dialogFrame').html(`
+			<br>
+            <input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
+            <input type="button" class="crisis" value="end dialog" name="end dialog" id="crisis">
+		`);
     });
 
     jQuery(document).one('click', "#crisisCloseWindow", function(event) {
@@ -196,7 +201,6 @@ function dialogForm() {
 					<div class="status">
 						<center>
 							<form id="dialogFrame">
-							<textarea class="dialog" type="text" name="message"  id="dialogInput"></textarea>
 								<br>
                                 <input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
                                 <input type="button" class="crisis" value="end dialog" name="end dialog" id="crisis">
