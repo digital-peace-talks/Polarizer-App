@@ -445,6 +445,11 @@ textarea {
   resize: none;
 }
 
+textarea.proposition,
+textarea.opinion,
+textarea.topic {
+	background-color: rgb(255,255,255);
+}
 textarea#dialog {
   font-family: DPTFont;
   color: #005B98;

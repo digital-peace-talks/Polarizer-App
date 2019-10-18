@@ -194,14 +194,14 @@ class DPT {
 	
 	putDialog(dialogId, topic, key, value) {
 		var obj = {
-				method: 'put',
-				path: '/dialog/'+ dialogId +'/',
-				data: {
-					dialogId: dialogId,
-					body: {
-						topic: topic,
-					}
+			method: 'put',
+			path: '/dialog/'+ dialogId +'/',
+			data: {
+				dialogId: dialogId,
+				body: {
+					topic: topic,
 				}
+			}
 		};
 		obj.data.body[key] = value;
 		this.socket.emit('api', obj);

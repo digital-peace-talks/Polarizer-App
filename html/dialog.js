@@ -39,7 +39,12 @@ function crisisForm(messageId) {
         dialogFormOpen = 0;
         jQuery('#misc2').empty();
         event.preventDefault();
-    })
+    });
+    jQuery(document).on('keyup', '#dialogInput', function(event) {
+    	if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
+    		jQuery('form#crisis').submit();
+    	}
+    });
 }
 
 function dialogForm() {
@@ -241,7 +246,7 @@ function dialogForm() {
             html += `
 					<div class="status">
 						<center id="actionSpace">
-							<input type="button" class="buttondialog" value="accept dialog" name="accept dialog" size="120" id="dialogAccept">
+							<input type="button" class="buttondialog" id="dialogAccept" value="accept dialog" name="accept dialog" size="120" id="dialogAccept">
 							<input type="button" class="buttondialog" value="ask me later" name="accept dialog" size="120" id="dialogCloseWindow">
 							<input type="button" class="buttondialog" value="reject" name="accept dialog" size="120" id="dialogReject">
 			   			</center>
@@ -250,11 +255,21 @@ function dialogForm() {
 
             jQuery(document).one('click', "#dialogAccept", function(event) {
                 jQuery('center#actionSpace').html(`
-						<form id="dialogFrame">
-							<input type="text" name="message" size="60" id="dialogInput">
-						</form><br>
+					<div class="status">
+						<center>
+							<form id="dialogFrame">
+							<textarea class="dialog" type="text" name="message"  id="dialogInput"></textarea>
+								<br>
+								<input type="submit" class="buttondialog" name="send" value="send">
+                                <input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
+                                <input type="button" class="crisis" value="end dialog" name="end dialog" id="crisis">
+                            </form>
+                            <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
+                        
+						</center>
+					</div>
 					`);
-                dpt.putDialog(currentDialog.dialog, "status", "ACTIVE");
+                dpt.putDialog(currentDialog.dialog, currentTopic, "status", "ACTIVE");
                 event.preventDefault();
             });
 
@@ -335,6 +350,9 @@ function dialogForm() {
             jQuery('#dialogForm').remove();
             focusAtCanvas();
             event.preventDefault();
+        }
+        if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
+        	jQuery('form#dialogFrame').submit();
         }
     });
     var objDiv = document.getElementById("dialogForm");

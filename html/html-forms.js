@@ -45,7 +45,10 @@ function propositionForm(opinionId) {
                 event.preventDefault();
             }
         } else {
-            jQuery('.proposition').css({ "background-color": "#ffffff" , "color": "#005B98"});
+        	var bg = jQuery('textarea.proposition').css('background-color');
+        	if(bg != "rgb(255,255,255)") {
+        		jQuery('textarea.proposition').css({ "background-color": "rgb(255,255,255)" });
+        	}
         }
         if (event.keyCode == 27) {
             jQuery('#form').remove();
@@ -57,6 +60,9 @@ function propositionForm(opinionId) {
         	event.preventDefault();
         }
         */
+        if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
+        	jQuery('form#proposition').submit();
+        }
     });
 
     jQuery(document).on('submit', 'form#proposition', function(event) {
@@ -116,7 +122,7 @@ function topicForm(edit, context) {
     jQuery(document).on('keydown', '.topic', function(event) {
         var n = jQuery('.topic').val().length;
         if (n >= 256) {
-            jQuery('textarea.topic').css({ "background-color": "#ff8888", "color": "#005B98" });
+            jQuery('textarea.topic').css({ "background-color": "#f88" });
             if (event.keyCode != 8 &&
                 event.keyCode != 127 &&
                 event.keyCode != 37 &&
@@ -126,7 +132,10 @@ function topicForm(edit, context) {
                 event.preventDefault();
             }
         } else {
-            jQuery('textarea.topic').css({ "background-color": "#ffffff" , "color": "#005B98"});
+        	var bg = jQuery('textarea.topic').css('background-color');
+        	if(bg != "rgb(255,255,255)") {
+        		jQuery('textarea.topic').css({ "background-color": "rgb(255,255,255)" });
+        	}
         }
         if (event.keyCode == 27) {
             jQuery('#form').remove();
@@ -207,7 +216,10 @@ function opinionForm(edit, context) {
                 event.preventDefault();
             }
         } else {
-            jQuery('.opinion').css({ "background-color": "#fff" });
+        	var bg = jQuery('textarea.opinion').css('background-color');
+        	if(bg != "rgb(255,255,255)") {
+        		jQuery('textarea.opinion').css({ "background-color": "rgb(255,255,255)" });
+        	}
         }
         if (event.keyCode == 27) {
             jQuery('#form').remove();
