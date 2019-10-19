@@ -203,7 +203,7 @@ var createGenericScene = function(dptMode) {
 	// lights - no light!!
 	var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
 	light.radius = 10;
-	light.intensity = 0.3;
+	light.intensity = 0.4;
 
 	genericScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
 
