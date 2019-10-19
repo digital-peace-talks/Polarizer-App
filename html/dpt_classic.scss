@@ -335,6 +335,7 @@ div#dialogFrame {
 .menu-btn {
     padding: 10px;
     padding-left: 20px;
+    margin: 0px;
     display: none;
     font-family: "DPTFontDin";
     text-transform: uppercase;
@@ -391,13 +392,13 @@ div#dialogFrame {
 #dialogMenu {
     position: relative;
     padding: 10px;
-    top: 144px;
+    top: 182px;
     border: $dpt-white;
     border-style: solid;
     border-width: 1px;
     color: $dpt-blue03;
     width: 280px;
-    max-height: 480px;
+    max-height: 450px;
     overflow-y: auto;
     z-index: 2;
     font-family: DPTFontDin;
@@ -512,6 +513,61 @@ textarea#dialog {
 }
 
 
+/*----- Menu -----*/
+
+nav {
+    margin: 0 auto;
+    width: 100%;
+    height: 11em;
+    text-align: right;
+    position: absolute;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0 0 0 0;
+}
+
+nav ul li {
+    list-style: none;
+    margin: 0;
+    display: inline;
+}
+
+nav ul li button {
+    color: #009999;
+    position: relative;
+    padding: 0 0 0.5em 0;
+    display: inline-block;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+nav ul.menu {
+    max-height: 20px;
+}
+
+nav a#nav-m,
+nav a.close {
+    display: none;
+}
+
+nav ul li {
+    margin: 0 0 0 0;
+}
+
+
+/*----- Logo -----*/
+
+.brand,
+.brand img {
+    float: left;
+}
+
+
+/*----------------*/
+
+
 /* button menu style for mobile */
 
 @media all and (max-width: 640px) {
@@ -522,14 +578,14 @@ textarea#dialog {
         background-color: $dpt-blue03-semi;
     }
     #overlay {
-        height: 144px;
+        height: 184px;
         width: 100%;
         display: block;
     }
     #form {
         width: 100%;
         height: 200px;
-        top: 144px;
+        top: 184px;
         left: 0;
         margin-left: 0px;
         position: absolute;
@@ -573,7 +629,7 @@ textarea#dialog {
     #dialogMenu {
         width: 100%;
         height: 100%;
-        top: 144px;
+        top: 184px;
         left: 0px;
         margin-left: 0px;
     }
@@ -605,6 +661,69 @@ textarea#dialog {
         position: absolute;
         left: 0px;
         width: 100%;
-        top: 80px;
+        top: 120px;
+    }
+    /* Normalize the lists */
+    .menu,
+    .sub-menu {
+        margin: 0;
+        padding: 0;
+        li {
+            margin: 0;
+        }
+    }
+    /*Formatierung Mobiles Menue*/
+    nav ul {
+        top: 40px;
+        position: absolute;
+        width: 100%;
+        left: -100%;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        -webkit-transition: all 0.4s ease-out;
+        -moz-transition: all 0.3s ease-out;
+        -o-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+    }
+    nav ul li {
+        display: block;
+        text-align: left;
+        padding: 0em 0em;
+    }
+    nav ul li button {
+        padding: 1em 0;
+    }
+    nav ul.menu li a:hover {
+        border-bottom: 0;
+    }
+    /*Hamburger-Icon*/
+    nav a#nav-m {
+        display: inline;
+    }
+    nav a#nav-m img,
+    nav a.close img {
+        width: 40px;
+        height: auto;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+    }
+    nav>.close,
+    nav a#nav-m:target {
+        display: none;
+        right: 0px;
+        top: 0px;
+    }
+    nav a:target~ul,
+    nav a:target~.close {
+        display: inline-block;
+    }
+    nav a:target~.close {
+        position: absolute;
+        margin-left: -40px;
+    }
+    nav a:target~ul {
+        left: 0;
     }
 }

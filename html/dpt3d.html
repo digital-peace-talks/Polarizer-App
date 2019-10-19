@@ -58,12 +58,22 @@
 <body>
 
     <div id="overlay">
-        <div id="button-menu">
-            <button class="menu-btn" id="home-btn"><img class= "btn-icon"src="/nav-top-logo.png" >Home</button>
-            <button class="menu-btn" id="new-topic-btn"><img class="btn-icon" src="/Interrobang.png">New-Topic</button>
-            <button class="menu-btn" id="new-opinion-btn"><img class="btn-icon" src="/Interrobang.png">New-Opinion</button>
-            <button class="menu-btn" id="dialogues-btn"><img class="btn-icon" src="/1message_white.png">Your Dialogues</button>
-        </div>
+
+        <nav>
+            <div class="brand">
+                <a href=""><img src="dpt_logo.png" alt="digital peace talks" /></a>
+            </div>
+            <a href="#nav-m" id="nav-m"><img src="/button_menu.png" alt="" /></a>
+            <a href="#" class="close"><img src="/button_close.png" alt="" /></a>
+            <ul class="menu">
+
+                <li><button class="menu-btn" id="home-btn"><img class= "btn-icon"src="/nav-top-logo.png" >Home</button></li>
+                <li><button class="menu-btn" id="new-topic-btn"><img class="btn-icon" >New-Topic</button></li>
+                <li><button class="menu-btn" id="new-opinion-btn"><img class="btn-icon" >New-Opinion</button></li>
+                <li><button class="menu-btn" id="dialogues-btn"><img class="btn-icon" src="/1message_white.png">Your Dialogues</button></li>
+            </ul>
+        </nav>
+
     </div>
 
     <canvas id="renderCanvas" tabindex="1"></canvas>
