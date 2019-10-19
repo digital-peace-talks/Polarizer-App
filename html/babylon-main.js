@@ -102,8 +102,8 @@ function getCamera(rotate) {
 		
 	camera.lowerAlphaLimit = 0.0174533 * -140;
 	camera.upperAlphaLimit = 0.0174533 * -40;
-	camera.lowerBetaLimit = 0.0174533 * 60;
-	camera.upperBetaLimit = 0.0174533 * 120;
+	camera.lowerBetaLimit = 0.0174533 * 40;
+	camera.upperBetaLimit = 0.0174533 * 140;
 
 	camera.panningAxis = new BABYLON.Vector3(1, 1, 0);
 	//camera.setTarget(BABYLON.Vector3.Zero());
@@ -214,12 +214,10 @@ var createGenericScene = function(dptMode) {
 	//pauseEngine();
 
 	// Enable Collisions
-	/*
 	var box = getCollisionBox();
 	box.checkCollisions = true;
 	camera.checkCollisions = true;
 	genericScene.collisionsEnabled = true;
-	*/
 
 	createGUIScene(dptMode);
 
