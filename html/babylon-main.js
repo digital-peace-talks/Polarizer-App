@@ -214,10 +214,12 @@ var createGenericScene = function(dptMode) {
 	//pauseEngine();
 
 	// Enable Collisions
+	/*
 	var box = getCollisionBox();
 	box.checkCollisions = true;
 	camera.checkCollisions = true;
 	genericScene.collisionsEnabled = true;
+	*/
 
 	createGUIScene(dptMode);
 

@@ -4,6 +4,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 
 	var status = opinionDialogConnections.dialogStatus;
 	var emissiveColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+	var distance = 0;
 
 	if(status == 'PENDING') {
 		return;
@@ -60,6 +61,7 @@ Where getIntersection is:
 	ev.y = p2[1];
 	//ev.z = 0.2;
 	
+	distance = Math.sqrt(Math.pow(sv.x-ev.x,2)+Math.pow(sv.y-ev.y,2)+Math.pow(sv.z-ev.z,2));
 
 	var radius = 0.04;
 	var occupacy = 0.85;
@@ -151,16 +153,16 @@ Where getIntersection is:
 		emmisiveColor = new BABYLON.Vector3(0.2, 0.2, 0.2);
 	}
 
-	if(combination.indexOf('grey') >= 0) {
+	if(combination.indexOf('grey') > 0) {
 		combination = 'grey-grey';
 	}
 	
 	// dominant color scheme
 	if(1) {
-		if(combination.indexOf('red') >= 0) {
+		if(combination.indexOf('red') > 0) {
 			combination = 'red-red';
 		}
-		if(combination.indexOf('green') >= 0) {
+		if(combination.indexOf('green') > 0) {
 			combination = 'green-green';
 		}
 	}
@@ -195,6 +197,10 @@ Where getIntersection is:
 		// mat.alphaMode = BABYLON.Engine.ALPHA_MAXIMIZED;
 	}
 	mat.diffuseTexture = dynamicTexture;
+	mat.diffuseTexture.uScale=4;
+	mat.diffuseTexture.vScale=distance*8;
+	mat.diffuseTexture.wrapU=1;
+	mat.diffuseTexture.wrapV=1;
 	mat.specularColor = new BABYLON.Color3.Black;
 	//mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
 	mat.emissiveColor = emissiveColor;
