@@ -171,7 +171,7 @@ function dialogForm() {
                     <form id="dialogFrame">
                     
                         <input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
-                        <input type="button" class="crisis" value="end dialog" name="end dialog" id="crisis">
+                        <input type="button" class="crisis" value="end dialog" name="end dialog" id="none">
                     </form>
                     <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
                 </center>
@@ -189,7 +189,7 @@ function dialogForm() {
 								<br>
 								<input type="submit" class="buttondialog" name="send" value="send">
                                 <input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
-                                <input type="button" class="crisis" value="end dialog" name="end dialog" id="crisis">
+                                <input type="button" class="crisis" value="end dialog" name="end dialog" id="none">
                             </form>
                             <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
                         
@@ -203,7 +203,7 @@ function dialogForm() {
 							<form id="dialogFrame">
 								<br>
                                 <input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
-                                <input type="button" class="crisis" value="end dialog" name="end dialog" id="crisis">
+                                <input type="button" class="crisis" value="end dialog" name="end dialog" id="none">
                             </form>
                             <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
                         
@@ -217,7 +217,6 @@ function dialogForm() {
             dialogFormOpen = 0;
             jQuery('#dialogForm').remove();
             focusAtCanvas();
-            event.preventDefault();
         });
 
         jQuery(document).one('click', "#extensionRequest", function(event) {
@@ -242,7 +241,6 @@ function dialogForm() {
                 dialogFormOpen = 0;
                 jQuery('#dialogForm').remove();
                 focusAtCanvas();
-                event.preventDefault();
             });
 
         } else {
@@ -251,7 +249,7 @@ function dialogForm() {
 					<div class="status">
 						<center id="actionSpace">
 							<input type="button" class="buttondialog" id="dialogAccept" value="accept dialog" name="accept dialog" size="120" id="dialogAccept">
-							<input type="button" class="buttondialog" value="ask me later" name="accept dialog" size="120" id="dialogCloseWindow">
+							<input type="button" class="buttondialog" value="ask me later" name="accept dialog" size="120" id="dialogClose">
 							<input type="button" class="buttondialog" value="reject" name="accept dialog" size="120" id="dialogReject">
 			   			</center>
 					</div>
@@ -266,7 +264,7 @@ function dialogForm() {
 								<br>
 								<input type="submit" class="buttondialog" name="send" value="send">
                                 <input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
-                                <input type="button" class="crisis" value="end dialog" name="end dialog" id="crisis">
+                                <input type="button" class="crisis" value="end dialog" name="end dialog" id="none">
                             </form>
                             <div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
                         
@@ -277,11 +275,10 @@ function dialogForm() {
                 event.preventDefault();
             });
 
-            jQuery(document).one('click', "#dialogCloseWindow", function(event) {
+            jQuery(document).one('click', "#dialogClose", function(event) {
                 dialogFormOpen = 0;
                 jQuery('#dialogForm').remove();
                 focusAtCanvas();
-                event.preventDefault();
             });
 
             jQuery(document).one('click', "#dialogReject", function(event) {
@@ -308,8 +305,9 @@ function dialogForm() {
         jQuery(document).one('click', "#dialogCloseWindow", function(event) {
             dialogFormOpen = 0;
             jQuery('#dialogForm').remove();
-            focusAtCanvas();
             event.preventDefault();
+            event.stopImmediatePropagation();
+            focusAtCanvas();
         });
     }
 

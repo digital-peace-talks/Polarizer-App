@@ -100,10 +100,10 @@ function getCamera(rotate) {
 	camera.lowerRadiusLimit = 1;
 	camera.upperRadiusLimit = 35;
 		
-	camera.lowerAlphaLimit = 0.0174533 * -115;
-	camera.upperAlphaLimit = 0.0174533 * -65;
-	camera.lowerBetaLimit = 0.0174533 * 65;
-	camera.upperBetaLimit = 0.0174533 * 115;
+	camera.lowerAlphaLimit = 0.0174533 * -140;
+	camera.upperAlphaLimit = 0.0174533 * -40;
+	camera.lowerBetaLimit = 0.0174533 * 60;
+	camera.upperBetaLimit = 0.0174533 * 120;
 
 	camera.panningAxis = new BABYLON.Vector3(1, 1, 0);
 	//camera.setTarget(BABYLON.Vector3.Zero());

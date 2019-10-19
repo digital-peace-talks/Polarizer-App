@@ -251,6 +251,9 @@ module.exports.createCrisis = async (options) => {
 	var dialog;
 
 	try {
+		if(options.body.causingMessage == 'none') {
+			delete(options.body.causingMessage);
+		}
 		dialog = await Dialog.findById(options.dialogId);
 		dialog.crisises.push(options.body);
 		await dialog.save();

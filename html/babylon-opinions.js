@@ -3,6 +3,7 @@
 function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections) {
 
 	var status = opinionDialogConnections.dialogStatus;
+	var emissiveColor = new BABYLON.Color3(0.1, 0.1, 0.1);
 
 	if(status == 'PENDING') {
 		return;
@@ -70,6 +71,7 @@ Where getIntersection is:
 		"tube", {
 			path: [sv, ev],
 			radius: radius,
+			cap: BABYLON.Mesh.CAP_ALL,
 			updatable: true,
 		},
 		currentScene);
@@ -142,9 +144,11 @@ Where getIntersection is:
 	} else if(combination == 'green-red') {
 		var reverse = 1;
 		combination = 'red-green';
+		emmisiveColor = new BABYLON.Vector3(0.2, 0.2, 0.2);
 	} else if(combination == 'blue-red') {
 		var reverse = 1;
 		combination = 'red-blue';
+		emmisiveColor = new BABYLON.Vector3(0.2, 0.2, 0.2);
 	}
 
 	if(combination.indexOf('grey') >= 0) {
@@ -193,21 +197,22 @@ Where getIntersection is:
 	mat.diffuseTexture = dynamicTexture;
 	mat.specularColor = new BABYLON.Color3.Black;
 	//mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+	mat.emissiveColor = emissiveColor;
 	tube.material = mat;
 
 	tube.actionManager = new BABYLON.ActionManager(currentScene);
 
-	// enlarge ON MOUSE ENTER
+	// bold ON MOUSE ENTER
 	tube.actionManager.registerAction(
 		new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
 			function(ev) {
 				var meshLocal = ev.meshUnderPointer;
-				meshLocal.material.emissiveColor = new BABYLON.Color3(0.7, 0.7, 0.7);
+				meshLocal.material.emissiveColor = new BABYLON.Vector3(0.7, 0.7, 0.7);
 				//meshLocal.position.y += 2;
 				canvas.style.cursor = "move";
 			}, false));
 
-	// normal size ON MOUSE EXIT
+	// normal ON MOUSE EXIT
 	tube.actionManager.registerAction(
 		new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
 			function(ev) {
