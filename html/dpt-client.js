@@ -26,6 +26,18 @@ class DPT {
 		});
 	}
 	
+	searchTopicsAndOpinions(searchString) {
+		this.socket.emit("api", {
+			method: 'get',
+			path: '/metadata/search/'+searchString+'/',
+			data: {
+				body: {
+					searchString: searchString,
+				}
+			}
+		});
+	}
+	
 	userReclaim(phrase, publicKey) {
 		this.socket.emit("api", {
 			method: 'put',

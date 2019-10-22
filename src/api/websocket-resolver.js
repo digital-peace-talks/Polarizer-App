@@ -7,6 +7,7 @@ const opinionService	= require('./services/opinion');
 const dialogService		= require('./services/dialog');
 const metadataService	= require('./services/metadata');
 
+const searchStr		= "([0-9a-zA-Z ].*)";
 const uuidReg		= "([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})";
 const mongoReg		= "([0-9a-fA-F]{24})";
 const topicIdReg	= mongoReg;
@@ -103,6 +104,14 @@ match.push({
 	}
 });
 
+match.push({
+	path: "/metadata/search/"+ searchStr +"/",
+	method: "get",
+	fun: async function(data) {
+		const result = await metadataService.searchTopicsAndOpinions(data);
+		return(result);
+	}
+});
 
 // not in the api and maybe needs to get protected, somehow.
 // this entry point will return a list of all users.

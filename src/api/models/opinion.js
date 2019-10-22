@@ -37,4 +37,6 @@ opinionSchema.post("remove", async doc => {
 	topic.save();
 });
 
+opinionSchema.index({content: 'text'});
+
 exports.opinionModel = mongoose.model("Opinion", opinionSchema);

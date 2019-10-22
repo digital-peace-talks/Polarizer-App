@@ -206,7 +206,7 @@ function textBlock(x, y, z, name, text, options) {
 			}, currentScene);
 	plane.dpt = JSON.parse(name);
 
-//    var pngBase64 = textureContext.canvas.toDataURL("image/gif", 0.99);
+//    var pngBase64 = textureContext.canvas.toDataURL("image/png", 0.99);
 
     plane.bjs = { x: 1/DTWidth * textureContext.canvas.width * 2.4, y: 1/DTHeight * textureContext.canvas.height * 1.6 }; 
 //    plane.bjs = { x: 1/DTWidth * textureContext.canvas.width * 2.4, y: 1/DTHeight * textureContext.canvas.height * 1.6 }; 

@@ -47,5 +47,7 @@ topicSchema.post("remove", async doc => {
 });
 */
 
+topicSchema.index({content: 'text'});
+
 exports.topicModel = mongoose.model("Topic", topicSchema);
 

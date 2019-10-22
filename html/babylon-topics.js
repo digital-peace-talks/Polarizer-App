@@ -54,3 +54,41 @@ function loadTopics(restObj) {
 		}
 	}
 }
+
+function searchResultTopics(restObj) {
+	var cols = Math.ceil(Math.sqrt(restObj.data.length));
+
+	var xstart = -cols*4.8/2 + 4.8/2;
+	var ystart = cols*3.2/2 + 3.2/2;
+
+	if(currentScene.name == 'topicScene') {
+		for(var i = currentScene.meshes.length - 1; i >= 0; i--) {
+			if('dpt' in currentScene.meshes[i]
+			&& currentScene.meshes[i].dpt.context == 'topicScene') {
+				currentScene.meshes[i].dispose();
+			}
+		}
+	}
+	if(restObj.data.length) {
+		x = xstart;
+		y = ystart;
+		for(var i in restObj.data) {
+			if(i % cols == 0) {
+				x = xstart;
+				y -= 3.2;
+			} else {
+				x += 4.8;
+			}
+			var plane = textBlock(
+				x, y, 0,
+				JSON.stringify({
+					"context": "topicScene",
+					"topicId": restObj.data[i].topicId,
+					"topic": restObj.data[i].topic
+				}),
+				`${restObj.data[i].topic} [${restObj.data[i].count}]`);
+		}
+	} else {
+		var plane = textBlock(0,0,0, `{"context": "topicScene"}`, `Nothing found.`);
+	}
+}
