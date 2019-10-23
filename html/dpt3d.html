@@ -9,6 +9,7 @@
 
     <!-- Babylon.js -->
     <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+
     <!--
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
 	<script src="https://preview.babylonjs.com/ammo.js"></script>
@@ -20,105 +21,115 @@
 	<script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
 	<script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
 	-->
+
     <script src="https://preview.babylonjs.com/babylon.js"></script>
     <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+
     <!--
 	<script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
 	<script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"/>
 	-->
+
     <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
     <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
 
     <link rel="stylesheet" href="/dpt_classic.css" />
-    <script>
-        // Testpage for different Browsers
-        // http://www.quirksmode.org/m/tests/widthtest_vpdevice.html
-        /* 
-        function fixZoom() {
-               var relation = 100 / window.devicePixelRatio;
-                document.body.style.MozTransform = 'scale(' + relation / 100 + ')';
-                document.body.style.zoom = relation + '%';
+	<script>
+		// Testpage for different Browsers
+		// http://www.quirksmode.org/m/tests/widthtest_vpdevice.html
+		/* 
+			function fixZoom() {
+				var relation = 100 / window.devicePixelRatio;
+				document.body.style.MozTransform = 'scale(' + relation / 100 + ')';
+				document.body.style.zoom = relation + '%';
 
-                document.body.style.webkitTransform = 'scale(' + relation / 100 + ')'; // Chrome, Opera, Safari
-                document.body.style.msTransform = 'scale(' + relation / 100 + ')'; // IE 9
-                document.body.style.transform = 'scale(' + relation / 100 + ')'; // General
+				document.body.style.webkitTransform = 'scale(' + relation / 100 + ')'; // Chrome, Opera, Safari
+				document.body.style.msTransform = 'scale(' + relation / 100 + ')'; // IE 9
+				document.body.style.transform = 'scale(' + relation / 100 + ')'; // General
 
-                $('body').offset({
-                    top: 0,
-                    left: 0
-                });
+				jQuery('body').offset({ top: 0, left: 0 });
 
-                document.getElementById('status').innerHTML = Math.round(window.devicePixelRatio * 100);
-            } */
-    </script>
+				document.getElementById('status').innerHTML = Math.round(window.devicePixelRatio * 100);
+			}
+		*/
+	</script>
     <link rel="manifest" href="manifest.json">
-    <!-- icon in the highest resolution we need it for -->
-    <link rel="icon" sizes="192x192" href="icons/icon-192x192.png">
-    <!-- reuse same icon for Safari 
-    <link rel="apple-touch-icon" href="icons/ios-icon.png"> -->
-    <link rel="apple-touch-icon" href="icons/touch-icon-iphone.png">
-    <link rel="apple-touch-startup-image" href="icons/ios-icon.png">
-    <!-- multiple icons for IE -->
-    <meta name="msapplication-square70x70logo" content="icons/icon-72x72.png">
-    <meta name="msapplication-square150x150logo" content="icons/icon-144x144.png">
-    <meta name="msapplication-wide310x150logo" content="icons/icon-192x192.png">
-    <meta name="msapplication-square310x310logo" content="icon_largetile.png">
-    <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#C4CAD3">
-    <!-- change the status bar appearance -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-transparent">
+
+	<!-- icon in the highest resolution we need it for -->
+	<link rel="icon" sizes="192x192" href="icons/icon-192x192.png">
+
+	<!-- reuse same icon for Safari 
+	<link rel="apple-touch-icon" href="icons/ios-icon.png"> -->
+	<link rel="apple-touch-icon" href="icons/touch-icon-iphone.png">
+	<link rel="apple-touch-startup-image" href="icons/ios-icon.png">
+
+	<!-- multiple icons for IE -->
+	<meta name="msapplication-square70x70logo" content="icons/icon-72x72.png">
+	<meta name="msapplication-square150x150logo" content="icons/icon-144x144.png">
+	<meta name="msapplication-wide310x150logo" content="icons/icon-192x192.png">
+	<meta name="msapplication-square310x310logo" content="icon_largetile.png">
+
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#C4CAD3">
+
+	<!-- change the status bar appearance -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-transparent">
+
 </head>
 
 
 <body>
 
-    <div id="overlay">
+	<div id="overlay">
+		<nav>
+			<div class="brand">
+				<a href=""><img src="dpt_logo.png" alt="digital peace talks" /></a>
+			</div>
+			<a href="#nav-m" id="nav-m"><img src="/button_menu.png" alt="" /></a>
+			<a href="#" class="close"><img src="/button_close.png" alt="" /></a>
+			<ul class="menu">
+				<li><button class="menu-btn" id="home-btn"><img class= "btn-icon"src="/nav-top-logo.png" >Home</button></li>
+				<li><form class="searchString menu-entry"><img class= "btn-icon"src="/search.png"><input size="18" type="text" id="searchString" name="searchString"/></form></li>
+				<li><button class="menu-btn" id="new-topic-btn"><img class="btn-icon" >New-Topic</button></li>
+				<li><button class="menu-btn" id="new-opinion-btn"><img class="btn-icon" >New-Opinion</button></li>
+				<li><button class="menu-btn" id="dialogues-btn"><img class="btn-icon" src="/1message_white.png">Your Dialogues</button></li>
+			</ul>
+		</nav>
+	</div>
 
-        <nav>
-            <div class="brand">
-                <a href=""><img src="dpt_logo.png" alt="digital peace talks" /></a>
-            </div>
-            <a href="#nav-m" id="nav-m"><img src="/button_menu.png" alt="" /></a>
-            <a href="#" class="close"><img src="/button_close.png" alt="" /></a>
-            <ul class="menu">
+	<canvas id="renderCanvas" tabindex="1"></canvas>
 
-                <li><button class="menu-btn" id="home-btn"><img class= "btn-icon"src="/nav-top-logo.png" >Home</button></li>
-                <li><form class="searchString menu-entry"><img class= "btn-icon"src="/search.png"><input size="18" type="text" id="searchString" name="searchString"/></form></li>
-                <li><button class="menu-btn" id="new-topic-btn"><img class="btn-icon" >New-Topic</button></li>
-                <li><button class="menu-btn" id="new-opinion-btn"><img class="btn-icon" >New-Opinion</button></li>
-                <li><button class="menu-btn" id="dialogues-btn"><img class="btn-icon" src="/1message_white.png">Your Dialogues</button></li>
-            </ul>
-        </nav>
-
-    </div>
-
-    <canvas id="renderCanvas" tabindex="1"></canvas>
-
-    <div id="misc"></div>
-    <div id="misc2"></div>
-    <script>
-    if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js').then(function(registration) {
-        // Registration was successful
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-        }, function(err) {
-        // registration failed :(
-        console.log('ServiceWorker registration failed: ', err);
-        });
-    });
-    }
+	<div id="misc"></div>
+	<div id="misc2"></div>
+	<script>
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', function() {
+				navigator.serviceWorker.register('/sw.js')
+				.then(function(registration) {
+					// Registration was successful
+					console.log('ServiceWorker registration successful with scope: ', registration.scope);
+				}, function(err) {
+					// registration failed :(
+					console.log('ServiceWorker registration failed: ', err);
+				});
+			});
+		}
     </script>
 </body>
+
 <!--
 <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
 <!--
 <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 -->
+
 <!--	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script> -->
+
 <script src="dpt3d.js"></script>
 <script src="babylon-main.js"></script>
 <script src="dpt-client.js"></script>
