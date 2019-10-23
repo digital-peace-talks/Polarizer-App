@@ -1,7 +1,7 @@
 {
     "name": "Digital Peace Talks",
     "short_name": "dpTalks",
-    "start_url": "/dpt3d.html",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#28A9E1",
     "theme_color": "#28A9E1",
