@@ -10,6 +10,7 @@ const router = new express.Router();
 
 router.get('/', async(req, res, next) => {
 	try {
+		res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
 		if (req.signedCookies.dptUUID === undefined) {
 			var phrase = await getPhrase();
 			//console.log("no cookie found, set new one");
