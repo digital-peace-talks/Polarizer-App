@@ -18,7 +18,7 @@ router.get('/', async(req, res, next) => {
             res.send(`<head><link rel="stylesheet" href="dpt_start.css" /></head>
             <body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="300" width="300">
                 <br>
-                <div class="text">Digital peace talks is currently in private beta!
+                <div class="text">Digital peace talks is currently in private alpha!
                 Only a minimum viable product is viable at the moment, and our primary goal is to get direct feedback from a small set of users to evaluate our core design. 
                 Thank you.</div>
                 <br>
@@ -36,7 +36,7 @@ router.get('/', async(req, res, next) => {
             res.send(`<head><link rel="stylesheet" href="dpt_start.css" /></head>
             <body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="300" width="300">
             <br>
-            <div class="text">Digital peace talks is currently in private beta!
+            <div class="text">Digital peace talks is currently in private alpha!
             Only a minimum viable product is viable at the moment, and our primary goal is to get direct feedback from a small set of users to evaluate our core design. 
             Only later, once we feel comfortable the app can handle more users, we will open up to general public. 
             Thank you.</div>
