@@ -3,6 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
     <title>Digital Peace Talks.</title>
@@ -53,7 +54,7 @@
     </script>
     <link rel="manifest" href="manifest.json">
     <!-- icon in the highest resolution we need it for -->
-    <link rel="icon" sizes="192x192" href="icons/icon-192x192.png">
+    <link rel="icon" sizes="512x512" href="icons/icon-512x512.png">
     <!-- reuse same icon for Safari 
     <link rel="apple-touch-icon" href="icons/ios-icon.png"> -->
     <link rel="apple-touch-icon" href="icons/touch-icon-iphone.png">
@@ -64,9 +65,9 @@
     <meta name="msapplication-wide310x150logo" content="icons/icon-192x192.png">
     <meta name="msapplication-square310x310logo" content="icon_largetile.png">
     <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#C4CAD3">
+    <meta name="theme-color" content="#28A9E1">
     <!-- change the status bar appearance -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-transparent">
+    <meta name="apple-mobile-web-app-status-bar" content="#28A9E1">
 </head>
 
 
@@ -108,6 +109,13 @@
         });
     });
     }
+    /*
+    if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+        .then((reg) => console.log('service worker registered', reg))
+        .catch((err) => console.log('service worker not registered'), err));
+    }
+    */
     </script>
 </body>
 <!--
