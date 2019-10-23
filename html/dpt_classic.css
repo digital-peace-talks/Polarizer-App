@@ -98,7 +98,7 @@ label#positive {
 }
 
 input[type=text] {
-  background: #0a120a;
+  background: #fff;
   border-color: #005B98;
   color: #005B98;
   font-weight: bold;
