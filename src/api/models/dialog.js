@@ -18,8 +18,8 @@ const crisisSchema = mongoose.Schema({
 	expirationDate: { type: Date, default: () => { return Date.now() + 86400000 * 5 }, required: true },
 	initiator: { type: Schema.Types.ObjectId, ref: "User", required: true },
 	reason: { type: String, required: true },
-  	rating: { type: Number, required: true, default: 0 },
-  	causingMessage: { type: Schema.Types.ObjectId, ref: "Dialog.messages" },
+	rating: { type: Number, required: true, default: 0 },
+	causingMessage: { type: Schema.Types.ObjectId, ref: "Dialog.messages" },
 });
 
 const dialogSchema = mongoose.Schema({
@@ -64,23 +64,23 @@ const dialogSchema = mongoose.Schema({
 	},
 	messages: [messageSchema],
 	crisises: [crisisSchema],
-  // messages: [
-  //   {
-  //     _id: { type: Schema.Types.ObjectId },
-  //     timestamp: Date,
-  //     sender: { type: Schema.Types.ObjectId, ref: "User" },
-  //     content: String,
-  //   },
-  // ],
-  // crisises: [
-  //   {
-  //     startDate: Date,
-  //     expirationDate: Date,
-  //     initiator: { type: Schema.Types.ObjectId, ref: "User" },
-  //     reason: String,
-  //     causingMessage: { type: Schema.Types.ObjectId, ref: "Dialog.messages" },
-  //   },
-  // ],
+	//	messages: [
+	//		{
+	//			_id: { type: Schema.Types.ObjectId },
+	//			timestamp: Date,
+	//			sender: { type: Schema.Types.ObjectId, ref: "User" },
+	//			content: String,
+	//		},
+	//	],
+	//	crisises: [
+	//		{
+	//			startDate: Date,
+	//			expirationDate: Date,
+	//			initiator: { type: Schema.Types.ObjectId, ref: "User" },
+	//			reason: String,
+	//			causingMessage: { type: Schema.Types.ObjectId, ref: "Dialog.messages" },
+	//		},
+	//	],
 });
 
 dialogSchema.post("save", async doc => {

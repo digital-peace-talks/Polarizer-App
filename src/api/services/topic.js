@@ -11,7 +11,7 @@ const Topic = require("../models/topic").topicModel;
 module.exports.getTopics = async (options) => {
 	var topics;
 	try {
-	  topics = await Topic.find();
+		topics = await Topic.find();
 	} catch(error) {
 		throw({
 			status: 500,

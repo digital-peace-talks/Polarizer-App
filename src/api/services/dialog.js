@@ -189,10 +189,10 @@ module.exports.updateDialog = async (options) => {
 		};
 	}
 
-  return {
-    status: 200,
-    data: result,
-  };
+	return {
+		status: 200,
+		data: result,
+	};
 };
 
 /**

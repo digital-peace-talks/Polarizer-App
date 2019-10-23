@@ -23,18 +23,18 @@ router.get('/:opinionId/', async (req, res, next) => {
  * Gets all opinions
  */
 router.get('/', async (req, res, next) => {
-  const options = {
-  };
+	const options = {
+	};
 
-  try {
-    const result = await opinion.getOpinions(options);
-    res.status(result.status || 200).send(result.data);
-  } catch (err) {
-    return res.status(500).send({
-      status: 500,
-      error: 'Server Error'
-    });
-  }
+	try {
+		const result = await opinion.getOpinions(options);
+		res.status(result.status || 200).send(result.data);
+	} catch (err) {
+		return res.status(500).send({
+			status: 500,
+			error: 'Server Error'
+		});
+	}
 });
 
 /**
@@ -43,33 +43,33 @@ router.get('/', async (req, res, next) => {
  * made the opinion
  */
 router.put('/:opinionId/', async (req, res, next) => {
-  const options = {
-    body: req.body,
-    opinionId: req.params["opinionId"]
-  };
+	const options = {
+		body: req.body,
+		opinionId: req.params["opinionId"]
+	};
 
-  try {
-    const result = await opinion.OpinionPut(options);
-    res.status(result.status || 200).send(result.data);
-  } catch (err) {
-    next(err);
-  }
+	try {
+		const result = await opinion.OpinionPut(options);
+		res.status(result.status || 200).send(result.data);
+	} catch (err) {
+		next(err);
+	}
 });
 
 /**
  * Creates a new opinion
  */
 router.post('/', async (req, res, next) => {
-  const options = {
-    body: req.body
-  };
+	const options = {
+		body: req.body
+	};
 
-  try {
-    const result = await opinion.opinionPost(options);
-    res.status(result.status || 200).send(result.data);
-  } catch (err) {
-    next(err);
-  }
+	try {
+		const result = await opinion.opinionPost(options);
+		res.status(result.status || 200).send(result.data);
+	} catch (err) {
+		next(err);
+	}
 });
 
 module.exports = router;

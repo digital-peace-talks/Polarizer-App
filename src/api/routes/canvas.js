@@ -3,16 +3,13 @@ const canvas = require('../services/canvas');
 
 const router = new express.Router();
 
-/**
- * Gets all opinions
- */
 //router.get('/opinion/:opinionId', async (req, res, next) => {
 router.get('/', async (req, res, next) => {
 	const options = {
 //		body: req.body,
 //		opinionId: req.params["opinionId"],
 	}
-	console.log('FUCK YOU!');
+	console.log('foo!');
 
 	try {
 		const result = await canvas.draw();

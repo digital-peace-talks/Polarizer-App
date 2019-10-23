@@ -14,7 +14,6 @@ module.exports.userReclaim = async (options) => {
 	const userBydptUUID = await User.findOne({ publicKey: options.body.publicKey });
 	
 	/*
-
 		we got a keyboard entered phrase
 		we got a cookie stored dptUUID
 		
@@ -35,7 +34,6 @@ module.exports.userReclaim = async (options) => {
 		                  we generate the phrase and check it's uniqueness
 		                  in our system.
 		in case of B + D: this must be a new user, lets create one.
-
 	 */
 
 	// recover only.

@@ -14,7 +14,7 @@ const topicIdReg	= mongoReg;
 const opinionIdReg	= mongoReg;
 const dialogIdReg	= mongoReg;
 
-const config		= require("../lib/config");
+const config	= require("../lib/config");
 const logger	= require("../lib/logger");
 const log		= logger(config.logger);
 
@@ -224,7 +224,7 @@ match.push({
 			io.emit('update', {
 				path: '/topic/',
 				method: 'get',
-				data:  {}
+				data: {}
 			});
 			return(ret);
 		} else {

@@ -13,8 +13,8 @@ const User			= require('./models/user');
 const userService	= require('./services/user');
 
 const config		= require("../lib/config");
-const logger	= require("../lib/logger");
-const log		= logger(config.logger);
+const logger		= require("../lib/logger");
+const log			= logger(config.logger);
 
 
 var cookieKey		= process.env.DPT_SECRET;
@@ -64,36 +64,36 @@ async function apiBroker(obj, dptUUID, socket) {
 		|| obj.method == "delete")
 		&& user) {
 			for(var i=0; i < match.length; i++) {
-			    if(obj.path.match('^'+match[i].path+'$')
-			    && obj.method == match[i].method) {
+				if(obj.path.match('^'+match[i].path+'$')
+				&& obj.method == match[i].method) {
 
-		    		ret = await match[i].fun(obj.data, dptUUID, socket); 
+					ret = await match[i].fun(obj.data, dptUUID, socket); 
 
-			        // clone the data
-			        ret = JSON.parse(JSON.stringify(ret.data, getCircularReplacer()));
+					// clone the data
+					ret = JSON.parse(JSON.stringify(ret.data, getCircularReplacer()));
 
-			        // hide the users mongodb id.
-			        if(Lo_.isArray(ret)) {
-			        	//ret = ret.map(e => ({...e, user: "Cafe-C0ffe-C0de"}));
-			    		for(var j = 0; j < ret.length; j++) {
-			    			if(ret[j].user == user.user.id.toString()) {
-						 		ret[j].user = 'mine';
-			    			} else {
-			    				ret[j].user = 'notmine';
-			    			}
-			    		}
-			        } else {
-			        	// ret.name = "Cafe-C0ffe-C0de";
-			        }
+					// hide the users mongodb id.
+					if(Lo_.isArray(ret)) {
+						//ret = ret.map(e => ({...e, user: "Cafe-C0ffe-C0de"}));
+						for(var j = 0; j < ret.length; j++) {
+							if(ret[j].user == user.user.id.toString()) {
+								ret[j].user = 'mine';
+							} else {
+								ret[j].user = 'notmine';
+							}
+						}
+					} else {
+						// ret.name = "Cafe-C0ffe-C0de";
+					}
 
-			        // re-pack it.
-			        ret = {
-			        	method: obj.method,
-			        	path: obj.path,
-			        	data: ret
-			        };
-			        return(ret);
-			    }
+					// re-pack it.
+					ret = {
+						method: obj.method,
+						path: obj.path,
+						data: ret
+					};
+					return(ret);
+				}
 			}
 		}
 	} catch(error) {
@@ -123,7 +123,7 @@ io.on('connection', function(socket) {
 		&& payload.path == '/user/login/') {
 			var testUUID = require('cookie').parse(payload.data.publicKey)['dptUUID'];
 			var dptUUID = cookieParser.signedCookie(testUUID, cookieKey);
-            log.info("check dptUUID: "+dptUUID);
+			log.info("check dptUUID: "+dptUUID);
 			log.info("payload: "+util.inspect(payload.data));
 
 			if(dptUUID != false) {
@@ -203,10 +203,10 @@ io.on('connection', function(socket) {
 		returns the results which will sended back to the client.
 	*/
 	socket.on('api', async (payload) => {
-		//log.debug('sio request: '+util.inspect(payload));
+		log.debug('sio request: '+util.inspect(payload));
 		var ret = await apiBroker(payload, socket.dptUUID, socket);
 		socket.emit('api', ret);
-		//log.debug('answer sio request: '+util.inspect(ret, {depth: 6}));
+		log.debug('answer sio request: '+util.inspect(ret, {depth: 6}));
 	});
 	
 	socket.on('3d', async (payload) => {

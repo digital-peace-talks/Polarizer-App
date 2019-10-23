@@ -41,7 +41,7 @@ async function getRatings(topicId) {
 	for(var i in topic.opinions) {
 		var opinion = await Opinion.findOne({_id: topic.opinions[i]._id});
 		users[opinion.user] = opinion._id;
-		opinions[opinion._id] =  {rating: 0, num: 0, content: opinion.content};
+		opinions[opinion._id] = {rating: 0, num: 0, content: opinion.content};
 	}
 	for(var i in topic.opinions) {
 		var dialogs = await Dialog.find({opinion: topic.opinions[i]._id});
