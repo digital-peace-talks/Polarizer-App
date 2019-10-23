@@ -73,6 +73,7 @@ Where getIntersection is:
 		"tube", {
 			path: [sv, ev],
 			radius: radius,
+			tessellation: 3,
 			cap: BABYLON.Mesh.CAP_ALL,
 			updatable: true,
 		},
@@ -153,16 +154,16 @@ Where getIntersection is:
 		emmisiveColor = new BABYLON.Vector3(0.2, 0.2, 0.2);
 	}
 
-	if(combination.indexOf('grey') > 0) {
+	if(combination.indexOf('grey') >= 0) {
 		combination = 'grey-grey';
 	}
 	
 	// dominant color scheme
 	if(1) {
-		if(combination.indexOf('red') > 0) {
+		if(combination.indexOf('red') >= 0) {
 			combination = 'red-red';
 		}
-		if(combination.indexOf('green') > 0) {
+		if(combination.indexOf('green') >= 0) {
 			combination = 'green-green';
 		}
 	}
@@ -229,6 +230,8 @@ Where getIntersection is:
 
 	//return(tube);
 }
+
+
 
 function dialogRelations(opinionDialogConnections) {
 	var initiatorOpinion = {};
@@ -368,6 +371,7 @@ function loadOpinions(restObj) {
 			JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id }),
 			`${restObj.data[i].content}`);
 
+/*
 		plane.actionManager = new BABYLON.ActionManager(currentScene);
 
 		// enlarge ON MOUSE ENTER
@@ -380,7 +384,7 @@ function loadOpinions(restObj) {
 					//meshLocal.position.y += 2;
 					canvas.style.cursor = "move";
 				}, false));
-
+		
 		// normal size ON MOUSE EXIT
 		plane.actionManager.registerAction(
 			new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
@@ -390,7 +394,30 @@ function loadOpinions(restObj) {
 					meshLocal.scaling.y /= 1.5;
 					canvas.style.cursor = "default";
 				}, false));
+		
+		plane.onUpdateTextPos = new BABYLON.Observable();
 
+		plane.pointerDragBehavior = new BABYLON.PointerDragBehavior({name: "foobar", dragPlaneNormal: new BABYLON.Vector3(0,0,1)});
+	    plane.pointerDragBehavior.onDragStartObservable.add((event,b,c)=>{
+	        console.log("dragStart");
+	        //console.log(event);
+	    })
+	    plane.pointerDragBehavior.onDragObservable.add((event,b,c)=>{
+	        console.log("drag");
+	        //console.log(event);
+	        //console.log("master: "+plane.position);
+	        //plane.onUpdateTextPos.notifyObservers(plane.position);
+	    });
+		plane.addBehavior(plane.pointerDragBehavior);
+*/
+		/*
+	    var minion0 = BABYLON.MeshBuilder.CreateSphere("minion0", {diameter: 0.5}, currentScene);
+	    minion0.position = new BABYLON.Vector3(1,1,1);
+	    plane.onUpdateTextPos.add(function(value) {       
+	        minion0.position.x = value.x;
+	        minion0.position.y = value.y;
+	    })
+	    */
 
 		// add 'can invite' identicator
 		if(canInvite && restObj.data[i].user != 'mine'
