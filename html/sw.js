@@ -1,27 +1,9 @@
 var cacheName = 'dpt-v1';
-var filesToCache = [
-  '/',
-  'babylon-main.js',
-  'babylon-misc.js',
-  'babylon-opinions.js',
-  'babylon-topics.js',
-  'dpt3d.html',
-  'dpt3d.js',
-  'dialog.html',
-  'dialog.js',
-  'dpt-client.js',
-  'dpt_start.css',
-  'html-forms.js',
-  'icons/icon-72x72.png',
-  'icons/icon-96x96.png',
-  'icons/icon-128x128.png',
-  'icons/icon-144x144.png',
-  'icons/icon-152x152.png',
-  'icons/icon-192x192.png',
-  'icons/icon-384x384.png',
-  'icons/icon-512x512.png'
+const filesToCache = [
+  '/'
 ];
 
+// install event
 self.addEventListener('install', function(e) {
   console.log('[ServiceWorker] Install');
   e.waitUntil(
@@ -32,9 +14,12 @@ self.addEventListener('install', function(e) {
   );
 });
 
+// activate event
 self.addEventListener('activate',  event => {
   event.waitUntil(self.clients.claim());
 });
+
+// fetch event
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request, {ignoreSearch:true}).then(response => {

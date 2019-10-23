@@ -1,10 +1,10 @@
 {
-    "name": "Digital Peace Talks Web-App",
+    "name": "Digital Peace Talks",
     "short_name": "dpTalks",
     "start_url": "/dpt3d.html",
     "display": "standalone",
-    "background_color": "#C4CAD3",
-    "theme_color": "#C4CAD3",
+    "background_color": "#28A9E1",
+    "theme_color": "#28A9E1",
     "icons": [{
         "src": "icons/icon-72x72.png",
         "sizes": "72x72",
