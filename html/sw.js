@@ -16,9 +16,31 @@ self.addEventListener('install', function(e) {
 });
 
 // activate event
-self.addEventListener('activate',  event => {
+self.addEventListener('activate',  (event) => {
 	event.waitUntil(self.clients.claim());
 });
+
+// beforeinstall event
+// to present an install button
+window.addEventListener("beforeinstallprompt", (event) => {
+	// Suppress automatic prompting.
+	event.preventDefault();
+  
+	// Show the (disabled-by-default) install button. This button
+	// resolves the installButtonClicked promise when clicked.
+	installButton.disabled = false;
+  
+	// Wait for the user to click the button.
+	installButton.addEventListener("click", async (e) => {
+	  // The prompt() method can only be used once.
+	  installButton.disabled = true;
+  
+	  // Show the prompt.
+	  const { userChoice } = await event.prompt();
+	  console.info(`user choice was: ${userChoice}`);
+	});
+  });
+
 
 // fetch event
 self.addEventListener('fetch', event => {

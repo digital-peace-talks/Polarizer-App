@@ -1,8 +1,9 @@
 {
     "name": "Digital Peace Talks",
-    "short_name": "dpTalks",
+    "short_name": "DPT",
+    "description": "DPT visualize the interactions between conflicting views",
     "start_url": "/",
-    "display": "standalone",
+    "display": "fullscreen",
     "background_color": "#28A9E1",
     "theme_color": "#28A9E1",
     "icons": [{
