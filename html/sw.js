@@ -25,7 +25,8 @@ self.addEventListener('fetch', event => {
 	event.respondWith(
 		caches.match(event.request, {ignoreSearch: true})
 		.then(response => {
-			if(event.request.url == "https://proto1.dpt.world/") {
+			var path = event.request.url.replace(location.origin, '');
+			if(path == "/") {
 				return(fetch(event.request));
 			} else {
 				return(response || fetch(event.request));
