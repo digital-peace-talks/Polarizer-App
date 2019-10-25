@@ -257,15 +257,30 @@ function loadDialogList(restObj) {
     var dialogs = restObj.data.data;
 
 
+    var sum = 0;
+    for(var i in dialogs) {
+    	sum += dialogs[i].unreadMessages;
+    }
+    if(sum > 0) {
+    	jQuery('#dialog-btn-label').empty().text(`Your Dialogs [${sum}]`);
+    } else {
+    	jQuery('#dialog-btn-label').empty().text(`Your Dialogs`);
+    }
     jQuery('body').append(`<div id="dialogMenu"></div>`);
 
     jQuery('#dialogMenu').empty();
 
     for (var i = 0; i < dialogs.length; i++) {
 
+    	if(dialogs[i].unreadMessages > 0) {
+    		sum = ' ['+dialogs[i].unreadMessages+']';
+    	} else {
+    		sum = '';
+    	}
+
         menuEntry = `
 			<span class="myDialogs" id="${dialogs[i].dialog}">
-			<i>proposition:</i><h2>${dialogs[i].opinionProposition}</h2></span>
+			<i>proposition:</i><h2>${dialogs[i].opinionProposition}${sum}</h2></span>
 		`;
 
         dialog = `

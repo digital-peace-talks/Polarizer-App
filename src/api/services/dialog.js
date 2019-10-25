@@ -41,7 +41,17 @@ module.exports.createDialog = async (options) => {
 module.exports.getDialog = async (options) => {
 	var result;
 	try {
-		result = await Dialog.findOne({"_id": mongoose.Types.ObjectId(options.body.dialogId)})
+		var dialogId = mongoose.Types.ObjectId(options.body.dialogId);
+		var now = new Date();
+		now = now.toISOString();
+		result = await Dialog.findOne({"_id": dialogId});
+		if('user' in options) {
+			if(result.initiator.id.toString('hex') == options.user.user.id) {
+				await Dialog.findByIdAndUpdate(dialogId, {initiatorTimestamp: now});
+			} else if(result.recipient.id.toString('hex') == options.user.user.id) {
+				await Dialog.findByIdAndUpdate(dialogId, {recipientTimestamp: now});
+			}
+		}
 	} catch(error) {
 		throw {
 			status: 500,
@@ -109,12 +119,22 @@ module.exports.getDialogList = async (options) => {
 			collection.opinionProposition = worker[i].opinionProposition;
 			collection.recipientOpinion = worker[i].opinion.content;
 			collection.status = worker[i].status;
+			collection.initiatorTimestamp = worker[i].initiatorTimestamp;
+			collection.recipientTimestamp = worker[i].recipientTimestamp;
+			collection.unreadMessages = 0;
 			var worker2 = await Topic.findOne({ "_id": mongoose.Types.ObjectId(worker[i].opinion.topic)}).populate('opinions');
 			collection.topic = worker2.content;
 			var opinion = Lo_.find(worker2.opinions, {user: worker[i].initiator});
 			if(opinion) {
 				collection.initiatorOpinion = opinion.content;
 				collection.initiator = 'me';
+
+				for(var m in worker[i].messages) {
+					if(worker[i].messages[m].timestamp > collection.initiatorTimestamp) {
+						collection.unreadMessages++;
+					}
+				}
+
 				result.push(collection);
 			}
 		}
@@ -126,12 +146,22 @@ module.exports.getDialogList = async (options) => {
 			collection.opinionProposition = worker[i].opinionProposition;
 			collection.recipientOpinion = worker[i].opinion.content;
 			collection.status = worker[i].status;
+			collection.initiatorTimestamp = worker[i].initiatorTimestamp;
+			collection.recipientTimestamp = worker[i].recipientTimestamp;
+			collection.unreadMessages = 0;
 			var worker2 = await Topic.findOne({ "_id": mongoose.Types.ObjectId(worker[i].opinion.topic)}).populate('opinions');
 			collection.topic = worker2.content;
 			var opinion = Lo_.find(worker2.opinions, {user: worker[i].initiator});
 			if(opinion) {
 				collection.initiatorOpinion = opinion.content;
 				collection.initiator = 'notme';
+
+				for(var m in worker[i].messages) {
+					if(worker[i].messages[m].timestamp > collection.recipientTimestamp) {
+						collection.unreadMessages++;
+					}
+				}
+
 				result.push(collection);
 			}
 		}

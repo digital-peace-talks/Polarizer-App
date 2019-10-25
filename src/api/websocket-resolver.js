@@ -351,6 +351,7 @@ match.push({
 		dialog.crisises = [];
 		dialog.extensionRequests = [];
 		if(user) {
+			data.user = user;
 			var ret = await dialogService.getDialog(data);
 			ret = ret.data;
 //			dialog.crisises = ret.crisises;

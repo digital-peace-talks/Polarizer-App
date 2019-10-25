@@ -57,11 +57,24 @@ const dialogSchema = mongoose.Schema({
 		required: true,
 	},
 
+	initiatorTimestamp: {
+		type: Date,
+		required: true,
+		default: Date.now
+	},
+
 	recipient: {
 		type: Schema.Types.ObjectId,
 		ref: "User",
 		required: true,
 	},
+
+	recipientTimestamp: {
+		type: Date,
+		required: true,
+		default: Date.now
+	},
+
 	messages: [messageSchema],
 	crisises: [crisisSchema],
 	//	messages: [

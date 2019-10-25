@@ -20,6 +20,7 @@ var idleSince = 100000;
 
 var powerSave = false;
 var touchScreen = false;
+var dialogFormOpen = 0;
 
 
 function focusAtCanvas() {

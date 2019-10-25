@@ -1,5 +1,4 @@
 
-var dialogFormOpen = 0;
 
 function crisisForm(messageId) {
 
@@ -337,7 +336,6 @@ function dialogForm() {
 	}
 
 	jQuery(document).one('submit', '#dialogFrame', function(event) {
-		dialogFormOpen = 0;
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		var message = this[0].value;
