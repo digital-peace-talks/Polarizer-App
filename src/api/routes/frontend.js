@@ -23,7 +23,7 @@ router.get('/', async(req, res, next) => {
 				Only a minimum viable product is viable at the moment, and our primary goal is to get direct feedback from a small set of users to evaluate our core design. 
 				Thank you.</div>
 				<br><br>
-				<a href="dptAnleitung.html" target="_blank">DPT Manual Page</a>
+				<a href="dptAnleitung.html" target="_blank">Learn how to use DPT here</a>
 				<br><br>
 				<br><div ><div style="color: #F0F3F5;">Are you a new user?</div><br><br>
 				<fieldset style="text-align:center; width:400px;  border-style: solid; border-width: 1px;">
@@ -44,7 +44,7 @@ router.get('/', async(req, res, next) => {
 			Only later, once we feel comfortable the app can handle more users, we will open up to general public. 
 			Thank you.</div>
 			<br><br>
-				<a href="dptAnleitung.html" target="_blank">DPT Manual Page</a>
+				<a href="dptAnleitung.html" target="_blank">Learn how to use DPT here</a>
 				<br><br>	
 				<h3><b>
 				<a style="color: #F0F3F5; text-decoration: none;" href=/dpt3d.html>Start &#9655;</a>
