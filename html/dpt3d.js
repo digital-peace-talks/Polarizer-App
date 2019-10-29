@@ -64,9 +64,14 @@ function onWebSocketUpdate(restObj) {
 
 	if(currentDialog
 	&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
-	&& restObj.method == 'get'
-	&& dialogFormOpen == 1) {
-		dpt.getDialog(currentDialog.dialog);
+	&& restObj.method == 'get') {
+		if(dialogFormOpen == 1) {
+			dpt.getDialog(currentDialog.dialog);
+		}
+		dpt.getDialogList();
+	} else if(restObj.path.match('^/dialog/([0-9a-fA-F]{24})/$')
+	&& restObj.method == 'get') {
+		dpt.getDialogList();
 	}
 }
 
