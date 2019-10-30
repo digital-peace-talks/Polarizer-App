@@ -544,6 +544,7 @@ jQuery(document).on("click touch touchend", "span.myDialogs", function(event) {
 	var text = jQuery(this).children("h2").text();
 	var count = jQuery("span#dialog-btn-label").attr("count");
 
+	jQuery(this).attr("count", 0);
 	text = text.replace(` [${oldCount}]`, '');
 	jQuery(this).children("h2").text(text);
 	text = jQuery("span#dialog-btn-label").text();

@@ -368,7 +368,7 @@ function loadOpinions(restObj) {
 		var plane = textBlock(
 			restObj.data[i].position.x, restObj.data[i].position.y, restObj.data[i].position.z, 
 //			nodes[i].x, nodes[i].y, Math.random() * 10 - 10,
-			JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id }),
+			JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id, "content": restObj.data[i].content }),
 			`${restObj.data[i].content}`);
 
 /*
