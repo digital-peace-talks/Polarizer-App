@@ -379,8 +379,9 @@ function loadOpinions(restObj) {
 			new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
 				function(ev) {
 					var meshLocal = ev.meshUnderPointer;
-					meshLocal.scaling.x *= 1.5;
-					meshLocal.scaling.y *= 1.5;
+//					meshLocal.scaling.x *= 1.5;
+//					meshLocal.scaling.y *= 1.5;
+					meshLocal.material.emissiveColor = new BABYLON.Color3(1,.5,0);
 					//meshLocal.position.y += 2;
 					canvas.style.cursor = "move";
 				}, false));
@@ -390,8 +391,9 @@ function loadOpinions(restObj) {
 			new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
 				function(ev) {
 					var meshLocal = ev.meshUnderPointer;
-					meshLocal.scaling.x /= 1.5;
-					meshLocal.scaling.y /= 1.5;
+//					meshLocal.scaling.x /= 1.5;
+//					meshLocal.scaling.y /= 1.5;
+					meshLocal.material.emissiveColor = new BABYLON.Color3(1,1,1);
 					canvas.style.cursor = "default";
 				}, false));
 		

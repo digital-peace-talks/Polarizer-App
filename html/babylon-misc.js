@@ -193,6 +193,7 @@ function textBlock(x, y, z, name, text, options) {
 	textureContext.font = (options.fontSize || "22") + "px DPTFont";
 	textureContext.save();
 	textureContext.fillStyle = options.color || "#00ccff";
+	textureContext.fillStyle = options.color || "#ffffff";
 
 	wrapText(textureContext, text, 5, options.fontSize || 22, DTWidth -1, options.fontSize || 22);
 	textureContext = cropImage(textureContext, textureContext.canvas);
@@ -221,7 +222,7 @@ function textBlock(x, y, z, name, text, options) {
 	//create material
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
 	mat.diffuseTexture = dynamicTexture;
-	mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
+	mat.emissiveColor = (options.color) ? new BABYLON.Color3(1,1,1) : new BABYLON.Color3(0, 0.8, 1);
 	mat.specularColor = new BABYLON.Color3(0.1, 0.1, 0.1);
 
 	//apply material
