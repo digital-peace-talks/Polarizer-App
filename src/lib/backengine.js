@@ -15,14 +15,14 @@ function circlePoints(opinions, radius, center) {
 		var angle = slice * i + startAngle;
 		var newX = center.X + radius * Math.cos(angle);
 		var newY = center.Y + radius * Math.sin(angle);
-		var newZ = Math.sin(1/Math.PI * mapRange(i, 0, points, 0, 359)) * 2 - 2;
+		var newZ = Math.sin(1/Math.PI * mapRange(i, 0, points, 0, 359)) * 4 - 6;
 		nodes.push({ "x": newX, "y": newY, "z": newZ });
 	}
 	return (nodes);
 }
 
 module.exports.calculatePositions = async (opinions) => {
-	nodes = circlePoints(opinions, 5, {X: 0, Y: 0});
+	nodes = circlePoints(opinions, 8, {X: 0, Y: 0});
 	for(var i in opinions) {
 		opinions[i].topic = opinions[i].topic._id;
 		opinions[i].position = nodes[i];

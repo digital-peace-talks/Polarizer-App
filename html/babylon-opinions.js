@@ -51,8 +51,8 @@ Where getIntersection is:
 	var dx = ev.x - sv.x;
 	var dy = ev.y - sv.y
 
-	var p1 = getIntersection(dx, dy, sv.x, sv.y, initiatorOpinion.size.x, initiatorOpinion.size.y);
-	var p2 = getIntersection(-dx, -dy, ev.x, ev.y, recipientOpinion.size.x, recipientOpinion.size.y);
+	var p1 = getIntersection(dx, dy, sv.x, sv.y, initiatorOpinion.size.x/2, initiatorOpinion.size.y/2);
+	var p2 = getIntersection(-dx, -dy, ev.x, ev.y, recipientOpinion.size.x/2, recipientOpinion.size.y/2);
 	
 	sv.x = p1[0];
 	sv.y = p1[1];
@@ -214,8 +214,7 @@ Where getIntersection is:
 		new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
 			function(ev) {
 				var meshLocal = ev.meshUnderPointer;
-				meshLocal.material.emissiveColor = new BABYLON.Vector3(0.7, 0.7, 0.7);
-				//meshLocal.position.y += 2;
+				meshLocal.material.emissiveColor = new BABYLON.Color3(0.79, 0.79, 0.79);
 				canvas.style.cursor = "move";
 			}, false));
 
@@ -480,7 +479,7 @@ function loadOpinions(restObj) {
 	
 	// paint the topic
 	var plane = textBlock(
-			19.2/6, 12.8/6, 4.001,
+			19.2/6, 12.8/6, 8.001,
 			JSON.stringify({ "context": "opinionTopic" }),
 			currentTopicStr, {fontSize: 128, width: 19.2, height: 12.8, color: "#550033"});
 

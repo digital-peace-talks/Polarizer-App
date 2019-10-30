@@ -218,7 +218,7 @@ function main() {
 
 		/*
 		jQuery('body').append(`<div id="debug" style="position: absolute;
-			color: white; height: 20px; width: 90px; right: 90px; z-index:999; bottom: 30px">FPS</div>
+			color: white; height: 80px; width: 390px; right: 390px; z-index:999; bottom: 80px"></div>
 		`);
 		*/
 		

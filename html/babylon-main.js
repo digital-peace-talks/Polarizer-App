@@ -64,12 +64,12 @@ function getCollisionBox() {
 	var box = new BABYLON.MeshBuilder.CreateBox("collisionBox", 
 	{
 		width: 100,
-		height: 30,
-		depth: 40,
+		height: 60,
+		depth: 80,
 		sideOrientation: 1
 	}, currentScene);
 
-	box.position = new BABYLON.Vector3(0, 0, -19.85);
+	box.position = new BABYLON.Vector3(0, 0, -39.85);
 	//create material
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
 	mat.diffuseColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
@@ -90,7 +90,7 @@ function getCollisionBox() {
 
 function getCamera(rotate) {
 
-	var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/2, 15, new BABYLON.Vector3(0, 0, 0), currentScene);
+	var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/2, 35, new BABYLON.Vector3(0, 0, 0), currentScene);
 	// camera
 	camera.wheelPrecision = 30;
 	camera.panningSensibility = 300;
@@ -234,6 +234,19 @@ var createGenericScene = function(dptMode) {
 
 				if(pointerInfo.pickInfo.pickedMesh
 				&& 'dpt' in pointerInfo.pickInfo.pickedMesh) {
+
+					// catch the icon button on the canvas
+					// "To get the axis aligned version of your picked coordinates, you need to
+					// transform it by the inverse of the mesh world matrix."
+					// discussed on here:
+					// https://forum.babylonjs.com/t/how-to-calculate-the-rotation-from-the-billboard-picked-point-position/6667/11
+					if(pointerInfo.pickInfo.pickedMesh.dpt.context == "opinionScene") {
+						var inverse = BABYLON.Matrix.Invert(pointerInfo.pickInfo.pickedMesh.getWorldMatrix());
+						// click point
+						var click = BABYLON.Vector3.TransformCoordinates(pointerInfo.pickInfo.pickedPoint, inverse)
+						click.x = pointerInfo.pickInfo.pickedMesh._geometry.extend.maximum.x + click.x;
+						click.y = pointerInfo.pickInfo.pickedMesh._geometry.extend.maximum.y - click.y;
+					}
 
 					if(pointerInfo.pickInfo.pickedMesh.dpt.context == "dialogInvitation") {
 

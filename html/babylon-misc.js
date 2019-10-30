@@ -236,6 +236,7 @@ function textBlock(x, y, z, name, text, options) {
 	plane.showBoundingBox = false;
 	
 	//plane.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
+	plane.billboardMode = BABYLON.Mesh.BILLBOARDMODE_X | BABYLON.Mesh.BILLBOARDMODE_Y;
 
 	//plane.bakeCurrentTransformIntoVertices();
 
