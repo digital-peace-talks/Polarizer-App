@@ -25,7 +25,7 @@ function loadTopics(restObj) {
 		}
 		var l = len - 1 - i;
 		var plane = textBlock(
-			x, y, 0,
+			x, y, -2,
 			JSON.stringify({
 				"context": "topicScene",
 				"topicId": restObj.data[l]._id,
