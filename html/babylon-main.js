@@ -269,7 +269,7 @@ var createGenericScene = function(dptMode) {
 							&& pointerInfo.pickInfo.pickedMesh.dpt.context == "topicScene"
 							&& pointerInfo.pickInfo.pickedMesh.name == "texttexture"
 							&& pointerInfo.pickInfo.pickedMesh.dpt.canEdit == true) {
-								opinionEdit(pointerInfo.pickInfo.pickedMesh.dpt);
+								topicEdit(pointerInfo.pickInfo.pickedMesh.dpt);
 								return;
 							}
 						}
