@@ -15,7 +15,7 @@ function circlePoints(opinions, radius, center) {
 		var angle = slice * i + startAngle;
 		var newX = center.X + radius * Math.cos(angle);
 		var newY = center.Y + radius * Math.sin(angle);
-		var newZ = Math.sin(1/Math.PI * mapRange(i, 0, points, 0, 359)) * 4 - 6;
+		var newZ = Math.sin(1/Math.PI * mapRange(i, 0, points, 0, 359)) * 8 - 8;
 		nodes.push({ "x": newX, "y": newY, "z": newZ });
 	}
 	return (nodes);

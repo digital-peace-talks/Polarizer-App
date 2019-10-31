@@ -1,3 +1,8 @@
+var editIcon = new Image();
+editIcon.src = "/Edit_icon.png";
+var inviteIcon = new Image();
+inviteIcon.src = "/chatbubble.png";
+
 function circleText(ctx, text, x, y, radius, angle) {
 	var numRadsPerLetter = 2 * Math.PI / text.length;
 	ctx.save();
@@ -173,7 +178,7 @@ function textBlock(x, y, z, name, text, options) {
 	}
 	//Set width an height for plane
 	var planeWidth = options.width || 4.8;
-	var planeHeight = options.height || 3.2; //10;
+	var planeHeight = options.height || 4.8; //10;
 
 	//Set width and height for dynamic texture using same multiplier
 	var DTWidth = planeWidth * 100; //64;
@@ -192,37 +197,38 @@ function textBlock(x, y, z, name, text, options) {
 	var textureContext = dynamicTexture.getContext();
 	textureContext.font = (options.fontSize || "22") + "px DPTFont";
 	textureContext.save();
-	textureContext.fillStyle = options.color || "#00ccff";
 	textureContext.fillStyle = options.color || "#ffffff";
 
-	wrapText(textureContext, text, 5, options.fontSize || 22, DTWidth -1, options.fontSize || 22);
+	wrapText(textureContext, text, 5, (options.fontSize || 22) + 42, DTWidth -1, options.fontSize || 22);
+
+	var obj = JSON.parse(name);
+	if(obj.canInvite) {
+		textureContext.drawImage(inviteIcon, 0, 0, 36, 36);
+	}
+	if(obj.canEdit) {
+		textureContext.drawImage(editIcon, 36, 0, 36, 36);
+	}
 	textureContext = cropImage(textureContext, textureContext.canvas);
 	
 	//Create plane
 	var plane = BABYLON.MeshBuilder.CreatePlane(
-			name,
+			"texttexture",
 			{
 				width: textureContext.canvas.width/100,
 				height: textureContext.canvas.height/100,
 			}, currentScene);
 	plane.dpt = JSON.parse(name);
 
-//    var pngBase64 = textureContext.canvas.toDataURL("image/png", 0.99);
+    var pngBase64 = textureContext.canvas.toDataURL("image/png", 0.99);
 
     plane.bjs = { x: 1/DTWidth * textureContext.canvas.width * 2.4, y: 1/DTHeight * textureContext.canvas.height * 1.6 }; 
-//    plane.bjs = { x: 1/DTWidth * textureContext.canvas.width * 2.4, y: 1/DTHeight * textureContext.canvas.height * 1.6 }; 
-    //plane._boundingInfo = new BoundingInfo(, max)
-//    plane._bound﻿ingInfo()._update(BABYLON.Matrix.Scaling(new BABYLON.Vector3(plane.bjs.x, plane.bjs.y, 0));
-//    plane.scaling.x = 1/DTWidth * textureContext.canvas.width;
-//    plane.scaling.y = 1/DTHeight * textureContext.canvas.height;
-//    plane._boundingInfo.update(BABYLON.Matrix.Scaling(new BABYLON.Vector3(plane.bjs.x, plane.bjs.y, 0)));
 
 	dynamicTexture.update();
 
 	//create material
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
 	mat.diffuseTexture = dynamicTexture;
-	mat.emissiveColor = (options.color) ? new BABYLON.Color3(1,1,1) : new BABYLON.Color3(0, 0.8, 1);
+	mat.emissiveColor = (options.color) ? new BABYLON.Color3(1,1,1) : new BABYLON.Color3(0, 0.5, 1);
 	mat.specularColor = new BABYLON.Color3(0.1, 0.1, 0.1);
 
 	//apply material

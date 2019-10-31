@@ -104,6 +104,8 @@ function getCamera(rotate) {
 	camera.upperAlphaLimit = 0.0174533 * -40;
 	camera.lowerBetaLimit = 0.0174533 * 40;
 	camera.upperBetaLimit = 0.0174533 * 140;
+	
+	camera.panningDistanceLimit = 35;
 
 	camera.panningAxis = new BABYLON.Vector3(1, 1, 0);
 	//camera.setTarget(BABYLON.Vector3.Zero());
@@ -240,19 +242,39 @@ var createGenericScene = function(dptMode) {
 					// transform it by the inverse of the mesh world matrix."
 					// discussed on here:
 					// https://forum.babylonjs.com/t/how-to-calculate-the-rotation-from-the-billboard-picked-point-position/6667/11
-					if(pointerInfo.pickInfo.pickedMesh.dpt.context == "opinionScene") {
-						var inverse = BABYLON.Matrix.Invert(pointerInfo.pickInfo.pickedMesh.getWorldMatrix());
-						// click point
-						var click = BABYLON.Vector3.TransformCoordinates(pointerInfo.pickInfo.pickedPoint, inverse)
-						click.x = pointerInfo.pickInfo.pickedMesh._geometry.extend.maximum.x + click.x;
-						click.y = pointerInfo.pickInfo.pickedMesh._geometry.extend.maximum.y - click.y;
+					var inverse = BABYLON.Matrix.Invert(pointerInfo.pickInfo.pickedMesh.getWorldMatrix());
+					// click point
+					var click = BABYLON.Vector3.TransformCoordinates(pointerInfo.pickInfo.pickedPoint, inverse)
+					click.x = pointerInfo.pickInfo.pickedMesh._geometry.extend.maximum.x + click.x;
+					click.y = pointerInfo.pickInfo.pickedMesh._geometry.extend.maximum.y - click.y;
+
+					if(click.y < 36) {
+						if(click.x >=0 && click.x < .36) {
+							if('opinionId' in pointerInfo.pickInfo.pickedMesh.dpt
+							&& pointerInfo.pickInfo.pickedMesh.dpt.context == "opinionScene"
+							&& pointerInfo.pickInfo.pickedMesh.name == "texttexture"
+							&& pointerInfo.pickInfo.pickedMesh.dpt.canInvite == true) {
+								propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId);
+								return;
+							}
+						} else if(click.x >= .36 && click.x < .72) {
+							if('opinionId' in pointerInfo.pickInfo.pickedMesh.dpt
+							&& pointerInfo.pickInfo.pickedMesh.dpt.context == "opinionScene"
+							&& pointerInfo.pickInfo.pickedMesh.name == "texttexture"
+							&& pointerInfo.pickInfo.pickedMesh.dpt.canEdit == true) {
+								opinionEdit(pointerInfo.pickInfo.pickedMesh.dpt);
+								return;
+							}
+							if('topicId' in pointerInfo.pickInfo.pickedMesh.dpt
+							&& pointerInfo.pickInfo.pickedMesh.dpt.context == "topicScene"
+							&& pointerInfo.pickInfo.pickedMesh.name == "texttexture"
+							&& pointerInfo.pickInfo.pickedMesh.dpt.canEdit == true) {
+								opinionEdit(pointerInfo.pickInfo.pickedMesh.dpt);
+								return;
+							}
+						}
 					}
-
-					if(pointerInfo.pickInfo.pickedMesh.dpt.context == "dialogInvitation") {
-
-						propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId);
-
-					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "tubeConnection") {
+					if(pointerInfo.pickInfo.pickedMesh.dpt.context == "tubeConnection") {
 
 						if(pointerInfo.pickInfo.pickedMesh.dpt.status == "CLOSED") {
 							currentDialog = {

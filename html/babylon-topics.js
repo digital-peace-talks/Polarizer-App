@@ -27,11 +27,15 @@ function loadTopics(restObj) {
 		var plane = textBlock(
 			x, y, -2,
 			JSON.stringify({
+				"name": "texttexture",
 				"context": "topicScene",
 				"topicId": restObj.data[l]._id,
-				"topic": restObj.data[l].content
+				"content": restObj.data[l].content,
+				"topic": restObj.data[l].content,
+				"canEdit": (restObj.data[l].user == 'mine') ? true : false
 			}),
 			`${restObj.data[l].content} [${restObj.data[l].opinions.length}]`);
+		/*
 		if(restObj.data[l].user == 'mine') {
 			var mat = new BABYLON.StandardMaterial("icon", currentScene);
 			mat.diffuseTexture = new BABYLON.Texture("/Edit_icon.png", currentScene);
@@ -52,6 +56,7 @@ function loadTopics(restObj) {
 			icon.material = mat;
 			icon.dpt = { context: 'editTopic', topicId: restObj.data[l]._id, content: restObj.data[l].content };
 		}
+		*/
 	}
 }
 

@@ -366,8 +366,13 @@ function loadOpinions(restObj) {
 		// paint the opinion
 		var plane = textBlock(
 			restObj.data[i].position.x, restObj.data[i].position.y, restObj.data[i].position.z, 
-//			nodes[i].x, nodes[i].y, Math.random() * 10 - 10,
-			JSON.stringify({ "context": "opinionScene", "opinionId": restObj.data[i]._id, "content": restObj.data[i].content }),
+			JSON.stringify( {
+				"context": "opinionScene",
+				"opinionId": restObj.data[i]._id,
+				"content": restObj.data[i].content,
+				"canEdit": (restObj.data[i].user == 'mine') ? true : false,
+				"canInvite": (canInvite && restObj.data[i].user != 'mine' && restObj.data[i].blocked == 1) ? true : false,
+			}),
 			`${restObj.data[i].content}`);
 
 /*
@@ -378,10 +383,7 @@ function loadOpinions(restObj) {
 			new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
 				function(ev) {
 					var meshLocal = ev.meshUnderPointer;
-//					meshLocal.scaling.x *= 1.5;
-//					meshLocal.scaling.y *= 1.5;
-					meshLocal.material.emissiveColor = new BABYLON.Color3(1,.5,0);
-					//meshLocal.position.y += 2;
+					meshLocal.material.emissiveColor = new BABYLON.Color3(0.5,0.5,1);
 					canvas.style.cursor = "move";
 				}, false));
 		
@@ -390,9 +392,7 @@ function loadOpinions(restObj) {
 			new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
 				function(ev) {
 					var meshLocal = ev.meshUnderPointer;
-//					meshLocal.scaling.x /= 1.5;
-//					meshLocal.scaling.y /= 1.5;
-					meshLocal.material.emissiveColor = new BABYLON.Color3(1,1,1);
+					meshLocal.material.emissiveColor = new BABYLON.Color3(0,0.8,1);
 					canvas.style.cursor = "default";
 				}, false));
 		
@@ -420,6 +420,7 @@ function loadOpinions(restObj) {
 	    })
 	    */
 
+		/*
 		// add 'can invite' identicator
 		if(canInvite && restObj.data[i].user != 'mine'
 		&& restObj.data[i].blocked == 1) {
@@ -465,6 +466,7 @@ function loadOpinions(restObj) {
 			icon.material = mat;
 			icon.dpt = { context: 'editOpinion', opinionId: restObj.data[i]._id, content: restObj.data[i].content };
 		}
+		*/
 	}
 
 
