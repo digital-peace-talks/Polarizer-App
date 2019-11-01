@@ -3,7 +3,7 @@
     "short_name": "DPT",
     "description": "DPT visualize the interactions between conflicting views",
     "start_url": "/",
-    "display": "fullscreen",
+    "display": "standalone",
     "background_color": "#28A9E1",
     "theme_color": "#28A9E1",
     "icons": [{
