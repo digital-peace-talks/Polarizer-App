@@ -86,9 +86,11 @@ function topicForm(edit, context) {
 	console.log('enter topic');
 
 	var topic = '';
+	var hiddenTopicId = '';
 	if (edit) {
 		topic = context.content;
 		edit = `<input type="hidden" class="edit" name="edit" value="edit" />`;
+		hiddenTopicId = `<input type="hidden" name="topicId" class="topicId" value="${context.topicId}">`;
 	} else {
 		edit = '';
 	}
@@ -97,8 +99,7 @@ function topicForm(edit, context) {
 			<div id="form">New topic:<br><form id="topic">
 			<textarea name="topic"
 			class="topic">${topic}</textarea><br>
-			<input type="hidden" name="topicId" class="topicId" value="${context.topicId}">
-			<input class="button" type="submit" value="send">${edit}</form></div>
+			<input class="button" type="submit" value="send">${edit}${hiddenTopicId}</form></div>
 		`);
 
 	} else {
@@ -107,9 +108,8 @@ function topicForm(edit, context) {
 			Please enter a new topic:<br><form id="topic">
 			<textarea name="topic" class="topic">${topic}</textarea><br>
 			<input class="button" type="submit" value="send">
-			<input type="hidden" name="topicId" class="topicId" value="${context.topicId}">
 			<input class="button" type="button" value="close window" name="close window"
-			id="CloseTopicForm">${edit}</form></div>
+			id="CloseTopicForm">${edit}${hiddenTopicId}</form></div>
 		`);
 	}
 	jQuery(".topic").focus();
@@ -124,31 +124,30 @@ function topicForm(edit, context) {
 	jQuery(document).on('keydown', '.topic', function(event) {
 		var n = jQuery('.topic').val().length;
 		if (n >= 256) {
-			jQuery('textarea.topic').css({ "background-color": "#f88" });
-			if (event.keyCode != 8 &&
-				event.keyCode != 127 &&
-				event.keyCode != 37 &&
-				event.keyCode != 38 &&
-				event.keyCode != 39 &&
-				event.keyCode != 40) {
+			jQuery('textarea.topic').css({ "background-color": "#ff8888" });
+			if (event.keyCode != 8
+			&& event.keyCode != 127
+			&& event.keyCode != 37
+			&& event.keyCode != 38
+			&& event.keyCode != 39
+			&& event.keyCode != 40) {
 				event.preventDefault();
 			}
 		} else {
-			var bg = jQuery('textarea.topic').css('background-color');
-			if (bg != "rgb(255,255,255)") {
-				jQuery('textarea.topic').css({ "background-color": "rgb(255,255,255)" });
-			}
+			jQuery('textarea.topic').css({ "background-color": "#ffffff" });
 		}
 		if (event.keyCode == 27) {
 			jQuery('#form').remove();
-			focusAtCanvas();
 			event.preventDefault();
+			focusAtCanvas();
 		}
 		if (event.keyCode == 10 || event.keyCode == 13) {
 			event.preventDefault();
 		}
 		if (event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
 			jQuery('form#topic').submit();
+			event.preventDefault();
+			focusAtCanvas();
 		}
 	});
 

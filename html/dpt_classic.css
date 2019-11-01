@@ -459,6 +459,7 @@ div#dialogFrame {
 textarea {
   font-family: DPTFont;
   color: #005B98;
+  background-color: #FFFFFF;
   font-size: 18px;
   width: 360px;
   height: 80px;
