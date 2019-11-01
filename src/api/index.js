@@ -50,6 +50,7 @@ app.use("/canvas", require("./routes/canvas"));
 app.use("/misc", require("./routes/misc"));
 app.use(express.static("static"));
 app.use(express.static("html"));
+app.use("/external/", express.static("external"));
 app.use("/", require("./routes/frontend"));
 
 

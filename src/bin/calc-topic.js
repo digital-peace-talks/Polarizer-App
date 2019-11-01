@@ -21,10 +21,10 @@ function mapRange(from, to, s) {
 async function getRatings(topicId) {
 
 	var connection = await mongoose.connect("mongodb://localhost:27017/dpt-dev", { useUnifiedTopology: true , useNewUrlParser: true, });
-	UserSchema = require("./user");
-	TopicSchema = require("./topic");
-	OpinionSchema = require("./opinion");
-	DialogSchema = require("./dialog");
+	UserSchema = require("../api/models/user");
+	TopicSchema = require("../api/models/topic");
+	OpinionSchema = require("../api/models/opinion");
+	DialogSchema = require("../api/models/dialog");
 
 	Opinion = OpinionSchema.opinionModel;
 	User = UserSchema.userModel;

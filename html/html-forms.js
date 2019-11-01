@@ -97,6 +97,7 @@ function topicForm(edit, context) {
 			<div id="form">New topic:<br><form id="topic">
 			<textarea name="topic"
 			class="topic">${topic}</textarea><br>
+			<input type="hidden" name="topicId" class="topicId" value="${context.topicId}">
 			<input class="button" type="submit" value="send">${edit}</form></div>
 		`);
 
@@ -106,6 +107,7 @@ function topicForm(edit, context) {
 			Please enter a new topic:<br><form id="topic">
 			<textarea name="topic" class="topic">${topic}</textarea><br>
 			<input class="button" type="submit" value="send">
+			<input type="hidden" name="topicId" class="topicId" value="${context.topicId}">
 			<input class="button" type="button" value="close window" name="close window"
 			id="CloseTopicForm">${edit}</form></div>
 		`);
@@ -154,10 +156,11 @@ function topicForm(edit, context) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		var topic = jQuery('.topic').val();
+		var topicId = jQuery('.topicId').val();
 		var edit = jQuery('.edit').val();
 		if (topic) {
 			if (edit == "edit") {
-				dpt.putTopic(topic, context.topicId, whoami.dptUUID);
+				dpt.putTopic(topic, topicId, whoami.dptUUID);
 			} else {
 				dpt.postTopic(topic);
 			}

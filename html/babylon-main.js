@@ -111,7 +111,7 @@ function getCamera(rotate) {
 	//camera.setTarget(BABYLON.Vector3.Zero());
 
 	if(currentScene.dptMode == "topicScene") {
-		//camera.setPosition(new BABYLON.Vector3(0,0,-15));
+		camera.radius = 15;
 		if(topicCamState) {
 			camera.setPosition(topicCamState.position);
 			camera.setTarget(topicCamState.target);
@@ -277,6 +277,14 @@ var createGenericScene = function(dptMode) {
 					if(pointerInfo.pickInfo.pickedMesh.dpt.context == "tubeConnection") {
 
 						if(pointerInfo.pickInfo.pickedMesh.dpt.status == "CLOSED") {
+							for(var i in currentScene.meshes) {
+								if('dpt' in currentScene.meshes[i]
+								&& currentScene.meshes[i].dpt.context == "tubeConnection"
+								&& currentScene.meshes[i].dpt.initiatorOpinion == pointerInfo.pickInfo.pickedMesh.dpt.recipientsOpinion
+								&& currentScene.meshes[i].dpt.recipientOpinion == pointerInfo.pickInfo.pickedMesh.dpt.initiatorOpinion) {
+									alert("found one second dialog between both.");
+								}
+							}
 							currentDialog = {
 								dialog: pointerInfo.pickInfo.pickedMesh.dpt.dialogId,
 								topic: currentTopicStr,
@@ -289,11 +297,6 @@ var createGenericScene = function(dptMode) {
 					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "topicScene") {
 
 						//console.log("hit topicId: "+pointerInfo.pickInfo.pickedMesh.dpt.topicId);
-						pointerInfo.pickInfo.pickedMesh.showBoundingBox = true;
-						setTimeout(function() {
-							pointerInfo.pickInfo.pickedMesh.showBoundingBox = false;
-						}, 250);
-
 						topicCamState = currentScene.cameras[0].storeState();
 						currentTopic = pointerInfo.pickInfo.pickedMesh.dpt.topicId;
 						currentTopicStr = pointerInfo.pickInfo.pickedMesh.dpt.topic;
