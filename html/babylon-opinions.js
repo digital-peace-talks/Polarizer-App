@@ -85,6 +85,7 @@ Where getIntersection is:
 		initiatorsOpinion: opinionDialogConnections.initiatorsOpinion,
 		recipientsOpinion: opinionDialogConnections.recipientsOpinion,
 		status: opinionDialogConnections.dialogStatus,
+		emissiveColor: emissiveColor,
 	};
 
 	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 32, currentScene);
@@ -147,7 +148,7 @@ Where getIntersection is:
 	} else if(combination == 'green-red') {
 		var reverse = 1;
 		combination = 'red-green';
-		emmisiveColor = new BABYLON.Vector3(0.2, 0.2, 0.2);
+		emmisiveColor = new BABYLON.Vector3(0.4, 0.4, 0.4);
 	} else if(combination == 'blue-red') {
 		var reverse = 1;
 		combination = 'red-blue';
@@ -168,6 +169,7 @@ Where getIntersection is:
 		}
 	}
 
+	tube.dpt.emissiveColor = emissiveColor;
 	image = new Image();
 	image.src = '/' + combination + '.png';
 
@@ -223,7 +225,7 @@ Where getIntersection is:
 		new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
 			function(ev) {
 				var meshLocal = ev.meshUnderPointer;
-				meshLocal.material.emissiveColor = new BABYLON.Color3(0, 0, 0);
+				meshLocal.material.emissiveColor = meshLocal.dpt.emissiveColor;
 				canvas.style.cursor = "default";
 			}, false));
 
