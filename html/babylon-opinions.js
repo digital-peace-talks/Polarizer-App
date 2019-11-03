@@ -359,11 +359,32 @@ function loadOpinions(restObj) {
 		}
 		if(restObj.data[i].user == 'mine') {
 			canInvite = true;
+			var myOpinion = restObj.data[i]._id;
 		}
 	}
 
 	//var nodes = circlePoints(restObj.data.length, 5, { X: 4, Y: 0 });
 	for(var i = 0; i < restObj.data.length; i++) {
+
+		// check, if the opinion owner already lead a discussion with the other opinion
+		var exists = false;
+		for(var j in restObj.data[i].topos) {
+			if(restObj.data[i]._id == restObj.data[i].topos[j].opinionId) {
+				var leafs = restObj.data[i].topos[j].leafs;
+				if(leafs.negative.includes(myOpinion)) {
+					exists = true;
+				}
+				if(leafs.positive.includes(myOpinion)) {
+					exists = true;
+				}
+				if(leafs.neutral.includes(myOpinion)) {
+					exists = true;
+				}
+				if(leafs.unset.includes(myOpinion)) {
+					exists = true;
+				}
+			}
+		}
 
 		// paint the opinion
 		var plane = textBlock(
@@ -373,7 +394,11 @@ function loadOpinions(restObj) {
 				"opinionId": restObj.data[i]._id,
 				"content": restObj.data[i].content,
 				"canEdit": (restObj.data[i].user == 'mine') ? true : false,
-				"canInvite": (canInvite && restObj.data[i].user != 'mine' && restObj.data[i].blocked == 1) ? true : false,
+				"canInvite": (
+					canInvite == true
+					&& restObj.data[i].user != 'mine'
+					&& restObj.data[i].blocked == 1
+					&& exists == false) ? true : false,
 			}),
 			`${restObj.data[i].content}`);
 

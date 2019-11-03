@@ -10,6 +10,7 @@ function crisisForm(messageId) {
 			break;
 		}
 	}
+	jQuery('#misc2').text('');
 	jQuery('#misc2').append(`
 			<div id="crisis">
 				<u>End of discussion, appraisal of results.</u><br><br>
@@ -32,13 +33,17 @@ function crisisForm(messageId) {
 	jQuery("#crisis").submit(function(event) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
-		dpt.postCrisis(jQuery('.reason').val(), jQuery("input[name='rating']:checked").val(), currentDialog.dialog, messageId, whoami.dptUUID);
-		jQuery('#misc2').empty();
-		jQuery('form#dialogFrame').html(`
+		var reason = jQuery('.reason').val();
+		if(reason.length > 0) {
+			dpt.postCrisis(reason, jQuery("input[name='rating']:checked").val(), currentDialog.dialog, messageId, whoami.dptUUID);
+			jQuery('#misc2').empty();
+			jQuery('form#dialogFrame').html(`
 			<br>
 			<input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
-			<input type="button" class="crisis" value="end dialog" name="end dialog" id="crisis">
-		`);
+			`);
+		} else {
+			alert('Please enter a conclusion.');
+		}
 	});
 
 	jQuery(document).one('click', "#crisisCloseWindow", function(event) {
@@ -48,6 +53,8 @@ function crisisForm(messageId) {
 	});
 	jQuery(document).on('keyup', '#dialogInput', function(event) {
 		if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
+			event.stopImmediatePropagation();
+			event.preventDefault();
 			jQuery('form#crisis').submit();
 		}
 	});
@@ -335,11 +342,13 @@ function dialogForm() {
 		}
 	}
 
-	jQuery(document).one('submit', '#dialogFrame', function(event) {
+	jQuery(document).on('submit', '#dialogFrame', function(event) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		var message = this[0].value;
-		dpt.postMessage(message, whoami.dptUUID, currentDialog.dialog);
+		if(message.length > 0) {
+			dpt.postMessage(message, whoami.dptUUID, currentDialog.dialog);
+		}
 		jQuery("#dialogInput").focus();
 		var objDiv = document.getElementById("dialogForm");
 		objDiv.scrollTop = objDiv.scrollHeight;
@@ -358,8 +367,16 @@ function dialogForm() {
 			focusAtCanvas();
 			event.preventDefault();
 		}
-		if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
-			jQuery('form#dialogFrame').submit();
+		if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)
+		||(event.keyCode == 10 || event.keyCode == 13)) {
+			event.stopImmediatePropagation();
+			event.preventDefault();
+			var message = jQuery("#dialogInput").val();
+			if(message.length > 1) {
+				jQuery('form#dialogFrame').submit();
+			} else {
+				jQuery("#dialogInput").val('');
+			}
 		}
 	});
 	var objDiv = document.getElementById("dialogForm");
