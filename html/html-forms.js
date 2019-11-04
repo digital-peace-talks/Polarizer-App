@@ -325,6 +325,7 @@ function loadDialogList(restObj) {
 	}
 }
 
+// GUI Menubar Buttons
 var createGUIScene = function(dptMode) {
 
 
@@ -395,6 +396,7 @@ var createGUIScene = function(dptMode) {
 		});
 	}
 
+
 	//create dialogue button
 	var dialoguesBtn = jQuery('#dialogues-btn');
 	dialoguesBtn.show();
@@ -436,8 +438,21 @@ function requestHome() {
 	btn.src = "/nav-top-logo.png";
 	btn.style.color = "#f00";
 	document.body.appendChild(btn);
-	btn.onclick = ()=> {
-		alert('home btn pressed!');
+
+	btn.onclick = () => {
+		opinionCamState = currentScene.cameras[0].storeState();
+		currentScene.dispose();
+		currentScene = __topicScene("topicScene");
+		currentScene.name = "topicScene";
+		dpt.getTopic();
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		jQuery('#form').remove();
+		/* if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		} */
+		focusAtCanvas();
 	}
 }
 
@@ -470,9 +485,21 @@ function requestNewTopic() {
 	btn.src = "/topic_white.png";
 	btn.style.color = "#f00";
 	document.body.appendChild(btn);
-	btn.onclick = ()=> {
+	/* btn.onclick = ()=> {
 		alert('newTopic btn pressed!');
-	}
+	} */
+	btn.onclick = () => {
+		jQuery('#form').remove();
+
+		topicForm();
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		/* if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		} */
+
+	};
 }
 
 function requestNewOpinion() {
@@ -487,8 +514,22 @@ function requestNewOpinion() {
 	btn.src = "/opinion_white.png";
 	btn.style.color = "#f00";
 	document.body.appendChild(btn);
-	btn.onclick = ()=> {
+	/* btn.onclick = ()=> {
 		alert('newOpinion btn pressed!');
+	} */
+	btn.onclick = () => {
+		jQuery('#form').remove();
+
+		dpt.opinionPostAllowed(currentTopic);
+		// alert(dpt.opinionPostAllowed(currentTopic)) <- returns undefined
+
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		/* if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		} */
+
 	}
 }
 
@@ -504,8 +545,24 @@ function requestYourDialogs() {
 	btn.src = "/1message_white.png";
 	btn.style.color = "#f00";
 	document.body.appendChild(btn);
-	btn.onclick = ()=> {
+	/* btn.onclick = ()=> {
 		alert('yourDialogs btn pressed!');
+	} */
+	btn.onclick = () => {
+		// alert('test')
+		if (myDialogsVisible == 'visible') {
+			myDialogsVisible = 'hidden';
+		} else {
+			myDialogsVisible = 'visible';
+		}
+		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		/* if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		} */
+
 	}
 }
 
