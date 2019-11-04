@@ -415,8 +415,98 @@ var createGUIScene = function(dptMode) {
 
 	});
 
+	requestHome();
+	requestSearch();
+	requestNewTopic();
+	requestNewOpinion();
+	requestYourDialogs();
 	requestFeedback();
 	requestHelp();
+}
+
+function requestHome() {
+	var btn = document.createElement("input");
+	btn.style.zIndex = 10;
+	btn.style.position = "absolute";
+	btn.style.bottom = "5px";
+	btn.style.right = "305px";
+	btn.width = "50";
+	btn.height = "50";
+	btn.type = "image";
+	btn.src = "/nav-top-logo.png";
+	btn.style.color = "#f00";
+	document.body.appendChild(btn);
+	btn.onclick = ()=> {
+		alert('home btn pressed!');
+	}
+}
+
+function requestSearch() {
+	var btn = document.createElement("input");
+	btn.style.zIndex = 10;
+	btn.style.position = "absolute";
+	btn.style.bottom = "5px";
+	btn.style.right = "255px";
+	btn.width = "50";
+	btn.height = "50";
+	btn.type = "image";
+	btn.src = "/search.png";
+	btn.style.color = "#f00";
+	document.body.appendChild(btn);
+	btn.onclick = ()=> {
+		alert('search btn pressed!');
+	}
+}
+
+function requestNewTopic() {
+	var btn = document.createElement("input");
+	btn.style.zIndex = 10;
+	btn.style.position = "absolute";
+	btn.style.bottom = "5px";
+	btn.style.right = "205px";
+	btn.width = "50";
+	btn.height = "50";
+	btn.type = "image";
+	btn.src = "/topic_white.png";
+	btn.style.color = "#f00";
+	document.body.appendChild(btn);
+	btn.onclick = ()=> {
+		alert('newTopic btn pressed!');
+	}
+}
+
+function requestNewOpinion() {
+	var btn = document.createElement("input");
+	btn.style.zIndex = 10;
+	btn.style.position = "absolute";
+	btn.style.bottom = "5px";
+	btn.style.right = "155px";
+	btn.width = "50";
+	btn.height = "50";
+	btn.type = "image";
+	btn.src = "/opinion_white.png";
+	btn.style.color = "#f00";
+	document.body.appendChild(btn);
+	btn.onclick = ()=> {
+		alert('newOpinion btn pressed!');
+	}
+}
+
+function requestYourDialogs() {
+	var btn = document.createElement("input");
+	btn.style.zIndex = 10;
+	btn.style.position = "absolute";
+	btn.style.bottom = "5px";
+	btn.style.right = "105px";
+	btn.width = "50";
+	btn.height = "50";
+	btn.type = "image";
+	btn.src = "/1message_white.png";
+	btn.style.color = "#f00";
+	document.body.appendChild(btn);
+	btn.onclick = ()=> {
+		alert('yourDialogs btn pressed!');
+	}
 }
 
 function requestFeedback() {
