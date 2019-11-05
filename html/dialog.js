@@ -60,11 +60,12 @@ function crisisForm(messageId) {
 	});
 }
 
-function dialogForm() {
+function dialogForm(secondDialog) {
 
 	var opinion1;
 	var opinion2;
 	var dialog = '';
+	var dialog2 = '';
 	var meReadyToEnd = '';
 	var otherReadyToEnd = '';
 	var viewOnly = true;
@@ -138,7 +139,18 @@ function dialogForm() {
 			dialog += '<p class="left">' + currentDialog.messages[i].content + option + '</p>';
 		}
 	}
-
+	
+	if(secondDialog) {
+		dialog2 = '<h3></h3>';
+		for(var i=0; i <  secondDialog.messages.length; i++) {
+			if(secondDialog.messages[i].sender == 'me'
+			|| secondDialog.messages[i].sender == 'notme2') {
+				dialog2 += '<p class="right">' + secondDialog.messages[i].content + '</p>';
+			} else {
+				dialog2 += '<p class="left">' + secondDialog.messages[i].content + '</p>';
+			}
+		}
+	}
 
 	var opinionLabel1 = "Others opinion";
 	var opinionLabel2 = "Your opinion";
@@ -168,7 +180,10 @@ function dialogForm() {
 				
 			</div>
 			<div class="middle">
-				<div id="c2">${dialog}</div>
+				<div id="c2">
+					${dialog}
+					${dialog2}
+				</div>
 			</div>
 		</div>
 	`;
@@ -304,15 +319,14 @@ function dialogForm() {
 	} else if (currentDialog.status == 'CLOSED') {
 
 		html += `
-				<div class="status">
-					<center>
-						
-						<input type="button" class="buttondialog" value="close window" name="close window" size="120" id="dialogCloseWindow">
-						<b>This dialog is closed.</b>   
-						</center>
-				</div>
-			`;
-
+			<div class="status">
+				<center>
+					<input type="button" class="buttondialog" value="close window" name="close window" size="120" id="dialogCloseWindow">
+					<b>This dialog is closed.</b>   
+				</center>
+			</div>
+		`;
+		
 		jQuery(document).one('click', "#dialogCloseWindow", function(event) {
 			dialogFormOpen = 0;
 			jQuery('#dialogForm').remove();

@@ -5,6 +5,7 @@ const Dialog = require("../models/dialog").dialogModel;
 const Opinion = require("../models/opinion").opinionModel;
 const Topic = require("../models/topic").topicModel;
 const Lo_ = require("lodash");
+const util = require("util");
 
 
 /**
@@ -38,9 +39,28 @@ module.exports.createDialog = async (options) => {
 };
 
 
-module.exports.getDialog = async (options) => {
+async function findExtraDialog(firstDialog) {
+	var opinion = await Opinion.findOne({_id: firstDialog.opinion});
+	var opinions = await Opinion.find({topic: mongoose.mongo.ObjectId(opinion.topic)});
+
+	for(var i in opinions) {
+		var dialogs = await Dialog.find({opinion: opinions[i]._id, status: "CLOSED"});
+		for(j in dialogs) {
+			if(dialogs[j].initiator.toString() == firstDialog.recipient.toString()
+			&& dialogs[j].recipient.toString() == firstDialog.initiator.toString()) {
+				
+				return(dialogs[j]);
+			}
+		}
+	}
+}
+
+module.exports.getDialog = async (options, getSet) => {
 	var result;
+	var result2;
 	try {
+		
+		console.log(util.inspect(options.body));
 		var dialogId = mongoose.Types.ObjectId(options.body.dialogId);
 		var now = new Date();
 		now = now.toISOString();
@@ -52,6 +72,30 @@ module.exports.getDialog = async (options) => {
 				await Dialog.findByIdAndUpdate(dialogId, {recipientTimestamp: now});
 			}
 		}
+		if(getSet) {
+			result2 = await findExtraDialog(result);
+			if(result2) {
+				if(result.crisises[1].startDate.valueOf() < result2.crisises[1].startDate.valueOf()) {
+					result = [ result, result2 ];
+				} else {
+					result = [ result2, result ];
+				}
+				/*
+				if('user' in options) {
+					if(result2.initiator.id.toString('hex') == options.user.user.id) {
+						await Dialog.findByIdAndUpdate(dialogId, {initiatorTimestamp: now});
+					} else if(result2.recipient.id.toString('hex') == options.user.user.id) {
+						await Dialog.findByIdAndUpdate(dialogId, {recipientTimestamp: now});
+					}
+				}
+				*/
+			}
+		}
+		
+		if(!Array.isArray(result)) {
+			result = [ result ];
+		}
+
 	} catch(error) {
 		throw {
 			status: 500,

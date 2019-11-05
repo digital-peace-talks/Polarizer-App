@@ -45,8 +45,8 @@ async function publishDialogUpdate(dialogId) {
 	var dialog = await dialogService.getDialog({body: {dialogId: dialogId}});
 	for(var i = 0; i < global.dptNS.online.length; i++) {
 		if(global.dptNS.online[i].registered
-		&& (global.dptNS.online[i].user.id == dialog.data.initiator.toString()
-		|| global.dptNS.online[i].user.id == dialog.data.recipient.toString())) {
+		&& (global.dptNS.online[i].user.id == dialog.data[0].initiator.toString()
+		|| global.dptNS.online[i].user.id == dialog.data[0].recipient.toString())) {
 			global.dptNS.online[i].socket.emit('update', {path: '/dialog/'+dialogId+'/', method: 'get'});
 		}
 	}
@@ -56,8 +56,8 @@ async function publishDialogListUpdate(dialogId) {
 	var dialog = await dialogService.getDialog({body: {dialogId: dialogId}});
 	for(var i = 0; i < global.dptNS.online.length; i++) {
 		if(global.dptNS.online[i].registered
-		&& (global.dptNS.online[i].user.id == dialog.data.initiator.toString()
-		|| global.dptNS.online[i].user.id == dialog.data.recipient.toString())) {
+		&& (global.dptNS.online[i].user.id == dialog.data[0].initiator.toString()
+		|| global.dptNS.online[i].user.id == dialog.data[0].recipient.toString())) {
 			global.dptNS.online[i].socket.emit('update', {path: '/dialog/list/', method: 'get'});
 		}
 	}
@@ -337,94 +337,120 @@ match.push({
 	}
 });
 
+/*
 match.push({
 	path: "/dialog/"+dialogIdReg+"/",
 	method: "get",
 	fun: async function(data, dptUUID, socket) {
-		console.log("get a dialog");
-		var user = userRegistered(dptUUID);
-		var dialog = {};
-		var me = '';
-		var notme = '';
-		var notme2 = '';
-		dialog.messages = [];
-		dialog.crisises = [];
-		dialog.extensionRequests = [];
-		if(user) {
-			data.user = user;
-			var ret = await dialogService.getDialog(data);
-			ret = ret.data;
-//			dialog.crisises = ret.crisises;
-			dialog.status = ret.status;
-			dialog.opinionProposition = ret.opinionProposition;
-			dialog.extension = ret.extension;
-			dialog.dialog = ret._id.toString();
-			
-			if(ret.initiator.toString() == user.user.id) {
-				me = ret.initiator.toString();
-				notme = ret.recipient.toString();
-				dialog.initiator = 'me';
-				dialog.recipient = 'notme';
-			} else if(ret.recipient.toString() == user.user.id) {
-				me = ret.recipient.toString();
-				notme = ret.initiator.toString();
-				dialog.initiator = 'notme';
-				dialog.recipient = 'me';
+*/
+async function getDialogById(data, dptUUID, socket, getSet) {
+	console.log("get a dialog");
+	var user = userRegistered(dptUUID);
+	var dialog = [];
+	var me = '';
+	var notme = '';
+	var notme2 = '';
+	if(user) {
+		data.user = user;
+		var ret = await dialogService.getDialog(data, getSet);
+		ret = ret.data;
+		for(var r in ret) {
+	//		dialog.crisises = ret.crisises;
+			dialog[r] = {};
+			dialog[r].messages = [];
+			dialog[r].crisises = [];
+			dialog[r].extensionRequests = [];
+			dialog[r].status = ret[r].status;
+			dialog[r].opinionProposition = ret[r].opinionProposition;
+			dialog[r].extension = ret[r].extension;
+			dialog[r].dialog = ret[r]._id.toString();
+				
+			if(ret[r].initiator.toString() == user.user.id) {
+				me = ret[r].initiator.toString();
+				notme = ret[r].recipient.toString();
+				dialog[r].initiator = 'me';
+				dialog[r].recipient = 'notme';
+			} else if(ret[r].recipient.toString() == user.user.id) {
+				me = ret[r].recipient.toString();
+				notme = ret[r].initiator.toString();
+				dialog[r].initiator = 'notme';
+				dialog[r].recipient = 'me';
 			} else {
-				dialog.initiator = 'notme';
-				dialog.recipient = 'notme2';
-				notme = ret.initiator.toString();
-				notme2 = dialog.recipient;
+				dialog[r].initiator = 'notme';
+				dialog[r].recipient = 'notme2';
+				notme = ret[r].initiator.toString();
+				notme2 = dialog[r].recipient;
 			}
-
-			for(var i=0; i < ret.crisises.length; i++) {
+	
+			for(var i=0; i < ret[r].crisises.length; i++) {
 				var crisis = {};
-				crisis.crisisesId = ret.crisises[i]._id.toString();
-				if(ret.crisises[i].initiator.toString() == user.user.id) {
+				crisis.crisisesId = ret[r].crisises[i]._id.toString();
+				if(ret[r].crisises[i].initiator.toString() == user.user.id) {
 					crisis.initiator = 'me';
-				} else if(dialog.recipient == "notme2") {
+				} else if(dialog[r].recipient == "notme2") {
 					crisis.initiator = 'notme';
 					crisis.recipient = 'notme2';
 				} else {
 					crisis.initiator = 'notme';
 				}
-				if(ret.status == 'CLOSED') {
-					crisis.reason = ret.crisises[i].reason;
-					crisis.rating = ret.crisises[i].rating;
+				if(ret[r].status == 'CLOSED') {
+					crisis.reason = ret[r].crisises[i].reason;
+					crisis.rating = ret[r].crisises[i].rating;
 				}
-				dialog.crisises.push(crisis);
+				dialog[r].crisises.push(crisis);
 			}
-
-			for(var i=0; i < ret.messages.length; i++) {
+	
+			for(var i=0; i < ret[r].messages.length; i++) {
 				var message = {};
-				message.messageId = ret.messages[i]._id.toString();
-				message.content = ret.messages[i].content;
-				if(ret.messages[i].sender.toString() == user.user.id) {
+				message.messageId = ret[r].messages[i]._id.toString();
+				message.content = ret[r].messages[i].content;
+				if(ret[r].messages[i].sender.toString() == user.user.id) {
 					message.sender = 'me';
-				} else if(ret.messages[i].sender.toString() == notme && notme2 == "notme2") {
+				} else if(ret[r].messages[i].sender.toString() == notme && notme2 == "notme2") {
 					message.sender = notme2;
 				} else {
 					message.sender = "notme";
 				}
-				dialog.messages.push(message);
+				dialog[r].messages.push(message);
 			}
 			
-			for(var i=0; i < ret.extensionRequests.length; i++) {
+			for(var i=0; i < ret[r].extensionRequests.length; i++) {
 				var request = {};
-				request.extensionRequestId = ret.extensionRequests[i]._id.toString();
-				if(ret.extensionRequests[i].sender.toString() == user.user.id) {
+				request.extensionRequestId = ret[r].extensionRequests[i]._id.toString();
+				if(ret[r].extensionRequests[i].sender.toString() == user.user.id) {
 					request.sender = 'me';
 				} else {
 					request.sender = 'notme';
 				}
-
-				dialog.extensionRequests.push(request);
+	
+				dialog[r].extensionRequests.push(request);
 			}
-
-			return({data: dialog});
 		}
+
+		return({data: dialog});
+	}
+}
+
+match.push({
+	path: "/dialog/"+dialogIdReg+"/",
+	method: "get",
+	fun: async function(data, dptUUID, socket) {
+		var ret = await getDialogById(data, dptUUID, socket, false);
+		return(ret);
 	}
 });
+
+match.push({
+	path: "/dialogSet/"+dialogIdReg+"/",
+	method: "get",
+	fun: async function(data, dptUUID, socket) {
+		var ret = await getDialogById(data, dptUUID, socket, true);
+		return(ret);
+	}
+});
+
+
+
 
 match.push({
 	path: "/dialog/",

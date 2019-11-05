@@ -91,17 +91,32 @@ function onWebSocketAPI(restObj) {
 	powerSave = false;
 
 	if(currentDialog
-			&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
-			&& restObj.method == 'get') {
+	&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
+	&& restObj.method == 'get') {
 
 		var old = currentDialog;
-		currentDialog = restObj.data;
+		currentDialog = restObj.data[0];
 		currentDialog.topic = old.topic;
 		currentDialog.initiatorOpinion = old.initiatorOpinion;
 		currentDialog.recipientOpinion = old.recipientOpinion;
 		dialogForm();
 
 	}
+	if(currentDialog
+	&& restObj.path == '/dialogSet/' + currentDialog.dialog + '/'
+	&& restObj.method == 'get') {
+
+		if(Array.isArray(restObj.data)) {
+			var old = currentDialog;
+			currentDialog = restObj.data[0];
+			currentDialog.topic = old.topic;
+			currentDialog.initiatorOpinion = old.initiatorOpinion;
+			currentDialog.recipientOpinion = old.recipientOpinion;
+		}
+
+		dialogForm(restObj.data[1]);
+	}
+
 	if(restObj.path == '/topic/'
 	&& restObj.method == 'get') {
 		if(currentScene.name == 'topicScene') {

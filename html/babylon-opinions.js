@@ -148,7 +148,7 @@ Where getIntersection is:
 	} else if(combination == 'green-red') {
 		var reverse = 1;
 		combination = 'red-green';
-		emmisiveColor = new BABYLON.Vector3(0.4, 0.4, 0.4);
+		emmisiveColor = new BABYLON.Vector3(0.5, 0.5, 0.5);
 	} else if(combination == 'blue-red') {
 		var reverse = 1;
 		combination = 'red-blue';
@@ -163,6 +163,7 @@ Where getIntersection is:
 	if(1) {
 		if(combination.indexOf('red') >= 0) {
 			combination = 'red-red';
+			emmisiveColor = new BABYLON.Vector3(0.6, 0.6, 0.6);
 		}
 		if(combination.indexOf('green') >= 0) {
 			combination = 'green-green';
@@ -410,7 +411,7 @@ function loadOpinions(restObj) {
 			new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
 				function(ev) {
 					var meshLocal = ev.meshUnderPointer;
-					meshLocal.material.emissiveColor = new BABYLON.Color3(0.5,0.5,1);
+					meshLocal.material.emissiveColor = new BABYLON.Color3(1.0,0,0.85);
 					canvas.style.cursor = "move";
 				}, false));
 		

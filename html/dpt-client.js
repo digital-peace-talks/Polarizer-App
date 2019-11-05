@@ -203,6 +203,18 @@ class DPT {
 			},
 		});
 	}
+
+	getDialogSet(dialogId) {
+		this.socket.emit('api', {
+			method: 'get',
+			path: '/dialogSet/'+ dialogId +'/',
+			data: {
+				body: {
+					dialogId: dialogId
+				}
+			}
+		});
+	}
 	
 	putDialog(dialogId, topic, key, value) {
 		var obj = {

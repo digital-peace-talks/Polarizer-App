@@ -205,6 +205,7 @@ var createGenericScene = function(dptMode) {
 	// lights - no light!!
 	var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
 	light.radius = 10;
+	light.diffuse = new BABYLON.Color3(1, 0.8, 0.8);
 	light.intensity = 0.3;
 
 	genericScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
@@ -291,7 +292,7 @@ var createGenericScene = function(dptMode) {
 								initiatorOpinion: pointerInfo.pickInfo.pickedMesh.dpt.initiatorsOpinion,
 								recipientOpinion: pointerInfo.pickInfo.pickedMesh.dpt.recipientsOpinion,
 							};
-							dpt.getDialog(currentDialog.dialog);
+							dpt.getDialogSet(currentDialog.dialog);
 						}
 
 					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "topicScene") {
