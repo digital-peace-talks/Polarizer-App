@@ -325,6 +325,7 @@ function loadDialogList(restObj) {
 	}
 }
 
+// GUI Menubar Buttons
 var createGUIScene = function(dptMode) {
 
 
@@ -395,6 +396,7 @@ var createGUIScene = function(dptMode) {
 		});
 	}
 
+
 	//create dialogue button
 	var dialoguesBtn = jQuery('#dialogues-btn');
 	dialoguesBtn.show();
@@ -415,8 +417,153 @@ var createGUIScene = function(dptMode) {
 
 	});
 
+	requestHome();
+	requestSearch();
+	requestNewTopic();
+	requestNewOpinion();
+	requestYourDialogs();
 	requestFeedback();
 	requestHelp();
+}
+
+function requestHome() {
+	var btn = document.createElement("input");
+	btn.style.zIndex = 10;
+	btn.style.position = "absolute";
+	btn.style.bottom = "5px";
+	btn.style.right = "305px";
+	btn.width = "50";
+	btn.height = "50";
+	btn.type = "image";
+	btn.src = "/nav-top-logo.png";
+	btn.style.color = "#f00";
+	document.body.appendChild(btn);
+
+	btn.onclick = () => {
+		opinionCamState = currentScene.cameras[0].storeState();
+		currentScene.dispose();
+		currentScene = __topicScene("topicScene");
+		currentScene.name = "topicScene";
+		dpt.getTopic();
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		jQuery('#form').remove();
+		/* if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		} */
+		focusAtCanvas();
+	}
+}
+
+function requestSearch() {
+	var btn = document.createElement("input");
+	btn.style.zIndex = 10;
+	btn.style.position = "absolute";
+	btn.style.bottom = "5px";
+	btn.style.right = "255px";
+	btn.width = "50";
+	btn.height = "50";
+	btn.type = "image";
+	btn.src = "/search.png";
+	btn.style.color = "#f00";
+	document.body.appendChild(btn);
+	btn.onclick = ()=> {
+		alert('search btn pressed!');
+	}
+}
+
+function requestNewTopic() {
+	var btn = document.createElement("input");
+	btn.style.zIndex = 10;
+	btn.style.position = "absolute";
+	btn.style.bottom = "5px";
+	btn.style.right = "205px";
+	btn.width = "50";
+	btn.height = "50";
+	btn.type = "image";
+	btn.src = "/topic_white.png";
+	btn.style.color = "#f00";
+	document.body.appendChild(btn);
+	/* btn.onclick = ()=> {
+		alert('newTopic btn pressed!');
+	} */
+	btn.onclick = () => {
+		jQuery('#form').remove();
+
+		topicForm();
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		/* if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		} */
+
+	};
+}
+
+function requestNewOpinion() {
+	var btn = document.createElement("input");
+	btn.style.zIndex = 10;
+	btn.style.position = "absolute";
+	btn.style.bottom = "5px";
+	btn.style.right = "155px";
+	btn.width = "50";
+	btn.height = "50";
+	btn.type = "image";
+	btn.src = "/opinion_white.png";
+	btn.style.color = "#f00";
+	document.body.appendChild(btn);
+	/* btn.onclick = ()=> {
+		alert('newOpinion btn pressed!');
+	} */
+	btn.onclick = () => {
+		jQuery('#form').remove();
+
+		dpt.opinionPostAllowed(currentTopic);
+		// alert(dpt.opinionPostAllowed(currentTopic)) <- returns undefined
+
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		/* if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		} */
+
+	}
+}
+
+function requestYourDialogs() {
+	var btn = document.createElement("input");
+	btn.style.zIndex = 10;
+	btn.style.position = "absolute";
+	btn.style.bottom = "5px";
+	btn.style.right = "105px";
+	btn.width = "50";
+	btn.height = "50";
+	btn.type = "image";
+	btn.src = "/1message_white.png";
+	btn.style.color = "#f00";
+	document.body.appendChild(btn);
+	/* btn.onclick = ()=> {
+		alert('yourDialogs btn pressed!');
+	} */
+	btn.onclick = () => {
+		// alert('test')
+		if (myDialogsVisible == 'visible') {
+			myDialogsVisible = 'hidden';
+		} else {
+			myDialogsVisible = 'visible';
+		}
+		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		/* if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		} */
+
+	}
 }
 
 function requestFeedback() {
