@@ -249,7 +249,7 @@ var createGenericScene = function(dptMode) {
 					click.x = pointerInfo.pickInfo.pickedMesh._geometry.extend.maximum.x + click.x;
 					click.y = pointerInfo.pickInfo.pickedMesh._geometry.extend.maximum.y - click.y;
 
-					if(click.y < 36) {
+					if(click.y < .36) {
 						if(click.x >=0 && click.x < .36) {
 							if('opinionId' in pointerInfo.pickInfo.pickedMesh.dpt
 							&& pointerInfo.pickInfo.pickedMesh.dpt.context == "opinionScene"
@@ -289,8 +289,8 @@ var createGenericScene = function(dptMode) {
 							currentDialog = {
 								dialog: pointerInfo.pickInfo.pickedMesh.dpt.dialogId,
 								topic: currentTopicStr,
-								initiatorOpinion: pointerInfo.pickInfo.pickedMesh.dpt.initiatorsOpinion,
-								recipientOpinion: pointerInfo.pickInfo.pickedMesh.dpt.recipientsOpinion,
+								initiatorOpinion: 'ZZZZ' + pointerInfo.pickInfo.pickedMesh.dpt.initiatorsOpinion,
+								recipientOpinion: 'YYYY' + pointerInfo.pickInfo.pickedMesh.dpt.recipientsOpinion,
 							};
 							dpt.getDialogSet(currentDialog.dialog);
 						}

@@ -107,11 +107,19 @@ function onWebSocketAPI(restObj) {
 	&& restObj.method == 'get') {
 
 		if(Array.isArray(restObj.data)) {
-			var old = currentDialog;
+			var old;
+			for(var i in currentScene.meshes) {
+				if('dpt' in currentScene.meshes[i]
+				&& currentScene.meshes[i].dpt.context == 'tubeConnection'
+				&& currentScene.meshes[i].dpt.dialogId == restObj.data[0].dialog) {
+					old = currentScene.meshes[i].dpt;
+					old.topic = currentDialog.topic;
+				}
+			}
 			currentDialog = restObj.data[0];
 			currentDialog.topic = old.topic;
-			currentDialog.initiatorOpinion = old.initiatorOpinion;
-			currentDialog.recipientOpinion = old.recipientOpinion;
+			currentDialog.initiatorOpinion = old.initiatorsOpinion;
+			currentDialog.recipientOpinion = old.recipientsOpinion;
 		}
 
 		dialogForm(restObj.data[1]);
