@@ -417,8 +417,8 @@ var createGUIScene = function(dptMode) {
 
 	});
 
-	requestHome();
-	requestSearch();
+	/* requestHome();
+	requestSearch(); */
 	requestNewTopic();
 	requestNewOpinion();
 	requestYourDialogs();
@@ -426,12 +426,12 @@ var createGUIScene = function(dptMode) {
 	requestHelp();
 }
 
-function requestHome() {
+/* function requestHome() {
 	var btn = document.createElement("input");
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
-	btn.style.right = "305px";
+	btn.style.right = "300px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -448,10 +448,10 @@ function requestHome() {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		jQuery('#form').remove();
-		/* if (isMobile) {
+		if (isMobile) {
 			console.log("mobile behavior!")
 			hideMenu();
-		} */
+		} 
 		focusAtCanvas();
 	}
 }
@@ -461,7 +461,7 @@ function requestSearch() {
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
-	btn.style.right = "255px";
+	btn.style.right = "250px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -471,14 +471,14 @@ function requestSearch() {
 	btn.onclick = ()=> {
 		alert('search btn pressed!');
 	}
-}
+} */
 
 function requestNewTopic() {
 	var btn = document.createElement("input");
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
-	btn.style.right = "205px";
+	btn.style.right = "200px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -507,7 +507,7 @@ function requestNewOpinion() {
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
-	btn.style.right = "155px";
+	btn.style.right = "150px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -538,7 +538,7 @@ function requestYourDialogs() {
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
-	btn.style.right = "105px";
+	btn.style.right = "100px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -571,7 +571,7 @@ function requestFeedback() {
 	//			btn.innerText = "Enable/Disable Joystick";
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
-	btn.style.bottom = "5px";
+	btn.style.bottom = "10px";
 	btn.style.right = "5px";
 	btn.width = "50";
 	btn.height = "50";
@@ -625,8 +625,8 @@ function requestHelp() {
 	//			btn.innerText = "Enable/Disable Joystick";
 	btnH.style.zIndex = 10;
 	btnH.style.position = "absolute";
-	btnH.style.bottom = "5px";
-	btnH.style.right = "55px";
+	btnH.style.bottom = "10px";
+	btnH.style.right = "50px";
 	btnH.width = "50";
 	btnH.height = "50";
 	btnH.type = "image";
