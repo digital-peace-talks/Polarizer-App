@@ -571,8 +571,8 @@ function requestFeedback() {
 	//			btn.innerText = "Enable/Disable Joystick";
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
-	btn.style.bottom = "5px";
-	btn.style.right = "5px";
+	btn.style.bottom = "10px";
+	btn.style.right = "10px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -625,7 +625,7 @@ function requestHelp() {
 	//			btn.innerText = "Enable/Disable Joystick";
 	btnH.style.zIndex = 10;
 	btnH.style.position = "absolute";
-	btnH.style.bottom = "5px";
+	btnH.style.bottom = "10px";
 	btnH.style.right = "55px";
 	btnH.width = "50";
 	btnH.height = "50";
