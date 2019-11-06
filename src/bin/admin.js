@@ -41,16 +41,27 @@ async function deleteTopic(topicId) {
 }
 
 async function deleteOpinion(opinionId) {
-	console.log("delete opinion: "+opinionId);
-	var opinion = await Opinion.findOne({_id: opinionId});
-	var topicId = opinion.topic;
-	var dialogs = await Dialog.find({opinion: opinionId}, {_id: 1});
-	for(i in dialogs) {
-		console.log("DIALOGS - delete: "+util.inspect(dialogs));
-		await Dialog.deleteOne({_id: dialogs[i]._id});
+	try {
+		console.log("delete opinion: "+opinionId);
+		var opinion = await Opinion.findOne({_id: opinionId});
+		var topicId = opinion.topic;
+		var topic = await Topic.findOne(topicId);
+		var dialogs = await Dialog.find({opinion: opinionId}, {_id: 1});
+		for(i in dialogs) {
+			console.log("DIALOGS - delete: "+util.inspect(dialogs));
+			await Dialog.deleteOne({_id: dialogs[i]._id});
+		}
+//		await Opinion.deleteOne({_id: opinionId});
+		await topic.opinions.remove(opinionId);
+		await topic.save();
+		var user = await User.findOne(opinion.user);
+		await user.opinions.remove(opinionId);
+		await user.save();
+		await Opinion.remove({_id: opinionId});
+		return(listOpinions(topicId));
+	} catch(err) {
+		console.log('err: '+err);
 	}
-	await Opinion.deleteOne({_id: opinionId});
-	return(listOpinions(topicId));
 }
 
 async function listTopics() {
@@ -63,7 +74,6 @@ async function listTopics() {
 			</tr>`;
 	}
 	ret += '</table>';
-	console.log(ret);
 	return(ret);
 }
 
@@ -78,7 +88,6 @@ async function listOpinions(topicId) {
 			</tr>`;
 	}
 	ret += '</table>';
-	console.log(ret);
 	return(ret);
 }
 
@@ -137,7 +146,6 @@ app.post("/listTopics", async (req, res) => {
 	var ret = '';
 	try {
 		ret = await listTopics();
-		console.log(ret);
 		res.json({ok: true, ret: ret});
 	} catch(err) {
 		res.json({ok: false, error: err});
@@ -151,7 +159,6 @@ app.post("/listOpinions", async (req, res) => {
 		if('topicId' in req.body) {
 			console.log(util.inspect(req.body.topicId));
 			ret = await listOpinions(req.body.topicId);
-			console.log(ret);
 			res.json({ok: true, ret: ret});
 		}
 	} catch(err) {
@@ -187,7 +194,6 @@ app.get("/", async (req, res) => {
 						data: JSON.stringify({}),
 						success: function(data) {
 							jQuery("div#content").html(data.ret);
-							console.log(data);
 						},
 						error: function(jqXHR, status, err) {
 							alert('text status '+status+', err '+err);
@@ -218,7 +224,6 @@ app.get("/", async (req, res) => {
 						data: JSON.stringify({topicId: args.topicId}),
 						success: function(data) {
 							jQuery("div#content").html(data.ret);
-							console.log(data);
 						},
 						error: function(jqXHR, status, err) {
 							alert('text status '+status+', err '+err);
@@ -234,7 +239,6 @@ app.get("/", async (req, res) => {
 						data: JSON.stringify({opinionId: args.opinionId}),
 						success: function(data) {
 							jQuery("div#content").html(data.ret);
-							console.log(data);
 						},
 						error: function(jqXHR, status, err) {
 							alert('text status '+status+', err '+err);
