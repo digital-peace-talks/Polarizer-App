@@ -417,8 +417,8 @@ var createGUIScene = function(dptMode) {
 
 	});
 
-	requestHome();
-	requestSearch();
+	/* requestHome();
+	requestSearch(); */
 	requestNewTopic();
 	requestNewOpinion();
 	requestYourDialogs();
@@ -426,7 +426,7 @@ var createGUIScene = function(dptMode) {
 	requestHelp();
 }
 
-function requestHome() {
+/* function requestHome() {
 	var btn = document.createElement("input");
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
@@ -448,10 +448,10 @@ function requestHome() {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		jQuery('#form').remove();
-		/* if (isMobile) {
+		if (isMobile) {
 			console.log("mobile behavior!")
 			hideMenu();
-		} */
+		} 
 		focusAtCanvas();
 	}
 }
@@ -471,7 +471,7 @@ function requestSearch() {
 	btn.onclick = ()=> {
 		alert('search btn pressed!');
 	}
-}
+} */
 
 function requestNewTopic() {
 	var btn = document.createElement("input");
