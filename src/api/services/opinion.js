@@ -48,7 +48,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 				opinions[i]._doc.topos = [];
 				opinions[i]._doc.blocked = 1;
 				for(var j in dialogs) {
-					dialog = dialogs[j];
+					var dialog = dialogs[j];
 					if(dialog) {
 	
 						var topo = {
