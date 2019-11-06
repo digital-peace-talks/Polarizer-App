@@ -431,7 +431,7 @@ var createGUIScene = function(dptMode) {
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
-	btn.style.right = "305px";
+	btn.style.right = "300px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -461,7 +461,7 @@ function requestSearch() {
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
-	btn.style.right = "255px";
+	btn.style.right = "250px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -478,7 +478,7 @@ function requestNewTopic() {
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
-	btn.style.right = "205px";
+	btn.style.right = "200px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -507,7 +507,7 @@ function requestNewOpinion() {
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
-	btn.style.right = "155px";
+	btn.style.right = "150px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -538,7 +538,7 @@ function requestYourDialogs() {
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
-	btn.style.right = "105px";
+	btn.style.right = "100px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -572,7 +572,7 @@ function requestFeedback() {
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "10px";
-	btn.style.right = "10px";
+	btn.style.right = "5px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -626,7 +626,7 @@ function requestHelp() {
 	btnH.style.zIndex = 10;
 	btnH.style.position = "absolute";
 	btnH.style.bottom = "10px";
-	btnH.style.right = "55px";
+	btnH.style.right = "50px";
 	btnH.width = "50";
 	btnH.height = "50";
 	btnH.type = "image";
