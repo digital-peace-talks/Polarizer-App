@@ -78,7 +78,7 @@ function dialogForm(secondDialog) {
 	}
 	dialogFormOpen = 1;
 	if(currentDialog.initiator == 'me'
-	|| currentDialog.initiator == 'notme2') {
+	|| currentDialog.recipient == 'notme2') {
 
 		opinionMe = currentDialog.initiatorOpinion;
 		opinionOther = currentDialog.recipientOpinion;
@@ -98,18 +98,29 @@ function dialogForm(secondDialog) {
 	for(var i = 0; i < currentDialog.crisises.length; i++) {
 
 		if(currentDialog.status == 'CLOSED') {
+
 			if(currentDialog.crisises[i].initiator == 'me'
 			|| currentDialog.crisises[i].recipient == 'notme2') {
+
 				meReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
+
 			} else if(currentDialog.crisises[i].initiator == 'notme') {
+
 				otherReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
+
 			}
+
 		} else {
+
 			if (currentDialog.crisises[i].initiator == 'me'
 			|| currentDialog.crisises[i].recipient == 'notme2') {
+
 				meReadyToEnd = '<h4>Ready to End</h4>';
+
 			} else if (currentDialog.crisises[i].initiator == 'notme') {
+
 				otherReadyToEnd = '<h4>Ready to End</h4>';
+
 			}
 		}
 	}
@@ -130,8 +141,8 @@ function dialogForm(secondDialog) {
 
 	for (var i = 0; i < currentDialog.messages.length; i++) {
 
-		if (currentDialog.messages[i].sender == 'me' ||
-			currentDialog.messages[i].sender == 'notme2') {
+		if(currentDialog.messages[i].sender == 'me'
+		|| currentDialog.messages[i].sender == 'notme2') {
 			dialog += '<p class="right">' + currentDialog.messages[i].content + '</p>';
 		} else {
 			var option = '';
@@ -143,17 +154,26 @@ function dialogForm(secondDialog) {
 	}
 	
 	if(secondDialog) {
+
 		dialog2 = '<h3></h3>';
+
 		var ratingMe = '';
 		var ratingOther = '';
+
 		for (var i = 0; i < secondDialog.crisises.length; i++) {
+
 			if(secondDialog.crisises[i].initiator == 'me'
 			|| secondDialog.crisises[i].recipient == 'notme2') {
+
 				ratingMe = `Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${secondDialog.crisises[i].rating}`;
+
 			} else if (secondDialog.crisises[i].initiator == 'notme') {
+
 				ratingOther = `Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${secondDialog.crisises[i].rating}`;
+
 			}
 		}
+
 		//	Proposion: ${secondDialog.opinionProposition}<br>
 		dialog2 += `<table width="100%"><tr>
 			<td valign="top" style="font-size: 14px" width="45%"><center>${ratingOther}</center></td>
@@ -162,11 +182,16 @@ function dialogForm(secondDialog) {
 			</tr></table><br>`;
 
 		for(var i=0; i <  secondDialog.messages.length; i++) {
+
 			if(secondDialog.messages[i].sender == 'me'
 			|| secondDialog.messages[i].sender == 'notme2') {
+
 				dialog2 += '<p class="right">' + secondDialog.messages[i].content + '</p>';
+
 			} else {
+
 				dialog2 += '<p class="left">' + secondDialog.messages[i].content + '</p>';
+
 			}
 		}
 	}
@@ -177,6 +202,7 @@ function dialogForm(secondDialog) {
 		var opinionLabel1 = "Opinion A";
 		var opinionLabel2 = "Opinion B";
 	}
+
 	var html = `
 		<div id="dialogFrame">
 	   
@@ -203,13 +229,13 @@ function dialogForm(secondDialog) {
 				<div id="c2">
 					<table width="100%">
 						<tr>
-							<td valign="top" style="font-size: 14px" width="45%"><center>
+							<td valign="top" class="dialogleft" style="font-size: 14px" width="45%"><center>
 								<p><b>${opinionLabel1}:</b><br>${opinionOther}<br>${otherReadyToEnd}</p>
 							</center></td>
 							<td style="font-size: 36px"><center>
 								vs.
 							</center></td>
-							<td valign="top" width="45%" style="font-size: 14px"><center>
+							<td valign="top" class="dialogright" width="45%" style="font-size: 14px"><center>
 								<p><b>${opinionLabel2}:</b><br>${opinionMe}<br>${meReadyToEnd}</p>
 							</center></td>
 						</tr>
@@ -224,6 +250,7 @@ function dialogForm(secondDialog) {
 	if (currentDialog.status == 'ACTIVE') {
 
 		if (viewOnly) {
+
 			html += `
 				<div class="status">
 				<center>
@@ -237,9 +264,10 @@ function dialogForm(secondDialog) {
 				</div>
 			`;
 
-
 		} else {
+
 			if (otherReadyToEnd != '<h4>Ready to End</h4>') {
+
 				html += `
 					<div class="status">
 						<center>
@@ -255,7 +283,9 @@ function dialogForm(secondDialog) {
 						</center>
 					</div>
 				`;
+
 			} else {
+
 				html += `
 					<div class="status">
 						<center>
@@ -269,6 +299,7 @@ function dialogForm(secondDialog) {
 						</center>
 					</div>
 				`;
+
 			}
 		}
 
@@ -287,6 +318,7 @@ function dialogForm(secondDialog) {
 	} else if (currentDialog.status == 'PENDING') {
 
 		if (currentDialog.initiator == 'me') {
+
 			html += `
 					<div class="status">
 						<center>
@@ -294,7 +326,7 @@ function dialogForm(secondDialog) {
 							<input type="button" class="buttondialog" value="close window" name="close window" size="120" id="dialogClose">
 			   			</center>
 					</div>
-				`;
+			`;
 
 			jQuery(document).one('click', "#dialogClose", function(event) {
 				dialogFormOpen = 0;
@@ -305,14 +337,14 @@ function dialogForm(secondDialog) {
 		} else {
 
 			html += `
-					<div class="status">
-						<center id="actionSpace">
-							<input type="button" class="buttondialog" id="dialogAccept" value="accept dialog" name="accept dialog" size="120" id="dialogAccept">
-							<input type="button" class="buttondialog" value="ask me later" name="accept dialog" size="120" id="dialogClose">
-							<input type="button" class="buttondialog" value="reject" name="accept dialog" size="120" id="dialogReject">
-			   			</center>
-					</div>
-				`;
+				<div class="status">
+					<center id="actionSpace">
+						<input type="button" class="buttondialog" id="dialogAccept" value="accept dialog" name="accept dialog" size="120" id="dialogAccept">
+						<input type="button" class="buttondialog" value="ask me later" name="accept dialog" size="120" id="dialogClose">
+						<input type="button" class="buttondialog" value="reject" name="accept dialog" size="120" id="dialogReject">
+		   			</center>
+				</div>
+			`;
 
 			jQuery(document).one('click', "#dialogAccept", function(event) {
 				jQuery('center#actionSpace').html(`
@@ -329,7 +361,8 @@ function dialogForm(secondDialog) {
 						
 						</center>
 					</div>
-					`);
+				`);
+
 				dpt.putDialog(currentDialog.dialog, currentTopic, "status", "ACTIVE");
 				event.preventDefault();
 			});
@@ -349,7 +382,7 @@ function dialogForm(secondDialog) {
 			});
 		}
 
-	} else if (currentDialog.status == 'CLOSED') {
+	} else if(currentDialog.status == 'CLOSED') {
 
 		html += `
 			<div class="status">
@@ -380,22 +413,25 @@ function dialogForm(secondDialog) {
 		for (var i = 0; i < currentDialog.crisises.length; i++) {
 			if(currentDialog.crisises[i].initiator != 'me'
 			|| currentDialog.crisises[i].recipient != 'notme2') {
-				jQuery('div.dialogleft>p').append(`Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}<br>`);
+				jQuery('td.dialogleft>center').append(`Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}<br>`);
 				break;
 			} else {
-				jQuery('div.dialogright>p').append(`Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}<br>`);
+				jQuery('td.dialogright>center').append(`Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}<br>`);
 			}
 		}
 	}
 	*/
 
 	jQuery(document).on('submit', '#dialogFrame', function(event) {
+
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		var message = this[0].value;
+
 		if(message.length > 0) {
 			dpt.postMessage(message, whoami.dptUUID, currentDialog.dialog);
 		}
+
 		jQuery("#dialogInput").focus();
 		var objDiv = document.getElementById("dialogForm");
 		objDiv.scrollTop = objDiv.scrollHeight;
@@ -408,12 +444,14 @@ function dialogForm(secondDialog) {
 	});
 
 	jQuery(document).on('keyup', '#dialogInput', function(event) {
+
 		if (event.keyCode == 27) {
 			dialogFormOpen = 0;
 			jQuery('#dialogForm').remove();
 			focusAtCanvas();
 			event.preventDefault();
 		}
+
 		if(event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)
 		||(event.keyCode == 10 || event.keyCode == 13)) {
 			event.stopImmediatePropagation();
@@ -426,6 +464,7 @@ function dialogForm(secondDialog) {
 			}
 		}
 	});
+
 	var objDiv = document.getElementById("dialogForm");
 	objDiv.scrollTop = objDiv.scrollHeight;
 	jQuery("#dialogInput").focus();
