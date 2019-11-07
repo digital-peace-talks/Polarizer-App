@@ -186,14 +186,14 @@ function dialogForm(secondDialog) {
 
 		for(var i=0; i <  secondDialog.messages.length; i++) {
 
-			if(secondDialog.messages[i].sender == 'me') {
+			if(secondDialog.messages[i].sender == 'me'
 			|| secondDialog.messages[i].sender == 'notme2') {
 
-				dialog2 += '<p class="right">' + secondDialog.messages[i].content + '</p>';
+				dialog2 += '<p class="left">' + secondDialog.messages[i].content + '</p>';
 
 			} else {
 
-				dialog2 += '<p class="left">' + secondDialog.messages[i].content + '</p>';
+				dialog2 += '<p class="right">' + secondDialog.messages[i].content + '</p>';
 
 			}
 		}
