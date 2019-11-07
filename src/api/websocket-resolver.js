@@ -387,11 +387,14 @@ async function getDialogById(data, dptUUID, socket, getSet) {
 				crisis.crisisesId = ret[r].crisises[i]._id.toString();
 				if(ret[r].crisises[i].initiator.toString() == user.user.id) {
 					crisis.initiator = 'me';
-				} else if(dialog[r].recipient == "notme2") {
+					crisis.recipient = 'notme';
+//				} else if(dialog[r].recipient == "notme2") {
+				} else if(ret[r].crisises[i].initiator.toString() == notme) {
 					crisis.initiator = 'notme';
-					crisis.recipient = 'notme2';
+					crisis.recipient = 'me';
 				} else {
 					crisis.initiator = 'notme';
+					crisis.recipient = 'notme2';
 				}
 				if(ret[r].status == 'CLOSED') {
 					crisis.reason = ret[r].crisises[i].reason;
