@@ -17,9 +17,11 @@ body {
   margin: 0px;
   overflow: hidden;
   /* Disable selection, highlighting and callouts on iOS*/
+  /*
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+  */
 }
 
 #renderCanvas {
