@@ -105,11 +105,19 @@ function dialogForm(secondDialog) {
 			if(currentDialog.crisises[i].initiator == 'me'
 			|| currentDialog.crisises[i].recipient == 'notme2') {
 
-				meReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
+				var propositionMine = '';
+				if(currentDialog.initiator == 'me' || currentDialog.initiator == 'notme2') {
+					propositionMine = `Proposion: ${currentDialog.opinionProposition}<br>`;
+				}
+				meReadyToEnd = `${propositionMine}Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
 
 			} else if(currentDialog.crisises[i].initiator == 'notme') {
 
-				otherReadyToEnd = `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
+				var propositionOther = '';
+				if(currentDialog.initiator == 'notme') {
+					propositionOther = `Proposion: ${currentDialog.opinionProposition}<br>`;
+				}
+				otherReadyToEnd = `${propositionOther}Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
 
 			}
 
@@ -168,40 +176,59 @@ function dialogForm(secondDialog) {
 			if(secondDialog.crisises[i].initiator == 'me'
 			|| secondDialog.crisises[i].recipient == 'notme2') {
 
-				ratingMe = `Proposion: ${secondDialog.opinionProposition}<br>Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${secondDialog.crisises[i].rating}`;
+				var propositionMine = '';
+				if(secondDialog.initiator == 'me' || secondDialog.initiator == 'notme2') {
+					propositionMine = `Proposion: ${secondDialog.opinionProposition}<br>`;
+				}
+				ratingMe = `${propositionMine}Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${secondDialog.crisises[i].rating}`;
 
 			} else if(secondDialog.crisises[i].initiator == 'notme') {
 
-				ratingOther = `Proposion: ${secondDialog.opinionProposition}<br>Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${secondDialog.crisises[i].rating}`;
+				var propositionOther = '';
+				if(secondDialog.initiator == 'notme') {
+					propositionOther = `Proposion: ${secondDialog.opinionProposition}<br>`;
+				}
+				ratingOther = `${propositionOther}Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${secondDialog.crisises[i].rating}`;
 
 			}
 		}
 
 		//	Proposion: ${secondDialog.opinionProposition}<br>
+		if(!currentDialog.thirdEye) {
 		dialog2 += `<table width="100%"><tr>
 			<td valign="top" style="font-size: 14px" width="45%"><center>${ratingOther}</center></td>
 			<td style="font-size: 36px"><center>vs.</center></td>
 			<td valign="top" width="45%" style="font-size: 14px"><center>${ratingMe}</center></td>
 			</tr></table><br>`;
+		} else {
+		dialog2 += `<table width="100%"><tr>
+			<td valign="top" style="font-size: 14px" width="45%"><center>${ratingMe}</center></td>
+			<td style="font-size: 36px"><center>vs.</center></td>
+			<td valign="top" width="45%" style="font-size: 14px"><center>${ratingOther}</center></td>
+			</tr></table><br>`;
+		}
 
 		for(var i=0; i <  secondDialog.messages.length; i++) {
 
-			if(secondDialog.messages[i].sender == 'me'
-			|| secondDialog.messages[i].sender == 'notme2') {
-
-				dialog2 += '<p class="left">' + secondDialog.messages[i].content + '</p>';
-
+			if(!currentDialog.thirdEye) {
+				if(secondDialog.messages[i].sender == 'me') {
+					dialog2 += '<p class="right">' + secondDialog.messages[i].content + '</p>';
+				} else {
+					dialog2 += '<p class="left">' + secondDialog.messages[i].content + '</p>';
+				}
 			} else {
-
-				dialog2 += '<p class="right">' + secondDialog.messages[i].content + '</p>';
-
+				if(secondDialog.messages[i].sender == 'me') {
+					dialog2 += '<p class="left">' + secondDialog.messages[i].content + '</p>';
+				} else {
+					dialog2 += '<p class="right">' + secondDialog.messages[i].content + '</p>';
+				}
 			}
 		}
 	}
 
 	var opinionLabel1 = "Others opinion";
 	var opinionLabel2 = "Your opinion";
-	if(currentDialog.recipient == 'notme2') {
+	if(currentDialog.thirdEye) {
 		var opinionLabel1 = "Opinion A";
 		var opinionLabel2 = "Opinion B";
 	}

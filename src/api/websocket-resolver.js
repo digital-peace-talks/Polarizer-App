@@ -364,6 +364,7 @@ async function getDialogById(data, dptUUID, socket, getSet) {
 			dialog[r].opinionProposition = ret[r].opinionProposition;
 			dialog[r].extension = ret[r].extension;
 			dialog[r].dialog = ret[r]._id.toString();
+			dialog[r].thirdEye = false;
 				
 			if(ret[r].initiator.toString() == user.user.id) {
 				me = ret[r].initiator.toString();
@@ -376,15 +377,17 @@ async function getDialogById(data, dptUUID, socket, getSet) {
 				dialog[r].initiator = 'notme';
 				dialog[r].recipient = 'me';
 			} else {
-				dialog[r].initiator = 'notme';
-				dialog[r].recipient = 'notme2';
-				notme = ret[r].initiator.toString();
-				notme2 = dialog[r].recipient;
+				me = ret[r].initiator.toString();
+				notme = ret[r].recipient.toString();
+				dialog[r].initiator = 'me';
+				dialog[r].recipient = 'notme';
+				dialog[r].thirdEye = true;
 			}
 	
 			for(var i=0; i < ret[r].crisises.length; i++) {
 				var crisis = {};
 				crisis.crisisesId = ret[r].crisises[i]._id.toString();
+				/*
 				if(ret[r].crisises[i].initiator.toString() == user.user.id) {
 					crisis.initiator = 'me';
 					crisis.recipient = 'notme';
@@ -395,6 +398,14 @@ async function getDialogById(data, dptUUID, socket, getSet) {
 				} else {
 					crisis.initiator = 'notme';
 					crisis.recipient = 'notme2';
+				}
+				*/
+				if(ret[r].crisises[i].initiator.toString() == me) {
+					crisis.initiator = 'me';
+					crisis.recipient = 'notme';
+				} else {
+					crisis.initiator = 'notme';
+					crisis.recipient = 'me';
 				}
 				if(ret[r].status == 'CLOSED') {
 					crisis.reason = ret[r].crisises[i].reason;
@@ -407,10 +418,8 @@ async function getDialogById(data, dptUUID, socket, getSet) {
 				var message = {};
 				message.messageId = ret[r].messages[i]._id.toString();
 				message.content = ret[r].messages[i].content;
-				if(ret[r].messages[i].sender.toString() == user.user.id) {
+				if(ret[r].messages[i].sender.toString() == me) {
 					message.sender = 'me';
-				} else if(ret[r].messages[i].sender.toString() == notme && notme2 == "notme2") {
-					message.sender = notme2;
 				} else {
 					message.sender = "notme";
 				}
