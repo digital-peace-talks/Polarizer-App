@@ -1,9 +1,13 @@
 var cacheName = 'dpt-v1';
 const filesToCache = [
-	'/',
-	'babylon.js',
+	
+	'/external/babylon.js',
 	'/external/jquery-1.11.1.js',
-	'../external/babylonjs.materials.min.js'
+	'/external/babylon.gui.min.js',
+	'/external/babylonjs.materials.min.js',
+	'/external/socket.io.js',
+	'/external/babylonjs.serializers.min.js',
+	'/external/pep.js'
 ];
 
 // install event
