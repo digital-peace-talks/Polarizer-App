@@ -401,7 +401,8 @@ function loadOpinions(restObj) {
 					&& restObj.data[i].blocked == 1
 					&& exists == false) ? true : false,
 			}),
-			`${restObj.data[i].content}`);
+			`${restObj.data[i].content}`,
+			);
 
 /*
 		plane.actionManager = new BABYLON.ActionManager(currentScene);
@@ -411,7 +412,7 @@ function loadOpinions(restObj) {
 			new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
 				function(ev) {
 					var meshLocal = ev.meshUnderPointer;
-					meshLocal.material.emissiveColor = new BABYLON.Color3(1.0,0,0.85);
+					meshLocal.material.emissiveColor = new BABYLON.Color3(1.0,0.5,0.0);
 					canvas.style.cursor = "move";
 				}, false));
 		
@@ -420,7 +421,7 @@ function loadOpinions(restObj) {
 			new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
 				function(ev) {
 					var meshLocal = ev.meshUnderPointer;
-					meshLocal.material.emissiveColor = new BABYLON.Color3(0,0.8,1);
+					meshLocal.material.emissiveColor = new BABYLON.Color3(0,0.5,1);
 					canvas.style.cursor = "default";
 				}, false));
 		
@@ -439,6 +440,7 @@ function loadOpinions(restObj) {
 	    });
 		plane.addBehavior(plane.pointerDragBehavior);
 */
+
 		/*
 	    var minion0 = BABYLON.MeshBuilder.CreateSphere("minion0", {diameter: 0.5}, currentScene);
 	    minion0.position = new BABYLON.Vector3(1,1,1);

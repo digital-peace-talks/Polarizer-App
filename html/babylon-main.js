@@ -193,6 +193,110 @@ function initVirtJoysticks() {
 	}
 }
 
+function createPitchLines() {
+	var mat = new BABYLON.StandardMaterial("pitchline", currentScene);
+	mat.diffuseTexture = new BABYLON.Texture("/pitch-line.png", currentScene);
+	/*
+	*/
+	mat.alpha = .95;
+	mat.alphaMode = BABYLON.Engine.ALPHA_ADD;
+	mat.diffuseTexture.hasAlpha = true;
+	mat.diffuseTexture.uScale=256;
+	mat.diffuseTexture.vScale=1;
+	mat.diffuseTexture.wrapU=1;
+	mat.diffuseTexture.wrapV=1;
+	mat.specularColor = new BABYLON.Color3.Black;
+	mat.emissiveColor = new BABYLON.Color3(0.8, 0.8, 0.8);
+	mat.backFaceCulling = false;
+	
+	//	var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.35, height: 0.25 }, currentScene);
+	var pitchLine = BABYLON.MeshBuilder.CreatePlane(
+		"pitchline",
+		{
+			width: 1024,
+			height: 1024,
+		}, currentScene);
+
+	pitchLine.position.x = 0;
+	pitchLine.position.y = 0;
+	pitchLine.position.z = 0;
+
+	pitchLine.material = mat;
+	
+	var pitchLine = BABYLON.MeshBuilder.CreatePlane(
+			"pitchline",
+			{
+				width: 1024,
+				height: 1024,
+			}, currentScene);
+
+		pitchLine.position.x = 0;
+		pitchLine.position.y = 0;
+		pitchLine.position.z = 0;
+		pitchLine.rotation.y = Math.PI / 180 * 90;
+
+		pitchLine.material = mat;
+		
+		var pitchLine = BABYLON.MeshBuilder.CreatePlane(
+				"pitchline",
+				{
+					width: 1024,
+					height: 1024,
+				}, currentScene);
+
+		pitchLine.position.x = 0;
+		pitchLine.position.y = 0;
+		pitchLine.position.z = 0;
+		pitchLine.rotation.z = Math.PI / 180 * 90;
+
+		pitchLine.material = mat;
+		
+		var pitchLine = BABYLON.MeshBuilder.CreatePlane(
+				"pitchline",
+				{
+					width: 1024,
+					height: 1024,
+				}, currentScene);
+
+		pitchLine.position.x = 0;
+		pitchLine.position.y = 0;
+		pitchLine.position.z = 0;
+		pitchLine.rotation.y = Math.PI / 180 * 90;
+		pitchLine.rotation.z = Math.PI / 180 * 90;
+
+		pitchLine.material = mat;
+		
+		var pitchLine = BABYLON.MeshBuilder.CreatePlane(
+				"pitchline",
+				{
+					width: 1024,
+					height: 1024,
+				}, currentScene);
+
+		pitchLine.position.x = 0;
+		pitchLine.position.y = 0;
+		pitchLine.position.z = 0;
+		pitchLine.rotation.x = Math.PI / 180 * 90;
+		pitchLine.rotation.z = Math.PI / 180 * 90;
+
+		pitchLine.material = mat;
+		
+		var pitchLine = BABYLON.MeshBuilder.CreatePlane(
+				"pitchline",
+				{
+					width: 1024,
+					height: 1024,
+				}, currentScene);
+
+		pitchLine.position.x = 0;
+		pitchLine.position.y = 0;
+		pitchLine.position.z = 0;
+		pitchLine.rotation.x = Math.PI / 180 * 90;
+		pitchLine.rotation.y = Math.PI / 180 * 90;
+		pitchLine.rotation.z = Math.PI / 180 * 90;
+
+		pitchLine.material = mat;
+}
 
 var createGenericScene = function(dptMode) {
 
@@ -208,7 +312,17 @@ var createGenericScene = function(dptMode) {
 	light.diffuse = new BABYLON.Color3(1, 0.8, 0.8);
 	light.intensity = 0.3;
 
-	genericScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	switch(colorScheme) {
+		case DPTConst.COLORS_dark:
+			genericScene.clearColor = new BABYLON.Color3(0, 0.1, 0.2);
+			break;
+		case DPTConst.COLORS_bright:
+			genericScene.clearColor = new BABYLON.Color3(.7, 0.9, 1.0);
+			break;
+		case DPTConst.COLORS_default:
+		default:
+			genericScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	}
 
 	var camera = getCamera();
 	camera.attachControl(canvas, true);
@@ -217,11 +331,12 @@ var createGenericScene = function(dptMode) {
 	//pauseEngine();
 
 	// Enable Collisions
-	var box = getCollisionBox();
-	box.checkCollisions = true;
+	//var box = getCollisionBox();
+	//box.checkCollisions = true;
 	camera.checkCollisions = true;
 	genericScene.collisionsEnabled = true;
 
+//	createPitchLines();
 	createGUIScene(dptMode);
 
 
@@ -289,8 +404,8 @@ var createGenericScene = function(dptMode) {
 							currentDialog = {
 								dialog: pointerInfo.pickInfo.pickedMesh.dpt.dialogId,
 								topic: currentTopicStr,
-								initiatorOpinion: 'ZZZZ' + pointerInfo.pickInfo.pickedMesh.dpt.initiatorsOpinion,
-								recipientOpinion: 'YYYY' + pointerInfo.pickInfo.pickedMesh.dpt.recipientsOpinion,
+								initiatorOpinion: pointerInfo.pickInfo.pickedMesh.dpt.initiatorsOpinion,
+								recipientOpinion: pointerInfo.pickInfo.pickedMesh.dpt.recipientsOpinion,
 							};
 							dpt.getDialogSet(currentDialog.dialog);
 						}
