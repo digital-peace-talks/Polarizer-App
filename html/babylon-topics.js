@@ -34,7 +34,8 @@ function loadTopics(restObj) {
 				"topic": restObj.data[l].content,
 				"canEdit": (restObj.data[l].user == 'mine') ? true : false
 			}),
-			`${restObj.data[l].content} [${restObj.data[l].opinions.length}]`);
+			`${restObj.data[l].content} [${restObj.data[l].opinions.length}]`,
+			);
 		/*
 		if(restObj.data[l].user == 'mine') {
 			var mat = new BABYLON.StandardMaterial("icon", currentScene);

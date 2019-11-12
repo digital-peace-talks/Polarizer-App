@@ -1,7 +1,7 @@
 var editIcon = new Image();
-editIcon.src = "/Edit_icon.png";
+editIcon.src = "/Edit_icon_inverted.png";
 var inviteIcon = new Image();
-inviteIcon.src = "/chatbubble.png";
+inviteIcon.src = "/chatbubble_inverted.png";
 
 function circleText(ctx, text, x, y, radius, angle) {
 	var numRadsPerLetter = 2 * Math.PI / text.length;
@@ -197,16 +197,55 @@ function textBlock(x, y, z, name, text, options) {
 	var textureContext = dynamicTexture.getContext();
 	textureContext.font = (options.fontSize || "22") + "px DPTFont";
 	textureContext.save();
-	textureContext.fillStyle = options.color || "#ffffff";
+	switch(colorScheme) {
+		case DPTConst.COLORS_dark:
+			textureContext.fillStyle = "#7fffff";
+			break;
+		case DPTConst.COLORS_bright:
+			textureContext.fillStyle = "#601616";
+			break;
+		case DPTConst.COLORS_default:
+		default:
+			textureContext.fillStyle = "#51c1fe";
+	}
+	if('color' in options) {
+		textureContext.fillStyle = options.color;
+	}
 
 	wrapText(textureContext, text, 5, (options.fontSize || 22) + 42, DTWidth -1, options.fontSize || 22);
 
-	var obj = JSON.parse(name);
-	if(obj.canInvite) {
+	var dpt = JSON.parse(name);
+	if(dpt.canInvite) {
 		textureContext.drawImage(inviteIcon, 0, 0, 36, 36);
+		textureContext.globalCompositeOperation = "xor";
+		switch(colorScheme) {
+			case DPTConst.COLORS_dark:
+				textureContext.fillStyle = "#00ff00";
+				break;
+			case DPTConst.COLORS_bright:
+				textureContext.fillStyle = "#00801a";
+				break;
+			case DPTConst.COLORS_default:
+			default:
+				textureContext.fillStyle = "#51c1fe";
+		}
+		textureContext.fillRect(0,0,36,36);
 	}
-	if(obj.canEdit) {
+	if(dpt.canEdit) {
 		textureContext.drawImage(editIcon, 36, 0, 36, 36);
+		textureContext.globalCompositeOperation = "xor";
+		switch(colorScheme) {
+			case DPTConst.COLORS_dark:
+				textureContext.fillStyle = "#ff7f00";
+				break;
+			case DPTConst.COLORS_bright:
+				textureContext.fillStyle = "#7a1a00";
+				break;
+			case DPTConst.COLORS_default:
+			default:
+				textureContext.fillStyle = "#51c1fe";
+		}
+		textureContext.fillRect(36,0,36,36);
 	}
 	textureContext = cropImage(textureContext, textureContext.canvas);
 	
@@ -217,7 +256,7 @@ function textBlock(x, y, z, name, text, options) {
 				width: textureContext.canvas.width/100,
 				height: textureContext.canvas.height/100,
 			}, currentScene);
-	plane.dpt = JSON.parse(name);
+	plane.dpt = dpt;
 
     var pngBase64 = textureContext.canvas.toDataURL("image/png", 0.99);
 
@@ -228,7 +267,8 @@ function textBlock(x, y, z, name, text, options) {
 	//create material
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
 	mat.diffuseTexture = dynamicTexture;
-	mat.emissiveColor = (options.color) ? new BABYLON.Color3(1,1,1) : new BABYLON.Color3(0, 0.5, 1);
+	mat.emissiveColor = new BABYLON.Color3(1,1,1);
+//	mat.emissiveColor = (options.color) ? new BABYLON.Color3(1,1,1) : new BABYLON.Color3(0, 0.5, 1);
 	mat.specularColor = new BABYLON.Color3(0.1, 0.1, 0.1);
 
 	//apply material

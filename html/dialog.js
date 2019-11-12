@@ -61,6 +61,24 @@ function crisisForm(messageId) {
 	});
 }
 
+function setSelectionRange(input, selectionStart, selectionEnd) {
+	if (input.setSelectionRange) {
+    	input.focus();
+        input.setSelectionRange(selectionStart, selectionEnd);
+    }
+    else if (input.createTextRange) {
+    	var range = input.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', selectionEnd);
+        range.moveStart('character', selectionStart);
+        range.select();
+    }
+}
+
+function setCaretToPos (input, pos) {
+	setSelectionRange(input, pos, pos);
+}
+
 function dialogForm(secondDialog) {
 
 	var opinionMine;
@@ -71,6 +89,11 @@ function dialogForm(secondDialog) {
 	var otherReadyToEnd = '';
 	var viewOnly = true;
 	var me;
+	var cursorPos= jQuery("textarea#dialogInput").prop('selectionStart');
+	var dialogInput = jQuery("textarea#dialogInput").val();
+	if(!dialogInput) {
+		dialogInput='';
+	}
 
 	const maxMessages = currentDialog.extension * 25;
 
@@ -302,7 +325,7 @@ function dialogForm(secondDialog) {
 					<div class="status">
 						<center>
 							<form id="dialogFrame">
-							<textarea class="dialog" type="text" name="message"  id="dialogInput"></textarea>
+							<textarea class="dialog" type="text" name="message" id="dialogInput">${dialogInput}</textarea>
 								<br>
 								<input type="submit" class="buttondialog" name="send" value="send">
 								<input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
@@ -381,7 +404,7 @@ function dialogForm(secondDialog) {
 					<div class="status">
 						<center>
 							<form id="dialogFrame">
-							<textarea class="dialog" type="text" name="message"  id="dialogInput"></textarea>
+							<textarea class="dialog" type="text" name="message" id="dialogInput">${dialogInput}</textarea>
 								<br>
 								<input type="submit" class="buttondialog" name="send" value="send">
 								<input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
@@ -436,6 +459,10 @@ function dialogForm(secondDialog) {
 
 	jQuery('body').append(`<div id="dialogForm">${html}</div>`);
 
+	if(cursorPos) {
+		//setCaretToPos(document.getElementById('textarea#dialogInput.dialog'), cursorPos);
+	}
+
 	/*
 	if(currentDialog.status == 'CLOSED') {
 		for(var i = 0; i < currentDialog.crisises.length; i++) {
@@ -455,6 +482,7 @@ function dialogForm(secondDialog) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		var message = this[0].value;
+		jQuery("#dialogInput").val('');
 
 		if(message.length > 0) {
 			dpt.postMessage(message, whoami.dptUUID, currentDialog.dialog);
