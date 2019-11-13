@@ -435,7 +435,7 @@ var createGUIScene = function(dptMode) {
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
-	btn.src = "/nav-top-logo.png";
+	btn.src = "/home_white.png";
 	btn.style.color = "#f00";
 	document.body.appendChild(btn);
 
