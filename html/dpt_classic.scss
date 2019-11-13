@@ -538,7 +538,7 @@ textarea#dialog {
 nav {
     margin: 0 auto;
     width: 100%;
-    height: 11em;
+    height: 1px;
     text-align: right;
     position: absolute;
 }
@@ -598,7 +598,7 @@ nav ul li {
         background-color: $dpt-blue03-semi;
     }
     #overlay {
-        height: 184px;
+        height: 1px;
         width: 100%;
         display: block;
     }
