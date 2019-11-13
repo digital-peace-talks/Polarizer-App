@@ -459,9 +459,6 @@ function dialogForm(secondDialog) {
 
 	jQuery('body').append(`<div id="dialogForm">${html}</div>`);
 
-	if(cursorPos) {
-		setCaretToPos(document.getElementById('#dialogInput.dialog'), cursorPos);
-	}
 
 	/*
 	if(currentDialog.status == 'CLOSED') {
@@ -523,7 +520,12 @@ function dialogForm(secondDialog) {
 
 	var objDiv = document.getElementById("dialogForm");
 	objDiv.scrollTop = objDiv.scrollHeight;
-	jQuery("#dialogInput").focus();
 
+	if(cursorPos) {
+		setCaretToPos(document.getElementById('dialogInput'), cursorPos);
+		jQuery("#dialogInput.dialog").focus();
+	} else {
+		jQuery("#dialogInput").focus();
+	}
 
 }
