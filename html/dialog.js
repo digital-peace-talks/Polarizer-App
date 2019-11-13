@@ -460,7 +460,7 @@ function dialogForm(secondDialog) {
 	jQuery('body').append(`<div id="dialogForm">${html}</div>`);
 
 	if(cursorPos) {
-		//setCaretToPos(document.getElementById('textarea#dialogInput.dialog'), cursorPos);
+		setCaretToPos(document.getElementById('#dialogInput.dialog'), cursorPos);
 	}
 
 	/*

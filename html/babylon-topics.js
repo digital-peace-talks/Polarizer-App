@@ -32,10 +32,10 @@ function loadTopics(restObj) {
 				"topicId": restObj.data[l]._id,
 				"content": restObj.data[l].content,
 				"topic": restObj.data[l].content,
-				"canEdit": (restObj.data[l].user == 'mine') ? true : false
+				"canEdit": (restObj.data[l].user == 'mine') ? true : false,
 			}),
 			`${restObj.data[l].content} [${restObj.data[l].opinions.length}]`,
-			);
+		);
 		/*
 		if(restObj.data[l].user == 'mine') {
 			var mat = new BABYLON.StandardMaterial("icon", currentScene);
