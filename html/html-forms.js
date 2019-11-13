@@ -417,6 +417,7 @@ var createGUIScene = function(dptMode) {
 
 	});
 
+	jQuery(".iconBar").remove();
 	/* requestHome();
 	requestSearch(); */
 	requestNewTopic();
@@ -475,6 +476,7 @@ function requestSearch() {
 
 function requestNewTopic() {
 	var btn = document.createElement("input");
+	btn.className = "iconBar";
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
@@ -504,6 +506,7 @@ function requestNewTopic() {
 
 function requestNewOpinion() {
 	var btn = document.createElement("input");
+	btn.className = "iconBar";
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
@@ -535,6 +538,7 @@ function requestNewOpinion() {
 
 function requestYourDialogs() {
 	var btn = document.createElement("input");
+	btn.className = "iconBar";
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
@@ -568,6 +572,7 @@ function requestYourDialogs() {
 
 function requestFeedback() {
 	var btn = document.createElement("input");
+	btn.className = "iconBar";
 	//			btn.innerText = "Enable/Disable Joystick";
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
@@ -622,6 +627,7 @@ function requestFeedback() {
 
 function requestHelp() {
 	var btnH = document.createElement("input");
+	btnH.className = "iconBar";
 	//			btn.innerText = "Enable/Disable Joystick";
 	btnH.style.zIndex = 10;
 	btnH.style.position = "absolute";
@@ -665,6 +671,7 @@ function requestHelp() {
 
 function pauseEngine() {
 	var btn = document.createElement("input");
+	btn.className = "iconBar";
 	//			btn.innerText = "Enable/Disable Joystick";
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";

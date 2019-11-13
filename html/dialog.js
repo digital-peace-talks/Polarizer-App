@@ -523,7 +523,7 @@ function dialogForm(secondDialog) {
 
 	if(cursorPos) {
 		setCaretToPos(document.getElementById('dialogInput'), cursorPos);
-		jQuery("#dialogInput.dialog").focus();
+		jQuery("#dialogInput").focus();
 	} else {
 		jQuery("#dialogInput").focus();
 	}
