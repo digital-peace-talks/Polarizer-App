@@ -346,6 +346,24 @@ div#dialogFrame {
   background-size: cover;
 }
 
+.menu-entry {
+  padding: 10px;
+  padding-left: 20px;
+  margin: 0px;
+  font-family: "DPTFontDin";
+  font-size: 20px;
+  width: 280px;
+  height: 48px;
+  border: 1px solid #F0F3F5;
+  background-color: #005B9888;
+  color: #F0F3F5;
+  -webkit-box-pack: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  text-align: left;
+  background-size: cover;
+}
+
 .btn-icon {
   height: 35px;
   position: relative;
