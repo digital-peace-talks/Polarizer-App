@@ -265,10 +265,10 @@ function loadDialogList(restObj) {
 	}
 	if(sum > 0) {
 		jQuery('#dialog-btn-label').attr('count', sum);
-		jQuery('#dialog-btn-label').empty().text(`Your Dialogs [${sum}]`);
+		jQuery('#dialog-btn-label').empty().text(`[${sum}]`);
 	} else {
 		jQuery('#dialog-btn-label').attr('count', 0);
-		jQuery('#dialog-btn-label').empty().text(`Your Dialogs`);
+		jQuery('#dialog-btn-label').empty().text(``);
 	}
 	jQuery('body').append(`<div id="dialogMenu"></div>`);
 
@@ -329,6 +329,106 @@ function loadDialogList(restObj) {
 var createGUIScene = function(dptMode) {
 
 
+	//create about button
+	var homeBtn = jQuery('#about-btn');
+	homeBtn.show();
+	homeBtn.on('click touch', function(event) {
+		opinionCamState = currentScene.cameras[0].storeState();
+		currentScene.dispose();
+		currentScene = __topicScene("topicScene");
+		currentScene.name = "topicScene";
+		dpt.getTopic();
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		jQuery('#form').remove();
+
+		if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		}
+		focusAtCanvas();
+	});
+
+	//create first steps button
+	var homeBtn = jQuery('#firststeps-btn');
+	homeBtn.show();
+	homeBtn.on('click touch', function(event) {
+		opinionCamState = currentScene.cameras[0].storeState();
+		currentScene.dispose();
+		currentScene = __topicScene("topicScene");
+		currentScene.name = "topicScene";
+		dpt.getTopic();
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		jQuery('#form').remove();
+
+		if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		}
+		focusAtCanvas();
+	});
+
+	//create documentation button
+	var homeBtn = jQuery('#documentation-btn');
+	homeBtn.show();
+	homeBtn.on('click touch', function(event) {
+		opinionCamState = currentScene.cameras[0].storeState();
+		currentScene.dispose();
+		currentScene = __topicScene("topicScene");
+		currentScene.name = "topicScene";
+		dpt.getTopic();
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		jQuery('#form').remove();
+
+		if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		}
+		focusAtCanvas();
+	});
+
+	//create imprint button
+	var homeBtn = jQuery('#survey-btn');
+	homeBtn.show();
+	homeBtn.on('click touch', function(event) {
+		opinionCamState = currentScene.cameras[0].storeState();
+		currentScene.dispose();
+		currentScene = __topicScene("topicScene");
+		currentScene.name = "topicScene";
+		dpt.getTopic();
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		jQuery('#form').remove();
+
+		if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		}
+		focusAtCanvas();
+	});
+	
+	//create imprint button
+	var homeBtn = jQuery('#imprint-btn');
+	homeBtn.show();
+	homeBtn.on('click touch', function(event) {
+		opinionCamState = currentScene.cameras[0].storeState();
+		currentScene.dispose();
+		currentScene = __topicScene("topicScene");
+		currentScene.name = "topicScene";
+		dpt.getTopic();
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		jQuery('#form').remove();
+
+		if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		}
+		focusAtCanvas();
+	});
+
 	//create home button
 	var homeBtn = jQuery('#home-btn');
 	homeBtn.show();
@@ -356,7 +456,7 @@ var createGUIScene = function(dptMode) {
 		var newTopicBtn = jQuery('#new-topic-btn');
 		newTopicBtn.show();
 
-		newTopicBtn.html(`<img class="btn-icon" src="/topic_white.png">New-Topic`);
+		newTopicBtn.html(`<img class="btn-icon" src="/topic_white.png">`);
 
 		newTopicBtn.on('click touch', function(event) {
 			jQuery('#form').remove();
@@ -379,7 +479,7 @@ var createGUIScene = function(dptMode) {
 		var newOpinionBtn = jQuery('#new-opinion-btn');
 		newOpinionBtn.show();
 
-		newOpinionBtn.html(`<img class="btn-icon" src="/opinion_white.png">New-Opinion`);
+		newOpinionBtn.html(`<img class="btn-icon" src="/opinion_white.png">`);
 		newOpinionBtn.on('click touch', function(event) {
 			jQuery('#form').remove();
 
@@ -416,11 +516,11 @@ var createGUIScene = function(dptMode) {
 		}
 
 	});
-
+/*
 	jQuery(".iconBar").remove();
 	requestHome();
 	/* requestSearch(); */
-	if (dptMode == 'topicScene') {
+/*	if (dptMode == 'topicScene') {
 		requestNewTopic();
 	}
 	if (dptMode == 'opinionScene') {
@@ -428,7 +528,7 @@ var createGUIScene = function(dptMode) {
 	}
 	requestYourDialogs();
 	requestFeedback();
-	requestHelp();
+	requestHelp(); */
 }
 
 function requestHome() {
