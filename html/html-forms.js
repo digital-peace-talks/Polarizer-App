@@ -418,8 +418,8 @@ var createGUIScene = function(dptMode) {
 	});
 
 	jQuery(".iconBar").remove();
-	/* requestHome();
-	requestSearch(); */
+	requestHome();
+	/* requestSearch(); */
 	if (dptMode == 'topicScene') {
 		requestNewTopic();
 	}
@@ -431,12 +431,13 @@ var createGUIScene = function(dptMode) {
 	requestHelp();
 }
 
-/* function requestHome() {
+function requestHome() {
 	var btn = document.createElement("input");
+	btn.className = "iconBar";
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
-	btn.style.right = "300px";
+	btn.style.right = "200px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -460,9 +461,10 @@ var createGUIScene = function(dptMode) {
 		focusAtCanvas();
 	}
 }
-
+/*
 function requestSearch() {
 	var btn = document.createElement("input");
+	btn.className = "iconBar";
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
