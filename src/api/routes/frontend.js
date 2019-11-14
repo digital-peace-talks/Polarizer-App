@@ -16,12 +16,16 @@ router.get('/', async(req, res, next) => {
 			//console.log("no cookie found, set new one");
 			//console.log("new phrase: " + phrase);
 			// The client need to get the uuid for the first time, it needs to send it back.
+			
+			/*Digital peace talks is currently in private alpha! Only a minimum viable product is viable at the moment,
+			and our primary goal is to get direct feedback from a small set of users to evaluate our core design. 
+			Thank you.*/
+			
 			res.send(`<head><link rel="stylesheet" href="dpt_start.css" /></head>
 				<body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="300" width="300">
 				<br>
-				<div class="text">Digital peace talks is currently in private alpha!
-				Only a minimum viable product is viable at the moment, and our primary goal is to get direct feedback from a small set of users to evaluate our core design. 
-				Thank you.</div>
+				<div class="text">This is a free open source prototype being developed by a social enterprise.<br>
+				Please be patient with what we have so far and/or be willing to help.</div>
 				<br><br>
 				<a href="dptAnleitung.html" target="_blank">Learn how to use DPT here</a>
 				<br><br>
@@ -39,10 +43,8 @@ router.get('/', async(req, res, next) => {
 			res.send(`<head><link rel="stylesheet" href="dpt_start.css" /></head>
 			<body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="300" width="300">
 			<br>
-			<div class="text">Digital peace talks is currently in private alpha!
-			Only a minimum viable product is viable at the moment, and our primary goal is to get direct feedback from a small set of users to evaluate our core design. 
-			Only later, once we feel comfortable the app can handle more users, we will open up to general public. 
-			Thank you.</div>
+			<div class="text">This is a free open source prototype being developed by a social enterprise.<br>
+			Please be patient with what we have so far and/or be willing to help.</div>
 			<br><br>
 				<a href="dptAnleitung.html" target="_blank">Learn how to use DPT here</a>
 				<br><br>	
