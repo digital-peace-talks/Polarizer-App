@@ -420,8 +420,12 @@ var createGUIScene = function(dptMode) {
 	jQuery(".iconBar").remove();
 	/* requestHome();
 	requestSearch(); */
-	requestNewTopic();
-	requestNewOpinion();
+	if (dptMode == 'topicScene') {
+		requestNewTopic();
+	}
+	if (dptMode == 'opinionScene') {
+		requestNewOpinion();
+	}
 	requestYourDialogs();
 	requestFeedback();
 	requestHelp();
@@ -480,7 +484,7 @@ function requestNewTopic() {
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
 	btn.style.bottom = "5px";
-	btn.style.right = "200px";
+	btn.style.right = "150px";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
