@@ -612,9 +612,10 @@ nav ul li {
 section {
   margin: 0 auto;
   width: 250px;
+  bottom: -50px;
   height: 1px;
   text-align: right;
-  position: absolute;
+  position: relative;
 }
 
 section ul {
@@ -819,6 +820,7 @@ section ul li {
   }
   section {
     width: 100%;
+    bottom: -1px;
   }
   section ul {
     bottom: -20px;
