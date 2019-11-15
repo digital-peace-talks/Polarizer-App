@@ -25,6 +25,8 @@ module.exports.createDialog = async (options) => {
 	try {
 		const opinion = await Opinion.findOne({"_id": mongoose.Types.ObjectId(options.opinion)});
 		options.recipient = opinion.user;
+		const initiatorOpinion = await Opinion.findOne({topic: mongoose.Types.ObjectId(options.topic), user: mongoose.Types.ObjectId(options.initiator)});
+		options.initiatorOpinion = initiatorOpinion._id;
 		result = await Dialog.create(options);
 	} catch(error) {
 		throw {
@@ -80,7 +82,6 @@ module.exports.getDialog = async (options, getSet) => {
 				} else {
 					result = [ result2, result ];
 				}
-				/*
 				if('user' in options) {
 					if(result2.initiator.id.toString('hex') == options.user.user.id) {
 						await Dialog.findByIdAndUpdate(dialogId, {initiatorTimestamp: now});
@@ -88,7 +89,6 @@ module.exports.getDialog = async (options, getSet) => {
 						await Dialog.findByIdAndUpdate(dialogId, {recipientTimestamp: now});
 					}
 				}
-				*/
 			}
 		}
 		
@@ -113,7 +113,7 @@ module.exports.getDialogListAll = async (options) => {
 	var result = [];
 	try {
 		var worker = [];
-		worker = await Dialog.find({});
+		worker = await Dialog.find({$or: [{recipient: option.userId}, {initiator: option.userId}]});
 		for(var i = 0; i < worker.length; i++) {
 			var collection = {};
 			collection.dialog = worker[i].id;

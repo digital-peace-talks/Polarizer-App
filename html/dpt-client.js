@@ -162,7 +162,7 @@ class DPT {
 	
 	// dialog
 	
-	postDialog(proposition, publicKey, opinionId) {
+	postDialog(proposition, publicKey, opinionId, topicId) {
 		this.socket.emit("api", {
 			method: 'post',
 			path: '/dialog/',
@@ -170,6 +170,7 @@ class DPT {
 				dptUUID: publicKey,
 				body: {
 					opinion: opinionId,
+					topic: topicId,
 					opinionProposition: proposition,
 				}
 			}

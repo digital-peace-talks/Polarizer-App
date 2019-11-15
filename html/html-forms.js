@@ -11,7 +11,7 @@ function hideMenu() {
 	//jQuery('#overlay').css("background-image", "url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png')");
 }
 
-function propositionForm(opinionId) {
+function propositionForm(opinionId, topicId) {
 
 	console.log('enter proposition');
 
@@ -19,6 +19,7 @@ function propositionForm(opinionId) {
 		<div id="form">Please enter your proposition:
 		<br><form id="proposition"><textarea name="proposition" class="proposition"></textarea>
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
+		<input type="hidden" id="topicId" name="topicId" value="${topicId}">
 		<br><input class="button" type="submit" value="Send">
 		<input class="button" type="button" value="close window" name="close window" id="ClosePropositionForm"></form></div>
 	`);
@@ -70,8 +71,9 @@ function propositionForm(opinionId) {
 		event.preventDefault();
 		var proposition = jQuery('.proposition').val();
 		var opinionId = jQuery('#opinionId').val();
+		var topicId = jQuery('#topicId').val();
 		if (proposition) {
-			dpt.postDialog(proposition, whoami.dptUUID, opinionId);
+			dpt.postDialog(proposition, whoami.dptUUID, opinionId, topicId);
 		}
 		jQuery('#form').remove();
 		focusAtCanvas();

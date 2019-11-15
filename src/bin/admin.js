@@ -46,7 +46,7 @@ async function deleteOpinion(opinionId) {
 		var opinion = await Opinion.findOne({_id: opinionId});
 		var topicId = opinion.topic;
 		var topic = await Topic.findOne(topicId);
-		var dialogs = await Dialog.find({opinion: opinionId}, {_id: 1});
+		var dialogs = await Dialog.find({$or: [{opinion: opinionId}, {initiatorOpinion: opinionId}]}, {_id: 1});
 		for(i in dialogs) {
 			console.log("DIALOGS - delete: "+util.inspect(dialogs));
 			await Dialog.deleteOne({_id: dialogs[i]._id});
@@ -69,7 +69,7 @@ async function listTopics() {
 	var ret = 'Admin tool<br><br><b>Topic list:</b><table>';
 	for(var i in topics) {
 		ret += `<tr>
-			<td valign="top"><span class="listTopics" id='{"op": "deleteTopic", "topicId": "${topics[i]._id}"}'> DEL </span></td>
+			<td valign="top" width="100" ><span style="color: #f00" class="listTopics" id='{"op": "deleteTopic", "topicId": "${topics[i]._id}"}'> DEL </span></td>
 			<td valign="top"><span class="listTopics" id='{"op": "listOpinions", "topicId": "${topics[i]._id}"}'>${topics[i].content}</span></td>
 			</tr>`;
 	}
@@ -83,7 +83,7 @@ async function listOpinions(topicId) {
 			<b>Opinion list:</b><table>`
 	for(var i in opinions) {
 		ret += `<tr>
-			<td valign="top"><span class="listOpinions" id='{"op": "deleteOpinion", "opinionId": "${opinions[i].id}"}'> DEL </span></td>
+			<td valign="top" width="100" ><span style="color: #f00" class="listOpinions" id='{"op": "deleteOpinion", "opinionId": "${opinions[i].id}"}'> DEL </span></td>
 			<td valign="top"><span class="listOpinions" id='{"op": "listDialogs", "opinionId": "${opinions[i].id}"}'>${opinions[i].content}</span></td>
 			</tr>`;
 	}

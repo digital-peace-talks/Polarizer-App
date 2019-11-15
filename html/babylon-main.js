@@ -366,14 +366,16 @@ var createGenericScene = function(dptMode) {
 
 					if(click.y < .36) {
 						if(click.x >=0 && click.x < .36) {
+							// invite to chat via proposition
 							if('opinionId' in pointerInfo.pickInfo.pickedMesh.dpt
 							&& pointerInfo.pickInfo.pickedMesh.dpt.context == "opinionScene"
 							&& pointerInfo.pickInfo.pickedMesh.name == "texttexture"
 							&& pointerInfo.pickInfo.pickedMesh.dpt.canInvite == true) {
-								propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId);
+								propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId, currentTopic);
 								return;
 							}
 						} else if(click.x >= .36 && click.x < .72) {
+							// edit either the opinion or the topic
 							if('opinionId' in pointerInfo.pickInfo.pickedMesh.dpt
 							&& pointerInfo.pickInfo.pickedMesh.dpt.context == "opinionScene"
 							&& pointerInfo.pickInfo.pickedMesh.name == "texttexture"

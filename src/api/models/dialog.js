@@ -23,12 +23,18 @@ const crisisSchema = mongoose.Schema({
 });
 
 const dialogSchema = mongoose.Schema({
+	topic: {
+		type: Schema.Types.ObjectId,
+		ref: "Topic",
+		required: true,
+	},
+	
 	opinion: {
 		type: Schema.Types.ObjectId,
 		ref: "Opinion",
 		required: true,
 	},
-
+	
 	status: {
 		type: String,
 		enum: ["PENDING", "ACTIVE", "CRISIS", "CLOSED"],
@@ -54,6 +60,12 @@ const dialogSchema = mongoose.Schema({
 	initiator: {
 		type: Schema.Types.ObjectId,
 		ref: "User",
+		required: true,
+	},
+
+	initiatorOpinion: {
+		type: Schema.Types.ObjectId,
+		ref: "Opinion",
 		required: true,
 	},
 
