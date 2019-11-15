@@ -332,9 +332,9 @@ var createGUIScene = function(dptMode) {
 
 
 	//create about button
-	var homeBtn = jQuery('#about-btn');
-	homeBtn.show();
-	homeBtn.on('click touch', function(event) {
+	var aboutBtn = jQuery('#about-btn');
+	aboutBtn.show();
+	aboutBtn.on('click touch', function(event) {
 		opinionCamState = currentScene.cameras[0].storeState();
 		currentScene.dispose();
 		currentScene = __topicScene("topicScene");
@@ -352,9 +352,9 @@ var createGUIScene = function(dptMode) {
 	});
 
 	//create first steps button
-	var homeBtn = jQuery('#firststeps-btn');
-	homeBtn.show();
-	homeBtn.on('click touch', function(event) {
+	var fsBtn = jQuery('#firststeps-btn');
+	fsBtn.show();
+	fsBtn.on('click touch', function(event) {
 		opinionCamState = currentScene.cameras[0].storeState();
 		currentScene.dispose();
 		currentScene = __topicScene("topicScene");
@@ -372,9 +372,9 @@ var createGUIScene = function(dptMode) {
 	});
 
 	//create documentation button
-	var homeBtn = jQuery('#documentation-btn');
-	homeBtn.show();
-	homeBtn.on('click touch', function(event) {
+	var docuBtn = jQuery('#documentation-btn');
+	docuBtn.show();
+	docuBtn.on('click touch', function(event) {
 		opinionCamState = currentScene.cameras[0].storeState();
 		currentScene.dispose();
 		currentScene = __topicScene("topicScene");
@@ -391,10 +391,12 @@ var createGUIScene = function(dptMode) {
 		focusAtCanvas();
 	});
 
-	//create imprint button
-	var homeBtn = jQuery('#survey-btn');
-	homeBtn.show();
-	homeBtn.on('click touch', function(event) {
+	//create survey button
+	var surveyBtn = jQuery('#survey-btn');
+	surveyBtn.show();
+	surveyBtn.on('click touch', function(event) {
+
+		
 		opinionCamState = currentScene.cameras[0].storeState();
 		currentScene.dispose();
 		currentScene = __topicScene("topicScene");
@@ -403,6 +405,22 @@ var createGUIScene = function(dptMode) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		jQuery('#form').remove();
+
+		jQuery('body').append(`
+			<div id="form" style="min-width: 40%; height: 80%;">
+				 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
+			</div>`)
+
+			window.addEventListener('message', event => {
+				// IMPORTANT: check the origin of the data! 
+				if (event.origin.startsWith('https://simple-feedback.dpt.world') &&
+					event.data == 'simple-feedback-finished') {
+					jQuery('#feedbackIframe').remove();
+					jQuery('#form').remove();
+				} else {
+					return;
+				}
+			});
 
 		if (isMobile) {
 			console.log("mobile behavior!")
@@ -412,9 +430,9 @@ var createGUIScene = function(dptMode) {
 	});
 	
 	//create imprint button
-	var homeBtn = jQuery('#imprint-btn');
-	homeBtn.show();
-	homeBtn.on('click touch', function(event) {
+	var imprintBtn = jQuery('#imprint-btn');
+	imprintBtn.show();
+	imprintBtn.on('click touch', function(event) {
 		opinionCamState = currentScene.cameras[0].storeState();
 		currentScene.dispose();
 		currentScene = __topicScene("topicScene");
