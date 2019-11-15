@@ -376,8 +376,6 @@ div#dialogFrame {
   color: #F0F3F5;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
-  justify-content: left;
-  text-align: left;
   background-size: cover;
 }
 
@@ -403,8 +401,14 @@ div#dialogFrame {
   height: 35px;
   position: relative;
   margin-left: -10px;
-  margin-right: 20px;
   float: left;
+  margin-right: 20px;
+}
+
+.btn-bar-icon {
+  height: 35px;
+  position: relative;
+  margin-left: -10px;
 }
 
 * {

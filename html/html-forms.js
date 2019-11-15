@@ -355,14 +355,24 @@ var createGUIScene = function(dptMode) {
 	var fsBtn = jQuery('#firststeps-btn');
 	fsBtn.show();
 	fsBtn.on('click touch', function(event) {
-		opinionCamState = currentScene.cameras[0].storeState();
-		currentScene.dispose();
-		currentScene = __topicScene("topicScene");
-		currentScene.name = "topicScene";
-		dpt.getTopic();
-		event.stopImmediatePropagation();
-		event.preventDefault();
+		
 		jQuery('#form').remove();
+
+		jQuery('body').append(`
+		<div id="form" class="helpframe">
+		<img src="/dpt_gestures.png" alt="help" class="helpimage">
+		<button class="button" id="close-btn">close</button>
+		</div>
+	`);
+	window.addEventListener('message', event => {
+		// IMPORTANT: check the origin of the data! 
+		if (event.data == 'simple-help-finished') {
+
+			jQuery('#form').remove();
+		} else {
+			return;
+		}
+			});
 
 		if (isMobile) {
 			console.log("mobile behavior!")
@@ -395,15 +405,7 @@ var createGUIScene = function(dptMode) {
 	var surveyBtn = jQuery('#survey-btn');
 	surveyBtn.show();
 	surveyBtn.on('click touch', function(event) {
-
 		
-		opinionCamState = currentScene.cameras[0].storeState();
-		currentScene.dispose();
-		currentScene = __topicScene("topicScene");
-		currentScene.name = "topicScene";
-		dpt.getTopic();
-		event.stopImmediatePropagation();
-		event.preventDefault();
 		jQuery('#form').remove();
 
 		jQuery('body').append(`
@@ -476,7 +478,7 @@ var createGUIScene = function(dptMode) {
 		var newTopicBtn = jQuery('#new-topic-btn');
 		newTopicBtn.show();
 
-		newTopicBtn.html(`<img class="btn-icon" src="/topic_white.png">`);
+		newTopicBtn.html(`<img class="btn-bar-icon" src="/topic_white.png">`);
 
 		newTopicBtn.on('click touch', function(event) {
 			jQuery('#form').remove();
@@ -499,7 +501,7 @@ var createGUIScene = function(dptMode) {
 		var newOpinionBtn = jQuery('#new-opinion-btn');
 		newOpinionBtn.show();
 
-		newOpinionBtn.html(`<img class="btn-icon" src="/opinion_white.png">`);
+		newOpinionBtn.html(`<img class="btn-bar-icon" src="/opinion_white.png">`);
 		newOpinionBtn.on('click touch', function(event) {
 			jQuery('#form').remove();
 
@@ -695,60 +697,6 @@ function requestYourDialogs() {
 
 	}
 }
-
-function requestFeedback() {
-	var btn = document.createElement("input");
-	btn.className = "iconBar";
-	//			btn.innerText = "Enable/Disable Joystick";
-	btn.style.zIndex = 10;
-	btn.style.position = "absolute";
-	btn.style.bottom = "10px";
-	btn.style.right = "5px";
-	btn.width = "50";
-	btn.height = "50";
-	btn.type = "image";
-	btn.src = "/survey_white.png";
-	btn.style.color = "#f00";
-	document.body.appendChild(btn);
-
-	// Button toggle logic
-	btn.onclick = () => {
-			jQuery('body').append(`
-			<div id="form" style="min-width: 40%; height: 80%;">
-				 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
-			</div>
-		`);
-			window.addEventListener('message', event => {
-				// IMPORTANT: check the origin of the data! 
-				if (event.origin.startsWith('https://simple-feedback.dpt.world') &&
-					event.data == 'simple-feedback-finished') {
-					jQuery('#feedbackIframe').remove();
-					jQuery('#form').remove();
-				} else {
-					return;
-				}
-			});
-		}
-		/*
-	btn.onclick = () => {
-		jQuery.ajax({ 
-			url: 'http://192.168.23.101:8011',
-			type: 'GET',
-			cache: false, 
-			success: function(data){
-				jQuery('body').append(`
-						<div id="propositionForm">
-						${data}
-						</div>
-					`);
-			},
-			error: function(jqXHR, status, err) {
-				alert('text status '+status+', err '+err);
-			},
-		});
-	}
-	*/
-};
 
 
 function requestHelp() {
