@@ -462,7 +462,7 @@ div#dialogFrame {
 
 #form {
   position: absolute;
-  top: 0px;
+  bottom: 47px;
   left: 0px;
   padding: 20px;
   margin-left: 280px;
@@ -657,7 +657,7 @@ nav a:target ~ ul {
 
 section {
   margin: 0 auto;
-  width: 250px;
+  width: 400px;
   bottom: -50px;
   height: 1px;
   text-align: right;
@@ -722,8 +722,6 @@ section ul li {
   }
   #form {
     width: 100%;
-    height: 200px;
-    top: 184px;
     left: 0;
     margin-left: 0px;
     position: absolute;
@@ -820,8 +818,6 @@ section ul li {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    -webkit-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
   }
   nav ul li {
     display: block;
