@@ -93,6 +93,14 @@ match.push({
 });
 
 match.push({
+	path: "/user/update/"+ uuidReg +"/",
+	method: "post",
+	fun: async (data, dptUUID) => {
+		return(await updateUser({ publicKey: dptUUID, body: data.body }));
+	}
+});
+
+match.push({
 	path: "/metadata/user/"+ uuidReg +"/",
 	method: "get",
 	fun: async function(data, dptUUID) {

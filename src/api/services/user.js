@@ -62,6 +62,9 @@ module.exports.userReclaim = async (options) => {
 			new_user.publicKey = uuid();
 			new_user.phrase = options.body.newPhrase;
 			new_user.signupTime = new Date();
+			new_user.preferences = {
+				colorSchema: 0,
+			}
 			var user = await User.create(new_user);
 			console.log(user);
 			return({

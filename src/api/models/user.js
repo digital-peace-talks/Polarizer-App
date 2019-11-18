@@ -6,6 +6,10 @@ const onlineTimesSchema = mongoose.Schema({
 	logout: {type: Date, default: Date.now},
 });
 
+const preferencesSchema = mongoose.Schema({
+	colorSchema: { type: Number },
+});
+
 const userSchema = mongoose.Schema({
 	publicKey: { type: String, unique: true, required: true },
 	phrase: { type: String, unique: true, required: true },
@@ -14,6 +18,7 @@ const userSchema = mongoose.Schema({
 	dialogs: [{ type: Schema.Types.ObjectId, ref: "Dialog" }],
 	signupTime: { type: Date, required: true },
 	onlineTimes: [ onlineTimesSchema ],
+	preferences: preferencesSchema,
 });
 
 exports.userModel = mongoose.model("User", userSchema);

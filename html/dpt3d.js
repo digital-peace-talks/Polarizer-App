@@ -195,8 +195,8 @@ function main() {
 		socket.on("connect", () => {
 			// if needed, we could keep socket.id somewhere
 			console.log('we are: '+socket.id);
-			currentScene = createGenericScene("topicScene");
-			currentScene.name = 'topicScene';
+//			currentScene = createGenericScene("topicScene");
+//			currentScene.name = 'topicScene';
 			if(document.cookie) {
 				dpt.userLogin(document.cookie);
 			} else {
@@ -222,6 +222,9 @@ function main() {
 					whoami.dptUUID = restObj.data.dptUUID;
 					if(restObj.data.message == "logged in") {
 						whoami.user = restObj.data.user;
+						colorScheme = whoami.user.preferences.colorSchema;
+						currentScene = createGenericScene("topicScene");
+						currentScene.name = 'topicScene';
 						dpt.getTopic();
 						dpt.getDialogList();
 					} else if(restObj.data.message == "user unknown") {

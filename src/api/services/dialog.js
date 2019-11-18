@@ -152,7 +152,81 @@ module.exports.getDialogListAll = async (options) => {
  * @throws {Error}
  * @return {Promise}
  */ 
+
 module.exports.getDialogList = async (options) => {
+	var result = [];
+	try {
+		var worker = {};
+		worker = await Dialog.find({$or: [{ "initiator": options.userId}, { "recipient": options.userId}]});
+		for(var i in worker) {
+			var collection = {};
+			collection.dialog = worker[i].id;
+			collection.opinionProposition = worker[i].opinionProposition;
+			collection.recipientOpinion = worker[i].opinion.content;
+			collection.status = worker[i].status;
+			collection.initiatorTimestamp = worker[i].initiatorTimestamp;
+			collection.recipientTimestamp = worker[i].recipientTimestamp;
+			collection.unreadMessages = 0;
+			var worker2 = await Topic.findOne({ "_id": mongoose.Types.ObjectId(worker[i].topic)});
+			collection.topic = worker2.content;
+			worker2 = await Opinion.find({ "_id": mongoose.Types.ObjectId(worker[i].opinion)});
+			collection.recipientOpinion = worker2.content;
+			worker2 = await Opinion.find({ "_id": mongoose.Types.ObjectId(worker[i].initiatorOpinion)});
+			collection.initiatorOpinion = worker2.content;
+			if(worker[i].initiator == options.userId) {
+				collection.initiator = 'me';
+				collection.recipient = 'notme';
+			} else {
+				collection.initiator = 'notme';
+				collection.recipient = 'me';
+			}
+
+			for(var m in worker[i].messages) {
+				if(worker[i].messages[m].timestamp > collection.initiatorTimestamp) {
+					collection.unreadMessages++;
+				}
+			}
+
+			result.push(collection);
+		}
+		for(var i=0; i<result.length; i++) {
+			if(result[i].status == 'ACTIVE') {
+				result[i].status = 'C';
+			} else if(result[i].status == 'PENDING') {
+				result[i].status = 'A';
+			} else if(result[i].status == 'CRISIS') {
+				result[i].status = 'B';
+			} else if(result[i].status == 'CLOSED') {
+				result[i].status = 'D';
+			}
+		}
+		result = Lo_.sortBy(result, ['status', 'messages.timestamp']);
+		for(var i=0; i<result.length; i++) {
+			if(result[i].status == 'C') {
+				result[i].status = 'ACTIVE';
+			} else if(result[i].status == 'A') {
+				result[i].status = 'PENDING';
+			} else if(result[i].status == 'B') {
+				result[i].status = 'CRISIS';
+			} else if(result[i].status == 'D') {
+				result[i].status = 'CLOSED';
+			}
+		}
+	} catch(error) {
+		throw {
+			status: 500,
+			data: error.message,
+		};
+	}
+	
+	return({
+		status: 200,
+		data: result,
+	});
+};
+
+				
+module.exports.getDialogListOld = async (options) => {
 	var result = [];
 	try {
 		var worker = {};

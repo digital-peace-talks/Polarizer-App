@@ -1,6 +1,6 @@
 // Digital Peace Talks - API
 class DPT {
-
+	
 	constructor(socket) {
 		this.socket = socket;
 		return(this);
@@ -50,7 +50,7 @@ class DPT {
 			}
 		});
 	}	
-
+	
 	userLogin(publicKey) {
 		this.socket.emit("login", {
 			method: 'post',
@@ -61,6 +61,17 @@ class DPT {
 		});
 	}
 	
+	userUpdate(publicKey, tuple) {
+		this.socket.emit("api", {
+			method: "update",
+			path: '/users/update/'+publicKey+'/',
+			data: {
+				publicKey: publicKey,
+				body: tuple,
+			}
+		});
+	}
+				
 	userDelete(publicKey) {
 		this.socket.emit("api", {
 			method: 'delete',
