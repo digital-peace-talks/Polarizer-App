@@ -96,7 +96,7 @@ match.push({
 	path: "/user/update/"+ uuidReg +"/",
 	method: "post",
 	fun: async (data, dptUUID) => {
-		return(await updateUser({ publicKey: dptUUID, body: data.body }));
+		return(await userService.updateUser({ publicKey: dptUUID, body: data.body }));
 	}
 });
 

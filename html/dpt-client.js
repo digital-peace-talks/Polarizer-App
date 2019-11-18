@@ -63,8 +63,8 @@ class DPT {
 	
 	userUpdate(publicKey, tuple) {
 		this.socket.emit("api", {
-			method: "update",
-			path: '/users/update/'+publicKey+'/',
+			method: "post",
+			path: '/user/update/'+publicKey+'/',
 			data: {
 				publicKey: publicKey,
 				body: tuple,

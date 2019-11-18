@@ -7,7 +7,7 @@ const onlineTimesSchema = mongoose.Schema({
 });
 
 const preferencesSchema = mongoose.Schema({
-	colorSchema: { type: Number },
+	colorScheme: { type: Number },
 });
 
 const userSchema = mongoose.Schema({

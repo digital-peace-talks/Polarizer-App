@@ -222,7 +222,7 @@ function main() {
 					whoami.dptUUID = restObj.data.dptUUID;
 					if(restObj.data.message == "logged in") {
 						whoami.user = restObj.data.user;
-						colorScheme = whoami.user.preferences.colorSchema;
+						colorScheme = whoami.user.preferences.colorScheme;
 						currentScene = createGenericScene("topicScene");
 						currentScene.name = 'topicScene';
 						dpt.getTopic();

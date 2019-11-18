@@ -39,7 +39,7 @@ async function updateDialog(dialog) {
 
 async function updateUser(user) {
 	try {
-		await User.updateOne({_id: user._id}, {preferences: {colorSchema: 0}});
+		await User.updateOne({_id: user._id}, {preferences: {colorScheme: 0}});
 	} catch(error) {
 		throw {
 			status: 500,

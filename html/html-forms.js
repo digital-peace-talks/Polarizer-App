@@ -11,6 +11,73 @@ function hideMenu() {
 	//jQuery('#overlay').css("background-image", "url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png')");
 }
 
+function settingsForm(opinionId, topicId) {
+
+	console.log('settings/preferences');
+
+	var colors = 'Color scheme:<br>';
+	for(var i = 0; i <= 2; i++) {
+		if(whoami.user.preferences.colorScheme == i) {
+			colors += `<input type="radio" name="colorScheme" value=${i} checked>`;
+		} else {
+			colors += `<input type="radio" name="colorScheme" value=${i}>`;
+		}
+		switch(i) {
+			case DPTConst.COLORS_bright:
+				colors += ' Bright';
+				break
+			case DPTConst.COLORS_dark:
+				colors += ' Dark';
+				break
+			case DPTConst.COLORS_default:
+			default:
+				colors += ' Default';
+				break
+		}
+		colors += "<br>";
+	}
+		
+	jQuery('body').append(`
+		<div id="form">Preferences & Settings:
+		<hr>
+		<br><form id="settings">
+		${colors}
+		<br>
+		<input class="button" type="submit" value="Save">
+		<input class="button" type="button" value="Close" name="close" id="closeSettingsForm">
+		</form></div>
+	`);
+
+	jQuery(document).one('click', "#CloseSettingsForm", function(event) {
+		jQuery('#form').remove();
+		focusAtCanvas();
+		event.preventDefault();
+	});
+
+	jQuery(document).on('submit', 'form#settings', function(event) {
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		colorScheme = jQuery('input[name=colorScheme]:checked').val();
+		dpt.userUpdate(whoami.dptUUID, {"preferences.colorScheme": colorScheme});
+		jQuery('#form').remove();
+		
+		if(currentScene.name == "topicScene") {
+			topicCamState = currentScene.cameras[0].storeState();
+			currentScene.dispose();
+			currentScene = __topicScene("topicScene");
+			currentScene.name = "topicScene";
+			dpt.getTopic();
+		} else {
+			opinionCamState = currentScene.cameras[0].storeState();
+			currentScene.dispose();
+			currentScene = __opinionScene("opinionScene");
+			currentScene.name = "opinionScene";
+			dpt.getOpinionByTopic(currentTopic);
+		}
+
+	});
+}
+
 function propositionForm(opinionId, topicId) {
 
 	console.log('enter proposition');
@@ -449,6 +516,19 @@ var createGUIScene = function(dptMode) {
 			hideMenu();
 		}
 		focusAtCanvas();
+	});
+	
+	var settingsBtn = jQuery('#settings-btn');
+	settingsBtn.show();
+	settingsBtn.on('click touch', function(event) {
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		jQuery('#form').remove();
+		settingsForm();
+		
+		if(isMobile) {
+			hideMenu();
+		}
 	});
 
 	//create home button
