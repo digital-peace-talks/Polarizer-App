@@ -774,7 +774,6 @@ section ul li {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    -webkit-transition: all 0.4s ease-out;
     -webkit-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
   }
