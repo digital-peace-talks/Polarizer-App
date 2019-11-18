@@ -305,14 +305,15 @@ div#dialogFrame {
 
 #overlay {
     /* margin:5%; */
-    position: fixed;
+    position: absolute;
     display: grid;
     background-color: rgba(0, 0, 0, 0);
     border: 0px;
     z-index: 100;
     /* grid-auto-flow: column; */
-    grid-template-columns: 210px;
+    grid-template-columns: 280px;
     /* pointer-events: none; */
+    right: 0px;
 }
 
 #menubar {
@@ -581,24 +582,36 @@ nav {
     width: 100%;
     height: 1px;
     text-align: right;
-    position: absolute;
+    position: inherit;
+    right: 0px;
 }
 
 nav ul {
+    top: 40px;
+    position: absolute;
+    width: 100%;
+    left: 100%;
+    list-style-type: none;
     margin: 0;
-    padding: 0 0 0 0;
+    padding: 0;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
 }
 
 nav ul li {
     list-style: none;
     margin: 0;
-    display: inline;
+    display: block;
+    text-align: left;
+    padding: 0em 0em;
 }
 
 nav ul li button {
     color: #009999;
     position: relative;
-    padding: 0 0 0.5em 0;
+    padding: 1em 0;
     display: inline-block;
     text-decoration: none;
     text-transform: uppercase;
@@ -613,8 +626,37 @@ nav a.close {
     display: none;
 }
 
-nav ul li {
-    margin: 0 0 0 0;
+nav ul.menu li a:hover {
+    border-bottom: 0;
+}
+/*Hamburger-Icon*/
+nav a#nav-m {
+    display: inline;
+}
+nav a#nav-m img,
+nav a.close img {
+    width: 40px;
+    height: auto;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+}
+nav>.close,
+nav a#nav-m:target {
+    display: none;
+    right: 0px;
+    top: 0px;
+}
+nav a:target~ul,
+nav a:target~.close {
+    display: inline-block;
+}
+nav a:target~.close {
+    position: absolute;
+    margin-left: -40px;
+}
+nav a:target~ul {
+    left: 0;
 }
 
 
@@ -785,7 +827,7 @@ section ul li {
         top: 40px;
         position: absolute;
         width: 100%;
-        left: -100%;
+        left: 100%;
         list-style-type: none;
         margin: 0;
         padding: 0;
