@@ -28,8 +28,6 @@ var DPTConst = {
 		"COLORS_bright": 2,
 };
 
-var colorScheme = DPTConst.COLORS_default;
-
 
 function focusAtCanvas() {
 	idleSince = BABYLON.Tools.Now;
@@ -222,7 +220,6 @@ function main() {
 					whoami.dptUUID = restObj.data.dptUUID;
 					if(restObj.data.message == "logged in") {
 						whoami.user = restObj.data.user;
-						colorScheme = whoami.user.preferences.colorScheme;
 						currentScene = createGenericScene("topicScene");
 						currentScene.name = 'topicScene';
 						dpt.getTopic();

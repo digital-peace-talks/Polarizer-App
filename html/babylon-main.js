@@ -312,7 +312,7 @@ var createGenericScene = function(dptMode) {
 	light.diffuse = new BABYLON.Color3(1, 0.8, 0.8);
 	light.intensity = 0.3;
 
-	switch(colorScheme) {
+	switch(whoami.user.preferences.colorScheme) {
 		case DPTConst.COLORS_dark:
 			genericScene.clearColor = new BABYLON.Color3(0, 0.1, 0.2);
 			break;
