@@ -51,11 +51,12 @@ function settingsForm(opinionId, topicId) {
 		</form></div>
 	`);
 
-	jQuery(document).one('click', "#CloseSettingsForm", function(event) {
+	jQuery(document).on('click touch', "#closeSettingsForm", function(event) {
 		jQuery('#form').remove();
 		focusAtCanvas();
 		event.preventDefault();
 	});
+	
 
 	jQuery(document).on('submit', 'form#settings', function(event) {
 		event.stopImmediatePropagation();
@@ -96,7 +97,7 @@ function propositionForm(opinionId, topicId) {
 
 	jQuery(".proposition").focus();
 
-	jQuery(document).one('click', "#ClosePropositionForm", function(event) {
+	jQuery(document).on('click', "#ClosePropositionForm", function(event) {
 		propositionFormOpen = 0;
 		jQuery('#form').remove();
 		focusAtCanvas();
@@ -271,7 +272,7 @@ function opinionForm(edit, context) {
 
 	jQuery(".opinion").focus();
 
-	jQuery(document).one('click', "#CloseOpinionForm", function(event) {
+	jQuery(document).on('click', "#CloseOpinionForm", function(event) {
 		opinionFormOpen = 0;
 		jQuery('#form').remove();
 		focusAtCanvas();
@@ -422,6 +423,7 @@ var createGUIScene = function(dptMode) {
 	});
 
 	//create first steps button
+
 	var fsBtn = jQuery('#firststeps-btn');
 	fsBtn.show();
 	fsBtn.on('click touch', function(event) {
@@ -433,22 +435,30 @@ var createGUIScene = function(dptMode) {
 		<img src="/dpt_gestures.png" alt="help" class="helpimage">
 		<button class="button" id="close-btn">close</button>
 		</div>
-	`);
-	window.addEventListener('message', event => {
-		// IMPORTANT: check the origin of the data! 
-		if (event.data == 'simple-help-finished') {
-
+		`);
+		jQuery(document).on('click touch', "#close-btn", function(event) {
 			jQuery('#form').remove();
-		} else {
-			return;
-		}
-			});
+			focusAtCanvas();
+			event.preventDefault();
+		});
+	
+		/*
+		window.addEventListener('message', event => {
+		// IMPORTANT: check the origin of the data! 
+			if (event.data == 'simple-help-finished') {
+
+				jQuery('#form').remove();
+			} else {
+				return;
+			}
+		});
 
 		if (isMobile) {
 			console.log("mobile behavior!")
 			hideMenu();
 		}
 		focusAtCanvas();
+		*/
 	});
 
 	//create documentation button
@@ -791,22 +801,22 @@ function requestYourDialogs() {
 
 
 function requestHelp() {
-	var btnH = document.createElement("input");
-	btnH.className = "iconBar";
+	var btn = document.createElement("input");
+	btn.className = "iconBar";
 	//			btn.innerText = "Enable/Disable Joystick";
-	btnH.style.zIndex = 10;
-	btnH.style.position = "absolute";
-	btnH.style.bottom = "10px";
-	btnH.style.right = "50px";
-	btnH.width = "50";
-	btnH.height = "50";
-	btnH.type = "image";
-	btnH.src = "/help_white.png";
-	btnH.style.color = "#f00";
-	document.body.appendChild(btnH);
+	btn.style.zIndex = 10;
+	btn.style.position = "absolute";
+	btn.style.bottom = "10px";
+	btn.style.right = "50px";
+	btn.width = "50";
+	btn.height = "50";
+	btn.type = "image";
+	btn.src = "/help_white.png";
+	btn.style.color = "#f00";
+	document.body.appendChild(btn);
 
 	// Button toggle logic
-	btnH.onclick = () => {
+	btn.onclick = () => {
 		jQuery('body').append(`
 			<div id="form" class="helpframe">
 			<img src="/dpt_gestures.png" alt="help" class="helpimage">
@@ -823,15 +833,13 @@ function requestHelp() {
 			}
 		});
 
-		jQuery(document).one('click', "#close-btn", function(event) {
+		jQuery(document).on('click', "#close-btn", function(event) {
 			jQuery('#form').remove();
 			focusAtCanvas();
 			event.preventDefault();
 		});
 	}
-
-
-};
+}
 
 
 function pauseEngine() {
@@ -885,5 +893,6 @@ jQuery(document).on("click touch touchend", "span.myDialogs", function(event) {
 	event.stopImmediatePropagation();
 	event.preventDefault();
 });
+
 
 //mobile version menu details
