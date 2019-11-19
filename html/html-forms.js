@@ -554,6 +554,13 @@ var createGUIScene = function(dptMode) {
 		focusAtCanvas();
 	});
 
+	//create search button
+	var searchBtn = jQuery('#search-btn');
+	searchBtn.show();
+	searchBtn.on('click touch', function(event) {
+		requestSearch();
+	});
+
 
 	//create topic button 
 	if (dptMode == 'topicScene') {
@@ -666,14 +673,14 @@ function requestHome() {
 		focusAtCanvas();
 	}
 }
-/*
+
 function requestSearch() {
 	var btn = document.createElement("input");
 	btn.className = "iconBar";
 	btn.style.zIndex = 10;
 	btn.style.position = "absolute";
-	btn.style.bottom = "5px";
-	btn.style.right = "250px";
+	btn.style.bottom = "60px";
+	btn.style.left = "50%";
 	btn.width = "50";
 	btn.height = "50";
 	btn.type = "image";
@@ -682,8 +689,9 @@ function requestSearch() {
 	document.body.appendChild(btn);
 	btn.onclick = ()=> {
 		alert('search btn pressed!');
+		btn.remove();
 	}
-} */
+} 
 
 function requestNewTopic() {
 	var btn = document.createElement("input");
