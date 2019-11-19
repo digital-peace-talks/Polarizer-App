@@ -153,7 +153,7 @@ module.exports.getDialogListAll = async (options) => {
  * @return {Promise}
  */ 
 
-module.exports.getDialogList = async (options) => {
+module.exports.getDialogListNew = async (options) => {
 	var result = [];
 	try {
 		var worker = {};
@@ -226,7 +226,7 @@ module.exports.getDialogList = async (options) => {
 };
 
 				
-module.exports.getDialogListOld = async (options) => {
+module.exports.getDialogList = async (options) => {
 	var result = [];
 	try {
 		var worker = {};
