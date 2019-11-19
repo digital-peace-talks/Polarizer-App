@@ -47,7 +47,7 @@ function settingsForm(opinionId, topicId) {
 		${colors}
 		<br>
 		<input class="button" type="submit" value="Apply">
-		<input class="button" type="button" value="Cancle" name="close" id="closeSettingsForm">
+		<input class="button" type="button" value="Cancel" name="close" id="closeSettingsForm">
 		</form></div>
 	`);
 
