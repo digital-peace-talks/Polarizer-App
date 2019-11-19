@@ -91,8 +91,8 @@ function propositionForm(opinionId, topicId) {
 		<br><form id="proposition"><textarea name="proposition" class="proposition"></textarea>
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
 		<input type="hidden" id="topicId" name="topicId" value="${topicId}">
-		<br><input class="button" type="submit" value="Send">
-		<input class="button" type="button" value="close window" name="close window" id="ClosePropositionForm"></form></div>
+		<br><input class="button" type="submit" value="Confirm">
+		<input class="button" type="button" value="Cancel" name="close window" id="ClosePropositionForm"></form></div>
 	`);
 
 	jQuery(".proposition").focus();
@@ -180,8 +180,8 @@ function topicForm(edit, context) {
 			<div id="form">
 			Please enter a new topic:<br><form id="topic">
 			<textarea name="topic" class="topic">${topic}</textarea><br>
-			<input class="button" type="submit" value="send">
-			<input class="button" type="button" value="close window" name="close window"
+			<input class="button" type="submit" value="Confirm">
+			<input class="button" type="button" value="Cancel" name="close window"
 			id="CloseTopicForm">${edit}${hiddenTopicId}</form></div>
 		`);
 	}
@@ -265,8 +265,8 @@ function opinionForm(edit, context) {
 		<div id="form">
 		Please enter a new opinion:<br> <form id="opinion">
 		<textarea name="opinion" class="opinion">${opinion}</textarea><br>
-		<input class="button" type="submit" value="Send"> 
-		<input class="button" type="button" value="close window" name="close window"
+		<input class="button" type="submit" value="Confirm"> 
+		<input class="button" type="button" value="Cancel" name="close window"
 		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}</form></div>
 	`);
 
