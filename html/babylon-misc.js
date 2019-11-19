@@ -197,7 +197,7 @@ function textBlock(x, y, z, name, text, options) {
 	var textureContext = dynamicTexture.getContext();
 	textureContext.font = (options.fontSize || "22") + "px DPTFont";
 	textureContext.save();
-	switch(colorScheme) {
+	switch(whoami.user.preferences.colorScheme) {
 		case DPTConst.COLORS_dark:
 			textureContext.fillStyle = "#7fffff";
 			break;
@@ -218,7 +218,7 @@ function textBlock(x, y, z, name, text, options) {
 	if(dpt.canInvite) {
 		textureContext.drawImage(inviteIcon, 0, 0, 36, 36);
 		textureContext.globalCompositeOperation = "xor";
-		switch(colorScheme) {
+		switch(whoami.user.preferences.colorScheme) {
 			case DPTConst.COLORS_dark:
 				textureContext.fillStyle = "#00ff00";
 				break;
@@ -234,7 +234,7 @@ function textBlock(x, y, z, name, text, options) {
 	if(dpt.canEdit) {
 		textureContext.drawImage(editIcon, 36, 0, 36, 36);
 		textureContext.globalCompositeOperation = "xor";
-		switch(colorScheme) {
+		switch(whoami.user.preferences.colorScheme) {
 			case DPTConst.COLORS_dark:
 				textureContext.fillStyle = "#ff7f00";
 				break;

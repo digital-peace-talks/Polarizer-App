@@ -15,32 +15,35 @@ function settingsForm(opinionId, topicId) {
 
 	console.log('settings/preferences');
 
-	var colors = 'Color scheme:<br>';
+	var colors = "Color scheme:<br>";
 	for(var i = 0; i <= 2; i++) {
 		if(whoami.user.preferences.colorScheme == i) {
-			colors += `<input type="radio" name="colorScheme" value=${i} checked>`;
+			colors += `<label><input type="radio" name="colorScheme" value="${i}" checked>`;
 		} else {
-			colors += `<input type="radio" name="colorScheme" value=${i}>`;
+			colors += `<label><input type="radio" name="colorScheme" value="${i}">`;
 		}
 		switch(i) {
 			case DPTConst.COLORS_bright:
-				colors += ' Bright';
+				colors += " Bright</label>";
 				break
 			case DPTConst.COLORS_dark:
-				colors += ' Dark';
+				colors += " Dark</label>";
 				break
 			case DPTConst.COLORS_default:
 			default:
-				colors += ' Default';
+				colors += " Default</label>";
 				break
 		}
 		colors += "<br>";
 	}
 		
 	jQuery('body').append(`
-		<div id="form">Preferences & Settings:
-		<hr>
-		<br><form id="settings">
+		<div id="form">Preferences & Settings:<hr><br>
+		My passphrase:<br>
+		${whoami.user.phrase}
+		<br>
+		<br>
+		<form id="settings">
 		${colors}
 		<br>
 		<input class="button" type="submit" value="Save">
@@ -57,8 +60,8 @@ function settingsForm(opinionId, topicId) {
 	jQuery(document).on('submit', 'form#settings', function(event) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
-		colorScheme = jQuery('input[name=colorScheme]:checked').val();
-		dpt.userUpdate(whoami.dptUUID, {"preferences.colorScheme": colorScheme});
+		whoami.user.preferences.colorScheme = jQuery('input[name=colorScheme]:checked').val() * 1;
+		dpt.userUpdate(whoami.dptUUID, {"preferences.colorScheme": whoami.user.preferences.colorScheme});
 		jQuery('#form').remove();
 		
 		if(currentScene.name == "topicScene") {

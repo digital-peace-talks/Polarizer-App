@@ -474,7 +474,7 @@ div#dialogFrame {
   border-style: solid;
   border-width: 1px;
   color: #002C4B;
-  z-index: 2;
+  z-index: 101;
   font-family: DPTFontDin;
   font-size: 18px;
   background-color: #28A9E1;
