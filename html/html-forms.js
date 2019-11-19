@@ -685,19 +685,21 @@ function requestHome() {
 }
 
 function requestSearch() {
-	var btn = document.createElement("input");
-	btn.className = "iconBar";
-	btn.style.zIndex = 10;
-	btn.style.position = "absolute";
-	btn.style.bottom = "60px";
-	btn.style.left = "50%";
-	btn.width = "50";
-	btn.height = "50";
-	btn.type = "image";
-	btn.src = "/search.png";
-	btn.style.color = "#f00";
-	document.body.appendChild(btn);
-	btn.onclick = ()=> {
+	
+	jQuery('body').append(`
+	<div id="form">
+	<form class="searchString">
+
+	<input type="text" id="searchString" name="searchString" width="300px">
+	</form>
+	<br>
+	<input class="button" type="submit" value="Search">
+	<input class="button" type="button" value="Close" name="close" id="closeSettingsForm" >
+	</div>
+`);
+
+
+	button.onclick = ()=> {
 		alert('search btn pressed!');
 		btn.remove();
 	}
