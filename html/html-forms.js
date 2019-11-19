@@ -338,7 +338,7 @@ function loadDialogList(restObj) {
 	}
 	if(sum > 0) {
 		jQuery('#dialog-btn-label').attr('count', sum);
-		jQuery('#dialog-btn-label').empty().text(`[${sum}]`);
+		jQuery('#dialog-btn-label').empty().text(`${sum}`);
 	} else {
 		jQuery('#dialog-btn-label').attr('count', 0);
 		jQuery('#dialog-btn-label').empty().text(``);
@@ -866,16 +866,16 @@ jQuery(document).on("click touch touchend", "span.myDialogs", function(event) {
 	var count = jQuery("span#dialog-btn-label").attr("count");
 
 	jQuery(this).attr("count", 0);
-	text = text.replace(` [${oldCount}]`, '');
+	text = text.replace(` ${oldCount}`, '');
 	jQuery(this).children("h2").text(text);
 	text = jQuery("span#dialog-btn-label").text();
 
 	if((count - oldCount) > 0) {
-		text = text.replace(` [${count}]`, ' ['+(count - oldCount)+']');
+		text = text.replace(` ${count}`, ' '+(count - oldCount)+'');
 		jQuery("span#dialog-btn-label").text(text);
 		jQuery("span#dialog-btn-label").attr('count', (count - oldCount));
 	} else {
-		text = text.replace(` [${count}]`, '');
+		text = text.replace(` ${count}`, '');
 		jQuery("span#dialog-btn-label").text(text);
 		jQuery("span#dialog-btn-label").attr('count', 0);
 	}

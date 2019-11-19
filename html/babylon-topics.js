@@ -92,7 +92,7 @@ function searchResultTopics(restObj) {
 					"topicId": restObj.data[i].topicId,
 					"topic": restObj.data[i].topic
 				}),
-				`${restObj.data[i].topic} [${restObj.data[i].count}]`);
+				`${restObj.data[i].topic} ${restObj.data[i].count}`);
 		}
 	} else {
 		var plane = textBlock(0,0,0, `{"context": "topicScene"}`, `Nothing found.`);
