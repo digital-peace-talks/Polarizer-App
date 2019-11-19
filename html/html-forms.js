@@ -690,18 +690,15 @@ function requestSearch() {
 	<div id="form">
 	<form class="searchString">
 
-	<input type="text" id="searchString" name="searchString" width="300px">
+	<input type="text" id="searchString" name="searchString" style="width:100%;">
 	</form>
-	<br>
-	<input class="button" type="submit" value="Search">
 	<input class="button" type="button" value="Close" name="close" id="closeSettingsForm" >
 	</div>
 `);
 
 
-	button.onclick = ()=> {
-		alert('search btn pressed!');
-		btn.remove();
+	closeSettingsForm.onclick = ()=> {
+		jQuery('#form').remove();
 	}
 } 
 
