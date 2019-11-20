@@ -455,7 +455,7 @@ var createGUIScene = function(dptMode) {
 	var docuBtn = jQuery('#documentation-btn');
 	docuBtn.show();
 	docuBtn.on('click touch', function(event) {
-		window.open("http://www.proto1.dpt.world/dpt-doku.html");
+		window.open("dpt-doku.html");
 	});
 
 	//create survey button
