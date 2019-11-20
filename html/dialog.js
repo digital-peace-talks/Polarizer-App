@@ -20,10 +20,7 @@ function crisisForm(messageId) {
 				Most impressive message:<br><b>${message}</b><br><br>
 				Please enter the reason:<br>
 				<form id="crisis">
-				
-
-				
-
+			
 					<input type="text" name="reason" size="50" class="reason"><br><br>
 					
 					<label id="negative">[-1: <input type="radio" name="rating" value="-1">]</label>
@@ -35,7 +32,6 @@ function crisisForm(messageId) {
 			</div>
 		`);
 		
-
 		$(document).ready(function() {
 			$('#range-slider').on('change', function() {
 			  $('.smile').css('transform','rotateX('+ $(this).val() +'deg)');
