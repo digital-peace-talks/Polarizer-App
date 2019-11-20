@@ -407,20 +407,26 @@ var createGUIScene = function(dptMode) {
 	var aboutBtn = jQuery('#about-btn');
 	aboutBtn.show();
 	aboutBtn.on('click touch', function(event) {
-		opinionCamState = currentScene.cameras[0].storeState();
-		currentScene.dispose();
-		currentScene = __topicScene("topicScene");
-		currentScene.name = "topicScene";
-		dpt.getTopic();
-		event.stopImmediatePropagation();
-		event.preventDefault();
+		
 		jQuery('#form').remove();
 
-		if (isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
-		}
-		focusAtCanvas();
+		jQuery('body').append(`
+		<div id="form" class="helpframe">
+		<h1>About</h1>
+		
+		<p>Digital Peace Talks gUG (h.b.)</p>
+		<p>A digital space where everyone can express and understand opinions</p>
+		<a href="http://www.digitalpeacetalks.com" target="_blank">Visit Our Website</a>
+
+		<button class="button" id="close-btn">close</button>
+		</div>
+		`);
+		jQuery(document).on('click touch', "#close-btn", function(event) {
+			jQuery('#form').remove();
+			focusAtCanvas();
+			event.preventDefault();
+		});
+	
 	});
 
 	//create first steps button
@@ -443,43 +449,13 @@ var createGUIScene = function(dptMode) {
 			event.preventDefault();
 		});
 	
-		/*
-		window.addEventListener('message', event => {
-		// IMPORTANT: check the origin of the data! 
-			if (event.data == 'simple-help-finished') {
-
-				jQuery('#form').remove();
-			} else {
-				return;
-			}
-		});
-
-		if (isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
-		}
-		focusAtCanvas();
-		*/
 	});
 
 	//create documentation button
 	var docuBtn = jQuery('#documentation-btn');
 	docuBtn.show();
 	docuBtn.on('click touch', function(event) {
-		opinionCamState = currentScene.cameras[0].storeState();
-		currentScene.dispose();
-		currentScene = __topicScene("topicScene");
-		currentScene.name = "topicScene";
-		dpt.getTopic();
-		event.stopImmediatePropagation();
-		event.preventDefault();
-		jQuery('#form').remove();
-
-		if (isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
-		}
-		focusAtCanvas();
+		window.open("dpt-doku.html");
 	});
 
 	//create survey button
@@ -490,7 +466,7 @@ var createGUIScene = function(dptMode) {
 		jQuery('#form').remove();
 
 		jQuery('body').append(`
-			<div id="form" style="min-width: 40%; height: 80%;">
+			<div id="form" style="height: 80%;">
 				 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
 			</div>`)
 

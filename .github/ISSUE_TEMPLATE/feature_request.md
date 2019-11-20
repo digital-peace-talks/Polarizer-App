@@ -2,8 +2,8 @@
 name: Feature request
 about: Suggest an idea for this project
 title: ''
-labels: enhancement, good first issue, help wanted, question
-assignees: dptalks, Iwan-Ittermann, Macribo, MartinDPT, Metin74, NilsNimsgarn
+labels: enhancement
+assignees: dptalks, Iwan-Ittermann, MartinDPT, Metin74
 
 ---
 
