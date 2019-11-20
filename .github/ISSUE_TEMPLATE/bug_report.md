@@ -2,8 +2,8 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: bug, duplicate, good first issue, help wanted, invalid, question, wontfix
-assignees: dptalks, Macribo, MartinDPT, NilsNimsgarn
+labels: bug
+assignees: Metin74, dptalks, MartinDPT
 
 ---
 
