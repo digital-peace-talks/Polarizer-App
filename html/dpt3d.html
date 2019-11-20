@@ -105,8 +105,12 @@
 		<!--	<div class="brand">
 				<a href=""><img src="dpt_logo.png" alt="digital peace talks" /></a>
 			</div>-->
-			<a href="#nav-m" id="nav-m"><img src="/button_menu.png" alt="" /></a>
-			<a href="#" class="close"><img src="/button_close.png" alt="" /></a>
+			<a class="hamburger" id="nav-m"><img src="/button_menu.png" alt="" /></a>
+			<a class="hamburger close"><img src="/button_close.png" alt="" /></a>
+			<!--
+			<a href="#nav-m" class="hamburger" id="nav-m"><img src="/button_menu.png" alt="" /></a>
+			<a href="#" class="hamburger close"><img src="/button_close.png" alt="" /></a>
+			-->
 			<ul class="menu">
 				<li><button class="menu-btn" id="about-btn"><img class= "btn-icon"src="/about_white.png" >About</button></li>
 				<li><button class="menu-btn" id="firststeps-btn"><img class= "btn-icon"src="/help_white.png" >First Steps</button></li>
@@ -134,6 +138,19 @@
 	<div id="misc"></div>
 	<div id="misc2"></div>
 	<script>
+	document.addEventListener("DOMContentLoaded", function(event) {
+		var hamburgerOpen = false;
+		var menuLeft = 0;
+		menuLeft = jQuery("nav ul").css("left");
+		jQuery("a.hamburger").on('click touch', function(event) {
+			hamburgerOpen = !hamburgerOpen;
+			if(hamburgerOpen) {
+				jQuery("nav ul").css("left", "0px");
+			} else {
+				jQuery("nav ul").css("left", menuLeft);
+			}
+		});
+		
 		if('serviceWorker' in navigator) {
 			window.addEventListener('load', function() {
 				navigator.serviceWorker.register('/sw.js')
@@ -174,7 +191,7 @@
 				document.getSelection().addRange(selected); // Restore the original selection
 			}
 		};
-
+	});
 	</script>
 </body>
 
