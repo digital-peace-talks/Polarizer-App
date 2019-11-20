@@ -41,6 +41,7 @@ function settingsForm(opinionId, topicId) {
 		<div id="form">Preferences & Settings:<hr><br>
 		My passphrase:<br>
 		${whoami.user.phrase}
+		<input type="image" style="width:18px" src="/copytoclipboard.png" onClick="copyToClipboard('${whoami.user.phrase}');"/>
 		<br>
 		<br>
 		<form id="settings">
