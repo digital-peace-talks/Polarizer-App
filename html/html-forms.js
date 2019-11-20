@@ -41,6 +41,7 @@ function settingsForm(opinionId, topicId) {
 		<div id="form">Preferences & Settings:<hr><br>
 		My passphrase:<br>
 		${whoami.user.phrase}
+		<input type="image" style="width:18px" src="/copytoclipboard.png" onClick="copyToClipboard('${whoami.user.phrase}');"/>
 		<br>
 		<br>
 		<form id="settings">
@@ -638,7 +639,6 @@ var createGUIScene = function(dptMode) {
 		}
 
 	});
-
 }
 
 function requestHome() {
@@ -674,19 +674,34 @@ function requestHome() {
 
 function requestSearch() {
 	
+	jQuery("#form").remove();
 	jQuery('body').append(`
-	<div id="form">
-	<form class="searchString">
+		<div id="form">
+		<form class="searchString">
 
-	<input type="text" id="searchString" name="searchString" style="width:100%;">
-	</form>
-	<input class="button" type="button" value="Close" name="close" id="closeSettingsForm" >
-	</div>
-`);
+		<input type="text" id="searchString" name="searchString" style="width:100%;">
+		</form>
+		<input class="button" type="button" value="Close" name="close" id="closeSettingsForm" >
+		</div>
+	`);
+	jQuery("#searchString").focus();
 
-	closeSettingsForm.onclick = ()=> {
+	jQuery("#closeSettingsForm").on('click touch', function(event) {
 		jQuery('#form').remove();
-	}
+		event.stopImmediatePropagation();
+		event.preventDefault();
+	});
+
+	jQuery(document).on('submit', '.searchString', function(event) {
+		event.preventDefault();
+		if(currentScene.name == "opinionScene") {
+			opinionCamState = currentScene.cameras[0].storeState();
+			currentScene.dispose();
+			currentScene = __topicScene("topicScene");
+			currentScene.name = "topicScene";
+		}
+		dpt.searchTopicsAndOpinions(jQuery('#searchString').val());
+	});
 } 
 
 function requestNewTopic() {

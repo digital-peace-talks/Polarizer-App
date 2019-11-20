@@ -10,6 +10,32 @@ const router = new express.Router();
 
 router.get('/', async(req, res, next) => {
 	try {
+		
+		// from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
+		var c2c = `
+		<script>
+		const copyToClipboard = (str) => {
+			const el = document.createElement('textarea');  // Create a <textarea> element
+			el.value = str;                                 // Set its value to the string that you want copied
+			el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
+			el.style.position = 'absolute';                 
+			el.style.left = '-9999px';                      // Move outside the screen to make it invisible
+			document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
+			const selected =            
+				document.getSelection().rangeCount > 0      // Check if there is any content selected previously
+				? document.getSelection().getRangeAt(0)     // Store selection if found
+				: false;                                    // Mark as false to know no selection existed before
+			el.select();                                    // Select the <textarea> content
+			document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
+			document.body.removeChild(el);                  // Remove the <textarea> element
+			if (selected) {                                 // If a selection existed before copying
+				document.getSelection().removeAllRanges();  // Unselect everything on the HTML document
+				document.getSelection().addRange(selected); // Restore the original selection
+			}
+		}
+		</script>
+		`;
+
 		res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
 		if (req.signedCookies.dptUUID === undefined) {
 			var phrase = await getPhrase();
@@ -22,7 +48,8 @@ router.get('/', async(req, res, next) => {
 			Thank you.*/
 			
 			res.send(`<head><link rel="stylesheet" href="dpt_start.css" /></head>
-				<body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="300" width="300">
+				<body>${c2c}
+				<center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="300" width="300">
 				<br>
 				<div class="text">This is a free open source prototype being developed by a social enterprise.<br>
 				Please be patient with what we have so far and/or be willing to help.</div>
@@ -32,7 +59,8 @@ router.get('/', async(req, res, next) => {
 				<br><div ><div style="color: #F0F3F5;">Are you a new user?</div><br><br>
 				<fieldset style="text-align:center; width:400px;  border-style: solid; border-width: 1px;">
 				<legend style="text-align:center; color: #F0F3F5;">This could be your pass-phrase, remember it:</legend>
-				<h3><b style="margin: 20px; white-space: nowrap;">${phrase}</b><br>
+				<h3><b style="margin: 20px; white-space: nowrap;">${phrase}</b>
+				<input type="image" style="width:18px" src="/copytoclipboard.png" onClick="copyToClipboard('${phrase}');"/><br>
 				<br><a style="color: #F0F3F5; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">Start &#9655;</a>
 				</fieldset>
 				</h3><br><div style="color: #F0F3F5">Lost your cookie? A new browser?</div><br><br><div style="color: #F0F3F5">Enter your pass-phrase:</div><br>
