@@ -286,16 +286,7 @@ function main() {
 		powerSave = false;
 	});
 	
-	jQuery(document).on('submit', '.searchString', function(event) {
-        event.preventDefault();
-        if(currentScene.name == "opinionScene") {
-        	opinionCamState = currentScene.cameras[0].storeState();
-        	currentScene.dispose();
-        	currentScene = __topicScene("topicScene");
-        	currentScene.name = "topicScene";
-        }
-		dpt.searchTopicsAndOpinions(jQuery('#searchString').val());
-	});
+
 }
 
 main();
