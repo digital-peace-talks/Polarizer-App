@@ -3,7 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: ''
 labels: bug
-assignees: Metin74, dptalks, MartinDPT
+assignees: dptalks, MartinDPT, Metin74
 
 ---
 
