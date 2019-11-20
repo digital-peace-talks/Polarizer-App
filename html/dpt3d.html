@@ -110,8 +110,8 @@
 			<a class="hamburger" id="nav-m"><img src="/button_menu.png" alt="" /></a>
 			<a class="hamburger close"><img src="/button_close.png" alt="" /></a>
 			<!--
-			<a href="#nav-m" class="hamburger" id="nav-m"><img src="/button_menu.png" alt="" /></a>
-			<a href="#" class="hamburger close"><img src="/button_close.png" alt="" /></a>
+			<a href="#nav-m" id="nav-m"><img src="/button_menu.png" alt="" /></a>
+			<a href="#" class="close"><img src="/button_close.png" alt="" /></a>
 			-->
 			<ul class="menu">
 					
@@ -143,9 +143,12 @@
 	<script>
 	document.addEventListener("DOMContentLoaded", function(event) {
 		var hamburgerOpen = false;
-		var menuLeft = 0;
-		menuLeft = jQuery("nav ul").css("left");
 		jQuery("a.hamburger").on('click touch', function(event) {
+			var menuLeft = canvas.width;
+			if(canvas.width > 640) {
+				menuLeft = 228;
+			}
+
 			hamburgerOpen = !hamburgerOpen;
 			if(hamburgerOpen) {
 				jQuery("nav ul").css("left", "0px");
