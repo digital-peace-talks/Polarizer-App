@@ -41,7 +41,7 @@ function settingsForm(opinionId, topicId) {
 		<div id="form">Preferences & Settings:<hr><br>
 		My passphrase:<br>
 		${whoami.user.phrase}
-		<input type="image" style="width:18px" src="/copytoclipboard.png" onClick="copyToClipboard('${whoami.user.phrase}');"/>
+		<input type="image" style="width:18px" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${whoami.user.phrase}');"/>
 		<br>
 		<br>
 		<form id="settings">
@@ -639,22 +639,6 @@ var createGUIScene = function(dptMode) {
 		}
 
 	});
-/*
-	jQuery(".iconBar").remove();
-	requestHome();
-*/
-	/* requestSearch(); */
-/*
-	if (dptMode == 'topicScene') {
-		requestNewTopic();
-	}
-	if (dptMode == 'opinionScene') {
-		requestNewOpinion();
-	}
-	requestYourDialogs();
-	requestFeedback();
-	requestHelp();
-*/
 }
 
 function requestHome() {
