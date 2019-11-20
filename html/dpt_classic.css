@@ -257,7 +257,7 @@ div#c2 {
   bottom: 0px;
   float: left;
   width: 100%;
-  padding-right: 30px;
+  padding-right: 16px;
   padding-bottom: 160px;
 }
 
@@ -283,7 +283,7 @@ div#crisis {
   background: #28A9E1;
   -webkit-box-shadow: 0px 0px 10px #002C4B;
           box-shadow: 0px 0px 10px #002C4B;
-  bottom: 49px;
+  bottom: 38px;
 }
 
 div#dialogFrame {
@@ -305,7 +305,7 @@ div#dialogFrame {
   display: grid;
   background-color: rgba(0, 0, 0, 0);
   border: 0px;
-  z-index: 100;
+  z-index: 400;
   /* grid-auto-flow: column; */
   -ms-grid-columns: 280px;
       grid-template-columns: 280px;
@@ -478,7 +478,7 @@ div#dialogFrame {
   border-style: solid;
   border-width: 1px;
   color: #002C4B;
-  z-index: 101;
+  z-index: 300;
   font-family: DPTFontDin;
   font-size: 18px;
   background-color: #28A9E1;
@@ -754,7 +754,7 @@ section ul li {
     border-style: solid;
     border-width: 1px;
     color: #002C4B;
-    z-index: 2;
+    z-index: 300;
     font-family: DPTFont;
     font-size: 18px;
     background-color: #28A9E1;
