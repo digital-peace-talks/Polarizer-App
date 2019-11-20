@@ -255,10 +255,10 @@ div.hide {
 
 div.status {
   bottom: 50px;
-  width: 600px;
+  width: 560px;
   position: fixed;
   left: 50%;
-  margin-left: -300px;
+  margin-left: -280px;
   z-index: 30;
   background-color: #28A9E1;
 }
@@ -587,6 +587,18 @@ textarea#dialog {
   -webkit-appearance: none;
 }
 
+.crisis.icon {
+  font-family: DPTFontDin;
+  color: #F0F3F5;
+  background-color: transparent;
+  border: none;
+  width: auto;
+  height: 48px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+}
+
 .helpframe {
   width: 720px;
 }
@@ -752,6 +764,108 @@ section ul li {
 }
 
 /*----------------*/
+.frame1 {
+  width: 400px;
+  height: 0;
+  margin-left: -200px;
+  position: absolute;
+  top: 310px;
+  left: 50%;
+}
+
+.container1 {
+  position: absolute;
+  top: 80px;
+  width: 300px;
+  left: 50%;
+  margin-left: -150px;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 1px;
+  cursor: pointer;
+  -moz-appearance: none;
+       appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  width: 300px;
+  height: 5px;
+  background: #36D1DC;
+  background: -webkit-gradient(linear, right top, left top, from(#15B76A), to(#FF6666));
+  background: linear-gradient(to left, #15B76A, #FF6666);
+  border-radius: 1px;
+}
+
+.slider:focus {
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #36D1DC;
+  border-radius: 50%;
+  background: #002C4B;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #36D1DC;
+  border-radius: 50%;
+  background: #002C4B;
+  cursor: pointer;
+}
+
+.smile-wrapper {
+  width: 60px;
+  height: 60px;
+  background: #fff;
+  position: absolute;
+  top: 25%;
+  left: 42%;
+  border-radius: 50%;
+  background: #002C4B;
+}
+
+.eye {
+  background: #28A9E1;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 15px;
+  border-radius: 50%;
+}
+
+.eye-l {
+  left: 12px;
+}
+
+.eye-r {
+  right: 12px;
+}
+
+.smile {
+  width: 30px;
+  height: 12px;
+  position: absolute;
+  top: 35px;
+  left: 15px;
+  background: transparent;
+  border: 2px solid #28A9E1;
+  border-top-left-radius: 60px;
+  border-top-right-radius: 60px;
+  border-bottom: none;
+  -webkit-transform: rotateX(90deg);
+          transform: rotateX(90deg);
+}
+
 /* button menu style for mobile */
 @media all and (max-width: 640px) {
   .menu-btn {

@@ -10,6 +10,8 @@ function crisisForm(messageId) {
 			break;
 		}
 	}
+
+
 	jQuery('#misc2').text('');
 	jQuery('#misc2').append(`
 			<div id="crisis">
@@ -18,7 +20,12 @@ function crisisForm(messageId) {
 				Most impressive message:<br><b>${message}</b><br><br>
 				Please enter the reason:<br>
 				<form id="crisis">
+				
+
+				
+
 					<input type="text" name="reason" size="50" class="reason"><br><br>
+					
 					<label id="negative">[-1: <input type="radio" name="rating" value="-1">]</label>
 					<label id="neutral">[0: <input type="radio" name="rating" value="0" checked>]</label>
 					<label id="positive">[1: <input type="radio" name="rating" value="1">]</label><br>
@@ -27,6 +34,14 @@ function crisisForm(messageId) {
 				</form>
 			</div>
 		`);
+		
+
+		$(document).ready(function() {
+			$('#range-slider').on('change', function() {
+			  $('.smile').css('transform','rotateX('+ $(this).val() +'deg)');
+			});
+		  });
+
 
 	jQuery(".crisis").focus();
 
@@ -181,7 +196,7 @@ function dialogForm(secondDialog) {
 		} else {
 			var option = '';
 			if(viewOnly == false) {
-				option = ' <span class="crisis" id="' + currentDialog.messages[i].messageId + '">&#9878;</span>';
+				option = ' <span class="crisis icon" id="' + currentDialog.messages[i].messageId + '">&#9878;</span>';
 			}
 			dialog += '<p class="left">' + currentDialog.messages[i].content + option + '</p>';
 		}
