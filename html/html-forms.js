@@ -638,19 +638,7 @@ var createGUIScene = function(dptMode) {
 		}
 
 	});
-/*
-	jQuery(".iconBar").remove();
-	requestHome();
-	/* requestSearch(); */
-/*	if (dptMode == 'topicScene') {
-		requestNewTopic();
-	}
-	if (dptMode == 'opinionScene') {
-		requestNewOpinion();
-	}
-	requestYourDialogs();
-	requestFeedback();
-	requestHelp(); */
+
 }
 
 function requestHome() {
@@ -695,7 +683,6 @@ function requestSearch() {
 	<input class="button" type="button" value="Close" name="close" id="closeSettingsForm" >
 	</div>
 `);
-
 
 	closeSettingsForm.onclick = ()=> {
 		jQuery('#form').remove();
