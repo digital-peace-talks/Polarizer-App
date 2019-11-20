@@ -63,7 +63,7 @@ class DPT {
 	
 	userUpdate(publicKey, tuple) {
 		this.socket.emit("api", {
-			method: "post",
+			method: "put",
 			path: '/user/update/'+publicKey+'/',
 			data: {
 				publicKey: publicKey,
@@ -276,6 +276,29 @@ class DPT {
 			data: {
 				dialogId: dialogId,
 				sender: publicKey,
+			}
+		});
+	}
+	
+	getContext(opinionId, publicKey) {
+		this.socket.emit('api', {
+			method: 'get',
+			path: '/context/'+opinionId+'/',
+			data: {
+				opinionId: opinionId,
+				publicKey: publicKey,
+			}
+		});
+	}
+	
+	postContext(opinionId, content, publicKey) {
+		this.socket.emit('api', {
+			method: 'post',
+			path: '/context/'+opinionId+'/',
+			data: {
+				opinionId: opinionId,
+				content: content,
+				publicKey: publicKey,
 			}
 		});
 	}
