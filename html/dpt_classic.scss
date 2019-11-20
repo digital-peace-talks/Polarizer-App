@@ -26,6 +26,11 @@ body {
     height: 100%;
     margin: 0px;
     overflow: hidden;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
 }
 
 #renderCanvas {
@@ -736,6 +741,7 @@ section ul li {
 
 
 /*----------------*/
+
 
 
 /* button menu style for mobile */
