@@ -19,6 +19,22 @@ $dpt-blue03-semi: #005B9888;
     src: url("/din.ttf") format("truetype");
 }
 
+.no-bounce { 
+    width: 100%; 
+    height: 100%; 
+    overflow-y: scroll; 
+    -webkit-overflow-scrolling: touch; 
+}
+.no-bounce > div { 
+    width: 100%; 
+    height: 100%; 
+    overflow-y: scroll; 
+    -webkit-overflow-scrolling: touch; }
+.no-bounce > div > div { 
+    width: 100%; 
+    min-height: 101%; 
+ }
+
 html,
 body {
     font-family: "DPTFont";
@@ -26,6 +42,11 @@ body {
     height: 100%;
     margin: 0px;
     overflow: hidden;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
 }
 
 #renderCanvas {
@@ -113,6 +134,7 @@ input[type=text] {
     color: $dpt-blue03;
     font-weight: bold;
     padding: 4px;
+    width: 100%
 }
 
 .table {
@@ -132,8 +154,10 @@ input[type=text] {
     position: absolute;
     z-index: 220;
     margin: 0 auto;
-    left: 440px;
-    top: 140px;
+    width: 400px;
+    left: 50%;
+    margin-left: -200px;
+    bottom: 0px;
 }
 
 p.left {
@@ -201,7 +225,6 @@ div.top {
 div.middle {
     z-index: 10;
     position: relative;
-    bottom: 80px;
     width: 100%;
 }
 
@@ -238,10 +261,11 @@ div.hide {
 }
 
 div.status {
-    bottom: 35px;
-    width: 582px;
+    bottom: 50px;
+    width: 560px;
     position: fixed;
-    left: 280px;
+    left: 50%;
+    margin-left: -280px;
     z-index: 30;
     background-color: $dpt-blue04;
 }
@@ -261,10 +285,10 @@ div#c1 {
 div#c2 {
     font-family: "DPTFont";
     position: relative;
-    top: 90px;
+    bottom: 0px;
     float: left;
     width: 100%;
-    padding-right: 30px;
+    padding-right: 16px;
     padding-bottom: 160px;
 }
 
@@ -277,19 +301,22 @@ div#c3 {
     background-color: $dpt-blue03;
     padding: 10px;
     width: 600px;
-    left: 280px;
+    left: 50%;
+    margin-left: -300px;
     bottom: 0px;
 }
 
 div#crisis {
     font-family: "DPTFont";
+    position: absolute;
     padding: 10px;
-    top: 0px;
     color: $dpt-white;
     background: $dpt-blue04;
-    width: 480px;
     box-shadow: 0px 0px 10px $dpt-blue02;
+    bottom: 38px;
+    //top: -450px;
 }
+
 
 div#dialogFrame {
     font-family: "DPTFont";
@@ -309,7 +336,7 @@ div#dialogFrame {
     display: grid;
     background-color: rgba(0, 0, 0, 0);
     border: 0px;
-    z-index: 100;
+    z-index: 400;
     /* grid-auto-flow: column; */
     grid-template-columns: 280px;
     /* pointer-events: none; */
@@ -335,19 +362,19 @@ div#dialogFrame {
 
 #dialogForm {
     position: absolute;
-    top: 0px;
-    left: 280px;
+    top: 40px;
+    left: 50%;
     padding: 10px;
-    margin-left: 0px;
+    margin-left: -300px;
     color: $dpt-white;
     width: 600px;
-    height: 100%;
     z-index: 200;
     font-family: DPTFont;
     font-size: 18px;
     background-color: $dpt-blue04;
     overflow-y: auto;
     box-shadow: 0px 0px 10px $dpt-blue02;
+    bottom: 0px;
 }
 
 .menu-btn {
@@ -481,7 +508,7 @@ div#dialogFrame {
     border-style: solid;
     border-width: 1px;
     color: $dpt-blue02;
-    z-index: 101;
+    z-index: 300;
     font-family: DPTFontDin;
     font-size: 18px;
     background-color: $dpt-blue04;
@@ -508,7 +535,7 @@ textarea {
     color: $dpt-blue03;
     background-color: #ffffff;
     font-size: 18px;
-    width: 360px;
+    width: 100%;
     height: 80px;
     margin: 0 auto;
     resize: none;
@@ -519,7 +546,7 @@ textarea#dialog {
     color: $dpt-blue03;
     background-color: #ffffff;
     font-size: 18px;
-    width: 300px;
+    width: 90%;
     height: 20px;
     margin: 0 auto;
     resize: none;
@@ -545,7 +572,7 @@ textarea#dialog {
     background-color: $dpt-blue02;
     border: none;
     font-size: 16px;
-    width: 120px;
+    width: auto;
     height: 40px;
     margin: 5px auto;
     margin-left: 10px;
@@ -558,8 +585,20 @@ textarea#dialog {
     background-color: $dpt-blue02;
     border: none;
     font-size: 16px;
-    width: 120px;
+    width: auto;
     height: 40px;
+    margin: 5px auto;
+    margin-left: 10px;
+    -webkit-appearance: none;
+}
+
+.crisis.icon {
+    font-family: DPTFontDin;
+    color: $dpt-white;
+    background-color: transparent;
+    border: none;
+    width: auto;
+    height: 48px;
     margin: 5px auto;
     margin-left: 10px;
     -webkit-appearance: none;
@@ -734,6 +773,108 @@ section ul li {
 /*----------------*/
 
 
+
+
+.frame1 {
+    width: 400px;
+    height: 0;
+    margin-left: -200px;
+    position: absolute;
+    top: 310px;
+    left: 50%;
+  }
+  .container1 {
+    position: absolute;
+    top: 80px;
+    width: 300px;
+    left: 50%;
+    margin-left: -150px;
+  }
+  .slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 1px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+    width: 300px;
+      height: 5px;
+    background: #36D1DC;
+    background: -webkit-linear-gradient(to left, #15B76A, #FF6666); 
+    background: linear-gradient(to left, #15B76A, #FF6666);
+    border-radius: 1px;
+    &:focus {
+      outline: none;
+    }
+    &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #36D1DC;
+    border-radius: 50%;
+    background: #002C4B;
+    cursor: pointer;
+  }
+    &::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #36D1DC;    
+    border-radius: 50%;   
+    background: #002C4B;
+    cursor: pointer;
+  }
+    
+  }
+  .smile-wrapper {
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    position: absolute;
+    top: 25%;
+    left: 42%;
+    border-radius: 50%;
+    background: #002C4B;
+  }
+  .eye {
+    background: #28A9E1;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: 15px;
+    border-radius: 50%;
+    
+    &-l {
+        left: 12px;
+    }
+    &-r {
+      right: 12px;
+    }
+  }
+  .smile {
+    width: 30px;
+    height: 12px;
+    position: absolute;
+    top: 35px;
+    left: 15px;
+    background: transparent;
+    border: 2px solid #28A9E1; 
+    border-top-left-radius: 60px;
+    border-top-right-radius: 60px;
+    border-bottom: none;
+    transform: rotateX(90deg);
+  }
+  
+  
+
+
+
+
+
+
+
 /* button menu style for mobile */
 
 @media all and (max-width: 640px) {
@@ -762,7 +903,7 @@ section ul li {
         border-style: solid;
         border-width: 1px;
         color: $dpt-blue02;
-        z-index: 2;
+        z-index: 300;
         font-family: DPTFont;
         font-size: 18px;
         background-color: $dpt-blue04;
@@ -790,6 +931,7 @@ section ul li {
         width: 100%;
         left: 0px;
         margin-left: 0px;
+        bottom: 38px;
     }
     h3 {
         font-size: 16px;
@@ -802,9 +944,9 @@ section ul li {
         margin-left: 0px;
     }
     #misc2 {
-        top: 0px;
-        left: 0px;
-        width: 100%
+        left: auto;
+        width: 100%;
+        margin-left: auto;
     }
     textarea {
         width: 100%;
@@ -812,6 +954,8 @@ section ul li {
     div#c3 {
         width: 100%;
         left: 0px;
+        margin-left: 0px;
+        bottom: 0px;
     }
     div#crisis {
         width: 100%;
