@@ -59,8 +59,8 @@ router.get('/', async(req, res, next) => {
 				<br><div ><div style="color: #F0F3F5;">Are you a new user?</div><br><br>
 				<fieldset style="text-align:center; width:400px;  border-style: solid; border-width: 1px;">
 				<legend style="text-align:center; color: #F0F3F5;">This could be your pass-phrase, remember it:</legend>
-				<h3><b style="margin: 20px; white-space: nowrap;">${phrase}</b>
-				<input type="image" style="width:18px" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${phrase}');"/><br>
+				<h3><b style="margin: 20px; white-space: nowrap;">${phrase}
+				<input type="image" style="width:18px" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${phrase}');"/></b><br>
 				<br><a style="color: #F0F3F5; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">Start &#9655;</a>
 				</fieldset>
 				</h3><br><div style="color: #F0F3F5">Lost your cookie? A new browser?</div><br><br><div style="color: #F0F3F5">Enter your pass-phrase:</div><br>
