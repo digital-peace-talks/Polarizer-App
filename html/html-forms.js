@@ -455,20 +455,7 @@ var createGUIScene = function(dptMode) {
 	var docuBtn = jQuery('#documentation-btn');
 	docuBtn.show();
 	docuBtn.on('click touch', function(event) {
-		opinionCamState = currentScene.cameras[0].storeState();
-		currentScene.dispose();
-		currentScene = __topicScene("topicScene");
-		currentScene.name = "topicScene";
-		dpt.getTopic();
-		event.stopImmediatePropagation();
-		event.preventDefault();
-		jQuery('#form').remove();
-
-		if (isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
-		}
-		focusAtCanvas();
+		window.open("http://www.proto1.dpt.world/dpt-doku.html");
 	});
 
 	//create survey button
