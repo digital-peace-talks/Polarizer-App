@@ -94,7 +94,7 @@ match.push({
 
 match.push({
 	path: "/user/update/"+ uuidReg +"/",
-	method: "post",
+	method: "put",
 	fun: async (data, dptUUID) => {
 		return(await userService.updateUser({ publicKey: dptUUID, body: data.body }));
 	}
@@ -585,3 +585,42 @@ match.push({
 		}
 	}
 });
+
+match.push({
+	path: "/context/"+ opinionIdReg +"/",
+	method: "get",
+	fun: async function(data, dptUUID) {
+		var user = userRegistered(data.dptUUID);
+		if(user) {
+			ret = await contextService.getContext({
+				user: user.user.id,
+				opinionId: data.opinionId});
+			if(ret.status == 200) {
+				return({data: ret});
+			}
+		} else {
+			return({data: {status: 400, data: "User not found" }});
+		}
+	}
+});
+
+match.push({
+	path: "/context/"+ opinionIdReg +"/",
+	method: "post",
+	fun: async function(data, dptUUID) {
+		var user = userRegistered(data.dptUUID);
+		if(user) {
+			ret = await contextService.postContext({
+				user: user.user.id,
+				opinionId: data.opinionId, 
+				content: data.content
+			});
+			if(ret.status == 200) {
+				return({data: ret});
+			}
+		} else {
+			return({data: {status: 400, data: "User not found" }});
+		}
+	}
+});
+
