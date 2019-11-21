@@ -483,7 +483,29 @@ var createGenericScene = function(dptMode) {
 				socket.emit('3d', { event: 'update', avatar: socket.id, avatarPos: currentScene.cameras[0].position });
 				console.log('sended');
 				*/
-				break;
+				switch(kbInfo.event.code) {
+					case "KeyF":
+						requestSearch();
+						break;
+					case "KeyH":
+						switchToTopics();
+						break;
+					case "KeyL":
+						toggleDialogList();
+						break;
+					case "KeyO":
+						if(currentScene.name == "opinionScene") {
+							jQuery('#form').remove();
+							dpt.opinionPostAllowed(currentTopic);
+						}
+						break;
+					case "KeyT":
+						if(currentScene.name == "topicScene") {
+							jQuery('#form').remove();
+							topicForm();
+						}
+						break;
+				}
 		}
 	});
 

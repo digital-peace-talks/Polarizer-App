@@ -107,12 +107,12 @@
 		<!--	<div class="brand">
 				<a href=""><img src="dpt_logo.png" alt="digital peace talks" /></a>
 			</div>-->
-			<!--
 			<a class="hamburger" id="nav-m"><img src="/button_menu.png" alt="" /></a>
 			<a class="hamburger close"><img src="/button_close.png" alt="" /></a>
-			-->
+			<!--
 			<a href="#nav-m" id="nav-m"><img src="/button_menu.png" alt="" /></a>
 			<a href="#" class="close"><img src="/button_close.png" alt="" /></a>
+			-->
 			<ul class="menu">
 					
 				<li><button class="menu-btn " id="about-btn" title="About this App"><img class= "btn-icon"src="/about_white.png" >About</button></li>
@@ -143,6 +143,16 @@
 	<script>
 	document.addEventListener("DOMContentLoaded", function(event) {
 		var hamburgerOpen = false;
+
+		var mql = window.matchMedia("(orientation: landscape)");
+		mql.addListener(function(m) {
+			if(m.matches) {
+				if(!hamburgerOpen) {
+					jQuery("nav ul").css("left", 640);
+				}
+			}
+		});
+
 		jQuery("a.hamburger").on('click touch', function(event) {
 			var menuLeft = canvas.width;
 			if(canvas.width > 640) {
@@ -152,8 +162,10 @@
 			hamburgerOpen = !hamburgerOpen;
 			if(hamburgerOpen) {
 				jQuery("nav ul").css("left", "0px");
+				jQuery("a.hamburger").html('<img src="/button_close.png">');
 			} else {
 				jQuery("nav ul").css("left", menuLeft);
+				jQuery("a.hamburger").html('<img src="/button_menu.png">');
 			}
 		});
 		

@@ -617,6 +617,20 @@ var createGUIScene = function(dptMode) {
 	});
 }
 
+function switchToTopics() {
+	opinionCamState = currentScene.cameras[0].storeState();
+	currentScene.dispose();
+	currentScene = __topicScene("topicScene");
+	currentScene.name = "topicScene";
+	dpt.getTopic();
+	jQuery('#form').remove();
+	if (isMobile) {
+		console.log("mobile behavior!")
+		hideMenu();
+	} 
+	focusAtCanvas();
+}
+
 function requestHome() {
 	var btn = document.createElement("input");
 	btn.className = "iconBar";
@@ -632,19 +646,9 @@ function requestHome() {
 	document.body.appendChild(btn);
 
 	btn.onclick = () => {
-		opinionCamState = currentScene.cameras[0].storeState();
-		currentScene.dispose();
-		currentScene = __topicScene("topicScene");
-		currentScene.name = "topicScene";
-		dpt.getTopic();
+		switchToTopics();
 		event.stopImmediatePropagation();
 		event.preventDefault();
-		jQuery('#form').remove();
-		if (isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
-		} 
-		focusAtCanvas();
 	}
 }
 
@@ -698,7 +702,6 @@ function requestNewTopic() {
 	} */
 	btn.onclick = () => {
 		jQuery('#form').remove();
-
 		topicForm();
 		event.stopImmediatePropagation();
 		event.preventDefault();
@@ -728,7 +731,6 @@ function requestNewOpinion() {
 	} */
 	btn.onclick = () => {
 		jQuery('#form').remove();
-
 		dpt.opinionPostAllowed(currentTopic);
 		// alert(dpt.opinionPostAllowed(currentTopic)) <- returns undefined
 
@@ -740,6 +742,15 @@ function requestNewOpinion() {
 		} */
 
 	}
+}
+
+function toggleDialogList() {
+	if (myDialogsVisible == 'visible') {
+		myDialogsVisible = 'hidden';
+	} else {
+		myDialogsVisible = 'visible';
+	}
+	jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
 }
 
 function requestYourDialogs() {
@@ -759,12 +770,7 @@ function requestYourDialogs() {
 		alert('yourDialogs btn pressed!');
 	} */
 	btn.onclick = () => {
-		// alert('test')
-		if (myDialogsVisible == 'visible') {
-			myDialogsVisible = 'hidden';
-		} else {
-			myDialogsVisible = 'visible';
-		}
+		toggleDialogList();
 		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
 		event.stopImmediatePropagation();
 		event.preventDefault();
@@ -772,7 +778,6 @@ function requestYourDialogs() {
 			console.log("mobile behavior!")
 			hideMenu();
 		} */
-
 	}
 }
 

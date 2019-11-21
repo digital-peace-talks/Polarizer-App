@@ -267,6 +267,10 @@ module.exports.getDialogList = async (options) => {
 			collection.initiatorTimestamp = worker[i].initiatorTimestamp;
 			collection.recipientTimestamp = worker[i].recipientTimestamp;
 			collection.unreadMessages = 0;
+			if((collection.status == 'PENDING' || collection.status == 'CRISIS')
+			&& collection.initiatorTimestamp >= collection.recipientTimestamp) {
+				collection.unreadMessages++;
+			}
 			var worker2 = await Topic.findOne({ "_id": mongoose.Types.ObjectId(worker[i].opinion.topic)}).populate('opinions');
 			collection.topic = worker2.content;
 			var opinion = Lo_.find(worker2.opinions, {user: worker[i].initiator});
