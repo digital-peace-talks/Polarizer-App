@@ -795,9 +795,10 @@ section ul li {
   width: 300px;
   height: 5px;
   background: #36D1DC;
-  background: -webkit-gradient(linear, right top, left top, from(#15B76A), to(#FF6666));
-  background: linear-gradient(to left, #15B76A, #FF6666);
+  background: -webkit-gradient(linear, right top, left top, from(#15B76A), color-stop(#005B98), to(#FF6666));
+  background: linear-gradient(to left, #15B76A, #005B98, #FF6666);
   border-radius: 1px;
+  border-color: #005B98;
 }
 
 .slider:focus {
@@ -809,7 +810,7 @@ section ul li {
   appearance: none;
   width: 20px;
   height: 20px;
-  border: 1px solid #36D1DC;
+  border: 1px solid #005B98;
   border-radius: 50%;
   background: #002C4B;
   cursor: pointer;
@@ -818,7 +819,7 @@ section ul li {
 .slider::-moz-range-thumb {
   width: 20px;
   height: 20px;
-  border: 1px solid #36D1DC;
+  border: 1px solid #005B98;
   border-radius: 50%;
   background: #002C4B;
   cursor: pointer;
@@ -858,11 +859,10 @@ section ul li {
   position: absolute;
   top: 35px;
   left: 15px;
-  background: transparent;
+  background: #28A9E1;
   border: 2px solid #28A9E1;
   border-top-left-radius: 60px;
   border-top-right-radius: 60px;
-  border-bottom: none;
   -webkit-transform: rotateX(90deg);
           transform: rotateX(90deg);
 }

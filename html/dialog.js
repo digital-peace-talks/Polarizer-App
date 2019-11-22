@@ -23,15 +23,15 @@ function crisisForm(messageId) {
 			
 					<input type="text" name="reason" size="50" class="reason"><br><br>
 					<div class="frame1">
-<div class="container1">
-<input type="range" min="1" max="180" value="90" class="slider" id="range-slider" />
-</div>
-<div class="smile-wrapper">
-<div class="eye eye-l"></div>
-<div class="eye eye-r"></div>  
-<div class="smile"></div>
-</div>
-</div>
+					<div class="container1">
+					<input type="range" min="1" max="180" value="90" class="slider" id="range-slider" />
+					</div>
+					<div class="smile-wrapper">
+					<div class="eye eye-l"></div>
+					<div class="eye eye-r"></div>  
+					<div class="smile"></div>
+					</div>
+					</div>
 					
 
 					<label id="negative">[-1: <input type="radio" name="rating" value="-1">]</label>
