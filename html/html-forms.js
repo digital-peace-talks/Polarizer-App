@@ -680,6 +680,13 @@ function requestSearch() {
 		}
 		dpt.searchTopicsAndOpinions(jQuery('#searchString').val());
 	});
+	jQuery(document).on('keydown', '.searchString', function(event) {
+		if (event.keyCode == 27) {
+			jQuery('#form').remove();
+			focusAtCanvas();
+			event.preventDefault();
+		}
+	});
 } 
 
 function requestNewTopic() {
