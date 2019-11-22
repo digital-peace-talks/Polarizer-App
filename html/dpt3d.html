@@ -136,6 +136,40 @@
 		</section>
 	</div>
 
+	<div class="fb_gd_wrap">
+			<div class="content" id="guideContent">
+			  <div class="header">
+				<span class="text">Welcome to digital peace talks</span>
+				<button class="btn" id="closeBtn">&times;</button>
+			  </div>
+			  <div  class="body">
+				<div  class="text">
+				  <div id="guideBodyText" class="textList">
+					<p>step 1: Welcome to digital peace talks. with this app you can.....</p>
+					<p>step 2: This is the main menu.</p>
+					<p>step 3: Make New Topics or Opinions. Click on the [T] to create a new Topic.</p>
+					<p>step 4: Now your Topic appears in 3D space. Use your mouse or touch to navigate.</p>
+					<p>step 5: Klick on a topic. Inside a Topic you find Opinions.</p>
+				  </div>                            
+				</div>
+			  </div>
+			  <div class="footer">
+				<button id="guidePrevBtn" class="btn prev">previous</button>
+				<ul class="steps">
+				  <li class="dot line active"></li>
+				  <li class="dot line "></li>
+				  <li class="dot line "></li>
+				  <li class="dot line "></li>
+				  <li class="dot  "></li>
+				</ul>
+				<button id="guideNextBtn"  class="btn next">next</button>
+			  </div>
+			</div>
+		  </div>            
+
+		  
+
+
 	<canvas id="renderCanvas" tabindex="1"></canvas>
 
 	<div id="misc"></div>
@@ -210,6 +244,58 @@
 			}
 		};
 	});
+
+
+	window.onload = function(){
+  const guidePosition = [{
+    top: "30%", left: "40%", bottom: "auto", right: "auto"},{
+      top: "auto", left: "40%", bottom:"50px"},{
+        top: "auto", left: "30%", bottom:"300px"},{
+			top: "20px", left: "20px", bottom: "auto", right: "auto"},{
+				top: "auto", left: "40%", bottom:"50px"}]
+  const bodyTextEle = document.getElementById('guideBodyText');
+  const contentEle = document.getElementById('guideContent');
+  const stepLiEle = document.getElementsByClassName('dot');
+  let currentStepIndex = -1;
+  const stepLength = guidePosition.length;
+  changeStep();
+  document.getElementById("guideNextBtn").addEventListener('click', ()=>{
+    changeStep('next');
+  },false);
+  document.getElementById("guidePrevBtn").addEventListener('click', ()=>{
+    changeStep('prev');
+  }, false);
+  document.getElementById('closeBtn').addEventListener('click', ()=>{
+	// schliessen aktion
+	document.getElementById("guideContent").remove();
+  },false);
+
+
+  function changeStep(direction){
+    if((direction === 'prev' && currentStepIndex === 0) || (direction === 'next' && currentStepIndex === stepLength-1)){
+		this.remove();
+    }else{
+      let eraseDotIndex;               
+      if(direction === 'prev'){
+        currentStepIndex = currentStepIndex - 1;
+        eraseDotIndex = currentStepIndex === stepLength-1 ? 0 : currentStepIndex +1;
+      }else{
+        currentStepIndex = currentStepIndex + 1;
+        eraseDotIndex = currentStepIndex === 0 ? stepLength -1 : currentStepIndex -1;
+      }
+      bodyTextEle.style.marginLeft = `${-360*currentStepIndex}px`; // margin-left 
+      // bodyTextEle.style.left = `${-360*currentStepIndex}px`; // relative+left 
+      stepLiEle[eraseDotIndex].setAttribute('data-step', ''); // erase number
+      stepLiEle[currentStepIndex].setAttribute('data-step', currentStepIndex+1); // add number
+      stepLiEle[eraseDotIndex].classList.remove('active'); // remove dot active
+      stepLiEle[currentStepIndex].classList.add('active');    // add dot active
+      contentEle.style.top = guidePosition[currentStepIndex].top;
+	  contentEle.style.left = guidePosition[currentStepIndex].left;       
+	  contentEle.style.right = guidePosition[currentStepIndex].right;
+      contentEle.style.bottom = guidePosition[currentStepIndex].bottom;                
+    }
+  }
+}
 	</script>
 					</div>
 				</div>
