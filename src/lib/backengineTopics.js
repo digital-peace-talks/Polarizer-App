@@ -5,9 +5,9 @@ function mapRange(num, in_min, in_max, out_min, out_max) {
 function positions(topics) {
 	var nodes = [];
 	for(var i in topics) {
-		var newX = Math.random() * 8 - 4; 
-		var newY = Math.random() * 8 - 4; 
-		var newZ = Math.random() * 8 - 4; 
+		var newX = Math.random() * 12 - 6; 
+		var newY = Math.random() * 12 - 6; 
+		var newZ = Math.random() * 12 - 6; 
 		nodes.push({ "x": newX, "y": newY, "z": newZ });
 	}
 	return (nodes);

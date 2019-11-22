@@ -128,11 +128,9 @@ function propositionForm(opinionId, topicId) {
 			focusAtCanvas();
 			event.preventDefault();
 		}
-		/*
 		if(event.keyCode == 10 || event.keyCode == 13) {
 			event.preventDefault();
 		}
-		*/
 		if (event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
 			jQuery('form#proposition').submit();
 		}
@@ -681,6 +679,13 @@ function requestSearch() {
 			currentScene.name = "topicScene";
 		}
 		dpt.searchTopicsAndOpinions(jQuery('#searchString').val());
+	});
+	jQuery(document).on('keydown', '.searchString', function(event) {
+		if (event.keyCode == 27) {
+			jQuery('#form').remove();
+			focusAtCanvas();
+			event.preventDefault();
+		}
 	});
 } 
 
