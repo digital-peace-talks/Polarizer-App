@@ -90,7 +90,6 @@ function searchResultTopics(restObj) {
 		}
 	}
 	if(restObj.data.length) {
-		/*
 		x = xstart;
 		y = ystart;
 		for(var i in restObj.data) {
@@ -102,17 +101,6 @@ function searchResultTopics(restObj) {
 			}
 			var plane = textBlock(
 				x, y, 0,
-				JSON.stringify({
-					"context": "topicScene",
-					"topicId": restObj.data[i].topicId,
-					"topic": restObj.data[i].topic
-				}),
-				`${restObj.data[i].topic} ${restObj.data[i].count}`);
-		}
-		*/
-		for(var i in restObj.data) {
-			var plane = textBlock(
-				restObj.data[i].position.x, restObj.data[i].position.y, restObj.data[i].position.z,
 				JSON.stringify({
 					"context": "topicScene",
 					"topicId": restObj.data[i].topicId,
