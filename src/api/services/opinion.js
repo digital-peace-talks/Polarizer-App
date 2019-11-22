@@ -1,7 +1,7 @@
 
 const ServerError = require("../../lib/error");
 const config = require("../../lib/config");
-const backEngine = require("../../lib/backengine");
+const backEngine = require("../../lib/backengineOpinions");
 const Opinion = require("../models/opinion").opinionModel;
 const User = require("../models/user").userModel;
 const Topic = require("../models/topic").topicModel;
