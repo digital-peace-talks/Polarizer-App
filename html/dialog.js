@@ -92,13 +92,12 @@ function setCaretToPos (input, pos) {
 
 function dialogForm(secondDialog) {
 
-	var opinionMine;
-	var opinionOther;
+	var headerMine;
+	var headerOther;
 	var dialog = '';
 	var dialog2 = '';
-	var meReadyToEnd = '';
-	var otherReadyToEnd = '';
-	var viewOnly = true;
+	var otherReadyToEnd = false;
+	var viewOnly = false;
 	var me;
 	var cursorPos= jQuery("textarea#dialogInput").prop('selectionStart');
 	var dialogInput = jQuery("textarea#dialogInput").val();
@@ -117,15 +116,15 @@ function dialogForm(secondDialog) {
 	if(currentDialog.initiator == 'me'
 	|| currentDialog.recipient == 'notme2') {
 
-		opinionMine = currentDialog.initiatorOpinion;
-		opinionOther = currentDialog.recipientOpinion;
-		//  opinion2 += "<br><br><b>Initiators proposition:</b><br>" + currentDialog.opinionProposition
+		headerMine = currentDialog.initiatorOpinion + "<br>";
+		headerOther = currentDialog.recipientOpinion + "<br>";
+		headerMine += "<b>Proposition:</b>" + currentDialog.opinionProposition + "<br>";
 
 	} else {
 
-		//opinion1 += "<br><br><b>Initiators proposition:</b><br>" + currentDialog.opinionProposition
-		opinionMine = currentDialog.recipientOpinion;
-		opinionOther = currentDialog.initiatorOpinion;
+		headerMine = currentDialog.recipientOpinion + "<br>";
+		headerOther = currentDialog.initiatorOpinion + "<br>";
+		headerOther += "<b>Proposition:</b>" + currentDialog.opinionProposition + "<br>";
 	}
 
 	if(currentDialog.messages.length == 0) {
@@ -138,34 +137,19 @@ function dialogForm(secondDialog) {
 
 			if(currentDialog.crisises[i].initiator == 'me'
 			|| currentDialog.crisises[i].recipient == 'notme2') {
-
-				var propositionMine = '';
-				if(currentDialog.initiator == 'me' || currentDialog.initiator == 'notme2') {
-					propositionMine = `Proposion: ${currentDialog.opinionProposition}<br>`;
-				}
-				meReadyToEnd = `${propositionMine}Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
-
+				headerMine += `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
 			} else if(currentDialog.crisises[i].initiator == 'notme') {
-
-				var propositionOther = '';
-				if(currentDialog.initiator == 'notme') {
-					propositionOther = `Proposion: ${currentDialog.opinionProposition}<br>`;
-				}
-				otherReadyToEnd = `${propositionOther}Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
-
+				headerOther += `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
 			}
 
 		} else {
-
 			if(currentDialog.crisises[i].initiator == 'me'
 			|| currentDialog.crisises[i].recipient == 'notme2') {
-
-				meReadyToEnd = '<h4>Ready to End</h4>';
-
+				headerMine += '<h4>Ready to End</h4>';
+				viewOnly = true;
 			} else if(currentDialog.crisises[i].initiator == 'notme') {
-
-				otherReadyToEnd = '<h4>Ready to End</h4>';
-
+				headerOther += '<h4>Ready to End</h4>';
+				otherReadyToEnd = true;
 			}
 		}
 	}
@@ -178,10 +162,6 @@ function dialogForm(secondDialog) {
 				// extensionRequest = `More messages: <input type="checkbox" name="extensionRequest" value="true" id="extensionRequest" checked>`;
 			}
 		}
-	}
-
-	if(meReadyToEnd == '') {
-		viewOnly = false;
 	}
 
 	for(var i = 0; i < currentDialog.messages.length; i++) {
@@ -212,7 +192,7 @@ function dialogForm(secondDialog) {
 
 				var propositionMine = '';
 				if(secondDialog.initiator == 'me' || secondDialog.initiator == 'notme2') {
-					propositionMine = `Proposion: ${secondDialog.opinionProposition}<br>`;
+					propositionMine = `Proposion: ${secondDialog.headerProposition}<br>`;
 				}
 				ratingMe = `${propositionMine}Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${secondDialog.crisises[i].rating}`;
 
@@ -220,14 +200,13 @@ function dialogForm(secondDialog) {
 
 				var propositionOther = '';
 				if(secondDialog.initiator == 'notme') {
-					propositionOther = `Proposion: ${secondDialog.opinionProposition}<br>`;
+					propositionOther = `Proposion: ${secondDialog.headerProposition}<br>`;
 				}
 				ratingOther = `${propositionOther}Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${secondDialog.crisises[i].rating}`;
 
 			}
 		}
 
-		//	Proposion: ${secondDialog.opinionProposition}<br>
 		if(!currentDialog.thirdEye) {
 			dialog2 += `<table width="100%"><tr>
 				<td valign="top" style="font-size: 14px" width="45%"><center>${ratingOther}</center></td>
@@ -273,19 +252,6 @@ function dialogForm(secondDialog) {
 			<div class="top">
 				<center>
 					<h3>${currentDialog.topic}</h3>
-					<!--
-					<div class="table">
-						<div class="dialogleft">
-							<p><b>${opinionLabel1}:</b><br>${opinionOther}<br>${otherReadyToEnd}</p>
-						</div>
-						<div class="dialogcenter">
-							vs.
-						</div>
-						<div class="dialogright">
-							<p><b>${opinionLabel2}:</b><br>${opinionMine}<br>${meReadyToEnd}</p>
-						</div>
-					</div>
-					-->
 				</center>
 				
 			</div>
@@ -294,13 +260,13 @@ function dialogForm(secondDialog) {
 					<table width="100%">
 						<tr>
 							<td valign="top" style="font-size: 14px" width="45%"><center>
-								<b>${opinionLabel1}:</b><br>${opinionOther}<br>${otherReadyToEnd}
+								<b>${opinionLabel1}:</b><br>${headerOther}<br>
 							</center></td>
 							<td style="font-size: 36px"><center>
 								vs.
 							</center></td>
 							<td valign="top" width="45%" style="font-size: 14px"><center>
-								<b>${opinionLabel2}:</b><br>${opinionMine}<br>${meReadyToEnd}
+								<b>${opinionLabel2}:</b><br>${headerMine}<br>
 							</center></td>
 						</tr>
 					</table>
@@ -336,7 +302,7 @@ function dialogForm(secondDialog) {
 
 		} else {
 
-			if(otherReadyToEnd != '<h4>Ready to End</h4>') {
+			if(otherReadyToEnd == false) {
 
 				html += `
 					<div class="status">
