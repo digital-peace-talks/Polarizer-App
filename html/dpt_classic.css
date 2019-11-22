@@ -308,6 +308,7 @@ div#crisis {
   -webkit-box-shadow: 0px 0px 10px #002C4B;
           box-shadow: 0px 0px 10px #002C4B;
   bottom: 38px;
+  top: -450px;
 }
 
 div#dialogFrame {
