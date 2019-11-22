@@ -22,13 +22,28 @@ function crisisForm(messageId) {
 				<form id="crisis">
 			
 					<input type="text" name="reason" size="50" class="reason"><br><br>
+					<div class="frame1">
+					<div class="container1">
+					<input type="range" min="1" max="180" value="90" class="slider" id="range-slider" />
+					</div>
+					<div class="smile-wrapper">
+					<div class="eye eye-l"></div>
+					<div class="eye eye-r"></div>  
+					<div class="smile"></div>
+					</div>
+					</div>
 					
+
 					<label id="negative">[-1: <input type="radio" name="rating" value="-1">]</label>
 					<label id="neutral">[0: <input type="radio" name="rating" value="0" checked>]</label>
 					<label id="positive">[1: <input type="radio" name="rating" value="1">]</label><br>
+
+
 					<input type="submit" class="buttondialog" name="send" value="send">
 					<input type="button" class="buttondialog" value="close window" name="close window" id="crisisCloseWindow">
 				</form>
+
+				
 			</div>
 		`);
 		

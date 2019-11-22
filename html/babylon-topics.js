@@ -17,6 +17,7 @@ function loadTopics(restObj) {
 	x = xstart;
 	y = ystart;
 	for(var i in restObj.data) {
+/*
 		if(i % cols == 0) {
 			x = xstart;
 			y -= 3.2;
@@ -35,6 +36,19 @@ function loadTopics(restObj) {
 				"canEdit": (restObj.data[l].user == 'mine') ? true : false,
 			}),
 			`${restObj.data[l].content} [${restObj.data[l].opinions.length}]`,
+		);
+*/
+		var plane = textBlock(
+			restObj.data[i].position.x, restObj.data[i].position.y, restObj.data[i].position.z,
+			JSON.stringify({
+				"name": "texttexture",
+				"context": "topicScene",
+				"topicId": restObj.data[i]._id,
+				"content": restObj.data[i].content,
+				"topic": restObj.data[i].content,
+				"canEdit": (restObj.data[i].user == 'mine') ? true : false,
+			}),
+			`${restObj.data[i].content} [${restObj.data[i].opinions.length}]`,
 		);
 		/*
 		if(restObj.data[l].user == 'mine') {
@@ -94,6 +108,7 @@ function searchResultTopics(restObj) {
 				}),
 				`${restObj.data[i].topic} ${restObj.data[i].count}`);
 		}
+		
 	} else {
 		var plane = textBlock(0,0,0, `{"context": "topicScene"}`, `Nothing found.`);
 	}

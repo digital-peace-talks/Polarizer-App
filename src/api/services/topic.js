@@ -1,6 +1,7 @@
 const ServerError = require("../../lib/error");
 const config = require("../../lib/config");
 const Topic = require("../models/topic").topicModel;
+const backEngine = require("../../lib/backengineTopics");
 
 
 /**
@@ -12,6 +13,7 @@ module.exports.getTopics = async (options) => {
 	var topics;
 	try {
 		topics = await Topic.find();
+		topics = await backEngine.calculatePositions(topics);
 	} catch(error) {
 		throw({
 			status: 500,
