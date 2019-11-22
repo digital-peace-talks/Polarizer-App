@@ -74,16 +74,16 @@ function crisisForm(messageId) {
 
 function setSelectionRange(input, selectionStart, selectionEnd) {
 	if (input.setSelectionRange) {
-    	input.focus();
-        input.setSelectionRange(selectionStart, selectionEnd);
-    }
-    else if (input.createTextRange) {
-    	var range = input.createTextRange();
-        range.collapse(true);
-        range.moveEnd('character', selectionEnd);
-        range.moveStart('character', selectionStart);
-        range.select();
-    }
+		input.focus();
+		input.setSelectionRange(selectionStart, selectionEnd);
+	}
+	else if (input.createTextRange) {
+		var range = input.createTextRange();
+		range.collapse(true);
+		range.moveEnd('character', selectionEnd);
+		range.moveStart('character', selectionStart);
+		range.select();
+	}
 }
 
 function setCaretToPos (input, pos) {
@@ -229,17 +229,17 @@ function dialogForm(secondDialog) {
 
 		//	Proposion: ${secondDialog.opinionProposition}<br>
 		if(!currentDialog.thirdEye) {
-		dialog2 += `<table width="100%"><tr>
-			<td valign="top" style="font-size: 14px" width="45%"><center>${ratingOther}</center></td>
-			<td style="font-size: 36px"><center>vs.</center></td>
-			<td valign="top" width="45%" style="font-size: 14px"><center>${ratingMe}</center></td>
-			</tr></table><br>`;
+			dialog2 += `<table width="100%"><tr>
+				<td valign="top" style="font-size: 14px" width="45%"><center>${ratingOther}</center></td>
+				<td style="font-size: 36px"><center>vs.</center></td>
+				<td valign="top" width="45%" style="font-size: 14px"><center>${ratingMe}</center></td>
+				</tr></table><br>`;
 		} else {
-		dialog2 += `<table width="100%"><tr>
-			<td valign="top" style="font-size: 14px" width="45%"><center>${ratingMe}</center></td>
-			<td style="font-size: 36px"><center>vs.</center></td>
-			<td valign="top" width="45%" style="font-size: 14px"><center>${ratingOther}</center></td>
-			</tr></table><br>`;
+			dialog2 += `<table width="100%"><tr>
+				<td valign="top" style="font-size: 14px" width="45%"><center>${ratingMe}</center></td>
+				<td style="font-size: 36px"><center>vs.</center></td>
+				<td valign="top" width="45%" style="font-size: 14px"><center>${ratingOther}</center></td>
+				</tr></table><br>`;
 		}
 
 		for(var i=0; i <  secondDialog.messages.length; i++) {
@@ -315,13 +315,19 @@ function dialogForm(secondDialog) {
 
 		if(viewOnly) {
 
+			var endDialog = '<input type="button" class="crisis" value="end dialog" name="end dialog" id="none">';
+			for(var i in currentDialog.crisises) {
+				if(currentDialog.crisises[i].initiator == 'me') {
+					endDialog = '';
+				}
+			}
 			html += `
 				<div class="status">
 				<center>
 					<form id="dialogFrame">
 					
 						<input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
-						<input type="button" class="crisis" value="end dialog" name="end dialog" id="none">
+						${endDialog}
 					</form>
 					<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
 				</center>
