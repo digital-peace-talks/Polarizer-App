@@ -54,7 +54,7 @@ router.get('/', async(req, res, next) => {
 				<div class="text">This is a free open source prototype being developed by a social enterprise.<br>
 				Please be patient with what we have so far and/or be willing to help.</div>
 				<br><br>
-				<a href="dptAnleitung.html" target="_blank">Learn how to use DPT here</a>
+				<a href="dpt-doku.html" target="_blank">Learn how to use DPT here</a>
 				<br><br>
 				<br><div ><div style="color: #F0F3F5;">Are you a new user?</div><br><br>
 				<fieldset style="text-align:center; width:400px;  border-style: solid; border-width: 1px;">
@@ -74,7 +74,7 @@ router.get('/', async(req, res, next) => {
 			<div class="text">This is a free open source prototype being developed by a social enterprise.<br>
 			Please be patient with what we have so far and/or be willing to help.</div>
 			<br><br>
-				<a href="dptAnleitung.html" target="_blank">Learn how to use DPT here</a>
+				<a href="dpt-doku.html" target="_blank">Learn how to use DPT here</a>
 				<br><br>	
 				<h3><b>
 				<a style="color: #F0F3F5; text-decoration: none;" href=/dpt3d.html>Start &#9655;</a>
