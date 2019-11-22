@@ -310,7 +310,7 @@ var createGenericScene = function(dptMode) {
 	var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
 	light.radius = 10;
 	light.diffuse = new BABYLON.Color3(1, 0.8, 0.8);
-	light.intensity = 0.3;
+	light.intensity = 0.5;
 
 	switch(whoami.user.preferences.colorScheme) {
 		case DPTConst.COLORS_dark:

@@ -177,8 +177,8 @@ function textBlock(x, y, z, name, text, options) {
 		options = {};
 	}
 	//Set width an height for plane
-	var planeWidth = options.width || 4.8;
-	var planeHeight = options.height || 4.8; //10;
+	var planeWidth = options.width || 3.2;
+	var planeHeight = options.height || 6.8; //10;
 
 	//Set width and height for dynamic texture using same multiplier
 	var DTWidth = planeWidth * 100; //64;

@@ -441,7 +441,7 @@ function dialogForm(secondDialog) {
 				dialogFormOpen = 0;
 				jQuery('#dialogForm').remove();
 				focusAtCanvas();
-				dpt.putDialog(currentDialog.dialog, "status", "CLOSED");
+				dpt.putDialog(currentDialog.dialog, currentTopic, "status", "CLOSED");
 				event.preventDefault();
 			});
 		}
