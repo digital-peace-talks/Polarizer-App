@@ -36,7 +36,7 @@ function settingsForm(opinionId, topicId) {
 		}
 		colors += "<br>";
 	}
-		
+	
 	jQuery('body').append(`
 		<div id="form">Preferences & Settings:<hr><br>
 		My passphrase:<br>
@@ -58,7 +58,6 @@ function settingsForm(opinionId, topicId) {
 		event.preventDefault();
 	});
 	
-
 	jQuery(document).on('submit', 'form#settings', function(event) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
@@ -402,26 +401,26 @@ function loadDialogList(restObj) {
 // GUI Menubar Buttons
 var createGUIScene = function(dptMode) {
 
-
 	//create about button
 	var aboutBtn = jQuery('#about-btn');
 	aboutBtn.show();
 	aboutBtn.on('click touch', function(event) {
-		
+
+		hideDialogList();
 		jQuery('#form').remove();
 
 		jQuery('body').append(`
-		<div id="form" class="helpframe">
-		<h1>About</h1>
-		
-		<p>Digital Peace Talks gUG (h.b.)</p>
-		<p>A digital space where everyone can express and understand opinions</p>
-		<a href="http://www.digitalpeacetalks.com" target="_blank">Visit Our Website</a>
-
-		<button class="button" id="close-btn">close</button>
-		</div>
+			<div id="form" class="helpframe">
+			<h1>About</h1>
+			<p>Digital Peace Talks gUG (h.b.)</p>
+			<p>A digital space where everyone can express and understand opinions</p>
+			<a href="http://www.digitalpeacetalks.com" target="_blank">Visit Our Website</a>
+			<button class="button" id="close-btn">close</button>
+			</div>
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
+
+			hideDialogList();
 			jQuery('#form').remove();
 			focusAtCanvas();
 			event.preventDefault();
@@ -430,11 +429,11 @@ var createGUIScene = function(dptMode) {
 	});
 
 	//create first steps button
-
 	var fsBtn = jQuery('#firststeps-btn');
 	fsBtn.show();
 	fsBtn.on('click touch', function(event) {
 		
+		hideDialogList();
 		jQuery('#form').remove();
 
 		jQuery('body').append(`
@@ -444,6 +443,8 @@ var createGUIScene = function(dptMode) {
 		</div>
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
+
+			hideDialogList();
 			jQuery('#form').remove();
 			focusAtCanvas();
 			event.preventDefault();
@@ -463,6 +464,7 @@ var createGUIScene = function(dptMode) {
 	surveyBtn.show();
 	surveyBtn.on('click touch', function(event) {
 		
+		hideDialogList();
 		jQuery('#form').remove();
 
 		jQuery('body').append(`
@@ -751,6 +753,13 @@ function toggleDialogList() {
 		myDialogsVisible = 'visible';
 	}
 	jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+}
+
+function hideDialogList() {
+	if(myDialogsVisible = 'visible') {
+		jQuery('#dialogMenu').css("visibility", "hidden");
+		myDialogsVisible = 'hidden';
+	}
 }
 
 function requestYourDialogs() {
