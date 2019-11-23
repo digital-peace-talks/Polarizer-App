@@ -14,54 +14,62 @@ function crisisForm(messageId) {
 
 	jQuery('#misc2').text('');
 	jQuery('#misc2').append(`
-			<div id="crisis">
-				<u>End of discussion, appraisal of results.</u><br><br>
-				Finish the dialog under Topic:<br><b>${currentDialog.topic}</b><br><br>
-				Most impressive message:<br><b>${message}</b><br><br>
-				Please enter the reason:<br>
-				<form id="crisis">
+		<div id="crisis">
+			<u>End of discussion, appraisal of results.</u><br><br>
+			Finish the dialog under Topic:<br><b>${currentDialog.topic}</b><br><br>
+			Most impressive message:<br><b>${message}</b><br><br>
+			Please enter the reason:<br>
+			<form id="crisis">
 			
-					<input type="text" name="reason" size="50" class="reason"><br><br>
-					<div class="frame1">
-					<div class="container1">
-					<input type="range" min="1" max="180" value="90" class="slider" id="range-slider" />
-					</div>
-					<div class="smile-wrapper">
-					<div class="eye eye-l"></div>
-					<div class="eye eye-r"></div>  
-					<div class="smile"></div>
-					</div>
-					</div>
+				<input type="text" name="reason" size="50" class="reason"><br><br>
+				<div class="frame1">
+				<div class="container1">
+				<input type="range" name="rating2" min="1" max="180" value="90" class="slider" id="range-slider" />
+				</div>
+				<div class="smile-wrapper">
+				<div class="eye eye-l"></div>
+				<div class="eye eye-r"></div>  
+				<div class="smile"></div>
+				</div>
+				</div>
 					
 
-					<label id="negative">[-1: <input type="radio" name="rating" value="-1">]</label>
-					<label id="neutral">[0: <input type="radio" name="rating" value="0" checked>]</label>
-					<label id="positive">[1: <input type="radio" name="rating" value="1">]</label><br>
+				<label id="negative">[-1: <input type="radio" name="rating" value="-1">]</label>
+				<label id="neutral">[0: <input type="radio" name="rating" value="0" checked>]</label>
+				<label id="positive">[1: <input type="radio" name="rating" value="1">]</label><br>
 
 
-					<input type="submit" class="buttondialog" name="send" value="send">
-					<input type="button" class="buttondialog" value="close window" name="close window" id="crisisCloseWindow">
-				</form>
+				<input type="submit" class="buttondialog" name="send" value="send">
+				<input type="button" class="buttondialog" value="close window" name="close window" id="crisisCloseWindow">
+			</form>
 
 				
-			</div>
-		`);
+		</div>
+	`);
 		
-		$(document).ready(function() {
-			$('#range-slider').on('change', function() {
-			  $('.smile').css('transform','rotateX('+ $(this).val() +'deg)');
-			});
-		  });
+	jQuery('#range-slider').on('change', function() {
+		jQuery('.smile').css('transform','rotateX('+ jQuery(this).val() +'deg)');
+	});
 
 
 	jQuery(".crisis").focus();
+
+	function mapRange(num, in_min, in_max, out_min, out_max) {
+		return ((num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
+	}
 
 	jQuery("#crisis").submit(function(event) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		var reason = jQuery('.reason').val();
 		if(reason.length > 0) {
-			dpt.postCrisis(reason, jQuery("input[name='rating']:checked").val(), currentDialog.dialog, messageId, whoami.dptUUID);
+			dpt.postCrisis(
+				reason,
+//				jQuery("input[name='rating']:checked").val(),
+				mapRange(jQuery("input[name='rating2']").val(), 1, 180, -1, 1),
+				currentDialog.dialog,
+				messageId,
+				whoami.dptUUID);
 			jQuery('#misc2').empty();
 			jQuery('form#dialogFrame').html(`
 			<br>
@@ -148,6 +156,7 @@ function dialogForm(secondDialog) {
 
 	for(var i = 0; i < currentDialog.crisises.length; i++) {
 
+		viewOnly = true;
 		if(currentDialog.status == 'CLOSED') {
 
 			if(currentDialog.crisises[i].initiator == 'me'
@@ -161,10 +170,10 @@ function dialogForm(secondDialog) {
 			if(currentDialog.crisises[i].initiator == 'me'
 			|| currentDialog.crisises[i].recipient == 'notme2') {
 				headerMine += '<h4>Ready to End</h4>';
-				viewOnly = true;
 			} else if(currentDialog.crisises[i].initiator == 'notme') {
 				headerOther += '<h4>Ready to End</h4>';
 				otherReadyToEnd = true;
+			} else if(currentDialog.crisises[i].initiator == 'notme') {
 			}
 		}
 	}
