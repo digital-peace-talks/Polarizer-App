@@ -90,12 +90,12 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 							topo.leafs.unset.push(opinionInitiator._id);
 						}
 						if(crisisRecipient) {
-							if(crisisRecipient.rating > 0) {
+							if(crisisRecipient.rating > 0.25) {
 								topo.leafs.positive.push(opinionRecipient._id);
-							} else if(crisisRecipient.rating == 0) {
-								topo.leafs.neutral.push(opinionRecipient._id);
-							} else if(crisisRecipient.rating < 0) {
+							} else if(crisisRecipient.rating < 0.25) {
 								topo.leafs.negative.push(opinionRecipient._id);
+							} else {
+								topo.leafs.neutral.push(opinionRecipient._id);
 							}
 						} else {
 							topo.leafs.unset.push(opinionRecipient._id);
