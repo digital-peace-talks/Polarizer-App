@@ -92,7 +92,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 						if(crisisRecipient) {
 							if(crisisRecipient.rating > 0.25) {
 								topo.leafs.positive.push(opinionRecipient._id);
-							} else if(crisisRecipient.rating < 0.25) {
+							} else if(crisisRecipient.rating < -0.25) {
 								topo.leafs.negative.push(opinionRecipient._id);
 							} else {
 								topo.leafs.neutral.push(opinionRecipient._id);
