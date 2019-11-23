@@ -113,6 +113,16 @@ function setCaretToPos (input, pos) {
 	setSelectionRange(input, pos, pos);
 }
 
+function colorBlock(d) {
+	if(d > 0.25) {
+		return('<span style="color: #0f0">&#9608;&#9608;&#9608;</span>');
+	} else if(d < -0.25) {
+		return('<span style="color: #f00">&#9608;&#9608;&#9608;</span>');
+	} else {
+		return('<span style="color: #00f">&#9608;&#9608;&#9608;</span>');
+	}
+}
+
 function dialogForm(secondDialog) {
 
 	var headerMine;
@@ -161,9 +171,9 @@ function dialogForm(secondDialog) {
 
 			if(currentDialog.crisises[i].initiator == 'me'
 			|| currentDialog.crisises[i].recipient == 'notme2') {
-				headerMine += `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
+				headerMine += `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${colorBlock(currentDialog.crisises[i].rating)}`;
 			} else if(currentDialog.crisises[i].initiator == 'notme') {
-				headerOther += `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}`;
+				headerOther += `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${colorBlock(currentDialog.crisises[i].rating)}`;
 			}
 
 		} else {
@@ -218,7 +228,7 @@ function dialogForm(secondDialog) {
 				if(secondDialog.initiator == 'me' || secondDialog.initiator == 'notme2') {
 					propositionMine = `Proposion: ${secondDialog.headerProposition}<br>`;
 				}
-				ratingMe = `${propositionMine}Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${secondDialog.crisises[i].rating}`;
+				ratingMe = `${propositionMine}Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${colorBlock(secondDialog.crisises[i].rating)}`;
 
 			} else if(secondDialog.crisises[i].initiator == 'notme') {
 
@@ -226,7 +236,7 @@ function dialogForm(secondDialog) {
 				if(secondDialog.initiator == 'notme') {
 					propositionOther = `Proposion: ${secondDialog.headerProposition}<br>`;
 				}
-				ratingOther = `${propositionOther}Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${secondDialog.crisises[i].rating}`;
+				ratingOther = `${propositionOther}Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${colorBlock(secondDialog.crisises[i].rating)}`;
 
 			}
 		}
@@ -466,20 +476,6 @@ function dialogForm(secondDialog) {
 
 	jQuery('body').append(`<div id="dialogForm">${html}</div>`);
 
-
-	/*
-	if(currentDialog.status == 'CLOSED') {
-		for(var i = 0; i < currentDialog.crisises.length; i++) {
-			if(currentDialog.crisises[i].initiator != 'me'
-			|| currentDialog.crisises[i].recipient != 'notme2') {
-				jQuery('td.dialogleft>center').append(`Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}<br>`);
-				break;
-			} else {
-				jQuery('td.dialogright>center').append(`Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${currentDialog.crisises[i].rating}<br>`);
-			}
-		}
-	}
-	*/
 
 	jQuery(document).on('submit', '#dialogFrame', function(event) {
 
