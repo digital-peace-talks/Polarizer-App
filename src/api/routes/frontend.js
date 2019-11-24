@@ -78,7 +78,7 @@ router.get('/', async (req, res, next) => {
                                 <br>
                                 Please write it down or memorize it! 
                                 If you loose or forget this phrase there is no chance to generate a new one for your existing account.
-                                <a class="start" style="color: #F0F3F5; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">I understand and want to enter &#9655;</a>
+                                <a style="color: #F0F3F5; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">I understand and want to enter &#9655;</a>
                                 <br>
                                 <br>
                             </div>
@@ -128,24 +128,31 @@ router.get('/', async (req, res, next) => {
                                 How awesome to see you again! <br>
                                 Just enter and continue where you left off last time.<br>
                                 <br>
-                                <form action="do_something">
-                                    <input type="submit" class="start"  value="Enter the App">
-                                    <a class="start href=/dpt3d.html>Enter the App &#9655;</a>
-                                </form>
+                             
+                                  
+                                    <a class="start" href=/dpt3d.html>Enter the App &#9655;</a>
+                               
                                 <br>
-                                                               
+                                <!--
+                                <a class="start" onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
+                                -->
+                                
                             </div>
                             <div class="rechts">
                                 <h1>Not your device? Login Problems?</h1>
                                 <br>
                                 You can delete the cookie for this app and clear your account data from this device.<br><br>
                                 <b>Caution:</b> If you delete this cookie and you don´t know your pass phrase this account will be inevitably lost forever!<br><br>
+                             
                                 <a class="button" onClick="function gcv(a){
                                     var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');
                                     return (b ? b.pop():'')
                                 }
                                 document.cookie='dptUUID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
                                 location.reload(true);">I know what I do!</a>
+
+                                  
+                               
                                 <br>
                                 <br>
                                 <br>
