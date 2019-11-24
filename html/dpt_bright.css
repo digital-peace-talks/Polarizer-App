@@ -1,29 +1,4 @@
 /* Easy theming */
-
-$dpt-menu: #005b9888;
-
-$dpt-prime-text: #f0f3f5;
-$dpt-second-text: #66d1ff;
-$dpt-third-text: #005b98;
-
-$dpt-prime-base: #28a9e1;
-$dpt-second-base: #005b98;
-
-$dpt-prime-button: #002c4b;
-$dpt-second-button: #005b98;
-
-$dpt-left-chat: #005b98;
-$dpt-right-chat: #002c4b;
-
-$dpt-prime-border: #f0f3f5;
-$dpt-second-border: #005b98;
-
-$dpt-red: #ff6666;
-$dpt-green: #15b76a;
-$dpt-blue: #005b98;
-
-$dpt-shadow: #030911;
-
 @font-face {
   font-family: "DPTFont";
   src: url("/font.ttf") format("truetype");
@@ -40,12 +15,14 @@ $dpt-shadow: #030911;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
+
 .no-bounce > div {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
+
 .no-bounce > div > div {
   width: 100%;
   min-height: 101%;
@@ -68,7 +45,8 @@ body {
 #renderCanvas {
   width: 100%;
   height: 100%;
-  touch-action: none;
+  -ms-touch-action: none;
+      touch-action: none;
   position: absolute;
   z-index: 1;
 }
@@ -81,18 +59,18 @@ body {
 i {
   font-family: "DPTFontDin";
   font-style: inherit;
-  color: $dpt-second-text;
+  color: #002c4b;
   font-weight: 700;
   font-size: 18px;
 }
 
 h2 {
   font-family: "DPTFont";
-  color: $dpt-prime-text;
+  color: #002c4b;
   font-size: 16px;
   font-weight: 300;
   padding-bottom: 15px;
-  border-bottom: $dpt-prime-border;
+  border-bottom: #caefff;
   border-bottom-style: solid;
   border-bottom-width: 1px;
 }
@@ -100,22 +78,22 @@ h2 {
 h3 {
   font-family: "DPTFontDin";
   font-size: 32px;
-  color: $dpt-third-text;
+  color: #005b98;
   border-color: transparent;
-  border-bottom: 1px solid $dpt-third-text;
+  border-bottom: 1px solid #005b98;
   padding-bottom: 20px;
 }
 
 h4 {
   font-family: "DPTFontDin";
   font-size: 18px;
-  color: $dpt-prime-text;
+  color: #002c4b;
   font-weight: 300;
   padding: 5px;
 }
 
 div#dialogMenu > i {
-  color: red; // keine wirkung
+  color: red;
 }
 
 i#props {
@@ -127,8 +105,8 @@ a {
 }
 
 input {
-  border-color: $dpt-second-border;
-  color: $dpt-third-text;
+  border-color: #f0f3f5;
+  color: #005b98;
   border-style: solid;
   border-width: 1px;
   font-weight: normal;
@@ -137,21 +115,20 @@ input {
 }
 
 label#negative {
-  color: $dpt-red;
+  color: #ff6666;
 }
 
 label#neutral {
-  color: $dpt-blue;
+  color: #005b98;
 }
 
 label#positive {
-  color: $dpt-green;
+  color: #15b76a;
 }
 
-// dunkles inputfeld ändern
 input[type="text"] {
-  border-color: $dpt-second-border;
-  color: $dpt-third-text;
+  border-color: #f0f3f5;
+  color: #005b98;
   border-style: solid;
   border-width: 1px;
   font-weight: normal;
@@ -163,7 +140,7 @@ input[type="text"] {
   min-height: 100%;
   height: 100%;
   min-width: 100%;
-  background: $dpt-prime-base;
+  background: #caefff;
 }
 
 #misc {
@@ -187,12 +164,12 @@ p.left {
   margin-bottom: 15px;
   padding: 5px;
   text-justify: inter-word;
-  background-color: $dpt-left-chat;
-  border-color: $dpt-left-chat;
+  background-color: #a4d3e7;
+  border-color: #a4d3e7;
   border-style: solid;
   border-width: 1px;
   position: relative;
-  color: $dpt-prime-text;
+  color: #002c4b;
   font-size: 18px;
   margin-left: 20px;
 }
@@ -205,7 +182,7 @@ p.left:before {
   left: 10px;
   bottom: -10px;
   border: 5px solid;
-  border-color: $dpt-left-chat transparent transparent $dpt-left-chat;
+  border-color: #a4d3e7 transparent transparent #a4d3e7;
 }
 
 p.right {
@@ -214,12 +191,12 @@ p.right {
   padding: 5px;
   text-align: justify-right;
   text-justify: inter-word;
-  background-color: $dpt-right-chat;
-  border-color: $dpt-right-chat;
+  background-color: #7db6ce;
+  border-color: #7db6ce;
   border-style: solid;
   border-width: 1px;
   position: relative;
-  color: $dpt-prime-text;
+  color: #002c4b;
   font-size: 18px;
   margin-left: 20px;
 }
@@ -233,8 +210,8 @@ p.right:before {
   bottom: -10px;
   border: 5px solid;
   border-left: 5px solid transparent;
-  border-right: 5px solid $dpt-right-chat;
-  border-top: 5px solid $dpt-right-chat;
+  border-right: 5px solid #7db6ce;
+  border-top: 5px solid #7db6ce;
   border-bottom: 5px solid transparent;
 }
 
@@ -289,7 +266,7 @@ div.status {
   left: 50%;
   margin-left: -280px;
   z-index: 30;
-  background-color: $dpt-prime-base;
+  background-color: #caefff;
 }
 
 div#c1 {
@@ -299,7 +276,7 @@ div#c1 {
   float: left;
   position: absolute;
   font-size: 14px;
-  background-color: $dpt-second-base;
+  background-color: #f0f3f5;
   padding: 5px;
   bottom: 0px;
 }
@@ -320,7 +297,7 @@ div#c3 {
   position: fixed;
   text-align: left;
   font-size: 14px;
-  background-color: $dpt-second-base;
+  background-color: #f0f3f5;
   padding: 10px;
   width: 600px;
   left: 50%;
@@ -332,18 +309,18 @@ div#crisis {
   font-family: "DPTFont";
   position: absolute;
   padding: 10px;
-  color: $dpt-prime-text;
-  box-shadow: 0px 0px 20px $dpt-shadow;
+  color: #002c4b;
+  -webkit-box-shadow: 0px 0px 20px #2c2c2c;
+          box-shadow: 0px 0px 20px #2c2c2c;
   bottom: 38px;
   top: -450px;
-  background-color: $dpt-prime-base;
+  background-color: #caefff;
 }
 
-// Überschrift (topic) Dialog
 div#dialogFrame {
   font-family: "DPTFont";
   border-width: 0px;
-  color: $dpt-prime-text;
+  color: #002c4b;
   margin-left: 0%;
   margin-right: 0%;
   min-width: 80%;
@@ -351,17 +328,17 @@ div#dialogFrame {
   left: 0px;
 }
 
-//menü rechts oben
 #overlay {
   /* margin:5%; */
   position: absolute;
+  display: -ms-grid;
   display: grid;
   background-color: transparent;
   border: 0px;
   z-index: 400;
   /* grid-auto-flow: column; */
-  grid-template-columns: 280px;
-  //pointer-events: none;
+  -ms-grid-columns: 280px;
+      grid-template-columns: 280px;
   right: 0px;
 }
 
@@ -375,7 +352,8 @@ div#dialogFrame {
   border: 0px;
   z-index: 100;
   /* grid-auto-flow: column; */
-  grid-template-columns: 210px;
+  -ms-grid-columns: 210px;
+      grid-template-columns: 210px;
   /* pointer-events: none; */
 }
 
@@ -385,14 +363,15 @@ div#dialogFrame {
   left: 50%;
   padding: 10px;
   margin-left: -300px;
-  color: $dpt-prime-text;
+  color: #002c4b;
   width: 600px;
   z-index: 200;
   font-family: DPTFont;
   font-size: 18px;
-  background-color: $dpt-prime-base;
+  background-color: #caefff;
   overflow-y: auto;
-  box-shadow: 0px 0px 20px $dpt-shadow;
+  -webkit-box-shadow: 0px 0px 20px #2c2c2c;
+          box-shadow: 0px 0px 20px #2c2c2c;
   bottom: 0px;
 }
 
@@ -406,9 +385,9 @@ div#dialogFrame {
   font-size: 20px;
   width: 280px;
   height: 48px;
-  border: 1px solid $dpt-prime-border;
-  background-color: $dpt-menu;
-  color: $dpt-prime-text;
+  border: 1px solid #caefff;
+  background-color: #1879a388;
+  color: #002c4b;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
   justify-content: left;
@@ -426,9 +405,9 @@ div#dialogFrame {
   font-size: 20px;
   width: 25%;
   height: 48px;
-  border: 1px solid $dpt-prime-border;
-  background-color: $dpt-menu;
-  color: $dpt-prime-text;
+  border: 1px solid #caefff;
+  background-color: #1879a388;
+  color: #002c4b;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
   background-size: cover;
@@ -442,9 +421,9 @@ div#dialogFrame {
   font-size: 20px;
   width: 280px;
   height: 48px;
-  border: 1px solid $dpt-prime-border;
-  background-color: $dpt-menu;
-  color: $dpt-prime-text;
+  border: 1px solid #caefff;
+  background-color: #1879a388;
+  color: #002c4b;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
   justify-content: left;
@@ -468,7 +447,8 @@ div#dialogFrame {
 }
 
 * {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 .dialogleft {
@@ -500,7 +480,7 @@ div#dialogFrame {
   position: absolute;
   padding: 10px;
   top: 40px;
-  border: $dpt-prime-border;
+  border: #caefff;
   border-style: solid;
   border-width: 1px;
   width: 400px;
@@ -508,12 +488,13 @@ div#dialogFrame {
   z-index: 2;
   font-family: DPTFontDin;
   font-size: 16px;
-  background-color: $dpt-menu;
+  background-color: #1879a388;
   visibility: hidden;
   bottom: 48px;
   left: 50%;
   margin-left: -200px;
-  box-shadow: 0px 0px 20px $dpt-shadow;
+  -webkit-box-shadow: 0px 0px 20px #2c2c2c;
+          box-shadow: 0px 0px 20px #2c2c2c;
 }
 
 #form {
@@ -523,15 +504,16 @@ div#dialogFrame {
   left: 50%;
   padding: 20px;
   margin-left: -200px;
-  border: $dpt-prime-border;
+  border: #caefff;
   border-style: solid;
   border-width: 1px;
-  color: $dpt-prime-text;
+  color: #002c4b;
   z-index: 300;
   font-family: DPTFontDin;
   font-size: 18px;
-  background-color: $dpt-prime-base;
-  box-shadow: 0px 0px 20px $dpt-shadow;
+  background-color: #caefff;
+  -webkit-box-shadow: 0px 0px 20px #2c2c2c;
+          box-shadow: 0px 0px 20px #2c2c2c;
 }
 
 #closeX {
@@ -540,10 +522,10 @@ div#dialogFrame {
   left: 0px;
   padding: 20px;
   margin-left: 300px;
-  border: $dpt-prime-border;
+  border: #caefff;
   border-style: solid;
   border-width: 1px;
-  color: $dpt-prime-text;
+  color: #002c4b;
   z-index: 200;
   font-family: DPTFont;
   font-size: 18px;
@@ -556,8 +538,8 @@ textarea {
   height: 80px;
   margin: 0 auto;
   resize: none;
-  border-color: $dpt-second-border;
-  color: $dpt-third-text;
+  border-color: #f0f3f5;
+  color: #005b98;
   border-style: solid;
   border-width: 1px;
   font-weight: normal;
@@ -570,8 +552,8 @@ textarea#dialog {
   height: 20px;
   margin: 0 auto;
   resize: none;
-  border-color: $dpt-second-border;
-  color: $dpt-third-text;
+  border-color: #f0f3f5;
+  color: #005b98;
   border-style: solid;
   border-width: 1px;
   font-weight: normal;
@@ -579,8 +561,8 @@ textarea#dialog {
 
 .button {
   font-family: DPTFontDin;
-  color: $dpt-prime-text;
-  background-color: $dpt-prime-button;
+  color: #002c4b;
+  background-color: #66d1ff;
   border: none;
   font-size: 16px;
   width: 120px;
@@ -593,8 +575,8 @@ textarea#dialog {
 
 .buttondialog {
   font-family: DPTFontDin;
-  color: $dpt-prime-text;
-  background-color: $dpt-prime-button;
+  color: #002c4b;
+  background-color: #66d1ff;
   border: none;
   font-size: 16px;
   width: auto;
@@ -606,8 +588,8 @@ textarea#dialog {
 
 .crisis {
   font-family: DPTFontDin;
-  color: $dpt-prime-text;
-  background-color: $dpt-second-button;
+  color: #002c4b;
+  background-color: #005b98;
   border: none;
   font-size: 16px;
   width: auto;
@@ -619,7 +601,7 @@ textarea#dialog {
 
 .crisis.icon {
   font-family: DPTFontDin;
-  color: $dpt-prime-text;
+  color: #002c4b;
   background-color: transparent;
   border: none;
   width: auto;
@@ -636,13 +618,12 @@ textarea#dialog {
 .helpimage {
   border-style: solid;
   border-width: 1px;
-  border-color: $dpt-prime-border;
+  border-color: #caefff;
   width: 100%;
   height: auto;
 }
 
 /*----- Menu -----*/
-
 nav {
   margin: 0 auto;
   width: 100%;
@@ -660,8 +641,6 @@ nav ul {
   margin: 0;
   padding: 0;
   -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
   left: 228px;
 }
@@ -694,10 +673,12 @@ nav a.close {
 nav ul.menu li a:hover {
   border-bottom: 0;
 }
+
 /*Hamburger-Icon*/
 nav a#nav-m {
   display: inline;
 }
+
 nav a#nav-m img,
 nav a.close img {
   width: 40px;
@@ -706,20 +687,24 @@ nav a.close img {
   right: 6px;
   top: 0px;
 }
+
 nav > .close,
 nav a#nav-m:target {
   display: none;
   right: 0px;
   top: 0px;
 }
+
 nav a:target ~ ul,
 nav a:target ~ .close {
   display: inline-block;
 }
+
 nav a:target ~ .close {
   position: absolute;
   margin-left: -40px;
 }
+
 nav a:target ~ ul {
   left: 0;
 }
@@ -768,7 +753,7 @@ section ul li {
 }
 
 .listcount {
-  color: $dpt-prime-text;
+  color: #002c4b;
   position: absolute;
   border-radius: 50%;
   border-style: solid;
@@ -780,18 +765,16 @@ section ul li {
   height: 20px;
   font-size: 12px;
   line-height: 14px;
-  background-color: $dpt-second-base;
+  background-color: #caefff;
 }
 
 /*----- Logo -----*/
-
 .brand,
 .brand img {
   float: left;
 }
 
 /*----------------*/
-
 .frame1 {
   width: 400px;
   height: 0;
@@ -800,6 +783,7 @@ section ul li {
   top: 310px;
   left: 50%;
 }
+
 .container1 {
   position: absolute;
   top: 80px;
@@ -807,81 +791,90 @@ section ul li {
   left: 50%;
   margin-left: -150px;
 }
+
 .slider {
   position: absolute;
   top: 0;
   left: 0;
   border-radius: 1px;
   cursor: pointer;
-  appearance: none;
+  -moz-appearance: none;
+       appearance: none;
   -webkit-appearance: none;
   margin: 0;
   width: 300px;
   height: 8px;
-  background: $dpt-prime-border;
-  background: -webkit-linear-gradient(to left, $dpt-green, $dpt-blue, $dpt-red);
-  background: linear-gradient(to left, $dpt-green, $dpt-blue, $dpt-red);
+  background: #caefff;
+  background: -webkit-gradient(linear, right top, left top, from(#15b76a), color-stop(#005b98), to(#ff6666));
+  background: linear-gradient(to left, #15b76a, #005b98, #ff6666);
   border-radius: 1px;
-  border-color: $dpt-prime-border;
-  &:focus {
-    outline: none;
-  }
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 1px solid $dpt-prime-text;
-    border-radius: 50%;
-    background: $dpt-prime-text;
-    cursor: pointer;
-  }
-  &::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    border: 1px solid $dpt-prime-text;
-    border-radius: 50%;
-    background: $dpt-prime-text;
-    cursor: pointer;
-  }
+  border-color: #caefff;
 }
+
+.slider:focus {
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #002c4b;
+  border-radius: 50%;
+  background: #002c4b;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #002c4b;
+  border-radius: 50%;
+  background: #002c4b;
+  cursor: pointer;
+}
+
 .smile-wrapper {
   width: 60px;
   height: 60px;
-  background: $dpt-prime-base;
+  background: #caefff;
   position: absolute;
   top: 25%;
   left: 42%;
   border-radius: 50%;
-  background: $dpt-prime-button;
+  background: #66d1ff;
 }
 
 .eye {
-  background: $dpt-prime-base;
+  background: #caefff;
   width: 10px;
   height: 10px;
   position: absolute;
   top: 15px;
   border-radius: 50%;
-
-  &-l {
-    left: 12px;
-  }
-  &-r {
-    right: 12px;
-  }
 }
+
+.eye-l {
+  left: 12px;
+}
+
+.eye-r {
+  right: 12px;
+}
+
 .smile {
   width: 30px;
   height: 12px;
   position: absolute;
   top: 35px;
   left: 15px;
-  background: $dpt-prime-base;
+  background: #caefff;
   border: none;
   border-top-left-radius: 60px;
   border-top-right-radius: 60px;
-  transform: rotateX(90deg);
+  -webkit-transform: rotateX(90deg);
+          transform: rotateX(90deg);
 }
 
 .fb_gd_wrap .mask {
@@ -893,11 +886,13 @@ section ul li {
   background: transparent;
   z-index: 0;
 }
+
 .fb_gd_wrap .content {
   height: 200px;
   background: transparent;
   z-index: 10;
-  box-shadow: 0px 0px 20px $dpt-shadow;
+  -webkit-box-shadow: 0px 0px 20px #2c2c2c;
+          box-shadow: 0px 0px 20px #2c2c2c;
   position: absolute;
   left: 500px;
   width: 400px;
@@ -906,38 +901,40 @@ section ul li {
 .fb_gd_wrap .header {
   height: 50px;
   line-height: 50px;
-  background: $dpt-prime-base;
+  background: #caefff;
   position: relative;
 }
 
 .fb_gd_wrap .header .text {
   font-size: 1.5rem;
   margin-left: 1rem;
-  color: $dpt-third-text;
+  color: #005b98;
 }
 
 .fb_gd_wrap .header .btn {
   position: absolute;
   right: 10px;
   top: 50%;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
   font-size: 1.5rem;
   border: none;
   background: transparent;
-  color: $dpt-prime-text;
+  color: #002c4b;
 }
 
 .fb_gd_wrap .header .btn:hover {
-  color: $dpt-prime-button;
+  color: #66d1ff;
 }
 
 .fb_gd_wrap .body {
   height: 100px;
-  background: $dpt-prime-base;
+  background: #caefff;
 }
+
 .fb_gd_wrap .body .text {
   font-size: 0.9rem;
-  color: $dpt-prime-text;
+  color: #002c4b;
   overflow: hidden;
   width: 360px;
   margin: 0 20px;
@@ -949,8 +946,9 @@ section ul li {
   width: 10000px;
   font-size: 0;
   margin-left: 0;
+  -webkit-transition: all 0.5s;
   transition: all 0.5s;
-  color: $dpt-prime-text;
+  color: #002c4b;
 }
 
 .fb_gd_wrap .body .textList p {
@@ -963,9 +961,10 @@ section ul li {
 
 .fb_gd_wrap .footer {
   height: 50px;
-  background: $dpt-second-base;
+  background: #f0f3f5;
   font-size: 0;
 }
+
 .fb_gd_wrap .footer .btn {
   display: inline-block;
   width: 20%;
@@ -974,46 +973,50 @@ section ul li {
   padding: 0;
   font-size: 16px;
   vertical-align: top;
-  color: $dpt-prime-text;
+  color: #002c4b;
   background: transparent;
 }
 
 .fb_gd_wrap .footer .btn:hover {
-  color: $dpt-prime-text;
+  color: #002c4b;
 }
+
 .fb_gd_wrap .footer .steps {
   display: inline-block;
   width: 60%;
-  background: $dpt-prime-button;
+  background: #66d1ff;
   height: 100%;
   margin: 0;
   padding: 0;
   text-align: center;
 }
+
 .fb_gd_wrap .footer .dot {
   width: 8px;
   height: 8px;
   background: transparent;
-  border: 1px solid $dpt-prime-text;
+  border: 1px solid #002c4b;
   margin: 30px 12px 12px 12px;
   display: inline-block;
   border-radius: 50%;
   position: relative;
 }
+
 .fb_gd_wrap .footer .line::after {
   content: "";
   display: block;
   width: 24px;
-  background-color: $dpt-prime-button;
-  border-top: 1px solid $dpt-prime-text;
+  background-color: #66d1ff;
+  border-top: 1px solid #002c4b;
   position: absolute;
   top: 4px;
   left: 9px;
 }
+
 .fb_gd_wrap .footer .dot::before {
   content: attr(data-step);
   display: block;
-  color: $dpt-prime-text;
+  color: #002c4b;
   position: absolute;
   top: -20px;
   left: 1.2px;
@@ -1021,12 +1024,12 @@ section ul li {
 }
 
 .fb_gd_wrap .footer .active {
-  background: $dpt-prime-base;
-  box-shadow: 0px 0px 20px $dpt-shadow;
+  background: #caefff;
+  -webkit-box-shadow: 0px 0px 20px #2c2c2c;
+          box-shadow: 0px 0px 20px #2c2c2c;
 }
 
 /* button menu style for mobile */
-
 @media all and (max-width: 640px) {
   .menu-btn {
     width: 100%;
@@ -1043,7 +1046,6 @@ section ul li {
   }
   #form {
     width: 100%;
-    //height: 200px;
     left: 0;
     margin-left: 0px;
     position: absolute;
@@ -1126,9 +1128,10 @@ section ul li {
   .sub-menu {
     margin: 0;
     padding: 0;
-    li {
-      margin: 0;
-    }
+  }
+  .menu li,
+  .sub-menu li {
+    margin: 0;
   }
   /*Formatierung Mobiles Menue*/
   nav ul {
@@ -1180,7 +1183,6 @@ section ul li {
   nav a:target ~ ul {
     left: 0;
   }
-  // ------------------------------------------
   section {
     width: 100%;
     left: 50%;
@@ -1235,11 +1237,8 @@ section ul li {
   section a:target ~ ul {
     left: 0;
   }
-
-  // __________________ mobile guided tool
-  .fb_gd_wrap .content{
+  .fb_gd_wrap .content {
     width: 100%;
   }
 }
-
-
+/*# sourceMappingURL=dpt_bright.css.map */

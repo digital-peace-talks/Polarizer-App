@@ -1,28 +1,28 @@
 /* Easy theming */
 
-$dpt-menu: #005b9888;
+$dpt-menu: #1879a388;
 
-$dpt-prime-text: #f0f3f5;
-$dpt-second-text: #66d1ff;
+$dpt-prime-text: #002c4b;
+$dpt-second-text: #002c4b;
 $dpt-third-text: #005b98;
 
-$dpt-prime-base: #28a9e1;
-$dpt-second-base: #005b98;
+$dpt-prime-base: #caefff;
+$dpt-second-base: #f0f3f5;
 
-$dpt-prime-button: #002c4b;
+$dpt-prime-button: #66d1ff;
 $dpt-second-button: #005b98;
 
-$dpt-left-chat: #005b98;
-$dpt-right-chat: #002c4b;
+$dpt-left-chat: #a4d3e7;
+$dpt-right-chat: #7db6ce;
 
-$dpt-prime-border: #f0f3f5;
-$dpt-second-border: #005b98;
+$dpt-prime-border: #caefff;
+$dpt-second-border: #f0f3f5;
 
 $dpt-red: #ff6666;
 $dpt-green: #15b76a;
 $dpt-blue: #005b98;
 
-$dpt-shadow: #030911;
+$dpt-shadow: #2c2c2c;
 
 @font-face {
   font-family: "DPTFont";
@@ -780,7 +780,7 @@ section ul li {
   height: 20px;
   font-size: 12px;
   line-height: 14px;
-  background-color: $dpt-second-base;
+  background-color: $dpt-prime-base;
 }
 
 /*----- Logo -----*/

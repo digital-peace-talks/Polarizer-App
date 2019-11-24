@@ -1,12 +1,13 @@
 /* Easy theming */
 
-$dpt-menu: #005b9888;
+$dpt-menu: #030911CC;
 
-$dpt-prime-text: #f0f3f5;
+//$dpt-prime-text: #f0f3f5;
+$dpt-prime-text: #b5bec4;
 $dpt-second-text: #66d1ff;
 $dpt-third-text: #005b98;
 
-$dpt-prime-base: #28a9e1;
+$dpt-prime-base: #001a2c;
 $dpt-second-base: #005b98;
 
 $dpt-prime-button: #002c4b;
@@ -15,7 +16,7 @@ $dpt-second-button: #005b98;
 $dpt-left-chat: #005b98;
 $dpt-right-chat: #002c4b;
 
-$dpt-prime-border: #f0f3f5;
+$dpt-prime-border: #030911;
 $dpt-second-border: #005b98;
 
 $dpt-red: #ff6666;
@@ -408,7 +409,7 @@ div#dialogFrame {
   height: 48px;
   border: 1px solid $dpt-prime-border;
   background-color: $dpt-menu;
-  color: $dpt-prime-text;
+  color: $dpt-third-text;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
   justify-content: left;
@@ -780,7 +781,7 @@ section ul li {
   height: 20px;
   font-size: 12px;
   line-height: 14px;
-  background-color: $dpt-second-base;
+  background-color: $dpt-prime-base;
 }
 
 /*----- Logo -----*/
@@ -926,7 +927,6 @@ section ul li {
   background: transparent;
   color: $dpt-prime-text;
 }
-
 .fb_gd_wrap .header .btn:hover {
   color: $dpt-prime-button;
 }

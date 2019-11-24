@@ -310,8 +310,8 @@ div#crisis {
   position: absolute;
   padding: 10px;
   color: #f0f3f5;
-  -webkit-box-shadow: 0px 0px 10px #0a120a;
-          box-shadow: 0px 0px 10px #0a120a;
+  -webkit-box-shadow: 0px 0px 20px #030911;
+          box-shadow: 0px 0px 20px #030911;
   bottom: 38px;
   top: -450px;
   background-color: #28a9e1;
@@ -370,8 +370,8 @@ div#dialogFrame {
   font-size: 18px;
   background-color: #28a9e1;
   overflow-y: auto;
-  -webkit-box-shadow: 0px 0px 10px #0a120a;
-          box-shadow: 0px 0px 10px #0a120a;
+  -webkit-box-shadow: 0px 0px 20px #030911;
+          box-shadow: 0px 0px 20px #030911;
   bottom: 0px;
 }
 
@@ -493,6 +493,8 @@ div#dialogFrame {
   bottom: 48px;
   left: 50%;
   margin-left: -200px;
+  -webkit-box-shadow: 0px 0px 20px #030911;
+          box-shadow: 0px 0px 20px #030911;
 }
 
 #form {
@@ -510,8 +512,8 @@ div#dialogFrame {
   font-family: DPTFontDin;
   font-size: 18px;
   background-color: #28a9e1;
-  -webkit-box-shadow: 0px 0px 10px #0a120a;
-          box-shadow: 0px 0px 10px #0a120a;
+  -webkit-box-shadow: 0px 0px 20px #030911;
+          box-shadow: 0px 0px 20px #030911;
 }
 
 #closeX {
@@ -763,7 +765,7 @@ section ul li {
   height: 20px;
   font-size: 12px;
   line-height: 14px;
-  background-color: #28a9e1;
+  background-color: #005b98;
 }
 
 /*----- Logo -----*/
@@ -801,7 +803,7 @@ section ul li {
   -webkit-appearance: none;
   margin: 0;
   width: 300px;
-  height: 5px;
+  height: 8px;
   background: #f0f3f5;
   background: -webkit-gradient(linear, right top, left top, from(#15b76a), color-stop(#005b98), to(#ff6666));
   background: linear-gradient(to left, #15b76a, #005b98, #ff6666);
@@ -889,8 +891,8 @@ section ul li {
   height: 200px;
   background: transparent;
   z-index: 10;
-  -webkit-box-shadow: 0px 0px 10px #0a120a;
-          box-shadow: 0px 0px 10px #0a120a;
+  -webkit-box-shadow: 0px 0px 20px #030911;
+          box-shadow: 0px 0px 20px #030911;
   position: absolute;
   left: 500px;
   width: 400px;
@@ -918,7 +920,7 @@ section ul li {
   font-size: 1.5rem;
   border: none;
   background: transparent;
-  color: #002c4b;
+  color: #f0f3f5;
 }
 
 .fb_gd_wrap .header .btn:hover {
@@ -1023,8 +1025,8 @@ section ul li {
 
 .fb_gd_wrap .footer .active {
   background: #28a9e1;
-  -webkit-box-shadow: 0 0 6px #0a120a;
-          box-shadow: 0 0 6px #0a120a;
+  -webkit-box-shadow: 0px 0px 20px #030911;
+          box-shadow: 0px 0px 20px #030911;
 }
 
 /* button menu style for mobile */
