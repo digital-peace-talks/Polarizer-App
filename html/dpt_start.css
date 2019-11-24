@@ -165,7 +165,12 @@
     .copytoclip{
       width: 40px;
       height: auto;
-
+      float: left;
+      position: relative;
+      top: -10px;
+      left: -4px;
+      filter: invert();
+      background-color: transparent;
     }
   
   /* button menu style for mobile */
