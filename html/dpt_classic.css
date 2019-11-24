@@ -64,6 +64,14 @@ i {
   font-size: 18px;
 }
 
+h1 {
+  font-family: "DPTFontDin";
+  color: #f0f3f5;
+  font-size: 28px;
+  font-weight: 500;
+  margin-top: 0px;
+}
+
 h2 {
   font-family: "DPTFont";
   color: #f0f3f5;
@@ -92,6 +100,12 @@ h4 {
   padding: 5px;
 }
 
+hr {
+  color: #66d1ff;
+  border-style: dashed;
+  border-width: 1px;
+}
+
 div#dialogMenu > i {
   color: red;
 }
@@ -114,15 +128,15 @@ input {
   font-size: 18px;
 }
 
-label#negative {
+#negative {
   color: #ff6666;
 }
 
-label#neutral {
+#neutral {
   color: #005b98;
 }
 
-label#positive {
+#positive {
   color: #15b76a;
 }
 
@@ -565,7 +579,6 @@ textarea#dialog {
   background-color: #002c4b;
   border: none;
   font-size: 16px;
-  width: 120px;
   height: 40px;
   margin: 5px auto;
   margin-left: 10px;
@@ -713,7 +726,7 @@ section {
   margin: 0 auto;
   width: 400px;
   bottom: 48px;
-  height: 1px;
+  height: 0px;
   text-align: right;
   position: absolute;
   left: 50%;

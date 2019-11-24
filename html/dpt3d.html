@@ -45,8 +45,12 @@
 	<script src="/external/babylonjs.serializers.min.js"></script>
 	<script src="/external/babylon.gui.min.js"></script>
 
-	<link rel="stylesheet" href="/dpt_classic.css" />
+<!--	<link rel="stylesheet" href="/dpt_classic.css" /> -->
+	<link type="text/css" rel="stylesheet" media="all" href="dpt_classic.css" id="theme_css" />
 	<script>
+
+
+
 		// Testpage for different Browsers
 		// http://www.quirksmode.org/m/tests/widthtest_vpdevice.html
 		/* 
@@ -272,13 +276,16 @@
 
 
   function changeStep(direction){
+
     if((direction === 'prev' && currentStepIndex === 0) || (direction === 'next' && currentStepIndex === stepLength-1)){
+		
 		this.remove();
     }else{
       let eraseDotIndex;               
       if(direction === 'prev'){
         currentStepIndex = currentStepIndex - 1;
-        eraseDotIndex = currentStepIndex === stepLength-1 ? 0 : currentStepIndex +1;
+		eraseDotIndex = currentStepIndex === stepLength-1 ? 0 : currentStepIndex +1;
+		
       }else{
         currentStepIndex = currentStepIndex + 1;
         eraseDotIndex = currentStepIndex === 0 ? stepLength -1 : currentStepIndex -1;

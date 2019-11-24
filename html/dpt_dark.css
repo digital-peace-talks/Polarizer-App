@@ -59,9 +59,17 @@ body {
 i {
   font-family: "DPTFontDin";
   font-style: inherit;
-  color: #66d1ff;
+  color: #3e88b9;
   font-weight: 700;
   font-size: 18px;
+}
+
+h1 {
+  font-family: "DPTFontDin";
+  color: #b5bec4;
+  font-size: 28px;
+  font-weight: 500;
+  margin-top: 0px;
 }
 
 h2 {
@@ -90,6 +98,12 @@ h4 {
   color: #b5bec4;
   font-weight: 300;
   padding: 5px;
+}
+
+hr {
+  color: #3e88b9;
+  border-style: dashed;
+  border-width: 1px;
 }
 
 div#dialogMenu > i {
@@ -140,7 +154,7 @@ input[type="text"] {
   min-height: 100%;
   height: 100%;
   min-width: 100%;
-  background: #001a2c;
+  background: #00090f;
 }
 
 #misc {
@@ -164,8 +178,8 @@ p.left {
   margin-bottom: 15px;
   padding: 5px;
   text-justify: inter-word;
-  background-color: #005b98;
-  border-color: #005b98;
+  background-color: #021b2c;
+  border-color: #021b2c;
   border-style: solid;
   border-width: 1px;
   position: relative;
@@ -182,7 +196,7 @@ p.left:before {
   left: 10px;
   bottom: -10px;
   border: 5px solid;
-  border-color: #005b98 transparent transparent #005b98;
+  border-color: #021b2c transparent transparent #021b2c;
 }
 
 p.right {
@@ -266,7 +280,7 @@ div.status {
   left: 50%;
   margin-left: -280px;
   z-index: 30;
-  background-color: #001a2c;
+  background-color: #00090f;
 }
 
 div#c1 {
@@ -314,7 +328,7 @@ div#crisis {
           box-shadow: 0px 0px 20px #030911;
   bottom: 38px;
   top: -450px;
-  background-color: #001a2c;
+  background-color: #00090f;
 }
 
 div#dialogFrame {
@@ -368,7 +382,7 @@ div#dialogFrame {
   z-index: 200;
   font-family: DPTFont;
   font-size: 18px;
-  background-color: #001a2c;
+  background-color: #00090f;
   overflow-y: auto;
   -webkit-box-shadow: 0px 0px 20px #030911;
           box-shadow: 0px 0px 20px #030911;
@@ -386,7 +400,7 @@ div#dialogFrame {
   width: 280px;
   height: 48px;
   border: 1px solid #030911;
-  background-color: #030911CC;
+  background-color: #030911BB;
   color: #005b98;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
@@ -406,7 +420,7 @@ div#dialogFrame {
   width: 25%;
   height: 48px;
   border: 1px solid #030911;
-  background-color: #030911CC;
+  background-color: #030911BB;
   color: #b5bec4;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
@@ -422,7 +436,7 @@ div#dialogFrame {
   width: 280px;
   height: 48px;
   border: 1px solid #030911;
-  background-color: #030911CC;
+  background-color: #030911BB;
   color: #b5bec4;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
@@ -488,7 +502,7 @@ div#dialogFrame {
   z-index: 2;
   font-family: DPTFontDin;
   font-size: 16px;
-  background-color: #030911CC;
+  background-color: #030911BB;
   visibility: hidden;
   bottom: 48px;
   left: 50%;
@@ -511,7 +525,7 @@ div#dialogFrame {
   z-index: 300;
   font-family: DPTFontDin;
   font-size: 18px;
-  background-color: #001a2c;
+  background-color: #00090f;
   -webkit-box-shadow: 0px 0px 20px #030911;
           box-shadow: 0px 0px 20px #030911;
 }
@@ -565,7 +579,6 @@ textarea#dialog {
   background-color: #002c4b;
   border: none;
   font-size: 16px;
-  width: 120px;
   height: 40px;
   margin: 5px auto;
   margin-left: 10px;
@@ -713,7 +726,7 @@ section {
   margin: 0 auto;
   width: 400px;
   bottom: 48px;
-  height: 1px;
+  height: 0px;
   text-align: right;
   position: absolute;
   left: 50%;
@@ -765,7 +778,7 @@ section ul li {
   height: 20px;
   font-size: 12px;
   line-height: 14px;
-  background-color: #001a2c;
+  background-color: #00090f;
 }
 
 /*----- Logo -----*/
@@ -838,7 +851,7 @@ section ul li {
 .smile-wrapper {
   width: 60px;
   height: 60px;
-  background: #001a2c;
+  background: #00090f;
   position: absolute;
   top: 25%;
   left: 42%;
@@ -847,7 +860,7 @@ section ul li {
 }
 
 .eye {
-  background: #001a2c;
+  background: #00090f;
   width: 10px;
   height: 10px;
   position: absolute;
@@ -869,7 +882,7 @@ section ul li {
   position: absolute;
   top: 35px;
   left: 15px;
-  background: #001a2c;
+  background: #00090f;
   border: none;
   border-top-left-radius: 60px;
   border-top-right-radius: 60px;
@@ -901,7 +914,7 @@ section ul li {
 .fb_gd_wrap .header {
   height: 50px;
   line-height: 50px;
-  background: #001a2c;
+  background: #00090f;
   position: relative;
 }
 
@@ -929,7 +942,7 @@ section ul li {
 
 .fb_gd_wrap .body {
   height: 100px;
-  background: #001a2c;
+  background: #00090f;
 }
 
 .fb_gd_wrap .body .text {
@@ -1024,7 +1037,7 @@ section ul li {
 }
 
 .fb_gd_wrap .footer .active {
-  background: #001a2c;
+  background: #00090f;
   -webkit-box-shadow: 0px 0px 20px #030911;
           box-shadow: 0px 0px 20px #030911;
 }

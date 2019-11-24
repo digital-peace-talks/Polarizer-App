@@ -1,13 +1,13 @@
 /* Easy theming */
 
-$dpt-menu: #1879a388;
+$dpt-menu: #f0faffDD;
 
 $dpt-prime-text: #002c4b;
 $dpt-second-text: #002c4b;
 $dpt-third-text: #005b98;
 
-$dpt-prime-base: #caefff;
-$dpt-second-base: #f0f3f5;
+$dpt-prime-base: #f2fafd;
+$dpt-second-base: #caefff;
 
 $dpt-prime-button: #66d1ff;
 $dpt-second-button: #005b98;
@@ -15,14 +15,15 @@ $dpt-second-button: #005b98;
 $dpt-left-chat: #a4d3e7;
 $dpt-right-chat: #7db6ce;
 
-$dpt-prime-border: #caefff;
-$dpt-second-border: #f0f3f5;
+$dpt-prime-border: #89bacf;
+$dpt-second-border: #366a8d;
 
 $dpt-red: #ff6666;
 $dpt-green: #15b76a;
 $dpt-blue: #005b98;
 
-$dpt-shadow: #2c2c2c;
+$dpt-shadow: #7db6ce;
+
 
 @font-face {
   font-family: "DPTFont";
@@ -86,8 +87,16 @@ i {
   font-size: 18px;
 }
 
+h1 {
+  font-family: "DPTFontDin";
+  color: $dpt-prime-text;
+  font-size: 28px;
+  font-weight: 500;
+  margin-top: 0px;
+}
+
 h2 {
-  font-family: "DPTFont";
+  font-family: "DPTFontDin";
   color: $dpt-prime-text;
   font-size: 16px;
   font-weight: 300;
@@ -112,6 +121,12 @@ h4 {
   color: $dpt-prime-text;
   font-weight: 300;
   padding: 5px;
+}
+
+hr {
+  color: $dpt-second-text;
+  border-style: dashed;
+  border-width: 1px;
 }
 
 div#dialogMenu > i {
@@ -458,6 +473,7 @@ div#dialogFrame {
   margin-left: -10px;
   float: left;
   margin-right: 20px;
+  filter: invert(60%);
 }
 
 .btn-bar-icon {
@@ -465,6 +481,7 @@ div#dialogFrame {
   position: relative;
   margin-left: -10px;
   bottom: 5px;
+  filter: invert(60%);
 }
 
 * {
@@ -556,7 +573,7 @@ textarea {
   height: 80px;
   margin: 0 auto;
   resize: none;
-  border-color: $dpt-second-border;
+  border-color: $dpt-prime-border;
   color: $dpt-third-text;
   border-style: solid;
   border-width: 1px;
@@ -583,7 +600,7 @@ textarea#dialog {
   background-color: $dpt-prime-button;
   border: none;
   font-size: 16px;
-  width: 120px;
+  //width: 120px;
   height: 40px;
   margin: 5px auto;
   margin-left: 10px;
@@ -705,7 +722,9 @@ nav a.close img {
   position: absolute;
   right: 6px;
   top: 0px;
+  filter: invert(60%);
 }
+
 nav > .close,
 nav a#nav-m:target {
   display: none;
@@ -728,7 +747,7 @@ section {
   margin: 0 auto;
   width: 400px;
   bottom: 48px;
-  height: 1px;
+  height: 0px;
   text-align: right;
   position: absolute;
   left: 50%;
@@ -781,6 +800,7 @@ section ul li {
   font-size: 12px;
   line-height: 14px;
   background-color: $dpt-prime-base;
+  border-color: $dpt-prime-border;
 }
 
 /*----- Logo -----*/

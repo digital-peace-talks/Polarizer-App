@@ -38,12 +38,27 @@ function settingsForm(opinionId, topicId) {
 	}
 	
 	jQuery('body').append(`
-		<div id="form">Preferences & Settings:<hr><br>
-		My passphrase:<br>
+		<div id="form"><h1>Settings:</h1>
+		<hr>
+		Your passphrase:
+		<br>
 		${whoami.user.phrase}
-		<input type="image" style="width:18px" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${whoami.user.phrase}');"/>
+		<input type="image" style="width:24px" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${whoami.user.phrase}');"/>
+		<br>
+		<hr>
+		<b>Change UI-Theme:</b>
+		<div>
+		<input class="button" type="button" value="MC" id="changetheme6">
+		<input class="button" type="button" value="Love" id="changetheme5">
+		<input class="button" type="button" value="Thx" id="changetheme4">
+		<input class="button" type="button" value="Dark" id="changetheme3">
+		<input class="button" type="button" value="Bright" id="changetheme2">
+		<input class="button" type="button" value="DPT" id="changetheme1">
+		</div>
 		<br>
 		<br>
+		<hr>
+		Change 3D-Theme:
 		<form id="settings">
 		${colors}
 		<br>
@@ -51,6 +66,36 @@ function settingsForm(opinionId, topicId) {
 		<input class="button" type="button" value="Cancel" name="close" id="closeSettingsForm">
 		</form></div>
 	`);
+
+	jQuery(document).on('click touch', "#changetheme1", function(event) {
+		document.getElementById('theme_css').href = 'dpt_classic.css';
+		focusAtCanvas();
+	});
+
+	jQuery(document).on('click touch', "#changetheme2", function(event) {
+		document.getElementById('theme_css').href = 'dpt_bright.css';
+		focusAtCanvas();
+	});
+
+	jQuery(document).on('click touch', "#changetheme3", function(event) {
+		document.getElementById('theme_css').href = 'dpt_dark.css';
+		focusAtCanvas();
+	});
+
+	jQuery(document).on('click touch', "#changetheme4", function(event) {
+		document.getElementById('theme_css').href = 'dpt_linden.css';
+		focusAtCanvas();
+	});
+
+	jQuery(document).on('click touch', "#changetheme5", function(event) {
+		document.getElementById('theme_css').href = 'dpt_love.css';
+		focusAtCanvas();
+	});
+
+	jQuery(document).on('click touch', "#changetheme6", function(event) {
+		document.getElementById('theme_css').href = 'dpt_mc.css';
+		focusAtCanvas();
+	});
 
 	jQuery(document).on('click touch', "#closeSettingsForm", function(event) {
 		jQuery('#form').remove();
@@ -410,6 +455,7 @@ var createGUIScene = function(dptMode) {
 		jQuery('body').append(`
 			<div id="form" class="helpframe">
 			<h1>About</h1>
+			<hr>
 			<p>Digital Peace Talks gUG (h.b.)</p>
 			<p>A digital space where everyone can express and understand opinions</p>
 			<a href="http://www.digitalpeacetalks.com" target="_blank">Visit Our Website</a>
