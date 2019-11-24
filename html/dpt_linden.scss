@@ -410,6 +410,11 @@ div#dialogFrame {
   bottom: 0px;
 }
 
+.myDialogs {
+  position: relative;
+  top: 30px;
+}
+
 .menu-btn {
   padding: 10px;
   padding-left: 20px;
@@ -603,6 +608,39 @@ textarea#dialog {
   margin-left: 10px;
   float: right;
   -webkit-appearance: none;
+}
+
+.closeButton {
+  font-family: DPTFontDin;
+  font-size: 32px;
+  transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  position: absolute;
+  background-color: transparent;
+  padding: 1.5px 7px;
+  width: 30px;
+  height: 30px;
+  top: 6px;
+  right: 6px;
+  border-radius: 50%;
+  border-color: transparent;
+  color: $dpt-third-text;
+  line-height: 0px;
+  text-indent: -7px;
+}
+
+.closeButton:hover {
+  transform: scale(1.4);
+  color: $dpt-prime-border;
+}
+
+.copyToClip{
+  filter: invert(100%);
+  width: 32px;
+  height: auto;
+  border-color: transparent;
+  position: relative;
+  top: 6px;
 }
 
 .buttondialog {
