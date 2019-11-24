@@ -752,7 +752,7 @@ function requestSearch() {
 		<form class="searchString">
 		<input type="text" id="searchString" name="searchString" style="width:100%;">
 		</form>
-		<input class="closeButton" type="button" value=06;" name="close" id="closeSettingsForm" >
+		<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm" >
 		</div>
 	`);
 	jQuery("#searchString").focus();
