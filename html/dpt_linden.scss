@@ -15,14 +15,14 @@ $dpt-second-button: #64921b;
 $dpt-left-chat: #64921b;
 $dpt-right-chat: #446410;
 
-$dpt-prime-border: #f0f3f5;
+$dpt-prime-border: #8dc237;
 $dpt-second-border: #64921b;
 
 $dpt-red: #ff6666;
 $dpt-green: #15b76a;
 $dpt-blue: #005b98;
 
-$dpt-shadow: #082403;
+$dpt-shadow: #89b11b;
 
 @font-face {
   font-family: "DPTFont";
@@ -86,6 +86,14 @@ i {
   font-size: 18px;
 }
 
+h1 {
+  font-family: "DPTFontDin";
+  color: $dpt-prime-text;
+  font-size: 28px;
+  font-weight: 500;
+  margin-top: 0px;
+}
+
 h2 {
   font-family: "DPTFont";
   color: $dpt-prime-text;
@@ -112,6 +120,12 @@ h4 {
   color: $dpt-prime-text;
   font-weight: 300;
   padding: 5px;
+}
+
+hr {
+  color: $dpt-second-text;
+  border-style: dashed;
+  border-width: 1px;
 }
 
 div#dialogMenu > i {
@@ -583,7 +597,7 @@ textarea#dialog {
   background-color: $dpt-prime-button;
   border: none;
   font-size: 16px;
-  width: 120px;
+  //width: 120px;
   height: 40px;
   margin: 5px auto;
   margin-left: 10px;
@@ -728,7 +742,7 @@ section {
   margin: 0 auto;
   width: 400px;
   bottom: 48px;
-  height: 1px;
+  height: 0px;
   text-align: right;
   position: absolute;
   left: 50%;

@@ -64,13 +64,21 @@ i {
   font-size: 18px;
 }
 
+h1 {
+  font-family: "DPTFontDin";
+  color: #002c4b;
+  font-size: 28px;
+  font-weight: 500;
+  margin-top: 0px;
+}
+
 h2 {
-  font-family: "DPTFont";
+  font-family: "DPTFontDin";
   color: #002c4b;
   font-size: 16px;
   font-weight: 300;
   padding-bottom: 15px;
-  border-bottom: #caefff;
+  border-bottom: #89bacf;
   border-bottom-style: solid;
   border-bottom-width: 1px;
 }
@@ -92,6 +100,12 @@ h4 {
   padding: 5px;
 }
 
+hr {
+  color: #002c4b;
+  border-style: dashed;
+  border-width: 1px;
+}
+
 div#dialogMenu > i {
   color: red;
 }
@@ -105,7 +119,7 @@ a {
 }
 
 input {
-  border-color: #f0f3f5;
+  border-color: #366a8d;
   color: #005b98;
   border-style: solid;
   border-width: 1px;
@@ -127,7 +141,7 @@ label#positive {
 }
 
 input[type="text"] {
-  border-color: #f0f3f5;
+  border-color: #366a8d;
   color: #005b98;
   border-style: solid;
   border-width: 1px;
@@ -140,7 +154,7 @@ input[type="text"] {
   min-height: 100%;
   height: 100%;
   min-width: 100%;
-  background: #caefff;
+  background: #f2fafd;
 }
 
 #misc {
@@ -266,7 +280,7 @@ div.status {
   left: 50%;
   margin-left: -280px;
   z-index: 30;
-  background-color: #caefff;
+  background-color: #f2fafd;
 }
 
 div#c1 {
@@ -276,7 +290,7 @@ div#c1 {
   float: left;
   position: absolute;
   font-size: 14px;
-  background-color: #f0f3f5;
+  background-color: #caefff;
   padding: 5px;
   bottom: 0px;
 }
@@ -297,7 +311,7 @@ div#c3 {
   position: fixed;
   text-align: left;
   font-size: 14px;
-  background-color: #f0f3f5;
+  background-color: #caefff;
   padding: 10px;
   width: 600px;
   left: 50%;
@@ -310,11 +324,11 @@ div#crisis {
   position: absolute;
   padding: 10px;
   color: #002c4b;
-  -webkit-box-shadow: 0px 0px 20px #2c2c2c;
-          box-shadow: 0px 0px 20px #2c2c2c;
+  -webkit-box-shadow: 0px 0px 20px #7db6ce;
+          box-shadow: 0px 0px 20px #7db6ce;
   bottom: 38px;
   top: -450px;
-  background-color: #caefff;
+  background-color: #f2fafd;
 }
 
 div#dialogFrame {
@@ -368,10 +382,10 @@ div#dialogFrame {
   z-index: 200;
   font-family: DPTFont;
   font-size: 18px;
-  background-color: #caefff;
+  background-color: #f2fafd;
   overflow-y: auto;
-  -webkit-box-shadow: 0px 0px 20px #2c2c2c;
-          box-shadow: 0px 0px 20px #2c2c2c;
+  -webkit-box-shadow: 0px 0px 20px #7db6ce;
+          box-shadow: 0px 0px 20px #7db6ce;
   bottom: 0px;
 }
 
@@ -385,8 +399,8 @@ div#dialogFrame {
   font-size: 20px;
   width: 280px;
   height: 48px;
-  border: 1px solid #caefff;
-  background-color: #1879a388;
+  border: 1px solid #89bacf;
+  background-color: #f0faffDD;
   color: #002c4b;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
@@ -405,8 +419,8 @@ div#dialogFrame {
   font-size: 20px;
   width: 25%;
   height: 48px;
-  border: 1px solid #caefff;
-  background-color: #1879a388;
+  border: 1px solid #89bacf;
+  background-color: #f0faffDD;
   color: #002c4b;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
@@ -421,8 +435,8 @@ div#dialogFrame {
   font-size: 20px;
   width: 280px;
   height: 48px;
-  border: 1px solid #caefff;
-  background-color: #1879a388;
+  border: 1px solid #89bacf;
+  background-color: #f0faffDD;
   color: #002c4b;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
@@ -437,6 +451,8 @@ div#dialogFrame {
   margin-left: -10px;
   float: left;
   margin-right: 20px;
+  -webkit-filter: invert(60%);
+          filter: invert(60%);
 }
 
 .btn-bar-icon {
@@ -444,6 +460,8 @@ div#dialogFrame {
   position: relative;
   margin-left: -10px;
   bottom: 5px;
+  -webkit-filter: invert(60%);
+          filter: invert(60%);
 }
 
 * {
@@ -480,7 +498,7 @@ div#dialogFrame {
   position: absolute;
   padding: 10px;
   top: 40px;
-  border: #caefff;
+  border: #89bacf;
   border-style: solid;
   border-width: 1px;
   width: 400px;
@@ -488,13 +506,13 @@ div#dialogFrame {
   z-index: 2;
   font-family: DPTFontDin;
   font-size: 16px;
-  background-color: #1879a388;
+  background-color: #f0faffDD;
   visibility: hidden;
   bottom: 48px;
   left: 50%;
   margin-left: -200px;
-  -webkit-box-shadow: 0px 0px 20px #2c2c2c;
-          box-shadow: 0px 0px 20px #2c2c2c;
+  -webkit-box-shadow: 0px 0px 20px #7db6ce;
+          box-shadow: 0px 0px 20px #7db6ce;
 }
 
 #form {
@@ -504,16 +522,16 @@ div#dialogFrame {
   left: 50%;
   padding: 20px;
   margin-left: -200px;
-  border: #caefff;
+  border: #89bacf;
   border-style: solid;
   border-width: 1px;
   color: #002c4b;
   z-index: 300;
   font-family: DPTFontDin;
   font-size: 18px;
-  background-color: #caefff;
-  -webkit-box-shadow: 0px 0px 20px #2c2c2c;
-          box-shadow: 0px 0px 20px #2c2c2c;
+  background-color: #f2fafd;
+  -webkit-box-shadow: 0px 0px 20px #7db6ce;
+          box-shadow: 0px 0px 20px #7db6ce;
 }
 
 #closeX {
@@ -522,7 +540,7 @@ div#dialogFrame {
   left: 0px;
   padding: 20px;
   margin-left: 300px;
-  border: #caefff;
+  border: #89bacf;
   border-style: solid;
   border-width: 1px;
   color: #002c4b;
@@ -538,7 +556,7 @@ textarea {
   height: 80px;
   margin: 0 auto;
   resize: none;
-  border-color: #f0f3f5;
+  border-color: #89bacf;
   color: #005b98;
   border-style: solid;
   border-width: 1px;
@@ -552,7 +570,7 @@ textarea#dialog {
   height: 20px;
   margin: 0 auto;
   resize: none;
-  border-color: #f0f3f5;
+  border-color: #366a8d;
   color: #005b98;
   border-style: solid;
   border-width: 1px;
@@ -565,7 +583,6 @@ textarea#dialog {
   background-color: #66d1ff;
   border: none;
   font-size: 16px;
-  width: 120px;
   height: 40px;
   margin: 5px auto;
   margin-left: 10px;
@@ -618,7 +635,7 @@ textarea#dialog {
 .helpimage {
   border-style: solid;
   border-width: 1px;
-  border-color: #caefff;
+  border-color: #89bacf;
   width: 100%;
   height: auto;
 }
@@ -686,6 +703,8 @@ nav a.close img {
   position: absolute;
   right: 6px;
   top: 0px;
+  -webkit-filter: invert(60%);
+          filter: invert(60%);
 }
 
 nav > .close,
@@ -713,7 +732,7 @@ section {
   margin: 0 auto;
   width: 400px;
   bottom: 48px;
-  height: 1px;
+  height: 0px;
   text-align: right;
   position: absolute;
   left: 50%;
@@ -765,7 +784,8 @@ section ul li {
   height: 20px;
   font-size: 12px;
   line-height: 14px;
-  background-color: #caefff;
+  background-color: #f2fafd;
+  border-color: #89bacf;
 }
 
 /*----- Logo -----*/
@@ -804,11 +824,11 @@ section ul li {
   margin: 0;
   width: 300px;
   height: 8px;
-  background: #caefff;
+  background: #89bacf;
   background: -webkit-gradient(linear, right top, left top, from(#15b76a), color-stop(#005b98), to(#ff6666));
   background: linear-gradient(to left, #15b76a, #005b98, #ff6666);
   border-radius: 1px;
-  border-color: #caefff;
+  border-color: #89bacf;
 }
 
 .slider:focus {
@@ -838,7 +858,7 @@ section ul li {
 .smile-wrapper {
   width: 60px;
   height: 60px;
-  background: #caefff;
+  background: #f2fafd;
   position: absolute;
   top: 25%;
   left: 42%;
@@ -847,7 +867,7 @@ section ul li {
 }
 
 .eye {
-  background: #caefff;
+  background: #f2fafd;
   width: 10px;
   height: 10px;
   position: absolute;
@@ -869,7 +889,7 @@ section ul li {
   position: absolute;
   top: 35px;
   left: 15px;
-  background: #caefff;
+  background: #f2fafd;
   border: none;
   border-top-left-radius: 60px;
   border-top-right-radius: 60px;
@@ -891,8 +911,8 @@ section ul li {
   height: 200px;
   background: transparent;
   z-index: 10;
-  -webkit-box-shadow: 0px 0px 20px #2c2c2c;
-          box-shadow: 0px 0px 20px #2c2c2c;
+  -webkit-box-shadow: 0px 0px 20px #7db6ce;
+          box-shadow: 0px 0px 20px #7db6ce;
   position: absolute;
   left: 500px;
   width: 400px;
@@ -901,7 +921,7 @@ section ul li {
 .fb_gd_wrap .header {
   height: 50px;
   line-height: 50px;
-  background: #caefff;
+  background: #f2fafd;
   position: relative;
 }
 
@@ -929,7 +949,7 @@ section ul li {
 
 .fb_gd_wrap .body {
   height: 100px;
-  background: #caefff;
+  background: #f2fafd;
 }
 
 .fb_gd_wrap .body .text {
@@ -961,7 +981,7 @@ section ul li {
 
 .fb_gd_wrap .footer {
   height: 50px;
-  background: #f0f3f5;
+  background: #caefff;
   font-size: 0;
 }
 
@@ -1024,9 +1044,9 @@ section ul li {
 }
 
 .fb_gd_wrap .footer .active {
-  background: #caefff;
-  -webkit-box-shadow: 0px 0px 20px #2c2c2c;
-          box-shadow: 0px 0px 20px #2c2c2c;
+  background: #f2fafd;
+  -webkit-box-shadow: 0px 0px 20px #7db6ce;
+          box-shadow: 0px 0px 20px #7db6ce;
 }
 
 /* button menu style for mobile */

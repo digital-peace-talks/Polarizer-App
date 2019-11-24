@@ -115,11 +115,11 @@ function setCaretToPos (input, pos) {
 
 function colorBlock(d) {
 	if(d > 0.25) {
-		return('<span style="color: #0f0">&#9608;&#9608;&#9608;</span>');
+		return('<span id="positive" style="font-size: 28px">&#128512; Positive</span>');
 	} else if(d < -0.25) {
-		return('<span style="color: #f00">&#9608;&#9608;&#9608;</span>');
+		return('<span id="negative" style="font-size: 28px">&#128544; Negative</span>');
 	} else {
-		return('<span style="color: #00f">&#9608;&#9608;&#9608;</span>');
+		return('<span id="neutral" style="font-size: 28px">&#128528; Neutral</span>');
 	}
 }
 
