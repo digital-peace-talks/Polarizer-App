@@ -157,6 +157,8 @@
       float: left;
       -webkit-appearance: none;
       padding: 5px;
+      text-align: center;
+      line-height: 60px;
     }
   
   /* button menu style for mobile */

@@ -78,7 +78,7 @@ router.get('/', async (req, res, next) => {
                                 <br>
                                 Please write it down or memorize it! 
                                 If you loose or forget this phrase there is no chance to generate a new one for your existing account.
-                                <a style="color: #F0F3F5; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">I understand and want to enter &#9655;</a>
+                                <a class="start" href="/recover?phrase=${encodeURIComponent(phrase)}">I understand and want to enter &#9655;</a>
                                 <br>
                                 <br>
                             </div>
