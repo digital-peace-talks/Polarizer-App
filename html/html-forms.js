@@ -64,7 +64,7 @@ function settingsForm(opinionId, topicId) {
 		${colors}
 		<br>
 		<input class="button" type="submit" value="Apply">
-		<input class="closeButton" type="button" value="&#10060;" name="close" id="closeSettingsForm">
+		<input class="closeButton" type="button" value="&#10006;" name="close" id="closeSettingsForm">
 		</form></div>
 	`);
 
@@ -144,7 +144,7 @@ function propositionForm(opinionId, topicId) {
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
 		<input type="hidden" id="topicId" name="topicId" value="${topicId}">
 		<br><input class="button" type="submit" value="Confirm">
-		<input class="closeButton" type="button" value="&#10060;" name="close window" id="ClosePropositionForm"></form></div>
+		<input class="closeButton" type="button" value="&#10006;" name="close window" id="ClosePropositionForm"></form></div>
 	`);
 
 	jQuery(".proposition").focus();
@@ -231,7 +231,7 @@ function topicForm(edit, context) {
 			Please enter a new topic:<br><form id="topic">
 			<textarea name="topic" class="topic">${topic}</textarea><br>
 			<input class="button" type="submit" value="Confirm">
-			<input class="closeButton" type="button" value="&#10060;" name="close window"
+			<input class="closeButton" type="button" value="&#10006;" name="close window"
 			id="CloseTopicForm">${edit}${hiddenTopicId}</form></div>
 		`);
 	}
@@ -316,7 +316,7 @@ function opinionForm(edit, context) {
 		Please enter a new opinion:<br> <form id="opinion">
 		<textarea name="opinion" class="opinion">${opinion}</textarea><br>
 		<input class="button" type="submit" value="Confirm"> 
-		<input class="closeButton" type="button" value="&#10060;" name="close window"
+		<input class="closeButton" type="button" value="&#10006;" name="close window"
 		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}</form></div>
 	`);
 
@@ -396,7 +396,7 @@ function loadDialogList(restObj) {
 	jQuery('body').append(`<div id="dialogMenu"></div>`);
 
 	jQuery('#dialogMenu').empty();
-	jQuery('#dialogMenu').append(`<button class="closeButton" id="close-dialog-btn">&#10060;</button>`);
+	jQuery('#dialogMenu').append(`<button class="closeButton" id="close-dialog-btn">&#10006;</button>`);
 	
 	jQuery(document).on('click touch', "#close-dialog-btn", function(event) {
 
@@ -475,7 +475,7 @@ var createGUIScene = function(dptMode) {
 			<p>Digital Peace Talks gUG (h.b.)</p>
 			<p>A digital space where everyone can express and understand opinions</p>
 			<a href="http://www.digitalpeacetalks.com" target="_blank">Visit Our Website</a>
-			<button class="closeButton" id="close-btn">&#10060;</button>
+			<button class="closeButton" id="close-btn">&#10006;</button>
 			</div>
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
@@ -520,7 +520,7 @@ var createGUIScene = function(dptMode) {
 			<hr>
 			<p>Navigation:</p>
 		<img src="/dpt_gestures.png" alt="help" class="helpimage">
-		<button class="closeButton" id="close-btn">&#10060;</button>
+		<button class="closeButton" id="close-btn">&#10006;</button>
 		</div>
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
@@ -752,7 +752,7 @@ function requestSearch() {
 		<form class="searchString">
 		<input type="text" id="searchString" name="searchString" style="width:100%;">
 		</form>
-		<input class="closeButton" type="button" value="&#10060;" name="close" id="closeSettingsForm" >
+		<input class="closeButton" type="button" value=06;" name="close" id="closeSettingsForm" >
 		</div>
 	`);
 	jQuery("#searchString").focus();
@@ -931,7 +931,7 @@ function requestHelp() {
 		jQuery('body').append(`
 			<div id="form" class="helpframe">
 			<img src="/dpt_gestures.png" alt="help" class="helpimage">
-			<button class="closeButton" id="close-btn">&#10060;</button>
+			<button class="closeButton" id="close-btn">&#10006;</button>
 			</div>
 		`);
 		window.addEventListener('message', event => {
