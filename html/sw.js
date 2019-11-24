@@ -1,6 +1,9 @@
 var cacheName = 'dpt-v1';
 const filesToCache = [
 	'/',
+];
+const XfilesToCache = [
+	'/',
 	'/external/babylon.gui.min.js',
 	'/external/babylon.js',
 	'/external/babylonjs.materials.min.js',
