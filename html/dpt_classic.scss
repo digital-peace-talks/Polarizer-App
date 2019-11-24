@@ -34,6 +34,11 @@ $dpt-shadow: #030911;
   src: url("/din.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "DPTSymbols";
+  src: url("/din.ttf") format("truetype");
+}
+
 .no-bounce {
   width: 100%;
   height: 100%;
