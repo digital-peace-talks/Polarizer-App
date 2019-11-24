@@ -220,6 +220,29 @@ function main() {
 					whoami.dptUUID = restObj.data.dptUUID;
 					if(restObj.data.message == "logged in") {
 						whoami.user = restObj.data.user;
+						var htmlScheme = '';
+						switch(whoami.user.preferences.htmlScheme) {
+							case 1:
+								htmlScheme = "dpt_bright.css";
+								break;
+							case 2:
+								htmlScheme = "dpt_dark.css";
+								break;
+							case 3:
+								htmlScheme = "dpt_linden.css";
+								break;
+							case 4:
+								htmlScheme = "dpt_love.css";
+								break;
+							case 5:
+								htmlScheme = "dpt_mc.css";
+								break;
+							case 0:
+							default:
+								htmlScheme = "dpt_classic.css";
+								break;
+						}
+						document.getElementById('theme_css').href = htmlScheme;
 						currentScene = createGenericScene("topicScene");
 						currentScene.name = 'topicScene';
 						dpt.getTopic();

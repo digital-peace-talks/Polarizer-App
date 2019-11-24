@@ -15,6 +15,7 @@ function settingsForm(opinionId, topicId) {
 
 	console.log('settings/preferences');
 
+	var theme = 0;
 	var colors = "Color scheme:<br>";
 	for(var i = 0; i <= 2; i++) {
 		if(whoami.user.preferences.colorScheme == i) {
@@ -69,37 +70,36 @@ function settingsForm(opinionId, topicId) {
 
 	jQuery(document).on('click touch', "#changetheme1", function(event) {
 		document.getElementById('theme_css').href = 'dpt_classic.css';
-		focusAtCanvas();
+		theme = 0;
 	});
 
 	jQuery(document).on('click touch', "#changetheme2", function(event) {
 		document.getElementById('theme_css').href = 'dpt_bright.css';
-		focusAtCanvas();
+		theme = 1;
 	});
 
 	jQuery(document).on('click touch', "#changetheme3", function(event) {
 		document.getElementById('theme_css').href = 'dpt_dark.css';
-		focusAtCanvas();
+		theme = 2;
 	});
 
 	jQuery(document).on('click touch', "#changetheme4", function(event) {
 		document.getElementById('theme_css').href = 'dpt_linden.css';
-		focusAtCanvas();
+		theme = 3;
 	});
 
 	jQuery(document).on('click touch', "#changetheme5", function(event) {
 		document.getElementById('theme_css').href = 'dpt_love.css';
-		focusAtCanvas();
+		theme = 4;
 	});
 
 	jQuery(document).on('click touch', "#changetheme6", function(event) {
 		document.getElementById('theme_css').href = 'dpt_mc.css';
-		focusAtCanvas();
+		theme = 5;
 	});
 
 	jQuery(document).on('click touch', "#closeSettingsForm", function(event) {
 		jQuery('#form').remove();
-		focusAtCanvas();
 		event.preventDefault();
 	});
 	
@@ -107,7 +107,13 @@ function settingsForm(opinionId, topicId) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		whoami.user.preferences.colorScheme = jQuery('input[name=colorScheme]:checked').val() * 1;
-		dpt.userUpdate(whoami.dptUUID, {"preferences.colorScheme": whoami.user.preferences.colorScheme});
+		whoami.user.preferences.htmlScheme = theme;
+		dpt.userUpdate(whoami.dptUUID,
+			{
+				"preferences.colorScheme": whoami.user.preferences.colorScheme,
+				"preferences.htmlScheme": whoami.user.preferences.htmlScheme
+			},
+		);
 		jQuery('#form').remove();
 		
 		if(currentScene.name == "topicScene") {
@@ -123,6 +129,7 @@ function settingsForm(opinionId, topicId) {
 			currentScene.name = "opinionScene";
 			dpt.getOpinionByTopic(currentTopic);
 		}
+		focusAtCanvas();
 
 	});
 }
