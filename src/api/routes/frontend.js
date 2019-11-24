@@ -81,6 +81,8 @@ router.get('/', async (req, res, next) => {
                                 If you loose or forget this phrase there is no chance to generate a new one for your existing account.
                                 <a class="start" href="/recover?phrase=${encodeURIComponent(phrase)}">Let me enter &#9655;</a>
                                 <br>
+								<br>
+								<br>
                                 <br>
                             </div>
                             <div class="rechts">
@@ -130,7 +132,10 @@ router.get('/', async (req, res, next) => {
                                 Just enter and continue where you left off last time.<br>
                                 <br>
                             	<a class="start" href=/dpt3d.html>Enter the App &#9655;</a>
-                                <br>
+								<br>
+								<br>
+								<br>
+								<br>
                                 <!--
                                 <a class="start" onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
                                 -->
