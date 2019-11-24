@@ -1,911 +1,921 @@
 /* Easy theming */
 
-$dpt-blue01: #0a120a;
-$dpt-blue02: #002C4B;
-$dpt-blue03: #005B98;
-$dpt-blue04: #28A9E1;
-$dpt-blue05: #66D1FF;
-$dpt-white: #F0F3F5;
-$dpt-red: #FF6666;
-$dpt-green: #15B76A;
-$dpt-blue03-semi: #005B9888;
+$dpt-menu: #005b9888;
+
+$dpt-prime-text: #f0f3f5;
+$dpt-second-text: #66d1ff;
+$dpt-third-text: #005b98;
+
+$dpt-prime-base: #28a9e1;
+$dpt-second-base: #005b98;
+
+$dpt-prime-button: #002c4b;
+$dpt-second-button: #005b98;
+
+$dpt-left-chat: #005b98;
+$dpt-right-chat: #002c4b;
+
+$dpt-prime-border: #f0f3f5;
+$dpt-second-border: #005b98;
+
+$dpt-red: #ff6666;
+$dpt-green: #15b76a;
+$dpt-blue: #005b98;
+
+$dpt-shadow: #0a120a;
+
 @font-face {
-    font-family: "DPTFont";
-    src: url("/font.ttf") format("truetype");
+  font-family: "DPTFont";
+  src: url("/font.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: "DPTFontDin";
-    src: url("/din.ttf") format("truetype");
+  font-family: "DPTFontDin";
+  src: url("/din.ttf") format("truetype");
 }
 
-.no-bounce { 
-    width: 100%; 
-    height: 100%; 
-    overflow-y: scroll; 
-    -webkit-overflow-scrolling: touch; 
+.no-bounce {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
-.no-bounce > div { 
-    width: 100%; 
-    height: 100%; 
-    overflow-y: scroll; 
-    -webkit-overflow-scrolling: touch; }
-.no-bounce > div > div { 
-    width: 100%; 
-    min-height: 101%; 
- }
+.no-bounce > div {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+.no-bounce > div > div {
+  width: 100%;
+  min-height: 101%;
+}
 
 html,
 body {
-    font-family: "DPTFont";
-    width: 100%;
-    height: 100%;
-    margin: 0px;
-    overflow: hidden;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    bottom: 0px;
-    right: 0px;
+  font-family: "DPTFont";
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  overflow: hidden;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
 }
 
 #renderCanvas {
-    width: 100%;
-    height: 100%;
-    touch-action: none;
-    position: absolute;
-    z-index: 1;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  position: absolute;
+  z-index: 1;
 }
 
 #main {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 i {
-    font-family: "DPTFontDin";
-    font-style: inherit;
-    color: $dpt-blue05;
-    font-weight: 700;
-    font-size: 18px;
+  font-family: "DPTFontDin";
+  font-style: inherit;
+  color: $dpt-second-text;
+  font-weight: 700;
+  font-size: 18px;
 }
 
 h2 {
-    font-family: "DPTFont";
-    color: $dpt-white;
-    font-size: 16px;
-    font-weight: 300;
-    padding-bottom: 15px;
-    border-bottom: $dpt-white;
-    border-bottom-style: solid;
-    border-bottom-width: 1px;
+  font-family: "DPTFont";
+  color: $dpt-prime-text;
+  font-size: 16px;
+  font-weight: 300;
+  padding-bottom: 15px;
+  border-bottom: $dpt-prime-border;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
 }
 
 h3 {
-    font-family: "DPTFontDin";
-    font-size: 32px;
-    color: $dpt-blue03;
-    border-color: transparent;
-    border-bottom: 1px solid $dpt-blue05;
-    padding-bottom: 20px;
+  font-family: "DPTFontDin";
+  font-size: 32px;
+  color: $dpt-third-text;
+  border-color: transparent;
+  border-bottom: 1px solid $dpt-third-text;
+  padding-bottom: 20px;
 }
 
 h4 {
-    font-family: "DPTFontDin";
-    font-size: 18px;
-    color: $dpt-white;
-    font-weight: 300;
-    padding: 5px;
+  font-family: "DPTFontDin";
+  font-size: 18px;
+  color: $dpt-prime-text;
+  font-weight: 300;
+  padding: 5px;
 }
 
-div#dialogMenu>i {
-    color: 00ccff !important;
+div#dialogMenu > i {
+  color: red; // keine wirkung
 }
 
 i#props {
-    line-height: 0px;
+  line-height: 0px;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 input {
-    font-family: DPTFont;
-    font-size: 18px;
+  border-color: $dpt-second-border;
+  color: $dpt-third-text;
+  border-style: solid;
+  border-width: 1px;
+  font-weight: normal;
+  font-family: DPTFont;
+  font-size: 18px;
 }
 
 label#negative {
-    color: $dpt-red;
+  color: $dpt-red;
 }
 
 label#neutral {
-    color: $dpt-blue05;
+  color: $dpt-blue;
 }
 
 label#positive {
-    color: $dpt-green;
+  color: $dpt-green;
 }
 
 // dunkles inputfeld ändern
-input[type=text] {
-    background: $dpt-blue01;
-    border-color: $dpt-blue03;
-    color: $dpt-blue03;
-    font-weight: bold;
-    padding: 4px;
-    width: 100%
+input[type="text"] {
+  border-color: $dpt-second-border;
+  color: $dpt-third-text;
+  border-style: solid;
+  border-width: 1px;
+  font-weight: normal;
+  padding: 4px;
+  width: 100%;
 }
 
 .table {
-    min-height: 100%;
-    height: 100%;
-    min-width: 100%;
-    background: $dpt-blue03;
+  min-height: 100%;
+  height: 100%;
+  min-width: 100%;
+  background: $dpt-prime-base;
 }
 
 #misc {
-    position: absolute;
-    z-index: 1;
-    margin: 0 auto;
+  position: absolute;
+  z-index: 1;
+  margin: 0 auto;
 }
 
 #misc2 {
-    position: absolute;
-    z-index: 220;
-    margin: 0 auto;
-    width: 400px;
-    left: 50%;
-    margin-left: -200px;
-    bottom: 0px;
+  position: absolute;
+  z-index: 220;
+  margin: 0 auto;
+  width: 400px;
+  left: 50%;
+  margin-left: -200px;
+  bottom: 0px;
 }
 
 p.left {
-    margin: 5px;
-    margin-bottom: 15px;
-    padding: 5px;
-    text-justify: inter-word;
-    background-color: $dpt-blue03;
-    border-color: $dpt-blue03;
-    border-style: solid;
-    border-width: 1px;
-    position: relative;
-    color: $dpt-white;
-    font-size: 18px;
-    margin-left: 20px;
+  margin: 5px;
+  margin-bottom: 15px;
+  padding: 5px;
+  text-justify: inter-word;
+  background-color: $dpt-left-chat;
+  border-color: $dpt-left-chat;
+  border-style: solid;
+  border-width: 1px;
+  position: relative;
+  color: $dpt-prime-text;
+  font-size: 18px;
+  margin-left: 20px;
 }
 
 p.left:before {
-    content: ' ';
-    position: absolute;
-    width: 0px;
-    height: 0px;
-    left: 10px;
-    bottom: -10px;
-    border: 5px solid;
-    border-color: $dpt-blue03 transparent transparent $dpt-blue03;
+  content: " ";
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  left: 10px;
+  bottom: -10px;
+  border: 5px solid;
+  border-color: $dpt-left-chat transparent transparent $dpt-left-chat;
 }
 
 p.right {
-    margin: 5px;
-    margin-bottom: 15px;
-    padding: 5px;
-    text-align: justify-right;
-    text-justify: inter-word;
-    background-color: $dpt-blue02;
-    border-color: $dpt-blue02;
-    border-style: solid;
-    border-width: 1px;
-    position: relative;
-    color: $dpt-white;
-    font-size: 18px;
-    margin-left: 20px;
+  margin: 5px;
+  margin-bottom: 15px;
+  padding: 5px;
+  text-align: justify-right;
+  text-justify: inter-word;
+  background-color: $dpt-right-chat;
+  border-color: $dpt-right-chat;
+  border-style: solid;
+  border-width: 1px;
+  position: relative;
+  color: $dpt-prime-text;
+  font-size: 18px;
+  margin-left: 20px;
 }
 
 p.right:before {
-    content: ' ';
-    position: absolute;
-    width: 0px;
-    height: 0px;
-    right: 10px;
-    bottom: -10px;
-    border: 5px solid;
-    border-left: 5px solid transparent;
-    border-right: 5px solid $dpt-blue02;
-    border-top: 5px solid $dpt-blue02;
-    border-bottom: 5px solid transparent;
+  content: " ";
+  position: absolute;
+  width: 0px;
+  height: 0px;
+  right: 10px;
+  bottom: -10px;
+  border: 5px solid;
+  border-left: 5px solid transparent;
+  border-right: 5px solid $dpt-right-chat;
+  border-top: 5px solid $dpt-right-chat;
+  border-bottom: 5px solid transparent;
 }
 
 div.top {
-    height: 100%;
-    position: relative;
-    top: 0px;
+  height: 100%;
+  position: relative;
+  top: 0px;
 }
 
 div.middle {
-    z-index: 10;
-    position: relative;
-    width: 100%;
+  z-index: 10;
+  position: relative;
+  width: 100%;
 }
 
 div.bottom {
-    height: 100%;
-    position: center;
-    bottom: 0px;
+  height: 100%;
+  position: center;
+  bottom: 0px;
 }
 
 div.dialogInfo {
-    visibility: hidden;
-    line-height: 0px;
-    font-size: 0px;
+  visibility: hidden;
+  line-height: 0px;
+  font-size: 0px;
 }
 
 div.col {
-    float: left;
-    padding-left: 10px;
-    height: 100%;
-    width: 30%;
-    max-width: 30%;
-    overflow-y: auto;
+  float: left;
+  padding-left: 10px;
+  height: 100%;
+  width: 30%;
+  max-width: 30%;
+  overflow-y: auto;
 }
 
 div.row:after {
-    content: "";
-    display: table;
-    clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 div.hide {
-    visibility: hidden;
-    line-height: 0%;
+  visibility: hidden;
+  line-height: 0%;
 }
 
 div.status {
-    bottom: 50px;
-    width: 560px;
-    position: fixed;
-    left: 50%;
-    margin-left: -280px;
-    z-index: 30;
-    background-color: $dpt-blue04;
+  bottom: 38px;
+  width: 560px;
+  position: fixed;
+  left: 50%;
+  margin-left: -280px;
+  z-index: 30;
+  background-color: $dpt-prime-base;
 }
 
 div#c1 {
-    font-family: "DPTFont";
-    text-justify: inter-word;
-    width: 100%;
-    float: left;
-    position: absolute;
-    font-size: 14px;
-    background-color: $dpt-blue03;
-    padding: 5px;
-    bottom: 0px;
+  font-family: "DPTFont";
+  text-justify: inter-word;
+  width: 100%;
+  float: left;
+  position: absolute;
+  font-size: 14px;
+  background-color: $dpt-second-base;
+  padding: 5px;
+  bottom: 0px;
 }
 
 div#c2 {
-    font-family: "DPTFont";
-    position: relative;
-    bottom: 0px;
-    float: left;
-    width: 100%;
-    padding-right: 16px;
-    padding-bottom: 160px;
+  font-family: "DPTFont";
+  position: relative;
+  bottom: 0px;
+  float: left;
+  width: 100%;
+  padding-right: 16px;
+  padding-bottom: 180px;
 }
 
 div#c3 {
-    font-family: "DPTFont";
-    float: left;
-    position: fixed;
-    text-align: left;
-    font-size: 14px;
-    background-color: $dpt-blue03;
-    padding: 10px;
-    width: 600px;
-    left: 50%;
-    margin-left: -300px;
-    bottom: 0px;
+  font-family: "DPTFont";
+  float: left;
+  position: fixed;
+  text-align: left;
+  font-size: 14px;
+  background-color: $dpt-second-base;
+  padding: 10px;
+  width: 600px;
+  left: 50%;
+  margin-left: -300px;
+  bottom: 0px;
 }
 
 div#crisis {
-    font-family: "DPTFont";
-    position: absolute;
-    padding: 10px;
-    color: $dpt-white;
-    background: $dpt-blue04;
-    box-shadow: 0px 0px 10px $dpt-blue02;
-    bottom: 38px;
-    top: -450px;
+  font-family: "DPTFont";
+  position: absolute;
+  padding: 10px;
+  color: $dpt-prime-text;
+  box-shadow: 0px 0px 10px $dpt-shadow;
+  bottom: 38px;
+  top: -450px;
+  background-color: $dpt-prime-base;
 }
 
-
+// Überschrift (topic) Dialog
 div#dialogFrame {
-    font-family: "DPTFont";
-    border-width: 0px;
-    color: $dpt-white;
-    margin-left: 0%;
-    margin-right: 0%;
-    min-width: 80%;
-    bottom: 40px;
-    left: 0px;
-    background-color: $dpt-blue04;
+  font-family: "DPTFont";
+  border-width: 0px;
+  color: $dpt-prime-text;
+  margin-left: 0%;
+  margin-right: 0%;
+  min-width: 80%;
+  bottom: 40px;
+  left: 0px;
 }
 
+//menü rechts oben
 #overlay {
-    /* margin:5%; */
-    position: absolute;
-    display: grid;
-    background-color: rgba(0, 0, 0, 0);
-    border: 0px;
-    z-index: 400;
-    /* grid-auto-flow: column; */
-    grid-template-columns: 280px;
-    /* pointer-events: none; */
-    right: 0px;
+  /* margin:5%; */
+  position: absolute;
+  display: grid;
+  background-color: transparent;
+  border: 0px;
+  z-index: 400;
+  /* grid-auto-flow: column; */
+  grid-template-columns: 280px;
+  //pointer-events: none;
+  right: 0px;
 }
 
 #menubar {
-    /* margin:5%; */
-    position: fixed;
-    bottom: 0px;
-    float: left;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0);
-    border: 0px;
-    z-index: 100;
-    /* grid-auto-flow: column; */
-    grid-template-columns: 210px;
-    /* pointer-events: none; */
-
+  /* margin:5%; */
+  position: fixed;
+  bottom: 0px;
+  float: left;
+  width: 100%;
+  background-color: transparent;
+  border: 0px;
+  z-index: 100;
+  /* grid-auto-flow: column; */
+  grid-template-columns: 210px;
+  /* pointer-events: none; */
 }
 
-
-
 #dialogForm {
-    position: absolute;
-    top: 40px;
-    left: 50%;
-    padding: 10px;
-    margin-left: -300px;
-    color: $dpt-white;
-    width: 600px;
-    z-index: 200;
-    font-family: DPTFont;
-    font-size: 18px;
-    background-color: $dpt-blue04;
-    overflow-y: auto;
-    box-shadow: 0px 0px 10px $dpt-blue02;
-    bottom: 0px;
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  padding: 10px;
+  margin-left: -300px;
+  color: $dpt-prime-text;
+  width: 600px;
+  z-index: 200;
+  font-family: DPTFont;
+  font-size: 18px;
+  background-color: $dpt-prime-base;
+  overflow-y: auto;
+  box-shadow: 0px 0px 10px $dpt-shadow;
+  bottom: 0px;
 }
 
 .menu-btn {
-    padding: 10px;
-    padding-left: 20px;
-    margin: 0px;
-    display: none;
-    font-family: "DPTFontDin";
-    text-transform: uppercase;
-    font-size: 20px;
-    width: 280px;
-    height: 48px;
-    border: 1px solid $dpt-white;
-    background-color: $dpt-blue03-semi;
-    color: $dpt-white;
-    -webkit-box-pack: left;
-    -ms-flex-pack: left;
-    justify-content: left;
-    text-align: left;
-    background-size: cover;
+  padding: 10px;
+  padding-left: 20px;
+  margin: 0px;
+  display: none;
+  font-family: "DPTFontDin";
+  text-transform: uppercase;
+  font-size: 20px;
+  width: 280px;
+  height: 48px;
+  border: 1px solid $dpt-prime-border;
+  background-color: $dpt-menu;
+  color: $dpt-prime-text;
+  -webkit-box-pack: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  text-align: left;
+  background-size: cover;
 }
 
 .menu-btn-bar {
-    padding: 10px;
-    padding-left: 20px;
-    margin: 0px;
-    float: left;
-    font-family: "DPTFontDin";
-    text-transform: uppercase;
-    font-size: 20px;
-    width: 25%;
-    height: 48px;
-    border: 1px solid $dpt-white;
-    background-color: $dpt-blue03-semi;
-    color: $dpt-white;
-    -webkit-box-pack: left;
-    -ms-flex-pack: left;
-    background-size: cover;
+  padding: 10px;
+  padding-left: 20px;
+  margin: 0px;
+  float: left;
+  font-family: "DPTFontDin";
+  text-transform: uppercase;
+  font-size: 20px;
+  width: 25%;
+  height: 48px;
+  border: 1px solid $dpt-prime-border;
+  background-color: $dpt-menu;
+  color: $dpt-prime-text;
+  -webkit-box-pack: left;
+  -ms-flex-pack: left;
+  background-size: cover;
 }
 
 .menu-entry {
-	padding: 10px;
-	padding-left: 20px;
-	margin: 0px;
-	font-family: "DPTFontDin";
-	font-size: 20px;
-	width: 280px;
-	height: 48px;
-	border: 1px solid #F0F3F5;
-	background-color: #005B9888;
-	color: #F0F3F5;
-	-webkit-box-pack: left;
-	-ms-flex-pack: left;
-	justify-content: left;
-	text-align: left;
-	background-size: cover;
+  padding: 10px;
+  padding-left: 20px;
+  margin: 0px;
+  font-family: "DPTFontDin";
+  font-size: 20px;
+  width: 280px;
+  height: 48px;
+  border: 1px solid $dpt-prime-border;
+  background-color: $dpt-menu;
+  color: $dpt-prime-text;
+  -webkit-box-pack: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  text-align: left;
+  background-size: cover;
 }
 
 .btn-icon {
-    height: 35px;
-    position: relative;
-    margin-left: -10px;
-    float: left;
-    margin-right: 20px;
+  height: 35px;
+  position: relative;
+  margin-left: -10px;
+  float: left;
+  margin-right: 20px;
 }
 
 .btn-bar-icon {
-    height: 48px;
-    position: relative;
-    margin-left: -10px;
-    bottom: 5px;
+  height: 48px;
+  position: relative;
+  margin-left: -10px;
+  bottom: 5px;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .dialogleft {
-    padding: 5px;
-    float: left;
-    width: 45%;
-    font-size: 14px;
-    /* The width is 45%, by default */
+  padding: 5px;
+  float: left;
+  width: 45%;
+  font-size: 14px;
+  /* The width is 45%, by default */
 }
 
 .dialogcenter {
-    padding: 20px;
-    float: left;
-    width: 10%;
-    font-size: 36px;
-    text-align: center;
-    /* The width is 10%, by default */
+  padding: 20px;
+  float: left;
+  width: 10%;
+  font-size: 36px;
+  text-align: center;
+  /* The width is 10%, by default */
 }
 
 .dialogright {
-    padding: 5px;
-    float: left;
-    width: 45%;
-    font-size: 14px;
-    /* The width is 45%, by default */
+  padding: 5px;
+  float: left;
+  width: 45%;
+  font-size: 14px;
+  /* The width is 45%, by default */
 }
 
 #dialogMenu {
-    position: absolute;
-    padding: 10px;
-    top: 40px;
-    border: $dpt-white;
-    border-style: solid;
-    border-width: 1px;
-    color: $dpt-blue03;
-    width: 400px;
-    overflow-y: auto;
-    z-index: 2;
-    font-family: DPTFontDin;
-    font-size: 16px;
-    background-color: $dpt-blue02;
-    visibility: hidden;
-    bottom: 48px;
-    left: 50%;
-    margin-left: -200px;
+  position: absolute;
+  padding: 10px;
+  top: 40px;
+  border: $dpt-prime-border;
+  border-style: solid;
+  border-width: 1px;
+  width: 400px;
+  overflow-y: auto;
+  z-index: 2;
+  font-family: DPTFontDin;
+  font-size: 16px;
+  background-color: $dpt-menu;
+  visibility: hidden;
+  bottom: 48px;
+  left: 50%;
+  margin-left: -200px;
 }
 
 #form {
-    position: absolute;
-    bottom: 48px;
-    width: 400px;
-    left: 50%;
-    padding: 20px;
-    margin-left: -200px;
-    border: $dpt-white;
-    border-style: solid;
-    border-width: 1px;
-    color: $dpt-blue02;
-    z-index: 300;
-    font-family: DPTFontDin;
-    font-size: 18px;
-    background-color: $dpt-blue04;
-    box-shadow: 0px 0px 10px $dpt-blue02;
+  position: absolute;
+  bottom: 48px;
+  width: 400px;
+  left: 50%;
+  padding: 20px;
+  margin-left: -200px;
+  border: $dpt-prime-border;
+  border-style: solid;
+  border-width: 1px;
+  color: $dpt-prime-text;
+  z-index: 300;
+  font-family: DPTFontDin;
+  font-size: 18px;
+  background-color: $dpt-prime-base;
+  box-shadow: 0px 0px 10px $dpt-shadow;
 }
 
 #closeX {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    padding: 20px;
-    margin-left: 300px;
-    border: $dpt-white;
-    border-style: solid;
-    border-width: 1px;
-    color: $dpt-white;
-    z-index: 200;
-    font-family: DPTFont;
-    font-size: 18px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding: 20px;
+  margin-left: 300px;
+  border: $dpt-prime-border;
+  border-style: solid;
+  border-width: 1px;
+  color: $dpt-prime-text;
+  z-index: 200;
+  font-family: DPTFont;
+  font-size: 18px;
 }
 
 textarea {
-    font-family: DPTFont;
-    color: $dpt-blue03;
-    background-color: #ffffff;
-    font-size: 18px;
-    width: 100%;
-    height: 80px;
-    margin: 0 auto;
-    resize: none;
+  font-family: DPTFont;
+  font-size: 18px;
+  width: 100%;
+  height: 80px;
+  margin: 0 auto;
+  resize: none;
+  border-color: $dpt-second-border;
+  color: $dpt-third-text;
+  border-style: solid;
+  border-width: 1px;
+  font-weight: normal;
 }
 
 textarea#dialog {
-    font-family: DPTFont;
-    color: $dpt-blue03;
-    background-color: #ffffff;
-    font-size: 18px;
-    width: 90%;
-    height: 20px;
-    margin: 0 auto;
-    resize: none;
+  font-family: DPTFont;
+  font-size: 18px;
+  width: 90%;
+  height: 20px;
+  margin: 0 auto;
+  resize: none;
+  border-color: $dpt-second-border;
+  color: $dpt-third-text;
+  border-style: solid;
+  border-width: 1px;
+  font-weight: normal;
 }
 
 .button {
-    font-family: DPTFontDin;
-    color: $dpt-white;
-    background-color: $dpt-blue02;
-    border: none;
-    font-size: 16px;
-    width: 120px;
-    height: 40px;
-    margin: 5px auto;
-    margin-left: 10px;
-    float: right;
-    -webkit-appearance: none;
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  border: none;
+  font-size: 16px;
+  width: 120px;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  float: right;
+  -webkit-appearance: none;
 }
 
 .buttondialog {
-    font-family: DPTFontDin;
-    color: $dpt-white;
-    background-color: $dpt-blue02;
-    border: none;
-    font-size: 16px;
-    width: auto;
-    height: 40px;
-    margin: 5px auto;
-    margin-left: 10px;
-    -webkit-appearance: none;
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
 }
 
 .crisis {
-    font-family: DPTFontDin;
-    color: $dpt-white;
-    background-color: $dpt-blue02;
-    border: none;
-    font-size: 16px;
-    width: auto;
-    height: 40px;
-    margin: 5px auto;
-    margin-left: 10px;
-    -webkit-appearance: none;
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-second-button;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
 }
 
 .crisis.icon {
-    font-family: DPTFontDin;
-    color: $dpt-white;
-    background-color: transparent;
-    border: none;
-    width: auto;
-    height: 48px;
-    margin: 5px auto;
-    margin-left: 10px;
-    -webkit-appearance: none;
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: transparent;
+  border: none;
+  width: auto;
+  height: 48px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
 }
 
 .helpframe {
-    width: 720px;
+  width: 720px;
 }
 
 .helpimage {
-    border-style: solid;
-    border-width: 1px;
-    border-color: white;
-    width: 100%;
-    height: auto;
+  border-style: solid;
+  border-width: 1px;
+  border-color: $dpt-prime-border;
+  width: 100%;
+  height: auto;
 }
-
 
 /*----- Menu -----*/
 
 nav {
-    margin: 0 auto;
-    width: 100%;
-    height: 1px;
-    text-align: right;
-    position: inherit;
-    right: 0px;
+  margin: 0 auto;
+  width: 100%;
+  height: 1px;
+  text-align: right;
+  position: inherit;
+  right: 0px;
 }
 
 nav ul {
-    top: 40px;
-    position: absolute;
-    width: 100%;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-    left: 228px;
+  top: 40px;
+  position: absolute;
+  width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+  left: 228px;
 }
 
 nav ul li {
-    list-style: none;
-    margin: 0;
-    display: block;
-    text-align: left;
-    padding: 0em 0em;
+  list-style: none;
+  margin: 0;
+  display: block;
+  text-align: left;
+  padding: 0em 0em;
 }
 
 nav ul li button {
-    color: #009999;
-    position: relative;
-    padding: 1em 0;
-    display: inline-block;
-    text-decoration: none;
-    text-transform: uppercase;
+  position: relative;
+  padding: 1em 0;
+  display: inline-block;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 nav ul.menu {
-    max-height: 20px;
+  max-height: 20px;
 }
 
 nav a#nav-m,
 nav a.close {
-    display: none;
+  display: none;
 }
 
 nav ul.menu li a:hover {
-    border-bottom: 0;
+  border-bottom: 0;
 }
 /*Hamburger-Icon*/
 nav a#nav-m {
-    display: inline;
+  display: inline;
 }
 nav a#nav-m img,
 nav a.close img {
-    width: 40px;
-    height: auto;
-    position: absolute;
-    right: 6px;
-    top: 0px;
+  width: 40px;
+  height: auto;
+  position: absolute;
+  right: 6px;
+  top: 0px;
 }
-nav>.close,
+nav > .close,
 nav a#nav-m:target {
-    display: none;
-    right: 0px;
-    top: 0px;
+  display: none;
+  right: 0px;
+  top: 0px;
 }
-nav a:target~ul,
-nav a:target~.close {
-    display: inline-block;
+nav a:target ~ ul,
+nav a:target ~ .close {
+  display: inline-block;
 }
-nav a:target~.close {
-    position: absolute;
-    margin-left: -40px;
+nav a:target ~ .close {
+  position: absolute;
+  margin-left: -40px;
 }
-nav a:target~ul {
-    left: 0;
+nav a:target ~ ul {
+  left: 0;
 }
 
 section {
-    margin: 0 auto;
-    width: 400px;
-    bottom: 48px;
-    height: 1px;
-    text-align: right;
-    position: absolute;
-    left: 50%;
-    margin-left: -200px;
- 
+  margin: 0 auto;
+  width: 400px;
+  bottom: 48px;
+  height: 1px;
+  text-align: right;
+  position: absolute;
+  left: 50%;
+  margin-left: -200px;
 }
 
 section ul {
-    margin: 0;
-    padding: 0 0 0 0;
+  margin: 0;
+  padding: 0 0 0 0;
 }
 
 section ul li {
-    list-style: none;
-    margin: 0;
-    display: inline;
+  list-style: none;
+  margin: 0;
+  display: inline;
 }
 
 section ul li button {
-    color: #009999;
-    position: relative;
-    padding: 0 0 0.5em 0;
-    display: inline-block;
-    text-decoration: none;
-    text-transform: uppercase;
+  position: relative;
+  padding: 0 0 0.5em 0;
+  display: inline-block;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 section ul.menu {
-    max-height: 20px;
+  max-height: 20px;
 }
 
 section a#nav-m,
 section a.close {
-    display: none;
+  display: none;
 }
 
 section ul li {
-    margin: 0 0 0 0;
+  margin: 0 0 0 0;
 }
 
-
 .listcount {
-    position: absolute; 
-    border-radius: 50%; 
-    border-style: solid; 
-    border-width: 2px; 
-    text-align: center; 
-    width: 20px; 
-    bottom: 24px; 
-    right: 17px; 
-    height: 20px; 
-    font-size: 12px; 
-    line-height: 14px; 
-    background-color: $dpt-blue02; 
+  color: $dpt-prime-text;
+  position: absolute;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  text-align: center;
+  width: 20px;
+  bottom: 24px;
+  right: 17px;
+  height: 20px;
+  font-size: 12px;
+  line-height: 14px;
+  background-color: $dpt-prime-base;
 }
 
 /*----- Logo -----*/
 
 .brand,
 .brand img {
-    float: left;
+  float: left;
 }
-
 
 /*----------------*/
 
-
-
-
 .frame1 {
-    width: 400px;
-    height: 0;
-    margin-left: -200px;
-    position: absolute;
-    top: 310px;
-    left: 50%;
+  width: 400px;
+  height: 0;
+  margin-left: -200px;
+  position: absolute;
+  top: 310px;
+  left: 50%;
+}
+.container1 {
+  position: absolute;
+  top: 80px;
+  width: 300px;
+  left: 50%;
+  margin-left: -150px;
+}
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 1px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  width: 300px;
+  height: 5px;
+  background: $dpt-prime-border;
+  background: -webkit-linear-gradient(to left, $dpt-green, $dpt-blue, $dpt-red);
+  background: linear-gradient(to left, $dpt-green, $dpt-blue, $dpt-red);
+  border-radius: 1px;
+  border-color: $dpt-prime-border;
+  &:focus {
+    outline: none;
   }
-  .container1 {
-    position: absolute;
-    top: 80px;
-    width: 300px;
-    left: 50%;
-    margin-left: -150px;
-  }
-  .slider {
-    position: absolute;
-    top: 0;
-    left: 0;
-    border-radius: 1px;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    margin: 0;
-    width: 300px;
-    height: 5px;
-    background: #36D1DC;
-    background: -webkit-linear-gradient(to left, #15B76A, #005B98, #FF6666); 
-    background: linear-gradient(to left, #15B76A, #005B98, #FF6666);
-    border-radius: 1px;
-    border-color: #005B98;
-    &:focus {
-      outline: none;
-    }
-    &::-webkit-slider-thumb {
+  &::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     width: 20px;
     height: 20px;
-    border: 1px solid #005B98;
+    border: 1px solid $dpt-prime-text;
     border-radius: 50%;
-    background: #002C4B;
+    background: $dpt-prime-text;
     cursor: pointer;
   }
-    &::-moz-range-thumb {
+  &::-moz-range-thumb {
     width: 20px;
     height: 20px;
-    border: 1px solid #005B98; 
-    border-radius: 50%;   
-    background: #002C4B;
+    border: 1px solid $dpt-prime-text;
+    border-radius: 50%;
+    background: $dpt-prime-text;
     cursor: pointer;
   }
-    
-  }
-  .smile-wrapper {
-    width: 60px;
-    height: 60px;
-    background: #fff;
-    position: absolute;
-    top: 25%;
-    left: 42%;
-    border-radius: 50%;
-    background: #002C4B;
-  }
+}
+.smile-wrapper {
+  width: 60px;
+  height: 60px;
+  background: $dpt-prime-base;
+  position: absolute;
+  top: 25%;
+  left: 42%;
+  border-radius: 50%;
+  background: $dpt-prime-button;
+}
 
-  .eye {
-    background: #28A9E1;
-    width: 10px;
-    height: 10px;
-    position: absolute;
-    top: 15px;
-    border-radius: 50%;
-    
-    &-l {
-        left: 12px;
-    }
-    &-r {
-      right: 12px;
-    }
-  }
-  .smile {
-    width: 30px;
-    height: 12px;
-    position: absolute;
-    top: 35px;
-    left: 15px;
-    background: #28A9E1; 
-    border: 2px solid #28A9E1; 
-    border-top-left-radius: 60px;
-    border-top-right-radius: 60px;
-    transform: rotateX(90deg);
-  }
-  
-  
+.eye {
+  background: $dpt-prime-base;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 15px;
+  border-radius: 50%;
 
+  &-l {
+    left: 12px;
+  }
+  &-r {
+    right: 12px;
+  }
+}
+.smile {
+  width: 30px;
+  height: 12px;
+  position: absolute;
+  top: 35px;
+  left: 15px;
+  background: $dpt-prime-base;
+  border: none;
+  border-top-left-radius: 60px;
+  border-top-right-radius: 60px;
+  transform: rotateX(90deg);
+}
 
-.fb_gd_wrap .mask{
+.fb_gd_wrap .mask {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, .3);
+  background: transparent;
   z-index: 0;
-
 }
-.fb_gd_wrap .content{
+.fb_gd_wrap .content {
   height: 200px;
   background: transparent;
-  z-index: 10;   
-  filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.4));
+  z-index: 10;
+  box-shadow: 0px 0px 10px $dpt-shadow;
   position: absolute;
-  left:500px;
-
+  left: 500px;
+  width: 400px;
 }
 
-
-.fb_gd_wrap .header{
+.fb_gd_wrap .header {
   height: 50px;
   line-height: 50px;
-  background: #eee;
+  background: $dpt-prime-base;
   position: relative;
 }
 
-.fb_gd_wrap .header .text{
+.fb_gd_wrap .header .text {
   font-size: 1.5rem;
-  margin-left: 1rem;   
-  color: #005B98;   
+  margin-left: 1rem;
+  color: $dpt-third-text;
 }
 
-.fb_gd_wrap .header .btn{
+.fb_gd_wrap .header .btn {
   position: absolute;
   right: 10px;
   top: 50%;
@@ -913,283 +923,268 @@ section ul li {
   font-size: 1.5rem;
   border: none;
   background: transparent;
-  color: #005B98;
+  color: $dpt-prime-button;
 }
-.fb_gd_wrap .header .btn:hover{
-  color:#000;
+.fb_gd_wrap .header .btn:hover {
+  color: $dpt-prime-button;
 }
 
-
-.fb_gd_wrap .body{
+.fb_gd_wrap .body {
   height: 100px;
-  background: #eee;            
-
-}    
-.fb_gd_wrap .body .text{
-  font-size: .9rem;
-  color: #005B98;   
+  background: $dpt-prime-base;
+}
+.fb_gd_wrap .body .text {
+  font-size: 0.9rem;
+  color: $dpt-prime-text;
   overflow: hidden;
   width: 360px;
   margin: 0 20px;
-
 }
 
-.fb_gd_wrap .body .textList{
+.fb_gd_wrap .body .textList {
   padding: 0;
   margin: 0;
-  width: 10000px;      
+  width: 10000px;
   font-size: 0;
   margin-left: 0;
-  transition: all .5s;
-  color: #0a120a;
+  transition: all 0.5s;
+  color: $dpt-prime-text;
 }
 
-.fb_gd_wrap .body .textList p{
+.fb_gd_wrap .body .textList p {
   display: inline-block;
-  font-size: 14px;            
+  font-size: 14px;
   width: 360px;
   padding: 0;
   vertical-align: top;
 }
 
-
-.fb_gd_wrap .footer{
-  height: 50px;            
-  background: #005B98;
-  font-size: 0;            
-}               
-.fb_gd_wrap .footer .btn{
+.fb_gd_wrap .footer {
+  height: 50px;
+  background: $dpt-second-base;
+  font-size: 0;
+}
+.fb_gd_wrap .footer .btn {
   display: inline-block;
-  width: 80px;
+  width: 20%;
   border: none;
   height: 100%;
-  padding: 0;      
-  font-size: 16px;      
+  padding: 0;
+  font-size: 16px;
   vertical-align: top;
-  color: #fff;
+  color: $dpt-prime-text;
   background: transparent;
 }
 
-.fb_gd_wrap .footer .btn:hover{
-  color: #666;
-
+.fb_gd_wrap .footer .btn:hover {
+  color: $dpt-prime-text;
 }
-.fb_gd_wrap .footer .steps{
+.fb_gd_wrap .footer .steps {
   display: inline-block;
-  width: 240px;
-  background: #002C4B;
+  width: 60%;
+  background: $dpt-prime-base;
   height: 100%;
   margin: 0;
-  padding: 0;        
-  text-align: center;   
+  padding: 0;
+  text-align: center;
 }
-.fb_gd_wrap .footer .dot{
+.fb_gd_wrap .footer .dot {
   width: 8px;
   height: 8px;
   background: transparent;
-  border: 1px solid #666;
+  border: 1px solid $dpt-prime-text;
   margin: 30px 12px 12px 12px;
   display: inline-block;
   border-radius: 50%;
   position: relative;
 }
-.fb_gd_wrap .footer .line::after{
+.fb_gd_wrap .footer .line::after {
   content: "";
   display: block;
-  background: #666;
   width: 24px;
-  border-top: 1px solid #666;
+  background-color: $dpt-prime-button;
+  border-top: 1px solid $dpt-prime-text;
   position: absolute;
   top: 4px;
   left: 9px;
 }
-.fb_gd_wrap .footer .dot::before{
+.fb_gd_wrap .footer .dot::before {
   content: attr(data-step);
   display: block;
-  color: #fff;
+  color: $dpt-prime-text;
   position: absolute;
   top: -20px;
   left: 1.2px;
   font-size: 10px;
 }
 
-.fb_gd_wrap .footer .active{
-  background: #fff;
-  box-shadow: 0 0 6px rgba(255,255,255,.7);
+.fb_gd_wrap .footer .active {
+  background: $dpt-prime-base;
+  box-shadow: 0 0 6px $dpt-shadow;
 }
-
-
-
-
-
 
 /* button menu style for mobile */
 
 @media all and (max-width: 640px) {
-    .menu-btn {
-        width: 100%;
-        margin-top: 0px;
-        margin-left: 0px;
-        background-color: $dpt-blue03-semi;
+  .menu-btn {
+    width: 100%;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+  .menu-entry {
+    width: 100%;
+  }
+  #overlay {
+    height: 1px;
+    width: 100%;
+    display: block;
+  }
+  #form {
+    width: 100%;
+    //height: 200px;
+    left: 0;
+    margin-left: 0px;
+    position: absolute;
+    padding: 20px;
+    border-style: solid;
+    border-width: 1px;
+    z-index: 300;
+    font-family: DPTFont;
+    font-size: 18px;
+  }
+  #topic {
+    width: 100%;
+    height: 100%;
+    top: 10%;
+    left: 0;
+    margin: 0px;
+  }
+  .dialogleft,
+  .dialogcenter,
+  .dialogright {
+    width: 100%;
+  }
+  #dialogForm {
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    margin-left: 0px;
+    top: 0px;
+  }
+  div.status {
+    width: 100%;
+    left: 0px;
+    margin-left: 0px;
+    bottom: 38px;
+  }
+  h3 {
+    font-size: 16px;
+  }
+  #dialogMenu {
+    width: 100%;
+    top: 40px;
+    left: 0px;
+    bottom: 48px;
+    margin-left: 0px;
+  }
+  #misc2 {
+    left: auto;
+    width: 100%;
+    margin-left: auto;
+  }
+  textarea {
+    width: 100%;
+  }
+  div#c3 {
+    width: 100%;
+    left: 0px;
+    margin-left: 0px;
+    bottom: 0px;
+  }
+  div#crisis {
+    width: 100%;
+  }
+  .helpframe {
+    width: 100%;
+    height: 400px;
+    margin: 0px;
+    padding: 0px;
+  }
+  .helpimage {
+    height: auto;
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    top: 120px;
+  }
+  /* Normalize the lists */
+  .menu,
+  .sub-menu {
+    margin: 0;
+    padding: 0;
+    li {
+      margin: 0;
     }
-    .menu-entry {
-        width: 100%;
-    }
-    #overlay {
-        height: 1px;
-        width: 100%;
-        display: block;
-    }
-    #form {
-        width: 100%;
-        //height: 200px;
-        left: 0;
-        margin-left: 0px;
-        position: absolute;
-        padding: 20px;
-        border: $dpt-white;
-        border-style: solid;
-        border-width: 1px;
-        color: $dpt-blue02;
-        z-index: 300;
-        font-family: DPTFont;
-        font-size: 18px;
-        background-color: $dpt-blue04;
-    }
-    #topic {
-        width: 100%;
-        height: 100%;
-        top: 10%;
-        left: 0;
-        margin: 0px;
-    }
-    .dialogleft,
-    .dialogcenter,
-    .dialogright {
-        width: 100%;
-    }
-    #dialogForm {
-        width: 100%;
-        height: 100%;
-        left: 0px;
-        margin-left: 0px;
-        top: 0px;
-    }
-    div.status {
-        width: 100%;
-        left: 0px;
-        margin-left: 0px;
-        bottom: 38px;
-    }
-    h3 {
-        font-size: 16px;
-    }
-    #dialogMenu {
-        width: 100%;
-        top: 40px;
-        left: 0px;
-        bottom: 48px;
-        margin-left: 0px;
-    }
-    #misc2 {
-        left: auto;
-        width: 100%;
-        margin-left: auto;
-    }
-    textarea {
-        width: 100%;
-    }
-    div#c3 {
-        width: 100%;
-        left: 0px;
-        margin-left: 0px;
-        bottom: 0px;
-    }
-    div#crisis {
-        width: 100%;
-    }
-    .helpframe {
-        width: 100%;
-        height: 400px;
-        margin: 0px;
-        padding: 0px;
-    }
-    .helpimage {
-        height: auto;
-        margin: 0px;
-        padding: 0px;
-        position: absolute;
-        left: 0px;
-        width: 100%;
-        top: 120px;
-    }
-    /* Normalize the lists */
-    .menu,
-    .sub-menu {
-        margin: 0;
-        padding: 0;
-        li {
-            margin: 0;
-        }
-    }
-    /*Formatierung Mobiles Menue*/
-    nav ul {
-        top: 40px;
-        position: absolute;
-        width: 100%;
-        left: 100%;
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
- 
-    }
-    nav ul li {
-        display: block;
-        text-align: left;
-        padding: 0em 0em;
-    }
-    nav ul li button {
-        padding: 1em 0;
-    }
-    nav ul.menu li a:hover {
-        border-bottom: 0;
-    }
-    /*Hamburger-Icon*/
-    nav a#nav-m {
-        display: inline;
-    }
-    nav a#nav-m img,
-    nav a.close img {
-        width: 40px;
-        height: auto;
-        position: absolute;
-        right: 0px;
-        top: 0px;
-    }
-    nav>.close,
-    nav a#nav-m:target {
-        display: none;
-        right: 0px;
-        top: 0px;
-    }
-    nav a:target~ul,
-    nav a:target~.close {
-        display: inline-block;
-    }
-    nav a:target~.close {
-        position: absolute;
-        margin-left: -40px;
-    }
-    nav a:target~ul {
-        left: 0;
-    }
-   // ------------------------------------------
-section {
+  }
+  /*Formatierung Mobiles Menue*/
+  nav ul {
+    top: 40px;
+    position: absolute;
+    width: 100%;
+    left: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  nav ul li {
+    display: block;
+    text-align: left;
+    padding: 0em 0em;
+  }
+  nav ul li button {
+    padding: 1em 0;
+  }
+  nav ul.menu li a:hover {
+    border-bottom: 0;
+  }
+  /*Hamburger-Icon*/
+  nav a#nav-m {
+    display: inline;
+  }
+  nav a#nav-m img,
+  nav a.close img {
+    width: 40px;
+    height: auto;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+  }
+  nav > .close,
+  nav a#nav-m:target {
+    display: none;
+    right: 0px;
+    top: 0px;
+  }
+  nav a:target ~ ul,
+  nav a:target ~ .close {
+    display: inline-block;
+  }
+  nav a:target ~ .close {
+    position: absolute;
+    margin-left: -40px;
+  }
+  nav a:target ~ ul {
+    left: 0;
+  }
+  // ------------------------------------------
+  section {
     width: 100%;
     left: 50%;
     margin-left: -50%;
-}
-   section ul {
+  }
+  section ul {
     bottom: -20px;
     position: absolute;
     width: 100%;
@@ -1197,47 +1192,52 @@ section {
     list-style-type: none;
     margin: 0;
     padding: 0;
-}
-section ul li {
+  }
+  section ul li {
     display: block;
     text-align: left;
     padding: 0em 0em;
-}
-section ul li button {
+  }
+  section ul li button {
     padding: 1em 0;
-}
-section ul.menu li a:hover {
+  }
+  section ul.menu li a:hover {
     border-bottom: 0;
-}
-/*Hamburger-Icon*/
-section a#section-m {
+  }
+  /*Hamburger-Icon*/
+  section a#section-m {
     display: inline;
-}
-section a#section-m img,
-section a.close img {
+  }
+  section a#section-m img,
+  section a.close img {
     width: 40px;
     height: auto;
     position: absolute;
     right: 0px;
     top: 0px;
-}
-section>.close,
-section a#section-m:target {
+  }
+  section > .close,
+  section a#section-m:target {
     display: none;
     right: 0px;
     top: 0px;
-}
-section a:target~ul,
-section a:target~.close {
+  }
+  section a:target ~ ul,
+  section a:target ~ .close {
     display: inline-block;
-}
-section a:target~.close {
+  }
+  section a:target ~ .close {
     position: absolute;
     margin-left: -40px;
-}
-section a:target~ul {
+  }
+  section a:target ~ ul {
     left: 0;
+  }
+
+  // __________________ mobile guided tool
+  .fb_gd_wrap .content{
+    width: 100%;
+  }
 }
 
-    
-}
+
