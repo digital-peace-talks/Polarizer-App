@@ -8,11 +8,11 @@ const getPhrase = require('../../lib/phrasegenerator')
 
 const router = new express.Router();
 
-router.get('/', async(req, res, next) => {
-	try {
-		
-		// from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
-		var c2c = `
+router.get('/', async (req, res, next) => {
+    try {
+
+        // from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
+        var c2c = `
 		<script>
 		const copyToClipboard = (str) => {
 			const el = document.createElement('textarea');  // Create a <textarea> element
@@ -34,9 +34,9 @@ router.get('/', async(req, res, next) => {
 			}
 		}
 		</script>
-		`;
+        `;
 
-		res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
 		if (req.signedCookies.dptUUID === undefined) {
 			var phrase = await getPhrase();
 			//console.log("no cookie found, set new one");
@@ -45,60 +45,131 @@ router.get('/', async(req, res, next) => {
 			
 			/*Digital peace talks is currently in private alpha! Only a minimum viable product is viable at the moment,
 			and our primary goal is to get direct feedback from a small set of users to evaluate our core design. 
-			Thank you.*/
-			
-			res.send(`<head><link rel="stylesheet" href="dpt_start.css" /></head>
-				<body>${c2c}
-				<center>
-				<img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="300" width="300">
-				<br>
-				<div class="text">This is a free open source prototype being developed by a social enterprise.<br>
-				Please be patient with what we have so far and/or be willing to help.</div>
-				<br><br>
-				<a href="dpt-doku.html" target="_blank">Learn how to use DPT here</a>
-				<br><br>
-				<br><div ><div style="color: #F0F3F5;">Are you a new user?</div><br><br>
-				<fieldset style="text-align:center; width:400px;  border-style: solid; border-width: 1px;">
-				<legend style="text-align:center; color: #F0F3F5;">This could be your pass-phrase, remember it:</legend>
-				<h3><b style="margin: 20px; white-space: nowrap;">${phrase}
-				<input type="image" style="width:18px" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${phrase}');"/></b><br>
-				<br><a style="color: #F0F3F5; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">Start &#9655;</a>
-				</fieldset>
-				</h3><br><div style="color: #F0F3F5">Lost your cookie? A new browser?</div><br><br><div style="color: #F0F3F5">Enter your pass-phrase:</div><br>
-				<form method="post" action="/recover"><input type=text name=phraseinput>
-				<input type="hidden" name="phrase" value="${phrase}"></form>
-			   </div></center>`);
-		} else {
-			res.send(`<head><link rel="stylesheet" href="dpt_start.css" /></head>
-			<body>
-			<center>
-			<img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png" alt="digital peace talks" height="300" width="300">
-			<br>
-			<div class="text">This is a free open source prototype being developed by a social enterprise.<br>
-			Please be patient with what we have so far and/or be willing to help.</div>
-			<br><br>
-				<a href="dpt-doku.html" target="_blank">Learn how to use DPT here</a>
-				<br><br>	
-				<h3><b>
-				<a style="color: #F0F3F5; text-decoration: none;" href=/dpt3d.html>Start &#9655;</a>
-				</b></h3><br><br>
-				<!--
-				<a onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
-				-->
-				<a onClick="function gcv(a){
-					var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');
-					return (b ? b.pop():'')
-				}
-				document.cookie='dptUUID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-				location.reload(true);">delete cookie</a>
-			   </div></center>
-			`);
+            Thank you.*/
+            
+        res.send(`<head>
+        <link rel="stylesheet" href="dpt_start.css" />
+                </head>
+                <body>${c2c}
+                    <div id="wrapper">
+                        <header>
+                            <img src="logo_dpt.png" alt="digital peace talks" class="logo">
+                            <h1>Welcome to digital peace talks.</h1>
+                            This is a free open source prototype being developed by a social enterprise.<br><br>
+                            Click here for more information about the project:
+                            <a href="https://digitalpeacetalks.com/" target="_blank">Our Website</a><br>
+                            Or learn more about the App:
+                            <a href="dpt-doku.html" target="_blank">How to use dpt.</a>
+                            <br>
+                        </header>
+                        <div id="mehrspaltig">
+                            <div class="links">
+                                <h1>Welcome stranger!</h1>
+                                <br>
+                                <b>It seems this is your first visit.</b><br>
+                                <br>
+                                Making an account is simple and we don´t even need your data. <br>
+                                Instead of giving us your mail address and unnecessary information we give you an unique pass phrase. <br>
+                                It consists of four words and will work as your future key for this app. <br><br>
+                                And this is your unique pass phrase:<br><br>
+                                <div class="phrase">${phrase}
+                                <input type="image" style="width:18px" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${phrase}');"/></div>
+                                <br>
+                                <br>
+                                Please write it down or memorize it! 
+                                If you loose or forget this phrase there is no chance to generate a new one for your existing account.
+                                <a style="color: #F0F3F5; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">I understand and want to enter &#9655;</a>
+                                <br>
+                                <br>
+                            </div>
+                            <div class="rechts">
+                                <h1>Allready a member?</h1>
+                                <br>
+                                Just type in your unique pass phrase to log into your account.<br><br>
+
+                                <div class="label">Enter your pass-phrase:</div><br>
+                                <form method="post" action="/recover"><input type=text name=phraseinput>
+                                <input type="hidden" name="phrase" value="${phrase}"></form>
+                            
+                                <br>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    <footer>
+                        Note:<br>
+                        Please keep in mind: This project is still under development and is far from major or done. Things can change dramatically. Every time! It's up to the user community to influence the way we go. And keep in mind: this is just a tool, not the solution to get conflicts solved.
+                    </footer>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>`);
+        } else {
+        res.send(`<head>
+                    <link rel="stylesheet" href="dpt_start.css" />
+                </head>
+                <body>
+                    <div id="wrapper">
+                        <header>
+                            <img src="logo_dpt.png" alt="digital peace talks" class="logo">
+                            <h1>Welcome to digital peace talks.</h1>
+                            This is a free open source prototype being developed by a social enterprise.<br><br>
+                            Click here for more information about the project:
+                            <a href="https://digitalpeacetalks.com/" target="_blank">Our Website</a><br>
+                            Or learn more about the App:
+                            <a href="dpt-doku.html" target="_blank">How to use dpt.</a>
+                            <br>
+                        </header>
+                        <div id="mehrspaltig">
+                            <div class="links">
+                                <h1>Welcome back!</h1>
+                                <br>
+                                How awesome to see you again! <br>
+                                Just enter and continue where you left off last time.<br>
+                                <br>
+                                <form action="do_something">
+                                    <input type="submit" class="start"  value="Enter the App">
+                                    <a style="color: #F0F3F5; text-decoration: none;" href=/dpt3d.html>Enter the App &#9655;</a>
+                                </form>
+                                <br>
+                                <!--
+                                <a onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
+                                -->
+                                
+                            </div>
+                            <div class="rechts">
+                                <h1>Not your device? Login Problems?</h1>
+                                <br>
+                                You can delete the cookie for this app and clear your account data from this device.<br><br>
+                                <b>Caution:</b> If you delete this cookie and you don´t know your pass phrase this account will be inevitably lost forever!<br><br>
+                                <form action="do_something">
+                                <a onClick="function gcv(a){
+                                    var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');
+                                    return (b ? b.pop():'')
+                                }
+                                document.cookie='dptUUID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+                                location.reload(true);">delete cookie</a>
+
+                                    <input type="submit" value="I know what I do!">
+                                </form>
+                                <br>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                        <footer>Note:<br>
+                            Please keep in mind: This project is still under development and is far from major or done. Things can change dramatically. Every time! It's up to the user community to influence the way we go. And keep in mind: this is just a tool, not the solution to get conflicts solved.
+                        </footer>
+                    </div>
+                    `);
 		}
 		res.status(200);
 	} catch (err) {
 		next(err);
 	}
 });
+
 
 router.get('/recover', async(req, res, next) => {
 	//console.log('recover get ' + req.query.phrase);
