@@ -131,6 +131,18 @@
     float: right;
     -webkit-appearance: none;
   }
+
+  .button {
+    font-family: DPTFontDin;
+    color: #f0f3f5;
+    background-color: #005b98;
+    border: none;
+    font-size: 16px;
+    height: 40px;
+    margin: 5px auto;
+    float: right;
+    -webkit-appearance: none;
+  }
   
   .start {
       font-family: DPTFontDin;

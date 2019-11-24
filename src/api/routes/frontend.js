@@ -130,7 +130,7 @@ router.get('/', async (req, res, next) => {
                                 <br>
                                 <form action="do_something">
                                     <input type="submit" class="start"  value="Enter the App">
-                                    <a style="color: #F0F3F5; text-decoration: none;" href=/dpt3d.html>Enter the App &#9655;</a>
+                                    <a class="start href=/dpt3d.html>Enter the App &#9655;</a>
                                 </form>
                                 <br>
                                 <!--
@@ -143,16 +143,13 @@ router.get('/', async (req, res, next) => {
                                 <br>
                                 You can delete the cookie for this app and clear your account data from this device.<br><br>
                                 <b>Caution:</b> If you delete this cookie and you don´t know your pass phrase this account will be inevitably lost forever!<br><br>
-                                <form action="do_something">
-                                <a onClick="function gcv(a){
+                                <a class="button" onClick="function gcv(a){
                                     var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');
                                     return (b ? b.pop():'')
                                 }
                                 document.cookie='dptUUID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-                                location.reload(true);">delete cookie</a>
+                                location.reload(true);">I know what I do!</a>
 
-                                    <input type="submit" value="I know what I do!">
-                                </form>
                                 <br>
                                 <br>
                                 <br>
