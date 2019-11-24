@@ -61,13 +61,13 @@ class DPT {
 		});
 	}
 	
-	userUpdate(publicKey, tuple) {
+	userUpdate(publicKey, preferences) {
 		this.socket.emit("api", {
 			method: "put",
 			path: '/user/update/'+publicKey+'/',
 			data: {
 				publicKey: publicKey,
-				body: tuple,
+				body: preferences,
 			}
 		});
 	}
