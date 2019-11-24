@@ -73,12 +73,12 @@ router.get('/', async (req, res, next) => {
                                 It consists of four words and will work as your future key for this app. <br><br>
                                 And this is your unique pass phrase:<br><br>
                                 <div class="phrase">${phrase}
-                                <input type="image" style="width:18px" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${phrase}');"/></div>
+                                <input type="image" class="copytoclip" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${phrase}');"/>Copy phrase to clipboard</div>
                                 <br>
                                 <br>
                                 Please write it down or memorize it! 
                                 If you loose or forget this phrase there is no chance to generate a new one for your existing account.
-                                <a class="start" href="/recover?phrase=${encodeURIComponent(phrase)}">I understand and want to enter &#9655;</a>
+                                <a class="start" href="/recover?phrase=${encodeURIComponent(phrase)}">Let me enter &#9655;</a>
                                 <br>
                                 <br>
                             </div>
