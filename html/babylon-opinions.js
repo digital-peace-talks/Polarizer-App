@@ -1,4 +1,31 @@
+function moveConnection(plane1, plane2, edge) {
+	return BABYLON.MeshBuilder.CreateTube(name, {path: [plane1.position, plane2.position], instance: edge});
+}
 
+function makePlanesDragable(opinion1, opinion2, edge) {
+	var plane1;
+	var plane2;
+	for(var i in currentScene.meshes) {
+		if(currentScene.meshes[i].dpt.opinionId == opinion1) {
+			plane1 = currentScene.meshes[i];
+		}
+		if(currentScene.meshes[i].dpt.opinionId == opinion2) {
+			plane2 = currentScene.meshes[i];
+		}
+	}
+
+	plane1.pointerDragBehavior = new BABYLON.PointerDragBehavior({name: "foobar", dragPlaneNormal: new BABYLON.Vector3(0,0,1)});
+	plane1.pointerDragBehavior.onDragObservable.add((event,b,c)=>{
+		moveConnection(plane1, plane2, edge);
+	});
+	plane1.addBehavior(plane1.pointerDragBehavior);
+
+	plane2.pointerDragBehavior = new BABYLON.PointerDragBehavior({name: "foobar", dragPlaneNormal: new BABYLON.Vector3(0,0,1)});
+	plane2.pointerDragBehavior.onDragObservable.add((event,b,c)=>{
+		moveConnection(plane1, plane2, edge);
+	});
+	plane2.addBehavior(plane2.pointerDragBehavior);
+}
 
 function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections) {
 
@@ -230,6 +257,7 @@ Where getIntersection is:
 				canvas.style.cursor = "default";
 			}, false));
 
+	makePlanesDragable(initiatorOpinion.opinionId, recipientOpinion.opinionId, tube);
 	//return(tube);
 }
 
