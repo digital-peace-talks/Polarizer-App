@@ -78,7 +78,7 @@ router.get('/', async (req, res, next) => {
                                 <br>
                                 Please write it down or memorize it! 
                                 If you loose or forget this phrase there is no chance to generate a new one for your existing account.
-                                <a style="color: #F0F3F5; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">I understand and want to enter &#9655;</a>
+                                <a class="start" style="color: #F0F3F5; text-decoration: none;" href="/recover?phrase=${encodeURIComponent(phrase)}">I understand and want to enter &#9655;</a>
                                 <br>
                                 <br>
                             </div>
@@ -133,10 +133,7 @@ router.get('/', async (req, res, next) => {
                                     <a class="start href=/dpt3d.html>Enter the App &#9655;</a>
                                 </form>
                                 <br>
-                                <!--
-                                <a onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
-                                -->
-                                
+                                                               
                             </div>
                             <div class="rechts">
                                 <h1>Not your device? Login Problems?</h1>
@@ -149,7 +146,6 @@ router.get('/', async (req, res, next) => {
                                 }
                                 document.cookie='dptUUID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
                                 location.reload(true);">I know what I do!</a>
-
                                 <br>
                                 <br>
                                 <br>
