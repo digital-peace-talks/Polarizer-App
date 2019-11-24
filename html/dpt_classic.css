@@ -112,7 +112,7 @@ hr {
 }
 
 div#dialogMenu > i {
-  color: red;
+  color: transparent;
 }
 
 i#props {
@@ -538,21 +538,6 @@ div#dialogFrame {
   background-color: #28a9e1;
   -webkit-box-shadow: 0px 0px 20px #030911;
           box-shadow: 0px 0px 20px #030911;
-}
-
-#closeX {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  padding: 20px;
-  margin-left: 300px;
-  border: #f0f3f5;
-  border-style: solid;
-  border-width: 1px;
-  color: #f0f3f5;
-  z-index: 200;
-  font-family: DPTFont;
-  font-size: 18px;
 }
 
 textarea {

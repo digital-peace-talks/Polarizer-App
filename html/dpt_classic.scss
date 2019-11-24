@@ -134,7 +134,7 @@ hr {
 }
 
 div#dialogMenu > i {
-  color: red; // keine wirkung
+  color: transparent; // keine wirkung
 }
 
 i#props {
@@ -559,20 +559,6 @@ div#dialogFrame {
   box-shadow: 0px 0px 20px $dpt-shadow;
 }
 
-#closeX {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  padding: 20px;
-  margin-left: 300px;
-  border: $dpt-prime-border;
-  border-style: solid;
-  border-width: 1px;
-  color: $dpt-prime-text;
-  z-index: 200;
-  font-family: DPTFont;
-  font-size: 18px;
-}
 
 textarea {
   font-family: DPTFont;
