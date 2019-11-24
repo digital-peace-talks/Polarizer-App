@@ -128,10 +128,7 @@ router.get('/', async (req, res, next) => {
                                 How awesome to see you again! <br>
                                 Just enter and continue where you left off last time.<br>
                                 <br>
-                             
-                                  
-                                    <a class="start" href=/dpt3d.html>Enter the App &#9655;</a>
-                               
+                            	<a class="start" href=/dpt3d.html>Enter the App &#9655;</a>
                                 <br>
                                 <!--
                                 <a class="start" onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
@@ -150,9 +147,6 @@ router.get('/', async (req, res, next) => {
                                 }
                                 document.cookie='dptUUID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
                                 location.reload(true);">I know what I do!</a>
-
-                                  
-                               
                                 <br>
                                 <br>
                                 <br>
