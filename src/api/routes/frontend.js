@@ -126,7 +126,7 @@ router.get('/', async (req, res, next) => {
                             <div class="links">
                                 <h1>Welcome back!</h1>
                                 <br>
-                                How awesome to see you again! <br>
+                                So awesome to see you again! <br>
                                 Just enter and continue where you left off last time.<br>
                                 <br>
                             	<a class="start" href=/dpt3d.html>Enter the App &#9655;</a>
