@@ -44,7 +44,7 @@ function settingsForm(opinionId, topicId) {
 		Your passphrase:
 		<br>
 		${whoami.user.phrase}
-		<input type="image" style="width:24px" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${whoami.user.phrase}');"/>
+		<input type="image" class="copyToClip" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${whoami.user.phrase}');"/>
 		<br>
 		<hr>
 		<b>Change UI-Theme:</b>
@@ -64,7 +64,7 @@ function settingsForm(opinionId, topicId) {
 		${colors}
 		<br>
 		<input class="button" type="submit" value="Apply">
-		<input class="button" type="button" value="Cancel" name="close" id="closeSettingsForm">
+		<input class="closeButton" type="button" value="&#128938;" name="close" id="closeSettingsForm">
 		</form></div>
 	`);
 
@@ -144,7 +144,7 @@ function propositionForm(opinionId, topicId) {
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
 		<input type="hidden" id="topicId" name="topicId" value="${topicId}">
 		<br><input class="button" type="submit" value="Confirm">
-		<input class="button" type="button" value="Cancel" name="close window" id="ClosePropositionForm"></form></div>
+		<input class="closeButton" type="button" value="&#128938;" name="close window" id="ClosePropositionForm"></form></div>
 	`);
 
 	jQuery(".proposition").focus();
@@ -231,7 +231,7 @@ function topicForm(edit, context) {
 			Please enter a new topic:<br><form id="topic">
 			<textarea name="topic" class="topic">${topic}</textarea><br>
 			<input class="button" type="submit" value="Confirm">
-			<input class="button" type="button" value="Cancel" name="close window"
+			<input class="closeButton" type="button" value="&#128938;" name="close window"
 			id="CloseTopicForm">${edit}${hiddenTopicId}</form></div>
 		`);
 	}
@@ -316,7 +316,7 @@ function opinionForm(edit, context) {
 		Please enter a new opinion:<br> <form id="opinion">
 		<textarea name="opinion" class="opinion">${opinion}</textarea><br>
 		<input class="button" type="submit" value="Confirm"> 
-		<input class="button" type="button" value="Cancel" name="close window"
+		<input class="closeButton" type="button" value="&#128938;" name="close window"
 		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}</form></div>
 	`);
 
@@ -396,6 +396,15 @@ function loadDialogList(restObj) {
 	jQuery('body').append(`<div id="dialogMenu"></div>`);
 
 	jQuery('#dialogMenu').empty();
+	jQuery('#dialogMenu').append(`<button class="closeButton" id="close-dialog-btn">&#128938;</button>`);
+	
+	jQuery(document).on('click touch', "#close-dialog-btn", function(event) {
+
+		hideDialogList();
+		jQuery('#close-dialog-btn').visibility(false);
+		focusAtCanvas();
+		event.preventDefault();
+	});
 
 	for (var i = 0; i < dialogs.length; i++) {
 
@@ -466,7 +475,7 @@ var createGUIScene = function(dptMode) {
 			<p>Digital Peace Talks gUG (h.b.)</p>
 			<p>A digital space where everyone can express and understand opinions</p>
 			<a href="http://www.digitalpeacetalks.com" target="_blank">Visit Our Website</a>
-			<button class="button" id="close-btn">close</button>
+			<button class="closeButton" id="close-btn">&#128938;</button>
 			</div>
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
@@ -479,6 +488,24 @@ var createGUIScene = function(dptMode) {
 	
 	});
 
+	function closeRightMenu(){
+		var menuLeft = canvas.width;
+		if(canvas.width > 640) {
+			menuLeft = 228;
+		}
+
+		hamburgerOpen = !hamburgerOpen;
+		if(hamburgerOpen) {
+			jQuery("nav ul").css("left", "0px");
+			jQuery("a.hamburger").html('<img src="/button_close.png">');
+		} else {
+			jQuery("nav ul").css("left", menuLeft);
+			jQuery("a.hamburger").html('<img src="/button_menu.png">');
+		}
+
+	}
+
+
 	//create first steps button
 	var fsBtn = jQuery('#firststeps-btn');
 	fsBtn.show();
@@ -489,8 +516,11 @@ var createGUIScene = function(dptMode) {
 
 		jQuery('body').append(`
 		<div id="form" class="helpframe">
+		<h1>First steps</h1>
+			<hr>
+			<p>Navigation:</p>
 		<img src="/dpt_gestures.png" alt="help" class="helpimage">
-		<button class="button" id="close-btn">close</button>
+		<button class="closeButton" id="close-btn">&#128938;</button>
 		</div>
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
@@ -660,6 +690,14 @@ var createGUIScene = function(dptMode) {
 			myDialogsVisible = 'visible';
 		}
 		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+		jQuery('#close-dialog-btn').css({
+			WebkitTransition : 'opacity 0s ease-in-out',
+			MozTransition    : 'opacity 0s ease-in-out',
+			MsTransition     : 'opacity 0s ease-in-out',
+			OTransition      : 'opacity 0s ease-in-out',
+			transition       : 'opacity 0s ease-in-out'
+		});
+		jQuery('#close-dialog-btn').css({ visibility: myDialogsVisible });
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		if (isMobile) {
@@ -710,11 +748,11 @@ function requestSearch() {
 	jQuery("#form").remove();
 	jQuery('body').append(`
 		<div id="form">
+		Search in Topics:
 		<form class="searchString">
-
 		<input type="text" id="searchString" name="searchString" style="width:100%;">
 		</form>
-		<input class="button" type="button" value="Close" name="close" id="closeSettingsForm" >
+		<input class="closeButton" type="button" value="&#128938;" name="close" id="closeSettingsForm" >
 		</div>
 	`);
 	jQuery("#searchString").focus();
@@ -811,11 +849,27 @@ function toggleDialogList() {
 		myDialogsVisible = 'visible';
 	}
 	jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+	jQuery('#close-dialog-btn').css({
+		WebkitTransition : 'opacity 0s ease-in-out',
+		MozTransition    : 'opacity 0s ease-in-out',
+		MsTransition     : 'opacity 0s ease-in-out',
+		OTransition      : 'opacity 0s ease-in-out',
+		transition       : 'opacity 0s ease-in-out'
+	});
+	jQuery('#close-dialog-btn').css({ visibility: myDialogsVisible });
 }
 
 function hideDialogList() {
 	if(myDialogsVisible = 'visible') {
 		jQuery('#dialogMenu').css("visibility", "hidden");
+		jQuery('#close-dialog-btn').css({
+			WebkitTransition : 'opacity 0s ease-in-out',
+			MozTransition    : 'opacity 0s ease-in-out',
+			MsTransition     : 'opacity 0s ease-in-out',
+			OTransition      : 'opacity 0s ease-in-out',
+			transition       : 'opacity 0s ease-in-out'
+		});
+		jQuery('#close-dialog-btn').css("visibility", "hidden");
 		myDialogsVisible = 'hidden';
 	}
 }
@@ -839,6 +893,14 @@ function requestYourDialogs() {
 	btn.onclick = () => {
 		toggleDialogList();
 		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+		jQuery('#close-dialog-btn').css({
+			WebkitTransition : 'opacity 0s ease-in-out',
+			MozTransition    : 'opacity 0s ease-in-out',
+			MsTransition     : 'opacity 0s ease-in-out',
+			OTransition      : 'opacity 0s ease-in-out',
+			transition       : 'opacity 0s ease-in-out'
+		});
+		jQuery('#close-dialog-btn').css({visibility: myDialogsVisible});
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		/* if (isMobile) {
@@ -869,7 +931,7 @@ function requestHelp() {
 		jQuery('body').append(`
 			<div id="form" class="helpframe">
 			<img src="/dpt_gestures.png" alt="help" class="helpimage">
-			<button class="button" id="close-btn">close</button>
+			<button class="closeButton" id="close-btn">&#128938;</button>
 			</div>
 		`);
 		window.addEventListener('message', event => {
