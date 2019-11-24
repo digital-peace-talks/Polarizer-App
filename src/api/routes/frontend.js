@@ -72,8 +72,9 @@ router.get('/', async (req, res, next) => {
                                 Instead of giving us your mail address and unnecessary information we give you an unique pass phrase. <br>
                                 It consists of four words and will work as your future key for this app. <br><br>
                                 And this is your unique pass phrase:<br><br>
-                                <div class="phrase">${phrase}
-                                <input type="image" class="copytoclip" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${phrase}');"/>Copy phrase to clipboard</div>
+								<div class="phrase">${phrase}</div>
+								<br>
+                                <input type="image" class="copytoclip" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${phrase}');"/>Copy phrase to clipboard!
                                 <br>
                                 <br>
                                 Please write it down or memorize it! 
