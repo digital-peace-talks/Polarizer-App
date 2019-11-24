@@ -453,22 +453,7 @@ function loadOpinions(restObj) {
 					canvas.style.cursor = "default";
 				}, false));
 		
-		plane.onUpdateTextPos = new BABYLON.Observable();
-
-		plane.pointerDragBehavior = new BABYLON.PointerDragBehavior({name: "foobar", dragPlaneNormal: new BABYLON.Vector3(0,0,1)});
-	    plane.pointerDragBehavior.onDragStartObservable.add((event,b,c)=>{
-	        console.log("dragStart");
-	        //console.log(event);
-	    })
-	    plane.pointerDragBehavior.onDragObservable.add((event,b,c)=>{
-	        console.log("drag");
-	        //console.log(event);
-	        //console.log("master: "+plane.position);
-	        //plane.onUpdateTextPos.notifyObservers(plane.position);
-	    });
-		plane.addBehavior(plane.pointerDragBehavior);
 */
-
 		/*
 	    var minion0 = BABYLON.MeshBuilder.CreateSphere("minion0", {diameter: 0.5}, currentScene);
 	    minion0.position = new BABYLON.Vector3(1,1,1);
