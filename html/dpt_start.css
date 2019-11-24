@@ -16,6 +16,13 @@ body {
     padding: 0;
     height: 100%;
     width: 100%;
+    color: #B8EAFF;
+}
+
+h1 {
+    font-family: "DPTFontDin";
+    font-size: 28px;
+    color: #B8EAFF;
 }
 
 h3 {
