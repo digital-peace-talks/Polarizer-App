@@ -537,6 +537,7 @@ var createGUIScene = function(dptMode) {
 	var docuBtn = jQuery('#documentation-btn');
 	docuBtn.show();
 	docuBtn.on('click touch', function(event) {
+		hideDialogList();
 		window.open("dpt-doku.html");
 	});
 
@@ -594,6 +595,7 @@ var createGUIScene = function(dptMode) {
 	var settingsBtn = jQuery('#settings-btn');
 	settingsBtn.show();
 	settingsBtn.on('click touch', function(event) {
+		hideDialogList();
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		jQuery('#form').remove();
@@ -608,6 +610,7 @@ var createGUIScene = function(dptMode) {
 	var homeBtn = jQuery('#home-btn');
 	homeBtn.show();
 	homeBtn.on('click touch', function(event) {
+		hideDialogList();
 		opinionCamState = currentScene.cameras[0].storeState();
 		currentScene.dispose();
 		currentScene = __topicScene("topicScene");
@@ -628,6 +631,7 @@ var createGUIScene = function(dptMode) {
 	var searchBtn = jQuery('#search-btn');
 	searchBtn.show();
 	searchBtn.on('click touch', function(event) {
+		hideDialogList();
 		requestSearch();
 	});
 
@@ -641,6 +645,7 @@ var createGUIScene = function(dptMode) {
 		newTopicBtn.html(`<img class="btn-bar-icon" src="/topic_white.png">`);
 
 		newTopicBtn.on('click touch', function(event) {
+			hideDialogList();
 			jQuery('#form').remove();
 
 			topicForm();
@@ -663,6 +668,7 @@ var createGUIScene = function(dptMode) {
 
 		newOpinionBtn.html(`<img class="btn-bar-icon" src="/opinion_white.png">`);
 		newOpinionBtn.on('click touch', function(event) {
+			hideDialogList();
 			jQuery('#form').remove();
 
 			dpt.opinionPostAllowed(currentTopic);
