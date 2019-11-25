@@ -88,6 +88,7 @@ const XfilesToCache = [
 ];
 
 // install event
+/*
 self.addEventListener('install', function(e) {
 	console.log('[ServiceWorker] Install');
 	e.waitUntil(
@@ -98,7 +99,7 @@ self.addEventListener('install', function(e) {
 		})
 	);
 });
-
+*/
 // activate event
 self.addEventListener('activate',  (event) => {
 	event.waitUntil(self.clients.claim());
