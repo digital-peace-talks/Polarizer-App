@@ -1,4 +1,4 @@
-var cacheName = 'dpt-v1';
+var cacheName = 'dpt-v2';
 const filesToCache = [
 	'/',
 ];
