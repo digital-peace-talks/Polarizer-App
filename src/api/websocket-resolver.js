@@ -555,7 +555,6 @@ match.push({
 				method: 'get',
 				data: {
 					id: opinions.data[0].topic,
-					dialogCrisis: dialogIdReg,
 				}
 			});
 			return(ret);
@@ -573,15 +572,6 @@ match.push({
 		if(user) {
 			console.log("dialog extension requested");
 			ret = await dialogService.extensionRequest({ dialogId: data.dialogId, body: { sender: user.user.id }});
-			/*
-			for(var i=0; i < ret.length; i++) {
-				if(ret.sender == user.user.id) {
-					ret.sender = 'me';
-				} else {
-					ret.sender = 'notme';
-				}
-			}
-			*/
 			if(ret.status == 200) {
 				publishDialogUpdate(data.dialogId);
 			}
