@@ -21,18 +21,12 @@ body {
 }
 
 #wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  flex-direction: column;
   max-width: 700px;
   position: relative;
   top: 40px;
-  -webkit-box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-          box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   overflow: hidden;
   min-height: 200px;
   left: 50%;
@@ -48,36 +42,23 @@ header {
 }
 
 #mehrspaltig {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  flex: 1;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  flex-direction: row;
 }
 
 .links {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
   padding: 20px;
   vertical-align: middle;
-  background: -webkit-gradient(linear, left top, left bottom, from(#03406b), to(#001625));
   background: linear-gradient(to bottom, #03406b, #001625);
   color: #e3f3fa;
 }
 
 .rechts {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
   padding: 20px;
   vertical-align: middle;
-  background: -webkit-gradient(linear, left top, left bottom, from(#ececec), to(#bfcbd1));
   background: linear-gradient(to bottom, #ececec, #bfcbd1);
   color: #285879;
 }
@@ -187,31 +168,27 @@ input {
   position: relative;
   top: -10px;
   left: -4px;
-  -webkit-filter: invert(100%);
-          filter: invert(100%);
+  filter: invert(100%);
   background-color: transparent;
 }
 
 /* button menu style for mobile */
+
 @media all and (max-width: 640px) {
   h3 {
     font-size: 16px;
   }
+
   #wrapper {
     width: 100%;
     left: 0px;
     margin-left: 0px;
     top: 0px;
   }
+
   #mehrspaltig {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
+    flex: 1;
     display: block;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    flex-direction: column;
   }
 }
-/*# sourceMappingURL=dpt_start.css.map */
