@@ -499,7 +499,9 @@ match.push({
 		io.emit('update', {
 			path: '/opinion/'+opinions.data[0].topic+'/',
 			method: 'get',
-			data: { id: opinions.data[0].topic }
+			data: {
+				id: opinions.data[0].topic,
+			}
 		});
 
 		return({data: ret});
@@ -547,10 +549,14 @@ match.push({
 				}
 			});
 			var opinions = await opinionService.getOpinions({opinionId: ret.data.opinion});
+			publishDialogUpdate(data.dialogId);
 			io.emit('update', {
 				path: '/opinion/'+opinions.data[0].topic+'/',
 				method: 'get',
-				data: { id: opinions.data[0].topic }
+				data: {
+					id: opinions.data[0].topic,
+					dialogCrisis: dialogIdReg,
+				}
 			});
 			return(ret);
 		} else {
