@@ -212,7 +212,11 @@ function textBlock(x, y, z, name, text, options) {
 		textureContext.fillStyle = options.color;
 	}
 
-	wrapText(textureContext, text, 5, (options.fontSize || 22) + 42, DTWidth -1, options.fontSize || 22);
+	wrapText(
+		textureContext,
+		text,
+		5,
+		(options.fontSize || 22) + 42, DTWidth -1, options.fontSize || 22);
 
 	var dpt = JSON.parse(name);
 	if(dpt.canInvite) {
@@ -231,6 +235,7 @@ function textBlock(x, y, z, name, text, options) {
 		}
 		textureContext.fillRect(0,0,36,36);
 	}
+
 	if(dpt.canEdit) {
 		textureContext.drawImage(editIcon, 36, 0, 36, 36);
 		textureContext.globalCompositeOperation = "xor";
@@ -260,7 +265,10 @@ function textBlock(x, y, z, name, text, options) {
 
     var pngBase64 = textureContext.canvas.toDataURL("image/png", 0.99);
 
-    plane.bjs = { x: 1/DTWidth * textureContext.canvas.width * 2.4, y: 1/DTHeight * textureContext.canvas.height * 1.6 }; 
+    plane.bjs = {
+    	x: 1/DTWidth * textureContext.canvas.width * 2.4,
+    	y: 1/DTHeight * textureContext.canvas.height * 1.6
+    }; 
 
 	dynamicTexture.update();
 
@@ -268,7 +276,6 @@ function textBlock(x, y, z, name, text, options) {
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
 	mat.diffuseTexture = dynamicTexture;
 	mat.emissiveColor = new BABYLON.Color3(1,1,1);
-//	mat.emissiveColor = (options.color) ? new BABYLON.Color3(1,1,1) : new BABYLON.Color3(0, 0.5, 1);
 	mat.specularColor = new BABYLON.Color3(0.1, 0.1, 0.1);
 
 	//apply material
