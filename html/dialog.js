@@ -29,7 +29,7 @@ function crisisForm(messageId) {
 				</div>
 				
 				<div class="reason">
-				Please rate your outcome in this dialouge:
+				Please rate your outcome in this dialogue:
 				<br>
 				<br>
 				<br>
@@ -40,11 +40,11 @@ function crisisForm(messageId) {
 					Please enter a reason for your rating:<br>
 					<input type="text" name="reason">
 				</div>
-				<input type="submit" class="buttonCrisisSend" name="send" value="Yes, I want to finish this dialouge">
+				<input type="submit" class="buttonCrisisSend" name="send" value="Yes, I want to finish this dialogue">
 				<input type="button" class="closeButton" value="&#10005;" name="close window" id="crisisCloseWindow">
 			</form>
 			<div>
-			After ending this dialouge it will be open to everyone in the topic: <br> "${currentDialog.topic}"
+			After ending this dialogue it will be open to everyone in the topic: <br> "${currentDialog.topic}"
 			</div>
 		</div>
 	`);

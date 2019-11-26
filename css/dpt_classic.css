@@ -332,7 +332,7 @@ div#crisis {
   color: #f0f3f5;
   -webkit-box-shadow: 0px 0px 20px #030911;
           box-shadow: 0px 0px 20px #030911;
-  bottom: 38px;
+  bottom: 49px;
   height: 550px;
   background-color: #28a9e1;
 }
@@ -713,7 +713,6 @@ textarea {
   transition: all 0.5s ease;
   position: absolute;
   background-color: transparent;
-  padding: 1.5px 7px;
   width: 30px;
   height: 30px;
   top: 6px;
