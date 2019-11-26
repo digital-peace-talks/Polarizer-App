@@ -1148,8 +1148,6 @@ section ul li {
   position: absolute;
   margin: 10px;
   z-index: 500;
-  -webkit-animation: all 1s ease-out;
-  animation: all 1s ease-out;
 }
 
 .pulse-circle, .pulse-circle2 {
@@ -1158,13 +1156,13 @@ section ul li {
   height: 2px;
   position: absolute;
   opacity: 0;
-  -webkit-transition: all 3s ease;
-  transition: all 3s ease;
+  -webkit-transition: all 10s ease;
+  transition: all 10s ease;
 }
 
 .pulse-circle {
-  -webkit-animation: pulseline 1s ease-out infinite;
-  animation: pulseline 1s ease-out infinite;
+  -webkit-animation: pulseline 2s ease-out infinite;
+  animation: pulseline 2s ease-out infinite;
 }
 
 .pulse-circle2 {
@@ -1222,6 +1220,59 @@ section ul li {
   width: 15px;
   height: 15px;
   background: #f7f313;
+}
+
+.arrowcontainer {
+  position: absolute;
+  left: -10px;
+  top: -120px;
+}
+
+.block1 {
+  background-color: #fff;
+  height: 60px;
+  width: 20px;
+}
+
+.block2 {
+  background-color: transparent;
+  width: 0;
+  height: 40px;
+  border-top: 40px solid #fff;
+  border-right: 30px solid transparent;
+  border-left: 30px solid transparent;
+  margin-left: -20px;
+}
+
+.arrow {
+  -webkit-animation: animate 1s infinite;
+          animation: animate 1s infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+
+@-webkit-keyframes animate {
+  0% {
+    margin-top: 20px;
+  }
+  50% {
+    margin-top: 0px;
+  }
+  100% {
+    margin-top: 20px;
+  }
+}
+
+@keyframes animate {
+  0% {
+    margin-top: 20px;
+  }
+  50% {
+    margin-top: 0px;
+  }
+  100% {
+    margin-top: 20px;
+  }
 }
 
 /* style for mobile */

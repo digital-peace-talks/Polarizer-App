@@ -8,7 +8,7 @@
 
 	<title>Digital Peace Talks</title>
 
-<!--	<link rel="stylesheet" href="/dpt_classic.css" /> -->
+	<!--	<link rel="stylesheet" href="/dpt_classic.css" /> -->
 	<link type="text/css" rel="stylesheet" media="all" href="dpt_classic.css" id="theme_css" />
 	<link rel="stylesheet" href="/external/trumbowyg.min.css" />
 
@@ -275,6 +275,12 @@
 
 <!-- Guided Tour-->
 <div id="animCircle" class="animated-circle">
+	<div class="arrowcontainer">
+		<div class="arrow">
+			<div class="block1"></div>
+			<div class="block2"></div>
+		</div>
+	</div>
 	<div class="pulse-circle"></div>
 	<div class="pulse-circle2"></div>
 	<div class="circle-center"></div>
@@ -294,7 +300,8 @@
 					<p>This is the topic cloud. You can move, zoom and rotate in 3D space.</p>
 					<p>This is the main navigation. With the home-button you come back to the topic cloud.</p>
 					<p>A click or touch on this button allows you to create a new topic. Let’s try it!</p>
-					<p>To enter a topic just click or touch on it. Inside a topic you can read through opinions regarding the topic or create one own opinion.</p>
+					<p>To enter a topic just click or touch on it. Inside a topic you can read through opinions
+						regarding the topic or create one own opinion.</p>
 					<p>This is your message list. All dialogs and invites get stored in it. </p>
 					<p>And now feel free to create a new topic or state an opinion in a topic of your choice.</p>
 				</div>
@@ -314,7 +321,6 @@
 			<button id="guideNextBtn" class="btn next">next</button>
 		</div>
 	</div>
-
 </div>
 <!-- End Guided Tour-->
 <script>
@@ -323,38 +329,55 @@
 	window.onload = function () {
 
 		const guidePosition = [{
-			top: "30%", 
+			// welcome
+			top: "30%",
 			left: "0px",
-			topMark: document.getElementById('guideContent').getBoundingClientRect().top + "px",
-			leftMark: document.getElementById('guideContent').getBoundingClientRect().left + "px"
+			bottom: "auto",
+			right: "auto",
+			topMark: document.getElementById('guideNextBtn').getBoundingClientRect().top + "px",
+			leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px"
 		}, {
-			top: "0%", 
+			// 3d space
+			top: "40px",
 			left: "0px",
+			bottom: "auto",
+			right: "auto",
 			topMark: "50%",
 			leftMark: "50%"
 		}, {
-			top: "50%", 
+			// 
+			top: "50%",
 			left: "0px",
+			bottom: "auto",
+			right: "auto",
 			topMark: document.getElementById('home-btn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('home-btn').getBoundingClientRect().left + "px"
 		}, {
-			top: "30%", 
+			top: "30%",
 			left: "0px",
+			bottom: "auto",
+			right: "auto",
 			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px"
 		}, {
-			top: "0%", 
+			top: "40px",
 			left: "0px",
+			bottom: "auto",
+			right: "auto",
 			topMark: "50%",
 			leftMark: "50%"
 		}, {
-			top: "30%", 
+			top: "30%",
 			left: "0px",
+			bottom: "auto",
+			right: "auto",
 			topMark: document.getElementById('new-opinion-btn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('new-opinion-btn').getBoundingClientRect().left + "px"
 		}, {
-			top: "30%", 
+			top: "30%",
 			left: "0px",
+			bottom: "auto",
+			right: "auto",
 			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px"
 		}]
@@ -400,8 +423,11 @@
 				stepLiEle[currentStepIndex].setAttribute('data-step', currentStepIndex + 1); // add number
 				stepLiEle[eraseDotIndex].classList.remove('active'); // remove dot active
 				stepLiEle[currentStepIndex].classList.add('active');    // add dot active
+
 				contentEle.style.top = guidePosition[currentStepIndex].top;
 				contentEle.style.left = guidePosition[currentStepIndex].left;
+				contentEle.style.bottom = guidePosition[currentStepIndex].bottom;
+				contentEle.style.right = guidePosition[currentStepIndex].right;
 
 				contentEle2.style.top = guidePosition[currentStepIndex].topMark;
 				contentEle2.style.left = guidePosition[currentStepIndex].leftMark;
@@ -410,4 +436,5 @@
 	} // End Script Guided Tour
 
 </script>
+
 </html>
