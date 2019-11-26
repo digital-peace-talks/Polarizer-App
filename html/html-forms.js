@@ -319,7 +319,7 @@ function opinionForm(edit, context) {
 		<form id="opinion">
 		<textarea name="opinion" class="opinion">${opinion}</textarea><br>
 		Details:
-		<div class="opinionContext">${opinionContext}</div>
+		<textarea class="opinionContext">${opinionContext}</textarea>
 		<input class="button" type="submit" value="Confirm"> 
 		<input class="closeButton" type="button" value="&#10005;" name="close window"
 		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}
@@ -327,7 +327,6 @@ function opinionForm(edit, context) {
 	`);
 	jQuery(".opinionContext").trumbowyg({
 		btns: [
-			['viewHTML'],
 			['formatting'],
 			['strong', 'em', 'del'],
 			['link'],
@@ -335,7 +334,7 @@ function opinionForm(edit, context) {
 			['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
 			['unorderedList', 'orderedList'],
 	    ],
-	    autogrow: true,
+	    adjustHeight: false,
 	});
 
 	jQuery(".opinion").focus();
@@ -381,7 +380,7 @@ function opinionForm(edit, context) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		var opinion = jQuery('.opinion').val();
-		var context = jQuery('.opinionContext').html();
+		var context = jQuery('.opinionContext').val();
 		var opinionId = jQuery('.opinionId').val();
 		var edit = jQuery('.edit').val();
 		if (opinion) {
