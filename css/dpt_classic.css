@@ -1143,7 +1143,86 @@ section ul li {
           box-shadow: 0px 0px 20px #030911;
 }
 
-/* button menu style for mobile */
+/* pulsating circle*/
+.animated-circle {
+  position: absolute;
+  margin: 10px;
+  z-index: 500;
+}
+
+.pulse-circle, .pulse-circle2 {
+  border-radius: 50%;
+  width: 2px;
+  height: 2px;
+  position: absolute;
+  opacity: 0;
+  -webkit-transition: all 3s ease;
+  transition: all 3s ease;
+}
+
+.pulse-circle {
+  -webkit-animation: pulseline 1s ease-out infinite;
+  animation: pulseline 1s ease-out infinite;
+}
+
+.pulse-circle2 {
+  -webkit-animation: pulseline 1s ease-out infinite .5s;
+  animation: pulseline 1s ease-out infinite .5s;
+}
+
+@-webkit-keyframes pulseline {
+  0% {
+    width: 2px;
+    height: 2px;
+    opacity: 1;
+    left: 0;
+    top: 0;
+    -webkit-box-shadow: 0 0 0 0px #f7f313;
+            box-shadow: 0 0 0 0px #f7f313;
+  }
+  100% {
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    left: -20px;
+    top: -20px;
+    -webkit-box-shadow: 0 0 0 6px #f7f313;
+            box-shadow: 0 0 0 6px #f7f313;
+  }
+}
+
+@keyframes pulseline {
+  0% {
+    width: 2px;
+    height: 2px;
+    opacity: 1;
+    left: 0;
+    top: 0;
+    -webkit-box-shadow: 0 0 0 0px #f7f313;
+            box-shadow: 0 0 0 0px #f7f313;
+  }
+  100% {
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    left: -20px;
+    top: -20px;
+    -webkit-box-shadow: 0 0 0 6px #f7f313;
+            box-shadow: 0 0 0 6px #f7f313;
+  }
+}
+
+.circle-center {
+  position: absolute;
+  left: -7px;
+  top: -7px;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background: #f7f313;
+}
+
+/* style for mobile */
 @media all and (max-width: 640px) {
   .menu-btn {
     width: 100%;
