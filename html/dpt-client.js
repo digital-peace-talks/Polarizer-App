@@ -145,18 +145,19 @@ class DPT {
 		});
 	}
 
-	postOpinion(topicId, newOpinion) {
+	postOpinion(topicId, newOpinion, newContext) {
 		this.socket.emit("api", {
 			method: 'post',
 			path: '/opinion/',
 			data: {
 				topic: topicId,
-				content: newOpinion
+				content: newOpinion,
+				context: newContext,
 			}
 		});
 	}
 	
-	putOpinion(publicKey, opinionId, topicId, newOpinion) {
+	putOpinion(publicKey, opinionId, topicId, newOpinion, newContext) {
 		this.socket.emit("api", {
 			method: 'put',
 			path: '/opinion/'+opinionId+'/',
@@ -165,7 +166,8 @@ class DPT {
 				opinionId: opinionId,
 				topicId: topicId,
 				body: {
-					content: newOpinion
+					content: newOpinion,
+					context: newContext
 				}
 			}
 		});

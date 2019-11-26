@@ -301,10 +301,12 @@ function opinionForm(edit, context) {
 	console.log('enter opinion');
 
 	var opinion = '';
+	var opinionContext = '';
 	var opinionIdHidden = '';
 	var deleteButton = '';
 	if (edit) {
 		opinion = context.content;
+		opinionContext = context.opinionContext;
 		edit = `<input type="hidden" class="edit" name="edit" value="edit" />`;
 		opinionIdHidden = `<input type="hidden" class="opinionId" name="opinionId" value="${context.opinionId}" />`;
 		//deleteButton = `<input class="button" type="button" value="Delete" name="Delete" id="DeleteOpinion"/>`;
@@ -317,13 +319,13 @@ function opinionForm(edit, context) {
 		<form id="opinion">
 		<textarea name="opinion" class="opinion">${opinion}</textarea><br>
 		Details:
-		<div id="context"></div>
+		<textarea class="opinionContext">${opinionContext}</textarea>
 		<input class="button" type="submit" value="Confirm"> 
 		<input class="closeButton" type="button" value="&#10005;" name="close window"
 		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}
 		</form></div>
 	`);
-	jQuery("#context").trumbowyg({
+	jQuery(".opinionContext").trumbowyg({
 		btns: [
 			['formatting'],
 			['strong', 'em', 'del'],
@@ -331,7 +333,8 @@ function opinionForm(edit, context) {
 			['insertImage'],
 			['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
 			['unorderedList', 'orderedList'],
-	    ]
+	    ],
+	    adjustHeight: false,
 	});
 
 	jQuery(".opinion").focus();
@@ -377,13 +380,14 @@ function opinionForm(edit, context) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		var opinion = jQuery('.opinion').val();
+		var context = jQuery('.opinionContext').val();
 		var opinionId = jQuery('.opinionId').val();
 		var edit = jQuery('.edit').val();
 		if (opinion) {
 			if (edit == 'edit') {
-				dpt.putOpinion(whoami.dptUUID, opinionId, currentTopic, opinion);
+				dpt.putOpinion(whoami.dptUUID, opinionId, currentTopic, opinion, context);
 			} else {
-				dpt.postOpinion(currentTopic, opinion);
+				dpt.postOpinion(currentTopic, opinion, context);
 			}
 		}
 		jQuery('#form').remove();
