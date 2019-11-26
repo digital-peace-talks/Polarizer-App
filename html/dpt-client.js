@@ -280,10 +280,10 @@ class DPT {
 		});
 	}
 	
-	getContext(opinionId, publicKey) {
+	getOpinionContext(opinionId, publicKey) {
 		this.socket.emit('api', {
 			method: 'get',
-			path: '/context/'+opinionId+'/',
+			path: '/opinionContext/'+opinionId+'/',
 			data: {
 				opinionId: opinionId,
 				publicKey: publicKey,
@@ -291,10 +291,10 @@ class DPT {
 		});
 	}
 	
-	postContext(opinionId, content, publicKey) {
+	postOpinionContext(opinionId, content, publicKey) {
 		this.socket.emit('api', {
 			method: 'post',
-			path: '/context/'+opinionId+'/',
+			path: '/opinionContext/'+opinionId+'/',
 			data: {
 				opinionId: opinionId,
 				content: content,

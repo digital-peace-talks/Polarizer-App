@@ -7,6 +7,8 @@ const opinionService	= require('./services/opinion');
 const dialogService		= require('./services/dialog');
 const metadataService	= require('./services/metadata');
 
+const opinionContextService	= require('./services/opinionContext');
+
 const searchStr		= "([0-9a-zA-Z ].*)";
 const uuidReg		= "([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})";
 const mongoReg		= "([0-9a-fA-F]{24})";
@@ -583,12 +585,12 @@ match.push({
 });
 
 match.push({
-	path: "/context/"+ opinionIdReg +"/",
+	path: "/context/"+ mongoReg +"/",
 	method: "get",
 	fun: async function(data, dptUUID) {
 		var user = userRegistered(data.dptUUID);
 		if(user) {
-			ret = await contextService.getContext({
+			ret = await opinionContextService.getContext({
 				user: user.user.id,
 				opinionId: data.opinionId});
 			if(ret.status == 200) {
@@ -601,12 +603,12 @@ match.push({
 });
 
 match.push({
-	path: "/context/"+ opinionIdReg +"/",
+	path: "/context/"+ mongoReg +"/",
 	method: "post",
 	fun: async function(data, dptUUID) {
 		var user = userRegistered(data.dptUUID);
 		if(user) {
-			ret = await contextService.postContext({
+			ret = await opinionContextService.postContext({
 				user: user.user.id,
 				opinionId: data.opinionId, 
 				content: data.content

@@ -8,7 +8,7 @@ const Context = require("../models/context").contextModel;
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.getContext = async (options) => {
+module.exports.opinionContextGet = async (options) => {
 	var context;
 	try {
 		context = await Context.find({_id: options.body.opinionId});
@@ -31,7 +31,7 @@ module.exports.getContext = async (options) => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.contextPut = async (context) => {
+module.exports.opinionContextPut = async (context) => {
 	var result;
 	if(context.body.content.length > config.api.maxContentLength) {
 		throw {
@@ -61,7 +61,7 @@ module.exports.contextPut = async (context) => {
  * @throws {Error}
  * @return {Promise}
  */
-module.exports.contextPost = async (context) => {
+module.exports.opinionContextPost = async (context) => {
 	var result;
 	if(context.body.content.length > config.api.maxContentLength) {
 		throw {

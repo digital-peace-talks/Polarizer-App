@@ -3,7 +3,7 @@ const User = require("./user").userModel;
 const Opinion = require("./opinion").topicModel;
 const Schema = mongoose.Schema;
 
-const contextSchema = mongoose.Schema({
+const opinionContextSchema = mongoose.Schema({
 	content: {
 		type: String,
 		required: true
@@ -13,7 +13,8 @@ const contextSchema = mongoose.Schema({
 		ref: "User",
 		required: true,
 	},
-	opinion: {
+	// parent can be a topic or a opinion.
+	parent: {
 		type: Schema.Types.ObjectId,
 		ref: "Opinion",
 		required: true,
@@ -25,5 +26,5 @@ const contextSchema = mongoose.Schema({
 	},
 });
 
-contextSchema.index({content: 'text'});
-exports.contextModel = mongoose.model("Context", contextSchema);
+opinionContextSchema.index({content: 'text'});
+exports.contextModel = mongoose.model("Context", opinionContextSchema);
