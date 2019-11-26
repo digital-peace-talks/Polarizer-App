@@ -333,7 +333,7 @@ div#crisis {
   -webkit-box-shadow: 0px 0px 20px #030911;
           box-shadow: 0px 0px 20px #030911;
   bottom: 38px;
-  top: -450px;
+  height: 550px;
   background-color: #28a9e1;
 }
 
@@ -612,7 +612,7 @@ textarea {
   transition: all 0.5s ease;
   background-color: transparent;
   border: none;
-  font-size: 32px;
+  font-size: 30px;
   width: 30px;
   height: 30px;
   margin: 5px auto;
@@ -676,6 +676,22 @@ textarea {
   -webkit-appearance: none;
 }
 
+.buttonCrisisSend {
+  font-family: DPTFontDin;
+  color: #f0f3f5;
+  background-color: #002c4b;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+}
+
 .button {
   font-family: DPTFontDin;
   color: #f0f3f5;
@@ -691,7 +707,7 @@ textarea {
 
 .closeButton {
   font-family: DPTFontDin;
-  font-size: 32px;
+  font-size: 30px;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
   transition: all 0.5s ease;
@@ -891,10 +907,10 @@ section ul li {
 /*----------------*/
 .frame1 {
   width: 400px;
-  height: 0;
+  height: 200px;
   margin-left: -200px;
   position: absolute;
-  top: 310px;
+  bottom: 30px;
   left: 50%;
 }
 
@@ -917,7 +933,7 @@ section ul li {
   -webkit-appearance: none;
   margin: 0;
   width: 300px;
-  height: 8px;
+  height: 10px;
   background: #f0f3f5;
   background: -webkit-gradient(linear, right top, left top, from(#15b76a), color-stop(#005b98), to(#ff6666));
   background: linear-gradient(to left, #15b76a, #005b98, #ff6666);
@@ -954,10 +970,16 @@ section ul li {
   height: 60px;
   background: #28a9e1;
   position: absolute;
-  top: 25%;
+  top: 0px;
   left: 42%;
   border-radius: 50%;
   background: #002c4b;
+}
+
+.reason {
+  position: absolute;
+  bottom: 70px;
+  width: 95%;
 }
 
 .eye {
@@ -987,8 +1009,8 @@ section ul li {
   border: none;
   border-top-left-radius: 60px;
   border-top-right-radius: 60px;
-  -webkit-transform: rotateX(90deg);
-          transform: rotateX(90deg);
+  -webkit-transform: rotateX(100deg);
+          transform: rotateX(100deg);
 }
 
 .fb_gd_wrap .mask {

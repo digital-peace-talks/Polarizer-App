@@ -355,7 +355,7 @@ div#crisis {
   color: $dpt-prime-text;
   box-shadow: 0px 0px 20px $dpt-shadow;
   bottom: 38px;
-  top: -450px;
+  height: 550px;
   background-color: $dpt-prime-base;
 }
 
@@ -629,7 +629,7 @@ textarea {
   transition: all 0.5s ease;
   background-color: transparent;
   border: none;
-  font-size: 32px;
+  font-size: 30px;
   width: 30px;
   height: 30px;
   margin: 5px auto;
@@ -694,6 +694,22 @@ textarea {
   -webkit-appearance: none;
 }
 
+.buttonCrisisSend {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+}
+
 .button {
   font-family: DPTFontDin;
   color: $dpt-prime-text;
@@ -710,7 +726,7 @@ textarea {
 
 .closeButton {
   font-family: DPTFontDin;
-  font-size: 32px;
+  font-size: 30px;
   transition: all 0.5s ease;
   transition: all 0.5s ease;
   position: absolute;
@@ -906,12 +922,13 @@ section ul li {
 
 .frame1 {
   width: 400px;
-  height: 0;
+  height: 200px;
   margin-left: -200px;
   position: absolute;
-  top: 310px;
+  bottom: 30px;
   left: 50%;
 }
+
 .container1 {
   position: absolute;
   top: 80px;
@@ -929,7 +946,7 @@ section ul li {
   -webkit-appearance: none;
   margin: 0;
   width: 300px;
-  height: 8px;
+  height: 10px;
   background: $dpt-prime-border;
   background: -webkit-linear-gradient(to left, $dpt-green, $dpt-blue, $dpt-red);
   background: linear-gradient(to left, $dpt-green, $dpt-blue, $dpt-red);
@@ -962,10 +979,16 @@ section ul li {
   height: 60px;
   background: $dpt-prime-base;
   position: absolute;
-  top: 25%;
+  top: 0px;
   left: 42%;
   border-radius: 50%;
   background: $dpt-prime-button;
+}
+
+.reason{
+  position: absolute;
+  bottom: 70px;
+  width: 95%;
 }
 
 .eye {
@@ -993,7 +1016,7 @@ section ul li {
   border: none;
   border-top-left-radius: 60px;
   border-top-right-radius: 60px;
-  transform: rotateX(90deg);
+  transform: rotateX(100deg);
 }
 
 .fb_gd_wrap .mask {
