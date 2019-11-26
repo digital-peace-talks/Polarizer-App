@@ -322,11 +322,13 @@ function dialogForm(secondDialog) {
 				}
 			}
 			html += `
+			<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
 				<div class="status">
+				
 				<center>
 					<form id="dialogFrame">
 					
-						<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
+						
 						${endDialog}
 					</form>
 					<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
@@ -339,13 +341,15 @@ function dialogForm(secondDialog) {
 			if(otherReadyToEnd == false) {
 
 				html += `
+				<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
 					<div class="status">
+					
 						<center>
 							<form id="dialogFrame">
 							<textarea class="textareaDialog" type="text" name="message" id="dialogInput">${dialogInput}</textarea>
 								<br>
 								<input type="submit" class="buttonSend" name="send" value="send">
-								<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
+								
 								<input type="button" class="crisis" value="finish dialog" name="end dialog" id="none">
 							</form>
 							<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
@@ -357,11 +361,13 @@ function dialogForm(secondDialog) {
 			} else {
 
 				html += `
+				<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
 					<div class="status">
+					
 						<center>
 							<form id="dialogFrame">
 								<br>
-								<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
+								
 								<input type="button" class="crisis" value="finish dialog" name="end dialog" id="none">
 							</form>
 							<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
@@ -390,10 +396,12 @@ function dialogForm(secondDialog) {
 		if(currentDialog.initiator == 'me') {
 
 			html += `
+			<input type="button" class="buttondialogclose" value="&#10005;" name="close window" size="120" id="dialogClose">
 					<div class="status">
+					
 						<center>
 							Please wait for the other to accept the dialog.
-							<input type="button" class="buttondialogclose" value="&#10005;" name="close window" size="120" id="dialogClose">
+							
 						</center>
 					</div>
 			`;
@@ -407,24 +415,27 @@ function dialogForm(secondDialog) {
 		} else {
 
 			html += `
+			<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
 				<div class="status">
 					<center id="actionSpace">
 						<input type="button" class="buttondialogstandard" id="dialogAccept" value="accept dialog" name="accept dialog" size="120" id="dialogAccept">
 						<input type="button" class="buttondialogstandard" value="ask me later" name="accept dialog" size="120" id="dialogClose">
 						<input type="button" class="buttondialogstandard" value="reject" name="accept dialog" size="120" id="dialogReject">
-					</center>
+						</center>
 				</div>
 			`;
 
 			jQuery(document).one('click', "#dialogAccept", function(event) {
 				jQuery('center#actionSpace').html(`
+				<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
 					<div class="status">
+					
 						<center>
 							<form id="dialogFrame">
 							<textarea class="textareaDialog" type="text" name="message" id="dialogInput">${dialogInput}</textarea>
 								<br>
 								<input type="submit" class="buttonSend" name="send" value="send">
-								<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
+								
 								<input type="button" class="crisis" value="finish dialog" name="end dialog" id="none">
 							</form>
 							<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
@@ -455,9 +466,11 @@ function dialogForm(secondDialog) {
 	} else if(currentDialog.status == 'CLOSED') {
 
 		html += `
+		<input type="button" class="buttondialogclose" value="&#10005;" name="close window" size="120" id="dialogCloseWindow">
 			<div class="status">
+			
 				<center>
-					<input type="button" class="buttondialogclose" value="&#10005;" name="close window" size="120" id="dialogCloseWindow">
+					
 					<b>This dialog is closed.</b>
 				</center>
 			</div>
