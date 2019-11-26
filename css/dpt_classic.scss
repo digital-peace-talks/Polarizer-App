@@ -167,7 +167,6 @@ input {
   color: $dpt-green;
 }
 
-
 // dunkles inputfeld ändern
 input[type="text"] {
   border-color: $dpt-second-border;
@@ -303,11 +302,11 @@ div.hide {
 }
 
 div.status {
-  bottom: 38px;
-  width: 560px;
+  bottom: 83px;
+  width: 580px;
   position: fixed;
   left: 50%;
-  margin-left: -280px;
+  margin-left: -290px;
   z-index: 30;
   background-color: $dpt-prime-base;
 }
@@ -335,17 +334,18 @@ div#c2 {
 }
 
 div#c3 {
-  font-family: "DPTFont";
+  font-family: "DPTFontDin";
   float: left;
   position: fixed;
   text-align: left;
   font-size: 14px;
   background-color: $dpt-second-base;
-  padding: 10px;
+  padding: 5px 15px;
   width: 600px;
+  height: 30px;
   left: 50%;
   margin-left: -300px;
-  bottom: 0px;
+  bottom: 115px;
 }
 
 div#crisis {
@@ -413,7 +413,7 @@ div#dialogFrame {
   background-color: $dpt-prime-base;
   overflow-y: auto;
   box-shadow: 0px 0px 20px $dpt-shadow;
-  bottom: 0px;
+  bottom: 49px;
 }
 
 .myDialogs {
@@ -559,7 +559,6 @@ div#dialogFrame {
   box-shadow: 0px 0px 20px $dpt-shadow;
 }
 
-
 textarea {
   font-family: DPTFont;
   font-size: 18px;
@@ -574,11 +573,11 @@ textarea {
   font-weight: normal;
 }
 
-textarea#dialog {
+.textareaDialog {
   font-family: DPTFont;
   font-size: 18px;
-  width: 90%;
-  height: 20px;
+  width: 80%;
+  height: 46px;
   margin: 0 auto;
   resize: none;
   border-color: $dpt-second-border;
@@ -586,6 +585,113 @@ textarea#dialog {
   border-style: solid;
   border-width: 1px;
   font-weight: normal;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.buttondialog {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  margin-left: 180px;
+}
+
+.buttondialogstandard {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: relative;
+}
+
+.buttondialogclose {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: transparent;
+  border: none;
+  font-size: 32px;
+  width: 30px;
+  height: 30px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: fixed;
+  top: 40px;
+  left: 595px;
+  margin-left: 180px;
+  border-radius: 50%;
+  border-color: transparent;
+  color: $dpt-prime-border;
+  line-height: 0px;
+  text-indent: -7px;
+}
+
+.buttondialogclose:hover {
+  transform: scale(1.4);
+  color: $dpt-third-text;
+}
+
+.buttonSend {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  border: none;
+  font-size: 20px;
+  width: 20%;
+  height: 46px;
+  -webkit-appearance: none;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+.crisis {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  border: none;
+  font-size: 16px;
+  width: 20%;
+  height: 30px;
+  //margin: 5px auto;
+  //margin-left: 10px;
+  -webkit-appearance: none;
+  z-index: 40;
+  position: absolute;
+  top: -40px;
+  right: 0px;
+}
+
+.crisis.icon {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: transparent;
+  border: none;
+  width: auto;
+  height: 48px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
 }
 
 .button {
@@ -626,52 +732,13 @@ textarea#dialog {
   color: $dpt-third-text;
 }
 
-.copyToClip{
+.copyToClip {
   filter: invert(100%);
   width: 32px;
   height: auto;
   border-color: transparent;
   position: relative;
   top: 6px;
-}
-
-
-.buttondialog {
-  font-family: DPTFontDin;
-  color: $dpt-prime-text;
-  background-color: $dpt-prime-button;
-  border: none;
-  font-size: 16px;
-  width: auto;
-  height: 40px;
-  margin: 5px auto;
-  margin-left: 10px;
-  -webkit-appearance: none;
-}
-
-.crisis {
-  font-family: DPTFontDin;
-  color: $dpt-prime-text;
-  background-color: $dpt-second-button;
-  border: none;
-  font-size: 16px;
-  width: auto;
-  height: 40px;
-  margin: 5px auto;
-  margin-left: 10px;
-  -webkit-appearance: none;
-}
-
-.crisis.icon {
-  font-family: DPTFontDin;
-  color: $dpt-prime-text;
-  background-color: transparent;
-  border: none;
-  width: auto;
-  height: 48px;
-  margin: 5px auto;
-  margin-left: 10px;
-  -webkit-appearance: none;
 }
 
 .helpframe {
@@ -1070,7 +1137,65 @@ section ul li {
   box-shadow: 0px 0px 20px $dpt-shadow;
 }
 
-/* button menu style for mobile */
+/* pulsating circle*/
+
+.animated-circle{
+  position:absolute;
+  margin:10px;
+  z-index: 500;
+}
+.pulse-circle, .pulse-circle2{
+  border-radius:50%;
+  width:2px;
+  height:2px;
+  position:absolute;
+  opacity:0;
+  transition: all 3s ease;
+}
+.pulse-circle{
+  -webkit-animation: pulseline 1s ease-out infinite;
+  -moz-animation: pulseline 1s ease-out infinite;
+  animation: pulseline 1s ease-out infinite;
+}
+.pulse-circle2{
+  -webkit-animation: pulseline 1s ease-out infinite .5s ;
+  -moz-animation: pulseline 1s ease-out infinite .5s ;
+  -ms-animation: pulseline 1s ease-out infinite .5s ;
+  -o-animation: pulseline 1s ease-out infinite .5s ;
+  animation: pulseline 1s ease-out infinite .5s ;
+}
+@-webkit-keyframes pulseline {
+  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px #f7f313;    }
+  100% {  width:40px;height:40px;opacity:0;left:-20px;top:-20px;box-shadow:0 0 0 6px #f7f313;   }
+}
+@-moz-keyframes pulseline {
+  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px #f7f313;   }
+  100% {  width:40px;height:40px;opacity:0;left:-20px;top:-20px;box-shadow:0 0 0 6px #f7f313;  }
+}
+@-ms-keyframes pulseline {
+  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px #f7f313;    }
+  100% {  width:40px;height:40px;opacity:0;left:-20px;top:-20px;box-shadow:0 0 0 6px #f7f313;   }
+}
+@-o-keyframes pulseline {
+  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px #f7f313;   }
+  100% {  width:40px;height:40px;opacity:0;left:-20px;top:-20px;box-shadow:0 0 0 6px #f7f313;   }
+}
+@keyframes pulseline {
+  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px #f7f313;    }
+  100% {  width:40px;height:40px;opacity:0;left:-20px;top:-20px;box-shadow:0 0 0 6px #f7f313;    }
+}
+.circle-center{
+  position:absolute;
+  left:-7px;
+  top:-7px;
+  border-radius:50%;
+  width:15px;
+  height:15px;
+  background:#f7f313; 
+}
+
+
+/* style for mobile */
 
 @media all and (max-width: 640px) {
   .menu-btn {
@@ -1113,16 +1238,15 @@ section ul li {
   }
   #dialogForm {
     width: 100%;
-    height: 100%;
     left: 0px;
     margin-left: 0px;
-    top: 0px;
+    //top: 0px;
   }
   div.status {
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    bottom: 38px;
+    //bottom: 38px;
   }
   h3 {
     font-size: 16px;
@@ -1142,11 +1266,36 @@ section ul li {
   textarea {
     width: 100%;
   }
+  .textareaDialog {
+    width: 70%;
+    margin-left: 5%;
+  }
+  .buttonSend {
+    width: 20%;
+    margin-right: 5%;
+  }
+  .buttondialog {
+    left: auto;
+    right: 10px;
+  }
+  .buttondialogclose {
+    left: 50%;
+    margin-left: 40%;
+  }
+  .buttondialog {
+    left: auto;
+    right: 10px;
+  }
+  .crisis {
+    width: 20%;
+    margin-right: 5%;
+    font-size: 11px;
+  }
   div#c3 {
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    bottom: 0px;
+    //bottom: 0px;
   }
   div#crisis {
     width: 100%;
@@ -1282,9 +1431,7 @@ section ul li {
   }
 
   // __________________ mobile guided tool
-  .fb_gd_wrap .content{
+  .fb_gd_wrap .content {
     width: 100%;
   }
 }
-
-

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
@@ -13,17 +13,43 @@
 	<link rel="stylesheet" href="/external/trumbowyg.min.css" />
 
 	<script src="/external/pep.js"></script>
+
+	<!--
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+	<script src="https://preview.babylonjs.com/ammo.js"></script>
+	<script src="https://preview.babylonjs.com/cannon.js"></script>
+	<script src="https://preview.babylonjs.com/Oimo.js"></script>
+	<script src="https://preview.babylonjs.com/gltf_validator.js"></script>
+	<script src="https://preview.babylonjs.com/earcut.min.js"></script>
+	<script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+	<script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+	<script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+	-->
+
+	<!--
+	<script src="https://preview.babylonjs.com/babylon.js"></script>
+	<script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+-->
 	<script src="/external/babylon.js"></script>
 	<script src="/external/babylonjs.materials.min.js"></script>
+
+	<!--
+	<script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+	<script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"/>
+	-->
+
+	<!--
+	<script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+	<script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+-->
 	<script src="/external/babylonjs.serializers.min.js"></script>
 	<script src="/external/babylon.gui.min.js"></script>
-
 
 	<script>
 
 		// Testpage for different Browsers
 		// http://www.quirksmode.org/m/tests/widthtest_vpdevice.html
-		/* 
+		/*
 		function fixZoom() {
 			var relation = 100 / window.devicePixelRatio;
 			document.body.style.MozTransform = 'scale(' + relation / 100 + ')';
@@ -49,11 +75,11 @@
 	<link rel="icon" sizes="512x512" href="icons/icon-512x512.png">
 
 	<!-- multiple icons for Safari -->
-    <link rel="apple-touch-icon" href="icons/touch-icon-iphone.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="icons/touch-icon-ipad.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="icons/touch-icon-iphone-retina.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="icons/touch-icon-ipad-retina.png">
-    <!-- splash scree icon for Apple -->
+	<link rel="apple-touch-icon" href="icons/touch-icon-iphone.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="icons/touch-icon-ipad.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="icons/touch-icon-iphone-retina.png">
+	<link rel="apple-touch-icon" sizes="167x167" href="icons/touch-icon-ipad-retina.png">
+	<!-- splash scree icon for Apple -->
 	<link rel="apple-touch-startup-image" href="icons/ios-icon.png">
 
 	<!-- multiple icons for IE -->
@@ -73,213 +99,139 @@
 
 
 <body>
-		<div class="no-bounce">
+	<div class="no-bounce">
+		<div>
 			<div>
-					<div>
-	<div id="overlay">
-		<nav>
-		<!--	<div class="brand">
+				<div id="overlay">
+					<nav>
+						<!--	<div class="brand">
 				<a href=""><img src="dpt_logo.png" alt="digital peace talks" /></a>
 			</div>-->
 
-			<a class="hamburger" id="nav-m"><img src="/button_menu.png" alt="" /></a>
-			<a class="hamburger close"><img src="/button_close.png" alt="" /></a>
-			<!--
+						<a class="hamburger" id="nav-m"><img src="/button_menu.png" alt="" /></a>
+						<a class="hamburger close"><img src="/button_close.png" alt="" /></a>
+						<!--
 			<a href="#nav-m" id="nav-m"><img src="/button_menu.png" alt="" /></a>
 			<a href="#" class="close"><img src="/button_close.png" alt="" /></a>
 			-->
 
-			<ul class="menu">
-					
-				<li><button class="menu-btn " id="about-btn" title="About this App"><img class= "btn-icon"src="/about_white.png" >About</button></li>
-				<li><button class="menu-btn" id="firststeps-btn" title="Tutorial"><img class= "btn-icon"src="/help_white.png" >First Steps</button></li>
-				<li><button class="menu-btn" id="documentation-btn" title="Read the documentation"><img class= "btn-icon"src="/documentation_white.png" >Documentation</button></li>
-				<li><button class="menu-btn" id="survey-btn" title="What do you think so far?"><img class= "btn-icon"src="/survey_white.png" >Survey</button></li>
-				<li><button class="menu-btn" id="settings-btn" title="Settings and more"><img class= "btn-icon"src="/settings_white.png" >Settings</button></li>
-			</ul>
-		</nav>
-	</div>
+						<ul class="menu">
 
-	<div id="menubar">
-		<section>
-			<ul class="menu">
-				<li><button class="menu-btn-bar" id="home-btn" title="Back to topics"><img class="btn-bar-icon"src="/home_white.png" ></button></li>
-				<li><button class="menu-btn-bar" id="search-btn" title="Search for opinions"><img class="btn-bar-icon"src="/search.png" ></button></li>
-				<li><button class="menu-btn-bar" id="new-topic-btn" title="Create a new topic"><img class="btn-bar-icon" ></button></li>
-				<li><button class="menu-btn-bar" id="new-opinion-btn" title="Create a new Opinion"><img class="btn-bar-icon" ></button></li>
-				<li><button class="menu-btn-bar" id="dialogues-btn" title="Open the dialog list"><img class="btn-bar-icon" src="/1message_white.png"><div class="listcount" id="dialog-btn-label"></div></button></li>
-			</ul>
-		</section>
-	</div>
-<!--
-	<div class="fb_gd_wrap">
-			<div class="content" id="guideContent">
-			  <div class="header">
-				<span class="text">Welcome to digital peace talks</span>
-				<button class="closeButton" id="closeBtn">&#10005;</button>
-			  </div>
-			  <div  class="body">
-				<div  class="text">
-				  <div id="guideBodyText" class="textList">
-					<p>step 1: Welcome to digital peace talks. with this app you can.....</p>
-					<p>step 2: This is the main menu.</p>
-					<p>step 3: Make New Topics or Opinions. Click on the [T] to create a new Topic.</p>
-					<p>step 4: Now your Topic appears in 3D space. Use your mouse or touch to navigate.</p>
-					<p>step 5: Klick on a topic. Inside a Topic you find Opinions.</p>
-				  </div>                            
+							<li><button class="menu-btn " id="about-btn" title="About this App"><img class="btn-icon"
+										src="/about_white.png">About</button></li>
+							<li><button class="menu-btn" id="firststeps-btn" title="Tutorial"><img class="btn-icon"
+										src="/help_white.png">First Steps</button></li>
+							<li><button class="menu-btn" id="documentation-btn" title="Read the documentation"><img
+										class="btn-icon" src="/documentation_white.png">Documentation</button></li>
+							<li><button class="menu-btn" id="survey-btn" title="What do you think so far?"><img
+										class="btn-icon" src="/survey_white.png">Survey</button></li>
+							<li><button class="menu-btn" id="settings-btn" title="Settings and more"><img
+										class="btn-icon" src="/settings_white.png">Settings</button></li>
+						</ul>
+					</nav>
 				</div>
-			  </div>
-			  <div class="footer">
-				<button id="guidePrevBtn" class="btn prev">previous</button>
-				<ul class="steps">
-				  <li class="dot line active"></li>
-				  <li class="dot line "></li>
-				  <li class="dot line "></li>
-				  <li class="dot line "></li>
-				  <li class="dot  "></li>
-				</ul>
-				<button id="guideNextBtn"  class="btn next">next</button>
-			  </div>
+
+				<div id="menubar">
+					<section>
+						<ul class="menu">
+							<li><button class="menu-btn-bar" id="home-btn" title="Back to topics"><img
+										class="btn-bar-icon" src="/home_white.png"></button></li>
+							<li><button class="menu-btn-bar" id="search-btn" title="Search for opinions"><img
+										class="btn-bar-icon" src="/search.png"></button></li>
+							<li><button class="menu-btn-bar" id="new-topic-btn" title="Create a new topic"><img
+										class="btn-bar-icon"></button></li>
+							<li><button class="menu-btn-bar" id="new-opinion-btn" title="Create a new Opinion"><img
+										class="btn-bar-icon"></button></li>
+							<li><button class="menu-btn-bar" id="dialogues-btn" title="Open the dialog list"><img
+										class="btn-bar-icon" src="/1message_white.png">
+									<div class="listcount" id="dialog-btn-label"></div>
+								</button></li>
+						</ul>
+					</section>
+				</div>
+
+
+
+				<canvas id="renderCanvas" tabindex="1"></canvas>
+				<div id="misc"></div>
+				<div id="misc2"></div>
+				<script>
+					document.addEventListener("DOMContentLoaded", function (event) {
+						var hamburgerOpen = false;
+
+						var mql = window.matchMedia("(orientation: landscape)");
+						mql.addListener(function (m) {
+							if (m.matches) {
+								if (!hamburgerOpen) {
+									jQuery("nav ul").css("left", 640);
+								}
+							}
+						});
+
+						jQuery("a.hamburger").on('click touch', function (event) {
+							var menuLeft = canvas.width;
+							if (canvas.width > 640) {
+								menuLeft = 228;
+							}
+
+							hamburgerOpen = !hamburgerOpen;
+							if (hamburgerOpen) {
+								jQuery("nav ul").css("left", "0px");
+								jQuery("a.hamburger").html('<img src="/button_close.png">');
+							} else {
+								jQuery("nav ul").css("left", menuLeft);
+								jQuery("a.hamburger").html('<img src="/button_menu.png">');
+							}
+						});
+
+						if ('serviceWorker' in navigator) {
+							window.addEventListener('load', function () {
+								navigator.serviceWorker.register('/sw.js')
+									.then(function (registration) {
+										// Registration was successful
+										console.log('ServiceWorker registration successful with scope: ', registration.scope);
+									}, function (err) {
+										// registration failed :(
+										console.log('ServiceWorker registration failed: ', err);
+									});
+							});
+						}
+						/*
+						if('serviceWorker' in navigator) {
+							navigator.serviceWorker.register('/sw.js')
+							.then((reg) => console.log('service worker registered', reg))
+							.catch((err) => console.log('service worker not registered'), err));
+						}
+						*/
+
+						// from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
+						const copyToClipboard = (str) => {
+							const el = document.createElement('textarea');  // Create a <textarea> element
+							el.value = str;                                 // Set its value to the string that you want copied
+							el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
+							el.style.position = 'absolute';
+							el.style.left = '-9999px';                      // Move outside the screen to make it invisible
+							document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
+							const selected =
+								document.getSelection().rangeCount > 0      // Check if there is any content selected previously
+									? document.getSelection().getRangeAt(0)     // Store selection if found
+									: false;                                    // Mark as false to know no selection existed before
+							el.select();                                    // Select the <textarea> content
+							document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
+							document.body.removeChild(el);                  // Remove the <textarea> element
+							if (selected) {                                 // If a selection existed before copying
+								document.getSelection().removeAllRanges();  // Unselect everything on the HTML document
+								document.getSelection().addRange(selected); // Restore the original selection
+							}
+						};
+					});
+
+
+
+				</script>
 			</div>
-		  </div>            
--->
-		  
-
-
-	<canvas id="renderCanvas" tabindex="1"></canvas>
-
-	<div id="misc"></div>
-	<div id="misc2"></div>
-	<script>
-	document.addEventListener("DOMContentLoaded", function(event) {
-		var hamburgerOpen = false;
-
-		var mql = window.matchMedia("(orientation: landscape)");
-		mql.addListener(function(m) {
-			if(m.matches) {
-				if(!hamburgerOpen) {
-					jQuery("nav ul").css("left", 640);
-				}
-			}
-		});
-
-		jQuery("a.hamburger").on('click touch', function(event) {
-			var menuLeft = canvas.width;
-			if(canvas.width > 640) {
-				menuLeft = 228;
-			}
-
-			hamburgerOpen = !hamburgerOpen;
-			if(hamburgerOpen) {
-				jQuery("nav ul").css("left", "0px");
-				jQuery("a.hamburger").html('<img src="/button_close.png">');
-			} else {
-				jQuery("nav ul").css("left", menuLeft);
-				jQuery("a.hamburger").html('<img src="/button_menu.png">');
-			}
-		});
-
-		if('serviceWorker' in navigator) {
-			window.addEventListener('load', function() {
-				navigator.serviceWorker.register('/sw.js')
-				.then(function(registration) {
-					// Registration was successful
-					console.log('ServiceWorker registration successful with scope: ', registration.scope);
-				}, function(err) {
-					// registration failed :(
-					console.log('ServiceWorker registration failed: ', err);
-				});
-			});
-		}
-		/*
-		if('serviceWorker' in navigator) {
-			navigator.serviceWorker.register('/sw.js')
-			.then((reg) => console.log('service worker registered', reg))
-			.catch((err) => console.log('service worker not registered'), err));
-		}
-		*/
-
-		// from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
-		const copyToClipboard = (str) => {
-			const el = document.createElement('textarea');  // Create a <textarea> element
-			el.value = str;                                 // Set its value to the string that you want copied
-			el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
-			el.style.position = 'absolute';                 
-			el.style.left = '-9999px';                      // Move outside the screen to make it invisible
-			document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
-			const selected =            
-				document.getSelection().rangeCount > 0      // Check if there is any content selected previously
-				? document.getSelection().getRangeAt(0)     // Store selection if found
-				: false;                                    // Mark as false to know no selection existed before
-			el.select();                                    // Select the <textarea> content
-			document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
-			document.body.removeChild(el);                  // Remove the <textarea> element
-			if (selected) {                                 // If a selection existed before copying
-				document.getSelection().removeAllRanges();  // Unselect everything on the HTML document
-				document.getSelection().addRange(selected); // Restore the original selection
-			}
-		};
-	});
-
-/*
-	window.onload = function(){
-  const guidePosition = [{
-    top: "30%", left: "0px", bottom: "auto", right: "auto"},{
-      top: "auto", left: "40%", bottom:"50px"},{
-        top: "auto", left: "30%", bottom:"300px"},{
-			top: "20px", left: "20px", bottom: "auto", right: "auto"},{
-				top: "auto", left: "40%", bottom:"50px"}]
-  const bodyTextEle = document.getElementById('guideBodyText');
-  const contentEle = document.getElementById('guideContent');
-  const stepLiEle = document.getElementsByClassName('dot');
-  let currentStepIndex = -1;
-  const stepLength = guidePosition.length;
-  changeStep();
-  document.getElementById("guideNextBtn").addEventListener('click', ()=>{
-    changeStep('next');
-  },false);
-  document.getElementById("guidePrevBtn").addEventListener('click', ()=>{
-    changeStep('prev');
-  }, false);
-  document.getElementById('closeBtn').addEventListener('click', ()=>{
-	// schliessen aktion
-	document.getElementById("guideContent").remove();
-  },false);
-
-
-  function changeStep(direction){
-
-    if((direction === 'prev' && currentStepIndex === 0) || (direction === 'next' && currentStepIndex === stepLength-1)){
-		
-		this.remove();
-    }else{
-      let eraseDotIndex;               
-      if(direction === 'prev'){
-        currentStepIndex = currentStepIndex - 1;
-		eraseDotIndex = currentStepIndex === stepLength-1 ? 0 : currentStepIndex +1;
-		
-      }else{
-        currentStepIndex = currentStepIndex + 1;
-        eraseDotIndex = currentStepIndex === 0 ? stepLength -1 : currentStepIndex -1;
-      }
-      bodyTextEle.style.marginLeft = `${-360*currentStepIndex}px`; // margin-left 
-      // bodyTextEle.style.left = `${-360*currentStepIndex}px`; // relative+left 
-      stepLiEle[eraseDotIndex].setAttribute('data-step', ''); // erase number
-      stepLiEle[currentStepIndex].setAttribute('data-step', currentStepIndex+1); // add number
-      stepLiEle[eraseDotIndex].classList.remove('active'); // remove dot active
-      stepLiEle[currentStepIndex].classList.add('active');    // add dot active
-      contentEle.style.top = guidePosition[currentStepIndex].top;
-	  contentEle.style.left = guidePosition[currentStepIndex].left;       
-	  contentEle.style.right = guidePosition[currentStepIndex].right;
-      contentEle.style.bottom = guidePosition[currentStepIndex].bottom;                
-    }
-  }
-}
-*/
-	</script>
-					</div>
-				</div>
 		</div>
+	</div>
 </body>
 
 <!--
@@ -302,11 +254,11 @@
 	<script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
 	<script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
 
-<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
 -->
 <script src="/external/socket.io.js"></script>
 <script src="/external/jquery-1.11.1.js"></script>
@@ -319,7 +271,143 @@
 <script src="babylon-opinions.js"></script>
 <script src="html-forms.js"></script>
 <script src="dialog.js"></script>
-
 <script src="/external/trumbowyg.min.js"></script>
 
+<!-- Guided Tour-->
+<div id="animCircle" class="animated-circle">
+	<div class="pulse-circle"></div>
+	<div class="pulse-circle2"></div>
+	<div class="circle-center"></div>
+</div>
+
+<div class="fb_gd_wrap">
+	<div class="content" id="guideContent">
+
+		<div class="header">
+			<span class="text">Welcome to digital peace talks</span>
+			<button class="closeButton" id="closeBtn">&#10005;</button>
+		</div>
+		<div class="body">
+			<div class="text">
+				<div id="guideBodyText" class="textList">
+					<p>Welcome to digital peace talks. Let us show you around. Please click for the next tip.</p>
+					<p>This is the topic cloud. You can move, zoom and rotate in 3D space.</p>
+					<p>This is the main navigation. With the home-button you come back to the topic cloud.</p>
+					<p>A click or touch on this button allows you to create a new topic. Let’s try it!</p>
+					<p>To enter a topic just click or touch on it. Inside a topic you can read through opinions regarding the topic or create one own opinion.</p>
+					<p>This is your message list. All dialogs and invites get stored in it. </p>
+					<p>And now feel free to create a new topic or state an opinion in a topic of your choice.</p>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<button id="guidePrevBtn" class="btn prev">previous</button>
+			<ul class="steps">
+				<li class="dot line active"></li>
+				<li class="dot line "></li>
+				<li class="dot line "></li>
+				<li class="dot line "></li>
+				<li class="dot line "></li>
+				<li class="dot line "></li>
+				<li class="dot  "></li>
+			</ul>
+			<button id="guideNextBtn" class="btn next">next</button>
+		</div>
+	</div>
+
+</div>
+<!-- End Guided Tour-->
+<script>
+
+	// Script Guided Tour
+	window.onload = function () {
+
+		const guidePosition = [{
+			top: "30%", 
+			left: "0px",
+			topMark: document.getElementById('guideContent').getBoundingClientRect().top + "px",
+			leftMark: document.getElementById('guideContent').getBoundingClientRect().left + "px"
+		}, {
+			top: "0%", 
+			left: "0px",
+			topMark: "50%",
+			leftMark: "50%"
+		}, {
+			top: "50%", 
+			left: "0px",
+			topMark: document.getElementById('home-btn').getBoundingClientRect().top + "px",
+			leftMark: document.getElementById('home-btn').getBoundingClientRect().left + "px"
+		}, {
+			top: "30%", 
+			left: "0px",
+			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
+			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px"
+		}, {
+			top: "0%", 
+			left: "0px",
+			topMark: "50%",
+			leftMark: "50%"
+		}, {
+			top: "30%", 
+			left: "0px",
+			topMark: document.getElementById('new-opinion-btn').getBoundingClientRect().top + "px",
+			leftMark: document.getElementById('new-opinion-btn').getBoundingClientRect().left + "px"
+		}, {
+			top: "30%", 
+			left: "0px",
+			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
+			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px"
+		}]
+		const bodyTextEle = document.getElementById('guideBodyText');
+		const contentEle = document.getElementById('guideContent');
+		const contentEle2 = document.getElementById('animCircle');
+		const stepLiEle = document.getElementsByClassName('dot');
+		let currentStepIndex = -1;
+		const stepLength = guidePosition.length;
+		changeStep();
+		document.getElementById("guideNextBtn").addEventListener('click', () => {
+			changeStep('next');
+
+		}, false);
+		document.getElementById("guidePrevBtn").addEventListener('click', () => {
+			changeStep('prev');
+		}, false);
+		document.getElementById('closeBtn').addEventListener('click', () => {
+			// schliessen aktion
+			document.getElementById("guideContent").remove();
+			document.getElementById("animCircle").remove();
+		}, false);
+
+
+		function changeStep(direction) {
+
+			if ((direction === 'prev' && currentStepIndex === 0) || (direction === 'next' && currentStepIndex === stepLength - 1)) {
+
+				this.remove();
+			} else {
+				let eraseDotIndex;
+				if (direction === 'prev') {
+					currentStepIndex = currentStepIndex - 1;
+					eraseDotIndex = currentStepIndex === stepLength - 1 ? 0 : currentStepIndex + 1;
+
+				} else {
+					currentStepIndex = currentStepIndex + 1;
+					eraseDotIndex = currentStepIndex === 0 ? stepLength - 1 : currentStepIndex - 1;
+				}
+				bodyTextEle.style.marginLeft = `${-360 * currentStepIndex}px`; // margin-left 
+				// bodyTextEle.style.left = `${-360*currentStepIndex}px`; // relative+left 
+				stepLiEle[eraseDotIndex].setAttribute('data-step', ''); // erase number
+				stepLiEle[currentStepIndex].setAttribute('data-step', currentStepIndex + 1); // add number
+				stepLiEle[eraseDotIndex].classList.remove('active'); // remove dot active
+				stepLiEle[currentStepIndex].classList.add('active');    // add dot active
+				contentEle.style.top = guidePosition[currentStepIndex].top;
+				contentEle.style.left = guidePosition[currentStepIndex].left;
+
+				contentEle2.style.top = guidePosition[currentStepIndex].topMark;
+				contentEle2.style.left = guidePosition[currentStepIndex].leftMark;
+			}
+		}
+	} // End Script Guided Tour
+
+</script>
 </html>

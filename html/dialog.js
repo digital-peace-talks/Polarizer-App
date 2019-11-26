@@ -39,8 +39,8 @@ function crisisForm(messageId) {
 				<label id="positive">[1: <input type="radio" name="rating" value="1">]</label><br>
 
 
-				<input type="submit" class="buttondialog" name="send" value="send">
-				<input type="button" class="buttondialog" value="close window" name="close window" id="crisisCloseWindow">
+				<input type="submit" class="buttondialogstandard" name="send" value="send">
+				<input type="button" class="closeButton" value="&#10005;" name="close window" id="crisisCloseWindow">
 			</form>
 
 				
@@ -73,7 +73,7 @@ function crisisForm(messageId) {
 			jQuery('#misc2').empty();
 			jQuery('form#dialogFrame').html(`
 			<br>
-			<input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
+			<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
 			`);
 		} else {
 			alert('Please enter a conclusion.');
@@ -315,7 +315,7 @@ function dialogForm(secondDialog) {
 
 		if(viewOnly) {
 
-			var endDialog = '<input type="button" class="crisis" value="end dialog" name="end dialog" id="none">';
+			var endDialog = '<input type="button" class="crisis" value="finish dialog" name="end dialog" id="none">';
 			for(var i in currentDialog.crisises) {
 				if(currentDialog.crisises[i].initiator == 'me') {
 					endDialog = '';
@@ -326,7 +326,7 @@ function dialogForm(secondDialog) {
 				<center>
 					<form id="dialogFrame">
 					
-						<input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
+						<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
 						${endDialog}
 					</form>
 					<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
@@ -342,11 +342,11 @@ function dialogForm(secondDialog) {
 					<div class="status">
 						<center>
 							<form id="dialogFrame">
-							<textarea class="dialog" type="text" name="message" id="dialogInput">${dialogInput}</textarea>
+							<textarea class="textareaDialog" type="text" name="message" id="dialogInput">${dialogInput}</textarea>
 								<br>
-								<input type="submit" class="buttondialog" name="send" value="send">
-								<input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
-								<input type="button" class="crisis" value="end dialog" name="end dialog" id="none">
+								<input type="submit" class="buttonSend" name="send" value="send">
+								<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
+								<input type="button" class="crisis" value="finish dialog" name="end dialog" id="none">
 							</form>
 							<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
 						
@@ -361,8 +361,8 @@ function dialogForm(secondDialog) {
 						<center>
 							<form id="dialogFrame">
 								<br>
-								<input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
-								<input type="button" class="crisis" value="end dialog" name="end dialog" id="none">
+								<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
+								<input type="button" class="crisis" value="finish dialog" name="end dialog" id="none">
 							</form>
 							<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
 						
@@ -393,7 +393,7 @@ function dialogForm(secondDialog) {
 					<div class="status">
 						<center>
 							Please wait for the other to accept the dialog.
-							<input type="button" class="buttondialog" value="close window" name="close window" size="120" id="dialogClose">
+							<input type="button" class="buttondialogclose" value="&#10005;" name="close window" size="120" id="dialogClose">
 						</center>
 					</div>
 			`;
@@ -409,9 +409,9 @@ function dialogForm(secondDialog) {
 			html += `
 				<div class="status">
 					<center id="actionSpace">
-						<input type="button" class="buttondialog" id="dialogAccept" value="accept dialog" name="accept dialog" size="120" id="dialogAccept">
-						<input type="button" class="buttondialog" value="ask me later" name="accept dialog" size="120" id="dialogClose">
-						<input type="button" class="buttondialog" value="reject" name="accept dialog" size="120" id="dialogReject">
+						<input type="button" class="buttondialogstandard" id="dialogAccept" value="accept dialog" name="accept dialog" size="120" id="dialogAccept">
+						<input type="button" class="buttondialogstandard" value="ask me later" name="accept dialog" size="120" id="dialogClose">
+						<input type="button" class="buttondialogstandard" value="reject" name="accept dialog" size="120" id="dialogReject">
 					</center>
 				</div>
 			`;
@@ -421,11 +421,11 @@ function dialogForm(secondDialog) {
 					<div class="status">
 						<center>
 							<form id="dialogFrame">
-							<textarea class="dialog" type="text" name="message" id="dialogInput">${dialogInput}</textarea>
+							<textarea class="textareaDialog" type="text" name="message" id="dialogInput">${dialogInput}</textarea>
 								<br>
-								<input type="submit" class="buttondialog" name="send" value="send">
-								<input type="button" class="buttondialog" value="close window" name="close window" id="dialogClose">
-								<input type="button" class="crisis" value="end dialog" name="end dialog" id="none">
+								<input type="submit" class="buttonSend" name="send" value="send">
+								<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
+								<input type="button" class="crisis" value="finish dialog" name="end dialog" id="none">
 							</form>
 							<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
 						
@@ -457,7 +457,7 @@ function dialogForm(secondDialog) {
 		html += `
 			<div class="status">
 				<center>
-					<input type="button" class="buttondialog" value="close window" name="close window" size="120" id="dialogCloseWindow">
+					<input type="button" class="buttondialogclose" value="&#10005;" name="close window" size="120" id="dialogCloseWindow">
 					<b>This dialog is closed.</b>
 				</center>
 			</div>
