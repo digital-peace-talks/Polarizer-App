@@ -316,10 +316,11 @@ function opinionForm(edit, context) {
 		Please enter a new opinion:<br>
 		<form id="opinion">
 		<textarea name="opinion" class="opinion">${opinion}</textarea><br>
+		Details:
+		<div id="context"></div>
 		<input class="button" type="submit" value="Confirm"> 
 		<input class="closeButton" type="button" value="&#10005;" name="close window"
 		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}
-		<div id="context"></div>
 		</form></div>
 	`);
 	jQuery("#context").trumbowyg({
