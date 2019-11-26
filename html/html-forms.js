@@ -313,12 +313,25 @@ function opinionForm(edit, context) {
 	}
 	jQuery('body').append(`
 		<div id="form">
-		Please enter a new opinion:<br> <form id="opinion">
+		Please enter a new opinion:<br>
+		<form id="opinion">
 		<textarea name="opinion" class="opinion">${opinion}</textarea><br>
 		<input class="button" type="submit" value="Confirm"> 
 		<input class="closeButton" type="button" value="&#10005;" name="close window"
-		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}</form></div>
+		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}
+		<div id="context"></div>
+		</form></div>
 	`);
+	jQuery("#context").trumbowyg({
+		btns: [
+			['formatting'],
+			['strong', 'em', 'del'],
+			['link'],
+			['insertImage'],
+			['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+			['unorderedList', 'orderedList'],
+	    ]
+	});
 
 	jQuery(".opinion").focus();
 
