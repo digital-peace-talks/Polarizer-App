@@ -242,11 +242,15 @@ function main() {
 								htmlScheme = "dpt_classic.css";
 								break;
 						}
-						document.getElementById('theme_css').href = htmlScheme;
+						//document.getElementById('theme_css').href = htmlScheme;
+						setTimeout(function() {
+							document.getElementById('theme_css').href = htmlScheme;
+						}, 300);
 						currentScene = createGenericScene("topicScene");
 						currentScene.name = 'topicScene';
 						dpt.getTopic();
 						dpt.getDialogList();
+								
 					} else if(restObj.data.message == "user unknown") {
 						alert('user unknown. please go back to the start page, delete your cookie. you can try to get your phrase recovered or get a new phrase. maybe cookies are disable?');
 						whoami.user = {};

@@ -98,12 +98,12 @@ function getCamera(rotate) {
 	camera.pinchToPanMaxDistance = 124;
 
 	camera.lowerRadiusLimit = 1;
-	camera.upperRadiusLimit = 35;
+	camera.upperRadiusLimit = 250;
 		
-	camera.lowerAlphaLimit = 0.0174533 * -140;
-	camera.upperAlphaLimit = 0.0174533 * -40;
-	camera.lowerBetaLimit = 0.0174533 * 40;
-	camera.upperBetaLimit = 0.0174533 * 140;
+	camera.lowerAlphaLimit = 0.0174533 * -179;
+	camera.upperAlphaLimit = 0.0174533 * 180;
+	camera.lowerBetaLimit = 0.0174533 * -179;
+	camera.upperBetaLimit = 0.0174533 * 180;
 	
 	camera.panningDistanceLimit = 35;
 
