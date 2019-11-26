@@ -635,9 +635,9 @@ textarea {
   margin: 5px auto;
   margin-left: 10px;
   -webkit-appearance: none;
-  position: fixed;
-  top: 40px;
-  left: 595px;
+  position: absolute;
+  top: 0px;
+  right: 7px;
   margin-left: 180px;
   border-radius: 50%;
   border-color: transparent;
@@ -1143,6 +1143,9 @@ section ul li {
   position:absolute;
   margin:10px;
   z-index: 500;
+  -webkit-animation: all 1s ease-out ;
+  -moz-animation: all 1s ease-out ;
+  animation: all 1s ease-out ;
 }
 .pulse-circle, .pulse-circle2{
   border-radius:50%;
@@ -1166,23 +1169,23 @@ section ul li {
 }
 @-webkit-keyframes pulseline {
   0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px #f7f313;    }
-  100% {  width:40px;height:40px;opacity:0;left:-20px;top:-20px;box-shadow:0 0 0 6px #f7f313;   }
+  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px #f7f313;   }
 }
 @-moz-keyframes pulseline {
   0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px #f7f313;   }
-  100% {  width:40px;height:40px;opacity:0;left:-20px;top:-20px;box-shadow:0 0 0 6px #f7f313;  }
+  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px #f7f313;   }
 }
 @-ms-keyframes pulseline {
   0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px #f7f313;    }
-  100% {  width:40px;height:40px;opacity:0;left:-20px;top:-20px;box-shadow:0 0 0 6px #f7f313;   }
+  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px #f7f313;   }
 }
 @-o-keyframes pulseline {
   0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px #f7f313;   }
-  100% {  width:40px;height:40px;opacity:0;left:-20px;top:-20px;box-shadow:0 0 0 6px #f7f313;   }
+  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px #f7f313;   }
 }
 @keyframes pulseline {
   0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px #f7f313;    }
-  100% {  width:40px;height:40px;opacity:0;left:-20px;top:-20px;box-shadow:0 0 0 6px #f7f313;    }
+  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px #f7f313;   }
 }
 .circle-center{
   position:absolute;

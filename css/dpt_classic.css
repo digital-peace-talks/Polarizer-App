@@ -618,9 +618,9 @@ textarea {
   margin: 5px auto;
   margin-left: 10px;
   -webkit-appearance: none;
-  position: fixed;
-  top: 40px;
-  left: 595px;
+  position: absolute;
+  top: 0px;
+  right: 7px;
   margin-left: 180px;
   border-radius: 50%;
   border-color: transparent;
@@ -1148,6 +1148,8 @@ section ul li {
   position: absolute;
   margin: 10px;
   z-index: 500;
+  -webkit-animation: all 1s ease-out;
+  animation: all 1s ease-out;
 }
 
 .pulse-circle, .pulse-circle2 {
@@ -1181,11 +1183,11 @@ section ul li {
             box-shadow: 0 0 0 0px #f7f313;
   }
   100% {
-    width: 40px;
-    height: 40px;
+    width: 80px;
+    height: 80px;
     opacity: 0;
-    left: -20px;
-    top: -20px;
+    left: -40px;
+    top: -40px;
     -webkit-box-shadow: 0 0 0 6px #f7f313;
             box-shadow: 0 0 0 6px #f7f313;
   }
@@ -1202,11 +1204,11 @@ section ul li {
             box-shadow: 0 0 0 0px #f7f313;
   }
   100% {
-    width: 40px;
-    height: 40px;
+    width: 80px;
+    height: 80px;
     opacity: 0;
-    left: -20px;
-    top: -20px;
+    left: -40px;
+    top: -40px;
     -webkit-box-shadow: 0 0 0 6px #f7f313;
             box-shadow: 0 0 0 6px #f7f313;
   }
