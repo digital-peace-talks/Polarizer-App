@@ -252,7 +252,12 @@ function main() {
 						dpt.getDialogList();
 								
 					} else if(restObj.data.message == "user unknown") {
-						alert('user unknown. please go back to the start page, delete your cookie. you can try to get your phrase recovered or get a new phrase. maybe cookies are disable?');
+						alert(`User unknown.
+								Please go back to the start page,
+								delete your cookie. You can try to get your
+								phrase recovered or get a new phrase.
+
+								maybe cookies are disable?`);
 						whoami.user = {};
 					}
 				}

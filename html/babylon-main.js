@@ -90,7 +90,14 @@ function getCollisionBox() {
 
 function getCamera(rotate) {
 
-	var camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI/2, Math.PI/2, 35, new BABYLON.Vector3(0, 0, 0), currentScene);
+	var camera = new BABYLON.ArcRotateCamera(
+			"Camera",
+			-Math.PI/2,
+			Math.PI/2,
+			35,
+			new BABYLON.Vector3(0, 0, 0),
+			currentScene);
+
 	// camera
 	camera.wheelPrecision = 30;
 	camera.panningSensibility = 300;
@@ -307,7 +314,11 @@ var createGenericScene = function(dptMode) {
 	currentScene.dptMode = dptMode;
 
 	// lights - no light!!
-	var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 0, -1), genericScene);
+	var light = new BABYLON.HemisphericLight(
+			"light1",
+			new BABYLON.Vector3(0, 0, -1),
+			genericScene);
+
 	light.radius = 10;
 	light.diffuse = new BABYLON.Color3(1, 0.8, 0.8);
 	light.intensity = 0.5;
@@ -333,12 +344,12 @@ var createGenericScene = function(dptMode) {
 	// Enable Collisions
 	//var box = getCollisionBox();
 	//box.checkCollisions = true;
+
 	camera.checkCollisions = true;
 	genericScene.collisionsEnabled = true;
 
 //	createPitchLines();
 	createGUIScene(dptMode);
-
 
 	genericScene.onPointerObservable.add((pointerInfo) => {
 		idleSince = BABYLON.Tools.Now;
@@ -354,9 +365,9 @@ var createGenericScene = function(dptMode) {
 				&& 'dpt' in pointerInfo.pickInfo.pickedMesh) {
 
 					// catch the icon button on the canvas
-					// "To get the axis aligned version of your picked coordinates, you need to
-					// transform it by the inverse of the mesh world matrix."
-					// discussed on here:
+					// "To get the axis aligned version of your picked
+					// coordinates, you need to transform it by the inverse of
+					// the mesh world matrix. discussed on here:
 					// https://forum.babylonjs.com/t/how-to-calculate-the-rotation-from-the-billboard-picked-point-position/6667/11
 					var inverse = BABYLON.Matrix.Invert(pointerInfo.pickInfo.pickedMesh.getWorldMatrix());
 					// click point

@@ -1,10 +1,15 @@
 function moveConnection(plane1, plane2, edge) {
-	return BABYLON.MeshBuilder.CreateTube(name, {path: [plane1.position, plane2.position], instance: edge});
+	return BABYLON.MeshBuilder.CreateTube(name,
+		{
+			path: [plane1.position, plane2.position],
+			instance: edge,
+		});
 }
 
 function makePlanesDragable(opinion1, opinion2, edge) {
 	var plane1;
 	var plane2;
+
 	for(var i in currentScene.meshes) {
 		if(currentScene.meshes[i].dpt.opinionId == opinion1) {
 			plane1 = currentScene.meshes[i];
@@ -14,13 +19,21 @@ function makePlanesDragable(opinion1, opinion2, edge) {
 		}
 	}
 
-	plane1.pointerDragBehavior = new BABYLON.PointerDragBehavior({name: "foobar", dragPlaneNormal: new BABYLON.Vector3(0,0,1)});
+	plane1.pointerDragBehavior = new BABYLON.PointerDragBehavior(
+		{
+			name: "foobar",
+			dragPlaneNormal: new BABYLON.Vector3(0,0,1)
+		});
 	plane1.pointerDragBehavior.onDragObservable.add((event,b,c)=>{
 		moveConnection(plane1, plane2, edge);
 	});
 	plane1.addBehavior(plane1.pointerDragBehavior);
 
-	plane2.pointerDragBehavior = new BABYLON.PointerDragBehavior({name: "foobar", dragPlaneNormal: new BABYLON.Vector3(0,0,1)});
+	plane2.pointerDragBehavior = new BABYLON.PointerDragBehavior(
+		{
+			name: "foobar",
+			dragPlaneNormal: new BABYLON.Vector3(0,0,1)
+		});
 	plane2.pointerDragBehavior.onDragObservable.add((event,b,c)=>{
 		moveConnection(plane1, plane2, edge);
 	});
@@ -334,11 +347,7 @@ function dialogRelations(opinionDialogConnections) {
 					}
 				}
 			}
-			/*
-			if('position' in initiatorOpinion && 'position' in recipientOpinion) {
-				createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections, opinionDialogConnections[initiatorOpinion.opinionId].dialogStatus);
-			}
-			*/
+
 			for(var j in odc[i].leafs.unset) {
 				var opinionId = odc[i].leafs.unset[j];
 				if(opinionId != h) {
@@ -417,7 +426,9 @@ function loadOpinions(restObj) {
 
 		// paint the opinion
 		var plane = textBlock(
-			restObj.data[i].position.x, restObj.data[i].position.y, restObj.data[i].position.z, 
+			restObj.data[i].position.x,
+			restObj.data[i].position.y,
+			restObj.data[i].position.z, 
 			JSON.stringify( {
 				"context": "opinionScene",
 				"opinionId": restObj.data[i]._id,
@@ -462,66 +473,9 @@ function loadOpinions(restObj) {
 	        minion0.position.y = value.y;
 	    })
 	    */
-
-		/*
-		// add 'can invite' identicator
-		if(canInvite && restObj.data[i].user != 'mine'
-		&& restObj.data[i].blocked == 1) {
-			var mat = new BABYLON.StandardMaterial("icon", currentScene);
-			mat.diffuseTexture = new BABYLON.Texture("/chatbubble.png", currentScene);
-			mat.emissiveColor = new BABYLON.Color3(0, 0.5, 1);
-			//	mat.alpha = .95;
-			//mat.alphaMode = BABYLON.Engine.ALPHA_ADD;
-			mat.opacityTexture = mat.diffuseTexture;
-
-			//	var icon = BABYLON.MeshBuilder.CreatePlane("icon", { width: 0.35, height: 0.25 }, currentScene);
-			var icon = BABYLON.MeshBuilder.CreatePlane(
-				"icon",
-				{
-					width: 0.35,
-					height: 0.35
-				}, currentScene);
-
-			icon.parent = plane;
-			icon.position.x -= plane.geometry.extend.maximum.x + 0.2;
-			icon.position.y += plane.geometry.extend.maximum.y - 0.4;
-			//icon.position.z = plane.position.z - 0.10;
-
-			icon.material = mat;
-			icon.dpt = { context: 'dialogInvitation', opinionId: restObj.data[i]._id };
-		} else if(restObj.data[i].user == 'mine') {
-			var mat = new BABYLON.StandardMaterial("icon", currentScene);
-			mat.diffuseTexture = new BABYLON.Texture("/Edit_icon.png", currentScene);
-			mat.emissiveColor = new BABYLON.Color3(0, 0.5, 1);
-			mat.opacityTexture = mat.diffuseTexture;
-
-			var icon = BABYLON.MeshBuilder.CreatePlane(
-				"icon",
-				{
-					width: 0.35,
-					height: 0.35
-				}, currentScene);
-
-			icon.parent = plane;
-			icon.position.x -= plane.geometry.extend.maximum.x + 0.2;
-			icon.position.y += plane.geometry.extend.maximum.y - 0.4;
-
-			icon.material = mat;
-			icon.dpt = { context: 'editOpinion', opinionId: restObj.data[i]._id, content: restObj.data[i].content };
-		}
-		*/
 	}
 
 
-	if(restObj.data.length > 0) {
-		//				dpt.opinionPostAllowed(restObj.data[0].topic);
-	} else {
-		//				opinionForm();
-	}
-	//			opinionEdit();
-
-	//			circleTextPlane(1.5, 1.2, 0, 'bla', currentTopicStr + " * ");
-	
 	// paint the topic
 	var plane = textBlock(
 			19.2/6, 12.8/6, 8.001,
