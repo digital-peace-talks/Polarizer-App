@@ -279,11 +279,11 @@ div.hide {
 }
 
 div.status {
-  bottom: 38px;
-  width: 560px;
+  bottom: 83px;
+  width: 580px;
   position: fixed;
   left: 50%;
-  margin-left: -280px;
+  margin-left: -290px;
   z-index: 30;
   background-color: #28a9e1;
 }
@@ -311,17 +311,18 @@ div#c2 {
 }
 
 div#c3 {
-  font-family: "DPTFont";
+  font-family: "DPTFontDin";
   float: left;
   position: fixed;
   text-align: left;
   font-size: 14px;
   background-color: #005b98;
-  padding: 10px;
+  padding: 5px 15px;
   width: 600px;
+  height: 30px;
   left: 50%;
   margin-left: -300px;
-  bottom: 0px;
+  bottom: 115px;
 }
 
 div#crisis {
@@ -391,7 +392,7 @@ div#dialogFrame {
   overflow-y: auto;
   -webkit-box-shadow: 0px 0px 20px #030911;
           box-shadow: 0px 0px 20px #030911;
-  bottom: 0px;
+  bottom: 49px;
 }
 
 .myDialogs {
@@ -554,11 +555,11 @@ textarea {
   font-weight: normal;
 }
 
-textarea#dialog {
+.textareaDialog {
   font-family: DPTFont;
   font-size: 18px;
-  width: 90%;
-  height: 20px;
+  width: 80%;
+  height: 46px;
   margin: 0 auto;
   resize: none;
   border-color: #005b98;
@@ -566,6 +567,114 @@ textarea#dialog {
   border-style: solid;
   border-width: 1px;
   font-weight: normal;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.buttondialog {
+  font-family: DPTFontDin;
+  color: #f0f3f5;
+  background-color: #002c4b;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  margin-left: 180px;
+}
+
+.buttondialogstandard {
+  font-family: DPTFontDin;
+  color: #f0f3f5;
+  background-color: #002c4b;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: relative;
+  top: 40px;
+}
+
+.buttondialogclose {
+  font-family: DPTFontDin;
+  color: #f0f3f5;
+  background-color: #002c4b;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: transparent;
+  border: none;
+  font-size: 32px;
+  width: 30px;
+  height: 30px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: fixed;
+  top: 40px;
+  left: 595px;
+  margin-left: 180px;
+  border-radius: 50%;
+  border-color: transparent;
+  color: #f0f3f5;
+  line-height: 0px;
+  text-indent: -7px;
+}
+
+.buttondialogclose:hover {
+  -webkit-transform: scale(1.4);
+          transform: scale(1.4);
+  color: #005b98;
+}
+
+.buttonSend {
+  font-family: DPTFontDin;
+  color: #f0f3f5;
+  background-color: #002c4b;
+  border: none;
+  font-size: 20px;
+  width: 20%;
+  height: 46px;
+  -webkit-appearance: none;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+.crisis {
+  font-family: DPTFontDin;
+  color: #f0f3f5;
+  background-color: #002c4b;
+  border: none;
+  font-size: 16px;
+  width: 20%;
+  height: 30px;
+  -webkit-appearance: none;
+  z-index: 40;
+  position: absolute;
+  top: -40px;
+  right: 0px;
+}
+
+.crisis.icon {
+  font-family: DPTFontDin;
+  color: #f0f3f5;
+  background-color: transparent;
+  border: none;
+  width: auto;
+  height: 48px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
 }
 
 .button {
@@ -615,44 +724,6 @@ textarea#dialog {
   border-color: transparent;
   position: relative;
   top: 6px;
-}
-
-.buttondialog {
-  font-family: DPTFontDin;
-  color: #f0f3f5;
-  background-color: #002c4b;
-  border: none;
-  font-size: 16px;
-  width: auto;
-  height: 40px;
-  margin: 5px auto;
-  margin-left: 10px;
-  -webkit-appearance: none;
-}
-
-.crisis {
-  font-family: DPTFontDin;
-  color: #f0f3f5;
-  background-color: #005b98;
-  border: none;
-  font-size: 16px;
-  width: auto;
-  height: 40px;
-  margin: 5px auto;
-  margin-left: 10px;
-  -webkit-appearance: none;
-}
-
-.crisis.icon {
-  font-family: DPTFontDin;
-  color: #f0f3f5;
-  background-color: transparent;
-  border: none;
-  width: auto;
-  height: 48px;
-  margin: 5px auto;
-  margin-left: 10px;
-  -webkit-appearance: none;
 }
 
 .helpframe {
@@ -1114,16 +1185,13 @@ section ul li {
   }
   #dialogForm {
     width: 100%;
-    height: 100%;
     left: 0px;
     margin-left: 0px;
-    top: 0px;
   }
   div.status {
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    bottom: 38px;
   }
   h3 {
     font-size: 16px;
@@ -1143,11 +1211,35 @@ section ul li {
   textarea {
     width: 100%;
   }
+  .textareaDialog {
+    width: 70%;
+    margin-left: 5%;
+  }
+  .buttonSend {
+    width: 20%;
+    margin-right: 5%;
+  }
+  .buttondialog {
+    left: auto;
+    right: 10px;
+  }
+  .buttondialogclose {
+    left: 50%;
+    margin-left: 40%;
+  }
+  .buttondialog {
+    left: auto;
+    right: 10px;
+  }
+  .crisis {
+    width: 20%;
+    margin-right: 5%;
+    font-size: 11px;
+  }
   div#c3 {
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    bottom: 0px;
   }
   div#crisis {
     width: 100%;
