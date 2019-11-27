@@ -1200,8 +1200,8 @@ section ul li {
     opacity: 1;
     left: 0;
     top: 0;
-    -webkit-box-shadow: 0 0 0 0px #f7f313;
-            box-shadow: 0 0 0 0px #f7f313;
+    -webkit-box-shadow: 0 0 0 0px #ffc400;
+            box-shadow: 0 0 0 0px #ffc400;
   }
   100% {
     width: 80px;
@@ -1209,8 +1209,8 @@ section ul li {
     opacity: 0;
     left: -40px;
     top: -40px;
-    -webkit-box-shadow: 0 0 0 6px #f7f313;
-            box-shadow: 0 0 0 6px #f7f313;
+    -webkit-box-shadow: 0 0 0 6px #ffc400;
+            box-shadow: 0 0 0 6px #ffc400;
   }
 }
 
@@ -1221,8 +1221,8 @@ section ul li {
     opacity: 1;
     left: 0;
     top: 0;
-    -webkit-box-shadow: 0 0 0 0px #f7f313;
-            box-shadow: 0 0 0 0px #f7f313;
+    -webkit-box-shadow: 0 0 0 0px #ffc400;
+            box-shadow: 0 0 0 0px #ffc400;
   }
   100% {
     width: 80px;
@@ -1230,8 +1230,8 @@ section ul li {
     opacity: 0;
     left: -40px;
     top: -40px;
-    -webkit-box-shadow: 0 0 0 6px #f7f313;
-            box-shadow: 0 0 0 6px #f7f313;
+    -webkit-box-shadow: 0 0 0 6px #ffc400;
+            box-shadow: 0 0 0 6px #ffc400;
   }
 }
 
@@ -1242,7 +1242,7 @@ section ul li {
   border-radius: 50%;
   width: 15px;
   height: 15px;
-  background: #f7f313;
+  background: #ffc400;
 }
 
 .arrowcontainer {
@@ -1252,7 +1252,7 @@ section ul li {
 }
 
 .block1 {
-  background-color: #fff;
+  background-color: #ffc400;
   height: 60px;
   width: 20px;
 }
@@ -1261,7 +1261,7 @@ section ul li {
   background-color: transparent;
   width: 0;
   height: 40px;
-  border-top: 40px solid #fff;
+  border-top: 40px solid #ffc400;
   border-right: 30px solid transparent;
   border-left: 30px solid transparent;
   margin-left: -20px;

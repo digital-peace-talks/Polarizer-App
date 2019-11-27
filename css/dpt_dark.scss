@@ -16,7 +16,7 @@ $dpt-second-button: #005b98;
 $dpt-left-chat: #021b2c;
 $dpt-right-chat: #002c4b;
 
-$dpt-prime-border: #030911;
+$dpt-prime-border: #1d324e;
 $dpt-second-border: #005b98;
 
 $dpt-red: #ff6666;
@@ -25,6 +25,8 @@ $dpt-blue: #005b98;
 
 $dpt-shadow: #030911;
 
+$dpt-hint: #ffc400;
+
 @font-face {
   font-family: "DPTFont";
   src: url("/font.ttf") format("truetype");
@@ -32,6 +34,11 @@ $dpt-shadow: #030911;
 
 @font-face {
   font-family: "DPTFontDin";
+  src: url("/din.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "DPTSymbols";
   src: url("/din.ttf") format("truetype");
 }
 
@@ -130,7 +137,7 @@ hr {
 }
 
 div#dialogMenu > i {
-  color: red; // keine wirkung
+  color: transparent; // keine wirkung
 }
 
 i#props {
@@ -151,15 +158,15 @@ input {
   font-size: 18px;
 }
 
-label#negative {
+#negative {
   color: $dpt-red;
 }
 
-label#neutral {
+#neutral {
   color: $dpt-blue;
 }
 
-label#positive {
+#positive {
   color: $dpt-green;
 }
 
@@ -298,11 +305,11 @@ div.hide {
 }
 
 div.status {
-  bottom: 38px;
-  width: 560px;
+  bottom: 83px;
+  width: 580px;
   position: fixed;
   left: 50%;
-  margin-left: -280px;
+  margin-left: -290px;
   z-index: 30;
   background-color: $dpt-prime-base;
 }
@@ -330,17 +337,18 @@ div#c2 {
 }
 
 div#c3 {
-  font-family: "DPTFont";
+  font-family: "DPTFontDin";
   float: left;
   position: fixed;
   text-align: left;
   font-size: 14px;
   background-color: $dpt-second-base;
-  padding: 10px;
+  padding: 5px 15px;
   width: 600px;
+  height: 30px;
   left: 50%;
   margin-left: -300px;
-  bottom: 0px;
+  bottom: 115px;
 }
 
 div#crisis {
@@ -349,8 +357,8 @@ div#crisis {
   padding: 10px;
   color: $dpt-prime-text;
   box-shadow: 0px 0px 20px $dpt-shadow;
-  bottom: 38px;
-  top: -450px;
+  bottom: 49px;
+  height: 550px;
   background-color: $dpt-prime-base;
 }
 
@@ -408,7 +416,7 @@ div#dialogFrame {
   background-color: $dpt-prime-base;
   overflow-y: auto;
   box-shadow: 0px 0px 20px $dpt-shadow;
-  bottom: 0px;
+  bottom: 49px;
 }
 
 .myDialogs {
@@ -428,7 +436,7 @@ div#dialogFrame {
   height: 48px;
   border: 1px solid $dpt-prime-border;
   background-color: $dpt-menu;
-  color: $dpt-third-text;
+  color: $dpt-prime-text;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
   justify-content: left;
@@ -554,21 +562,6 @@ div#dialogFrame {
   box-shadow: 0px 0px 20px $dpt-shadow;
 }
 
-#closeX {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  padding: 20px;
-  margin-left: 300px;
-  border: $dpt-prime-border;
-  border-style: solid;
-  border-width: 1px;
-  color: $dpt-prime-text;
-  z-index: 200;
-  font-family: DPTFont;
-  font-size: 18px;
-}
-
 textarea {
   font-family: DPTFont;
   font-size: 18px;
@@ -583,11 +576,11 @@ textarea {
   font-weight: normal;
 }
 
-textarea#dialog {
+.textareaDialog {
   font-family: DPTFont;
   font-size: 18px;
-  width: 90%;
-  height: 20px;
+  width: 80%;
+  height: 46px;
   margin: 0 auto;
   resize: none;
   border-color: $dpt-second-border;
@@ -595,6 +588,129 @@ textarea#dialog {
   border-style: solid;
   border-width: 1px;
   font-weight: normal;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.buttondialog {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  margin-left: 180px;
+}
+
+.buttondialogstandard {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: relative;
+}
+
+.buttondialogclose {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: absolute;
+  top: 0px;
+  right: 7px;
+  margin-left: 180px;
+  border-radius: 50%;
+  border-color: transparent;
+  color: $dpt-prime-border;
+  line-height: 0px;
+  text-indent: -7px;
+}
+
+.buttondialogclose:hover {
+  transform: scale(1.4);
+  color: $dpt-third-text;
+}
+
+.buttonSend {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  border: none;
+  font-size: 20px;
+  width: 20%;
+  height: 46px;
+  -webkit-appearance: none;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+.crisis {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  border: none;
+  font-size: 16px;
+  width: 20%;
+  height: 30px;
+  //margin: 5px auto;
+  //margin-left: 10px;
+  -webkit-appearance: none;
+  z-index: 40;
+  position: absolute;
+  top: -40px;
+  right: 0px;
+}
+
+.crisis.icon {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: transparent;
+  border: none;
+  width: auto;
+  height: 48px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+}
+
+.buttonCrisisSend {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-prime-button;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
 }
 
 .button {
@@ -613,19 +729,18 @@ textarea#dialog {
 
 .closeButton {
   font-family: DPTFontDin;
-  font-size: 32px;
+  font-size: 30px;
   transition: all 0.5s ease;
   transition: all 0.5s ease;
   position: absolute;
   background-color: transparent;
-  padding: 1.5px 7px;
   width: 30px;
   height: 30px;
   top: 6px;
   right: 6px;
   border-radius: 50%;
   border-color: transparent;
-  color: $dpt-prime-text;
+  color: $dpt-prime-border;
   line-height: 0px;
   text-indent: -7px;
 }
@@ -635,51 +750,13 @@ textarea#dialog {
   color: $dpt-third-text;
 }
 
-.copyToClip{
-  filter: invert(70%);
+.copyToClip {
+  filter: invert(100%);
   width: 32px;
   height: auto;
   border-color: transparent;
   position: relative;
   top: 6px;
-}
-
-.buttondialog {
-  font-family: DPTFontDin;
-  color: $dpt-prime-text;
-  background-color: $dpt-prime-button;
-  border: none;
-  font-size: 16px;
-  width: auto;
-  height: 40px;
-  margin: 5px auto;
-  margin-left: 10px;
-  -webkit-appearance: none;
-}
-
-.crisis {
-  font-family: DPTFontDin;
-  color: $dpt-prime-text;
-  background-color: $dpt-second-button;
-  border: none;
-  font-size: 16px;
-  width: auto;
-  height: 40px;
-  margin: 5px auto;
-  margin-left: 10px;
-  -webkit-appearance: none;
-}
-
-.crisis.icon {
-  font-family: DPTFontDin;
-  color: $dpt-prime-text;
-  background-color: transparent;
-  border: none;
-  width: auto;
-  height: 48px;
-  margin: 5px auto;
-  margin-left: 10px;
-  -webkit-appearance: none;
 }
 
 .helpframe {
@@ -833,7 +910,7 @@ section ul li {
   height: 20px;
   font-size: 12px;
   line-height: 14px;
-  background-color: $dpt-prime-base;
+  background-color: $dpt-second-base;
 }
 
 /*----- Logo -----*/
@@ -847,12 +924,13 @@ section ul li {
 
 .frame1 {
   width: 400px;
-  height: 0;
+  height: 200px;
   margin-left: -200px;
   position: absolute;
-  top: 310px;
+  bottom: 30px;
   left: 50%;
 }
+
 .container1 {
   position: absolute;
   top: 80px;
@@ -870,7 +948,7 @@ section ul li {
   -webkit-appearance: none;
   margin: 0;
   width: 300px;
-  height: 8px;
+  height: 10px;
   background: $dpt-prime-border;
   background: -webkit-linear-gradient(to left, $dpt-green, $dpt-blue, $dpt-red);
   background: linear-gradient(to left, $dpt-green, $dpt-blue, $dpt-red);
@@ -903,10 +981,16 @@ section ul li {
   height: 60px;
   background: $dpt-prime-base;
   position: absolute;
-  top: 25%;
+  top: 0px;
   left: 42%;
   border-radius: 50%;
   background: $dpt-prime-button;
+}
+
+.reason{
+  position: absolute;
+  bottom: 70px;
+  width: 95%;
 }
 
 .eye {
@@ -934,7 +1018,7 @@ section ul li {
   border: none;
   border-top-left-radius: 60px;
   border-top-right-radius: 60px;
-  transform: rotateX(90deg);
+  transform: rotateX(100deg);
 }
 
 .fb_gd_wrap .mask {
@@ -944,12 +1028,11 @@ section ul li {
   right: 0;
   bottom: 0;
   background: transparent;
-  z-index: 0;
 }
 .fb_gd_wrap .content {
   height: 200px;
   background: transparent;
-  z-index: 10;
+  z-index: 1000;
   box-shadow: 0px 0px 20px $dpt-shadow;
   position: absolute;
   left: 500px;
@@ -979,12 +1062,13 @@ section ul li {
   background: transparent;
   color: $dpt-prime-text;
 }
+
 .fb_gd_wrap .header .btn:hover {
   color: $dpt-prime-button;
 }
 
 .fb_gd_wrap .body {
-  height: 100px;
+  height: auto;
   background: $dpt-prime-base;
 }
 .fb_gd_wrap .body .text {
@@ -1006,8 +1090,10 @@ section ul li {
 }
 
 .fb_gd_wrap .body .textList p {
+  color: $dpt-third-text;
   display: inline-block;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 16px;
   width: 360px;
   padding: 0;
   vertical-align: top;
@@ -1077,7 +1163,103 @@ section ul li {
   box-shadow: 0px 0px 20px $dpt-shadow;
 }
 
-/* button menu style for mobile */
+/* pulsating circle*/
+
+.animated-circle{
+  position:absolute;
+  margin-left:30px;
+  margin-top: 10px;
+  z-index: 500;
+}
+.pulse-circle, .pulse-circle2{
+  border-radius:50%;
+  width:2px;
+  height:2px;
+  position:absolute;
+  opacity:0;
+  transition: all 10s ease;
+}
+.pulse-circle{
+  -webkit-animation: pulseline 2s ease-out infinite;
+  -moz-animation: pulseline 2s ease-out infinite;
+  animation: pulseline 2s ease-out infinite;
+}
+.pulse-circle2{
+  -webkit-animation: pulseline 1s ease-out infinite .5s ;
+  -moz-animation: pulseline 1s ease-out infinite .5s ;
+  -ms-animation: pulseline 1s ease-out infinite .5s ;
+  -o-animation: pulseline 1s ease-out infinite .5s ;
+  animation: pulseline 1s ease-out infinite .5s ;
+}
+@-webkit-keyframes pulseline {
+  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px $dpt-hint;    }
+  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px $dpt-hint;   }
+}
+@-moz-keyframes pulseline {
+  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px $dpt-hint;   }
+  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px $dpt-hint;   }
+}
+@-ms-keyframes pulseline {
+  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px $dpt-hint;    }
+  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px $dpt-hint;   }
+}
+@-o-keyframes pulseline {
+  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px $dpt-hint;   }
+  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px $dpt-hint;   }
+}
+@keyframes pulseline {
+  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px $dpt-hint;    }
+  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px $dpt-hint;   }
+}
+.circle-center{
+  position:absolute;
+  left:-7px;
+  top:-7px;
+  border-radius:50%;
+  width:15px;
+  height:15px;
+  background:$dpt-hint; 
+}
+
+.arrowcontainer{
+  position: absolute;
+  left: -10px;
+  top: -120px;
+}
+.block1 {
+  background-color: $dpt-hint;
+  height: 60px;
+  width: 20px;
+}
+
+.block2 {
+  background-color: transparent;
+  width: 0;
+  height: 40px;
+  border-top: 40px solid $dpt-hint;
+  border-right: 30px solid transparent;
+  border-left: 30px solid transparent;
+  margin-left: -20px;
+}
+
+.arrow {
+  animation: animate 1s infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes animate {
+  0% {
+      margin-top: 20px;
+  }
+  50% {
+      margin-top: 0px;
+  }
+  100% {
+      margin-top: 20px;
+  }
+}
+
+/* style for mobile */
 
 @media all and (max-width: 640px) {
   .menu-btn {
@@ -1120,16 +1302,15 @@ section ul li {
   }
   #dialogForm {
     width: 100%;
-    height: 100%;
     left: 0px;
     margin-left: 0px;
-    top: 0px;
+    //top: 0px;
   }
   div.status {
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    bottom: 38px;
+    //bottom: 38px;
   }
   h3 {
     font-size: 16px;
@@ -1149,11 +1330,36 @@ section ul li {
   textarea {
     width: 100%;
   }
+  .textareaDialog {
+    width: 70%;
+    margin-left: 5%;
+  }
+  .buttonSend {
+    width: 20%;
+    margin-right: 5%;
+  }
+  .buttondialog {
+    left: auto;
+    right: 10px;
+  }
+  .buttondialogclose {
+    left: 50%;
+    margin-left: 40%;
+  }
+  .buttondialog {
+    left: auto;
+    right: 10px;
+  }
+  .crisis {
+    width: 20%;
+    margin-right: 5%;
+    font-size: 11px;
+  }
   div#c3 {
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    bottom: 0px;
+    //bottom: 0px;
   }
   div#crisis {
     width: 100%;
@@ -1289,9 +1495,7 @@ section ul li {
   }
 
   // __________________ mobile guided tool
-  .fb_gd_wrap .content{
+  .fb_gd_wrap .content {
     width: 100%;
   }
 }
-
-
