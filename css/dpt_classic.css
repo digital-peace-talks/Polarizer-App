@@ -1019,13 +1019,12 @@ section ul li {
   right: 0;
   bottom: 0;
   background: transparent;
-  z-index: 0;
 }
 
 .fb_gd_wrap .content {
   height: 200px;
   background: transparent;
-  z-index: 10;
+  z-index: 1000;
   -webkit-box-shadow: 0px 0px 20px #030911;
           box-shadow: 0px 0px 20px #030911;
   position: absolute;
@@ -1063,7 +1062,7 @@ section ul li {
 }
 
 .fb_gd_wrap .body {
-  height: 100px;
+  height: auto;
   background: #28a9e1;
 }
 
@@ -1087,8 +1086,10 @@ section ul li {
 }
 
 .fb_gd_wrap .body .textList p {
+  color: #005b98;
   display: inline-block;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 16px;
   width: 360px;
   padding: 0;
   vertical-align: top;
