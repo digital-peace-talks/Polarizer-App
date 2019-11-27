@@ -293,6 +293,31 @@ function topicForm(edit, context) {
 	});
 }
 
+function opinionContext(context) {
+	jQuery("#form").remove();
+	jQuery("body").append(`
+		<div id="form">
+			<div style="height: 500px; overflow: auto;">
+			<h4>
+			<i>Opinion:</i><br>
+			${context.content}
+			</h4>
+			<br>
+			<h3>
+			<i>Details:</i>
+			</h3>
+			${context.opinionContext}
+			<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm" >
+			</div>
+		</div>
+	`);
+	jQuery("#closeSettingsForm").on('click touch', function(event) {
+		jQuery('#form').remove();
+		event.stopImmediatePropagation();
+		event.preventDefault();
+	});
+}
+
 function opinionEdit(context) {
 	opinionForm(true, context);
 }
@@ -335,6 +360,7 @@ function opinionForm(edit, context) {
 			['unorderedList', 'orderedList'],
 	    ],
 	    adjustHeight: false,
+		defaultLinkTarget: '_blank',
 	});
 
 	jQuery(".opinion").focus();
