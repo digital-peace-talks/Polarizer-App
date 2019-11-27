@@ -9,6 +9,11 @@
   src: url("/din.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "DPTSymbols";
+  src: url("/din.ttf") format("truetype");
+}
+
 .no-bounce {
   width: 100%;
   height: 100%;
@@ -107,7 +112,7 @@ hr {
 }
 
 div#dialogMenu > i {
-  color: red;
+  color: transparent;
 }
 
 i#props {
@@ -128,15 +133,15 @@ input {
   font-size: 18px;
 }
 
-label#negative {
+#negative {
   color: #ff6666;
 }
 
-label#neutral {
+#neutral {
   color: #005b98;
 }
 
-label#positive {
+#positive {
   color: #15b76a;
 }
 
@@ -274,11 +279,11 @@ div.hide {
 }
 
 div.status {
-  bottom: 38px;
-  width: 560px;
+  bottom: 83px;
+  width: 580px;
   position: fixed;
   left: 50%;
-  margin-left: -280px;
+  margin-left: -290px;
   z-index: 30;
   background-color: #000000;
 }
@@ -306,17 +311,18 @@ div#c2 {
 }
 
 div#c3 {
-  font-family: "DPTFont";
+  font-family: "DPTFontDin";
   float: left;
   position: fixed;
   text-align: left;
   font-size: 14px;
   background-color: #252525;
-  padding: 10px;
+  padding: 5px 15px;
   width: 600px;
+  height: 30px;
   left: 50%;
   margin-left: -300px;
-  bottom: 0px;
+  bottom: 115px;
 }
 
 div#crisis {
@@ -326,8 +332,8 @@ div#crisis {
   color: #fff;
   -webkit-box-shadow: 0px 0px 20px #00000099;
           box-shadow: 0px 0px 20px #00000099;
-  bottom: 38px;
-  top: -450px;
+  bottom: 49px;
+  height: 550px;
   background-color: #000000;
 }
 
@@ -386,7 +392,7 @@ div#dialogFrame {
   overflow-y: auto;
   -webkit-box-shadow: 0px 0px 20px #00000099;
           box-shadow: 0px 0px 20px #00000099;
-  bottom: 0px;
+  bottom: 49px;
 }
 
 .myDialogs {
@@ -535,21 +541,6 @@ div#dialogFrame {
           box-shadow: 0px 0px 20px #00000099;
 }
 
-#closeX {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  padding: 20px;
-  margin-left: 300px;
-  border: #fff;
-  border-style: solid;
-  border-width: 1px;
-  color: #fff;
-  z-index: 200;
-  font-family: DPTFont;
-  font-size: 18px;
-}
-
 textarea {
   font-family: DPTFont;
   font-size: 18px;
@@ -564,11 +555,11 @@ textarea {
   font-weight: normal;
 }
 
-textarea#dialog {
+.textareaDialog {
   font-family: DPTFont;
   font-size: 18px;
-  width: 90%;
-  height: 20px;
+  width: 80%;
+  height: 46px;
   margin: 0 auto;
   resize: none;
   border-color: #000;
@@ -576,6 +567,129 @@ textarea#dialog {
   border-style: solid;
   border-width: 1px;
   font-weight: normal;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+
+.buttondialog {
+  font-family: DPTFontDin;
+  color: #fff;
+  background-color: #505050;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  margin-left: 180px;
+}
+
+.buttondialogstandard {
+  font-family: DPTFontDin;
+  color: #fff;
+  background-color: #505050;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: relative;
+}
+
+.buttondialogclose {
+  font-family: DPTFontDin;
+  color: #fff;
+  background-color: #505050;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: absolute;
+  top: 0px;
+  right: 7px;
+  margin-left: 180px;
+  border-radius: 50%;
+  border-color: transparent;
+  color: #fff;
+  line-height: 0px;
+  text-indent: -7px;
+}
+
+.buttondialogclose:hover {
+  -webkit-transform: scale(1.4);
+          transform: scale(1.4);
+  color: #bbb;
+}
+
+.buttonSend {
+  font-family: DPTFontDin;
+  color: #fff;
+  background-color: #505050;
+  border: none;
+  font-size: 20px;
+  width: 20%;
+  height: 46px;
+  -webkit-appearance: none;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+.crisis {
+  font-family: DPTFontDin;
+  color: #fff;
+  background-color: #505050;
+  border: none;
+  font-size: 16px;
+  width: 20%;
+  height: 30px;
+  -webkit-appearance: none;
+  z-index: 40;
+  position: absolute;
+  top: -40px;
+  right: 0px;
+}
+
+.crisis.icon {
+  font-family: DPTFontDin;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  width: auto;
+  height: 48px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+}
+
+.buttonCrisisSend {
+  font-family: DPTFontDin;
+  color: #fff;
+  background-color: #505050;
+  border: none;
+  font-size: 16px;
+  width: auto;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
 }
 
 .button {
@@ -593,13 +707,12 @@ textarea#dialog {
 
 .closeButton {
   font-family: DPTFontDin;
-  font-size: 32px;
+  font-size: 30px;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
   transition: all 0.5s ease;
   position: absolute;
   background-color: transparent;
-  padding: 1.5px 7px;
   width: 30px;
   height: 30px;
   top: 6px;
@@ -625,44 +738,6 @@ textarea#dialog {
   border-color: transparent;
   position: relative;
   top: 6px;
-}
-
-.buttondialog {
-  font-family: DPTFontDin;
-  color: #fff;
-  background-color: #505050;
-  border: none;
-  font-size: 16px;
-  width: auto;
-  height: 40px;
-  margin: 5px auto;
-  margin-left: 10px;
-  -webkit-appearance: none;
-}
-
-.crisis {
-  font-family: DPTFontDin;
-  color: #fff;
-  background-color: #303030;
-  border: none;
-  font-size: 16px;
-  width: auto;
-  height: 40px;
-  margin: 5px auto;
-  margin-left: 10px;
-  -webkit-appearance: none;
-}
-
-.crisis.icon {
-  font-family: DPTFontDin;
-  color: #fff;
-  background-color: transparent;
-  border: none;
-  width: auto;
-  height: 48px;
-  margin: 5px auto;
-  margin-left: 10px;
-  -webkit-appearance: none;
 }
 
 .helpframe {
@@ -831,10 +906,10 @@ section ul li {
 /*----------------*/
 .frame1 {
   width: 400px;
-  height: 0;
+  height: 200px;
   margin-left: -200px;
   position: absolute;
-  top: 310px;
+  bottom: 30px;
   left: 50%;
 }
 
@@ -857,7 +932,7 @@ section ul li {
   -webkit-appearance: none;
   margin: 0;
   width: 300px;
-  height: 8px;
+  height: 10px;
   background: #fff;
   background: -webkit-gradient(linear, right top, left top, from(#15b76a), color-stop(#005b98), to(#ff6666));
   background: linear-gradient(to left, #15b76a, #005b98, #ff6666);
@@ -894,10 +969,16 @@ section ul li {
   height: 60px;
   background: #000000;
   position: absolute;
-  top: 25%;
+  top: 0px;
   left: 42%;
   border-radius: 50%;
   background: #505050;
+}
+
+.reason {
+  position: absolute;
+  bottom: 70px;
+  width: 95%;
 }
 
 .eye {
@@ -927,8 +1008,8 @@ section ul li {
   border: none;
   border-top-left-radius: 60px;
   border-top-right-radius: 60px;
-  -webkit-transform: rotateX(90deg);
-          transform: rotateX(90deg);
+  -webkit-transform: rotateX(100deg);
+          transform: rotateX(100deg);
 }
 
 .fb_gd_wrap .mask {
@@ -938,13 +1019,12 @@ section ul li {
   right: 0;
   bottom: 0;
   background: transparent;
-  z-index: 0;
 }
 
 .fb_gd_wrap .content {
   height: 200px;
   background: transparent;
-  z-index: 10;
+  z-index: 1000;
   -webkit-box-shadow: 0px 0px 20px #00000099;
           box-shadow: 0px 0px 20px #00000099;
   position: absolute;
@@ -982,7 +1062,7 @@ section ul li {
 }
 
 .fb_gd_wrap .body {
-  height: 100px;
+  height: auto;
   background: #000000;
 }
 
@@ -1006,8 +1086,10 @@ section ul li {
 }
 
 .fb_gd_wrap .body .textList p {
+  color: #bbb;
   display: inline-block;
-  font-size: 14px;
+  font-weight: 500;
+  font-size: 16px;
   width: 360px;
   padding: 0;
   vertical-align: top;
@@ -1083,7 +1165,140 @@ section ul li {
           box-shadow: 0px 0px 20px #00000099;
 }
 
-/* button menu style for mobile */
+/* pulsating circle*/
+.animated-circle {
+  position: absolute;
+  margin-left: 30px;
+  margin-top: 10px;
+  z-index: 500;
+}
+
+.pulse-circle, .pulse-circle2 {
+  border-radius: 50%;
+  width: 2px;
+  height: 2px;
+  position: absolute;
+  opacity: 0;
+  -webkit-transition: all 10s ease;
+  transition: all 10s ease;
+}
+
+.pulse-circle {
+  -webkit-animation: pulseline 2s ease-out infinite;
+  animation: pulseline 2s ease-out infinite;
+}
+
+.pulse-circle2 {
+  -webkit-animation: pulseline 1s ease-out infinite .5s;
+  animation: pulseline 1s ease-out infinite .5s;
+}
+
+@-webkit-keyframes pulseline {
+  0% {
+    width: 2px;
+    height: 2px;
+    opacity: 1;
+    left: 0;
+    top: 0;
+    -webkit-box-shadow: 0 0 0 0px #ffc400;
+            box-shadow: 0 0 0 0px #ffc400;
+  }
+  100% {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    left: -40px;
+    top: -40px;
+    -webkit-box-shadow: 0 0 0 6px #ffc400;
+            box-shadow: 0 0 0 6px #ffc400;
+  }
+}
+
+@keyframes pulseline {
+  0% {
+    width: 2px;
+    height: 2px;
+    opacity: 1;
+    left: 0;
+    top: 0;
+    -webkit-box-shadow: 0 0 0 0px #ffc400;
+            box-shadow: 0 0 0 0px #ffc400;
+  }
+  100% {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    left: -40px;
+    top: -40px;
+    -webkit-box-shadow: 0 0 0 6px #ffc400;
+            box-shadow: 0 0 0 6px #ffc400;
+  }
+}
+
+.circle-center {
+  position: absolute;
+  left: -7px;
+  top: -7px;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background: #ffc400;
+}
+
+.arrowcontainer {
+  position: absolute;
+  left: -10px;
+  top: -120px;
+}
+
+.block1 {
+  background-color: #ffc400;
+  height: 60px;
+  width: 20px;
+}
+
+.block2 {
+  background-color: transparent;
+  width: 0;
+  height: 40px;
+  border-top: 40px solid #ffc400;
+  border-right: 30px solid transparent;
+  border-left: 30px solid transparent;
+  margin-left: -20px;
+}
+
+.arrow {
+  -webkit-animation: animate 1s infinite;
+          animation: animate 1s infinite;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+}
+
+@-webkit-keyframes animate {
+  0% {
+    margin-top: 20px;
+  }
+  50% {
+    margin-top: 0px;
+  }
+  100% {
+    margin-top: 20px;
+  }
+}
+
+@keyframes animate {
+  0% {
+    margin-top: 20px;
+  }
+  50% {
+    margin-top: 0px;
+  }
+  100% {
+    margin-top: 20px;
+  }
+}
+
+/* style for mobile */
 @media all and (max-width: 640px) {
   .menu-btn {
     width: 100%;
@@ -1124,16 +1339,13 @@ section ul li {
   }
   #dialogForm {
     width: 100%;
-    height: 100%;
     left: 0px;
     margin-left: 0px;
-    top: 0px;
   }
   div.status {
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    bottom: 38px;
   }
   h3 {
     font-size: 16px;
@@ -1153,11 +1365,35 @@ section ul li {
   textarea {
     width: 100%;
   }
+  .textareaDialog {
+    width: 70%;
+    margin-left: 5%;
+  }
+  .buttonSend {
+    width: 20%;
+    margin-right: 5%;
+  }
+  .buttondialog {
+    left: auto;
+    right: 10px;
+  }
+  .buttondialogclose {
+    left: 50%;
+    margin-left: 40%;
+  }
+  .buttondialog {
+    left: auto;
+    right: 10px;
+  }
+  .crisis {
+    width: 20%;
+    margin-right: 5%;
+    font-size: 11px;
+  }
   div#c3 {
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    bottom: 0px;
   }
   div#crisis {
     width: 100%;
