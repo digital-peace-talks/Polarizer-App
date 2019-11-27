@@ -144,6 +144,17 @@
 										class="btn-bar-icon"></button></li>
 							<li><button class="menu-btn-bar" id="dialogues-btn" title="Open the dialog list"><img
 										class="btn-bar-icon" src="/1message_white.png">
+									<!--<script>
+										var sum = 0;
+										for (var i in dialogs) {
+											sum += dialogs[i].unreadMessages;
+										}
+										if (sum > 0){
+											jQuery.html('<div class="listcount" id="dialog-btn-label"></div>');
+										}
+										
+									
+									</script> -->
 									<div class="listcount" id="dialog-btn-label"></div>
 								</button></li>
 						</ul>
@@ -290,20 +301,19 @@
 	<div class="content" id="guideContent">
 
 		<div class="header">
-			<span class="text">Welcome to digital peace talks</span>
+			<span class="text">digital peace talks GUIDE</span>
 			<button class="closeButton" id="closeBtn">&#10005;</button>
 		</div>
 		<div class="body">
 			<div class="text">
 				<div id="guideBodyText" class="textList">
-					<p>Welcome to digital peace talks. Let us show you around. Please click for the next tip.</p>
-					<p>This is the topic cloud. You can move, zoom and rotate in 3D space.</p>
-					<p>This is the main navigation. With the home-button you come back to the topic cloud.</p>
-					<p>A click or touch on this button allows you to create a new topic. Let’s try it!</p>
-					<p>To enter a topic just click or touch on it. Inside a topic you can read through opinions
-						regarding the topic or create one own opinion.</p>
-					<p>This is your message list. All dialogs and invites get stored in it. </p>
-					<p>And now feel free to create a new topic or state an opinion in a topic of your choice.</p>
+					<p><b>Welcome to digital peace talks!</b> <br> Your App to survive difficult dialogs. <br>Let us show you around: <br>Please click [next] to start the tour.</p> 
+					<p><b>This is the topic cloud. Your new home.</b><br>You can move, zoom and rotate in 3D space!!! <br><b>Mouse Navigation:</b> <br>Left = rotate, right = move, wheel = zoom<br><b>Mobile Navigation:</b> <br>One finger = rotate, two fingers = move, pinch = zoom</p>
+					<p>These four buttons are used for main actions. <br><b>Let's start with the home button:</b><br>It will bring you allways back to the topic cloud. <br>No matter what! We promise!</p>
+					<p>This button is for creation: <br>A click/touch on this button allows you to create! <br>Start a new topic. Or: <br>Inside a topic you can state an opinion. <br>So much power in this little fella!</p>
+					<p>To enter a topic just click or touch on it. <br>Try it, or not. <br>Inside a topic you can read through opinions other people stated or deliver your own opinion.</p>
+					<p><b>Hard to see through?</b> <br>Here comes the message list. Your new best friend! <br>All dialogs and invites get stored in it. <br>Scroll through missed invites, long forgotten dialogs, your best arguments or follow your favorite topics.</p>
+					<p>And now feel free to create a new topic or state an opinion in a topic of your choice. <br>The digital-peace-talks-team is allready loving you just for joining! <br>Have fun!</p>
 				</div>
 			</div>
 		</div>
@@ -330,15 +340,15 @@
 
 		const guidePosition = [{
 			// welcome
-			top: "30%",
+			top: "auto",
 			left: "0px",
-			bottom: "auto",
+			bottom: "30%",
 			right: "auto",
 			topMark: document.getElementById('guideNextBtn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px"
 		}, {
 			// 3d space / topic-cloud
-			top: "40px",
+			top: "0px",
 			left: "0px",
 			bottom: "auto",
 			right: "auto",
@@ -346,9 +356,9 @@
 			leftMark: "50%"
 		}, {
 			// home button
-			top: "50%",
+			top: "auto",
 			left: "0px",
-			bottom: "auto",
+			bottom: "200px",
 			right: "auto",
 			topMark: document.getElementById('home-btn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('home-btn').getBoundingClientRect().left + "px"
