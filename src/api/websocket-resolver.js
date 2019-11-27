@@ -258,10 +258,11 @@ match.push({
 		var user = userRegistered(dptUUID)
 		data.id = mongoose.Types.ObjectId(data.id);
 		var ret = await opinionService.getOpinionsByTopicId({body: data}, user.user.id);
-		for(var i in ret.data) {
+		for(var j in global.dptNS.online) {
+			for(var i in ret.data) {
 
-			var id = ret.data[i].user.toString();
-			for(var j in global.dptNS.online) {
+				var id = ret.data[i].user.toString();
+
 				console.log(`if(${global.dptNS.online[j].user.id} == ${id}) {`);
 				if(global.dptNS.online[j].user.id == id) {
 					console.log('bla');
