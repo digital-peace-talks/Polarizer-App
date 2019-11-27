@@ -298,15 +298,13 @@ function opinionContext(context) {
 	jQuery("body").append(`
 		<div id="form">
 			<div style="height: 500px; overflow: auto;">
-			<h4>
-			<i>Opinion:</i><br>
+			<i>Opinion:</i>
+			<p>
 			${context.content}
-			</h4>
+			</p>
 			<br>
-			<h4>
 			<i>Details:</i>
-			</h4>
-			${context.opinionContext?context.opinionContext:'none.'}
+			${context.opinionContext?context.opinionContext:'<p>none.</p>'}
 			<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm" >
 			</div>
 		</div>
