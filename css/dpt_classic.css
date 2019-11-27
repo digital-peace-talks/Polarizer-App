@@ -1168,7 +1168,8 @@ section ul li {
 /* pulsating circle*/
 .animated-circle {
   position: absolute;
-  margin: 10px;
+  margin-left: 30px;
+  margin-top: 10px;
   z-index: 500;
 }
 
