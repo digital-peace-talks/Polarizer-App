@@ -39,7 +39,7 @@ function settingsForm(opinionId, topicId) {
 	}
 	
 	jQuery('body').append(`
-		<div id="form"><h1>Settings:</h1>
+		<div id="form" class="helpframe" style="visibility: ${settingsVisible};"><h1>Settings:</h1>
 		<hr>
 		Your passphrase:
 		<br>
@@ -99,6 +99,7 @@ function settingsForm(opinionId, topicId) {
 	});
 
 	jQuery(document).on('click touch', "#closeSettingsForm", function(event) {
+		settingsVisible = 'hidden';
 		jQuery('#form').remove();
 		event.preventDefault();
 	});
@@ -499,8 +500,8 @@ function loadDialogList(restObj) {
 			menuEntry: menuEntry,
 			description: dialog
 		};
-
 		jQuery('#dialogMenu').append(menuEntry);
+
 	}
 }
 
@@ -510,6 +511,7 @@ var createGUIScene = function(dptMode) {
 	//create about button
 	var aboutBtn = jQuery('#about-btn');
 	aboutBtn.show();
+
 	aboutBtn.on('click touch', function(event) {
 
 		if (aboutVisible == 'visible') {
@@ -525,12 +527,11 @@ var createGUIScene = function(dptMode) {
 			console.log("mobile behavior!")
 			hideMenu();
 		}
-
 		hideDialogList();
 		jQuery('#form').remove();
 
 		jQuery('body').append(`
-			<div id="form" class="helpframe" style="visibility:${aboutVisible}">
+			<div id="form" class="helpframe" style="visibility: ${aboutVisible};">
 			<h1>About</h1>
 			<hr>
 			<p>Digital Peace Talks gUG (h.b.)</p>
@@ -540,7 +541,7 @@ var createGUIScene = function(dptMode) {
 			</div>
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
-
+			aboutVisible = 'hidden';
 			hideDialogList();
 			jQuery('#form').remove();
 			focusAtCanvas();
@@ -566,17 +567,23 @@ var createGUIScene = function(dptMode) {
 
 	}
 
-
 	//create first steps button
 	var fsBtn = jQuery('#firststeps-btn');
 	fsBtn.show();
 	fsBtn.on('click touch', function(event) {
+
+		if (tutorialVisible == 'visible') {
+			tutorialVisible = 'hidden';
+		} else {
+			tutorialVisible = 'visible';
+		}
+		jQuery('.helpframe').css({ visibility: tutorialVisible });
 		
 		hideDialogList();
 		jQuery('#form').remove();
 
 		jQuery('body').append(`
-		<div id="form" class="helpframe">
+		<div id="form" class="helpframe" style="visibility: ${tutorialVisible};">
 		<h1>First steps</h1>
 			<hr>
 			<p>Navigation:</p>
@@ -585,7 +592,7 @@ var createGUIScene = function(dptMode) {
 		</div>
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
-
+			tutorialVisible = 'hidden';
 			hideDialogList();
 			jQuery('#form').remove();
 			focusAtCanvas();
@@ -605,18 +612,26 @@ var createGUIScene = function(dptMode) {
 	//create survey button
 	var surveyBtn = jQuery('#survey-btn');
 	surveyBtn.show();
+
 	surveyBtn.on('click touch', function(event) {
+		if (surveyVisible == 'visible') {
+			surveyVisible = 'hidden';
+		} else {
+			surveyVisible = 'visible';
+		}
+		jQuery('.helpframe').css({ visibility: surveyVisible });
 		
 		hideDialogList();
 		jQuery('#form').remove();
 
 		jQuery('body').append(`
-			<div id="form" style="height: 80%;">
+			<div id="form" class="helpframe" style="height: 80%; visibility: ${surveyVisible};">
 				 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
 			</div>`)
 
 			window.addEventListener('message', event => {
 				// IMPORTANT: check the origin of the data! 
+				surveyVisible = 'hidden';
 				if (event.origin.startsWith('https://simple-feedback.dpt.world') &&
 					event.data == 'simple-feedback-finished') {
 					jQuery('#feedbackIframe').remove();
@@ -653,9 +668,19 @@ var createGUIScene = function(dptMode) {
 		focusAtCanvas();
 	});
 	
+	// create settings button
 	var settingsBtn = jQuery('#settings-btn');
 	settingsBtn.show();
+
 	settingsBtn.on('click touch', function(event) {
+
+		if (settingsVisible == 'visible') {
+			settingsVisible = 'hidden';
+		} else {
+			settingsVisible = 'visible';
+		}
+		jQuery('#form').css({ visibility: settingsVisible });
+		
 		hideDialogList();
 		event.stopImmediatePropagation();
 		event.preventDefault();
@@ -665,6 +690,7 @@ var createGUIScene = function(dptMode) {
 		if(isMobile) {
 			hideMenu();
 		}
+
 	});
 
 	//create home button
@@ -744,7 +770,6 @@ var createGUIScene = function(dptMode) {
 
 		});
 	}
-
 
 	//create dialogue button
 	var dialoguesBtn = jQuery('#dialogues-btn');

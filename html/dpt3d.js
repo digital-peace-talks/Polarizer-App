@@ -11,6 +11,9 @@ var myDialogMenu = [];
 var currentDialog;
 var myDialogsVisible = 'hidden';
 var aboutVisible = 'hidden';
+var tutorialVisible = 'hidden';
+var surveyVisible = 'hidden';
+var settingsVisible = 'hidden';
 
 var currentTopic;
 var currentTopicStr;
