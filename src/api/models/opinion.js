@@ -10,7 +10,6 @@ const opinionSchema = mongoose.Schema({
 	},
 	context: {
 		type: String,
-		required: true,
 	},
 	user: {
 		type: Schema.Types.ObjectId,
