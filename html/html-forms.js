@@ -303,10 +303,10 @@ function opinionContext(context) {
 			${context.content}
 			</h4>
 			<br>
-			<h3>
+			<h4>
 			<i>Details:</i>
-			</h3>
-			${context.opinionContext}
+			</h4>
+			${context.opinionContext?context.opinionContext:'none.'}
 			<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm" >
 			</div>
 		</div>
@@ -344,7 +344,7 @@ function opinionForm(edit, context) {
 		<form id="opinion">
 		<textarea name="opinion" class="opinion">${opinion}</textarea><br>
 		Details:
-		<textarea class="opinionContext">${opinionContext}</textarea>
+		<textarea class="opinionContext">${context.opinionContext?context.opinionContext:''}</textarea>
 		<input class="button" type="submit" value="Confirm"> 
 		<input class="closeButton" type="button" value="&#10005;" name="close window"
 		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}
