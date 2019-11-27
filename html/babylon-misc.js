@@ -2,6 +2,8 @@ var editIcon = new Image();
 editIcon.src = "/Edit_icon_inverted.png";
 var inviteIcon = new Image();
 inviteIcon.src = "/chatbubble_inverted.png";
+var onlineIcon = new Image();
+onlineIcon.src = "/online_inverted.png";
 
 function circleText(ctx, text, x, y, radius, angle) {
 	var numRadsPerLetter = 2 * Math.PI / text.length;
@@ -252,8 +254,26 @@ function textBlock(x, y, z, name, text, options) {
 		}
 		textureContext.fillRect(36,0,36,36);
 	}
-	textureContext = cropImage(textureContext, textureContext.canvas);
 	
+	if(dpt.isOnline) {
+		textureContext.drawImage(onlineIcon, 72, 0, 36, 36);
+		textureContext.globalCompositeOperation = "xor";
+		switch(whoami.user.preferences.colorScheme) {
+			case DPTConst.COLORS_dark:
+				textureContext.fillStyle = "#009900";
+				break;
+			case DPTConst.COLORS_bright:
+				textureContext.fillStyle = "#009900";
+				break;
+			case DPTConst.COLORS_default:
+			default:
+				textureContext.fillStyle = "#009900";
+		}
+		textureContext.fillRect(72,0,36,36);
+	}
+	
+	textureContext = cropImage(textureContext, textureContext.canvas);
+
 	//Create plane
 	var plane = BABYLON.MeshBuilder.CreatePlane(
 			"texttexture",

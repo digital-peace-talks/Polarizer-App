@@ -434,6 +434,7 @@ function loadOpinions(restObj) {
 				"opinionId": restObj.data[i]._id,
 				"content": restObj.data[i].content,
 				"opinionContext": restObj.data[i].context,
+				"isOnline": restObj.data[i].isOnline,
 				"canEdit": (restObj.data[i].user == 'mine') ? true : false,
 				"canInvite": (
 					canInvite == true
