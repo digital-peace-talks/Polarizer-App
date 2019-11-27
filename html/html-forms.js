@@ -363,6 +363,7 @@ function opinionForm(edit, context) {
 	    ],
 	    adjustHeight: false,
 		defaultLinkTarget: '_blank',
+		imageWidthModalEdit: true,
 	});
 
 	jQuery(".opinion").focus();
