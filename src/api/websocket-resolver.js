@@ -262,6 +262,7 @@ match.push({
 
 			var id = ret.data[i].user.toString();
 			for(var j in global.dptNS.online) {
+				console.log(`if(${global.dptNS.online[j].user.id} == ${id}) {`);
 				if(global.dptNS.online[j].user.id == id) {
 					console.log('bla');
 					ret.data[i].isOnline = true;
