@@ -1,3 +1,4 @@
+var compression = require("compression");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
@@ -8,6 +9,9 @@ const favicon = require('serve-favicon');
 
 const log = logger(config.logger);
 const app = express();
+
+//compress all responses
+app.use(compression())
 
 /*
 Setup of the express http service
