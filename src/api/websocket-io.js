@@ -139,6 +139,10 @@ io.on('connection', function(socket) {
 				var user = await User.userModel.findOne({publicKey: dptUUID});
 				
 				if(user != null && dptUUID) {
+					var userCheck = Lo_.find(global.dptNS.online, {dptUUID: dptUUID});
+					if(userCheck.registered) {
+						Lo_.pull(global.dptNS.online, userCheck);
+					}
 
 					// yes, we found a user with the dptUUID
 					global.dptNS.online.push( {
