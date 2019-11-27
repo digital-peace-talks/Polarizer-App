@@ -281,27 +281,4 @@ class DPT {
 			}
 		});
 	}
-	
-	getOpinionContext(opinionId, publicKey) {
-		this.socket.emit('api', {
-			method: 'get',
-			path: '/opinionContext/'+opinionId+'/',
-			data: {
-				opinionId: opinionId,
-				publicKey: publicKey,
-			}
-		});
-	}
-	
-	postOpinionContext(opinionId, content, publicKey) {
-		this.socket.emit('api', {
-			method: 'post',
-			path: '/opinionContext/'+opinionId+'/',
-			data: {
-				opinionId: opinionId,
-				content: content,
-				publicKey: publicKey,
-			}
-		});
-	}
 }
