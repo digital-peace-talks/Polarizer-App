@@ -512,11 +512,25 @@ var createGUIScene = function(dptMode) {
 	aboutBtn.show();
 	aboutBtn.on('click touch', function(event) {
 
+		if (aboutVisible == 'visible') {
+			aboutVisible = 'hidden';
+		} else {
+			aboutVisible = 'visible';
+		}
+		jQuery('.helpframe').css({ visibility: aboutVisible });
+		
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		if (isMobile) {
+			console.log("mobile behavior!")
+			hideMenu();
+		}
+
 		hideDialogList();
 		jQuery('#form').remove();
 
 		jQuery('body').append(`
-			<div id="form" class="helpframe">
+			<div id="form" class="helpframe" style="visibility:${aboutVisible}">
 			<h1>About</h1>
 			<hr>
 			<p>Digital Peace Talks gUG (h.b.)</p>

@@ -10,6 +10,7 @@ var opinionCamState;
 var myDialogMenu = [];
 var currentDialog;
 var myDialogsVisible = 'hidden';
+var aboutVisible = 'hidden';
 
 var currentTopic;
 var currentTopicStr;
