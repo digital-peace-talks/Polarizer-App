@@ -336,13 +336,17 @@ function opinionForm(edit, context) {
 	} else {
 		edit = '';
 	}
+	var opinionContext = '';
+	if(context && context.opinionContext) {
+		opinionContext = context.opinionContext;
+	}
 	jQuery('body').append(`
 		<div id="form">
 		Please enter a new opinion:<br>
 		<form id="opinion">
 		<textarea name="opinion" class="opinion">${opinion}</textarea><br>
 		Details:
-		<textarea class="opinionContext">${context.opinionContext?context.opinionContext:''}</textarea>
+		<textarea class="opinionContext">${opinionContext}</textarea>
 		<input class="button" type="submit" value="Confirm"> 
 		<input class="closeButton" type="button" value="&#10005;" name="close window"
 		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}
