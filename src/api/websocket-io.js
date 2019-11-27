@@ -140,7 +140,7 @@ io.on('connection', function(socket) {
 				
 				if(user != null && dptUUID) {
 					var userCheck = Lo_.find(global.dptNS.online, {dptUUID: dptUUID});
-					if(userCheck.registered) {
+					if(userCheck && userCheck.registered) {
 						Lo_.pull(global.dptNS.online, userCheck);
 					}
 
