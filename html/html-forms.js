@@ -114,7 +114,7 @@ function settingsForm(opinionId, topicId) {
 	});
 	
 	jQuery(document).on('submit', 'form#settings', function(event) {
-		formVisible = 'hidden';
+		
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		whoami.user.preferences.colorScheme = jQuery('input[name=colorScheme]:checked').val() * 1;
@@ -136,6 +136,7 @@ function settingsForm(opinionId, topicId) {
 				}
 			},
 		);
+		formVisible = 'hidden';
 		jQuery('#form').remove();
 		
 		if(currentScene.name == "topicScene") {
@@ -173,6 +174,7 @@ function propositionForm(opinionId, topicId) {
 
 	jQuery(document).on('click', "#ClosePropositionForm", function(event) {
 		propositionFormOpen = 0;
+		formVisible = 'hidden';
 		jQuery('#form').remove();
 		focusAtCanvas();
 		event.preventDefault();
@@ -197,6 +199,7 @@ function propositionForm(opinionId, topicId) {
 			}
 		}
 		if (event.keyCode == 27) {
+			formVisible = 'hidden';
 			jQuery('#form').remove();
 			focusAtCanvas();
 			event.preventDefault();
@@ -218,6 +221,7 @@ function propositionForm(opinionId, topicId) {
 		if (proposition) {
 			dpt.postDialog(proposition, whoami.dptUUID, opinionId, topicId);
 		}
+		formVisible = 'hidden';
 		jQuery('#form').remove();
 		focusAtCanvas();
 	});
@@ -261,6 +265,7 @@ function topicForm(edit, context) {
 
 	jQuery(document).on('click', "#CloseTopicForm", function(event) {
 		// topicFormOpen = 0;
+		formVisible = 'hidden';
 		jQuery('#form').remove();
 		focusAtCanvas();
 		event.preventDefault();
@@ -309,6 +314,7 @@ function topicForm(edit, context) {
 				dpt.postTopic(topic);
 			}
 		}
+		formVisible = 'hidden';
 		jQuery('#form').remove();
 		focusAtCanvas();
 
@@ -332,6 +338,7 @@ function opinionContext(context) {
 		</div>
 	`);
 	jQuery("#closeSettingsForm").on('click touch', function(event) {
+		formVisible = 'hidden';
 		jQuery('#form').remove();
 		event.stopImmediatePropagation();
 		event.preventDefault();
@@ -392,6 +399,7 @@ function opinionForm(edit, context) {
 
 	jQuery(document).on('click', "#CloseOpinionForm", function(event) {
 		opinionFormOpen = 0;
+		formVisible = 'hidden';
 		jQuery('#form').remove();
 		focusAtCanvas();
 		event.preventDefault();
@@ -441,6 +449,7 @@ function opinionForm(edit, context) {
 				dpt.postOpinion(currentTopic, opinion, context);
 			}
 		}
+		formVisible = 'hidden';
 		jQuery('#form').remove();
 	});
 }
@@ -562,8 +571,8 @@ var createGUIScene = function(dptMode) {
 			</div>
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
-			formVisible = 'hidden';
 			hideDialogList();
+			formVisible = 'hidden';
 			jQuery('#form').remove();
 			focusAtCanvas();
 			event.preventDefault();
@@ -656,6 +665,7 @@ var createGUIScene = function(dptMode) {
 				if (event.origin.startsWith('https://simple-feedback.dpt.world') &&
 					event.data == 'simple-feedback-finished') {
 					jQuery('#feedbackIframe').remove();
+					formVisible = 'hidden';
 					jQuery('#form').remove();
 				} else {
 					return;
@@ -717,8 +727,17 @@ var createGUIScene = function(dptMode) {
 	//create home button
 	var homeBtn = jQuery('#home-btn');
 	homeBtn.show();
+
 	homeBtn.on('click touch', function(event) {
+
+		if (formVisible == 'visible') {
+			formVisible = 'hidden';
+		} else {
+			formVisible = 'visible';
+		}
+		jQuery('#form').css({ visibility: formVisible });
 		hideDialogList();
+
 		opinionCamState = currentScene.cameras[0].storeState();
 		currentScene.dispose();
 		currentScene = __topicScene("topicScene");
@@ -899,6 +918,7 @@ function requestSearch() {
 	});
 
 	jQuery(document).on('submit', '.searchString', function(event) {
+		formVisible = 'hidden';
 		event.preventDefault();
 		if(currentScene.name == "opinionScene") {
 			opinionCamState = currentScene.cameras[0].storeState();
@@ -910,7 +930,6 @@ function requestSearch() {
 	});
 	jQuery(document).on('keydown', '.searchString', function(event) {
 		if (event.keyCode == 27) {
-			formVisible = 'hidden';
 			jQuery('#form').remove();
 			focusAtCanvas();
 			event.preventDefault();
