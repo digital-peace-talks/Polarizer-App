@@ -11,13 +11,7 @@ var myDialogMenu = [];
 var currentDialog;
 
 var myDialogsVisible = 'hidden';
-var aboutVisible = 'hidden';
-var tutorialVisible = 'hidden';
-var surveyVisible = 'hidden';
-var settingsVisible = 'hidden';
-var searchVisible = 'hidden';
-var topicVisible = 'hidden';
-var opinionVisible = 'hideen';
+var formVisible = 'hidden';
 
 var currentTopic;
 var currentTopicStr;
@@ -298,8 +292,20 @@ function main() {
 		//engine.enableOfflineSupport = false;
 		
 		engine.runRenderLoop(function() {
-			if(BABYLON.Tools.Now - idleSince > 3000.0) {
+			let timeout = BABYLON.Tools.Now - idleSince;
+			if(timeout > 3000.0) {
 				powerSave = true;
+			}
+			if(timeout > 600000.0) {
+				if(currentScene.name == "topicScene") {
+					dpt.getTopic();
+				} else if(currentScene.name == "opinionScene" && currentTopic) {
+					dpt.getOpinionByTopic(currentTopic);
+				}
+				powerSave = false;
+				idleSince = BABYLON.Tools.Now;
+			} else {
+				jQuery('#debug').text("");
 			}
 			if(currentScene && !powerSave) {
 //				jQuery('#debug').text(engine.getFps()+"\n"+(BABYLON.Tools.Now - idleSince));
