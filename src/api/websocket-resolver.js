@@ -260,19 +260,18 @@ match.push({
 		data.id = mongoose.Types.ObjectId(data.id);
 		var ret = await opinionService.getOpinionsByTopicId({body: data}, user.user.id);
 		console.log("dptNS: "+util.inspect(global.dptNS.online));
-		for(var j in global.dptNS.online) {
-			for(var i in ret.data) {
+		for(var i in ret.data) {
 
-				var id = ret.data[i].user.toString();
+			var id = ret.data[i].user.toString();
+			ret.data[i].isOnline = false;
+			ret.data[i]._doc.isOnline = false;
+
+			for(var j in global.dptNS.online) {
 
 				if(global.dptNS.online[j].user.id == id) {
 					console.log(`isOnline ${global.dptNS.online[j].user.id} == ${id})`);
 					ret.data[i].isOnline = true;
 					ret.data[i]._doc.isOnline = true;
-				} else {
-					console.log(`!isOnline ${global.dptNS.online[j].user.id} == ${id})`);
-					ret.data[i].isOnline = false;
-					ret.data[i]._doc.isOnline = false;
 				}
 			}
 		}
