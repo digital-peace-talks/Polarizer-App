@@ -19,7 +19,7 @@ function crisisForm(messageId) {
 			<form id="crisis">
 				<div class="frame1">
 					<div class="container1">
-						<input type="range" name="rating2" min="1" max="180" value="100" class="slider" id="range-slider" />
+						<input type="range" style="z-index:400" name="rating2" min="1" max="180" value="100" class="slider" id="range-slider" />
 					</div>
 					<div class="smile-wrapper">
 						<div class="eye eye-l"></div>
