@@ -265,12 +265,12 @@ match.push({
 
 				var id = ret.data[i].user.toString();
 
-				console.log(`if(${global.dptNS.online[j].user.id} == ${id}) {`);
 				if(global.dptNS.online[j].user.id == id) {
-					console.log('bla');
+					console.log(`isOnline ${global.dptNS.online[j].user.id} == ${id})`);
 					ret.data[i].isOnline = true;
 					ret.data[i]._doc.isOnline = true;
 				} else {
+					console.log(`!isOnline ${global.dptNS.online[j].user.id} == ${id})`);
 					ret.data[i].isOnline = false;
 					ret.data[i]._doc.isOnline = false;
 				}
