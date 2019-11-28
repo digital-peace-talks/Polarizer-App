@@ -38,6 +38,7 @@ const XfilesToCache = [
 	'/font.ttf',
 	'/1message_white.png',
 	'/2message_white.png',
+	'/messagelist_white.png',
 	'/about_white.png',
 	'/blue-blue.png',
 	'/blue-green.png',
