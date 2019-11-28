@@ -302,7 +302,7 @@ function main() {
 			if(timeout > 3000.0) {
 				powerSave = true;
 			}
-			if(timeout > 30000.0) {
+			if(timeout > 600000.0) {
 				if(currentScene.name == "topicScene") {
 					dpt.getTopic();
 				} else if(currentScene.name == "opinionScene" && currentTopic) {
