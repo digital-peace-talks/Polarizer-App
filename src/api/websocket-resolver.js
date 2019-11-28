@@ -97,7 +97,13 @@ match.push({
 	path: "/user/update/"+ uuidReg +"/",
 	method: "put",
 	fun: async (data, dptUUID) => {
-		return(await userService.updateUser({ publicKey: dptUUID, body: data.body }));
+		var user;
+		if(user = userRegistered(dptUUID)) {
+			user.user.preferences.stealthMode = data.body.preferences.stealthMode;
+			return(await userService.updateUser({ publicKey: dptUUID, body: data.body }));
+		} else {
+			return({});
+		}
 	}
 });
 
@@ -259,24 +265,27 @@ match.push({
 		var user = userRegistered(dptUUID)
 		data.id = mongoose.Types.ObjectId(data.id);
 		var ret = await opinionService.getOpinionsByTopicId({body: data}, user.user.id);
-		console.log("dptNS: "+util.inspect(global.dptNS.online));
-		for(var i in ret.data) {
 
-			var id = ret.data[i].user.toString();
-			ret.data[i].isOnline = false;
-			ret.data[i]._doc.isOnline = false;
-
-			for(var j in global.dptNS.online) {
-
-				if(global.dptNS.online[j].user.id == id) {
-					console.log(`isOnline ${global.dptNS.online[j].user.id} == ${id})`);
-					ret.data[i].isOnline = true;
-					ret.data[i]._doc.isOnline = true;
-					break;
+		if(user.user.preferences.stealthMode == false) {
+			for(var i in ret.data) {
+	
+				var id = ret.data[i].user.toString();
+				ret.data[i].isOnline = false;
+				ret.data[i]._doc.isOnline = false;
+	
+				for(var j in global.dptNS.online) {
+	
+					if(global.dptNS.online[j].user.id == id) {
+						console.log(`isOnline ${global.dptNS.online[j].user.id} == ${id})`);
+						ret.data[i].isOnline = true;
+						ret.data[i]._doc.isOnline = true;
+						break;
+					}
 				}
 			}
 		}
-		console.log("ret: "+util.inspect(ret));
+
+		//console.log("ret: "+util.inspect(ret));
 		return(ret);
 	}
 });

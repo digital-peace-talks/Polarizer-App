@@ -9,6 +9,8 @@ const onlineTimesSchema = mongoose.Schema({
 const preferencesSchema = mongoose.Schema({
 	colorScheme: { type: Number },
 	htmlScheme: {type: Number },
+	stealthMode: {type: Boolean, default: true },
+	guidedTour: {type: Boolean, default: true },
 });
 
 const userSchema = mongoose.Schema({

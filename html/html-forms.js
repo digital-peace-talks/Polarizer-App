@@ -17,6 +17,11 @@ function settingsForm(opinionId, topicId) {
 
 	var theme = 0;
 	var colors = "Color scheme:<br>";
+	var stealthMode = 'checked';
+	
+	if(!whoami.user.preferences.stealthMode) {
+		stealthMode = '';
+	}
 	for(var i = 0; i <= 2; i++) {
 		if(whoami.user.preferences.colorScheme == i) {
 			colors += `<label><input type="radio" name="colorScheme" value="${i}" checked>`;
@@ -62,6 +67,10 @@ function settingsForm(opinionId, topicId) {
 		Change 3D-Theme:
 		<form id="settings">
 		${colors}
+		<hr>
+		Do you like to be visible to other Users? Then uncheck the checkbox.
+		<br>
+		Stealth-Mode: <input type="checkbox" name="stealthMode" ${stealthMode}>
 		<br>
 		<input class="button" type="submit" value="Apply">
 		<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm">
@@ -109,10 +118,21 @@ function settingsForm(opinionId, topicId) {
 		event.preventDefault();
 		whoami.user.preferences.colorScheme = jQuery('input[name=colorScheme]:checked').val() * 1;
 		whoami.user.preferences.htmlScheme = theme;
+		if(jQuery('input[name=stealthMode]:checked').val() == 'on') {
+			whoami.user.preferences.stealthMode = true;
+		} else {
+			whoami.user.preferences.stealthMode = false;
+		}
+		whoami.user.preferences.guidedTour = whoami.user.preferences.guidedTour;
+
 		dpt.userUpdate(whoami.dptUUID,
 			{
-				"preferences.colorScheme": whoami.user.preferences.colorScheme,
-				"preferences.htmlScheme": whoami.user.preferences.htmlScheme
+				"preferences": {
+					colorScheme: whoami.user.preferences.colorScheme,
+					htmlScheme: whoami.user.preferences.htmlScheme,
+					stealthMode: whoami.user.preferences.stealthMode,
+					guidedTour: whoami.user.preferences.guidedTour,
+				}
 			},
 		);
 		jQuery('#form').remove();
