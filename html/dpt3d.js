@@ -9,11 +9,15 @@ var opinionCamState;
 
 var myDialogMenu = [];
 var currentDialog;
+
 var myDialogsVisible = 'hidden';
 var aboutVisible = 'hidden';
 var tutorialVisible = 'hidden';
 var surveyVisible = 'hidden';
 var settingsVisible = 'hidden';
+var searchVisible = 'hidden';
+var topicVisible = 'hidden';
+var opinionVisible = 'hideen';
 
 var currentTopic;
 var currentTopicStr;

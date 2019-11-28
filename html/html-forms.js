@@ -114,6 +114,7 @@ function settingsForm(opinionId, topicId) {
 	});
 	
 	jQuery(document).on('submit', 'form#settings', function(event) {
+		settingsVisible = 'hidden';
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		whoami.user.preferences.colorScheme = jQuery('input[name=colorScheme]:checked').val() * 1;
@@ -259,7 +260,7 @@ function topicForm(edit, context) {
 	jQuery(".topic").focus();
 
 	jQuery(document).on('click', "#CloseTopicForm", function(event) {
-		topicFormOpen = 0;
+		// topicFormOpen = 0;
 		jQuery('#form').remove();
 		focusAtCanvas();
 		event.preventDefault();
@@ -740,7 +741,16 @@ var createGUIScene = function(dptMode) {
 	//create search button
 	var searchBtn = jQuery('#search-btn');
 	searchBtn.show();
+
 	searchBtn.on('click touch', function(event) {
+
+		if (searchVisible == 'visible') {
+			searchVisible = 'hidden';
+		} else {
+			searchVisible = 'visible';
+		}
+		jQuery('#form').css({ visibility: searchVisible });
+
 		hideDialogList();
 		requestSearch();
 	});
@@ -862,7 +872,7 @@ function requestSearch() {
 	
 	jQuery("#form").remove();
 	jQuery('body').append(`
-		<div id="form">
+		<div id="form" style="visibility: ${searchVisible};">
 		Search in Topics:
 		<form class="searchString">
 		<input type="text" id="searchString" name="searchString" style="width:100%;">
@@ -873,6 +883,7 @@ function requestSearch() {
 	jQuery("#searchString").focus();
 
 	jQuery("#closeSettingsForm").on('click touch', function(event) {
+		searchVisible = 'hidden';
 		jQuery('#form').remove();
 		event.stopImmediatePropagation();
 		event.preventDefault();
