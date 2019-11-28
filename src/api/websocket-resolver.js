@@ -272,6 +272,7 @@ match.push({
 					console.log(`isOnline ${global.dptNS.online[j].user.id} == ${id})`);
 					ret.data[i].isOnline = true;
 					ret.data[i]._doc.isOnline = true;
+					break;
 				}
 			}
 		}
