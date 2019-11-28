@@ -232,7 +232,7 @@ io.on('connection', function(socket) {
 			updateUser.save();
 		}
 		Lo_.pull(global.dptNS.online, user);
-		//log.info('updated global online (user-): '+require('util').inspect(global.dptNS.online));
+		log.info('updated global online (user-): '+require('util').inspect(global.dptNS.online));
 	});
 });
 
