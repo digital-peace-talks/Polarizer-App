@@ -455,11 +455,14 @@ function loadDialogList(restObj) {
 		sum += dialogs[i].unreadMessages;
 	}
 	if(sum > 0) {
+		//jQuery('#dialog-btn-label').css("visibility", "visible")
 		jQuery('#dialog-btn-label').attr('count', sum);
 		jQuery('#dialog-btn-label').empty().text(`${sum}`);
 	} else {
 		jQuery('#dialog-btn-label').attr('count', 0);
 		jQuery('#dialog-btn-label').empty().text(``);
+		//jQuery('#dialog-btn-label').css("visibility", "hidden")
+	
 	}
 	jQuery('body').append(`<div id="dialogMenu"></div>`);
 
