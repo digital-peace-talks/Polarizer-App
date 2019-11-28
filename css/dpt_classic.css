@@ -105,6 +105,15 @@ h4 {
   padding: 5px;
 }
 
+h5 {
+  font-family: "DPTFontDin";
+  font-size: 18px;
+  color: #f0f3f5;
+  font-weight: 500;
+  padding: 0px;
+  margin: 0px;
+}
+
 hr {
   color: #66d1ff;
   border-style: dashed;

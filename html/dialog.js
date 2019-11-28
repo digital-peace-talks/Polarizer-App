@@ -275,8 +275,8 @@ function dialogForm(secondDialog) {
 		}
 	}
 
-	var opinionLabel1 = "Others opinion";
-	var opinionLabel2 = "Your opinion";
+	var opinionLabel1 = "<h5>Others opinion:</h5>";
+	var opinionLabel2 = "<h5>Your opinion:</h5>";
 	if (currentDialog.thirdEye) {
 		var opinionLabel1 = "Opinion A";
 		var opinionLabel2 = "Opinion B";
@@ -296,13 +296,13 @@ function dialogForm(secondDialog) {
 					<table width="100%">
 						<tr>
 							<td valign="top" style="font-size: 14px" width="45%"><center>
-								<b>${opinionLabel1}:</b><br>${headerOther}<br>
+								<b>${opinionLabel1}</b><br>${headerOther}<br>
 							</center></td>
 							<td style="font-size: 36px"><center>
 								vs.
 							</center></td>
 							<td valign="top" width="45%" style="font-size: 14px"><center>
-								<b>${opinionLabel2}:</b><br>${headerMine}<br>
+								<b>${opinionLabel2}</b><br>${headerMine}<br>
 							</center></td>
 						</tr>
 					</table>

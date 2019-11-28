@@ -109,8 +109,8 @@ function getCamera(rotate) {
 		
 	camera.lowerAlphaLimit = 0.0174533 * -179;
 	camera.upperAlphaLimit = 0.0174533 * 180;
-	camera.lowerBetaLimit = 0.0174533 * -179;
-	camera.upperBetaLimit = 0.0174533 * 180;
+	camera.lowerBetaLimit = 0.0174533 * 0;
+	camera.upperBetaLimit = 0.0174533 * 179;
 	
 	camera.panningDistanceLimit = 35;
 
