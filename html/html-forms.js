@@ -44,7 +44,7 @@ function settingsForm(opinionId, topicId) {
 	}
 	
 	jQuery('body').append(`
-		<div id="form" class="helpframe" style="visibility: ${settingsVisible};"><h1>Settings:</h1>
+		<div id="form" class="helpframe" style="visibility: ${formVisible};"><h1>Settings:</h1>
 		<hr>
 		Your passphrase:
 		<br>
@@ -108,13 +108,13 @@ function settingsForm(opinionId, topicId) {
 	});
 
 	jQuery(document).on('click touch', "#closeSettingsForm", function(event) {
-		settingsVisible = 'hidden';
+		formVisible = 'hidden';
 		jQuery('#form').remove();
 		event.preventDefault();
 	});
 	
 	jQuery(document).on('submit', 'form#settings', function(event) {
-		settingsVisible = 'hidden';
+		formVisible = 'hidden';
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		whoami.user.preferences.colorScheme = jQuery('input[name=colorScheme]:checked').val() * 1;
@@ -241,7 +241,7 @@ function topicForm(edit, context) {
 	}
 	if (isMobile) {
 		jQuery('body').append(`
-			<div id="form">New topic:<br><form id="topic">
+			<div id="form" style="visibility:${formVisible};">New topic:<br><form id="topic">
 			<textarea name="topic"
 			class="topic">${topic}</textarea><br>
 			<input class="button" type="submit" value="send">${edit}${hiddenTopicId}</form></div>
@@ -249,7 +249,7 @@ function topicForm(edit, context) {
 
 	} else {
 		jQuery('body').append(`
-			<div id="form">
+			<div id="form" style="visibility:${formVisible};">
 			Please enter a new topic:<br><form id="topic">
 			<textarea name="topic" class="topic">${topic}</textarea><br>
 			<input class="button" type="submit" value="Confirm">
@@ -363,7 +363,7 @@ function opinionForm(edit, context) {
 		opinionContext = context.opinionContext;
 	}
 	jQuery('body').append(`
-		<div id="form">
+		<div id="form" style="visibility:${formVisible};">
 		Please enter a new opinion:<br>
 		<form id="opinion">
 		<textarea name="opinion" class="opinion">${opinion}</textarea><br>
@@ -456,14 +456,11 @@ function loadDialogList(restObj) {
 		sum += dialogs[i].unreadMessages;
 	}
 	if(sum > 0) {
-		jQuery('#dialog-btn-label').css("display", "show")
 		jQuery('#dialog-btn-label').attr('count', sum);
 		jQuery('#dialog-btn-label').empty().text(`${sum}`);
 	} else {
 		jQuery('#dialog-btn-label').attr('count', 0);
 		jQuery('#dialog-btn-label').empty().text(``);
-		jQuery('#dialog-btn-label').css("display", "none")
-	
 	}
 	jQuery('body').append(`<div id="dialogMenu"></div>`);
 
@@ -538,12 +535,12 @@ var createGUIScene = function(dptMode) {
 
 	aboutBtn.on('click touch', function(event) {
 
-		if (aboutVisible == 'visible') {
-			aboutVisible = 'hidden';
+		if (formVisible == 'visible') {
+			formVisible = 'hidden';
 		} else {
-			aboutVisible = 'visible';
+			formVisible = 'visible';
 		}
-		jQuery('.helpframe').css({ visibility: aboutVisible });
+		jQuery('#form').css({ visibility: formVisible });
 		
 		event.stopImmediatePropagation();
 		event.preventDefault();
@@ -555,7 +552,7 @@ var createGUIScene = function(dptMode) {
 		jQuery('#form').remove();
 
 		jQuery('body').append(`
-			<div id="form" class="helpframe" style="visibility: ${aboutVisible};">
+			<div id="form" class="helpframe" style="visibility: ${formVisible};">
 			<h1>About</h1>
 			<hr>
 			<p>Digital Peace Talks gUG (h.b.)</p>
@@ -565,7 +562,7 @@ var createGUIScene = function(dptMode) {
 			</div>
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
-			aboutVisible = 'hidden';
+			formVisible = 'hidden';
 			hideDialogList();
 			jQuery('#form').remove();
 			focusAtCanvas();
@@ -596,18 +593,18 @@ var createGUIScene = function(dptMode) {
 	fsBtn.show();
 	fsBtn.on('click touch', function(event) {
 
-		if (tutorialVisible == 'visible') {
-			tutorialVisible = 'hidden';
+		if (formVisible == 'visible') {
+			formVisible = 'hidden';
 		} else {
-			tutorialVisible = 'visible';
+			formVisible = 'visible';
 		}
-		jQuery('.helpframe').css({ visibility: tutorialVisible });
+		jQuery('#form').css({ visibility: formVisible });
 		
 		hideDialogList();
 		jQuery('#form').remove();
 
 		jQuery('body').append(`
-		<div id="form" class="helpframe" style="visibility: ${tutorialVisible};">
+		<div id="form" class="helpframe" style="visibility: ${formVisible};">
 		<h1>First steps</h1>
 			<hr>
 			<p>Navigation:</p>
@@ -616,7 +613,7 @@ var createGUIScene = function(dptMode) {
 		</div>
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
-			tutorialVisible = 'hidden';
+			formVisible = 'hidden';
 			hideDialogList();
 			jQuery('#form').remove();
 			focusAtCanvas();
@@ -638,24 +635,24 @@ var createGUIScene = function(dptMode) {
 	surveyBtn.show();
 
 	surveyBtn.on('click touch', function(event) {
-		if (surveyVisible == 'visible') {
-			surveyVisible = 'hidden';
+		if (formVisible == 'visible') {
+			formVisible = 'hidden';
 		} else {
-			surveyVisible = 'visible';
+			formVisible = 'visible';
 		}
-		jQuery('.helpframe').css({ visibility: surveyVisible });
+		jQuery('#form').css({ visibility: formVisible });
 		
 		hideDialogList();
 		jQuery('#form').remove();
 
 		jQuery('body').append(`
-			<div id="form" class="helpframe" style="height: 80%; visibility: ${surveyVisible};">
+			<div id="form" class="helpframe" style="height: 80%; visibility: ${formVisible};">
 				 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
 			</div>`)
 
 			window.addEventListener('message', event => {
 				// IMPORTANT: check the origin of the data! 
-				surveyVisible = 'hidden';
+				formVisible = 'hidden';
 				if (event.origin.startsWith('https://simple-feedback.dpt.world') &&
 					event.data == 'simple-feedback-finished') {
 					jQuery('#feedbackIframe').remove();
@@ -698,12 +695,12 @@ var createGUIScene = function(dptMode) {
 
 	settingsBtn.on('click touch', function(event) {
 
-		if (settingsVisible == 'visible') {
-			settingsVisible = 'hidden';
+		if (formVisible == 'visible') {
+			formVisible = 'hidden';
 		} else {
-			settingsVisible = 'visible';
+			formVisible = 'visible';
 		}
-		jQuery('#form').css({ visibility: settingsVisible });
+		jQuery('#form').css({ visibility: formVisible });
 		
 		hideDialogList();
 		event.stopImmediatePropagation();
@@ -744,12 +741,12 @@ var createGUIScene = function(dptMode) {
 
 	searchBtn.on('click touch', function(event) {
 
-		if (searchVisible == 'visible') {
-			searchVisible = 'hidden';
+		if (formVisible == 'visible') {
+			formVisible = 'hidden';
 		} else {
-			searchVisible = 'visible';
+			formVisible = 'visible';
 		}
-		jQuery('#form').css({ visibility: searchVisible });
+		jQuery('#form').css({ visibility: formVisible });
 
 		hideDialogList();
 		requestSearch();
@@ -765,6 +762,12 @@ var createGUIScene = function(dptMode) {
 		newTopicBtn.html(`<img class="btn-bar-icon" src="/topic_white.png">`);
 
 		newTopicBtn.on('click touch', function(event) {
+			if (formVisible == 'visible') {
+				formVisible = 'hidden';
+			} else {
+				formVisible = 'visible';
+			}
+			jQuery('#form').css({ visibility: formVisible });
 			hideDialogList();
 			jQuery('#form').remove();
 
@@ -778,8 +781,7 @@ var createGUIScene = function(dptMode) {
 
 		});
 
-
-		//create opinion button 
+	//create opinion button 
 	} else if (dptMode == 'opinionScene') {
 
 		jQuery('#new-topic-btn').hide();
@@ -788,6 +790,13 @@ var createGUIScene = function(dptMode) {
 
 		newOpinionBtn.html(`<img class="btn-bar-icon" src="/opinion_white.png">`);
 		newOpinionBtn.on('click touch', function(event) {
+			
+			if (formVisible == 'visible') {
+				formVisible = 'hidden';
+			} else {
+				formVisible = 'visible';
+			}
+			jQuery('#form').css({ visibility: formVisible });
 			hideDialogList();
 			jQuery('#form').remove();
 
@@ -809,12 +818,12 @@ var createGUIScene = function(dptMode) {
 	dialoguesBtn.show();
 	dialoguesBtn.on('click touch', function(event) {
 		// alert('test')
-		if (myDialogsVisible == 'visible') {
-			myDialogsVisible = 'hidden';
+		if (formVisible == 'visible') {
+			formVisible = 'hidden';
 		} else {
-			myDialogsVisible = 'visible';
+			formVisible = 'visible';
 		}
-		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+		jQuery('#dialogMenu').css({ visibility: formVisible });
 		jQuery('#close-dialog-btn').css({
 			WebkitTransition : 'opacity 0s ease-in-out',
 			MozTransition    : 'opacity 0s ease-in-out',
@@ -822,7 +831,7 @@ var createGUIScene = function(dptMode) {
 			OTransition      : 'opacity 0s ease-in-out',
 			transition       : 'opacity 0s ease-in-out'
 		});
-		jQuery('#close-dialog-btn').css({ visibility: myDialogsVisible });
+		jQuery('#close-dialog-btn').css({ visibility: formVisible });
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		if (isMobile) {
@@ -872,7 +881,7 @@ function requestSearch() {
 	
 	jQuery("#form").remove();
 	jQuery('body').append(`
-		<div id="form" style="visibility: ${searchVisible};">
+		<div id="form" style="visibility:${formVisible};">
 		Search in Topics:
 		<form class="searchString">
 		<input type="text" id="searchString" name="searchString" style="width:100%;">
@@ -883,7 +892,7 @@ function requestSearch() {
 	jQuery("#searchString").focus();
 
 	jQuery("#closeSettingsForm").on('click touch', function(event) {
-		searchVisible = 'hidden';
+		formVisible = 'hidden';
 		jQuery('#form').remove();
 		event.stopImmediatePropagation();
 		event.preventDefault();
@@ -901,6 +910,7 @@ function requestSearch() {
 	});
 	jQuery(document).on('keydown', '.searchString', function(event) {
 		if (event.keyCode == 27) {
+			formVisible = 'hidden';
 			jQuery('#form').remove();
 			focusAtCanvas();
 			event.preventDefault();
