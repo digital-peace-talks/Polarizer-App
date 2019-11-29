@@ -699,6 +699,14 @@ var createGUIScene = function(dptMode) {
 		focusAtCanvas();
 	});
 	
+	//create documentation button
+	var docuBtn = jQuery('#github-btn');
+	docuBtn.show();
+	docuBtn.on('click touch', function(event) {
+		hideDialogList();
+		window.open("https://github.com/digital-peace-talks/DPT-server");
+	});
+	
 	// create settings button
 	var settingsBtn = jQuery('#settings-btn');
 	settingsBtn.show();

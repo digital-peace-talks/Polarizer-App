@@ -526,6 +526,8 @@ var createGenericScene = function(dptMode) {
 	});
 
 
+	//var gl = new BABYLON.GlowLayer("glow", currentScene);
+	
 	//genericScene.autoClear = false; // Color buffer
 	//genericScene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
 	//genericScene.getAnimationRatio();
