@@ -63,7 +63,7 @@ function crisisForm(messageId) {
 	jQuery("#crisis").submit(function (event) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
-		var reason = jQuery('.reason').val();
+		var reason = jQuery('input[name="reason"]').val();
 		if (reason.length > 0) {
 			dpt.postCrisis(
 				reason,
@@ -82,7 +82,7 @@ function crisisForm(messageId) {
 		}
 	});
 
-	jQuery(document).one('click', "#crisisCloseWindow", function (event) {
+	jQuery(document).on('click', "#crisisCloseWindow", function (event) {
 		dialogFormOpen = 0;
 		jQuery('#misc2').empty();
 		event.preventDefault();
