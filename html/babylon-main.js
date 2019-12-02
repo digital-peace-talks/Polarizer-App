@@ -382,6 +382,7 @@ var createGenericScene = function(dptMode) {
 							&& pointerInfo.pickInfo.pickedMesh.dpt.context == "opinionScene"
 							&& pointerInfo.pickInfo.pickedMesh.name == "texttexture"
 							&& pointerInfo.pickInfo.pickedMesh.dpt.canInvite == true) {
+
 								propositionForm(pointerInfo.pickInfo.pickedMesh.dpt.opinionId, currentTopic);
 								return;
 							}
@@ -426,6 +427,9 @@ var createGenericScene = function(dptMode) {
 					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "topicScene") {
 
 						//console.log("hit topicId: "+pointerInfo.pickInfo.pickedMesh.dpt.topicId);
+						jQuery("#form").remove();
+						formVisible = false;
+
 						topicCamState = currentScene.cameras[0].storeState();
 						currentTopic = pointerInfo.pickInfo.pickedMesh.dpt.topicId;
 						currentTopicStr = pointerInfo.pickInfo.pickedMesh.dpt.topic;
@@ -433,16 +437,11 @@ var createGenericScene = function(dptMode) {
 						currentScene = __opinionScene("opinionScene");
 						currentScene.name = "opinionScene";
 						dpt.getOpinionByTopic(currentTopic);
-						jQuery('#topicForm').remove();
 
 					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "opinionScene") {
 							
 						opinionContext(pointerInfo.pickInfo.pickedMesh.dpt);
 						
-					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "editOpinion") {
-						opinionEdit(pointerInfo.pickInfo.pickedMesh.dpt);
-					} else if(pointerInfo.pickInfo.pickedMesh.dpt.context == "editTopic") {
-						topicEdit(pointerInfo.pickInfo.pickedMesh.dpt);
 					}
 				}
 

@@ -11,7 +11,7 @@ var myDialogMenu = [];
 var currentDialog;
 
 var myDialogsVisible = 'hidden';
-var formVisible = 'hidden';
+var formVisible = false;
 
 var currentTopic;
 var currentTopicStr;

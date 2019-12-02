@@ -44,7 +44,7 @@ function settingsForm(opinionId, topicId) {
 	}
 	
 	jQuery('body').append(`
-		<div id="form" class="helpframe" style="visibility: ${formVisible};"><h1>Settings:</h1>
+		<div id="form" class="helpframe"><h1>Settings:</h1>
 		<hr>
 		Your passphrase:
 		<br>
@@ -108,8 +108,8 @@ function settingsForm(opinionId, topicId) {
 	});
 
 	jQuery(document).on('click touch', "#closeSettingsForm", function(event) {
-		formVisible = 'hidden';
 		jQuery('#form').remove();
+		formVisible = false;
 		event.preventDefault();
 	});
 	
@@ -136,8 +136,8 @@ function settingsForm(opinionId, topicId) {
 				}
 			},
 		);
-		formVisible = 'hidden';
 		jQuery('#form').remove();
+		formVisible = false;
 		
 		if(currentScene.name == "topicScene") {
 			topicCamState = currentScene.cameras[0].storeState();
@@ -174,8 +174,8 @@ function propositionForm(opinionId, topicId) {
 
 	jQuery(document).on('click', "#ClosePropositionForm", function(event) {
 		propositionFormOpen = 0;
-		formVisible = 'hidden';
 		jQuery('#form').remove();
+		formVisible = false;
 		focusAtCanvas();
 		event.preventDefault();
 	});
@@ -199,8 +199,8 @@ function propositionForm(opinionId, topicId) {
 			}
 		}
 		if (event.keyCode == 27) {
-			formVisible = 'hidden';
 			jQuery('#form').remove();
+			formVisible = false;
 			focusAtCanvas();
 			event.preventDefault();
 		}
@@ -221,8 +221,8 @@ function propositionForm(opinionId, topicId) {
 		if (proposition) {
 			dpt.postDialog(proposition, whoami.dptUUID, opinionId, topicId);
 		}
-		formVisible = 'hidden';
 		jQuery('#form').remove();
+		formVisible = false;
 		focusAtCanvas();
 	});
 }
@@ -233,6 +233,9 @@ function topicEdit(context) {
 
 function topicForm(edit, context) {
 	console.log('enter topic');
+
+	jQuery("#form").remove();
+	formVisible = true;
 
 	var topic = '';
 	var hiddenTopicId = '';
@@ -245,7 +248,7 @@ function topicForm(edit, context) {
 	}
 	if (isMobile) {
 		jQuery('body').append(`
-			<div id="form" style="visibility:${formVisible};">New topic:<br><form id="topic">
+			<div id="form">New topic:<br><form id="topic" class="topicForm">
 			<textarea name="topic"
 			class="topic">${topic}</textarea><br>
 			<input class="button" type="submit" value="send">${edit}${hiddenTopicId}</form></div>
@@ -253,8 +256,8 @@ function topicForm(edit, context) {
 
 	} else {
 		jQuery('body').append(`
-			<div id="form" style="visibility:${formVisible};">
-			Please enter a new topic:<br><form id="topic">
+			<div id="form">
+			Please enter a new topic:<br><form id="topic" class="topicForm">
 			<textarea name="topic" class="topic">${topic}</textarea><br>
 			<input class="button" type="submit" value="Confirm">
 			<input class="closeButton" type="button" value="&#10005;" name="close window"
@@ -263,10 +266,10 @@ function topicForm(edit, context) {
 	}
 	jQuery(".topic").focus();
 
-	jQuery(document).on('click', "#CloseTopicForm", function(event) {
+	jQuery(document).on('click touch', "#CloseTopicForm", function(event) {
 		// topicFormOpen = 0;
-		formVisible = 'hidden';
 		jQuery('#form').remove();
+		formVisible = false;
 		focusAtCanvas();
 		event.preventDefault();
 	});
@@ -288,6 +291,7 @@ function topicForm(edit, context) {
 		}
 		if (event.keyCode == 27) {
 			jQuery('#form').remove();
+			formVisible = false;
 			event.preventDefault();
 			focusAtCanvas();
 		}
@@ -314,8 +318,8 @@ function topicForm(edit, context) {
 				dpt.postTopic(topic);
 			}
 		}
-		formVisible = 'hidden';
 		jQuery('#form').remove();
+		formVisible = false;
 		focusAtCanvas();
 
 	});
@@ -338,8 +342,8 @@ function opinionContext(context) {
 		</div>
 	`);
 	jQuery("#closeSettingsForm").on('click touch', function(event) {
-		formVisible = 'hidden';
 		jQuery('#form').remove();
+		formVisible = false;
 		event.stopImmediatePropagation();
 		event.preventDefault();
 	});
@@ -352,6 +356,9 @@ function opinionEdit(context) {
 function opinionForm(edit, context) {
 	console.log('enter opinion');
 
+	jQuery("#form").remove();
+	formVisible = true;
+	
 	var opinion = '';
 	var opinionContext = '';
 	var opinionIdHidden = '';
@@ -370,9 +377,9 @@ function opinionForm(edit, context) {
 		opinionContext = context.opinionContext;
 	}
 	jQuery('body').append(`
-		<div id="form" style="visibility:${formVisible};">
+		<div id="form">
 		Please enter a new opinion:<br>
-		<form id="opinion">
+		<form id="opinion" class="opinionForm">
 		<textarea name="opinion" class="opinion">${opinion}</textarea><br>
 		Details:
 		<textarea class="opinionContext">${opinionContext}</textarea>
@@ -399,8 +406,8 @@ function opinionForm(edit, context) {
 
 	jQuery(document).on('click', "#CloseOpinionForm", function(event) {
 		opinionFormOpen = 0;
-		formVisible = 'hidden';
 		jQuery('#form').remove();
+		formVisible = false;
 		focusAtCanvas();
 		event.preventDefault();
 	});
@@ -425,6 +432,7 @@ function opinionForm(edit, context) {
 		}
 		if (event.keyCode == 27) {
 			jQuery('#form').remove();
+			formVisible = false;
 			event.preventDefault();
 		}
 		if (event.keyCode == 10 || event.keyCode == 13) {
@@ -449,8 +457,8 @@ function opinionForm(edit, context) {
 				dpt.postOpinion(currentTopic, opinion, context);
 			}
 		}
-		formVisible = 'hidden';
 		jQuery('#form').remove();
+		formVisible = false;
 	});
 }
 
@@ -544,13 +552,9 @@ var createGUIScene = function(dptMode) {
 
 	aboutBtn.on('click touch', function(event) {
 
-		if (formVisible == 'visible') {
-			formVisible = 'hidden';
-		} else {
-			formVisible = 'visible';
-		}
-		jQuery('#form').css({ visibility: formVisible });
-		
+		jQuery('#form').remove();
+		formVisible = true;
+
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		if (isMobile) {
@@ -558,10 +562,9 @@ var createGUIScene = function(dptMode) {
 			hideMenu();
 		}
 		hideDialogList();
-		jQuery('#form').remove();
 
 		jQuery('body').append(`
-			<div id="form" class="helpframe" style="visibility: ${formVisible};">
+			<div id="form" class="helpframe">
 			<h1>About</h1>
 			<hr>
 			<p>Digital Peace Talks gUG (h.b.)</p>
@@ -572,15 +575,15 @@ var createGUIScene = function(dptMode) {
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
 			hideDialogList();
-			formVisible = 'hidden';
 			jQuery('#form').remove();
+			formVisible = false;
 			focusAtCanvas();
 			event.preventDefault();
 		});
 	
 	});
 
-	function closeRightMenu(){
+	function closeRightMenu() {
 		var menuLeft = canvas.width;
 		if(canvas.width > 640) {
 			menuLeft = 228;
@@ -594,7 +597,6 @@ var createGUIScene = function(dptMode) {
 			jQuery("nav ul").css("left", menuLeft);
 			jQuery("a.hamburger").html('<img src="/button_menu.png">');
 		}
-
 	}
 
 	//create first steps button
@@ -602,29 +604,24 @@ var createGUIScene = function(dptMode) {
 	fsBtn.show();
 	fsBtn.on('click touch', function(event) {
 
-		if (formVisible == 'visible') {
-			formVisible = 'hidden';
-		} else {
-			formVisible = 'visible';
-		}
-		jQuery('#form').css({ visibility: formVisible });
-		
-		hideDialogList();
 		jQuery('#form').remove();
+		formVisible = true;
+
+		hideDialogList();
 
 		jQuery('body').append(`
-		<div id="form" class="helpframe" style="visibility: ${formVisible};">
-		<h1>First steps</h1>
+			<div id="form" class="helpframe">
+			<h1>First steps</h1>
 			<hr>
 			<p>Navigation:</p>
-		<img src="/dpt_gestures.png" alt="help" class="helpimage">
-		<button class="closeButton" id="close-btn">&#10005;</button>
-		</div>
+			<img src="/dpt_gestures.png" alt="help" class="helpimage">
+			<button class="closeButton" id="close-btn">&#10005;</button>
+			</div>
 		`);
 		jQuery(document).on('click touch', "#close-btn", function(event) {
-			formVisible = 'hidden';
 			hideDialogList();
 			jQuery('#form').remove();
+			formVisible = false;
 			focusAtCanvas();
 			event.preventDefault();
 		});
@@ -643,34 +640,29 @@ var createGUIScene = function(dptMode) {
 	var surveyBtn = jQuery('#survey-btn');
 	surveyBtn.show();
 
-	surveyBtn.on('click touch', function(event) {
-		if (formVisible == 'visible') {
-			formVisible = 'hidden';
-		} else {
-			formVisible = 'visible';
-		}
-		jQuery('#form').css({ visibility: formVisible });
-		
-		hideDialogList();
+	surveyBtn.on('click touch', function(event) {	
 		jQuery('#form').remove();
+		formVisible = true;
+		hideDialogList();
 
 		jQuery('body').append(`
-			<div id="form" class="helpframe" style="height: 80%; visibility: ${formVisible};">
-				 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
-			</div>`)
+			<div id="form" class="helpframe" style="height: 80%;">
+			 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
+			</div>
+		`);
 
-			window.addEventListener('message', event => {
-				// IMPORTANT: check the origin of the data! 
-				formVisible = 'hidden';
-				if (event.origin.startsWith('https://simple-feedback.dpt.world') &&
-					event.data == 'simple-feedback-finished') {
-					jQuery('#feedbackIframe').remove();
-					formVisible = 'hidden';
-					jQuery('#form').remove();
-				} else {
-					return;
-				}
-			});
+		window.addEventListener('message', event => {
+			// IMPORTANT: check the origin of the data! 
+			formVisible = 'hidden';
+			if(event.origin.startsWith('https://simple-feedback.dpt.world')
+			&& event.data == 'simple-feedback-finished') {
+				jQuery('#feedbackIframe').remove();
+				jQuery('#form').remove();
+				formVisible = false;
+			} else {
+				return;
+			}
+		});
 
 		if (isMobile) {
 			console.log("mobile behavior!")
@@ -713,17 +705,13 @@ var createGUIScene = function(dptMode) {
 
 	settingsBtn.on('click touch', function(event) {
 
-		if (formVisible == 'visible') {
-			formVisible = 'hidden';
-		} else {
-			formVisible = 'visible';
-		}
-		jQuery('#form').css({ visibility: formVisible });
+		jQuery('#form').remove();
+		formVisible = true;
 		
 		hideDialogList();
 		event.stopImmediatePropagation();
 		event.preventDefault();
-		jQuery('#form').remove();
+
 		settingsForm();
 		
 		if(isMobile) {
@@ -738,13 +726,12 @@ var createGUIScene = function(dptMode) {
 
 	homeBtn.on('click touch', function(event) {
 
-		if (formVisible == 'visible') {
-			formVisible = 'hidden';
-		} else {
-			formVisible = 'visible';
-		}
-		jQuery('#form').css({ visibility: formVisible });
 		hideDialogList();
+
+		if(formVisible) {
+			jQuery('#form').remove();
+			formVisible = false;
+		}
 
 		opinionCamState = currentScene.cameras[0].storeState();
 		currentScene.dispose();
@@ -753,7 +740,6 @@ var createGUIScene = function(dptMode) {
 		dpt.getTopic();
 		event.stopImmediatePropagation();
 		event.preventDefault();
-		jQuery('#form').remove();
 
 		if (isMobile) {
 			console.log("mobile behavior!")
@@ -767,21 +753,25 @@ var createGUIScene = function(dptMode) {
 	searchBtn.show();
 
 	searchBtn.on('click touch', function(event) {
+		event.stopImmediatePropagation();
+		event.preventDefault();
 
-		if (formVisible == 'visible') {
-			formVisible = 'hidden';
+		if(formVisible && jQuery('#form>form').hasClass('searchForm')) {
+			jQuery("#form").remove();
+			formVisible = false;
 		} else {
-			formVisible = 'visible';
+			hideDialogList();
+			requestSearch();
 		}
-		jQuery('#form').css({ visibility: formVisible });
-
-		hideDialogList();
-		requestSearch();
 	});
 
 
 	//create topic button 
 	if (dptMode == 'topicScene') {
+
+		jQuery('#form').remove();
+		formVisible = false;
+
 		jQuery('#new-opinion-btn').hide();
 		var newTopicBtn = jQuery('#new-topic-btn');
 		newTopicBtn.show();
@@ -789,27 +779,30 @@ var createGUIScene = function(dptMode) {
 		newTopicBtn.html(`<img class="btn-bar-icon" src="/topic_white.png">`);
 
 		newTopicBtn.on('click touch', function(event) {
-			if (formVisible == 'visible') {
-				formVisible = 'hidden';
-			} else {
-				formVisible = 'visible';
-			}
-			jQuery('#form').css({ visibility: formVisible });
-			hideDialogList();
-			jQuery('#form').remove();
-
-			topicForm();
 			event.stopImmediatePropagation();
 			event.preventDefault();
-			if (isMobile) {
-				console.log("mobile behavior!")
-				hideMenu();
+
+			if(formVisible && jQuery('#form>form').hasClass('topicForm')) {
+				formVisible = false;
+				jQuery('#form').remove();
+			} else {
+				hideDialogList();
+	
+				topicForm();
+	
+				if (isMobile) {
+					console.log("mobile behavior!")
+					hideMenu();
+				}
 			}
 
 		});
 
 	//create opinion button 
 	} else if (dptMode == 'opinionScene') {
+
+		jQuery('#form').remove();
+		formVisible = false;
 
 		jQuery('#new-topic-btn').hide();
 		var newOpinionBtn = jQuery('#new-opinion-btn');
@@ -818,23 +811,22 @@ var createGUIScene = function(dptMode) {
 		newOpinionBtn.html(`<img class="btn-bar-icon" src="/opinion_white.png">`);
 		newOpinionBtn.on('click touch', function(event) {
 			
-			if (formVisible == 'visible') {
-				formVisible = 'hidden';
-			} else {
-				formVisible = 'visible';
-			}
-			jQuery('#form').css({ visibility: formVisible });
-			hideDialogList();
-			jQuery('#form').remove();
-
-			dpt.opinionPostAllowed(currentTopic);
-			// alert(dpt.opinionPostAllowed(currentTopic)) <- returns undefined
-
 			event.stopImmediatePropagation();
 			event.preventDefault();
-			if (isMobile) {
-				console.log("mobile behavior!")
-				hideMenu();
+
+			if(formVisible && jQuery('#form>form').hasClass('opinionForm')) {
+				jQuery('#form').remove();
+				formVisible = false;
+			} else {
+				hideDialogList();
+	
+				dpt.opinionPostAllowed(currentTopic);
+				// alert(dpt.opinionPostAllowed(currentTopic)) <- returns undefined
+	
+				if (isMobile) {
+					console.log("mobile behavior!")
+					hideMenu();
+				}
 			}
 
 		});
@@ -845,12 +837,13 @@ var createGUIScene = function(dptMode) {
 	dialoguesBtn.show();
 	dialoguesBtn.on('click touch', function(event) {
 		// alert('test')
-		if (formVisible == 'visible') {
-			formVisible = 'hidden';
+		if(myDialogsVisible == 'hidden') {
+			myDialogsVisible = 'visible';
 		} else {
-			formVisible = 'visible';
+			myDialogsVisible = 'hidden';
 		}
-		jQuery('#dialogMenu').css({ visibility: formVisible });
+
+		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
 		jQuery('#close-dialog-btn').css({
 			WebkitTransition : 'opacity 0s ease-in-out',
 			MozTransition    : 'opacity 0s ease-in-out',
@@ -858,7 +851,7 @@ var createGUIScene = function(dptMode) {
 			OTransition      : 'opacity 0s ease-in-out',
 			transition       : 'opacity 0s ease-in-out'
 		});
-		jQuery('#close-dialog-btn').css({ visibility: formVisible });
+		jQuery('#close-dialog-btn').css({ visibility: myDialogsVisible });
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		if (isMobile) {
@@ -875,7 +868,9 @@ function switchToTopics() {
 	currentScene = __topicScene("topicScene");
 	currentScene.name = "topicScene";
 	dpt.getTopic();
+
 	jQuery('#form').remove();
+	formVisible = false;
 	if (isMobile) {
 		console.log("mobile behavior!")
 		hideMenu();
@@ -907,10 +902,11 @@ function requestHome() {
 function requestSearch() {
 	
 	jQuery("#form").remove();
+	formVisible = true;
 	jQuery('body').append(`
-		<div id="form" style="visibility:${formVisible};">
+		<div id="form">
 		Search in Topics:
-		<form class="searchString">
+		<form class="searchString searchForm">
 		<input type="text" id="searchString" name="searchString" style="width:100%;">
 		</form>
 		<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm" >
@@ -919,14 +915,15 @@ function requestSearch() {
 	jQuery("#searchString").focus();
 
 	jQuery("#closeSettingsForm").on('click touch', function(event) {
-		formVisible = 'hidden';
 		jQuery('#form').remove();
+		formVisible = false;
 		event.stopImmediatePropagation();
 		event.preventDefault();
 	});
 
 	jQuery(document).on('submit', '.searchString', function(event) {
-		formVisible = 'hidden';
+		jQuery('#form').remove();
+		formVisible = false;
 		event.preventDefault();
 		if(currentScene.name == "opinionScene") {
 			opinionCamState = currentScene.cameras[0].storeState();

@@ -40,6 +40,7 @@ router.get('/', async (req, res, next) => {
         res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
        	var user = await User.userModel.findOne({publicKey: req.signedCookies.dptUUID});
 		if(req.signedCookies.dptUUID === undefined || !user) {
+		//if(req.signedCookies.dptUUID === undefined) {
 			var phrase = await getPhrase();
 			//console.log("no cookie found, set new one");
 			//console.log("new phrase: " + phrase);
@@ -103,7 +104,7 @@ router.get('/', async (req, res, next) => {
                         </div>
                     <footer>
                         Note:<br>
-                        Please keep in mind: This project is still under development and is far from major or done. Things can change dramatically. Every time! It's up to the user community to influence the way we go. And keep in mind: this is just a tool, not the solution to get conflicts solved.
+                        Please keep in mind: This project is still under development and is far from major or done. Things can change dramatically. Every time! It's up to the user community to influence the way we go.
                     </footer>
                     </div>
                     <br>
@@ -161,7 +162,7 @@ router.get('/', async (req, res, next) => {
                             </div>
                         </div>
                         <footer>Note:<br>
-                            Please keep in mind: This project is still under development and is far from major or done. Things can change dramatically. Every time! It's up to the user community to influence the way we go. And keep in mind: this is just a tool, not the solution to get conflicts solved.
+                            Please keep in mind: This project is still under development and is far from major or done. Things can change dramatically. Every time! It's up to the user community to influence the way we go.
                         </footer>
                     </div>
                     `);
