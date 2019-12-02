@@ -396,8 +396,8 @@ function opinionForm(edit, context) {
 			['insertImage'],
 			['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
 			['unorderedList', 'orderedList'],
-	    ],
-	    adjustHeight: false,
+		],
+		adjustHeight: false,
 		defaultLinkTarget: '_blank',
 		imageWidthModalEdit: true,
 	});
@@ -845,11 +845,11 @@ var createGUIScene = function(dptMode) {
 
 		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
 		jQuery('#close-dialog-btn').css({
-			WebkitTransition : 'opacity 0s ease-in-out',
-			MozTransition    : 'opacity 0s ease-in-out',
-			MsTransition     : 'opacity 0s ease-in-out',
-			OTransition      : 'opacity 0s ease-in-out',
-			transition       : 'opacity 0s ease-in-out'
+			WebkitTransition	: 'opacity 0s ease-in-out',
+			MozTransition		: 'opacity 0s ease-in-out',
+			MsTransition		: 'opacity 0s ease-in-out',
+			OTransition			: 'opacity 0s ease-in-out',
+			transition			: 'opacity 0s ease-in-out'
 		});
 		jQuery('#close-dialog-btn').css({ visibility: myDialogsVisible });
 		event.stopImmediatePropagation();
@@ -1010,11 +1010,11 @@ function toggleDialogList() {
 	}
 	jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
 	jQuery('#close-dialog-btn').css({
-		WebkitTransition : 'opacity 0s ease-in-out',
-		MozTransition    : 'opacity 0s ease-in-out',
-		MsTransition     : 'opacity 0s ease-in-out',
-		OTransition      : 'opacity 0s ease-in-out',
-		transition       : 'opacity 0s ease-in-out'
+		WebkitTransition	: 'opacity 0s ease-in-out',
+		MozTransition		: 'opacity 0s ease-in-out',
+		MsTransition		: 'opacity 0s ease-in-out',
+		OTransition			: 'opacity 0s ease-in-out',
+		transition			: 'opacity 0s ease-in-out'
 	});
 	jQuery('#close-dialog-btn').css({ visibility: myDialogsVisible });
 }
@@ -1023,11 +1023,11 @@ function hideDialogList() {
 	if(myDialogsVisible = 'visible') {
 		jQuery('#dialogMenu').css("visibility", "hidden");
 		jQuery('#close-dialog-btn').css({
-			WebkitTransition : 'opacity 0s ease-in-out',
-			MozTransition    : 'opacity 0s ease-in-out',
-			MsTransition     : 'opacity 0s ease-in-out',
-			OTransition      : 'opacity 0s ease-in-out',
-			transition       : 'opacity 0s ease-in-out'
+			WebkitTransition	: 'opacity 0s ease-in-out',
+			MozTransition		: 'opacity 0s ease-in-out',
+			MsTransition		: 'opacity 0s ease-in-out',
+			OTransition			: 'opacity 0s ease-in-out',
+			transition			: 'opacity 0s ease-in-out'
 		});
 		jQuery('#close-dialog-btn').css("visibility", "hidden");
 		myDialogsVisible = 'hidden';
@@ -1054,11 +1054,11 @@ function requestYourDialogs() {
 		toggleDialogList();
 		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
 		jQuery('#close-dialog-btn').css({
-			WebkitTransition : 'opacity 0s ease-in-out',
-			MozTransition    : 'opacity 0s ease-in-out',
-			MsTransition     : 'opacity 0s ease-in-out',
-			OTransition      : 'opacity 0s ease-in-out',
-			transition       : 'opacity 0s ease-in-out'
+			WebkitTransition	: 'opacity 0s ease-in-out',
+			MozTransition		: 'opacity 0s ease-in-out',
+			MsTransition		: 'opacity 0s ease-in-out',
+			OTransition			: 'opacity 0s ease-in-out',
+			transition			: 'opacity 0s ease-in-out'
 		});
 		jQuery('#close-dialog-btn').css({visibility: myDialogsVisible});
 		event.stopImmediatePropagation();
