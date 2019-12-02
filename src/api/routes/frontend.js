@@ -1,5 +1,6 @@
 const express = require('express');
 const metadata = require('../services/metadata');
+const User = require('../models/user');
 const userService = require('../services/user');
 const uuid = require('uuid/v4');
 const cookieParser = require("cookie-parser");
@@ -37,7 +38,8 @@ router.get('/', async (req, res, next) => {
         `;
 
         res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-		if (req.signedCookies.dptUUID === undefined) {
+       	var user = await User.userModel.findOne({publicKey: req.signedCookies.dptUUID});
+		if(req.signedCookies.dptUUID === undefined || !user) {
 			var phrase = await getPhrase();
 			//console.log("no cookie found, set new one");
 			//console.log("new phrase: " + phrase);
@@ -109,7 +111,7 @@ router.get('/', async (req, res, next) => {
                     <br>
                     <br>`);
         } else {
-        res.send(`<head>
+        		res.send(`<head>
                     <link rel="stylesheet" href="dpt_start.css" />
                 </head>
                 <body>
