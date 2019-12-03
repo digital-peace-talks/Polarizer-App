@@ -65,7 +65,7 @@ function settingsForm(opinionId, topicId) {
 		<br>
 		<hr>
 		Change 3D-Theme:
-		<form id="settings">
+		<form id="settings" class="settingsForm">
 		${colors}
 		<hr>
 		Do you like to be visible to other Users? Then uncheck the checkbox.
@@ -117,6 +117,7 @@ function settingsForm(opinionId, topicId) {
 		
 		event.stopImmediatePropagation();
 		event.preventDefault();
+
 		whoami.user.preferences.colorScheme = jQuery('input[name=colorScheme]:checked').val() * 1;
 		whoami.user.preferences.htmlScheme = theme;
 		if(jQuery('input[name=stealthMode]:checked').val() == 'on') {
@@ -552,34 +553,40 @@ var createGUIScene = function(dptMode) {
 
 	aboutBtn.on('click touch', function(event) {
 
-		jQuery('#form').remove();
-		formVisible = true;
-
 		event.stopImmediatePropagation();
 		event.preventDefault();
-		if (isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
-		}
-		hideDialogList();
 
-		jQuery('body').append(`
-			<div id="form" class="helpframe">
-			<h1>About</h1>
-			<hr>
-			<p>Digital Peace Talks gUG (h.b.)</p>
-			<p>A digital space where everyone can express and understand opinions</p>
-			<a href="http://www.digitalpeacetalks.com" target="_blank">Visit Our Website</a>
-			<button class="closeButton" id="close-btn">&#10005;</button>
-			</div>
-		`);
-		jQuery(document).on('click touch', "#close-btn", function(event) {
-			hideDialogList();
+		if(formVisible && jQuery('#form').hasClass('aboutForm')) {
 			jQuery('#form').remove();
 			formVisible = false;
-			focusAtCanvas();
-			event.preventDefault();
-		});
+		} else {
+			jQuery('#form').remove();
+			formVisible = true;
+	
+			if (isMobile) {
+				console.log("mobile behavior!")
+				hideMenu();
+			}
+			hideDialogList();
+	
+			jQuery('body').append(`
+				<div id="form" class="helpframe aboutForm">
+				<h1>About</h1>
+				<hr>
+				<p>Digital Peace Talks gUG (h.b.)</p>
+				<p>A digital space where everyone can express and understand opinions</p>
+				<a href="http://www.digitalpeacetalks.com" target="_blank">Visit Our Website</a>
+				<button class="closeButton" id="close-btn">&#10005;</button>
+				</div>
+			`);
+			jQuery(document).on('click touch', "#close-btn", function(event) {
+				hideDialogList();
+				jQuery('#form').remove();
+				formVisible = false;
+				focusAtCanvas();
+				event.preventDefault();
+			});
+		}
 	
 	});
 
@@ -604,27 +611,36 @@ var createGUIScene = function(dptMode) {
 	fsBtn.show();
 	fsBtn.on('click touch', function(event) {
 
-		jQuery('#form').remove();
-		formVisible = true;
+		event.stopImmediatePropagation();
+		event.preventDefault();
 
-		hideDialogList();
-
-		jQuery('body').append(`
-			<div id="form" class="helpframe">
-			<h1>First steps</h1>
-			<hr>
-			<p>Navigation:</p>
-			<img src="/dpt_gestures.png" alt="help" class="helpimage">
-			<button class="closeButton" id="close-btn">&#10005;</button>
-			</div>
-		`);
-		jQuery(document).on('click touch', "#close-btn", function(event) {
-			hideDialogList();
+		if(formVisible && jQuery('#form').hasClass('firststepsForm')) {
 			jQuery('#form').remove();
 			formVisible = false;
-			focusAtCanvas();
-			event.preventDefault();
-		});
+		} else {
+
+			jQuery('#form').remove();
+			formVisible = true;
+	
+			hideDialogList();
+	
+			jQuery('body').append(`
+				<div id="form" class="helpframe firststepsForm">
+				<h1>First steps</h1>
+				<hr>
+				<p>Navigation:</p>
+				<img src="/dpt_gestures.png" alt="help" class="helpimage">
+				<button class="closeButton" id="close-btn">&#10005;</button>
+				</div>
+			`);
+			jQuery(document).on('click touch', "#close-btn", function(event) {
+				hideDialogList();
+				jQuery('#form').remove();
+				formVisible = false;
+				focusAtCanvas();
+				event.preventDefault();
+			});
+		}
 	
 	});
 
@@ -641,34 +657,40 @@ var createGUIScene = function(dptMode) {
 	surveyBtn.show();
 
 	surveyBtn.on('click touch', function(event) {	
-		jQuery('#form').remove();
-		formVisible = true;
-		hideDialogList();
-
-		jQuery('body').append(`
-			<div id="form" class="helpframe" style="height: 80%;">
-			 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
-			</div>
-		`);
-
-		window.addEventListener('message', event => {
-			// IMPORTANT: check the origin of the data! 
-			formVisible = 'hidden';
-			if(event.origin.startsWith('https://simple-feedback.dpt.world')
-			&& event.data == 'simple-feedback-finished') {
-				jQuery('#feedbackIframe').remove();
-				jQuery('#form').remove();
-				formVisible = false;
-			} else {
-				return;
+		event.preventDefault();
+		if(formVisible && jQuery('#form').hasClass('surveyForm')) {
+			jQuery('#form').remove();
+			formVisible = false;
+		} else {
+			jQuery('#form').remove();
+			formVisible = true;
+			hideDialogList();
+	
+			jQuery('body').append(`
+				<div id="form" class="surveyForm" style="height: 80%;">
+				 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
+				</div>
+			`);
+	
+			window.addEventListener('message', event => {
+				// IMPORTANT: check the origin of the data! 
+				formVisible = 'hidden';
+				if(event.origin.startsWith('https://simple-feedback.dpt.world')
+				&& event.data == 'simple-feedback-finished') {
+					jQuery('#feedbackIframe').remove();
+					jQuery('#form').remove();
+					formVisible = false;
+				} else {
+					return;
+				}
+			});
+	
+			if (isMobile) {
+				console.log("mobile behavior!")
+				hideMenu();
 			}
-		});
-
-		if (isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
+			focusAtCanvas();
 		}
-		focusAtCanvas();
 	});
 	
 	//create imprint button
@@ -705,17 +727,23 @@ var createGUIScene = function(dptMode) {
 
 	settingsBtn.on('click touch', function(event) {
 
-		jQuery('#form').remove();
-		formVisible = true;
-		
-		hideDialogList();
 		event.stopImmediatePropagation();
 		event.preventDefault();
 
-		settingsForm();
-		
-		if(isMobile) {
-			hideMenu();
+		if(formVisible && jQuery('#form>form').hasClass('settingsForm')) {
+			jQuery('#form').remove();
+			formVisible = false;
+		} else {
+			jQuery('#form').remove();
+			formVisible = true;
+			
+			hideDialogList();
+	
+			settingsForm();
+			
+			if(isMobile) {
+				hideMenu();
+			}
 		}
 
 	});
