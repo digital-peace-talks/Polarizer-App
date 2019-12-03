@@ -100,9 +100,11 @@
 
 <body>
 	<div class="no-bounce">
+
 		<div>
 			<div>
 				<div id="overlay">
+
 					<nav>
 						<!--	<div class="brand">
 				<a href=""><img src="dpt_logo.png" alt="digital peace talks" /></a>
@@ -125,8 +127,8 @@
 										class="btn-icon" src="/documentation_white.png">Documentation</button></li>
 							<li><button class="menu-btn" id="survey-btn" title="What do you think so far?"><img
 										class="btn-icon" src="/survey_white.png">Survey</button></li>
-							<li><button class="menu-btn" id="github-btn" title="Get involved"><img
-										class="btn-icon" src="/github.png">Github</button></li>
+							<li><button class="menu-btn" id="github-btn" title="Get involved"><img class="btn-icon"
+										src="/github.png">Github</button></li>
 							<li><button class="menu-btn" id="settings-btn" title="Settings and more"><img
 										class="btn-icon" src="/settings_white.png">Settings</button></li>
 						</ul>
@@ -145,7 +147,7 @@
 							<li><button class="menu-btn-bar" id="new-opinion-btn" title="Create a new Opinion"><img
 										class="btn-bar-icon"></button></li>
 							<li><button class="menu-btn-bar" id="dialogues-btn" title="Open the dialog list"><img
-										class="btn-bar-icon" src="/messagelist_white.png">									
+										class="btn-bar-icon" src="/messagelist_white.png">
 									<div class="listcount" id="dialog-btn-label"></div>
 								</button></li>
 						</ul>
@@ -231,9 +233,11 @@
 
 
 				</script>
+
 			</div>
 		</div>
 	</div>
+
 </body>
 
 <!--
@@ -277,6 +281,8 @@
 
 <!-- Guided Tour-->
 <!--Container  und Pfeil-->
+<div style="border-color:rgb(255, 251, 0); border-style: dashed; border-width: 3px; height: 96%; width:96%; position:fixed; z-index: 50; top: 2%; left: 2%; display:none"
+	id="tutorialBorder"></div>
 <div id="animCircle" class="animated-circle">
 	<div class="arrowcontainer">
 		<div class="arrow">
@@ -293,6 +299,7 @@
 </div>
 
 <div class="fb_gd_wrap">
+
 	<div class="content" id="guideContent">
 
 		<div class="header">
@@ -302,13 +309,18 @@
 		<div class="body">
 			<div class="text">
 				<div id="guideBodyText" class="textList">
-					<p><b>Welcome to digital peace talks!</b><br> Your App to survive difficult dialogs. <br>Let us show you around: <br>Please click [next] to start the tour.</p> 
-					<p><img src="/dpt_gestures.png" alt="gestures" height="auto" width="60%"><br><b>This is the topic cloud. Your new home.</b><br>You can move, zoom and rotate in 3D space!!! <br><b>Mouse Navigation:</b> <br>Left = rotate, right = move, wheel = zoom<br><b>Mobile Navigation:</b> <br>One finger = rotate, two fingers = move, <br>pinch = zoom</p>
-					<p>These four buttons are used for main actions. <br><b>Let's start with the home button:</b><br>It will bring you allways back to the topic cloud. <br>No matter what! We promise!</p>
-					<p>Let us skip the Search-button, we all know what it does.<br><b>This button is far more interesting: <br>It's for creation:</b> <br>A click/touch on this button allows you to create new topics or: <br>Inside a topic you can state an opinion. <br>So much power in this little fella!</p>
-					<p>To visit a topic in the all-mighty topic-cloud <br>just click or touch on the topic of your choice. <br>Try it, or not. <br>Inside a topic you can read through opinions other people stated and deliver your own opinion.</p>
-					<p><b>Hard to see through?</b> <br>This is the message list. Your new best friend! <br>Every interaction gets stored in it. <br>Scroll through missed invites, forgotten dialogs, <br>your best arguments or follow your favorite topics.</p>
-					<p>And now feel free to create a new topic or state an opinion in a topic of your choice. <br>The digital-peace-talks-team is allready loving you just for joining! <br>Have fun!</p>
+					<p>Take the tour to explore all options and features.</p>
+					<p><img src="/tutorial_mobile.png" alt="gestures" height="auto" width="100%"></p>
+					<p><img src="/tutorial_desktop.png" alt="gestures" height="auto" width="100%"></p>
+					<p>Click on any topic you want to discuss. You can also create your own topic.</p>
+					<p>To visit a topic in the all-mighty topic-cloud <br>just click or touch on the topic of your
+						choice. <br>Try it, or not. <br>Inside a topic you can read through opinions other people stated
+						and deliver your own opinion.</p>
+					<p><b>Hard to see through?</b> <br>This is the message list. Your new best friend! <br>Every
+						interaction gets stored in it. <br>Scroll through missed invites, forgotten dialogs, <br>your
+						best arguments or follow your favorite topics.</p>
+					<p>And now feel free to create a new topic or state an opinion in a topic of your choice. <br>The
+						digital-peace-talks-team is allready loving you just for joining! <br>Have fun!</p>
 				</div>
 			</div>
 		</div>
@@ -343,9 +355,9 @@
 			leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px",
 			buttonLeftName: "",
 			buttonRightName: "start tour",
-			guideText: "Willkommen"
+			guideText: "A new way to discuss"
 		}, {
-			// 3d space / topic-cloud
+			// tutorial mobile
 			top: "0px",
 			left: "0px",
 			bottom: "auto",
@@ -354,20 +366,20 @@
 			leftMark: "50%",
 			buttonLeftName: "back",
 			buttonRightName: "next",
-			guideText: "Seite 2"
+			guideText: "How to navigate"
 		}, {
-			// home button
-			top: "auto",
+			// tutorial desktop
+			top: "0px",
 			left: "0px",
-			bottom: "240px",
+			bottom: "auto",
 			right: "auto",
-			topMark: document.getElementById('home-btn').getBoundingClientRect().top + "px",
-			leftMark: document.getElementById('home-btn').getBoundingClientRect().left + "px",
+			topMark: "55%",
+			leftMark: "50%",
 			buttonLeftName: "back",
 			buttonRightName: "next",
-			guideText: "Seite 3"
+			guideText: "How to navigate"
 		}, {
-			// new topic
+			// Choose a topic 
 			top: "30%",
 			left: "0px",
 			bottom: "auto",
@@ -376,7 +388,7 @@
 			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
 			buttonLeftName: "back",
 			buttonRightName: "next",
-			guideText: "Seite 4"
+			guideText: "Choose a topic"
 		}, {
 			// click on topic
 			top: "0px",
@@ -467,8 +479,16 @@
 				buttonLeft.innerText = guidePosition[currentStepIndex].buttonLeftName;
 				buttonRight.innerText = guidePosition[currentStepIndex].buttonRightName;
 				guideTitle.innerText = guidePosition[currentStepIndex].guideText;
+
+				console.log(currentStepIndex);
+
+				if (currentStepIndex == 3) {
+					document.getElementById("tutorialBorder").css("dsiplay","block");
+
+				}
 			}
 		}
+
 	} // End Script Guided Tour
 	
 	
