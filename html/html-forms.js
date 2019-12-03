@@ -906,7 +906,7 @@ function requestSearch() {
 	jQuery('body').append(`
 		<div id="form">
 		Search in Topics:
-		<form class="searchString searchForm">
+		<form class="searchForm">
 		<input type="text" id="searchString" name="searchString" style="width:100%;">
 		</form>
 		<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm" >
@@ -921,9 +921,8 @@ function requestSearch() {
 		event.preventDefault();
 	});
 
-	jQuery(document).on('submit', '.searchString', function(event) {
-		jQuery('#form').remove();
-		formVisible = false;
+	jQuery(document).on('submit', '.searchForm', function(event) {
+		event.stopImmediatePropagation();
 		event.preventDefault();
 		if(currentScene.name == "opinionScene") {
 			opinionCamState = currentScene.cameras[0].storeState();
@@ -932,8 +931,10 @@ function requestSearch() {
 			currentScene.name = "topicScene";
 		}
 		dpt.searchTopicsAndOpinions(jQuery('#searchString').val());
+		jQuery('#form').remove();
+		formVisible = false;
 	});
-	jQuery(document).on('keydown', '.searchString', function(event) {
+	jQuery(document).on('keydown', '#searchString', function(event) {
 		if (event.keyCode == 27) {
 			jQuery('#form').remove();
 			focusAtCanvas();
