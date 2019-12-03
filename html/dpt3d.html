@@ -312,15 +312,11 @@
 					<p>Take the tour to explore all options and features.</p>
 					<p><img src="/tutorial_mobile.png" alt="gestures" height="auto" width="100%"></p>
 					<p><img src="/tutorial_desktop.png" alt="gestures" height="auto" width="100%"></p>
-					<p>Click on any topic you want to discuss. You can also create your own topic.</p>
-					<p>To visit a topic in the all-mighty topic-cloud <br>just click or touch on the topic of your
-						choice. <br>Try it, or not. <br>Inside a topic you can read through opinions other people stated
-						and deliver your own opinion.</p>
-					<p><b>Hard to see through?</b> <br>This is the message list. Your new best friend! <br>Every
-						interaction gets stored in it. <br>Scroll through missed invites, forgotten dialogs, <br>your
-						best arguments or follow your favorite topics.</p>
-					<p>And now feel free to create a new topic or state an opinion in a topic of your choice. <br>The
-						digital-peace-talks-team is allready loving you just for joining! <br>Have fun!</p>
+					<p>Click on any topic you want to discuss. <br>You can also create your own topic.</p>
+					<p>Inside a topic, click here to publish your opinion.</p>
+					<p><img src="/dpt_opinions.png" alt="gestures" height="auto" width="100%"></p>
+					<p>After publishing your opinion, click on this button to start a dialogue with others.<br><img src="/chatbubble.png" alt="gestures" height="auto" width="48px"></p>
+					<p>Access all your dialogues here. </p>
 				</div>
 			</div>
 		</div>
@@ -328,6 +324,7 @@
 			<button id="guidePrevBtn" class="btn prev"></button>
 			<ul class="steps">
 				<li class="dot active"></li>
+				<li class="dot"></li>
 				<li class="dot"></li>
 				<li class="dot"></li>
 				<li class="dot"></li>
@@ -390,27 +387,40 @@
 			buttonRightName: "next",
 			guideText: "Choose a topic"
 		}, {
-			// click on topic
+			// start opinion
+			top: "30%",
+			left: "0px",
+			bottom: "auto",
+			right: "auto",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "Publish your opinion"
+		}, {
+			// open list
 			top: "0px",
 			left: "0px",
 			bottom: "auto",
 			right: "auto",
 			topMark: "55%",
 			leftMark: "50%",
-			buttonLeftName: "back",
-			buttonRightName: "next",
-			guideText: "Seite 5"
-		}, {
-			// open list
-			top: "30%",
-			left: "0px",
-			bottom: "auto",
-			right: "auto",
 			topMark: document.getElementById('new-opinion-btn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('new-opinion-btn').getBoundingClientRect().left + "px",
 			buttonLeftName: "back",
 			buttonRightName: "next",
-			guideText: "Seite 6"
+			guideText: "Start a dialogue"
+		}, {
+			// open list
+			top: "0px",
+			left: "0px",
+			bottom: "auto",
+			right: "auto",
+			topMark: "55%",
+			leftMark: "50%",
+			topMark: document.getElementById('new-opinion-btn').getBoundingClientRect().top + "px",
+			leftMark: document.getElementById('new-opinion-btn').getBoundingClientRect().left + "px",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "Start a dialogue"
 		}, {
 			// start with opinion/topic
 			top: "30%",
@@ -420,8 +430,8 @@
 			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
 			buttonLeftName: "back",
-			buttonRightName: "",
-			guideText: "Seite 7"
+			buttonRightName: "that's it",
+			guideText: "Dialoguelist"
 		}]
 		const bodyTextEle = document.getElementById('guideBodyText');
 		const contentEle = document.getElementById('guideContent');
@@ -442,6 +452,7 @@
 		}, false);
 		document.getElementById('closeBtn').addEventListener('click', () => {
 			// schliessen aktion
+			jQuery("#tutorialBorder").css("display","none");
 			document.getElementById("guideContent").remove();
 			document.getElementById("animCircle").remove();
 			
@@ -483,8 +494,9 @@
 				console.log(currentStepIndex);
 
 				if (currentStepIndex == 3) {
-					document.getElementById("tutorialBorder").css("dsiplay","block");
-
+					jQuery("#tutorialBorder").css("display","block");
+				} else {
+					jQuery("#tutorialBorder").css("display","none");
 				}
 			}
 		}
