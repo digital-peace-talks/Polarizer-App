@@ -18,7 +18,11 @@ function settingsForm(opinionId, topicId) {
 	var theme = 0;
 	var colors = "Color scheme:<br>";
 	var stealthMode = 'checked';
+	var guidedTour = 'checked';
 	
+	if(whoami.user.preferences.guidedTour) {
+		guidedTour = '';
+	}
 	if(!whoami.user.preferences.stealthMode) {
 		stealthMode = '';
 	}
@@ -72,11 +76,17 @@ function settingsForm(opinionId, topicId) {
 		<br>
 		Stealth-Mode: <input type="checkbox" name="stealthMode" ${stealthMode}>
 		<br>
+		<hr>
+		Check the checkbox to disable the guided tour on each session.
+		<br>
+		<label><input type="checkbox" name="guidedTour" ${guidedTour}>Disable the guided tour</label>
+		<br>
 		<input class="button" type="submit" value="Apply">
 		<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm">
-		</form></div>
+		</form>
+		</div>
 	`);
-
+	
 	jQuery(document).on('click touch', "#changetheme1", function(event) {
 		document.getElementById('theme_css').href = 'dpt_classic.css';
 		theme = 0;
@@ -120,12 +130,18 @@ function settingsForm(opinionId, topicId) {
 
 		whoami.user.preferences.colorScheme = jQuery('input[name=colorScheme]:checked').val() * 1;
 		whoami.user.preferences.htmlScheme = theme;
+
 		if(jQuery('input[name=stealthMode]:checked').val() == 'on') {
 			whoami.user.preferences.stealthMode = true;
 		} else {
 			whoami.user.preferences.stealthMode = false;
 		}
-		whoami.user.preferences.guidedTour = whoami.user.preferences.guidedTour;
+
+		if(jQuery('input[name=guidedTour]:checked').val() == 'on') {
+			whoami.user.preferences.guidedTour = false;
+		} else {
+			whoami.user.preferences.guidedTour = true;
+		}
 
 		dpt.userUpdate(whoami.dptUUID,
 			{

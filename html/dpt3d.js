@@ -252,6 +252,9 @@ function main() {
 						currentScene.name = 'topicScene';
 						dpt.getTopic();
 						dpt.getDialogList();
+						if(whoami.user.preferences.guidedTour) {
+							startGuidedTour();
+						}
 								
 					} else if(restObj.data.message == "user unknown") {
 						alert(`User unknown.

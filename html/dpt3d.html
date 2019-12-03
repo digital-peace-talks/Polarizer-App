@@ -282,7 +282,7 @@
 <!-- Guided Tour-->
 <!--Container  und Pfeil-->
 <div style="border-color:rgb(255, 251, 0); border-style: dashed; border-width: 3px; height: 96%; width:96%; position:fixed; z-index: 50; top: 2%; left: 2%; display:none" id="tutorialBorder"></div>
-<div id="animCircle" class="animated-circle">
+<div id="animCircle" class="animated-circle" style="visibility: hidden">
 	<div class="arrowcontainer">
 		<div class="arrow">
 			<div class="block1"></div>
@@ -316,6 +316,19 @@
 					<p><img src="/dpt_opinions.png" alt="gestures" height="auto" width="100%"></p>
 					<p>After publishing your opinion, click on this button to start a dialogue with others.<br><img src="/chatbubble.png" alt="gestures" height="auto" width="48px"></p>
 					<p>Access all your dialogues here. </p>
+					<p>You are about to close the guided tour. The guided tour will
+					start on your next session again. You can stop the tour for the
+					next sessions, when you check the following checkbox. You can
+					reactivate the tour in the settings and preferences.
+					<br>
+					<br>
+					<label>
+					<input type="checkbox" id="disableGuidedTour">Disable the guided tour</label>
+					<br>
+					<br>
+					<input type="submit" value="Stop the guided tour">
+					</p>
+			
 				</div>
 			</div>
 		</div>
@@ -330,17 +343,21 @@
 				<li class="dot"></li>
 				<li class="dot"></li>
 				<li class="dot"></li>
+				<li class="dot"></li>
 			</ul>
 			<button id="guideNextBtn" class="btn next">Start Tour</button>
 		</div>
 	</div>
 </div>
 <!-- End Guided Tour-->
+
 <script>
 
 	// Script Guided Tour
-	window.onload = function () {
+//	window.onload = function () {
+	function startGuidedTour() {
 
+		jQuery('#animCircle').css('visibility', 'visible');
 		const guidePosition = [{
 			// welcome to tour
 			top: "auto",
@@ -435,7 +452,16 @@
 			buttonRightName: "that's it",
 			guideText: "Dialoguelist",
 			guideHeight: "200px"
-		}]
+		}, {
+			// exit the guided tour
+			top: "30%",
+			left: "0px",
+			bottom: "auto",
+			right: "auto",
+			buttonLeftName: "",
+			buttonRightName: "",
+			guideText: "Stop the guided tour",
+		}];
 		const bodyTextEle = document.getElementById('guideBodyText');
 		const contentEle = document.getElementById('guideContent');
 		const contentEle2 = document.getElementById('animCircle');
@@ -459,8 +485,17 @@
 			jQuery("#tutorialBorder").css("display","none");
 			document.getElementById("guideContent").remove();
 			document.getElementById("animCircle").remove();
-			
 		}, false);
+		
+		jQuery("#disableGuidedTour").change(function() {
+		    if(this.checked) {
+		    	whoami.user.preferences.guidedTour = false;
+		    	dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": false}});
+		    } else {
+		    	whoami.user.preferences.guidedTour = true;
+		    	dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": true}});
+		    }
+		});
 
 		function changeStep(direction) {
 
