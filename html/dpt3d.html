@@ -444,6 +444,7 @@
 			// schliessen aktion
 			document.getElementById("guideContent").remove();
 			document.getElementById("animCircle").remove();
+			
 		}, false);
 
 		function changeStep(direction) {
@@ -489,6 +490,35 @@
 		}
 
 	} // End Script Guided Tour
+	
+	
+	jQuery(window).keyup(function(event) {
+		if (jQuery(event.target).is(':not(input, textarea)')) {
+			switch(event.keyCode) {
+				case 70:
+					requestSearch();
+					break;
+				case 72:
+					switchToTopics();
+					break;
+				case 76:
+					toggleDialogList();
+					break;
+				case 79:
+					if(currentScene.name == "opinionScene") {
+						jQuery('#form').remove();
+						dpt.opinionPostAllowed(currentTopic);
+					}
+					break;
+				case 84:
+					if(currentScene.name == "topicScene") {
+						jQuery('#form').remove();
+						topicForm();
+					}
+					break;
+			}
+		}
+	});
 
 </script>
 
