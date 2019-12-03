@@ -611,11 +611,14 @@ var createGUIScene = function(dptMode) {
 	fsBtn.show();
 	fsBtn.on('click touch', function(event) {
 
+		event.stopImmediatePropagation();
 		event.preventDefault();
+
 		if(formVisible && jQuery('#form').hasClass('firststepsForm')) {
 			jQuery('#form').remove();
 			formVisible = false;
 		} else {
+
 			jQuery('#form').remove();
 			formVisible = true;
 	
@@ -724,6 +727,9 @@ var createGUIScene = function(dptMode) {
 
 	settingsBtn.on('click touch', function(event) {
 
+		event.stopImmediatePropagation();
+		event.preventDefault();
+
 		if(formVisible && jQuery('#form>form').hasClass('settingsForm')) {
 			jQuery('#form').remove();
 			formVisible = false;
@@ -732,8 +738,6 @@ var createGUIScene = function(dptMode) {
 			formVisible = true;
 			
 			hideDialogList();
-			event.stopImmediatePropagation();
-			event.preventDefault();
 	
 			settingsForm();
 			
