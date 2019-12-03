@@ -509,7 +509,7 @@
 	
 	
 	jQuery(window).keyup(function(event) {
-		if (jQuery(event.target).is(':not(input, textarea)')) {
+		if (jQuery(event.target).is(':not(input, textarea, div.trumbowyg-editor)')) {
 			switch(event.keyCode) {
 				case 70:
 					requestSearch();
