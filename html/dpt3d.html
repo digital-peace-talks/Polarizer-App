@@ -352,7 +352,8 @@
 			leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px",
 			buttonLeftName: "",
 			buttonRightName: "start tour",
-			guideText: "A new way to discuss"
+			guideText: "A new way to discuss",
+			guideHeight: "200px"
 		}, {
 			// tutorial mobile
 			top: "0px",
@@ -363,7 +364,8 @@
 			leftMark: "50%",
 			buttonLeftName: "back",
 			buttonRightName: "next",
-			guideText: "How to navigate"
+			guideText: "How to navigate",
+			guideHeight: "300px"
 		}, {
 			// tutorial desktop
 			top: "0px",
@@ -374,7 +376,8 @@
 			leftMark: "50%",
 			buttonLeftName: "back",
 			buttonRightName: "next",
-			guideText: "How to navigate"
+			guideText: "How to navigate",
+			guideHeight: "200px"
 		}, {
 			// Choose a topic 
 			top: "30%",
@@ -431,7 +434,8 @@
 			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
 			buttonLeftName: "back",
 			buttonRightName: "that's it",
-			guideText: "Dialoguelist"
+			guideText: "Dialoguelist",
+			guideHeight: "200px"
 		}]
 		const bodyTextEle = document.getElementById('guideBodyText');
 		const contentEle = document.getElementById('guideContent');
@@ -440,6 +444,7 @@
 		const buttonLeft = document.getElementById('guidePrevBtn');
 		const buttonRight = document.getElementById('guideNextBtn');
 		const guideTitle = document.getElementById('guideTitle');
+		
 		let currentStepIndex = -1;
 		const stepLength = guidePosition.length;
 		changeStep();
@@ -461,7 +466,6 @@
 		function changeStep(direction) {
 
 			if ((direction === 'prev' && currentStepIndex === 0) || (direction === 'next' && currentStepIndex === stepLength - 1)) {
-
 				this.remove();
 			} else {
 				let eraseDotIndex;
@@ -490,6 +494,7 @@
 				buttonLeft.innerText = guidePosition[currentStepIndex].buttonLeftName;
 				buttonRight.innerText = guidePosition[currentStepIndex].buttonRightName;
 				guideTitle.innerText = guidePosition[currentStepIndex].guideText;
+				jQuery("guideBody").css("height", guideHeight);
 
 				console.log(currentStepIndex);
 
