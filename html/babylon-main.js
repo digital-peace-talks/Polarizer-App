@@ -498,6 +498,7 @@ var createGenericScene = function(dptMode) {
 				socket.emit('3d', { event: 'update', avatar: socket.id, avatarPos: currentScene.cameras[0].position });
 				console.log('sended');
 				*/
+				/*
 				switch(kbInfo.event.code) {
 					case "KeyF":
 						requestSearch();
@@ -521,6 +522,7 @@ var createGenericScene = function(dptMode) {
 						}
 						break;
 				}
+				*/
 		}
 	});
 
