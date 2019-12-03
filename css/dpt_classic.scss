@@ -1139,15 +1139,16 @@ section ul li {
   text-align: center;
 }
 .fb_gd_wrap .footer .dot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   background: transparent;
   border: 1px solid $dpt-prime-text;
-  margin: 30px 12px 12px 12px;
+  margin: 20px 12px 12px 12px;
   display: inline-block;
   border-radius: 50%;
   position: relative;
 }
+/*
 .fb_gd_wrap .footer .line::after {
   content: "";
   display: block;
@@ -1158,6 +1159,7 @@ section ul li {
   top: 4px;
   left: 9px;
 }
+*/
 .fb_gd_wrap .footer .dot::before {
   content: attr(data-step);
   display: block;

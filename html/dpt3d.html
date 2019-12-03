@@ -145,9 +145,7 @@
 							<li><button class="menu-btn-bar" id="new-opinion-btn" title="Create a new Opinion"><img
 										class="btn-bar-icon"></button></li>
 							<li><button class="menu-btn-bar" id="dialogues-btn" title="Open the dialog list"><img
-										class="btn-bar-icon" src="/messagelist_white.png">
-							
-									
+										class="btn-bar-icon" src="/messagelist_white.png">									
 									<div class="listcount" id="dialog-btn-label"></div>
 								</button></li>
 						</ul>
@@ -278,6 +276,7 @@
 <script src="/external/trumbowyg.min.js"></script>
 
 <!-- Guided Tour-->
+<!--Container  und Pfeil-->
 <div id="animCircle" class="animated-circle">
 	<div class="arrowcontainer">
 		<div class="arrow">
@@ -285,23 +284,26 @@
 			<div class="block2"></div>
 		</div>
 	</div>
+	<!--
+		Gelber pulsierender Kreis 
 	<div class="pulse-circle"></div>
 	<div class="pulse-circle2"></div>
 	<div class="circle-center"></div>
+	-->
 </div>
 
 <div class="fb_gd_wrap">
 	<div class="content" id="guideContent">
 
 		<div class="header">
-			<span class="text">digital peace talks GUIDE</span>
+			<span class="text" id="guideTitle">digital peace talks GUIDE</span>
 			<button class="closeButton" id="closeBtn">&#10005;</button>
 		</div>
 		<div class="body">
 			<div class="text">
 				<div id="guideBodyText" class="textList">
-					<p><b>Welcome to digital peace talks!</b> <br> Your App to survive difficult dialogs. <br>Let us show you around: <br>Please click [next] to start the tour.</p> 
-					<p><b>This is the topic cloud. Your new home.</b><br>You can move, zoom and rotate in 3D space!!! <br><b>Mouse Navigation:</b> <br>Left = rotate, right = move, wheel = zoom<br><b>Mobile Navigation:</b> <br>One finger = rotate, two fingers = move, <br>pinch = zoom</p>
+					<p><b>Welcome to digital peace talks!</b><br> Your App to survive difficult dialogs. <br>Let us show you around: <br>Please click [next] to start the tour.</p> 
+					<p><img src="/dpt_gestures.png" alt="gestures" height="auto" width="60%"><br><b>This is the topic cloud. Your new home.</b><br>You can move, zoom and rotate in 3D space!!! <br><b>Mouse Navigation:</b> <br>Left = rotate, right = move, wheel = zoom<br><b>Mobile Navigation:</b> <br>One finger = rotate, two fingers = move, <br>pinch = zoom</p>
 					<p>These four buttons are used for main actions. <br><b>Let's start with the home button:</b><br>It will bring you allways back to the topic cloud. <br>No matter what! We promise!</p>
 					<p>Let us skip the Search-button, we all know what it does.<br><b>This button is far more interesting: <br>It's for creation:</b> <br>A click/touch on this button allows you to create new topics or: <br>Inside a topic you can state an opinion. <br>So much power in this little fella!</p>
 					<p>To visit a topic in the all-mighty topic-cloud <br>just click or touch on the topic of your choice. <br>Try it, or not. <br>Inside a topic you can read through opinions other people stated and deliver your own opinion.</p>
@@ -311,17 +313,17 @@
 			</div>
 		</div>
 		<div class="footer">
-			<button id="guidePrevBtn" class="btn prev">previous</button>
+			<button id="guidePrevBtn" class="btn prev"></button>
 			<ul class="steps">
-				<li class="dot line active"></li>
-				<li class="dot line "></li>
-				<li class="dot line "></li>
-				<li class="dot line "></li>
-				<li class="dot line "></li>
-				<li class="dot line "></li>
-				<li class="dot  "></li>
+				<li class="dot active"></li>
+				<li class="dot"></li>
+				<li class="dot"></li>
+				<li class="dot"></li>
+				<li class="dot"></li>
+				<li class="dot"></li>
+				<li class="dot"></li>
 			</ul>
-			<button id="guideNextBtn" class="btn next">next</button>
+			<button id="guideNextBtn" class="btn next">Start Tour</button>
 		</div>
 	</div>
 </div>
@@ -332,13 +334,16 @@
 	window.onload = function () {
 
 		const guidePosition = [{
-			// welcome
+			// welcome to tour
 			top: "auto",
 			left: "0px",
 			bottom: "30%",
 			right: "auto",
 			topMark: document.getElementById('guideNextBtn').getBoundingClientRect().top + "px",
-			leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px"
+			leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px",
+			buttonLeftName: "",
+			buttonRightName: "start tour",
+			guideText: "Willkommen"
 		}, {
 			// 3d space / topic-cloud
 			top: "0px",
@@ -346,15 +351,21 @@
 			bottom: "auto",
 			right: "auto",
 			topMark: "55%",
-			leftMark: "50%"
+			leftMark: "50%",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "Seite 2"
 		}, {
 			// home button
 			top: "auto",
 			left: "0px",
-			bottom: "200px",
+			bottom: "240px",
 			right: "auto",
 			topMark: document.getElementById('home-btn').getBoundingClientRect().top + "px",
-			leftMark: document.getElementById('home-btn').getBoundingClientRect().left + "px"
+			leftMark: document.getElementById('home-btn').getBoundingClientRect().left + "px",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "Seite 3"
 		}, {
 			// new topic
 			top: "30%",
@@ -362,7 +373,10 @@
 			bottom: "auto",
 			right: "auto",
 			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
-			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px"
+			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "Seite 4"
 		}, {
 			// click on topic
 			top: "0px",
@@ -370,7 +384,10 @@
 			bottom: "auto",
 			right: "auto",
 			topMark: "55%",
-			leftMark: "50%"
+			leftMark: "50%",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "Seite 5"
 		}, {
 			// open list
 			top: "30%",
@@ -378,7 +395,10 @@
 			bottom: "auto",
 			right: "auto",
 			topMark: document.getElementById('new-opinion-btn').getBoundingClientRect().top + "px",
-			leftMark: document.getElementById('new-opinion-btn').getBoundingClientRect().left + "px"
+			leftMark: document.getElementById('new-opinion-btn').getBoundingClientRect().left + "px",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "Seite 6"
 		}, {
 			// start with opinion/topic
 			top: "30%",
@@ -386,12 +406,18 @@
 			bottom: "auto",
 			right: "auto",
 			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
-			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px"
+			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
+			buttonLeftName: "back",
+			buttonRightName: "",
+			guideText: "Seite 7"
 		}]
 		const bodyTextEle = document.getElementById('guideBodyText');
 		const contentEle = document.getElementById('guideContent');
 		const contentEle2 = document.getElementById('animCircle');
 		const stepLiEle = document.getElementsByClassName('dot');
+		const buttonLeft = document.getElementById('guidePrevBtn');
+		const buttonRight = document.getElementById('guideNextBtn');
+		const guideTitle = document.getElementById('guideTitle');
 		let currentStepIndex = -1;
 		const stepLength = guidePosition.length;
 		changeStep();
@@ -407,7 +433,6 @@
 			document.getElementById("guideContent").remove();
 			document.getElementById("animCircle").remove();
 		}, false);
-
 
 		function changeStep(direction) {
 
@@ -426,8 +451,8 @@
 				}
 				bodyTextEle.style.marginLeft = `${-360 * currentStepIndex}px`; // margin-left 
 				// bodyTextEle.style.left = `${-360*currentStepIndex}px`; // relative+left 
-				stepLiEle[eraseDotIndex].setAttribute('data-step', ''); // erase number
-				stepLiEle[currentStepIndex].setAttribute('data-step', currentStepIndex + 1); // add number
+				//stepLiEle[eraseDotIndex].setAttribute('data-step', ''); // erase number
+				//stepLiEle[currentStepIndex].setAttribute('data-step', currentStepIndex + 1); // add number
 				stepLiEle[eraseDotIndex].classList.remove('active'); // remove dot active
 				stepLiEle[currentStepIndex].classList.add('active');    // add dot active
 
@@ -438,6 +463,9 @@
 
 				contentEle2.style.top = guidePosition[currentStepIndex].topMark;
 				contentEle2.style.left = guidePosition[currentStepIndex].leftMark;
+				buttonLeft.innerText = guidePosition[currentStepIndex].buttonLeftName;
+				buttonRight.innerText = guidePosition[currentStepIndex].buttonRightName;
+				guideTitle.innerText = guidePosition[currentStepIndex].guideText;
 			}
 		}
 	} // End Script Guided Tour
