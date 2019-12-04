@@ -254,6 +254,10 @@ function main() {
 						dpt.getDialogList();
 						if(whoami.user.preferences.guidedTour) {
 							startGuidedTour();
+						} else {
+							jQuery('.tutorialBorder').remove();
+							jQuery('.animated-circle').remove();
+							jQuery('.fb_gd_wrap').remove();
 						}
 								
 					} else if(restObj.data.message == "user unknown") {
