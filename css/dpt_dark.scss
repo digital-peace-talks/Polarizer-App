@@ -560,6 +560,8 @@ div#dialogFrame {
   font-size: 18px;
   background-color: $dpt-prime-base;
   box-shadow: 0px 0px 20px $dpt-shadow;
+  max-height: 80%;
+  overflow-y: auto;
 }
 
 textarea {
@@ -574,6 +576,16 @@ textarea {
   border-style: solid;
   border-width: 1px;
   font-weight: normal;
+}
+
+.trumbowyg-editor, .trumbowyg-textarea {
+  background-color: white;
+  color: $dpt-third-text;
+  padding: 5px !important;
+  padding-top: 0px !important;
+}
+.trumbowyg-editor p {
+  	margin: 5px !important;
 }
 
 .textareaDialog {

@@ -586,6 +586,16 @@ textarea {
   font-weight: normal;
 }
 
+.trumbowyg-editor, .trumbowyg-textarea {
+  background-color: white;
+  color: $dpt-third-text;
+  padding: 5px !important;
+  padding-top: 0px !important;
+}
+.trumbowyg-editor p {
+  	margin: 5px !important;
+}
+
 .textareaDialog {
   font-family: DPTFont;
   font-size: 18px;
