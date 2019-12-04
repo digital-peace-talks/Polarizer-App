@@ -668,6 +668,7 @@ textarea {
   -webkit-appearance: none;
   position: absolute;
   right: 0px;
+  bottom: 10px;
 }
 
 .crisis {
