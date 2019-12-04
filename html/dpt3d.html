@@ -329,7 +329,7 @@
 							<input type="checkbox" id="disableGuidedTour">Disable the guided tour
 						</label>
 					<br>
-					<input type="submit" value="Stop the guided tour">
+					<!--<input type="submit" value="Stop the guided tour">-->
 					</p>
 				</div>
 			</div>
@@ -495,7 +495,7 @@
 		
 		jQuery("#disableGuidedTour").change(function() {
 		    if(this.checked) {
-		    	whoami.user.preferences.guidedTour = false;
+				whoami.user.preferences.guidedTour = false;
 		    	dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": false}});
 		    } else {
 		    	whoami.user.preferences.guidedTour = true;
