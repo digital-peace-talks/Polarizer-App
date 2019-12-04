@@ -1383,6 +1383,9 @@ display: "none";
   .buttondialogclose {
     left: 50%;
     margin-left: 40%;
+    top: 40px;
+position: fixed;
+z-index: 500;
   }
   .buttondialog {
     left: auto;
