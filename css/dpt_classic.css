@@ -1043,7 +1043,6 @@ section ul li {
 }
 
 .fb_gd_wrap .content {
-  height: 200px;
   background: transparent;
   z-index: 1000;
   -webkit-box-shadow: 0px 0px 20px #030911;
@@ -1083,7 +1082,7 @@ section ul li {
 }
 
 .fb_gd_wrap .body {
-  height: auto;
+  height: 180px;
   background: #28a9e1;
 }
 

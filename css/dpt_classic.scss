@@ -1051,7 +1051,7 @@ section ul li {
   background: transparent;
 }
 .fb_gd_wrap .content {
-  height: 200px;
+  //height: 200px;
   background: transparent;
   z-index: 1000;
   box-shadow: 0px 0px 20px $dpt-shadow;
@@ -1089,7 +1089,8 @@ section ul li {
 }
 
 .fb_gd_wrap .body {
-  height: auto;
+  //height: auto;
+  height: 180px;
   background: $dpt-prime-base;
 }
 .fb_gd_wrap .body .text {
