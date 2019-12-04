@@ -288,13 +288,14 @@ div.hide {
 }
 
 div.status {
-  bottom: 83px;
+  bottom: 49px;
   width: 580px;
   position: fixed;
   left: 50%;
   margin-left: -290px;
   z-index: 30;
   background-color: #28a9e1;
+  height: 80px;
 }
 
 div#c1 {
@@ -590,7 +591,7 @@ textarea {
   font-weight: normal;
   position: absolute;
   left: 0px;
-  top: 0px;
+  bottom: 10px;
 }
 
 .buttondialog {
@@ -667,7 +668,7 @@ textarea {
   -webkit-appearance: none;
   position: absolute;
   right: 0px;
-  top: 0px;
+  bottom: 10px;
 }
 
 .crisis {
@@ -681,8 +682,8 @@ textarea {
   -webkit-appearance: none;
   z-index: 40;
   position: absolute;
-  top: -40px;
   right: 0px;
+  bottom: 66px;
 }
 
 .crisis.icon {
@@ -1043,7 +1044,6 @@ section ul li {
 }
 
 .fb_gd_wrap .content {
-  height: 200px;
   background: transparent;
   z-index: 1000;
   -webkit-box-shadow: 0px 0px 20px #030911;
@@ -1083,7 +1083,7 @@ section ul li {
 }
 
 .fb_gd_wrap .body {
-  height: auto;
+  height: 180px;
   background: #28a9e1;
 }
 
@@ -1152,7 +1152,7 @@ section ul li {
   height: 10px;
   background: transparent;
   border: 1px solid #f0f3f5;
-  margin: 20px 8px 12px 8px;
+  margin: 20px 7px 12px 7px;
   display: inline-block;
   border-radius: 50%;
   position: relative;
@@ -1184,6 +1184,19 @@ section ul li {
   background: #28a9e1;
   -webkit-box-shadow: 0px 0px 20px #030911;
           box-shadow: 0px 0px 20px #030911;
+}
+
+.tutorialBorder {
+  border-color: #fffb00;
+  border-style: dashed;
+  border-width: 3px;
+  height: 96%;
+  width: 96%;
+  position: fixed;
+  z-index: 50;
+  top: 2%;
+  left: 2%;
+  display: "none";
 }
 
 /* pulsating circle*/
@@ -1401,6 +1414,9 @@ section ul li {
   .buttondialogclose {
     left: 50%;
     margin-left: 40%;
+    top: 40px;
+    position: fixed;
+    z-index: 500;
   }
   .buttondialog {
     left: auto;

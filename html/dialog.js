@@ -16,6 +16,22 @@ function crisisForm(messageId) {
 	jQuery('#misc2').append(`
 		<div id="crisis">
 			<h1>Finishing this dialogue</h1><br>
+			<h2>please rate this dialogue</h2>
+				<form style="font-size: 22px">
+				<input type="radio" name="feel" value="0"checked>&#x1F600;00
+				<input type="radio" name="feel" value="1">&#x1F609;01
+				<input type="radio" name="feel" value="2">&#x1F615;02<br>
+				<input type="radio" name="feel" value="3">&#x1F622;03
+				<input type="radio" name="feel" value="4">&#x1F620;04
+				<input type="radio" name="feel" value="5">&#x1F635;05<br>
+				<input type="radio" name="feel" value="6">&#x1F47D;06
+				<input type="radio" name="feel" value="7">&#x1F4A9;07
+				<input type="radio" name="feel" value="8">&#x1F916;08<br>
+				<input type="radio" name="feel" value="9">&#x1F648;09
+				<input type="radio" name="feel" value="10">&#x1F649;10
+				<input type="radio" name="feel" value="11">&#x1F64A;11<br>
+				</form> 
+				<br>
 			<form id="crisis">
 				<div class="frame1">
 					<div class="container1">
@@ -28,18 +44,7 @@ function crisisForm(messageId) {
 					</div>
 				</div>
 				
-				<div class="reason">
-				Please rate your outcome in this dialogue:
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-				<br>
-					Please enter a reason for your rating:<br>
-					<input type="text" name="reason">
-				</div>
+				
 				<input type="submit" class="buttonCrisisSend" name="send" value="Yes, I want to finish this dialogue">
 				<input type="button" class="closeButton" value="&#10005;" name="close window" id="crisisCloseWindow">
 			</form>

@@ -286,7 +286,7 @@
 
 <!-- Guided Tour-->
 <!--Container  und Pfeil-->
-<div style="border-color:rgb(255, 251, 0); border-style: dashed; border-width: 3px; height: 96%; width:96%; position:fixed; z-index: 50; top: 2%; left: 2%; display:none" id="tutorialBorder"></div>
+<div class="tutorialBorder" id="tutorialBorder" style="display: none"></div>
 <div id="animCircle" class="animated-circle" style="visibility: hidden">
 	<div class="arrowcontainer">
 		<div class="arrow">
@@ -305,8 +305,13 @@
 <div class="fb_gd_wrap">
 
 	<div class="content" id="guideContent">
-
+			<div class="text">
+					<label>
+						<input type="checkbox" id="disableGuidedTour">Disable the guided tour
+					</label>
+				</div>
 		<div class="header">
+			
 			<span class="text" id="guideTitle">digital peace talks GUIDE</span>
 			<button class="closeButton" id="closeBtn">&#10005;</button>
 		</div>
@@ -318,26 +323,28 @@
 					<p><img src="/tutorial_desktop.png" alt="gestures" height="auto" width="100%"></p>
 					<p>Click on any topic you want to discuss. <br>You can also create your own topic.</p>
 					<p>Inside a topic, click here to publish your opinion.</p>
-					<p><img src="/dpt_opinions.png" alt="gestures" height="auto" width="100%"></p>
+					<p><img src="/dpt_opinions.png" alt="gestures" height="160px" width="auto"></p>
 					<p>After publishing your opinion, click on this button to start a dialogue with others.<br><img src="/chatbubble.png" alt="gestures" height="auto" width="48px"></p>
 					<p>Access all your dialogues here. </p>
 					<p>You are about to close the guided tour. The guided tour will
 					start on your next session again. You can stop the tour for the
 					next sessions, when you check the following checkbox. You can
-					reactivate the tour in the settings and preferences.
+					reactivate the tour in the settings and preferences.<br>
 						<label>
 							<input type="checkbox" id="disableGuidedTour">Disable the guided tour
 						</label>
 					<br>
-					<input type="submit" value="Stop the guided tour">
+					<!--<input type="submit" value="Stop the guided tour">-->
 					</p>
 				</div>
-					<!--sowas in der art-->
-			<input type="checkbox" id="disableGuidedTour" >
-			<input type="submit" value="Don't show this again">
 			</div>
+			
+			
 		</div>
+		
 		<div class="footer">
+		
+		
 			<button id="guidePrevBtn" class="btn prev"></button>
 			<ul class="steps">
 				<li class="dot active"></li>
@@ -352,7 +359,9 @@
 			</ul>
 			<button id="guideNextBtn" class="btn next">Start Tour</button>
 			
+			
 		</div>
+		
 	</div>
 </div>
 <!-- End Guided Tour-->
@@ -368,41 +377,38 @@
 			// welcome to tour
 			top: "auto",
 			left: "0px",
-			bottom: "30%",
+			bottom: "50px",
 			right: "auto",
 			topMark: document.getElementById('guideNextBtn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px",
 			buttonLeftName: "",
 			buttonRightName: "start tour",
 			guideText: "A new way to discuss",
-			guideHeight: "200px"
 		}, {
 			// tutorial mobile
-			top: "0px",
+			top: "auto",
 			left: "0px",
-			bottom: "auto",
+			bottom: "0px",
 			right: "auto",
-			topMark: "55%",
+			topMark: "30%",
 			leftMark: "50%",
 			buttonLeftName: "back",
 			buttonRightName: "next",
 			guideText: "How to navigate",
-			guideHeight: "300px"
 		}, {
 			// tutorial desktop
-			top: "0px",
+			top: "auto",
 			left: "0px",
-			bottom: "auto",
+			bottom: "0px",
 			right: "auto",
-			topMark: "55%",
+			topMark: "40%",
 			leftMark: "50%",
 			buttonLeftName: "back",
 			buttonRightName: "next",
 			guideText: "How to navigate",
-			guideHeight: "200px"
 		}, {
 			// Choose a topic 
-			top: "30%",
+			top: "0px",
 			left: "0px",
 			bottom: "auto",
 			right: "auto",
@@ -455,17 +461,16 @@
 			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
 			buttonLeftName: "back",
-			buttonRightName: "that's it",
+			buttonRightName: "next",
 			guideText: "Dialoguelist",
-			guideHeight: "200px"
 		}, {
 			// exit the guided tour
 			top: "30%",
 			left: "0px",
 			bottom: "auto",
 			right: "auto",
-			buttonLeftName: "",
-			buttonRightName: "",
+			buttonLeftName: "back",
+			buttonRightName: "that's it",
 			guideText: "Stop the guided tour",
 		}];
 		const bodyTextEle = document.getElementById('guideBodyText');
@@ -495,7 +500,7 @@
 		
 		jQuery("#disableGuidedTour").change(function() {
 		    if(this.checked) {
-		    	whoami.user.preferences.guidedTour = false;
+				whoami.user.preferences.guidedTour = false;
 		    	dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": false}});
 		    } else {
 		    	whoami.user.preferences.guidedTour = true;
@@ -534,7 +539,7 @@
 				buttonLeft.innerText = guidePosition[currentStepIndex].buttonLeftName;
 				buttonRight.innerText = guidePosition[currentStepIndex].buttonRightName;
 				guideTitle.innerText = guidePosition[currentStepIndex].guideText;
-				//jQuery("guideBody").css("height", guideHeight);
+		
 
 				console.log(currentStepIndex);
 
