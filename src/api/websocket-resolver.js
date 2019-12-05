@@ -509,6 +509,13 @@ match.push({
 			if(ret.status == 200) {
 				publishDialogListUpdate(ret.data.id);
 			}
+			if(ret.data.initiator.toString() == user.user.id) {
+				ret.data._doc.initiator = 'me';
+				ret.data._doc.recipient = 'notme';
+			} else {
+				ret.data._doc.initiator = 'notme';
+				ret.data._doc.recipient = 'me';
+			}
 			return({data: ret});
 		}
 	}
