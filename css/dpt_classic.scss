@@ -1094,7 +1094,7 @@ section ul li {
 
 .fb_gd_wrap .body {
   //height: auto;
-  height: 180px;
+  height: 190px;
   background: $dpt-prime-base;
 }
 .fb_gd_wrap .body .text {
@@ -1201,6 +1201,7 @@ z-index: 50;
 top: 2%; 
 left: 2%; 
 display: "none";
+pointer-events: none;
 }
 
 /* pulsating circle*/
