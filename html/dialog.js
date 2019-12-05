@@ -16,6 +16,7 @@ function crisisForm(messageId) {
 	jQuery('#misc2').append(`
 		<div id="crisis">
 			<h1>Finishing this dialogue</h1><br>
+			<!--
 			<h2>please rate this dialogue</h2>
 				<form style="font-size: 22px">
 				<input type="radio" name="feel" value="0"checked>&#x1F600;00
@@ -42,6 +43,33 @@ function crisisForm(messageId) {
 						<div class="eye eye-r"></div>  
 						<div class="smile" ></div>
 					</div>
+				</div>
+				-->
+				<!--
+				-->
+							<form id="crisis">
+				<div class="frame1">
+					<div class="container1">
+						<input type="range" style="z-index:400" name="rating2" min="1" max="180" value="100" class="slider" id="range-slider" />
+					</div>
+					<div class="smile-wrapper">
+						<div class="eye eye-l"></div>
+						<div class="eye eye-r"></div>  
+						<div class="smile" ></div>
+					</div>
+				</div>
+				
+				<div class="reason">
+				Please rate your outcome in this dialogue:
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+				<br>
+					Please enter a reason for your rating:<br>
+					<input type="text" name="reason">
 				</div>
 				
 				
