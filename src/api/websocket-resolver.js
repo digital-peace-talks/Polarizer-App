@@ -273,7 +273,8 @@ match.push({
 			ret.data[i]._doc.isOnline = false;
 	
 			for(var j in global.dptNS.online) {
-				if(global.dptNS.online[j].user.preferences.stealthMode == false
+				if('stealthMode' in global.dptNS.online[j].user.preferences
+				&& global.dptNS.online[j].user.preferences.stealthMode == false
 				&& global.dptNS.online[j].user.id == id) {
 						ret.data[i].isOnline = true;
 						ret.data[i]._doc.isOnline = true;
