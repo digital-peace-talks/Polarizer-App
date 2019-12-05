@@ -273,6 +273,7 @@ match.push({
 			ret.data[i]._doc.isOnline = false;
 	
 			for(var j in global.dptNS.online) {
+				/*
 				if('stealthMode' in global.dptNS.online[j].user.preferences
 				&& global.dptNS.online[j].user.preferences.stealthMode == false
 				&& global.dptNS.online[j].user.id == id) {
@@ -280,6 +281,7 @@ match.push({
 						ret.data[i]._doc.isOnline = true;
 						break;
 				}
+				*/
 			}
 		}
 
