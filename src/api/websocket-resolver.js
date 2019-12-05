@@ -273,7 +273,8 @@ match.push({
 			ret.data[i]._doc.isOnline = false;
 	
 			for(var j in global.dptNS.online) {
-				if(global.dptNS.online[j].user.preferences.stealthMode == false
+				if('user' in global.dptNS.online[j]
+				&& global.dptNS.online[j].user.preferences.stealthMode == false 
 				&& global.dptNS.online[j].user.id == id) {
 						ret.data[i].isOnline = true;
 						ret.data[i]._doc.isOnline = true;
@@ -508,6 +509,13 @@ match.push({
 			//socket.emit('update', {path: '/dialog/list/', method: 'get'});
 			if(ret.status == 200) {
 				publishDialogListUpdate(ret.data.id);
+			}
+			if(ret.data.initiator.toString() == user.user.id) {
+				ret.data._doc.initiator = 'me';
+				ret.data._doc.recipient = 'notme';
+			} else {
+				ret.data._doc.initiator = 'notme';
+				ret.data._doc.recipient = 'me';
 			}
 			return({data: ret});
 		}

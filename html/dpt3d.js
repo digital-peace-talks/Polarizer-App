@@ -51,36 +51,35 @@ function onWebSocketUpdate(restObj) {
 
 			window.scrollTo(0, document.body.scrollHeight);
 		}
-	}
+	} else if(restObj.method == 'get') {
 
-	if(restObj.path == '/topic/' && restObj.method == 'get') {
-		if(currentScene.name == 'topicScene') {
-			dpt.getTopic();
+		if(restObj.path == '/topic/') {
+			if(currentScene.name == 'topicScene') {
+				dpt.getTopic();
+			}
+		}
+	
+		if(restObj.path == '/dialog/list/') {
+			dpt.getDialogList();
+		}
+	
+		if(restObj.path.startsWith('/opinion/')
+		&& restObj.data.id == currentTopic
+		&& currentScene.name == 'opinionScene') {
+			dpt.getOpinionByTopic(currentTopic);
+		}
+	
+		if(currentDialog
+		&& restObj.path == '/dialog/' + currentDialog.dialog + '/') {
+			if(dialogFormOpen == 1) {
+				dpt.getDialog(currentDialog.dialog);
+			}
+			dpt.getDialogList();
+		} else if(restObj.path.match('^/dialog/([0-9a-fA-F]{24})/$')) {
+			dpt.getDialogList();
 		}
 	}
-
-	if(restObj.path == '/dialog/list/' && restObj.method == 'get') {
-		dpt.getDialogList();
-	}
-
-	if(restObj.path.startsWith('/opinion/')
-	&& restObj.data.id == currentTopic
-	&& restObj.method == 'get'
-	&& currentScene.name == 'opinionScene') {
-		dpt.getOpinionByTopic(currentTopic);
-	}
-
-	if(currentDialog
-	&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
-	&& restObj.method == 'get') {
-		if(dialogFormOpen == 1) {
-			dpt.getDialog(currentDialog.dialog);
-		}
-		dpt.getDialogList();
-	} else if(restObj.path.match('^/dialog/([0-9a-fA-F]{24})/$')
-	&& restObj.method == 'get') {
-		dpt.getDialogList();
-	}
+	
 }
 
 function onWebSocketAPI(restObj) {
@@ -98,67 +97,61 @@ function onWebSocketAPI(restObj) {
 	idleSince = BABYLON.Tools.Now;
 	powerSave = false;
 
-	if(currentDialog
-	&& restObj.path == '/dialog/' + currentDialog.dialog + '/'
-	&& restObj.method == 'get') {
-
-		var old = currentDialog;
-		currentDialog = restObj.data[0];
-		currentDialog.topic = old.topic;
-		currentDialog.initiatorOpinion = old.initiatorOpinion;
-		currentDialog.recipientOpinion = old.recipientOpinion;
-		dialogForm();
-
-	}
-	if(currentDialog
-	&& restObj.path == '/dialogSet/' + currentDialog.dialog + '/'
-	&& restObj.method == 'get') {
-
-		if(Array.isArray(restObj.data)) {
-			var old;
-			for(var i in currentScene.meshes) {
-				if('dpt' in currentScene.meshes[i]
-				&& currentScene.meshes[i].dpt.context == 'tubeConnection'
-				&& currentScene.meshes[i].dpt.dialogId == restObj.data[0].dialog) {
-					old = currentScene.meshes[i].dpt;
-					old.topic = currentDialog.topic;
-				}
-			}
+	if(restObj.method == 'get') {
+		if(currentDialog && restObj.path == '/dialog/' + currentDialog.dialog + '/') {
+	
+			var old = currentDialog;
 			currentDialog = restObj.data[0];
 			currentDialog.topic = old.topic;
-			currentDialog.initiatorOpinion = old.initiatorsOpinion;
-			currentDialog.recipientOpinion = old.recipientsOpinion;
-		}
-
-		dialogForm(restObj.data[1]);
-	}
-
-	if(restObj.path == '/topic/'
-	&& restObj.method == 'get') {
-		if(currentScene.name == 'topicScene') {
-			loadTopics(restObj);
-		}
-
-	} else if(restObj.path.startsWith('/metadata/search/')) {
-		searchResultTopics(restObj);
-	} else if(restObj.path == "/opinion/" + currentTopic + "/"
-			&& restObj.method == "get") {
-		if(currentScene.name == 'opinionScene') {
-			loadOpinions(restObj);
-		}
-
-	} else if(restObj.path == '/opinion/postAllowed/') {
-		if(restObj.data.value == true) {
-			opinionForm();
-		} else {
-			alert('Only one opinion per topic.');
-		}
+			currentDialog.initiatorOpinion = old.initiatorOpinion;
+			currentDialog.recipientOpinion = old.recipientOpinion;
+			dialogForm();
 	
-	} else if(restObj.path == '/dialog/list/'
-			&& restObj.method == 'get') {
-
-		loadDialogList(restObj);
-	}	
+		}
+		if(currentDialog && restObj.path == '/dialogSet/' + currentDialog.dialog + '/') {
+	
+			if(Array.isArray(restObj.data)) {
+				var old;
+				for(var i in currentScene.meshes) {
+					if('dpt' in currentScene.meshes[i]
+					&& currentScene.meshes[i].dpt.context == 'tubeConnection'
+					&& currentScene.meshes[i].dpt.dialogId == restObj.data[0].dialog) {
+						old = currentScene.meshes[i].dpt;
+						old.topic = currentDialog.topic;
+					}
+				}
+				currentDialog = restObj.data[0];
+				currentDialog.topic = old.topic;
+				currentDialog.initiatorOpinion = old.initiatorsOpinion;
+				currentDialog.recipientOpinion = old.recipientsOpinion;
+			}
+	
+			dialogForm(restObj.data[1]);
+		}
+		if(restObj.path == '/topic/') {
+			if(currentScene.name == 'topicScene') {
+				loadTopics(restObj);
+			}
+		} else if(restObj.path.startsWith('/metadata/search/')) {
+			searchResultTopics(restObj);
+		} else if(restObj.path == "/opinion/" + currentTopic + "/") {
+			if(currentScene.name == 'opinionScene') {
+				loadOpinions(restObj);
+			}
+		} else if(restObj.path == '/opinion/postAllowed/') {
+			if(restObj.data.value == true) {
+					opinionForm();
+			} else {
+				alert('Only one opinion per topic.');
+			}
+		} else if(restObj.path == '/dialog/list/') {
+			loadDialogList(restObj);
+		}	
+	} else if(restObj.method == 'post') {
+		if(restObj.path == '/dialog/') {
+			dpt.getOpinionByTopic(currentTopic);
+		}	
+	}
 }
 
 function main() {

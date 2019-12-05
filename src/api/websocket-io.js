@@ -231,8 +231,10 @@ io.on('connection', function(socket) {
 			updateUser.onlineTimes.push({ login: user.login, logout: Date.now() });
 			updateUser.save();
 		}
-		Lo_.pull(global.dptNS.online, user);
-		log.info('updated global online (user-): '+require('util').inspect(global.dptNS.online));
+		if(user) {
+			Lo_.pull(global.dptNS.online, user);
+			log.info('updated global online (user-): '+require('util').inspect(global.dptNS.online));
+		}
 	});
 });
 
