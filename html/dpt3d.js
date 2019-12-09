@@ -28,6 +28,7 @@ var DPTConst = {
 	"COLORS_default": 0,
 	"COLORS_dark": 1,
 	"COLORS_bright": 2,
+	"COLORS_skybox": 3,
 };
 
 

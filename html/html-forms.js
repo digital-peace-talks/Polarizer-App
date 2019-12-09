@@ -52,7 +52,7 @@ function settingsForm(opinionId, topicId) {
 	if(!whoami.user.preferences.stealthMode) {
 		stealthMode = '';
 	}
-	for(var i = 0; i <= 2; i++) {
+	for(var i = 0; i <= 3; i++) {
 		if(whoami.user.preferences.colorScheme == i) {
 			colors += `<label><input type="radio" name="colorScheme" value="${i}" checked>`;
 		} else {
@@ -64,6 +64,9 @@ function settingsForm(opinionId, topicId) {
 				break
 			case DPTConst.COLORS_dark:
 				colors += " Dark</label>";
+				break
+			case DPTConst.COLORS_skybox:
+				colors += " Skybox</label>";
 				break
 			case DPTConst.COLORS_default:
 			default:

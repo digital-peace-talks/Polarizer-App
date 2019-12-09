@@ -11,6 +11,9 @@ function makePlanesDragable(opinion1, opinion2, edge) {
 	var plane2;
 
 	for(var i in currentScene.meshes) {
+		if(currentScene.meshes[i].id == 'skyBox') {
+			continue;
+		}
 		if(currentScene.meshes[i].dpt.opinionId == opinion1) {
 			plane1 = currentScene.meshes[i];
 		}

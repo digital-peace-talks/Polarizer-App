@@ -56,6 +56,7 @@ app.use(express.static("static"));
 app.use(express.static("html"));
 app.use(express.static("css"));
 app.use("/external/", express.static("external"));
+app.use("/skybox/", express.static("skybox"));
 app.use("/", require("./routes/frontend"));
 
 
