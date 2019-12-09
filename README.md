@@ -1,5 +1,7 @@
 # Digital Peace Talks
 
+![Alt text](docs/screenshot.png?raw=true "DPT Screenshot")
+
 ## About
 
 Digital Peace Talks is (and always will be) a free and open web app that maps opinions via an artificial intelligence and uncovers high quality dialogues. The Digital Peace Talks offer:
