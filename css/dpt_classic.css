@@ -921,13 +921,6 @@ section ul li {
   background-color: #005b98;
 }
 
-/*----- Logo -----*/
-.brand,
-.brand img {
-  float: left;
-}
-
-/*----------------*/
 .frame1 {
   width: 400px;
   height: 200px;
@@ -1160,18 +1153,6 @@ section ul li {
   position: relative;
 }
 
-/*
-.fb_gd_wrap .footer .line::after {
-  content: "";
-  display: block;
-  width: 24px;
-  background-color: $dpt-prime-button;
-  border-top: 1px solid $dpt-prime-text;
-  position: absolute;
-  top: 4px;
-  left: 9px;
-}
-*/
 .fb_gd_wrap .footer .dot::before {
   content: attr(data-step);
   display: block;
@@ -1463,7 +1444,7 @@ section ul li {
   .sub-menu li {
     margin: 0;
   }
-  /*Formatierung Mobiles Menue*/
+  /*Format Mobile Menu*/
   nav ul {
     top: 40px;
     position: absolute;
