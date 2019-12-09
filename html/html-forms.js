@@ -752,26 +752,7 @@ var createGUIScene = function(dptMode) {
 		}
 	});
 	
-	//create imprint button
-	var imprintBtn = jQuery('#imprint-btn');
-	imprintBtn.show();
-	imprintBtn.on('click touch', function(event) {
-		opinionCamState = currentScene.cameras[0].storeState();
-		currentScene.dispose();
-		currentScene = __topicScene("topicScene");
-		currentScene.name = "topicScene";
-		dpt.getTopic();
-		event.stopImmediatePropagation();
-		event.preventDefault();
-		jQuery('#form').remove();
-
-		if(isMobile) {
-			closeRightMenu();
-		}
-		focusAtCanvas();
-	});
-	
-	//create documentation button
+	//create github repository button
 	var docuBtn = jQuery('#github-btn');
 	docuBtn.show();
 	docuBtn.on('click touch', function(event) {
@@ -781,6 +762,7 @@ var createGUIScene = function(dptMode) {
 		hideDialogList();
 		window.open("https://github.com/digital-peace-talks/DPT-server");
 	});
+	
 	
 	// create settings button
 	var settingsBtn = jQuery('#settings-btn');
@@ -857,7 +839,6 @@ var createGUIScene = function(dptMode) {
 			requestSearch();
 		}
 	});
-
 
 	//create topic button 
 	if (dptMode == 'topicScene') {
@@ -971,27 +952,6 @@ function switchToTopics() {
 	focusAtCanvas();
 }
 
-function requestHome() {
-	var btn = document.createElement("input");
-	btn.className = "iconBar";
-	btn.style.zIndex = 10;
-	btn.style.position = "absolute";
-	btn.style.bottom = "5px";
-	btn.style.right = "200px";
-	btn.width = "50";
-	btn.height = "50";
-	btn.type = "image";
-	btn.src = "/home_white.png";
-	btn.style.color = "#f00";
-	document.body.appendChild(btn);
-
-	btn.onclick = () => {
-		switchToTopics();
-		event.stopImmediatePropagation();
-		event.preventDefault();
-	}
-}
-
 function requestSearch() {
 	
 	jQuery("#form").remove();
@@ -1036,66 +996,6 @@ function requestSearch() {
 	});
 } 
 
-function requestNewTopic() {
-	var btn = document.createElement("input");
-	btn.className = "iconBar";
-	btn.style.zIndex = 10;
-	btn.style.position = "absolute";
-	btn.style.bottom = "5px";
-	btn.style.right = "150px";
-	btn.width = "50";
-	btn.height = "50";
-	btn.type = "image";
-	btn.src = "/topic_white.png";
-	btn.style.color = "#f00";
-	document.body.appendChild(btn);
-	/* btn.onclick = ()=> {
-		alert('newTopic btn pressed!');
-	} */
-	btn.onclick = () => {
-		jQuery('#form').remove();
-		topicForm();
-		event.stopImmediatePropagation();
-		event.preventDefault();
-		/* if (isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
-		} */
-
-	};
-}
-
-function requestNewOpinion() {
-	var btn = document.createElement("input");
-	btn.className = "iconBar";
-	btn.style.zIndex = 10;
-	btn.style.position = "absolute";
-	btn.style.bottom = "5px";
-	btn.style.right = "150px";
-	btn.width = "50";
-	btn.height = "50";
-	btn.type = "image";
-	btn.src = "/opinion_white.png";
-	btn.style.color = "#f00";
-	document.body.appendChild(btn);
-	/* btn.onclick = ()=> {
-		alert('newOpinion btn pressed!');
-	} */
-	btn.onclick = () => {
-		jQuery('#form').remove();
-		dpt.opinionPostAllowed(currentTopic);
-		// alert(dpt.opinionPostAllowed(currentTopic)) <- returns undefined
-
-		event.stopImmediatePropagation();
-		event.preventDefault();
-		/* if (isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
-		} */
-
-	}
-}
-
 function toggleDialogList() {
 	if (myDialogsVisible == 'visible') {
 		myDialogsVisible = 'hidden';
@@ -1128,85 +1028,6 @@ function hideDialogList() {
 	}
 }
 
-function requestYourDialogs() {
-	var btn = document.createElement("input");
-	btn.className = "iconBar";
-	btn.style.zIndex = 10;
-	btn.style.position = "absolute";
-	btn.style.bottom = "5px";
-	btn.style.right = "100px";
-	btn.width = "50";
-	btn.height = "50";
-	btn.type = "image";
-	btn.src = "/1message_white.png";
-	btn.style.color = "#f00";
-	document.body.appendChild(btn);
-	/* btn.onclick = ()=> {
-		alert('yourDialogs btn pressed!');
-	} */
-	btn.onclick = () => {
-		toggleDialogList();
-		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
-		jQuery('#close-dialog-btn').css({
-			WebkitTransition	: 'opacity 0s ease-in-out',
-			MozTransition		: 'opacity 0s ease-in-out',
-			MsTransition		: 'opacity 0s ease-in-out',
-			OTransition			: 'opacity 0s ease-in-out',
-			transition			: 'opacity 0s ease-in-out'
-		});
-		jQuery('#close-dialog-btn').css({visibility: myDialogsVisible});
-		event.stopImmediatePropagation();
-		event.preventDefault();
-		/* if (isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
-		} */
-	}
-}
-
-
-function requestHelp() {
-	var btn = document.createElement("input");
-	btn.className = "iconBar";
-	//			btn.innerText = "Enable/Disable Joystick";
-	btn.style.zIndex = 10;
-	btn.style.position = "absolute";
-	btn.style.bottom = "10px";
-	btn.style.right = "50px";
-	btn.width = "50";
-	btn.height = "50";
-	btn.type = "image";
-	btn.src = "/help_white.png";
-	btn.style.color = "#f00";
-	document.body.appendChild(btn);
-
-	// Button toggle logic
-	btn.onclick = () => {
-		jQuery('body').append(`
-			<div id="form" class="helpframe">
-			<img src="/dpt_gestures.png" alt="help" class="helpimage">
-			<button class="closeButton" id="close-btn">&#10005;</button>
-			</div>
-		`);
-		window.addEventListener('message', event => {
-			// IMPORTANT: check the origin of the data! 
-			if (event.data == 'simple-help-finished') {
-
-				jQuery('#form').remove();
-			} else {
-				return;
-			}
-		});
-
-		jQuery(document).on('click', "#close-btn", function(event) {
-			jQuery('#form').remove();
-			focusAtCanvas();
-			event.preventDefault();
-		});
-	}
-}
-
-
 function pauseEngine() {
 	var btn = document.createElement("input");
 	btn.className = "iconBar";
@@ -1227,7 +1048,6 @@ function pauseEngine() {
 		powerSave = !powerSave;
 	}
 }
-
 
 jQuery(document).on("click touch touchend", "span.myDialogs", function(event) {
 	jQuery('#dialogInfo').remove();
