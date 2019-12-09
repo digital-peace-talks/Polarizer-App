@@ -73,7 +73,6 @@
 	<!-- icon in the highest resolution we need it for -->
 	<link rel="icon" sizes="16x16 32x32 48x48" href="icons/icon-72x72.png">
 	<link rel="icon" sizes="512x512" href="icons/icon-512x512.png">
-
 	<!-- multiple icons for Safari -->
 	<link rel="apple-touch-icon" href="icons/touch-icon-iphone.png">
 	<link rel="apple-touch-icon" sizes="152x152" href="icons/touch-icon-ipad.png">
@@ -81,16 +80,13 @@
 	<link rel="apple-touch-icon" sizes="167x167" href="icons/touch-icon-ipad-retina.png">
 	<!-- splash scree icon for Apple -->
 	<link rel="apple-touch-startup-image" href="icons/ios-icon.png">
-
 	<!-- multiple icons for IE -->
 	<meta name="msapplication-square70x70logo" content="icons/icon-72x72.png">
 	<meta name="msapplication-square150x150logo" content="icons/icon-144x144.png">
 	<meta name="msapplication-wide310x150logo" content="icons/icon-192x192.png">
 	<meta name="msapplication-square310x310logo" content="icon_largetile.png">
-
 	<!-- Chrome, Firefox OS and Opera -->
 	<meta name="theme-color" content="#28A9E1">
-
 	<!-- change the status bar appearance on ios-->
 	<meta name="apple-mobile-web-app-status-bar" content="#28A9E1">
 	<meta name="apple-mobile-web-app-capable" content="yes">
@@ -106,17 +102,10 @@
 				<div id="overlay">
 
 					<nav>
-						<!--	<div class="brand">
-				<a href=""><img src="dpt_logo.png" alt="digital peace talks" /></a>
-			</div>-->
-
+					
 						<a class="hamburger" id="nav-m"><img src="/button_menu.png" alt="" /></a>
 						<a class="hamburger close"><img src="/button_close.png" alt="" /></a>
-						<!--
-			<a href="#nav-m" id="nav-m"><img src="/button_menu.png" alt="" /></a>
-			<a href="#" class="close"><img src="/button_close.png" alt="" /></a>
-			-->
-
+						
 						<ul class="menu">
 
 							<li><button class="menu-btn " id="about-btn" title="About this App"><img class="btn-icon"
@@ -148,13 +137,12 @@
 										class="btn-bar-icon"></button></li>
 							<li><button class="menu-btn-bar" id="dialogues-btn" title="Open the dialog list"><img
 										class="btn-bar-icon" src="/messagelist_white.png">
-									<div class="listcount" id="dialog-btn-label"></div>
-								</button></li>
+									<div class="listcount" id="dialog-btn-label"></div></button></li>
+							<!--<li><button class="menu-btn-bar" id="setup-btn" title="Setup"><img
+										class="btn-bar-icon" src="/settings_white.png"></button></li>-->
 						</ul>
 					</section>
 				</div>
-
-
 
 				<canvas id="renderCanvas" tabindex="1"></canvas>
 				<div id="misc"></div>
@@ -205,13 +193,6 @@
 									});
 							});
 						}
-						/*
-						if('serviceWorker' in navigator) {
-							navigator.serviceWorker.register('/sw.js')
-							.then((reg) => console.log('service worker registered', reg))
-							.catch((err) => console.log('service worker not registered'), err));
-						}
-						*/
 
 						// from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
 						const copyToClipboard = (str) => {
@@ -294,12 +275,7 @@
 			<div class="block2"></div>
 		</div>
 	</div>
-	<!--
-		Gelber pulsierender Kreis 
-	<div class="pulse-circle"></div>
-	<div class="pulse-circle2"></div>
-	<div class="circle-center"></div>
-	-->
+
 </div>
 
 <div class="fb_gd_wrap">
@@ -445,8 +421,8 @@
 			left: "0px",
 			bottom: "auto",
 			right: "auto",
-			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
-			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
+			topMark: document.getElementById('dialogues-btn').getBoundingClientRect().top + "px",
+			leftMark: document.getElementById('dialogues-btn').getBoundingClientRect().left + "px",
 			buttonLeftName: "back",
 			buttonRightName: "next",
 			guideText: "Dialoguelist",
@@ -456,6 +432,8 @@
 			left: "0px",
 			bottom: "auto",
 			right: "auto",
+			topMark: "-200px",
+			leftMark: "-200px",
 			buttonLeftName: "back",
 			buttonRightName: "that's it",
 			guideText: "Stop the guided tour",

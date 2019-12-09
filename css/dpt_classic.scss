@@ -21,9 +21,7 @@ $dpt-second-border: #005b98;
 $dpt-red: #ff6666;
 $dpt-green: #15b76a;
 $dpt-blue: #005b98;
-
 $dpt-shadow: #030911;
-
 $dpt-hint: #ffc400;
 
 @font-face {
@@ -698,12 +696,9 @@ textarea {
   font-size: 16px;
   width: 20%;
   height: 30px;
-  //margin: 5px auto;
-  //margin-left: 10px;
   -webkit-appearance: none;
   z-index: 40;
   position: absolute;
-  //top: 4px;
   right: 0px;
   bottom: 66px;
 }
@@ -744,7 +739,6 @@ textarea {
   background-color: $dpt-prime-button;
   border: none;
   font-size: 16px;
-  //width: 120px;
   height: 40px;
   margin: 5px auto;
   margin-left: 10px;
@@ -938,15 +932,6 @@ section ul li {
   background-color: $dpt-second-base;
 }
 
-/*----- Logo -----*/
-
-.brand,
-.brand img {
-  float: left;
-}
-
-/*----------------*/
-
 .frame1 {
   width: 400px;
   height: 200px;
@@ -1055,7 +1040,6 @@ section ul li {
   background: transparent;
 }
 .fb_gd_wrap .content {
-  //height: 200px;
   background: transparent;
   z-index: 1000;
   box-shadow: 0px 0px 20px $dpt-shadow;
@@ -1093,7 +1077,6 @@ section ul li {
 }
 
 .fb_gd_wrap .body {
-  //height: auto;
   height: 190px;
   background: $dpt-prime-base;
 }
@@ -1163,18 +1146,7 @@ section ul li {
   border-radius: 50%;
   position: relative;
 }
-/*
-.fb_gd_wrap .footer .line::after {
-  content: "";
-  display: block;
-  width: 24px;
-  background-color: $dpt-prime-button;
-  border-top: 1px solid $dpt-prime-text;
-  position: absolute;
-  top: 4px;
-  left: 9px;
-}
-*/
+
 .fb_gd_wrap .footer .dot::before {
   content: attr(data-step);
   display: block;
@@ -1318,7 +1290,6 @@ pointer-events: none;
   }
   #form {
     width: 100%;
-    //height: 200px;
     left: 0;
     margin-left: 0px;
     position: absolute;
@@ -1345,13 +1316,11 @@ pointer-events: none;
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    //top: 0px;
   }
   div.status {
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    //bottom: 38px;
   }
   h3 {
     font-size: 16px;
@@ -1387,8 +1356,8 @@ pointer-events: none;
     left: 50%;
     margin-left: 40%;
     top: 40px;
-position: fixed;
-z-index: 500;
+    position: fixed;
+    z-index: 500;
   }
   .buttondialog {
     left: auto;
@@ -1403,7 +1372,6 @@ z-index: 500;
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    //bottom: 0px;
   }
   div#crisis {
     width: 100%;
@@ -1432,7 +1400,7 @@ z-index: 500;
       margin: 0;
     }
   }
-  /*Formatierung Mobiles Menue*/
+  /*Format Mobile Menu*/
   nav ul {
     top: 40px;
     position: absolute;
@@ -1538,7 +1506,7 @@ z-index: 500;
     left: 0;
   }
 
-  // __________________ mobile guided tool
+  // __________________ mobile guided tour
   .fb_gd_wrap .content {
     width: 100%;
   }
