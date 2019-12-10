@@ -10,8 +10,9 @@ function makePlanesDragable(opinion1, opinion2, edge) {
 	var plane1;
 	var plane2;
 
+	// find the text meshes
 	for(var i in currentScene.meshes) {
-		if(currentScene.meshes[i].id == 'skyBox') {
+		if(currentScene.meshes[i].id != 'texttexture') {
 			continue;
 		}
 		if(currentScene.meshes[i].dpt.opinionId == opinion1) {
@@ -22,9 +23,10 @@ function makePlanesDragable(opinion1, opinion2, edge) {
 		}
 	}
 
+	// make them dragable
 	plane1.pointerDragBehavior = new BABYLON.PointerDragBehavior(
 		{
-			name: "foobar",
+			name: "drag1",
 			dragPlaneNormal: new BABYLON.Vector3(0,0,1)
 		});
 	plane1.pointerDragBehavior.onDragObservable.add((event,b,c)=>{
@@ -34,13 +36,27 @@ function makePlanesDragable(opinion1, opinion2, edge) {
 
 	plane2.pointerDragBehavior = new BABYLON.PointerDragBehavior(
 		{
-			name: "foobar",
+			name: "drag2",
 			dragPlaneNormal: new BABYLON.Vector3(0,0,1)
 		});
 	plane2.pointerDragBehavior.onDragObservable.add((event,b,c)=>{
 		moveConnection(plane1, plane2, edge);
 	});
 	plane2.addBehavior(plane2.pointerDragBehavior);
+}
+
+function recipientRating(rating) {
+	switch(rating) {
+		case "negative":
+			return("red");
+		case "neutral":
+			return("blue");
+		case "positive":
+			return("green");
+		case "unset":
+		default:
+			return("grey");
+	}
 }
 
 function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections) {
@@ -62,27 +78,21 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	ev.z = recipientOpinion.position.z;
 	
 	/*
-https://stackoverflow.com/questions/50252070/svg-draw-connection-line-between-two-rectangles
-
-Say you have two rects and you know the center of them (cx1, cy1) and (cx2, cy2).
-You also have the width and height divided by 2 (i.e. the distance from the center
-to the sides): (w1, h1) and (w2, h2).
-
-The distance between them is:
-
-var dx = cx2 - cx1;
-var dy = cy2 - cy1;
-
-Then you can calculate the intersection point for the two rects with:
-
-var p1 = getIntersection(dx, dy, cx1, cy1, w1, h1);
-var p2 = getIntersection(-dx, -dy, cx2, cy2, w2, h2);
-
-Where getIntersection is:
-	 */
+	https://stackoverflow.com/questions/50252070/svg-draw-connection-line-between-two-rectangles
+	Say you have two rects and you know the center of them (cx1, cy1) and (cx2, cy2).
+	You also have the width and height divided by 2 (i.e. the distance from the center
+	to the sides): (w1, h1) and (w2, h2).
+	The distance between them is:
+	var dx = cx2 - cx1;
+	var dy = cy2 - cy1;
+	Then you can calculate the intersection point for the two rects with:
+	var p1 = getIntersection(dx, dy, cx1, cy1, w1, h1);
+	var p2 = getIntersection(-dx, -dy, cx2, cy2, w2, h2);
+	Where getIntersection is:
+		 */
 
 	function getIntersection(dx, dy, cx, cy, w, h) {
-		if (Math.abs(dy / dx) < h / w) {
+		if(Math.abs(dy / dx) < h / w) {
 			// Hit vertical edge of box1
 			return [cx + (dx > 0 ? w : -w), cy + dy * w / Math.abs(dx)];
 		} else {
@@ -96,13 +106,13 @@ Where getIntersection is:
 
 	var p1 = getIntersection(dx, dy, sv.x, sv.y, initiatorOpinion.size.x/2, initiatorOpinion.size.y/2);
 	var p2 = getIntersection(-dx, -dy, ev.x, ev.y, recipientOpinion.size.x/2, recipientOpinion.size.y/2);
-	
+		
 	sv.x = p1[0];
 	sv.y = p1[1];
-	//sv.z = 0.2;
+	//sv.z += 0.4;
 	ev.x = p2[0];
 	ev.y = p2[1];
-	//ev.z = 0.2;
+	//ev.z += 0.4;
 	
 	distance = Math.sqrt(Math.pow(sv.x-ev.x,2)+Math.pow(sv.y-ev.y,2)+Math.pow(sv.z-ev.z,2));
 
@@ -136,52 +146,13 @@ Where getIntersection is:
 
 	var combination = '';
 	if(initiatorOpinion.rating == 'negative') {
-		combination = 'red-';
-		if(recipientOpinion.rating == 'negative') {
-			combination += 'red';
-		} else if(recipientOpinion.rating == 'neutral') {
-			combination += 'blue';
-		} else if(recipientOpinion.rating == 'positive') {
-			combination += 'green';
-		} else if(recipientOpinion.rating == 'unset') {
-			combination += 'grey';
-		}
-
+		combination = 'red-' + recipientRating(recipientOpinion.rating);
 	} else if(initiatorOpinion.rating == 'neutral') {
-		combination = 'blue-';
-		if(recipientOpinion.rating == 'negative') {
-			combination += 'red';
-		} else if(recipientOpinion.rating == 'neutral') {
-			combination += 'blue';
-		} else if(recipientOpinion.rating == 'positive') {
-			combination += 'green';
-		} else if(recipientOpinion.rating == 'unset') {
-			combination += 'grey';
-		}
-
+		combination = 'blue-' + recipientRating(recipientOpinion.rating);
 	} else if(initiatorOpinion.rating == 'positive') {
-		combination = 'green-';
-		if(recipientOpinion.rating == 'negative') {
-			combination += 'red';
-		} else if(recipientOpinion.rating == 'neutral') {
-			combination += 'blue';
-		} else if(recipientOpinion.rating == 'positive') {
-			combination += 'green';
-		} else if(recipientOpinion.rating == 'unset') {
-			combination += 'grey';
-		}
-
+		combination = 'green-' + recipientRating(recipientOpinion.rating);
 	} else if(initiatorOpinion.rating == 'unset') {
-		combination += 'grey-';
-		if(recipientOpinion.rating == 'negative') {
-			combination += 'red';
-		} else if(recipientOpinion.rating == 'neutral') {
-			combination += 'blue';
-		} else if(recipientOpinion.rating == 'positive') {
-			combination += 'green';
-		} else if(recipientOpinion.rating == 'unset') {
-			combination += 'grey';
-		}
+		combination = 'grey-' + recipientRating(recipientOpinion.rating);
 	}
 
 	var reverse = 0;
@@ -221,11 +192,11 @@ Where getIntersection is:
 
 		if(reverse || 1) {
 			ctx.translate(-16, 16);
-			ctx.rotate(-90 * (Math.PI / 180));
+			ctx.rotate(-1.57079632679489661922); // -pi/2
 			ctx.translate(-16, 16);
 		} else {
 			ctx.translate(16, -16);
-			ctx.rotate(90 * (Math.PI / 180));
+			ctx.rotate(1.57079632679489661922); // pi/2
 			ctx.translate(16, -16);
 		}
 		ctx.drawImage(this, 0, 0);
@@ -273,10 +244,10 @@ Where getIntersection is:
 				canvas.style.cursor = "default";
 			}, false));
 
-	makePlanesDragable(initiatorOpinion.opinionId, recipientOpinion.opinionId, tube);
-	//return(tube);
+	if(0) {
+		makePlanesDragable(initiatorOpinion.opinionId, recipientOpinion.opinionId, tube);
+	}
 }
-
 
 
 function dialogRelations(opinionDialogConnections) {
@@ -376,10 +347,7 @@ function dialogRelations(opinionDialogConnections) {
 }
 
 
-
-
 function loadOpinions(restObj) {
-	var i;
 	var canInvite = false;
 
 	if(currentScene.name == 'opinionScene') {
@@ -412,16 +380,10 @@ function loadOpinions(restObj) {
 		for(var j in restObj.data[i].topos) {
 			if(restObj.data[i]._id == restObj.data[i].topos[j].opinionId) {
 				var leafs = restObj.data[i].topos[j].leafs;
-				if(leafs.negative.includes(myOpinion)) {
-					exists = true;
-				}
-				if(leafs.positive.includes(myOpinion)) {
-					exists = true;
-				}
-				if(leafs.neutral.includes(myOpinion)) {
-					exists = true;
-				}
-				if(leafs.unset.includes(myOpinion)) {
+				if(leafs.negative.includes(myOpinion)
+				|| leafs.positive.includes(myOpinion)
+				|| leafs.neutral.includes(myOpinion)
+				|| leafs.unset.includes(myOpinion)) {
 					exists = true;
 				}
 			}
@@ -445,31 +407,9 @@ function loadOpinions(restObj) {
 					&& restObj.data[i].blocked == 1
 					&& exists == false) ? true : false,
 			}),
-			`${restObj.data[i].content}`,
-			);
+			`${restObj.data[i].content}`
+		);
 
-/*
-		plane.actionManager = new BABYLON.ActionManager(currentScene);
-
-		// enlarge ON MOUSE ENTER
-		plane.actionManager.registerAction(
-			new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
-				function(ev) {
-					var meshLocal = ev.meshUnderPointer;
-					meshLocal.material.emissiveColor = new BABYLON.Color3(1.0,0.5,0.0);
-					canvas.style.cursor = "move";
-				}, false));
-		
-		// normal size ON MOUSE EXIT
-		plane.actionManager.registerAction(
-			new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
-				function(ev) {
-					var meshLocal = ev.meshUnderPointer;
-					meshLocal.material.emissiveColor = new BABYLON.Color3(0,0.5,1);
-					canvas.style.cursor = "default";
-				}, false));
-		
-*/
 		/*
 	    var minion0 = BABYLON.MeshBuilder.CreateSphere("minion0", {diameter: 0.5}, currentScene);
 	    minion0.position = new BABYLON.Vector3(1,1,1);
