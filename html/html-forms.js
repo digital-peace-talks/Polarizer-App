@@ -521,10 +521,10 @@ function loadDialogList(restObj) {
 		jQuery('#dialog-btn-label').attr('count', 0);
 		jQuery('#dialog-btn-label').empty().text(``);
 	}
-	jQuery('body').append(`<div id="dialogMenu"></div>`);
+	jQuery('body').append(`<div id="dialogList"></div>`);
 
-	jQuery('#dialogMenu').empty();
-	jQuery('#dialogMenu').append(`<button class="closeButton" id="close-dialog-btn">&#10005;</button>`);
+	jQuery('#dialogList').empty();
+	jQuery('#dialogList').append(`<button class="closeButton" id="close-dialog-btn">&#10005;</button>`);
 	
 	jQuery(document).on('click touch', "#close-dialog-btn", function(event) {
 
@@ -580,7 +580,7 @@ function loadDialogList(restObj) {
 			menuEntry: menuEntry,
 			description: dialog
 		};
-		jQuery('#dialogMenu').append(menuEntry);
+		jQuery('#dialogList').append(menuEntry);
 
 	}
 }
@@ -916,7 +916,7 @@ var createGUIScene = function(dptMode) {
 			myDialogsVisible = 'hidden';
 		}
 
-		jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+		jQuery('#dialogList').css({ visibility: myDialogsVisible });
 		jQuery('#close-dialog-btn').css({
 			WebkitTransition	: 'opacity 0s ease-in-out',
 			MozTransition		: 'opacity 0s ease-in-out',
@@ -1001,7 +1001,7 @@ function toggleDialogList() {
 	} else {
 		myDialogsVisible = 'visible';
 	}
-	jQuery('#dialogMenu').css({ visibility: myDialogsVisible });
+	jQuery('#dialogList').css({ visibility: myDialogsVisible });
 	jQuery('#close-dialog-btn').css({
 		WebkitTransition	: 'opacity 0s ease-in-out',
 		MozTransition		: 'opacity 0s ease-in-out',
@@ -1014,7 +1014,7 @@ function toggleDialogList() {
 
 function hideDialogList() {
 	if(myDialogsVisible = 'visible') {
-		jQuery('#dialogMenu').css("visibility", "hidden");
+		jQuery('#dialogList').css("visibility", "hidden");
 		jQuery('#close-dialog-btn').css({
 			WebkitTransition	: 'opacity 0s ease-in-out',
 			MozTransition		: 'opacity 0s ease-in-out',

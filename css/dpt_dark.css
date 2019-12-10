@@ -111,7 +111,7 @@ hr {
   border-width: 1px;
 }
 
-div#dialogMenu > i {
+div#dialogList > i {
   color: transparent;
 }
 
@@ -501,7 +501,7 @@ div#dialogFrame {
   /* The width is 45%, by default */
 }
 
-#dialogMenu {
+#dialogList {
   position: absolute;
   padding: 10px;
   top: 40px;
@@ -1363,7 +1363,7 @@ section ul li {
   h3 {
     font-size: 16px;
   }
-  #dialogMenu {
+  #dialogList {
     width: 100%;
     top: 40px;
     left: 0px;
