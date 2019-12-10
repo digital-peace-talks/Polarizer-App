@@ -517,9 +517,11 @@ function loadDialogList(restObj) {
 	if(sum > 0) {
 		jQuery('#dialog-btn-label').attr('count', sum);
 		jQuery('#dialog-btn-label').empty().text(`${sum}`);
+		jQuery("#dialog-btn-label").show();
 	} else {
 		jQuery('#dialog-btn-label').attr('count', 0);
 		jQuery('#dialog-btn-label').empty().text(``);
+		jQuery("#dialog-btn-label").hide();
 	}
 	jQuery('body').append(`<div id="dialogList"></div>`);
 
