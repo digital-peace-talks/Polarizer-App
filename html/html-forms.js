@@ -1,7 +1,4 @@
-var isMobile = false; //initiate as false
 
-
-var hamburgerOpen = false;
 function hideMenu() {
 //	jQuery('#button-menu').fadeOut();
 //	jQuery('#overlay').css("background-image", "url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png')");
@@ -1027,27 +1024,6 @@ function hideDialogList() {
 		});
 		jQuery('#close-dialog-btn').css("visibility", "hidden");
 		myDialogsVisible = 'hidden';
-	}
-}
-
-function pauseEngine() {
-	var btn = document.createElement("input");
-	btn.className = "iconBar";
-	//			btn.innerText = "Enable/Disable Joystick";
-	btn.style.zIndex = 10;
-	btn.style.position = "absolute";
-	btn.style.bottom = "50px";
-	btn.style.right = "150px";
-	btn.width = "50";
-	btn.height = "50";
-	btn.type = "image";
-	btn.src = "/survey_white.png";
-	btn.style.color = "#f00";
-	document.body.appendChild(btn);
-
-	// Button toggle logic
-	btn.onclick = () => {
-		powerSave = !powerSave;
 	}
 }
 
