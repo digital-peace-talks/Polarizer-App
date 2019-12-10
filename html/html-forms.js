@@ -599,7 +599,7 @@ var createGUIScene = function(dptMode) {
 			event.stopImmediatePropagation();
 			event.preventDefault();
 
-			if(formVisible && jQuery('#form').hasClass('setupForm') && !isMobile) {
+			if(formVisible && jQuery('#form').hasClass('setupForm')) {
 			//if(formVisible && jQuery('#form>form').hasClass('setupForm')) {
 				jQuery("#form").remove();
 				formVisible = false;
