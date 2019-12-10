@@ -346,12 +346,13 @@ var createGenericScene = function(dptMode) {
 	//box.checkCollisions = true;
 
 	if(whoami.user.preferences.colorScheme == DPTConst.COLORS_skybox) {
-		var skybox = BABYLON.Mesh.CreateBox("skyBox", 100.0, currentScene);
+		var skybox = BABYLON.Mesh.CreateBox("skyBox", 250.0, currentScene);
 		var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", currentScene);
 		skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("/skybox/space2", currentScene);
 		skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
 		skyboxMaterial.backFaceCulling = false;
 		skyboxMaterial.disableLighting = true;
+		skybox.infiniteDistance = true;
 		skybox.material = skyboxMaterial;
 	}
 
