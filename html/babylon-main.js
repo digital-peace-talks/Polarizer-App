@@ -170,7 +170,7 @@ var createGenericScene = function(dptMode) {
 		case DPTConst.COLORS_skybox:
 			var skybox = BABYLON.Mesh.CreateBox("skyBox", 250.0, currentScene);
 			var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", currentScene);
-			skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("/skybox/skybox", currentScene);
+			skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("/skybox/space2", currentScene);
 			skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
 			skyboxMaterial.backFaceCulling = false;
 			skyboxMaterial.disableLighting = true;
