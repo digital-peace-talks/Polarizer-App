@@ -162,6 +162,7 @@ io.on('connection', function(socket) {
 							message: 'logged in',
 							user: user,
 							dptUUID: dptUUID,
+							developer: process.env.DPT_DEVELOPER=="true" ? true : false,
 							status: 200
 						}
 					});
