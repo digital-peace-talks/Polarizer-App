@@ -56,6 +56,7 @@ router.get('/', async (req, res, next) => {
 		<body>${c2c}
 			<div id="wrapper">
 				<header>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 					<img src="logo_dpt.png" alt="digital peace talks" class="logo">
 					<h1>Welcome to digital peace talks.</h1>
 					This is a free open source prototype being developed by a social enterprise.<br><br>
@@ -118,6 +119,7 @@ router.get('/', async (req, res, next) => {
 				<body>
 				<div id="wrapper">
 					<header>
+					<meta name="viewport" content="width=device-width, initial-scale=1.0">
 						<img src="logo_dpt.png" alt="digital peace talks" class="logo">
 						<h1>Welcome to digital peace talks.</h1>
 						This is a free open source prototype being developed by a social enterprise.<br><br>
