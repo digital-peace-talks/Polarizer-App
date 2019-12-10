@@ -50,21 +50,25 @@ router.get('/', async (req, res, next) => {
 			and our primary goal is to get direct feedback from a small set of users to evaluate our core design. 
 			Thank you.*/
 			
-		res.send(`<head>
-		<link rel="stylesheet" href="dpt_start.css" />
+		res.send(`
+		<!DOCTYPE html>
+		<html>
+		<head>
+			<link rel="stylesheet" href="dpt_start.css" />
 		</head>
 		<body>${c2c}
 			<div id="wrapper">
-				<header>
-					<img src="logo_dpt.png" alt="digital peace talks" class="logo">
-					<h1>Welcome to digital peace talks.</h1>
-					This is a free open source prototype being developed by a social enterprise.<br><br>
-					Click here for more information about the project:
-					<a href="https://digitalpeacetalks.com/" target="_blank">Our Website</a><br>
-					Or learn more about the App:
-					<a href="dpt-doku.html" target="_blank">How to use dpt.</a>
-					<br>
-				</header>
+			<header>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<img src="logo_dpt.png" alt="digital peace talks" class="logo">
+				<h1>Welcome to digital peace talks.</h1>
+				This is a free open source prototype being developed by a social enterprise.<br><br>
+				Click here for more information about the project:
+				<a href="https://digitalpeacetalks.com/" target="_blank">Our Website</a><br>
+				Or learn more about the App:
+				<a href="dpt-doku.html" target="_blank">How to use dpt.</a>
+				<br>
+			</header>
 				<div id="mehrspaltig">
 					<div class="links">
 						<h1>Welcome stranger!</h1>
@@ -110,14 +114,20 @@ router.get('/', async (req, res, next) => {
 			<br>
 			<br>
 			<br>
-			<br>`);
+			<br>
+			</body>
+			</html>`);
 		} else {
-			res.send(`<head>
+			res.send(`
+			<!DOCTYPE html>
+			<html>
+			<head>
 				<link rel="stylesheet" href="dpt_start.css" />
-				</head>
+			</head>
 				<body>
 				<div id="wrapper">
 					<header>
+						<meta name="viewport" content="width=device-width, initial-scale=1.0">
 						<img src="logo_dpt.png" alt="digital peace talks" class="logo">
 						<h1>Welcome to digital peace talks.</h1>
 						This is a free open source prototype being developed by a social enterprise.<br><br>
@@ -166,6 +176,7 @@ router.get('/', async (req, res, next) => {
 					</footer>
 				</div>
 				</body>
+				</html>
 			`);
 		}
 		res.status(200);
