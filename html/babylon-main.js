@@ -137,7 +137,8 @@ function getCamera(rotate) {
 			camera.radius = opinionCamState.radius;
 		}
 	}
-	createAvatar(false, camera);
+
+	//createAvatar(false, camera);
 
 	return (camera);
 }
