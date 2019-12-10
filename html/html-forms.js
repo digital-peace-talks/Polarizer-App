@@ -691,7 +691,6 @@ var createGUIScene = function(dptMode) {
 				event.preventDefault();
 			});
 		}
-	
 	});
 
 	//create documentation button
