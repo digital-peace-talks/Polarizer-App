@@ -115,6 +115,7 @@ router.get('/', async (req, res, next) => {
 			<br>
 			<br>
 			<br>
+			</body>
 			</html>`);
 		} else {
 			res.send(`
