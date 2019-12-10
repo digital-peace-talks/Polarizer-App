@@ -7,6 +7,10 @@ var __opinionScene;
 var topicCamState;
 var opinionCamState;
 
+var hamburgerOpen = false;
+
+var isMobile = false; //initiate as false
+
 var myDialogMenu = [];
 var currentDialog;
 

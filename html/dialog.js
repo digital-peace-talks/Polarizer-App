@@ -414,12 +414,6 @@ function dialogForm(secondDialog) {
 			}
 		}
 
-		jQuery(document).one('click', "#dialogClose", function (event) {
-			dialogFormOpen = 0;
-			jQuery('#dialogForm').remove();
-			focusAtCanvas();
-		});
-
 		jQuery(document).one('click', "#extensionRequest", function (event) {
 			if (jQuery("#extensionRequest").is(':checked')) {
 				dpt.extensionRequest(currentDialog.dialog, whoami.dptUUID);
@@ -440,12 +434,6 @@ function dialogForm(secondDialog) {
 						</center>
 					</div>
 			`;
-
-			jQuery(document).one('click', "#dialogClose", function (event) {
-				dialogFormOpen = 0;
-				jQuery('#dialogForm').remove();
-				focusAtCanvas();
-			});
 
 		} else {
 
@@ -483,12 +471,6 @@ function dialogForm(secondDialog) {
 				event.preventDefault();
 			});
 
-			jQuery(document).one('click', "#dialogClose", function (event) {
-				dialogFormOpen = 0;
-				jQuery('#dialogForm').remove();
-				focusAtCanvas();
-			});
-
 			jQuery(document).one('click', "#dialogReject", function (event) {
 				dialogFormOpen = 0;
 				jQuery('#dialogForm').remove();
@@ -501,7 +483,7 @@ function dialogForm(secondDialog) {
 	} else if (currentDialog.status == 'CLOSED') {
 
 		html += `
-		<input type="button" class="buttondialogclose" value="&#10005;" name="close window" size="120" id="dialogCloseWindow">
+		<input type="button" class="buttondialogclose" value="&#10005;" name="close window" size="120" id="dialogClose">
 			<div class="status">
 			
 				<center>
@@ -511,19 +493,20 @@ function dialogForm(secondDialog) {
 			</div>
 		`;
 
-		jQuery(document).one('click', "#dialogCloseWindow", function (event) {
-			dialogFormOpen = 0;
-			jQuery('#dialogForm').remove();
-			event.preventDefault();
-			event.stopImmediatePropagation();
-			focusAtCanvas();
-		});
 	}
 
 	html += '</div></div>';
 
 	jQuery('body').append(`<div id="dialogForm">${html}</div>`);
 
+
+	jQuery(document).one('click', "#dialogClose", function (event) {
+		dialogFormOpen = 0;
+		jQuery('#dialogForm').remove();
+		event.preventDefault();
+		event.stopImmediatePropagation();
+		focusAtCanvas();
+	});
 
 	jQuery(document).on('submit', '#dialogFrame', function (event) {
 
