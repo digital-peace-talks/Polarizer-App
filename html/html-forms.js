@@ -934,6 +934,24 @@ var createGUIScene = function(dptMode) {
 	});
 }
 
+
+	//create setup button
+	var setupBtn = jQuery('#setup-btn');
+	setupBtn.show();
+
+	setupBtn.on('click touch', function(event) {
+		event.stopImmediatePropagation();
+		event.preventDefault();
+
+		if(formVisible && jQuery('#form>form').hasClass('setupForm')) {
+			jQuery("#form").remove();
+			formVisible = false;
+		} else {
+			hideDialogList();
+			requestSetup();
+		}
+	});
+
 function switchToTopics() {
 	opinionCamState = currentScene.cameras[0].storeState();
 	currentScene.dispose();
@@ -986,6 +1004,33 @@ function requestSearch() {
 		formVisible = false;
 	});
 	jQuery(document).on('keydown', '#searchString', function(event) {
+		if (event.keyCode == 27) {
+			jQuery('#form').remove();
+			focusAtCanvas();
+			event.preventDefault();
+		}
+	});
+} 
+
+function requestSetup() {
+	
+	jQuery("#form").remove();
+	formVisible = true;
+	jQuery('body').append(`
+		<div id="form">
+		Setup
+		<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSetupForm" >
+		</div>
+	`);
+
+	jQuery("#closeSetupForm").on('click touch', function(event) {
+		jQuery('#form').remove();
+		formVisible = false;
+		event.stopImmediatePropagation();
+		event.preventDefault();
+	});
+
+	jQuery(document).on('keydown', function(event) {
 		if (event.keyCode == 27) {
 			jQuery('#form').remove();
 			focusAtCanvas();
@@ -1056,5 +1101,3 @@ jQuery(document).on("click touch touchend", "span.myDialogs", function(event) {
 	event.preventDefault();
 });
 
-
-//mobile version menu details
