@@ -82,7 +82,7 @@ function settingsForm(opinionId, topicId) {
 		<br>
 		<hr>
 		<b>Change UI-Theme:</b>
-		<div>
+		<div style="display: flex; flex-direction: row-reverse;">
 		<input class="button" type="button" value="MC" id="changetheme6">
 		<input class="button" type="button" value="Love" id="changetheme5">
 		<input class="button" type="button" value="Thx" id="changetheme4">
