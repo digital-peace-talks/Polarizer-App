@@ -599,7 +599,8 @@ var createGUIScene = function(dptMode) {
 			event.stopImmediatePropagation();
 			event.preventDefault();
 
-			if(formVisible && jQuery('#form>form').hasClass('setupForm')) {
+			if(formVisible && jQuery('#form').hasClass('setupForm') && !isMobile) {
+			//if(formVisible && jQuery('#form>form').hasClass('setupForm')) {
 				jQuery("#form").remove();
 				formVisible = false;
 			} else {
@@ -607,24 +608,6 @@ var createGUIScene = function(dptMode) {
 				requestSetup();
 			}
 		});
-		//create setup button
-		/*
-		var setupBtn = jQuery('#setup-btn');
-		setupBtn.show();
-
-		setupBtn.on('click touch', function(event) {
-			event.stopImmediatePropagation();
-			event.preventDefault();
-
-			if(formVisible && jQuery('#form>form').hasClass('setupForm')) {
-				jQuery("#form").remove();
-				formVisible = false;
-			} else {
-				hideDialogList();
-				requestSetup();
-			}
-		});
-		*/
 	}
 	
 	// is the device a 'mobile'?
@@ -643,9 +626,9 @@ var createGUIScene = function(dptMode) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 
-			if(isMobile) {
-				closeRightMenu();
-			}
+		if(isMobile) {
+			closeRightMenu();
+		}
 		if(formVisible && jQuery('#form').hasClass('aboutForm') && !isMobile) {
 			jQuery('#form').remove();
 			formVisible = false;
@@ -1058,7 +1041,7 @@ function requestSetup() {
 	jQuery("#form").remove();
 	formVisible = true;
 	jQuery('body').append(`
-		<div id="form">
+		<div id="form" class="setupForm">
 		Setup
 		<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSetupForm" >
 		</div>
