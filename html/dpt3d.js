@@ -182,6 +182,7 @@ function main() {
 		whoami = {
 			dptUUID: "",
 			user: {},
+			developer: false
 		};
 
 		__topicScene = createGenericScene;
@@ -218,6 +219,7 @@ function main() {
 			if(restObj.method == "post") {
 				if(restObj.path == "/user/login/") {
 					whoami.dptUUID = restObj.data.dptUUID;
+					whoami.developer = restObj.data.developer;
 					if(restObj.data.message == "logged in") {
 						whoami.user = restObj.data.user;
 						var htmlScheme = '';

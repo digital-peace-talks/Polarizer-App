@@ -590,6 +590,43 @@ function loadDialogList(restObj) {
 // GUI Menubar Buttons
 var createGUIScene = function(dptMode) {
 
+	if(whoami.developer == true) {
+		jQuery(".actionmenu").append(
+			`<li><button class="menu-btn-bar" id="setup-btn" title="Setup">
+			<img class="btn-bar-icon" src="/setup_white.png"></button></li>`);
+		jQuery(".menu-btn-bar").css('width', '20%');
+		jQuery(document).on('click touch', "#setup-btn", function(event) {
+			event.stopImmediatePropagation();
+			event.preventDefault();
+
+			if(formVisible && jQuery('#form>form').hasClass('setupForm')) {
+				jQuery("#form").remove();
+				formVisible = false;
+			} else {
+				hideDialogList();
+				requestSetup();
+			}
+		});
+		//create setup button
+		/*
+		var setupBtn = jQuery('#setup-btn');
+		setupBtn.show();
+
+		setupBtn.on('click touch', function(event) {
+			event.stopImmediatePropagation();
+			event.preventDefault();
+
+			if(formVisible && jQuery('#form>form').hasClass('setupForm')) {
+				jQuery("#form").remove();
+				formVisible = false;
+			} else {
+				hideDialogList();
+				requestSetup();
+			}
+		});
+		*/
+	}
+	
 	// is the device a 'mobile'?
 	if(canvas.width < 640
 	&& (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent)
@@ -937,6 +974,7 @@ var createGUIScene = function(dptMode) {
 }
 
 
+/*
 	//create setup button
 	var setupBtn = jQuery('#setup-btn');
 	setupBtn.show();
@@ -953,6 +991,7 @@ var createGUIScene = function(dptMode) {
 			requestSetup();
 		}
 	});
+*/
 
 function switchToTopics() {
 	opinionCamState = currentScene.cameras[0].storeState();
