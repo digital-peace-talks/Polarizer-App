@@ -148,7 +148,7 @@ function setCaretToPos(input, pos) {
 	setSelectionRange(input, pos, pos);
 }
 
-function colorBlock(d) {
+function emoticon(d) {
 	if (d > 0.25) {
 		return ('<span id="positive" style="font-size: 28px">&#128512; Positive</span>');
 	} else if (d < -0.25) {
@@ -206,9 +206,9 @@ function dialogForm(secondDialog) {
 
 			if (currentDialog.crisises[i].initiator == 'me'
 				|| currentDialog.crisises[i].recipient == 'notme2') {
-				headerMine += `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${colorBlock(currentDialog.crisises[i].rating)}`;
+				headerMine += `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${emoticon(currentDialog.crisises[i].rating)}`;
 			} else if (currentDialog.crisises[i].initiator == 'notme') {
-				headerOther += `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${colorBlock(currentDialog.crisises[i].rating)}`;
+				headerOther += `Last statement: ${currentDialog.crisises[i].reason}<br>Rating: ${emoticon(currentDialog.crisises[i].rating)}`;
 			}
 
 		} else {
@@ -263,7 +263,7 @@ function dialogForm(secondDialog) {
 				if (secondDialog.initiator == 'me' || secondDialog.initiator == 'notme2') {
 					propositionMine = `Proposion: ${secondDialog.headerProposition}<br>`;
 				}
-				ratingMe = `${propositionMine}Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${colorBlock(secondDialog.crisises[i].rating)}`;
+				ratingMe = `${propositionMine}Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${emoticon(secondDialog.crisises[i].rating)}`;
 
 			} else if (secondDialog.crisises[i].initiator == 'notme') {
 
@@ -271,7 +271,7 @@ function dialogForm(secondDialog) {
 				if (secondDialog.initiator == 'notme') {
 					propositionOther = `Proposion: ${secondDialog.headerProposition}<br>`;
 				}
-				ratingOther = `${propositionOther}Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${colorBlock(secondDialog.crisises[i].rating)}`;
+				ratingOther = `${propositionOther}Last statement: ${secondDialog.crisises[i].reason}<br>Rating: ${emoticon(secondDialog.crisises[i].rating)}`;
 
 			}
 		}
