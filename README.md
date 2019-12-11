@@ -65,7 +65,7 @@ With this components ready, you can follow these instructions to get it running:
 
 ```shell
 $ git clone https://github.com/digital-peace-talks/DPT.git
-$ cd DPT-server
+$ cd DPT
 $ cp .env.example .env
 $ vi .env
 $ npm install
