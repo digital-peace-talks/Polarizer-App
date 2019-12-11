@@ -29,7 +29,7 @@ Users can send messages to users that accepted their request.
 ### end 1:1 dialogue 
 Users can permanently end 1:1 dialogues. A pair of users can have a maximum of two dialogues. 
 
-### rate 1.1 dialogue 
+### rate 1:1 dialogue 
 Both users can rate an ended dialogue with negative, neutral or positive. Once both users rated, the results are visualised as follows: 
 - positive/positive = green line
 - positive/neutral = green line
