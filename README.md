@@ -64,7 +64,7 @@ For testing, the easiest way to get it up & running:
 With this components ready, you can follow these instructions to get it running:
 
 ```shell
-$ git clone https://github.com/digital-peace-talks/DPT-server.git
+$ git clone https://github.com/digital-peace-talks/DPT.git
 $ cd DPT-server
 $ cp .env.example .env
 $ vi .env
