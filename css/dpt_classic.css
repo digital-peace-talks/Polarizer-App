@@ -1039,7 +1039,7 @@ section ul li {
 }
 
 .fb_gd_wrap .content {
-  background: transparent;
+  background: #28a9e1;
   z-index: 1000;
   -webkit-box-shadow: 0px 0px 20px #030911;
           box-shadow: 0px 0px 20px #030911;
