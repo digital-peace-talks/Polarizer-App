@@ -41,7 +41,7 @@ Both users can rate an ended dialogue with negative, neutral or positive. Once b
 
 ## Live demos
 - [sandbox](https://sandbox.dpt.world/) (reset every night)
-- [user tests](https://try.dpt.world/) (every second wendesday 8 PM CET)
+- [user tests](https://try.digitalpeacetalks.com/) (every second wendesday 8 PM CET)
 
 
 ## Screenshot:
