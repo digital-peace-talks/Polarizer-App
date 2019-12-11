@@ -375,3 +375,38 @@ var createGenericScene = function(dptMode) {
 	
 	return genericScene;
 }
+
+function startBabylonEngine() {
+	engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
+	//engine.doNotHandleContextLost = true;
+	//engine.enableOfflineSupport = false;
+	
+	// babylon render loop
+	engine.runRenderLoop(function() {
+		let timeout = BABYLON.Tools.Now - idleSince;
+		
+		// stop rendering after 3s idle time
+		if(timeout > 3000.0) {
+			powerSave = true;
+		}
+	
+		// reload scene after 10min idle time
+		if(timeout > 600000.0) {
+			if(currentScene.name == "topicScene") {
+				dpt.getTopic();
+			} else if(currentScene.name == "opinionScene" && currentTopic) {
+				dpt.getOpinionByTopic(currentTopic);
+			}
+			powerSave = false;
+			idleSince = BABYLON.Tools.Now;
+//		} else {
+//			jQuery('#debug').text("");
+		}
+	
+		if(currentScene && !powerSave) {
+//			jQuery('#debug').text(engine.getFps()+"\n"+(BABYLON.Tools.Now - idleSince));
+			currentScene.render();
+		}
+	
+	});
+}

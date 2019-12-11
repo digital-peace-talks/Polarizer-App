@@ -497,31 +497,7 @@ function main() {
 		`);
 		*/
 		
-		engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
-		//engine.doNotHandleContextLost = true;
-		//engine.enableOfflineSupport = false;
-		
-		engine.runRenderLoop(function() {
-			let timeout = BABYLON.Tools.Now - idleSince;
-			if(timeout > 3000.0) {
-				powerSave = true;
-			}
-			if(timeout > 600000.0) {
-				if(currentScene.name == "topicScene") {
-					dpt.getTopic();
-				} else if(currentScene.name == "opinionScene" && currentTopic) {
-					dpt.getOpinionByTopic(currentTopic);
-				}
-				powerSave = false;
-				idleSince = BABYLON.Tools.Now;
-			} else {
-				jQuery('#debug').text("");
-			}
-			if(currentScene && !powerSave) {
-//				jQuery('#debug').text(engine.getFps()+"\n"+(BABYLON.Tools.Now - idleSince));
-				currentScene.render();
-			}
-		});
+		startBabylonEngine();
 		
 		// Resize
 		window.addEventListener("resize", function() {
