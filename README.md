@@ -23,7 +23,7 @@ Users can accept or deny requests for dialogue within their dialogue list. A den
 
 ### lead a 1:1 dialogue
 Users can send messages to users that accepted their request. 
-- We a testing constrains to incentivise constructivnes. 
+- We are testing constrains to incentivise constructivnes. 
 - ATM we are testing to limit the maximum number of messages to incentivise on point argumentation. 
 
 ### end 1:1 dialogue 
@@ -40,9 +40,9 @@ Both users can rate an ended dialogue with negative, neutral or positive. Once b
 -->The protocols of rated dialogues are pubslished! 
 
 ## Live demos
-[sandbox](https://sandbox.dpt.world/) (reset every night)
-[user tests](https://try.dpt.world/) (every second wendesday 8 PM CET)
-[dev server](https://proto1.dpt.world/) (unstable and explicit)
+- [sandbox](https://sandbox.dpt.world/) (reset every night)
+- [user tests](https://try.digitalpeacetalks.com/) (every second wendesday 8 PM CET)
+
 
 ## Screenshot:
 ![Alt text](docs/screenshot.png?raw=true "DPT Screenshot")
@@ -64,7 +64,7 @@ For testing, the easiest way to get it up & running:
 With this components ready, you can follow these instructions to get it running:
 
 ```shell
-$ git clone https://github.com/digital-peace-talks/DPT-server.git
+$ git clone https://github.com/digital-peace-talks/DPT.git
 $ cd DPT-server
 $ cp .env.example .env
 $ vi .env
