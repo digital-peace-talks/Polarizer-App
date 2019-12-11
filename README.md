@@ -4,8 +4,7 @@
 
 Digital Peace Talks is (and always will be) a free and open web app that visualises the quality of interactions between opinions expressed to a given topic. 
 
-Features:
-
+## Features:
 
 ### create random ID 
 Privacy is protected by a random and encrypted ID.
