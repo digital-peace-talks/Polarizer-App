@@ -40,9 +40,9 @@ Both users can rate an ended dialogue with negative, neutral or positive. Once b
 -->The protocols of rated dialogues are pubslished! 
 
 ## Live demos
-[sandbox](https://sandbox.dpt.world/) (reset every night)
-[user tests](https://try.dpt.world/) (every second wendesday 8 PM CET)
-[dev server](https://proto1.dpt.world/) (unstable and explicit)
+- [sandbox](https://sandbox.dpt.world/) (reset every night)
+- [user tests](https://try.dpt.world/) (every second wendesday 8 PM CET)
+
 
 ## Screenshot:
 ![Alt text](docs/screenshot.png?raw=true "DPT Screenshot")
