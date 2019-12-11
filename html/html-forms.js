@@ -1,36 +1,12 @@
 
 function hideMenu() {
-//	jQuery('#button-menu').fadeOut();
-//	jQuery('#overlay').css("background-image", "url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Hamburger_icon.svg/1200px-Hamburger_icon.svg.png')");
-	
-	/*
-	var mql = window.matchMedia("(orientation: landscape)");
-	mql.addListener(function (m) {
-		if (m.matches) {
-			if (!hamburgerOpen) {
-				jQuery("nav ul").css("left", 640);
-			}
-		}
-	});
-	*/
-	
 	var menuLeft = canvas.width;
 	if (canvas.width > 640) {
 		menuLeft = 228;
 	}
 
-	/*
-	hamburgerOpen = !hamburgerOpen;
-	if (hamburgerOpen) {
-		jQuery("nav ul").css("left", "0px");
-		jQuery("a.hamburger").html('<img src="/button_close.png">');
-	} else {
-		jQuery("nav ul").css("left", menuLeft);
-		jQuery("a.hamburger").html('<img src="/button_menu.png">');
-	}
-	*/
-		jQuery("nav ul").css("left", menuLeft);
-		jQuery("a.hamburger").html('<img src="/button_menu.png">');
+	jQuery("nav ul").css("left", menuLeft);
+	jQuery("a.hamburger").html('<img src="/button_menu.png">');
 }
 
 function settingsForm(opinionId, topicId) {
@@ -956,26 +932,6 @@ var createGUIScene = function(dptMode) {
 	});
 }
 
-
-/*
-	//create setup button
-	var setupBtn = jQuery('#setup-btn');
-	setupBtn.show();
-
-	setupBtn.on('click touch', function(event) {
-		event.stopImmediatePropagation();
-		event.preventDefault();
-
-		if(formVisible && jQuery('#form>form').hasClass('setupForm')) {
-			jQuery("#form").remove();
-			formVisible = false;
-		} else {
-			hideDialogList();
-			requestSetup();
-		}
-	});
-*/
-
 function switchToTopics() {
 	opinionCamState = currentScene.cameras[0].storeState();
 	currentScene.dispose();
@@ -1017,13 +973,14 @@ function requestSearch() {
 	jQuery(document).on('submit', '.searchForm', function(event) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
+		var searchString = jQuery('input#searchString').val();
 		if(currentScene.name == "opinionScene") {
 			opinionCamState = currentScene.cameras[0].storeState();
 			currentScene.dispose();
 			currentScene = __topicScene("topicScene");
 			currentScene.name = "topicScene";
 		}
-		dpt.searchTopicsAndOpinions(jQuery('#searchString').val());
+		dpt.searchTopicsAndOpinions(searchString);
 		jQuery('#form').remove();
 		formVisible = false;
 	});
