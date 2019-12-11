@@ -28,7 +28,7 @@ var powerSave = false;
 var touchScreen = false;
 var dialogFormOpen = 0;
 
-var DPTConst = {
+var DPTGlobal = {
 	"COLORS_default": 0,
 	"COLORS_dark": 1,
 	"COLORS_bright": 2,
@@ -36,7 +36,6 @@ var DPTConst = {
 };
 
 // Script Guided Tour
-//window.onload = function () {
 function startGuidedTour() {
 
 	jQuery('#animCircle').css('visibility', 'visible');
@@ -342,7 +341,7 @@ function onWebSocketAPI(restObj) {
 			}
 		} else if(restObj.path == '/opinion/postAllowed/') {
 			if(restObj.data.value == true) {
-					opinionForm();
+				opinionForm();
 			} else {
 				alert('Only one opinion per topic.');
 			}
@@ -354,6 +353,35 @@ function onWebSocketAPI(restObj) {
 			dpt.getOpinionByTopic(currentTopic);
 		}	
 	}
+}
+
+function setHtmlScheme() {
+	var htmlScheme = '';
+	switch(whoami.user.preferences.htmlScheme) {
+		case 1:
+			htmlScheme = "dpt_bright.css";
+			break;
+		case 2:
+			htmlScheme = "dpt_dark.css";
+			break;
+		case 3:
+			htmlScheme = "dpt_linden.css";
+			break;
+		case 4:
+			htmlScheme = "dpt_love.css";
+			break;
+		case 5:
+			htmlScheme = "dpt_mc.css";
+			break;
+		case 0:
+		default:
+			htmlScheme = "dpt_classic.css";
+			break;
+	}
+	//document.getElementById('theme_css').href = htmlScheme;
+	setTimeout(function() {
+		document.getElementById('theme_css').href = htmlScheme;
+	}, 300);
 }
 
 function main() {
@@ -389,15 +417,15 @@ function main() {
 
 		// Handle the incomming websocket trafic
 		socket.on("connect", () => {
+
 			// if needed, we could keep socket.id somewhere
 			console.log('we are: '+socket.id);
-//			currentScene = createGenericScene("topicScene");
-//			currentScene.name = 'topicScene';
 			if(document.cookie) {
 				dpt.userLogin(document.cookie);
 			} else {
 				alert('document cookie not set');
 			}
+
 		});
 
 		socket.on("3d", function(update) {
@@ -418,37 +446,15 @@ function main() {
 					whoami.dptUUID = restObj.data.dptUUID;
 					whoami.developer = restObj.data.developer;
 					if(restObj.data.message == "logged in") {
+
 						whoami.user = restObj.data.user;
-						var htmlScheme = '';
-						switch(whoami.user.preferences.htmlScheme) {
-							case 1:
-								htmlScheme = "dpt_bright.css";
-								break;
-							case 2:
-								htmlScheme = "dpt_dark.css";
-								break;
-							case 3:
-								htmlScheme = "dpt_linden.css";
-								break;
-							case 4:
-								htmlScheme = "dpt_love.css";
-								break;
-							case 5:
-								htmlScheme = "dpt_mc.css";
-								break;
-							case 0:
-							default:
-								htmlScheme = "dpt_classic.css";
-								break;
-						}
-						//document.getElementById('theme_css').href = htmlScheme;
-						setTimeout(function() {
-							document.getElementById('theme_css').href = htmlScheme;
-						}, 300);
+						setHtmlScheme();
+
 						currentScene = createGenericScene("topicScene");
 						currentScene.name = 'topicScene';
 						dpt.getTopic();
 						dpt.getDialogList();
+
 						if(whoami.user.preferences.guidedTour) {
 							startGuidedTour();
 						} else {
@@ -459,11 +465,11 @@ function main() {
 								
 					} else if(restObj.data.message == "user unknown") {
 						alert(`User unknown.
-								Please go back to the start page,
-								delete your cookie. You can try to get your
-								phrase recovered or get a new phrase.
+							Please go back to the start page,
+							delete your cookie. You can try to get your
+							phrase recovered or get a new phrase.
 
-								maybe cookies are disable?`);
+							maybe cookies are disable?`);
 						whoami.user = {};
 					}
 				}

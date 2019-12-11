@@ -55,16 +55,16 @@ function settingsForm(opinionId, topicId) {
 			colors += `<label><input type="radio" name="colorScheme" value="${i}">`;
 		}
 		switch(i) {
-			case DPTConst.COLORS_bright:
+			case DPTGlobal.COLORS_bright:
 				colors += " Bright</label>";
 				break
-			case DPTConst.COLORS_dark:
+			case DPTGlobal.COLORS_dark:
 				colors += " Dark</label>";
 				break
-			case DPTConst.COLORS_skybox:
+			case DPTGlobal.COLORS_skybox:
 				colors += " Skybox</label>";
 				break
-			case DPTConst.COLORS_default:
+			case DPTGlobal.COLORS_default:
 			default:
 				colors += " Default</label>";
 				break

@@ -162,13 +162,13 @@ var createGenericScene = function(dptMode) {
 	light.intensity = 0.5;
 
 	switch(whoami.user.preferences.colorScheme) {
-		case DPTConst.COLORS_dark:
+		case DPTGlobal.COLORS_dark:
 			genericScene.clearColor = new BABYLON.Color3(0, 0.1, 0.2);
 			break;
-		case DPTConst.COLORS_bright:
+		case DPTGlobal.COLORS_bright:
 			genericScene.clearColor = new BABYLON.Color3(.7, 0.9, 1.0);
 			break;
-		case DPTConst.COLORS_skybox:
+		case DPTGlobal.COLORS_skybox:
 			var skybox = BABYLON.Mesh.CreateBox("skyBox", 250.0, currentScene);
 			var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", currentScene);
 			skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("/skybox/space2", currentScene);
@@ -178,7 +178,7 @@ var createGenericScene = function(dptMode) {
 			skybox.infiniteDistance = true;
 			skybox.material = skyboxMaterial;
 			break;
-		case DPTConst.COLORS_default:
+		case DPTGlobal.COLORS_default:
 		default:
 			genericScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
 	}
