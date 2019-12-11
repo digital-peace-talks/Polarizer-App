@@ -176,7 +176,6 @@ input {
   color: $dpt-green;
 }
 
-// dunkles inputfeld ändern
 input[type="text"] {
   border-color: $dpt-second-border;
   color: $dpt-third-text;
@@ -546,9 +545,7 @@ div#dialogFrame {
   background-color: $dpt-menu;
   visibility: hidden;
   bottom: 0px;
-  //bottom: 48px;
   left: 0%;
-  //margin-left: -200px;
   box-shadow: 0px 0px 20px $dpt-shadow;
 }
 
@@ -1413,7 +1410,7 @@ pointer-events: none;
   nav ul li {
     display: block;
     text-align: left;
-    padding: 0em 0em;
+    padding: 0 0;
   }
   nav ul li button {
     padding: 1em 0;
@@ -1506,7 +1503,7 @@ pointer-events: none;
     left: 0;
   }
 
-  // __________________ mobile guided tour
+  // __________________needed at mobile guided tour
   .fb_gd_wrap .content {
     width: 100%;
   }

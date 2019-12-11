@@ -1457,7 +1457,7 @@ section ul li {
   nav ul li {
     display: block;
     text-align: left;
-    padding: 0em 0em;
+    padding: 0 0;
   }
   nav ul li button {
     padding: 1em 0;
