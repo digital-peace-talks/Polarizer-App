@@ -1,34 +1,37 @@
+// global vars
+
+
 var canvas = document.getElementById("renderCanvas");
 var engine;
-var advancedTexture;
+
 var currentScene;
 var __topicScene;
 var __opinionScene;
 var topicCamState;
 var opinionCamState;
 
-var hamburgerOpen = false;
-
-var isMobile = false; //initiate as false
-
-var myDialogMenu = [];
-var currentDialog;
-
-var myDialogsVisible = 'hidden';
-var formVisible = false;
+var idleSince = 100000;
+var powerSave = false;
 
 var currentTopic;
 var currentTopicStr;
 
+var currentDialog;
+var isMobile = false; //initiate as false
+var myDialogMenu = [];
+
+var hamburgerOpen = false;
+
+var myDialogsVisible = 'hidden';
+var formVisible = false;
+
 var dpt;
 var whoami;
-var idleSince = 100000;
 
-var powerSave = false;
 var touchScreen = false;
 var dialogFormOpen = 0;
 
-var DPTConst = {
+var DPTGlobal = {
 	"COLORS_default": 0,
 	"COLORS_dark": 1,
 	"COLORS_bright": 2,
@@ -36,7 +39,6 @@ var DPTConst = {
 };
 
 // Script Guided Tour
-//window.onload = function () {
 function startGuidedTour() {
 
 	jQuery('#animCircle').css('visibility', 'visible');
@@ -222,8 +224,8 @@ function copyToClipboard(str) {
 	document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
 	const selected =
 		document.getSelection().rangeCount > 0      // Check if there is any content selected previously
-			? document.getSelection().getRangeAt(0)     // Store selection if found
-			: false;                                    // Mark as false to know no selection existed before
+		? document.getSelection().getRangeAt(0)     // Store selection if found
+		: false;                                    // Mark as false to know no selection existed before
 	el.select();                                    // Select the <textarea> content
 	document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
 	document.body.removeChild(el);                  // Remove the <textarea> element
@@ -342,7 +344,7 @@ function onWebSocketAPI(restObj) {
 			}
 		} else if(restObj.path == '/opinion/postAllowed/') {
 			if(restObj.data.value == true) {
-					opinionForm();
+				opinionForm();
 			} else {
 				alert('Only one opinion per topic.');
 			}
@@ -356,173 +358,161 @@ function onWebSocketAPI(restObj) {
 	}
 }
 
+function setHtmlScheme() {
+	var htmlScheme = '';
+	switch(whoami.user.preferences.htmlScheme) {
+		case 1:
+			htmlScheme = "dpt_bright.css";
+			break;
+		case 2:
+			htmlScheme = "dpt_dark.css";
+			break;
+		case 3:
+			htmlScheme = "dpt_linden.css";
+			break;
+		case 4:
+			htmlScheme = "dpt_love.css";
+			break;
+		case 5:
+			htmlScheme = "dpt_mc.css";
+			break;
+		case 0:
+		default:
+			htmlScheme = "dpt_classic.css";
+			break;
+	}
+	//document.getElementById('theme_css').href = htmlScheme;
+	setTimeout(function() {
+		document.getElementById('theme_css').href = htmlScheme;
+	}, 300);
+}
+
 function main() {
 
-	document.addEventListener("DOMContentLoaded", function(event) {
-		if('ontouchstart' in window
-		|| window.DocumentTouch && document instanceof window.DocumentTouch
-		|| navigator.maxTouchPoints > 0
-		|| window.navigator.msMaxTouchPoints) {
-			touchScreen = true;
+	if('ontouchstart' in window
+	|| window.DocumentTouch && document instanceof window.DocumentTouch
+	|| navigator.maxTouchPoints > 0
+	|| window.navigator.msMaxTouchPoints) {
+		touchScreen = true;
+	}
+
+	focusAtCanvas();
+
+	// open a websocket connection to the server
+	var socket = io.connect(
+		window.location.protocol + "//" + window.location.host, {
+			transports: ["websocket"],
+		}
+	);
+
+	// get DPT api class instance
+	dpt = new DPT(socket);
+
+	// initialize global vars
+	var restObj = {};
+	whoami = {
+		dptUUID: "",
+		user: {},
+		developer: false
+	};
+
+	// assign the generic scene function to some globals
+	// with special name
+	__topicScene = createGenericScene;
+	__topicScene.name = 'topicScene';
+	__opinionScene = createGenericScene;
+	__opinionScene.name = 'opinionScene';
+
+	// Handle the incomming websocket trafic
+	socket.on("connect", () => {
+
+		// if needed, we could keep socket.id somewhere
+		console.log('we are: '+socket.id);
+		if(document.cookie) {
+			dpt.userLogin(document.cookie);
+		} else {
+			alert('document cookie not set');
 		}
 
-		focusAtCanvas();
-		//jQuery('canvas#renderCanvas').focus();
-		var socket = io.connect(
-			window.location.protocol + "//" + window.location.host, {
-				transports: ["websocket"],
-			}
-		);
+	});
 
-		dpt = new DPT(socket);
-		var restObj = {};
-		whoami = {
-			dptUUID: "",
-			user: {},
-			developer: false
-		};
+	// this function get called when we work with 3d avatars
+	socket.on("3d", function(update) {
+		if(update.event == 'connect'
+		&& update.avatar != socket.id) {
+			createAvatar(update, false);
+		} else if(update.event == 'disconnect') {
+			disposeAvatar(update);
+		} else if(update.event == 'update') {
+			updateAvatar(update);
+		}
+		console.log(update);
+	});
 
-		__topicScene = createGenericScene;
-		__topicScene.name = 'topicScene';
-		__opinionScene = createGenericScene;
-		__opinionScene.name = 'opinionScene';
+	// special call for login procedure, we keep it a bit separate.
+	socket.on("private", function(restObj) {
+		if(restObj.method == "post") {
+			if(restObj.path == "/user/login/") {
+				whoami.dptUUID = restObj.data.dptUUID;
+				whoami.developer = restObj.data.developer;
+				if(restObj.data.message == "logged in") {
 
-		// Handle the incomming websocket trafic
-		socket.on("connect", () => {
-			// if needed, we could keep socket.id somewhere
-			console.log('we are: '+socket.id);
-//			currentScene = createGenericScene("topicScene");
-//			currentScene.name = 'topicScene';
-			if(document.cookie) {
-				dpt.userLogin(document.cookie);
-			} else {
-				alert('document cookie not set');
-			}
-		});
+					whoami.user = restObj.data.user;
+					setHtmlScheme();
 
-		socket.on("3d", function(update) {
-			if(update.event == 'connect'
-			&& update.avatar != socket.id) {
-				createAvatar(update, false);
-			} else if(update.event == 'disconnect') {
-				disposeAvatar(update);
-			} else if(update.event == 'update') {
-				updateAvatar(update);
-			}
-			console.log(update);
-		});
-
-		socket.on("private", function(restObj) {
-			if(restObj.method == "post") {
-				if(restObj.path == "/user/login/") {
-					whoami.dptUUID = restObj.data.dptUUID;
-					whoami.developer = restObj.data.developer;
-					if(restObj.data.message == "logged in") {
-						whoami.user = restObj.data.user;
-						var htmlScheme = '';
-						switch(whoami.user.preferences.htmlScheme) {
-							case 1:
-								htmlScheme = "dpt_bright.css";
-								break;
-							case 2:
-								htmlScheme = "dpt_dark.css";
-								break;
-							case 3:
-								htmlScheme = "dpt_linden.css";
-								break;
-							case 4:
-								htmlScheme = "dpt_love.css";
-								break;
-							case 5:
-								htmlScheme = "dpt_mc.css";
-								break;
-							case 0:
-							default:
-								htmlScheme = "dpt_classic.css";
-								break;
-						}
-						//document.getElementById('theme_css').href = htmlScheme;
-						setTimeout(function() {
-							document.getElementById('theme_css').href = htmlScheme;
-						}, 300);
-						currentScene = createGenericScene("topicScene");
-						currentScene.name = 'topicScene';
-						dpt.getTopic();
-						dpt.getDialogList();
-						if(whoami.user.preferences.guidedTour) {
-							startGuidedTour();
-						} else {
-							jQuery('.tutorialBorder').remove();
-							jQuery('.animated-circle').remove();
-							jQuery('.fb_gd_wrap').remove();
-						}
-								
-					} else if(restObj.data.message == "user unknown") {
-						alert(`User unknown.
-								Please go back to the start page,
-								delete your cookie. You can try to get your
-								phrase recovered or get a new phrase.
-
-								maybe cookies are disable?`);
-						whoami.user = {};
-					}
-				}
-			}
-		});
-
-		socket.on("error", function(e) {
-			console.log("System", e ? e : "A unknown error occurred");
-			document.location.reload(true);
-			window.location.reload(true);
-		});
-
-		// server says it has some updates for client
-		socket.on('update', function(restObj) {
-			onWebSocketUpdate(restObj);
-		});
-
-		socket.on("api", function(restObj) {
-			onWebSocketAPI(restObj);
-		});
-
-		/*
-		jQuery('body').append(`<div id="debug" style="position: absolute;
-			color: white; height: 80px; width: 390px; right: 390px; z-index:999; bottom: 80px"></div>
-		`);
-		*/
-		
-		engine = new BABYLON.Engine(canvas, true); //, { preserveDrawingBuffer: true, stencil: true });
-		//engine.doNotHandleContextLost = true;
-		//engine.enableOfflineSupport = false;
-		
-		engine.runRenderLoop(function() {
-			let timeout = BABYLON.Tools.Now - idleSince;
-			if(timeout > 3000.0) {
-				powerSave = true;
-			}
-			if(timeout > 600000.0) {
-				if(currentScene.name == "topicScene") {
+					currentScene = createGenericScene("topicScene");
+					currentScene.name = 'topicScene';
 					dpt.getTopic();
-				} else if(currentScene.name == "opinionScene" && currentTopic) {
-					dpt.getOpinionByTopic(currentTopic);
+					dpt.getDialogList();
+
+					if(whoami.user.preferences.guidedTour) {
+						startGuidedTour();
+					} else {
+						jQuery('.tutorialBorder').remove();
+						jQuery('.animated-circle').remove();
+						jQuery('.fb_gd_wrap').remove();
+					}
+							
+				} else if(restObj.data.message == "user unknown") {
+					alert(`User unknown.
+						Please go back to the start page,
+						delete your cookie. You can try to get your
+						phrase recovered or get a new phrase.
+
+						maybe cookies are disable?`);
+					whoami.user = {};
 				}
-				powerSave = false;
-				idleSince = BABYLON.Tools.Now;
-			} else {
-				jQuery('#debug').text("");
 			}
-			if(currentScene && !powerSave) {
-//				jQuery('#debug').text(engine.getFps()+"\n"+(BABYLON.Tools.Now - idleSince));
-				currentScene.render();
-			}
-		});
-		
-		// Resize
-		window.addEventListener("resize", function() {
-			idleSince = BABYLON.Tools.Now;
-			powerSave = false;
-			engine.resize();
-		});
+		}
+	});
+
+	socket.on("error", function(e) {
+		console.log("System", e ? e : "A unknown error occurred");
+		document.location.reload(true);
+		window.location.reload(true);
+	});
+
+	// server says it has some updates for client
+	socket.on('update', function(restObj) {
+		onWebSocketUpdate(restObj);
+	});
+
+	socket.on("api", function(restObj) {
+		onWebSocketAPI(restObj);
+	});
+
+	// this is for create a on-screen debug div for debugging purposes
+	/*
+	jQuery('body').append(`<div id="debug" style="position: absolute;
+		color: white; height: 80px; width: 390px; right: 390px; z-index:999; bottom: 80px"></div>
+	`);
+	*/
+	
+	// Resize
+	window.addEventListener("resize", function() {
+		idleSince = BABYLON.Tools.Now;
+		powerSave = false;
+		engine.resize();
 	});
 
 	jQuery(window).blur(function() {
@@ -535,8 +525,13 @@ function main() {
 		idleSince = BABYLON.Tools.Now;
 		powerSave = false;
 	});
-	
 
+	// get 3D.
+	startBabylonEngine();
 }
 
-main();
+// hooray! we start our javascript in main().
+
+document.addEventListener("DOMContentLoaded", function(event) {
+	main();
+});

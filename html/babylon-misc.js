@@ -200,13 +200,13 @@ function textBlock(x, y, z, name, text, options) {
 	textureContext.font = (options.fontSize || "22") + "px DPTFont";
 	textureContext.save();
 	switch(whoami.user.preferences.colorScheme) {
-		case DPTConst.COLORS_dark:
+		case DPTGlobal.COLORS_dark:
 			textureContext.fillStyle = "#7fffff";
 			break;
-		case DPTConst.COLORS_bright:
+		case DPTGlobal.COLORS_bright:
 			textureContext.fillStyle = "#601616";
 			break;
-		case DPTConst.COLORS_default:
+		case DPTGlobal.COLORS_default:
 		default:
 			textureContext.fillStyle = "#51c1fe";
 	}
@@ -225,13 +225,13 @@ function textBlock(x, y, z, name, text, options) {
 		textureContext.drawImage(inviteIcon, 0, 0, 36, 36);
 		textureContext.globalCompositeOperation = "xor";
 		switch(whoami.user.preferences.colorScheme) {
-			case DPTConst.COLORS_dark:
+			case DPTGlobal.COLORS_dark:
 				textureContext.fillStyle = "#00ff00";
 				break;
-			case DPTConst.COLORS_bright:
+			case DPTGlobal.COLORS_bright:
 				textureContext.fillStyle = "#00801a";
 				break;
-			case DPTConst.COLORS_default:
+			case DPTGlobal.COLORS_default:
 			default:
 				textureContext.fillStyle = "#51c1fe";
 		}
@@ -242,13 +242,13 @@ function textBlock(x, y, z, name, text, options) {
 		textureContext.drawImage(editIcon, 36, 0, 36, 36);
 		textureContext.globalCompositeOperation = "xor";
 		switch(whoami.user.preferences.colorScheme) {
-			case DPTConst.COLORS_dark:
+			case DPTGlobal.COLORS_dark:
 				textureContext.fillStyle = "#ff7f00";
 				break;
-			case DPTConst.COLORS_bright:
+			case DPTGlobal.COLORS_bright:
 				textureContext.fillStyle = "#7a1a00";
 				break;
-			case DPTConst.COLORS_default:
+			case DPTGlobal.COLORS_default:
 			default:
 				textureContext.fillStyle = "#51c1fe";
 		}
@@ -259,13 +259,13 @@ function textBlock(x, y, z, name, text, options) {
 		textureContext.drawImage(onlineIcon, 72, 0, 36, 36);
 		textureContext.globalCompositeOperation = "xor";
 		switch(whoami.user.preferences.colorScheme) {
-			case DPTConst.COLORS_dark:
+			case DPTGlobal.COLORS_dark:
 				textureContext.fillStyle = "#009900";
 				break;
-			case DPTConst.COLORS_bright:
+			case DPTGlobal.COLORS_bright:
 				textureContext.fillStyle = "#009900";
 				break;
-			case DPTConst.COLORS_default:
+			case DPTGlobal.COLORS_default:
 			default:
 				textureContext.fillStyle = "#009900";
 		}

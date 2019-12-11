@@ -66,7 +66,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	var distance = 0;
 
 	if(status == 'PENDING') {
-		return;
+//		return;
 	}
 	var sv = new BABYLON.Vector3(initiatorOpinion.position);
 	var ev = new BABYLON.Vector3(recipientOpinion.position);
@@ -171,6 +171,9 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 
 	if(combination.indexOf('grey') >= 0) {
 		combination = 'grey-grey';
+		if(status == 'PENDING') {
+			combination = 'brown-brown';
+		}
 	}
 	
 	// dominant color scheme
