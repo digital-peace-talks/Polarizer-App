@@ -35,6 +35,203 @@ var DPTConst = {
 	"COLORS_skybox": 3,
 };
 
+// Script Guided Tour
+//window.onload = function () {
+function startGuidedTour() {
+
+	jQuery('#animCircle').css('visibility', 'visible');
+	const guidePosition = [{
+		// welcome to tour
+		top: "auto",
+		left: "0px",
+		bottom: "50px",
+		right: "auto",
+		topMark: document.getElementById('guideNextBtn').getBoundingClientRect().top + "px",
+		leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px",
+		buttonLeftName: "",
+		buttonRightName: "start tour",
+		guideText: "A new way to discuss",
+	}, {
+		// tutorial mobile
+		top: "auto",
+		left: "0px",
+		bottom: "0px",
+		right: "auto",
+		topMark: "30%",
+		leftMark: "50%",
+		buttonLeftName: "back",
+		buttonRightName: "next",
+		guideText: "How to navigate",
+	}, {
+		// tutorial desktop
+		top: "auto",
+		left: "0px",
+		bottom: "0px",
+		right: "auto",
+		topMark: "40%",
+		leftMark: "50%",
+		buttonLeftName: "back",
+		buttonRightName: "next",
+		guideText: "How to navigate",
+	}, {
+		// Choose a topic 
+		top: "0px",
+		left: "0px",
+		bottom: "auto",
+		right: "auto",
+		topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
+		leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
+		buttonLeftName: "back",
+		buttonRightName: "next",
+		guideText: "Choose a topic"
+	}, {
+		// start opinion
+		top: "30%",
+		left: "0px",
+		bottom: "auto",
+		right: "auto",
+		buttonLeftName: "back",
+		buttonRightName: "next",
+		guideText: "Publish your opinion"
+	}, {
+		// open list
+		top: "0px",
+		left: "0px",
+		bottom: "auto",
+		right: "auto",
+		topMark: "55%",
+		leftMark: "50%",
+		//topMark: document.getElementById('new-opinion-btn').getBoundingClientRect().top + "px",
+		//leftMark: document.getElementById('new-opinion-btn').getBoundingClientRect().left + "px",
+		topMark: "40%",
+		leftMark: "50%",
+		buttonLeftName: "back",
+		buttonRightName: "next",
+		guideText: "Start a dialogue"
+	}, {
+		// start with opinion/topic
+		top: "30%",
+		left: "0px",
+		bottom: "auto",
+		right: "auto",
+		topMark: document.getElementById('dialogues-btn').getBoundingClientRect().top + "px",
+		leftMark: document.getElementById('dialogues-btn').getBoundingClientRect().left + "px",
+		buttonLeftName: "back",
+		buttonRightName: "next",
+		guideText: "Dialoguelist",
+	}, {
+		// exit the guided tour
+		top: "30%",
+		left: "0px",
+		bottom: "auto",
+		right: "auto",
+		topMark: "-200px",
+		leftMark: "-200px",
+		buttonLeftName: "back",
+		buttonRightName: "that's it",
+		guideText: "Stop the guided tour",
+	}];
+	const bodyTextEle = document.getElementById('guideBodyText');
+	const contentEle = document.getElementById('guideContent');
+	const contentEle2 = document.getElementById('animCircle');
+	const stepLiEle = document.getElementsByClassName('dot');
+	const buttonLeft = document.getElementById('guidePrevBtn');
+	const buttonRight = document.getElementById('guideNextBtn');
+	const guideTitle = document.getElementById('guideTitle');
+	
+	let currentStepIndex = -1;
+	const stepLength = guidePosition.length;
+	changeStep();
+	document.getElementById("guideNextBtn").addEventListener('click', () => {
+		changeStep('next');
+
+	}, false);
+	document.getElementById("guidePrevBtn").addEventListener('click', () => {
+		changeStep('prev');
+	}, false);
+	document.getElementById('closeBtn').addEventListener('click', () => {
+		// schliessen aktion
+		jQuery("#tutorialBorder").css("display","none");
+		document.getElementById("guideContent").remove();
+		document.getElementById("animCircle").remove();
+	}, false);
+	
+	jQuery("#disableGuidedTour").change(function() {
+	    if(this.checked) {
+			whoami.user.preferences.guidedTour = false;
+	    	dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": false}});
+	    } else {
+	    	whoami.user.preferences.guidedTour = true;
+	    	dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": true}});
+	    }
+	});
+
+	function changeStep(direction) {
+
+		if ((direction === 'prev' && currentStepIndex === 0) || (direction === 'next' && currentStepIndex === stepLength - 1)) {
+			this.remove();
+		} else {
+			let eraseDotIndex;
+			if (direction === 'prev') {
+				currentStepIndex = currentStepIndex - 1;
+				eraseDotIndex = currentStepIndex === stepLength - 1 ? 0 : currentStepIndex + 1;
+
+			} else {
+				currentStepIndex = currentStepIndex + 1;
+				eraseDotIndex = currentStepIndex === 0 ? stepLength - 1 : currentStepIndex - 1;
+			}
+			bodyTextEle.style.marginLeft = `${-360 * currentStepIndex}px`; // margin-left 
+			// bodyTextEle.style.left = `${-360*currentStepIndex}px`; // relative+left 
+			//stepLiEle[eraseDotIndex].setAttribute('data-step', ''); // erase number
+			//stepLiEle[currentStepIndex].setAttribute('data-step', currentStepIndex + 1); // add number
+			stepLiEle[eraseDotIndex].classList.remove('active'); // remove dot active
+			stepLiEle[currentStepIndex].classList.add('active');    // add dot active
+
+			contentEle.style.top = guidePosition[currentStepIndex].top;
+			contentEle.style.left = guidePosition[currentStepIndex].left;
+			contentEle.style.bottom = guidePosition[currentStepIndex].bottom;
+			contentEle.style.right = guidePosition[currentStepIndex].right;
+
+			contentEle2.style.top = guidePosition[currentStepIndex].topMark;
+			contentEle2.style.left = guidePosition[currentStepIndex].leftMark;
+			buttonLeft.innerText = guidePosition[currentStepIndex].buttonLeftName;
+			buttonRight.innerText = guidePosition[currentStepIndex].buttonRightName;
+			guideTitle.innerText = guidePosition[currentStepIndex].guideText;
+	
+
+			console.log(currentStepIndex);
+
+			if (currentStepIndex == 3) {
+				jQuery("#tutorialBorder").css("display","block");
+			} else {
+				jQuery("#tutorialBorder").css("display","none");
+			}
+		}
+	}
+
+} // End Script Guided Tour
+
+
+// from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
+function copyToClipboard(str) {
+	const el = document.createElement('textarea');  // Create a <textarea> element
+	el.value = str;                                 // Set its value to the string that you want copied
+	el.setAttribute('readonly', '');                // Make it readonly to be tamper-proof
+	el.style.position = 'absolute';
+	el.style.left = '-9999px';                      // Move outside the screen to make it invisible
+	document.body.appendChild(el);                  // Append the <textarea> element to the HTML document
+	const selected =
+		document.getSelection().rangeCount > 0      // Check if there is any content selected previously
+			? document.getSelection().getRangeAt(0)     // Store selection if found
+			: false;                                    // Mark as false to know no selection existed before
+	el.select();                                    // Select the <textarea> content
+	document.execCommand('copy');                   // Copy - only works as a result of a user action (e.g. click events)
+	document.body.removeChild(el);                  // Remove the <textarea> element
+	if (selected) {                                 // If a selection existed before copying
+		document.getSelection().removeAllRanges();  // Unselect everything on the HTML document
+		document.getSelection().addRange(selected); // Restore the original selection
+	}
+}
 
 function focusAtCanvas() {
 	idleSince = BABYLON.Tools.Now;
