@@ -23,7 +23,7 @@ Users can accept or deny requests for dialogue within their dialogue list. A den
 
 ### lead a 1:1 dialogue
 Users can send messages to users that accepted their request. 
-- We a testing constrains to incentivise constructivnes. 
+- We are testing constrains to incentivise constructivnes. 
 - ATM we are testing to limit the maximum number of messages to incentivise on point argumentation. 
 
 ### end 1:1 dialogue 
