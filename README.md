@@ -2,50 +2,68 @@
 
 ## About
 
-Digital Peace Talks is (and always will be) a free and open web app that maps opinions via an artificial intelligence and uncovers high quality dialogues. The Digital Peace Talks offer:
+Digital Peace Talks is (and always will be) a free and open web app that visualises the quality of interactions between opinions expressed to a given topic. 
 
-You can open or join a discussion for any question that is on your mind. Anyone can give one single answer and, with that, express their opinion on the topic. Every user acts anonymously, protected by a random and encrypted ID.
+## Features:
 
-Yes, anonymity bring forth the depths of the human soul.That is the reason why Digital Peace Talks distinguish strictly between the expression of opinion of a person and the exchange of opinion between two people.
+### create random ID 
+Privacy is protected by a random and encrypted ID.
 
-You can ask any person that has published an opinion to a personal one-on-one dialogue.
+### create topics
+Users can open one topic per day. Topics are visualised within a 3D space. 
 
-At the end of the dialogue you can rate the exchange. The dialogue is marked as a line between your opinions on a 3D map. the line's color indicates the course that the dialogue took.
+### publish opinion 
+Users can publish one opinion per topic. Opinions are visualised within a 3D sub-space
 
-You can see who stirs things up, who is hurtful and who manages to build bridges.
+### request 1:1 dialogue
+Users that published an opinion to a topic can request a 1:1 dialogue (No Group interaction in DPT) with other users that published their opinion regarding the given topic. Requests are visualised as light brown lines between the two opinions. 
 
-Every dialogue is published. The result is a three-dimensional space, where every opinion belonging to a question is visible.
+### accept or deny 1:1 dialogue
+Users can accept or deny requests for dialogue within their dialogue list. A denied request can not be requested a second time. Accepted (active) dialogues are visualised as grey lines between the two opinions. 
 
-Now you can filter all the opinions and dialogues, for example by only showing the dialogues that are rated positively or negatively. That way you can see where bridges between camps have already been built and where they haven't.
+### lead a 1:1 dialogue
+Users can send messages to users that accepted their request. 
+- We a testing constrains to incentivise constructivnes. 
+- ATM we are testing to limit the maximum number of messages to incentivise on point argumentation. 
 
-You can also set criteria for the kind of offers you get for one-on-one dialogues.
+### end 1:1 dialogue 
+Users can permanently end 1:1 dialogues. A pair of users can have a maximum of two dialogues. 
 
-Find more details on our [homepage](https://www.digitalpeacetalks.com). To see Digital Peace Talks in action, you can try it out at our self-cleaning [sandbox](https://sandbox.dpt.world/).
+### rate 1:1 dialogue 
+Both users can rate an ended dialogue with negative, neutral or positive. Once both users rated, the results are visualised as follows: 
+- positive/positive = green line
+- positive/neutral = green line
+- neutral/neutral = blue line
+- neutral/negative = red line
+- negative/negative = red line ..between the two opinions. 
+
+-->The protocols of rated dialogues are pubslished! 
+
+## Live demos
+[sandbox](https://sandbox.dpt.world/) (reset every night)
+[user tests](https://try.dpt.world/) (every second wendesday 8 PM CET)
+[dev server](https://proto1.dpt.world/) (unstable and explicit)
 
 ## Screenshot:
 ![Alt text](docs/screenshot.png?raw=true "DPT Screenshot")
 
-## Conceptual
+## Technical stack (brief)
 
-The digital peace talks project creates a anonymous communication space. The users are able to create and view topics, they can invite each other in message limited dialogs and they can rate the dialog. A topic can specify a problem or question. A opinion is a personal opinion related to the topic. A dialog is the exchange of messages between two users. The opinions related to a topic will be arranged in a three dimensional space based on an algorithm which will use the text input and by the dialogs rating results. All the information gathered in this process will be transparent available to all users.
+- Server implements a RESTful API written in nodejs, using express. Examine is via [swagger api interface](http://dpt.world:2088/) 
+- Mongo database accessed via mongoose. 
+- Client uses babylon.js as a webgl render engine.
+- All running instances are dockerised. 
 
-## Technical status (brief)
+## Installation
 
-We are in an early alpha release mode now. There is no machine learning component yet. The 3D world has still a flat look. This means, that all components (topics, opinions and edges) are arranged on a x-y plane.
+Prerequisites:
+   * git client
+   * mongo database server
+   * node environment
+   * (recent) npm
+   * dockerfile with updated env.file 
 
-The server implements a RESTful API. It is written in nodejs, using express. The mongo database get accessed via mongoose. The API can be examined via the [swagger api interface](http://dpt.world:2088/). The client uses babylon.js as a webgl render engine.
-
-The way we get a running instance, is, to get a docker container build. Find a Dockerfile and all needed components in the docs/docker directory. The only file you need to update / create is the .env file. There is a .env.example file which works as a template.
-
-For testing, the easiest way to get it up & running:
-
-#### Prerequisite:
-   * A git client
-   * A mongo database server
-   * A node environment
-   * A recent npm
-
-With this components ready, you can follow these instructions to get it running:
+Once you got your prerequisites ready, type:
 
 ```shell
 $ git clone https://github.com/digital-peace-talks/DPT-server.git
@@ -59,8 +77,5 @@ In .env file you update the absolute path to the directory of the cloned reposit
 
 #### Note
 
-Please keep in mind: This project is under development and is far from major or done. Things can change dramatically. Every time. It's up to the user community to influence the way we go. And keep in mind: this is just a tool, not the solution to get conflicts solved.
+We believe no one is truely lost. There is no trolls, just humans looking for their needs to be understood. 
 
-Feel free to try it out at our [sandbox](https://sandbox.dpt.world/). There is still a lot to do, if you have suggestions or patches or like to join the active dev team, get in contact. Please use this github to report any feedback.
-
-Thank you.
