@@ -139,7 +139,6 @@ function getCamera(rotate) {
 		}
 	}
 
-
 	return(camera);
 }
 

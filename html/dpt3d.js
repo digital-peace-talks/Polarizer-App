@@ -1,30 +1,33 @@
+// global vars
+
+
 var canvas = document.getElementById("renderCanvas");
 var engine;
-var advancedTexture;
+
 var currentScene;
 var __topicScene;
 var __opinionScene;
 var topicCamState;
 var opinionCamState;
 
-var hamburgerOpen = false;
-
-var isMobile = false; //initiate as false
-
-var myDialogMenu = [];
-var currentDialog;
-
-var myDialogsVisible = 'hidden';
-var formVisible = false;
+var idleSince = 100000;
+var powerSave = false;
 
 var currentTopic;
 var currentTopicStr;
 
+var currentDialog;
+var isMobile = false; //initiate as false
+var myDialogMenu = [];
+
+var hamburgerOpen = false;
+
+var myDialogsVisible = 'hidden';
+var formVisible = false;
+
 var dpt;
 var whoami;
-var idleSince = 100000;
 
-var powerSave = false;
 var touchScreen = false;
 var dialogFormOpen = 0;
 
@@ -386,125 +389,130 @@ function setHtmlScheme() {
 
 function main() {
 
-	document.addEventListener("DOMContentLoaded", function(event) {
-		if('ontouchstart' in window
-		|| window.DocumentTouch && document instanceof window.DocumentTouch
-		|| navigator.maxTouchPoints > 0
-		|| window.navigator.msMaxTouchPoints) {
-			touchScreen = true;
+	if('ontouchstart' in window
+	|| window.DocumentTouch && document instanceof window.DocumentTouch
+	|| navigator.maxTouchPoints > 0
+	|| window.navigator.msMaxTouchPoints) {
+		touchScreen = true;
+	}
+
+	focusAtCanvas();
+
+	// open a websocket connection to the server
+	var socket = io.connect(
+		window.location.protocol + "//" + window.location.host, {
+			transports: ["websocket"],
+		}
+	);
+
+	// get DPT api class instance
+	dpt = new DPT(socket);
+
+	// initialize global vars
+	var restObj = {};
+	whoami = {
+		dptUUID: "",
+		user: {},
+		developer: false
+	};
+
+	// assign the generic scene function to some globals
+	// with special name
+	__topicScene = createGenericScene;
+	__topicScene.name = 'topicScene';
+	__opinionScene = createGenericScene;
+	__opinionScene.name = 'opinionScene';
+
+	// Handle the incomming websocket trafic
+	socket.on("connect", () => {
+
+		// if needed, we could keep socket.id somewhere
+		console.log('we are: '+socket.id);
+		if(document.cookie) {
+			dpt.userLogin(document.cookie);
+		} else {
+			alert('document cookie not set');
 		}
 
-		focusAtCanvas();
-		//jQuery('canvas#renderCanvas').focus();
-		var socket = io.connect(
-			window.location.protocol + "//" + window.location.host, {
-				transports: ["websocket"],
-			}
-		);
+	});
 
-		dpt = new DPT(socket);
-		var restObj = {};
-		whoami = {
-			dptUUID: "",
-			user: {},
-			developer: false
-		};
+	// this function get called when we work with 3d avatars
+	socket.on("3d", function(update) {
+		if(update.event == 'connect'
+		&& update.avatar != socket.id) {
+			createAvatar(update, false);
+		} else if(update.event == 'disconnect') {
+			disposeAvatar(update);
+		} else if(update.event == 'update') {
+			updateAvatar(update);
+		}
+		console.log(update);
+	});
 
-		__topicScene = createGenericScene;
-		__topicScene.name = 'topicScene';
-		__opinionScene = createGenericScene;
-		__opinionScene.name = 'opinionScene';
+	// special call for login procedure, we keep it a bit separate.
+	socket.on("private", function(restObj) {
+		if(restObj.method == "post") {
+			if(restObj.path == "/user/login/") {
+				whoami.dptUUID = restObj.data.dptUUID;
+				whoami.developer = restObj.data.developer;
+				if(restObj.data.message == "logged in") {
 
-		// Handle the incomming websocket trafic
-		socket.on("connect", () => {
+					whoami.user = restObj.data.user;
+					setHtmlScheme();
 
-			// if needed, we could keep socket.id somewhere
-			console.log('we are: '+socket.id);
-			if(document.cookie) {
-				dpt.userLogin(document.cookie);
-			} else {
-				alert('document cookie not set');
-			}
+					currentScene = createGenericScene("topicScene");
+					currentScene.name = 'topicScene';
+					dpt.getTopic();
+					dpt.getDialogList();
 
-		});
-
-		socket.on("3d", function(update) {
-			if(update.event == 'connect'
-			&& update.avatar != socket.id) {
-				createAvatar(update, false);
-			} else if(update.event == 'disconnect') {
-				disposeAvatar(update);
-			} else if(update.event == 'update') {
-				updateAvatar(update);
-			}
-			console.log(update);
-		});
-
-		socket.on("private", function(restObj) {
-			if(restObj.method == "post") {
-				if(restObj.path == "/user/login/") {
-					whoami.dptUUID = restObj.data.dptUUID;
-					whoami.developer = restObj.data.developer;
-					if(restObj.data.message == "logged in") {
-
-						whoami.user = restObj.data.user;
-						setHtmlScheme();
-
-						currentScene = createGenericScene("topicScene");
-						currentScene.name = 'topicScene';
-						dpt.getTopic();
-						dpt.getDialogList();
-
-						if(whoami.user.preferences.guidedTour) {
-							startGuidedTour();
-						} else {
-							jQuery('.tutorialBorder').remove();
-							jQuery('.animated-circle').remove();
-							jQuery('.fb_gd_wrap').remove();
-						}
-								
-					} else if(restObj.data.message == "user unknown") {
-						alert(`User unknown.
-							Please go back to the start page,
-							delete your cookie. You can try to get your
-							phrase recovered or get a new phrase.
-
-							maybe cookies are disable?`);
-						whoami.user = {};
+					if(whoami.user.preferences.guidedTour) {
+						startGuidedTour();
+					} else {
+						jQuery('.tutorialBorder').remove();
+						jQuery('.animated-circle').remove();
+						jQuery('.fb_gd_wrap').remove();
 					}
+							
+				} else if(restObj.data.message == "user unknown") {
+					alert(`User unknown.
+						Please go back to the start page,
+						delete your cookie. You can try to get your
+						phrase recovered or get a new phrase.
+
+						maybe cookies are disable?`);
+					whoami.user = {};
 				}
 			}
-		});
+		}
+	});
 
-		socket.on("error", function(e) {
-			console.log("System", e ? e : "A unknown error occurred");
-			document.location.reload(true);
-			window.location.reload(true);
-		});
+	socket.on("error", function(e) {
+		console.log("System", e ? e : "A unknown error occurred");
+		document.location.reload(true);
+		window.location.reload(true);
+	});
 
-		// server says it has some updates for client
-		socket.on('update', function(restObj) {
-			onWebSocketUpdate(restObj);
-		});
+	// server says it has some updates for client
+	socket.on('update', function(restObj) {
+		onWebSocketUpdate(restObj);
+	});
 
-		socket.on("api", function(restObj) {
-			onWebSocketAPI(restObj);
-		});
+	socket.on("api", function(restObj) {
+		onWebSocketAPI(restObj);
+	});
 
-		/*
-		jQuery('body').append(`<div id="debug" style="position: absolute;
-			color: white; height: 80px; width: 390px; right: 390px; z-index:999; bottom: 80px"></div>
-		`);
-		*/
-		
-		startBabylonEngine();
-		
-		// Resize
-		window.addEventListener("resize", function() {
-			idleSince = BABYLON.Tools.Now;
-			powerSave = false;
-			engine.resize();
-		});
+	// this is for create a on-screen debug div for debugging purposes
+	/*
+	jQuery('body').append(`<div id="debug" style="position: absolute;
+		color: white; height: 80px; width: 390px; right: 390px; z-index:999; bottom: 80px"></div>
+	`);
+	*/
+	
+	// Resize
+	window.addEventListener("resize", function() {
+		idleSince = BABYLON.Tools.Now;
+		powerSave = false;
+		engine.resize();
 	});
 
 	jQuery(window).blur(function() {
@@ -517,8 +525,13 @@ function main() {
 		idleSince = BABYLON.Tools.Now;
 		powerSave = false;
 	});
-	
 
+	// get 3D.
+	startBabylonEngine();
 }
 
-main();
+// hooray! we start our javascript in main().
+
+document.addEventListener("DOMContentLoaded", function(event) {
+	main();
+});
