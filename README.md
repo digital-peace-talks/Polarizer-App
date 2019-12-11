@@ -49,21 +49,19 @@ Both users can rate an ended dialogue with negative, neutral or positive. Once b
 
 ## Technical stack (brief)
 
-- Server implements a RESTful API written in nodejs, using express. Examine is via [swagger api interface](http://dpt.world:2088/) 
-- Mongo database accessed via mongoose. 
-- Client uses babylon.js as a webgl render engine.
-- All running instances are dockerised. 
+The server implements a RESTful API. It is written in nodejs, using express. The mongo database get accessed via mongoose. The API can be examined via the [swagger api interface](http://dpt.world:2088/). The client uses babylon.js as a webgl render engine.
 
-## Installation
+The way we get a running instance, is, to get a docker container build. Find a Dockerfile and all needed components in the docs/docker directory. The only file you need to update / create is the .env file. There is a .env.example file which works as a template.
 
-Prerequisites:
-   * git client
-   * mongo database server
-   * node environment
-   * (recent) npm
-   * dockerfile with updated env.file 
+For testing, the easiest way to get it up & running:
 
-Once you got your prerequisites ready, type:
+#### Prerequisite:
+   * A git client
+   * A mongo database server
+   * A node environment
+   * A recent npm
+
+With this components ready, you can follow these instructions to get it running:
 
 ```shell
 $ git clone https://github.com/digital-peace-talks/DPT-server.git
@@ -74,6 +72,7 @@ $ npm install
 $ node src/bin/www
 ```
 In .env file you update the absolute path to the directory of the cloned repository and a secret for identifying the session cookie.
+
 
 #### Note
 
