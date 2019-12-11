@@ -756,7 +756,7 @@ var createGUIScene = function(dptMode) {
 			closeRightMenu();
 		}
 		hideDialogList();
-		window.open("https://github.com/digital-peace-talks/DPT-server");
+		window.open("https://github.com/digital-peace-talks/DPT");
 	});
 	
 	
