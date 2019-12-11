@@ -267,7 +267,7 @@ app.get("/", async (req, res) => {
 	console.log("Serve user at " + req.headers.host);
 });
 
-app.use('/static', express.static('/opt/DPT-server/static'))
+app.use('/static', express.static('/opt/DPT/static'))
 
 app.use(function(req, res) {
 	res.status(404);

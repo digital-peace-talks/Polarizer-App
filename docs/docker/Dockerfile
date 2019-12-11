@@ -15,8 +15,8 @@ COPY authorized_keys /root/.ssh/authorized_keys
 
 
 WORKDIR /opt
-RUN git clone https://github.com/digital-peace-talks/DPT-server.git
-WORKDIR /opt/DPT-server
+RUN git clone https://github.com/digital-peace-talks/DPT.git
+WORKDIR /opt/DPT
 
 RUN cp .env.example .env
 
