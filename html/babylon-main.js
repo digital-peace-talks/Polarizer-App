@@ -1,4 +1,5 @@
 
+
 function createAvatar(avatarInfo, camera) {
 	var name;
 	if(!avatarInfo && camera) {
@@ -85,7 +86,7 @@ function getCollisionBox() {
 	box.material = mat;
 	//mat.freeze();
 
-	return (box);
+	return(box);
 }
 
 function getCamera(rotate) {
@@ -138,11 +139,33 @@ function getCamera(rotate) {
 		}
 	}
 
-	//createAvatar(false, camera);
 
-	return (camera);
+	return(camera);
 }
 
+function setBabylonScheme() {
+	switch(whoami.user.preferences.colorScheme) {
+	case DPTGlobal.COLORS_dark:
+		currentScene.clearColor = new BABYLON.Color3(0, 0.1, 0.2);
+		break;
+	case DPTGlobal.COLORS_bright:
+		currentScene.clearColor = new BABYLON.Color3(.7, 0.9, 1.0);
+		break;
+	case DPTGlobal.COLORS_skybox:
+		var skybox = BABYLON.Mesh.CreateBox("skyBox", 250.0, currentScene);
+		var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", currentScene);
+		skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("/skybox/space2", currentScene);
+		skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+		skyboxMaterial.backFaceCulling = false;
+		skyboxMaterial.disableLighting = true;
+		skybox.infiniteDistance = true;
+		skybox.material = skyboxMaterial;
+		break;
+	case DPTGlobal.COLORS_default:
+	default:
+		currentScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+	}
+}
 var createGenericScene = function(dptMode) {
 
 	var genericScene = new BABYLON.Scene(engine);
@@ -150,48 +173,29 @@ var createGenericScene = function(dptMode) {
 
 	currentScene = genericScene;
 	currentScene.dptMode = dptMode;
+	currentScene.collisionsEnabled = false;
 
 	// switch the light on.
 	var light = new BABYLON.HemisphericLight(
 			"light1",
 			new BABYLON.Vector3(0, 0, -1),
-			genericScene);
+			currentScene);
 
 	light.radius = 10;
 	light.diffuse = new BABYLON.Color3(1, 0.8, 0.8);
 	light.intensity = 0.5;
 
-	switch(whoami.user.preferences.colorScheme) {
-		case DPTGlobal.COLORS_dark:
-			genericScene.clearColor = new BABYLON.Color3(0, 0.1, 0.2);
-			break;
-		case DPTGlobal.COLORS_bright:
-			genericScene.clearColor = new BABYLON.Color3(.7, 0.9, 1.0);
-			break;
-		case DPTGlobal.COLORS_skybox:
-			var skybox = BABYLON.Mesh.CreateBox("skyBox", 250.0, currentScene);
-			var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", currentScene);
-			skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("/skybox/space2", currentScene);
-			skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-			skyboxMaterial.backFaceCulling = false;
-			skyboxMaterial.disableLighting = true;
-			skybox.infiniteDistance = true;
-			skybox.material = skyboxMaterial;
-			break;
-		case DPTGlobal.COLORS_default:
-		default:
-			genericScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
-	}
-
+	// get us the cam
 	var camera = getCamera();
 	camera.attachControl(canvas, true);
-
 	camera.checkCollisions = false;
-	genericScene.collisionsEnabled = false;
 
+	//createAvatar(false, camera);
+
+	setBabylonScheme();
 	createGUIScene(dptMode);
 
-	genericScene.onPointerObservable.add((pointerInfo) => {
+	currentScene.onPointerObservable.add((pointerInfo) => {
 		idleSince = BABYLON.Tools.Now;
 		powerSave = false;
 		switch (pointerInfo.type) {
@@ -319,7 +323,7 @@ var createGenericScene = function(dptMode) {
 		}
 	});
 
-	genericScene.onKeyboardObservable.add((kbInfo) => {
+	currentScene.onKeyboardObservable.add((kbInfo) => {
 		idleSince = BABYLON.Tools.Now;
 		powerSave = false;
 		switch (kbInfo.type) {
@@ -367,13 +371,13 @@ var createGenericScene = function(dptMode) {
 
 	//var gl = new BABYLON.GlowLayer("glow", currentScene);
 	
-	//genericScene.autoClear = false; // Color buffer
-	//genericScene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
-	//genericScene.getAnimationRatio();
-	//genericScene.clearCachedVertexData();
-	//genericScene.cleanCachedTextureBuffer();
+	//currentScene.autoClear = false; // Color buffer
+	//currentScene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
+	//currentScene.getAnimationRatio();
+	//currentScene.clearCachedVertexData();
+	//currentScene.cleanCachedTextureBuffer();
 	
-	return genericScene;
+	return currentScene;
 }
 
 function startBabylonEngine() {
@@ -410,3 +414,4 @@ function startBabylonEngine() {
 	
 	});
 }
+
