@@ -165,6 +165,7 @@ function setBabylonScheme() {
 		currentScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
 	}
 }
+
 var createGenericScene = function(dptMode) {
 
 	var genericScene = new BABYLON.Scene(engine);
