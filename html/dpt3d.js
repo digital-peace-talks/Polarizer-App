@@ -103,8 +103,6 @@ function startGuidedTour() {
 		right: "auto",
 		topMark: "55%",
 		leftMark: "50%",
-		//topMark: document.getElementById('new-opinion-btn').getBoundingClientRect().top + "px",
-		//leftMark: document.getElementById('new-opinion-btn').getBoundingClientRect().left + "px",
 		topMark: "40%",
 		leftMark: "50%",
 		buttonLeftName: "back",
