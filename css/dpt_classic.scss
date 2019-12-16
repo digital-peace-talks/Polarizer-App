@@ -554,7 +554,7 @@ div#dialogFrame {
   bottom: 48px;
   width: 400px;
   left: 50%;
-  padding: 20px;
+  padding: 10px;
   margin-left: -200px;
   border: $dpt-prime-border;
   border-style: solid;
@@ -567,6 +567,7 @@ div#dialogFrame {
   box-shadow: 0px 0px 20px $dpt-shadow;
   max-height: 80%;
   overflow-y: auto;
+  padding-top: 40px;
 }
 
 textarea {
