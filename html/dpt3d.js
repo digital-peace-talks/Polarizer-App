@@ -133,7 +133,7 @@ function startGuidedTour() {
 			topMark: "-200px",
 			leftMark: "-200px",
 			buttonLeftName: "back",
-			buttonRightName: "",
+			buttonRightName: "let's go",
 			guideText: "You are all set!",
 		}];
 	
