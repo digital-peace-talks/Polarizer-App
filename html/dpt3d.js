@@ -31,6 +31,8 @@ var whoami;
 var touchScreen = false;
 var dialogFormOpen = 0;
 
+const guidePosition = [];
+
 var DPTGlobal = {
 	"COLORS_default": 0,
 	"COLORS_dark": 1,
@@ -42,95 +44,103 @@ var DPTGlobal = {
 function startGuidedTour() {
 
 	jQuery('#animCircle').css('visibility', 'visible');
-	const guidePosition = [{
-		// welcome to tour
-		top: "auto",
-		left: "0px",
-		bottom: "50px",
-		right: "auto",
-		topMark: document.getElementById('guideNextBtn').getBoundingClientRect().top + "px",
-		leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px",
-		buttonLeftName: "",
-		buttonRightName: "start tour",
-		guideText: "A new way to discuss",
-	}, {
-		// tutorial mobile
-		top: "auto",
-		left: "0px",
-		bottom: "0px",
-		right: "auto",
-		topMark: "30%",
-		leftMark: "50%",
-		buttonLeftName: "back",
-		buttonRightName: "next",
-		guideText: "How to navigate",
-	}, {
-		// tutorial desktop
-		top: "auto",
-		left: "0px",
-		bottom: "0px",
-		right: "auto",
-		topMark: "40%",
-		leftMark: "50%",
-		buttonLeftName: "back",
-		buttonRightName: "next",
-		guideText: "How to navigate",
-	}, {
-		// Choose a topic 
-		top: "0px",
-		left: "0px",
-		bottom: "auto",
-		right: "auto",
-		topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
-		leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
-		buttonLeftName: "back",
-		buttonRightName: "next",
-		guideText: "Choose a topic"
-	}, {
-		// start opinion
-		top: "30%",
-		left: "0px",
-		bottom: "auto",
-		right: "auto",
-		buttonLeftName: "back",
-		buttonRightName: "next",
-		guideText: "Publish your opinion"
-	}, {
-		// open list
-		top: "0px",
-		left: "0px",
-		bottom: "auto",
-		right: "auto",
-		topMark: "55%",
-		leftMark: "50%",
-		topMark: "40%",
-		leftMark: "50%",
-		buttonLeftName: "back",
-		buttonRightName: "next",
-		guideText: "Start a dialogue"
-	}, {
-		// start with opinion/topic
-		top: "30%",
-		left: "0px",
-		bottom: "auto",
-		right: "auto",
-		topMark: document.getElementById('dialogues-btn').getBoundingClientRect().top + "px",
-		leftMark: document.getElementById('dialogues-btn').getBoundingClientRect().left + "px",
-		buttonLeftName: "back",
-		buttonRightName: "next",
-		guideText: "Dialoguelist",
-	}, {
-		// exit the guided tour
-		top: "30%",
-		left: "0px",
-		bottom: "auto",
-		right: "auto",
-		topMark: "-200px",
-		leftMark: "-200px",
-		buttonLeftName: "back",
-		buttonRightName: "that's it",
-		guideText: "Stop the guided tour",
-	}];
+
+	console.log(isMobile);
+
+		const guidePosition = [{
+			// welcome to tour
+			top: "auto",
+			left: "0px",
+			bottom: "0px",
+			right: "auto",
+			topMark: document.getElementById('guideNextBtn').getBoundingClientRect().top + "px",
+			leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px",
+			buttonLeftName: "",
+			buttonRightName: "start tour",
+			guideText: "Get started!",
+		}, {
+			// tutorial mobile
+			top: "auto",
+			left: "0px",
+			bottom: "0px",
+			right: "auto",
+			topMark: "30%",
+			leftMark: "50%",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "Navigate with one or two fingers",
+		}, {
+			// tutorial desktop
+			top: "auto",
+			left: "0px",
+			bottom: "0px",
+			right: "auto",
+			topMark: "40%",
+			leftMark: "50%",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "Use left and right clicks to navigate",
+		}, {
+			// Choose a topic 
+			top: "auto",
+			left: "0px",
+			bottom: "0px",
+			right: "auto",
+			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
+			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "Which topic would you like"
+		}, {
+			// start opinion
+			top: "auto",
+			left: "0px",
+			bottom: "0px",
+			right: "auto",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "Now publish your opinion"
+		}, {
+			// open list
+			top: "auto",
+			left: "0px",
+			bottom: "0px",
+			right: "auto",
+			topMark: "55%",
+			leftMark: "50%",
+			topMark: "40%",
+			leftMark: "50%",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "You are ready to discuss others!"
+		}, {
+			// start with opinion/topic
+			top: "auto",
+			left: "0px",
+			bottom: "0px",
+			right: "auto",
+			topMark: document.getElementById('dialogues-btn').getBoundingClientRect().top + "px",
+			leftMark: document.getElementById('dialogues-btn').getBoundingClientRect().left + "px",
+			buttonLeftName: "back",
+			buttonRightName: "next",
+			guideText: "Accept or deny chat requests",
+		}, {
+			// exit the guided tour
+			top: "auto",
+			left: "0px",
+			bottom: "0px",
+			right: "auto",
+			topMark: "-200px",
+			leftMark: "-200px",
+			buttonLeftName: "back",
+			buttonRightName: "",
+			guideText: "You are all set!",
+		}];
+	
+
+		
+	
+	
 	const bodyTextEle = document.getElementById('guideBodyText');
 	const contentEle = document.getElementById('guideContent');
 	const contentEle2 = document.getElementById('animCircle');
@@ -175,16 +185,17 @@ function startGuidedTour() {
 			if (direction === 'prev') {
 				currentStepIndex = currentStepIndex - 1;
 				eraseDotIndex = currentStepIndex === stepLength - 1 ? 0 : currentStepIndex + 1;
+				stepLiEle[eraseDotIndex].classList.remove('active'); // remove dot active
 
 			} else {
 				currentStepIndex = currentStepIndex + 1;
 				eraseDotIndex = currentStepIndex === 0 ? stepLength - 1 : currentStepIndex - 1;
 			}
-			bodyTextEle.style.marginLeft = `${-360 * currentStepIndex}px`; // margin-left 
+			bodyTextEle.style.marginLeft = `${-340 * currentStepIndex}px`; // margin-left 
 			// bodyTextEle.style.left = `${-360*currentStepIndex}px`; // relative+left 
 			//stepLiEle[eraseDotIndex].setAttribute('data-step', ''); // erase number
 			//stepLiEle[currentStepIndex].setAttribute('data-step', currentStepIndex + 1); // add number
-			stepLiEle[eraseDotIndex].classList.remove('active'); // remove dot active
+			//stepLiEle[eraseDotIndex].classList.remove('active'); // remove dot active
 			stepLiEle[currentStepIndex].classList.add('active');    // add dot active
 
 			contentEle.style.top = guidePosition[currentStepIndex].top;
@@ -192,20 +203,32 @@ function startGuidedTour() {
 			contentEle.style.bottom = guidePosition[currentStepIndex].bottom;
 			contentEle.style.right = guidePosition[currentStepIndex].right;
 
-			contentEle2.style.top = guidePosition[currentStepIndex].topMark;
+			contentEle2.style.top = "-220px"; //make arrow outside
 			contentEle2.style.left = guidePosition[currentStepIndex].leftMark;
 			buttonLeft.innerText = guidePosition[currentStepIndex].buttonLeftName;
 			buttonRight.innerText = guidePosition[currentStepIndex].buttonRightName;
 			guideTitle.innerText = guidePosition[currentStepIndex].guideText;
-	
+		
+			if (currentStepIndex < 1) {
+				jQuery("#text").css("display","block");
+			} else {
+				jQuery("#text").css("display","none");
+			}
 
-			console.log(currentStepIndex);
+			if (currentStepIndex == 0) {
+				jQuery("#steps").css("visibility","hidden");
+			} else {
+				jQuery("#steps").css("visibility","visible");
+			}
 
+			
+			/*
 			if (currentStepIndex == 3) {
 				jQuery("#tutorialBorder").css("display","block");
 			} else {
 				jQuery("#tutorialBorder").css("display","none");
 			}
+			*/
 		}
 	}
 

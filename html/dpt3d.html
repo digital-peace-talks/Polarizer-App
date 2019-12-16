@@ -112,7 +112,9 @@
 
 <!-- Guided Tour-->
 <!--Container  und Pfeil-->
+<!--
 <div class="tutorialBorder" id="tutorialBorder" style="display: none"></div>
+-->
 <div id="animCircle" class="animated-circle" style="visibility: hidden">
 	<div class="arrowcontainer">
 		<div class="arrow">
@@ -123,14 +125,11 @@
 
 </div>
 
+
 <div class="fb_gd_wrap">
 
 	<div class="content" id="guideContent">
-			<div class="text">
-					<label>
-						<input type="checkbox" id="disableGuidedTour">Disable the guided tour
-					</label>
-				</div>
+			
 		<div class="header">
 			
 			<span class="text" id="guideTitle">digital peace talks GUIDE</span>
@@ -139,17 +138,14 @@
 		<div class="body">
 			<div class="text">
 				<div id="guideBodyText" class="textList">
-					<p>Take the tour to explore all options and features.</p>
+					<p>Digital Peace Talks is a platform for conflicting views to discuss constructively. <br>This tour shows you how to use it.</p>
 					<p><img src="/tutorial_mobile.png" alt="gestures" height="auto" width="100%"></p>
 					<p><img src="/tutorial_desktop.png" alt="gestures" height="auto" width="100%"></p>
-					<p>Click on any topic you want to discuss. <br>You can also create your own topic.</p>
-					<p>Inside a topic, click here to publish your opinion. <img src="/tutorial_opinions.png" alt="gestures" height="140px" width="auto"></p>
-					<p>After publishing your opinion, click on this button to start a dialogue with others.<br><img src="/chatbubble.png" alt="gestures" height="auto" width="48px"></p>
-					<p>Access all your dialogues here. </p>
-					<p>You are about to close the guided tour. The guided tour will
-					start on your next session again. You can stop the tour for the
-					next sessions, when you check the following checkbox. You can
-					reactivate the tour in the settings and preferences.<br>
+					<p>The futuristic text boxes are subjects up for discussion. Click on them to join! <img src="/tutorial_click_topic.png" alt="click topic" height="auto" width="100%"></p>
+					<p>Click on this icon to add your opinion. This let's you interact with others. <img src="/tutorial_opinions.png" alt="start opinion" height="auto" width="100%"></p>
+					<p>Click this icon to request 1-on-1 chats with other opinions.<br><img src="/tutorial_chatbubble.png" alt="chat" height="auto" width="100%"></p>
+					<p>This icon let's you manage your requests and active chats. <br><img src="/tutorial_dialoguelist.png" alt="dialoguelist" height="auto" width="100%"> </p>
+					<p>You know the basics now. <br>Have fun discovering many more features while discussing people with different views!<br>
 						<!-- <label>
 							<input type="checkbox" id="disableGuidedTour">Disable the guided tour
 						</label> -->
@@ -164,9 +160,8 @@
 		
 		<div class="footer">
 		
-		
 			<button id="guidePrevBtn" class="btn prev"></button>
-			<ul class="steps">
+			<ul class="steps" id="steps">
 				<li class="dot active"></li>
 				<li class="dot"></li>
 				<li class="dot"></li>
@@ -178,7 +173,11 @@
 			</ul>
 			<button id="guideNextBtn" class="btn next">Start Tour</button>
 			
-			
+		</div>
+		<div class="text" id="text">
+			<label>
+				<input type="checkbox" id="disableGuidedTour">Don't show this again
+			</label>
 		</div>
 		
 	</div>
