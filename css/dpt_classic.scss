@@ -795,7 +795,7 @@ textarea {
   font-size: 16px;
   position: absolute;
   background-color: transparent;
-  top: 265px;
+  top: 264px;
   left: 6px;
   border-color: transparent;
   color: $dpt-prime-border;
@@ -1147,6 +1147,7 @@ section ul li {
   font-size: 0;
 }
 .fb_gd_wrap .footer .btn {
+  font-family: DPTFont;
   display: inline-block;
   width: 25%;
   border: none;
@@ -1163,7 +1164,7 @@ section ul li {
 }
 .fb_gd_wrap .footer .steps {
   display: inline-block;
-  width: 50%;
+  width: 48%;
   height: 100%;
   margin: 0;
   padding: 0;

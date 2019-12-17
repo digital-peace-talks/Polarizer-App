@@ -56,7 +56,7 @@ function startGuidedTour() {
 			topMark: document.getElementById('guideNextBtn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px",
 			buttonLeftName: "",
-			buttonRightName: "start tour",
+			buttonRightName: "START TOUR",
 			guideText: "Get started!",
 		}, {
 			// tutorial mobile
@@ -66,8 +66,8 @@ function startGuidedTour() {
 			right: "auto",
 			topMark: "30%",
 			leftMark: "50%",
-			buttonLeftName: "back",
-			buttonRightName: "next",
+			buttonLeftName: "BACK",
+			buttonRightName: "NEXT",
 			guideText: "Navigate with one or two fingers",
 		}, {
 			// tutorial desktop
@@ -77,8 +77,8 @@ function startGuidedTour() {
 			right: "auto",
 			topMark: "40%",
 			leftMark: "50%",
-			buttonLeftName: "back",
-			buttonRightName: "next",
+			buttonLeftName: "BACK",
+			buttonRightName: "NEXT",
 			guideText: "Use left and right clicks to navigate",
 		}, {
 			// Choose a topic 
@@ -88,17 +88,17 @@ function startGuidedTour() {
 			right: "auto",
 			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
-			buttonLeftName: "back",
-			buttonRightName: "next",
-			guideText: "Which topic would you like"
+			buttonLeftName: "BACK",
+			buttonRightName: "NEXT",
+			guideText: "Which topic would you like?"
 		}, {
 			// start opinion
 			top: "auto",
 			left: "0px",
 			bottom: "0px",
 			right: "auto",
-			buttonLeftName: "back",
-			buttonRightName: "next",
+			buttonLeftName: "BACK",
+			buttonRightName: "NEXT",
 			guideText: "Now publish your opinion"
 		}, {
 			// open list
@@ -110,8 +110,8 @@ function startGuidedTour() {
 			leftMark: "50%",
 			topMark: "40%",
 			leftMark: "50%",
-			buttonLeftName: "back",
-			buttonRightName: "next",
+			buttonLeftName: "BACK",
+			buttonRightName: "NEXT",
 			guideText: "You are ready to discuss others!"
 		}, {
 			// start with opinion/topic
@@ -121,8 +121,8 @@ function startGuidedTour() {
 			right: "auto",
 			topMark: document.getElementById('dialogues-btn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('dialogues-btn').getBoundingClientRect().left + "px",
-			buttonLeftName: "back",
-			buttonRightName: "next",
+			buttonLeftName: "BACK",
+			buttonRightName: "NEXT",
 			guideText: "Accept or deny chat requests",
 		}, {
 			// exit the guided tour
@@ -132,8 +132,8 @@ function startGuidedTour() {
 			right: "auto",
 			topMark: "-200px",
 			leftMark: "-200px",
-			buttonLeftName: "back",
-			buttonRightName: "let's go",
+			buttonLeftName: "BACK",
+			buttonRightName: "LET'S GO!",
 			guideText: "You are all set!",
 		}];
 	
@@ -185,7 +185,7 @@ function startGuidedTour() {
 	function changeStep(direction) {
 
 		if ((direction === 'prev' && currentStepIndex === 0) || (direction === 'next' && currentStepIndex === stepLength - 1)) {
-			this.remove();
+			document.getElementById("guideContent").remove();
 		} else {
 			let eraseDotIndex;
 			if (direction === 'prev') {
