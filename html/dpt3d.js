@@ -165,6 +165,12 @@ function startGuidedTour() {
 		document.getElementById("guideContent").remove();
 		document.getElementById("animCircle").remove();
 	}, false);
+	document.getElementById('closeBtn2').addEventListener('click', () => {
+		// schliessen aktion
+		jQuery("#tutorialBorder").css("display","none");
+		document.getElementById("guideContent").remove();
+		document.getElementById("animCircle").remove();
+	}, false);
 	
 	jQuery("#disableGuidedTour").change(function() {
 	    if(this.checked) {
@@ -211,8 +217,14 @@ function startGuidedTour() {
 		
 			if (currentStepIndex < 1) {
 				jQuery("#text").css("display","block");
+				jQuery(".closeButtonTutorial").css("display","none");
+				jQuery(".closeButtonTutorial2").css("display","block");
+		
 			} else {
 				jQuery("#text").css("display","none");
+				jQuery(".closeButtonTutorial").css("display","block");
+				jQuery(".closeButtonTutorial2").css("display","none");
+			
 			}
 
 			if (currentStepIndex == 0) {

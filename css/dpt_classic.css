@@ -755,6 +755,43 @@ textarea {
   color: #005b98;
 }
 
+.closeButtonTutorial {
+  font-family: DPTFontDin;
+  font-size: 30px;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  position: absolute;
+  background-color: transparent;
+  width: 30px;
+  height: 30px;
+  top: 6px;
+  right: 6px;
+  border-radius: 50%;
+  border-color: transparent;
+  color: #f0f3f5;
+  line-height: 0px;
+  text-indent: -7px;
+}
+
+.closeButtonTutorial:hover {
+  -webkit-transform: scale(1.4);
+          transform: scale(1.4);
+  color: #005b98;
+}
+
+.closeButtonTutorial2 {
+  font-family: DPTFont;
+  font-size: 16px;
+  position: absolute;
+  background-color: transparent;
+  top: 265px;
+  left: 6px;
+  border-color: transparent;
+  color: #f0f3f5;
+  line-height: 0px;
+}
+
 .copyToClip {
   -webkit-filter: invert(100%);
           filter: invert(100%);
@@ -1547,6 +1584,9 @@ section ul li {
   }
   section a:target ~ ul {
     left: 0;
+  }
+  .fb_gd_wrap .content {
+    width: 100%;
   }
 }
 /*# sourceMappingURL=dpt_classic.css.map */

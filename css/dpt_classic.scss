@@ -767,6 +767,41 @@ textarea {
   color: $dpt-third-text;
 }
 
+.closeButtonTutorial {
+  font-family: DPTFontDin;
+  font-size: 30px;
+  transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  position: absolute;
+  background-color: transparent;
+  width: 30px;
+  height: 30px;
+  top: 6px;
+  right: 6px;
+  border-radius: 50%;
+  border-color: transparent;
+  color: $dpt-prime-border;
+  line-height: 0px;
+  text-indent: -7px;
+}
+
+.closeButtonTutorial:hover {
+  transform: scale(1.4);
+  color: $dpt-third-text;
+}
+
+.closeButtonTutorial2 {
+  font-family: DPTFont;
+  font-size: 16px;
+  position: absolute;
+  background-color: transparent;
+  top: 265px;
+  left: 6px;
+  border-color: transparent;
+  color: $dpt-prime-border;
+  line-height: 0px;
+}
+
 .copyToClip {
   filter: invert(100%);
   width: 32px;
@@ -1506,6 +1541,6 @@ pointer-events: none;
   }
   // __________________needed at mobile guided tour
   .fb_gd_wrap .content {
-    //width: 100%;
+    width: 100%;
   }
 }
