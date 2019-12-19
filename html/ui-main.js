@@ -203,11 +203,23 @@ var createGUIScene = function(dptMode) {
 			hideDialogList();
 	
 			jQuery('body').append(`
-				<div id="form" class="surveyForm" style="height: 80%;">
+				<div id="form" class="surveyForm" style="height: 90%;">
+				<h1>Contact</h1>
+				<p>We would love to hear your thoughts and ideas for improvement.</p>
+				Feel free to write them to <a href= "feedback@digitalpeacetalks.com">feedback@digitalpeacetalks.com</a>
+				or into this form:
 				 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
-				</div>
+				 <button class="closeButton" id="close-btn">&#10005;</button>
+				 </div>
 			`);
-	
+
+			jQuery(document).on('click touch', "#close-btn", function(event) {
+				hideDialogList();
+				jQuery('#form').remove();
+				formVisible = false;
+				focusAtCanvas();
+				event.preventDefault();
+			});	
 			window.addEventListener('message', event => {
 				// IMPORTANT: check the origin of the data! 
 				formVisible = 'hidden';

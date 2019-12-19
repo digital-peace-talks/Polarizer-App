@@ -71,8 +71,9 @@ body {
   font-weight: 700;
   font-size: 20px;
   position: absolute;
-  right: 26px;
+  left: 5px;
   top: 3px;
+  z-index: 200;
 }
 
 /*----------------*/
@@ -145,6 +146,7 @@ i#props {
 
 a {
   text-decoration: none;
+  color: #005b98;
 }
 
 input {

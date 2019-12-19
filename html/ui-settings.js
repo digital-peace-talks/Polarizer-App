@@ -41,12 +41,7 @@ function settingsForm(opinionId, topicId) {
 	jQuery('body').append(`
 		<div id="form" class="helpframe"><h1>Settings:</h1>
 		<hr>
-		Your passphrase:
-		<br>
-		${whoami.user.phrase}
-		<input type="image" class="copyToClip" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${whoami.user.phrase}');"/>
-		<br>
-		<hr>
+		
 		<b>Change UI-Theme:</b>
 		<div style="display: flex; flex-direction: row-reverse;">
 		<input class="button" type="button" value="MC" id="changetheme6">
@@ -73,6 +68,14 @@ function settingsForm(opinionId, topicId) {
 		<label><input type="checkbox" name="guidedTour" ${guidedTour}>Disable the guided tour</label>
 		<br>
 		<input class="button" type="submit" value="Apply">
+
+		Your passphrase:
+		<br>
+		${whoami.user.phrase}
+		<input type="image" class="copyToClip" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${whoami.user.phrase}');"/>
+		<br>
+		<hr>
+		
 		<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm">
 		</form>
 		</div>
