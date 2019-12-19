@@ -83,6 +83,23 @@ body {
   width: 100%;
 }
 
+/*----- Logo -----*/
+
+.brand,
+.brand img {
+  float: left;
+  font-family: "DPTFontDin";
+  font-style: inherit;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 20px;
+  position: absolute;
+  right: 26px;
+  top: 3px;
+}
+
+/*----------------*/
+
 i {
   font-family: "DPTFontDin";
   font-style: inherit;
