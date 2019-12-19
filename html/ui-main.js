@@ -136,13 +136,19 @@ var createGUIScene = function(dptMode) {
 	
 			jQuery('body').append(`
 				<div id="form" class="helpframe firststepsForm">
-				<h1>First steps</h1>
+				<h1>Help</h1>
 				<hr>
-				<p>Navigation:</p>
-				<img src="/dpt_gestures.png" alt="help" class="helpimage">
+				<p>Need a hand? Let us show you the basic features.</p>
+				<input class="tourBtn" type="button" value="Start tour" id="tourBtn">
+				<p>Need something specific? Take a look at the full documentation.</p>
+				<form action="https://proto1.dpt.world/dpt-doku.html" target="_blank">
+    			<input type="submit" value="Documentation"/>
+				</form>
 				<button class="closeButton" id="close-btn">&#10005;</button>
 				</div>
 			`);
+
+			
 			jQuery(document).on('click touch', "#close-btn", function(event) {
 				hideDialogList();
 				jQuery('#form').remove();
@@ -150,6 +156,15 @@ var createGUIScene = function(dptMode) {
 				focusAtCanvas();
 				event.preventDefault();
 			});
+			document.getElementById('tourBtn').addEventListener('click', () => {
+				// tour öffnen aktion
+				console.log("klick");
+				//document.getElementById("guideContent").css("display","block");
+				whoami.user.preferences.guidedTour = true;
+				dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": true}});
+				location.reload();
+			
+			}, false);
 		}
 	});
 
