@@ -79,9 +79,10 @@ var createGUIScene = function(dptMode) {
 				<div id="form" class="helpframe aboutForm">
 				<h1>About</h1>
 				<hr>
-				<p>Digital Peace Talks gUG (h.b.)</p>
-				<p>A digital space where everyone can express and understand opinions</p>
-				<a href="http://www.digitalpeacetalks.com" target="_blank">Visit Our Website</a>
+				<p>This is a free and open web app to allow for exchange of conflicting opinions.</p>
+				Website: <a href="http://www.digitalpeacetalks.com" target="_blank">digitalpeacetalks.com</a>
+				<br>
+				Software: <a href="https://github.com/digital-peace-talks/DPT" target="_blank">github.com/digital-peace-talks/DPT</a>
 				<button class="closeButton" id="close-btn">&#10005;</button>
 				</div>
 			`);
