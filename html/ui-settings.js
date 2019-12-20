@@ -180,6 +180,7 @@ function settingsForm(opinionId, topicId) {
 		}
 		
 		focusAtCanvas();
+		settingsForm(opinionId, topicId);
 
 	});
 }
