@@ -206,7 +206,9 @@ var createGUIScene = function(dptMode) {
 				<div id="form" class="surveyForm" style="height: 90%;">
 				<h1>Contact</h1>
 				<p>We would love to hear your thoughts and ideas for improvement.</p>
-				Feel free to write them to <a href= "feedback@digitalpeacetalks.com">feedback@digitalpeacetalks.com</a>
+				Feel free to write them to: <br>
+				 <a href= "mailto:feedback@digitalpeacetalks.com"><img src="email.png" alt="email" height="auto" width="80%"></a>
+				<br>
 				or into this form:
 				 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
 				 <button class="closeButton" id="close-btn">&#10005;</button>
