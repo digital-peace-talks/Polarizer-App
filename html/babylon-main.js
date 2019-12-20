@@ -151,6 +151,10 @@ function setBabylonScheme() {
 		currentScene.clearColor = new BABYLON.Color3(.7, 0.9, 1.0);
 		break;
 	case DPTGlobal.COLORS_skybox:
+		currentScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+		break;
+	case DPTGlobal.COLORS_default:
+	default:
 		var skybox = BABYLON.Mesh.CreateBox("skyBox", 250.0, currentScene);
 		var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", currentScene);
 		skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("/skybox/space2", currentScene);
@@ -159,10 +163,7 @@ function setBabylonScheme() {
 		skyboxMaterial.disableLighting = true;
 		skybox.infiniteDistance = true;
 		skybox.material = skyboxMaterial;
-		break;
-	case DPTGlobal.COLORS_default:
-	default:
-		currentScene.clearColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
+		
 	}
 }
 

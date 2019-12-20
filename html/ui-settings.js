@@ -28,11 +28,11 @@ function settingsForm(opinionId, topicId) {
 				colors += " Dark</label>";
 				break
 			case DPTGlobal.COLORS_skybox:
-				colors += " Skybox</label>";
+				colors += " DPT</label>";
 				break
 			case DPTGlobal.COLORS_default:
 			default:
-				colors += " DPT</label>";
+				colors += " Skybox</label>";
 				break
 		}
 		colors += "<br>";
