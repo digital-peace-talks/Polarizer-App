@@ -763,6 +763,20 @@ textarea {
   -webkit-appearance: none;
 }
 
+.buttonRed {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-red;
+  border: none;
+  font-size: 16px;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+ // float: right;
+  -webkit-appearance: none;
+}
+
+
 .closeButton {
   font-family: DPTFontDin;
   font-size: 30px;
