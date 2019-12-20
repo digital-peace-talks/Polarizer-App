@@ -210,7 +210,7 @@ var createGUIScene = function(dptMode) {
 				 <a href= "mailto:feedback@digitalpeacetalks.com"><img src="email.png" alt="email" height="auto" width="80%"></a>
 				<br>
 				or into this form:
-				 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
+				 <iframe id="feedbackIframe" style="width: 100%; height: 105%;"scrolling="no" src="https://simple-feedback.dpt.world/"></iframe> 
 				 <button class="closeButton" id="close-btn">&#10005;</button>
 				 </div>
 			`);
