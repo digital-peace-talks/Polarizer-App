@@ -65,19 +65,19 @@ function settingsForm(opinionId, topicId) {
 		${colors}
 		<hr>
 		<b>Logout</b><br>
-		WARNING: Make sure to save your passphrase before you logg out. You can not recover it!<br><br>
+		<font color="red">WARNING:</font> Make sure to save your passphrase before you log out. You can not recover it!<br><br>
 		Your passphrase:
 		<br>
 		${whoami.user.phrase}
+		<br>		
+		<button class="button" onClick="copyToClipboard('${whoami.user.phrase}');"><img src="/copytoclipboard_white.png" width="20px" height="auto"> Copy to clipboard</button>
 		<br>
-		Copy to clipboard: 
-		<input type="image" class="copyToClip" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${whoami.user.phrase}');"/>
+		<br>
 		<br>
 		<input class="buttonRed" type="submit" id="logout" value="Logout">	
 		<br>
-		<hr>
-		<label><input type="checkbox" name="guidedTour" ${guidedTour}>Disable the guided tour</label>
 		<br>
+		<hr>
 		<input class="button" type="submit" value="SAVE">	
 		<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm">
 		</form>
