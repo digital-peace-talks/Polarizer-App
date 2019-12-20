@@ -61,6 +61,22 @@ body {
   width: 100%;
 }
 
+/*----- Logo -----*/
+.brand,
+.brand img {
+  float: left;
+  font-family: "DPTFontDin";
+  font-style: inherit;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 20px;
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  z-index: 200;
+}
+
+/*----------------*/
 i {
   font-family: "DPTFontDin";
   font-style: inherit;
@@ -130,6 +146,7 @@ i#props {
 
 a {
   text-decoration: none;
+  color: #005b98;
 }
 
 input {
@@ -730,6 +747,18 @@ textarea {
   -webkit-appearance: none;
 }
 
+.buttonRed {
+  font-family: DPTFontDin;
+  color: #b5bec4;
+  background-color: #ff6666;
+  border: none;
+  font-size: 16px;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  -webkit-appearance: none;
+}
+
 .closeButton {
   font-family: DPTFontDin;
   font-size: 30px;
@@ -833,7 +862,7 @@ nav ul {
   padding: 0;
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
-  left: 228px;
+  left: 280px;
 }
 
 nav ul li {
@@ -1585,9 +1614,6 @@ section ul li {
   }
   section a:target ~ ul {
     left: 0;
-  }
-  .fb_gd_wrap .content {
-    width: 100%;
   }
 }
 /*# sourceMappingURL=dpt_dark.css.map */
