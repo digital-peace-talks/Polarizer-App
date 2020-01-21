@@ -394,7 +394,7 @@ function dialogForm(secondDialog) {
 		objDiv.scrollTop = objDiv.scrollHeight;
 	});
 
-	jQuery(document).on('click', '.crisis', function (event) {
+	jQuery(document).on('click touch', '.crisis', function (event) {
 		crisisForm(this.id);
 		event.stopImmediatePropagation();
 		event.preventDefault();
