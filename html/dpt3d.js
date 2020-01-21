@@ -68,7 +68,7 @@ function startGuidedTour() {
 			leftMark: "50%",
 			buttonLeftName: "BACK",
 			buttonRightName: "NEXT",
-			guideText: "Navigate with one or two fingers",
+			guideText: "Use two fingers",
 		}, {
 			// tutorial desktop
 			top: "auto",
@@ -79,7 +79,7 @@ function startGuidedTour() {
 			leftMark: "50%",
 			buttonLeftName: "BACK",
 			buttonRightName: "NEXT",
-			guideText: "Use left and right clicks to navigate",
+			guideText: "Use right clicks",
 		}, {
 			// Choose a topic 
 			top: "auto",

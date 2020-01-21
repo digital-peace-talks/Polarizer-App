@@ -92,6 +92,24 @@ body {
   width: 100%;
 }
 
+/*----- Logo -----*/
+
+.brand,
+.brand img {
+  float: left;
+  font-family: "DPTFontDin";
+  font-style: inherit;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 20px;
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  z-index: 200;
+}
+
+/*----------------*/
+
 i {
   font-family: "DPTFontDin";
   font-style: inherit;
@@ -136,6 +154,15 @@ h4 {
   padding: 5px;
 }
 
+h5 {
+  font-family: "DPTFontDin";
+  font-size: 18px;
+  color: $dpt-prime-text;
+  font-weight: 500;
+  padding: 0px;
+  margin: 0px;
+}
+
 hr {
   color: $dpt-second-text;
   border-style: dashed;
@@ -152,6 +179,7 @@ i#props {
 
 a {
   text-decoration: none;
+  color: $dpt-third-text;
 }
 
 input {
@@ -176,7 +204,6 @@ input {
   color: $dpt-green;
 }
 
-// dunkles inputfeld ändern
 input[type="text"] {
   border-color: $dpt-second-border;
   color: $dpt-third-text;
@@ -311,13 +338,14 @@ div.hide {
 }
 
 div.status {
-  bottom: 83px;
+  bottom: 49px;
   width: 580px;
   position: fixed;
   left: 50%;
   margin-left: -290px;
   z-index: 30;
   background-color: $dpt-prime-base;
+  height: 80px;
 }
 
 div#c1 {
@@ -364,7 +392,7 @@ div#crisis {
   color: $dpt-prime-text;
   box-shadow: 0px 0px 20px $dpt-shadow;
   bottom: 49px;
-  height: 550px;
+  height: 500px;
   background-color: $dpt-prime-base;
 }
 
@@ -492,7 +520,7 @@ div#dialogFrame {
   margin-left: -10px;
   float: left;
   margin-right: 20px;
-  filter: invert(100%);
+  filter: invert(100%)
 }
 
 .btn-bar-icon {
@@ -500,7 +528,7 @@ div#dialogFrame {
   position: relative;
   margin-left: -10px;
   bottom: 5px;
-  filter: invert(100%);
+  filter: invert(100%)
 }
 
 * {
@@ -546,9 +574,8 @@ div#dialogFrame {
   font-size: 16px;
   background-color: $dpt-menu;
   visibility: hidden;
-  bottom: 48px;
-  left: 50%;
-  margin-left: -200px;
+  bottom: 0px;
+  left: 0%;
   box-shadow: 0px 0px 20px $dpt-shadow;
 }
 
@@ -557,7 +584,7 @@ div#dialogFrame {
   bottom: 48px;
   width: 400px;
   left: 50%;
-  padding: 20px;
+  padding: 10px;
   margin-left: -200px;
   border: $dpt-prime-border;
   border-style: solid;
@@ -570,6 +597,7 @@ div#dialogFrame {
   box-shadow: 0px 0px 20px $dpt-shadow;
   max-height: 80%;
   overflow-y: auto;
+  padding-top: 40px;
 }
 
 textarea {
@@ -610,7 +638,7 @@ textarea {
   font-weight: normal;
   position: absolute;
   left: 0px;
-  top: 0px;
+  bottom: 10px;
 }
 
 .buttondialog {
@@ -685,7 +713,7 @@ textarea {
   -webkit-appearance: none;
   position: absolute;
   right: 0px;
-  top: 0px;
+  bottom: 10px;
 }
 
 .crisis {
@@ -696,13 +724,11 @@ textarea {
   font-size: 16px;
   width: 20%;
   height: 30px;
-  //margin: 5px auto;
-  //margin-left: 10px;
   -webkit-appearance: none;
   z-index: 40;
   position: absolute;
-  top: -40px;
   right: 0px;
+  bottom: 66px;
 }
 
 .crisis.icon {
@@ -715,6 +741,8 @@ textarea {
   margin: 5px auto;
   margin-left: 10px;
   -webkit-appearance: none;
+  font-size: 18px;
+  bottom: -33px;
 }
 
 .buttonCrisisSend {
@@ -739,13 +767,26 @@ textarea {
   background-color: $dpt-prime-button;
   border: none;
   font-size: 16px;
-  //width: 120px;
   height: 40px;
   margin: 5px auto;
   margin-left: 10px;
   float: right;
   -webkit-appearance: none;
 }
+
+.buttonRed {
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-red;
+  border: none;
+  font-size: 16px;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  float: right;
+  -webkit-appearance: none;
+}
+
 
 .closeButton {
   font-family: DPTFontDin;
@@ -770,14 +811,48 @@ textarea {
   color: $dpt-third-text;
 }
 
+.closeButtonTutorial {
+  font-family: DPTFontDin;
+  font-size: 30px;
+  transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  position: absolute;
+  background-color: transparent;
+  width: 30px;
+  height: 30px;
+  top: 6px;
+  right: 6px;
+  border-radius: 50%;
+  border-color: transparent;
+  color: $dpt-prime-border;
+  line-height: 0px;
+  text-indent: -7px;
+}
+
+.closeButtonTutorial:hover {
+  transform: scale(1.4);
+  color: $dpt-third-text;
+}
+
+.closeButtonTutorial2 {
+  font-family: DPTFont;
+  font-size: 16px;
+  position: absolute;
+  background-color: transparent;
+  top: 264px;
+  left: 6px;
+  border-color: transparent;
+  color: $dpt-prime-border;
+  line-height: 0px;
+}
+
 .copyToClip {
-  filter: invert(100%);
+  filter: invert(0%);
   width: 32px;
   height: auto;
   border-color: transparent;
   position: relative;
   top: 6px;
-  filter: invert(0%);
 }
 
 .helpframe {
@@ -814,7 +889,7 @@ nav ul {
   -moz-transition: all 0.3s ease-out;
   -o-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
-  left: 228px;
+  left: 280px;
 }
 
 nav ul li {
@@ -934,15 +1009,6 @@ section ul li {
   background-color: $dpt-second-base;
 }
 
-/*----- Logo -----*/
-
-.brand,
-.brand img {
-  float: left;
-}
-
-/*----------------*/
-
 .frame1 {
   width: 400px;
   height: 200px;
@@ -1051,13 +1117,12 @@ section ul li {
   background: transparent;
 }
 .fb_gd_wrap .content {
-  height: 200px;
-  background: transparent;
+  background: $dpt-prime-base;
   z-index: 1000;
   box-shadow: 0px 0px 20px $dpt-shadow;
   position: absolute;
   left: 500px;
-  width: 400px;
+  width: 380px;
 }
 
 .fb_gd_wrap .header {
@@ -1068,9 +1133,9 @@ section ul li {
 }
 
 .fb_gd_wrap .header .text {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin-left: 1rem;
-  color: $dpt-third-text;
+  color: $dpt-prime-text;
 }
 
 .fb_gd_wrap .header .btn {
@@ -1089,14 +1154,14 @@ section ul li {
 }
 
 .fb_gd_wrap .body {
-  height: auto;
+  height: 190px;
   background: $dpt-prime-base;
 }
 .fb_gd_wrap .body .text {
   font-size: 0.9rem;
   color: $dpt-prime-text;
   overflow: hidden;
-  width: 360px;
+ // width: 360px;
   margin: 0 20px;
 }
 
@@ -1115,7 +1180,7 @@ section ul li {
   display: inline-block;
   font-weight: 500;
   font-size: 16px;
-  width: 360px;
+  width: 340px;
   padding: 0;
   vertical-align: top;
 }
@@ -1126,8 +1191,9 @@ section ul li {
   font-size: 0;
 }
 .fb_gd_wrap .footer .btn {
+  font-family: DPTFont;
   display: inline-block;
-  width: 20%;
+  width: 25%;
   border: none;
   height: 100%;
   padding: 0;
@@ -1142,33 +1208,24 @@ section ul li {
 }
 .fb_gd_wrap .footer .steps {
   display: inline-block;
-  width: 60%;
-  background: $dpt-prime-button;
+  width: 48%;
   height: 100%;
   margin: 0;
   padding: 0;
   text-align: center;
+  //visibility: hidden; // progressbar hidden
 }
 .fb_gd_wrap .footer .dot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   background: transparent;
   border: 1px solid $dpt-prime-text;
-  margin: 30px 12px 12px 12px;
+  margin: 20px 5px 12px 5px;
   display: inline-block;
   border-radius: 50%;
   position: relative;
 }
-.fb_gd_wrap .footer .line::after {
-  content: "";
-  display: block;
-  width: 24px;
-  background-color: $dpt-prime-button;
-  border-top: 1px solid $dpt-prime-text;
-  position: absolute;
-  top: 4px;
-  left: 9px;
-}
+
 .fb_gd_wrap .footer .dot::before {
   content: attr(data-step);
   display: block;
@@ -1182,6 +1239,20 @@ section ul li {
 .fb_gd_wrap .footer .active {
   background: $dpt-prime-base;
   box-shadow: 0px 0px 20px $dpt-shadow;
+}
+
+.tutorialBorder{
+border-color:rgb(255, 251, 0); 
+border-style: dashed; 
+border-width: 3px; 
+height: 96%; 
+width:96%; 
+position:fixed; 
+z-index: 50; 
+top: 2%; 
+left: 2%; 
+display: "none";
+pointer-events: none;
 }
 
 /* pulsating circle*/
@@ -1298,7 +1369,6 @@ section ul li {
   }
   #form {
     width: 100%;
-    //height: 200px;
     left: 0;
     margin-left: 0px;
     position: absolute;
@@ -1325,13 +1395,11 @@ section ul li {
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    //top: 0px;
   }
   div.status {
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    //bottom: 38px;
   }
   h3 {
     font-size: 16px;
@@ -1366,6 +1434,9 @@ section ul li {
   .buttondialogclose {
     left: 50%;
     margin-left: 40%;
+    top: 40px;
+    position: fixed;
+    z-index: 500;
   }
   .buttondialog {
     left: auto;
@@ -1380,7 +1451,6 @@ section ul li {
     width: 100%;
     left: 0px;
     margin-left: 0px;
-    //bottom: 0px;
   }
   div#crisis {
     width: 100%;
@@ -1409,7 +1479,7 @@ section ul li {
       margin: 0;
     }
   }
-  /*Formatierung Mobiles Menue*/
+  /*Format Mobile Menu*/
   nav ul {
     top: 40px;
     position: absolute;
@@ -1422,7 +1492,7 @@ section ul li {
   nav ul li {
     display: block;
     text-align: left;
-    padding: 0em 0em;
+    padding: 0 0;
   }
   nav ul li button {
     padding: 1em 0;
@@ -1513,10 +1583,5 @@ section ul li {
   }
   section a:target ~ ul {
     left: 0;
-  }
-
-  // __________________ mobile guided tool
-  .fb_gd_wrap .content {
-    width: 100%;
   }
 }

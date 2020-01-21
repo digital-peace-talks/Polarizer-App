@@ -28,11 +28,11 @@ function settingsForm(opinionId, topicId) {
 				colors += " Dark</label>";
 				break
 			case DPTGlobal.COLORS_skybox:
-				colors += " Skybox</label>";
+				colors += " DPT</label>";
 				break
 			case DPTGlobal.COLORS_default:
 			default:
-				colors += " Default</label>";
+				colors += " Skybox</label>";
 				break
 		}
 		colors += "<br>";
@@ -41,38 +41,44 @@ function settingsForm(opinionId, topicId) {
 	jQuery('body').append(`
 		<div id="form" class="helpframe"><h1>Settings:</h1>
 		<hr>
-		Your passphrase:
+		<b>Visibility</b>
 		<br>
-		${whoami.user.phrase}
-		<input type="image" class="copyToClip" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${whoami.user.phrase}');"/>
+		Show or hide your online status.
+		<br>
+		Visible: <input type="checkbox" name="stealthMode" ${stealthMode}>
 		<br>
 		<hr>
-		<b>Change UI-Theme:</b>
+		<b>Styling</b><br>
+		How about some new colors?
+		<br>
+		Menu:
 		<div style="display: flex; flex-direction: row-reverse;">
 		<input class="button" type="button" value="MC" id="changetheme6">
 		<input class="button" type="button" value="Love" id="changetheme5">
-		<input class="button" type="button" value="Thx" id="changetheme4">
 		<input class="button" type="button" value="Dark" id="changetheme3">
 		<input class="button" type="button" value="Bright" id="changetheme2">
 		<input class="button" type="button" value="DPT" id="changetheme1">
 		</div>
 		<br>
-		<br>
-		<hr>
-		Change 3D-Theme:
+		3-D Space:
 		<form id="settings" class="settingsForm">
 		${colors}
 		<hr>
-		Do you like to be visible to other Users? Then uncheck the checkbox.
+		<b>Logout</b><br>
+		<font color="red">WARNING:</font> Make sure to save your passphrase before you log out. You can not recover it!<br><br>
+		Your passphrase:
 		<br>
-		Stealth-Mode: <input type="checkbox" name="stealthMode" ${stealthMode}>
+		${whoami.user.phrase}
+		<br>		
+		<button class="button" onClick="copyToClipboard('${whoami.user.phrase}');"><img src="/copytoclipboard_white.png" width="20px" height="auto"> Copy to clipboard</button>
+		<br>
+		<br>
+		<br>
+		<input class="buttonRed" type="submit" id="logout" value="Logout">	
+		<br>
 		<br>
 		<hr>
-		Check the checkbox to disable the guided tour on each session.
-		<br>
-		<label><input type="checkbox" name="guidedTour" ${guidedTour}>Disable the guided tour</label>
-		<br>
-		<input class="button" type="submit" value="Apply">
+		<input class="button" type="submit" value="SAVE">	
 		<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm">
 		</form>
 		</div>
@@ -106,6 +112,18 @@ function settingsForm(opinionId, topicId) {
 	jQuery(document).on('click touch', "#changetheme6", function(event) {
 		document.getElementById('theme_css').href = 'dpt_mc.css';
 		theme = 5;
+	});
+
+	jQuery(document).on('click touch', "#logout", function(event) {
+		//document.getElementById('theme_css').href = 'dpt_mc.css';
+		//theme = 5;
+			function gcv(a){
+								var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');
+								return (b ? b.pop():'')
+							}
+							document.cookie='dptUUID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+							location.reload(true);
+		location.href = '../';
 	});
 
 	jQuery(document).on('click touch', "#closeSettingsForm", function(event) {
@@ -160,7 +178,9 @@ function settingsForm(opinionId, topicId) {
 			currentScene.name = "opinionScene";
 			dpt.getOpinionByTopic(currentTopic);
 		}
+		
 		focusAtCanvas();
+		settingsForm(opinionId, topicId);
 
 	});
 }

@@ -79,9 +79,10 @@ var createGUIScene = function(dptMode) {
 				<div id="form" class="helpframe aboutForm">
 				<h1>About</h1>
 				<hr>
-				<p>Digital Peace Talks gUG (h.b.)</p>
-				<p>A digital space where everyone can express and understand opinions</p>
-				<a href="http://www.digitalpeacetalks.com" target="_blank">Visit Our Website</a>
+				<p>This is a free and open web app to allow for exchange of conflicting opinions.</p>
+				Website: <a href="http://www.digitalpeacetalks.com" target="_blank">digitalpeacetalks.com</a>
+				<br>
+				Software: <a href="https://github.com/digital-peace-talks/DPT" target="_blank">github.com/digital-peace-talks/DPT</a>
 				<button class="closeButton" id="close-btn">&#10005;</button>
 				</div>
 			`);
@@ -135,13 +136,19 @@ var createGUIScene = function(dptMode) {
 	
 			jQuery('body').append(`
 				<div id="form" class="helpframe firststepsForm">
-				<h1>First steps</h1>
+				<h1>Help</h1>
 				<hr>
-				<p>Navigation:</p>
-				<img src="/dpt_gestures.png" alt="help" class="helpimage">
+				<p>Need a hand? Let us show you the basic features.</p>
+				<input class="tourBtn" type="button" value="Start tour" id="tourBtn">
+				<p>Need something specific? Take a look at the full documentation.</p>
+				<form action="https://proto1.dpt.world/dpt-doku.html" target="_blank">
+    			<input type="submit" value="Documentation"/>
+				</form>
 				<button class="closeButton" id="close-btn">&#10005;</button>
 				</div>
 			`);
+
+			
 			jQuery(document).on('click touch', "#close-btn", function(event) {
 				hideDialogList();
 				jQuery('#form').remove();
@@ -149,6 +156,15 @@ var createGUIScene = function(dptMode) {
 				focusAtCanvas();
 				event.preventDefault();
 			});
+			document.getElementById('tourBtn').addEventListener('click', () => {
+				// tour öffnen aktion
+				console.log("klick");
+				//document.getElementById("guideContent").css("display","block");
+				whoami.user.preferences.guidedTour = true;
+				dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": true}});
+				location.reload();
+			
+			}, false);
 		}
 	});
 
@@ -187,11 +203,25 @@ var createGUIScene = function(dptMode) {
 			hideDialogList();
 	
 			jQuery('body').append(`
-				<div id="form" class="surveyForm" style="height: 80%;">
-				 <iframe id="feedbackIframe" style="width: 100%; height: 100%;" src="https://simple-feedback.dpt.world/"></iframe> 
-				</div>
+				<div id="form" class="surveyForm" style="height: 90%;">
+				<h1>Contact</h1>
+				<p>We would love to hear your thoughts and ideas for improvement.</p>
+				Feel free to write them to: <br>
+				 <a href= "mailto:feedback@digitalpeacetalks.com"><img src="email.png" alt="email" height="auto" width="80%"></a>
+				<br>
+				or into this form:
+				 <iframe id="feedbackIframe" style="width: 100%; height: 105%;"scrolling="no" src="https://simple-feedback.dpt.world/"></iframe> 
+				 <button class="closeButton" id="close-btn">&#10005;</button>
+				 </div>
 			`);
-	
+
+			jQuery(document).on('click touch', "#close-btn", function(event) {
+				hideDialogList();
+				jQuery('#form').remove();
+				formVisible = false;
+				focusAtCanvas();
+				event.preventDefault();
+			});	
 			window.addEventListener('message', event => {
 				// IMPORTANT: check the origin of the data! 
 				formVisible = 'hidden';
