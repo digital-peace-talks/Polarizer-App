@@ -140,7 +140,6 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
 };
 
 function cropImage(ctx, canvas) {
-
 	var w = canvas.width;
 	var h = canvas.height;
 	var pix = { x: [], y: [] };
@@ -283,7 +282,7 @@ function textBlock(x, y, z, name, text, options) {
 			}, currentScene);
 	plane.dpt = dpt;
 
-    var pngBase64 = textureContext.canvas.toDataURL("image/png", 0.99);
+//    var pngBase64 = textureContext.canvas.toDataURL("image/png", 0.99);
 
     plane.bjs = {
     	x: 1/DTWidth * textureContext.canvas.width * 2.4,

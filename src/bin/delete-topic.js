@@ -43,6 +43,11 @@ async function deleteTopic(topicId) {
 	await Topic.deleteOne({_id: topicId});
 }
 
+async function listTopics() {
+	topics = await Topic.find({});
+	console.log(topics);
+}
+
 async function main() {
 	await deleteTopic(process.argv[2]);
 
