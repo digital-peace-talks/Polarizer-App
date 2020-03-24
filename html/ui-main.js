@@ -337,7 +337,7 @@ var createGUIScene = function (dptMode) {
 		jQuery('#form').remove();
 		formVisible = false;
 
-		jQuery('#new-opinion-btn').hide();
+		jQuery('#new-opinion-li').hide();
 		
 		
 		var newTopicBtn = jQuery('#new-topic-btn');
@@ -382,7 +382,7 @@ var createGUIScene = function (dptMode) {
 
 		jQuery('#new-topic-btn').hide();
 		var newOpinionBtn = jQuery('#new-opinion-btn');
-		newOpinionBtn.show();
+		newOpinionBtn.parent().show();
 
 		newOpinionBtn.html(`<img class="btn-bar-icon" src="/opinion_white.png">`);
 		newOpinionBtn.on('click touch', function (event) {

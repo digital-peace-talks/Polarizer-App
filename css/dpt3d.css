@@ -1,0 +1,34 @@
+section {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+section ul.menu {
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  margin: 0;
+  padding: 0;
+}
+@media screen and (max-width: 640px) {
+  section ul.menu {
+    flex-grow: 1;
+  }
+}
+section ul.menu li {
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  flex-grow: 1;
+}
+section ul.menu li button {
+  width: 100%;
+}
+section ul.menu li#new-topic-li, section ul.menu li#new-opinion-li {
+  display: none;
+}
+
+/*# sourceMappingURL=dpt3d.css.map */
