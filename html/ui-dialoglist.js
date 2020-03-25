@@ -92,6 +92,15 @@ function loadDialogList(restObj) {
 		event.preventDefault();
 	});
 
+	if (!dialogs.length) {
+		jQuery('#dialogList').append(`
+			<div class="dialoglist-empty">
+				<img src="/illustrations/blank_canvas.svg" />
+				<h1>You don't have any dialogs yet</h1>
+			</div>
+		`);
+	}
+
 	for (var i = 0; i < dialogs.length; i++) {
 
 		if(dialogs[i].unreadMessages > 0) {

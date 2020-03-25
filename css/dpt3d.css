@@ -31,4 +31,22 @@ section ul.menu li#new-topic-li, section ul.menu li#new-opinion-li {
   display: none;
 }
 
+.dialoglist-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space;
+  padding: 32px;
+}
+.dialoglist-empty h1 {
+  text-align: center;
+  margin-top: 32px;
+}
+.dialoglist-empty img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
 /*# sourceMappingURL=dpt3d.css.map */
