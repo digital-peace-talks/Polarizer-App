@@ -12,14 +12,33 @@ function opinionContext(context) {
 			${context.opinionContext?context.opinionContext:'<p>none.</p>'}
 			<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm" >
 			</div>
+			${context.canInvite?
+				`<button id="btn-request-dialog" class="button block">request dialog</button>`
+				: ``
+			}
 		</div>
 	`);
+	jQuery("#btn-request-dialog").on('click touch', () => {
+		closeOpinion();
+		propositionForm(context.opinionId, currentTopic)
+	})
 	jQuery("#closeSettingsForm").on('click touch', function(event) {
-		jQuery('#form').remove();
-		formVisible = false;
 		event.stopImmediatePropagation();
 		event.preventDefault();
+		closeOpinion();
 	});
+	jQuery("#closeSettingsForm").on('click touch', function(event) {
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		closeOpinion();
+	});
+	/**
+	 * Closes opinion modal
+	 */
+	const closeOpinion = () => {
+		jQuery('#form').remove();
+		formVisible = false;
+	}
 }
 
 function opinionEdit(context) {
