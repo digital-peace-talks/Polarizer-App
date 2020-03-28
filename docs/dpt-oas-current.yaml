@@ -441,11 +441,11 @@ paths:
     summary: Contains opinion operations
 
 
-  /opinion/postAllowed/:
+  /opinion/opinionsExist/:
     get:
       description: Can the user post a new opinion? Only one opinion per user
         per topic.
-      operationId: opinionPostAllowed
+      operationId: opinionOpinionsExist
       requestBody:
         content:
           application/json:

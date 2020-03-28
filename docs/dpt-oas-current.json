@@ -547,12 +547,12 @@
         } ]
       }
     },
-    "/opinion/postAllowed/" : {
+    "/opinion/opinionsExist/" : {
       "get" : {
         "tags" : [ "user", "opinion" ],
         "summary" : "Check, if the user is able to post an opinion",
         "description" : "Can the user post a new opinion? Only one opinion per user per topic.",
-        "operationId" : "opinionPostAllowed",
+        "operationId" : "opinionOpinionsExist",
         "requestBody" : {
           "description" : "data we need",
           "content" : {
