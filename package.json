@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "nodemon --inspect=0.0.0.0:9229 src/bin/www | node node_modules/.bin/bunyan",
-    "scss": "node-sass --watch scss -o css"
+    "sass": "sass --watch scss:css"
   },
   "dependencies": {
     "body-parser": ">=1.19.0",
@@ -31,6 +31,7 @@
   "devDependencies": {
     "@types/mongoose": ">=5.5.1",
     "mocha": ">=6.2.0",
-    "node-sass": "^4.13.1"
+    "nodemon": "^2.0.2",
+    "sass": "^1.26.3"
   }
 }
