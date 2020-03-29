@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(cookieKey));
-app.use(favicon(process.env.DPT_PATH+'/static/favicon.ico'));
+app.use(favicon(process.cwd()+'/static/favicon.ico'));
 
 /*
  * Routes
