@@ -2,12 +2,16 @@ function propositionForm(opinionId, topicId) {
   console.log("enter proposition");
 
   jQuery(
-    `
-		<div id="form" class="dialog-form" style="display:flex; position:absoulute;">
+    ` <div id="form" class="dialog-form" position:absoulute;">
+    <form id="proposition">
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
 		<input type="hidden" id="topicId" name="topicId" value="${topicId}">
-		<br><button class="button" type="submit" value="Confirm">Request dialog</button>
-		<button class="button" type="button" value="&#10005;" name="close window" id="ClosePropositionForm">Never mind</button>
+		<div>
+      <br><button class="button" type="submit" value="Confirm">Request dialog</button>
+    </div>
+		<div>
+      <button class="button-second" type="button" value="&#10005;" name="close window" id="ClosePropositionForm">Never mind</button>
+    </div>
     </form></div>
 	`
   )
@@ -67,12 +71,10 @@ function propositionForm(opinionId, topicId) {
   jQuery(document).on("submit", "form#proposition", function (event) {
     event.stopImmediatePropagation();
     event.preventDefault();
-    var proposition = jQuery(".proposition").val();
+    var proposition = "";
     var opinionId = jQuery("#opinionId").val();
     var topicId = jQuery("#topicId").val();
-    if (proposition) {
-      dpt.postDialog(proposition, whoami.dptUUID, opinionId, topicId);
-    }
+    dpt.postDialog(proposition, whoami.dptUUID, opinionId, topicId);
     jQuery("#form").remove();
     formVisible = false;
     focusAtCanvas();
