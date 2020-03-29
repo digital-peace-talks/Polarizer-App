@@ -1,14 +1,19 @@
 function propositionForm(opinionId, topicId) {
   console.log("enter proposition");
 
-  jQuery("body").append(`
+  jQuery(
+    `
 		<div id="form" class="dialog-form" style="display:flex; position:absoulute;">
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
 		<input type="hidden" id="topicId" name="topicId" value="${topicId}">
 		<br><button class="button" type="submit" value="Confirm">Request dialog</button>
 		<button class="button" type="button" value="&#10005;" name="close window" id="ClosePropositionForm">Never mind</button>
     </form></div>
-	`);
+	`
+  )
+    .hide()
+    .appendTo("body")
+    .fadeIn(900);
 
   jQuery(".proposition").focus();
 
