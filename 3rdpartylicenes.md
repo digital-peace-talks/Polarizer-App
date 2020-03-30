@@ -1,3 +1,4 @@
+
 ## Third party packages
 
 This is a list of those packages, licenses and copyright holders of the projects we use directly in our digital peace talks project.
@@ -59,7 +60,7 @@ This is a list of those packages, licenses and copyright holders of the projects
     Copyright: 2010 LearnBoost <dev@learnboost.com><Paste>
 
     Package: node-yaml-config
-    License: unklar
+    License: unklar 
 
     Package: path-to-regexp
     License: MIT
@@ -87,3 +88,4 @@ This is a list of those packages, licenses and copyright holders of the projects
     Package: ws
     License: MIT
     Copyright: 2011 Einar Otto Stangvik <einaros@gmail.com>
+

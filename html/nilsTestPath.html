@@ -1,60 +1,63 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-    <title></title>
-    <style></style>
-  </head>
-  <body>
-    <form id="nilsTestForm">
-      <input type="text" id="nilsTestStringId" name="nilsTestStringName" />
-    </form>
-  </body>
-  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  <script>
-    jQuery(document).ready(function () {
-      var restObj = {};
+	<head>
+		<title></title>
+		<style></style>
+	</head>
+	<body>
+		<form id="nilsTestForm">
+		<input type="text" id="nilsTestStringId" name="nilsTestStringName">
+		</form>
+	</body>
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	<script>
+		jQuery(document).ready(function() {
+			var restObj = {};
 
-      var socket = io.connect(
-        window.location.protocol + "//" + window.location.host,
-        { transports: ["websocket"] }
-      );
+			var socket = io.connect(
+				window.location.protocol
+				+ '//' + window.location.host,
+				{ transports: ['websocket'] }
+			);
 
-      function postNilsTestPath(nilsTestString) {
-        socket.emit("api", {
-          method: "post",
-          path: "/nilsTestPath/",
-          data: {
-            content: nilsTestString,
-          },
-        });
-      }
-      jQuery("#nilsTestForm").submit(function (event) {
-        var nilsTestString = jQuery("#nilsTestStringId").val();
-        postNilsTestPath(nilsTestString);
-        jQuery("#nilsTestStringId").val("");
-        event.preventDefault();
-      });
 
-      socket.on("connect", () => {
-        mysocketid = socket.id;
-        if (document.cookie) {
-          socket.emit("login", {
-            method: "post",
-            path: "/user/login/",
-            data: {
-              publicKey: document.cookie,
-            },
-          });
-        }
-      });
+			function postNilsTestPath(nilsTestString) {
+				socket.emit("api", {
+					method: 'post',
+					path: '/nilsTestPath/',
+					data: {
+						content: nilsTestString
+					}
+				});
+			}
+			jQuery("#nilsTestForm").submit(function(event) {
+				var nilsTestString = jQuery('#nilsTestStringId').val();
+				postNilsTestPath(nilsTestString);
+				jQuery('#nilsTestStringId').val('');
+				event.preventDefault();
+			});
 
-      socket.on("api", function (restObj) {
-        if (restObj) {
-          if (restObj.path == "/nilsTestPath/" && restObj.data) {
-          }
-        }
-      });
-    });
-  </script>
-</html>
+			socket.on('connect', () => {
+				mysocketid = socket.id;
+				if(document.cookie) {
+					socket.emit("login", {
+						method: 'post',
+						path: '/user/login/',
+						data: {
+							publicKey: document.cookie
+						}
+					});
+				}
+			});
+				
+			socket.on('api', function(restObj) {
+				if(restObj) {
+					if(restObj.path == '/nilsTestPath/' && restObj.data) {
+					}
+				}
+			});
+			
+		});
+	</script>
+</html>  

@@ -1,7 +1,8 @@
 function propositionForm(opinionId, topicId) {
-  console.log("enter proposition");
 
-  jQuery("body").append(`
+	console.log('enter proposition');
+
+	jQuery('body').append(`
 		<div id="form">Please enter your proposition:
 		<br><form id="proposition"><textarea name="proposition" class="proposition"></textarea>
 		<input type="hidden" id="opinionId" name="opinionId" value="${opinionId}">
@@ -10,66 +11,60 @@ function propositionForm(opinionId, topicId) {
 		<input class="closeButton" type="button" value="&#10005;" name="close window" id="ClosePropositionForm"></form></div>
 	`);
 
-  jQuery(".proposition").focus();
+	jQuery(".proposition").focus();
 
-  jQuery(document).on("click", "#ClosePropositionForm", function (event) {
-    propositionFormOpen = 0;
-    jQuery("#form").remove();
-    formVisible = false;
-    focusAtCanvas();
-    event.preventDefault();
-  });
+	jQuery(document).on('click', "#ClosePropositionForm", function(event) {
+		propositionFormOpen = 0;
+		jQuery('#form').remove();
+		formVisible = false;
+		focusAtCanvas();
+		event.preventDefault();
+	});
 
-  jQuery(document).on("keydown", ".proposition", function (event) {
-    var n = jQuery(".proposition").val().length;
-    if (n >= 512) {
-      jQuery(".proposition").css({
-        "background-color": "#ff8888",
-        color: "#005B98",
-      });
-      if (
-        event.keyCode != 8 &&
-        event.keyCode != 127 &&
-        event.keyCode != 37 &&
-        event.keyCode != 38 &&
-        event.keyCode != 39 &&
-        event.keyCode != 40
-      ) {
-        event.preventDefault();
-      }
-    } else {
-      var bg = jQuery("textarea.proposition").css("background-color");
-      if (bg != "rgb(255,255,255)") {
-        jQuery("textarea.proposition").css({
-          "background-color": "rgb(255,255,255)",
-        });
-      }
-    }
-    if (event.keyCode == 27) {
-      jQuery("#form").remove();
-      formVisible = false;
-      focusAtCanvas();
-      event.preventDefault();
-    }
-    if (event.keyCode == 10 || event.keyCode == 13) {
-      event.preventDefault();
-    }
-    if (event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
-      jQuery("form#proposition").submit();
-    }
-  });
+	jQuery(document).on('keydown', '.proposition', function(event) {
+		var n = jQuery('.proposition').val().length;
+		if (n >= 512) {
+			jQuery('.proposition').css({ "background-color": "#ff8888", "color": "#005B98" });
+			if (event.keyCode != 8 &&
+				event.keyCode != 127 &&
+				event.keyCode != 37 &&
+				event.keyCode != 38 &&
+				event.keyCode != 39 &&
+				event.keyCode != 40) {
+				event.preventDefault();
+			}
+		} else {
+			var bg = jQuery('textarea.proposition').css('background-color');
+			if (bg != "rgb(255,255,255)") {
+				jQuery('textarea.proposition').css({ "background-color": "rgb(255,255,255)" });
+			}
+		}
+		if (event.keyCode == 27) {
+			jQuery('#form').remove();
+			formVisible = false;
+			focusAtCanvas();
+			event.preventDefault();
+		}
+		if(event.keyCode == 10 || event.keyCode == 13) {
+			event.preventDefault();
+		}
+		if (event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
+			jQuery('form#proposition').submit();
+		}
+	});
 
-  jQuery(document).on("submit", "form#proposition", function (event) {
-    event.stopImmediatePropagation();
-    event.preventDefault();
-    var proposition = jQuery(".proposition").val();
-    var opinionId = jQuery("#opinionId").val();
-    var topicId = jQuery("#topicId").val();
-    if (proposition) {
-      dpt.postDialog(proposition, whoami.dptUUID, opinionId, topicId);
-    }
-    jQuery("#form").remove();
-    formVisible = false;
-    focusAtCanvas();
-  });
+	jQuery(document).on('submit', 'form#proposition', function(event) {
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		var proposition = jQuery('.proposition').val();
+		var opinionId = jQuery('#opinionId').val();
+		var topicId = jQuery('#topicId').val();
+		if (proposition) {
+			dpt.postDialog(proposition, whoami.dptUUID, opinionId, topicId);
+		}
+		jQuery('#form').remove();
+		formVisible = false;
+		focusAtCanvas();
+	});
 }
+
