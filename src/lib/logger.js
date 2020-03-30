@@ -3,11 +3,11 @@ const bunyan = require("bunyan");
 /**
  * @param {Object} config Logger configuration
  */
-module.exports = config => {
+module.exports = (config) => {
   const bunyanConfig = [];
   const levels = Object.keys(config.levels);
 
-  levels.forEach(level => {
+  levels.forEach((level) => {
     const bunyanLevel = config.levels[level];
     if (!bunyanLevel) return;
 
@@ -28,5 +28,9 @@ module.exports = config => {
     bunyanConfig.push(logger);
   });
 
-  return bunyan.createLogger({ src: true, name: config.name, streams: bunyanConfig });
+  return bunyan.createLogger({
+    src: true,
+    name: config.name,
+    streams: bunyanConfig,
+  });
 };

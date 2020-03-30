@@ -2,35 +2,33 @@
  * http://usejsdoc.org/
  */
 
-const mongoose 		= require('mongoose');
-const Lo_			= require('lodash');
-const cookieParser	= require('cookie-parser');
-const util			= require('util');
+const mongoose = require("mongoose");
+const Lo_ = require("lodash");
+const cookieParser = require("cookie-parser");
+const util = require("util");
 
-var io				= require('socket.io')();
+var io = require("socket.io")();
 
-const User			= require('./models/user');
-const userService	= require('./services/user');
+const User = require("./models/user");
+const userService = require("./services/user");
 
-const config		= require("../lib/config");
-const logger		= require("../lib/logger");
-const log			= logger(config.logger);
+const config = require("../lib/config");
+const logger = require("../lib/logger");
+const log = logger(config.logger);
 
-
-var cookieKey		= process.env.DPT_SECRET;
-
+var cookieKey = process.env.DPT_SECRET;
 
 const getCircularReplacer = () => {
-	const seen = new WeakSet();
-	return (key, value) => {
-		if (typeof value === "object" && value !== null) {
-			if (seen.has(value)) {
-				return;
-			}
-			seen.add(value);
-		}
-		return value;
-	};
+  const seen = new WeakSet();
+  return (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
 };
 
 /*
@@ -52,191 +50,196 @@ const getCircularReplacer = () => {
 	it with care. in the apiBroker function, we just call this function which
 	match the path and return the return value to the caller function.
  */
-var match = require('./websocket-resolver.js')(io);
+var match = require("./websocket-resolver.js")(io);
 async function apiBroker(obj, dptUUID, socket) {
-	try {
-		var ret;
-		var user = await userService.whoamiByDptUUID({body: { dptUUID: dptUUID}});
-		if((obj.method == "post"
-		|| obj.method == "get"
-		|| obj.method == "put"
-		|| obj.method == "update"
-		|| obj.method == "delete")
-		&& user) {
-			for(var i=0; i < match.length; i++) {
-				if(obj.path.match('^'+match[i].path+'$')
-				&& obj.method == match[i].method) {
+  try {
+    var ret;
+    var user = await userService.whoamiByDptUUID({
+      body: { dptUUID: dptUUID },
+    });
+    if (
+      (obj.method == "post" ||
+        obj.method == "get" ||
+        obj.method == "put" ||
+        obj.method == "update" ||
+        obj.method == "delete") &&
+      user
+    ) {
+      for (var i = 0; i < match.length; i++) {
+        if (
+          obj.path.match("^" + match[i].path + "$") &&
+          obj.method == match[i].method
+        ) {
+          ret = await match[i].fun(obj.data, dptUUID, socket);
 
-					ret = await match[i].fun(obj.data, dptUUID, socket); 
+          // clone the data
+          ret = JSON.parse(JSON.stringify(ret.data, getCircularReplacer()));
 
-					// clone the data
-					ret = JSON.parse(JSON.stringify(ret.data, getCircularReplacer()));
+          // hide the users mongodb id.
+          if (Lo_.isArray(ret)) {
+            //ret = ret.map(e => ({...e, user: "Cafe-C0ffe-C0de"}));
+            for (var j = 0; j < ret.length; j++) {
+              if (ret[j].user == user.user.id.toString()) {
+                ret[j].user = "mine";
+              } else {
+                ret[j].user = "notmine";
+              }
+            }
+          } else {
+            // ret.name = "Cafe-C0ffe-C0de";
+          }
 
-					// hide the users mongodb id.
-					if(Lo_.isArray(ret)) {
-						//ret = ret.map(e => ({...e, user: "Cafe-C0ffe-C0de"}));
-						for(var j = 0; j < ret.length; j++) {
-							if(ret[j].user == user.user.id.toString()) {
-								ret[j].user = 'mine';
-							} else {
-								ret[j].user = 'notmine';
-							}
-						}
-					} else {
-						// ret.name = "Cafe-C0ffe-C0de";
-					}
-
-					// re-pack it.
-					ret = {
-						method: obj.method,
-						path: obj.path,
-						data: ret
-					};
-					return(ret);
-				}
-			}
-		}
-	} catch(error) {
-		ret = error;
-		log.error("error:> " + util.inspect(ret));
-	}
-	return(ret);
+          // re-pack it.
+          ret = {
+            method: obj.method,
+            path: obj.path,
+            data: ret,
+          };
+          return ret;
+        }
+      }
+    }
+  } catch (error) {
+    ret = error;
+    log.error("error:> " + util.inspect(ret));
+  }
+  return ret;
 }
-
 
 /*
 	setup of the socket.io service.
 	the io object handles the whole set of connected messages
 */
-io.on('connection', function(socket) {
-	console.log("socket.id: "+socket.id);
+io.on("connection", function (socket) {
+  console.log("socket.id: " + socket.id);
 
-	/*
+  /*
 		we decided to pull the login api endpoint from the standard api
 		in the socket.io environment. it's to special.
 
 		the client will send the dptUUID cookie, packed in the payload message,
 		when it connects to our io space.
 	*/
-	socket.on('login', async (payload) => {
-		if(payload
-		&& payload.path == '/user/login/') {
-			var testUUID = require('cookie').parse(payload.data.publicKey)['dptUUID'];
-			var dptUUID = cookieParser.signedCookie(testUUID, cookieKey);
-			log.info("check dptUUID: "+dptUUID);
-			log.info("payload: "+util.inspect(payload.data));
+  socket.on("login", async (payload) => {
+    if (payload && payload.path == "/user/login/") {
+      var testUUID = require("cookie").parse(payload.data.publicKey)["dptUUID"];
+      var dptUUID = cookieParser.signedCookie(testUUID, cookieKey);
+      log.info("check dptUUID: " + dptUUID);
+      log.info("payload: " + util.inspect(payload.data));
 
-			if(dptUUID != false) {
+      if (dptUUID != false) {
+        socket.dptUUID = dptUUID;
+        socket.username = socket.id;
 
-				socket.dptUUID = dptUUID;
-				socket.username = socket.id;
+        // log.info("uuid -> socket.dptUUID: "+ socket.dptUUID + ' socket.username: '+socket.username);
 
-				// log.info("uuid -> socket.dptUUID: "+ socket.dptUUID + ' socket.username: '+socket.username);
+        // check, if we can find our new connected user via the cookie
+        // stored dptUUID in the mongodb, don't like to delay it so much,
+        // thats why we query via mongoose right here.
+        var user = await User.userModel.findOne({ publicKey: dptUUID });
 
-				// check, if we can find our new connected user via the cookie
-				// stored dptUUID in the mongodb, don't like to delay it so much,
-				// thats why we query via mongoose right here.
-				var user = await User.userModel.findOne({publicKey: dptUUID});
-				
-				if(user != null && dptUUID) {
-					var userCheck = Lo_.find(global.dptNS.online, {dptUUID: dptUUID});
-					if(userCheck && userCheck.registered) {
-						Lo_.pull(global.dptNS.online, userCheck);
-					}
+        if (user != null && dptUUID) {
+          var userCheck = Lo_.find(global.dptNS.online, { dptUUID: dptUUID });
+          if (userCheck && userCheck.registered) {
+            Lo_.pull(global.dptNS.online, userCheck);
+          }
 
-					// yes, we found a user with the dptUUID
-					global.dptNS.online.push( {
-						socketid: socket.id,
-						dptUUID: dptUUID,
-						registered: true,
-						user: user,
-						socket: socket,
-						login: Date.now()
-					});
+          // yes, we found a user with the dptUUID
+          global.dptNS.online.push({
+            socketid: socket.id,
+            dptUUID: dptUUID,
+            registered: true,
+            user: user,
+            socket: socket,
+            login: Date.now(),
+          });
 
-					// log.info('updated global online (user+): '+require('util').inspect(global.dptNS.online));
-					socket.emit('private', {
-						method: 'post',
-						path: "/user/login/",
-						data: {
-							message: 'logged in',
-							user: user,
-							dptUUID: dptUUID,
-							developer: process.env.DPT_DEVELOPER=="true" ? true : false,
-							status: 200
-						}
-					});
-				} else {
-					// no such user in the database, an obvious unregistered one.
-					global.dptNS.online.push( {
-						socketid: socket.id,
-						dptUUID: dptUUID,
-						registered: false
-					});
+          // log.info('updated global online (user+): '+require('util').inspect(global.dptNS.online));
+          socket.emit("private", {
+            method: "post",
+            path: "/user/login/",
+            data: {
+              message: "logged in",
+              user: user,
+              dptUUID: dptUUID,
+              developer: process.env.DPT_DEVELOPER == "true" ? true : false,
+              status: 200,
+            },
+          });
+        } else {
+          // no such user in the database, an obvious unregistered one.
+          global.dptNS.online.push({
+            socketid: socket.id,
+            dptUUID: dptUUID,
+            registered: false,
+          });
 
-					// log.info('updated global online (user+): '+require('util').inspect(global.dptNS.online));
-					// the user is obvious unknown to the system. the user shall
-					// know the user is not logged in.
-					if(dptUUID) {
-						socket.emit('private', {
-							method: 'post',
-							path: '/user/login/',
-							data: {
-								message: "user unknown",
-								dptUUID: dptUUID,
-								status: 404
-							}
-						});
-					} else {
-						socket.emit('private', {
-							method: 'post',
-							path: '/info',
-							data: {
-								message: "maybe cookies are disabled?",
-								status: 404
-							}
-						});
-					}
-				}
-			}
-		}
-	});
-	
-	/*
+          // log.info('updated global online (user+): '+require('util').inspect(global.dptNS.online));
+          // the user is obvious unknown to the system. the user shall
+          // know the user is not logged in.
+          if (dptUUID) {
+            socket.emit("private", {
+              method: "post",
+              path: "/user/login/",
+              data: {
+                message: "user unknown",
+                dptUUID: dptUUID,
+                status: 404,
+              },
+            });
+          } else {
+            socket.emit("private", {
+              method: "post",
+              path: "/info",
+              data: {
+                message: "maybe cookies are disabled?",
+                status: 404,
+              },
+            });
+          }
+        }
+      }
+    }
+  });
+
+  /*
 		take the api message (sio request message) and let them
 		be processed by the socket.io api broker. this broker
 		returns the results which will sended back to the client.
 	*/
-	socket.on('api', async (payload) => {
-		log.debug('sio request: '+util.inspect(payload));
-		var ret = await apiBroker(payload, socket.dptUUID, socket);
-		socket.emit('api', ret);
-//		log.debug('answer sio request: '+util.inspect(ret, {depth: 6}));
-	});
-	
-	socket.on('3d', async (payload) => {
-		log.debug('sio request: '+util.inspect(payload));
-		io.emit('3d', payload);
-	});
+  socket.on("api", async (payload) => {
+    log.debug("sio request: " + util.inspect(payload));
+    var ret = await apiBroker(payload, socket.dptUUID, socket);
+    socket.emit("api", ret);
+    //		log.debug('answer sio request: '+util.inspect(ret, {depth: 6}));
+  });
 
-	/*
+  socket.on("3d", async (payload) => {
+    log.debug("sio request: " + util.inspect(payload));
+    io.emit("3d", payload);
+  });
+
+  /*
 		let a user disconnect. remove it from the table of
 		online users.
 	 */
-	socket.on('disconnect', async (reason) => {
-		log.info(socket.id+" disconnected, reason: "+reason);
-		io.emit('3d', { event: 'disconnect', avatar: socket.id });
-		var user = Lo_.find(global.dptNS.online, {socketid: socket.id});
-		if(user.user) {
-			var updateUser = await User.userModel.findById(user.user.id);
-			updateUser.onlineTimes.push({ login: user.login, logout: Date.now() });
-			updateUser.save();
-		}
-		if(user) {
-			Lo_.pull(global.dptNS.online, user);
-			log.info('updated global online (user-): '+require('util').inspect(global.dptNS.online));
-		}
-	});
+  socket.on("disconnect", async (reason) => {
+    log.info(socket.id + " disconnected, reason: " + reason);
+    io.emit("3d", { event: "disconnect", avatar: socket.id });
+    var user = Lo_.find(global.dptNS.online, { socketid: socket.id });
+    if (user.user) {
+      var updateUser = await User.userModel.findById(user.user.id);
+      updateUser.onlineTimes.push({ login: user.login, logout: Date.now() });
+      updateUser.save();
+    }
+    if (user) {
+      Lo_.pull(global.dptNS.online, user);
+      log.info(
+        "updated global online (user-): " +
+          require("util").inspect(global.dptNS.online)
+      );
+    }
+  });
 });
 
 module.exports = io;

@@ -1,195 +1,323 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
 
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Digital Peace Talks</title>
 
-	<title>Digital Peace Talks</title>
+    <!--	<link rel="stylesheet" href="/dpt_classic.css" /> -->
+    <link type="text/css" rel="stylesheet" media="all" href="dpt3d.css" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      media="all"
+      href="dpt_classic.css"
+      id="theme_css"
+    />
+    <link rel="stylesheet" href="/external/trumbowyg.min.css" />
 
-	<!--	<link rel="stylesheet" href="/dpt_classic.css" /> -->
-	<link type="text/css" rel="stylesheet" media="all" href="dpt3d.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="dpt_classic.css" id="theme_css" />
-	<link rel="stylesheet" href="/external/trumbowyg.min.css" />
+    <!-- Startup configuration -->
+    <link rel="manifest" href="manifest.webmanifest" />
 
-	<!-- Startup configuration -->
-	<link rel="manifest" href="manifest.webmanifest">
+    <!-- Fallback application metadata for legacy browsers -->
+    <meta name="application-name" content="DPT" />
 
-	<!-- Fallback application metadata for legacy browsers -->
-	<meta name="application-name" content="DPT">
+    <!-- icon in the highest resolution we need it for -->
+    <link rel="icon" sizes="16x16 32x32 48x48" href="icons/icon-72x72.png" />
+    <link rel="icon" sizes="512x512" href="icons/icon-512x512.png" />
 
-	<!-- icon in the highest resolution we need it for -->
-	<link rel="icon" sizes="16x16 32x32 48x48" href="icons/icon-72x72.png">
-	<link rel="icon" sizes="512x512" href="icons/icon-512x512.png">
+    <!-- multiple icons for Safari -->
+    <link rel="apple-touch-icon" href="icons/touch-icon-iphone.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="icons/touch-icon-ipad.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="icons/touch-icon-iphone-retina.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="167x167"
+      href="icons/touch-icon-ipad-retina.png"
+    />
 
-	<!-- multiple icons for Safari -->
-	<link rel="apple-touch-icon" href="icons/touch-icon-iphone.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="icons/touch-icon-ipad.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="icons/touch-icon-iphone-retina.png">
-	<link rel="apple-touch-icon" sizes="167x167" href="icons/touch-icon-ipad-retina.png">
+    <!-- splash screen icon for Apple -->
+    <link rel="apple-touch-startup-image" href="icons/ios-icon.png" />
 
-	<!-- splash screen icon for Apple -->
-	<link rel="apple-touch-startup-image" href="icons/ios-icon.png">
+    <!-- multiple icons for IE -->
+    <meta name="msapplication-square70x70logo" content="icons/icon-72x72.png" />
+    <meta
+      name="msapplication-square150x150logo"
+      content="icons/icon-144x144.png"
+    />
+    <meta
+      name="msapplication-wide310x150logo"
+      content="icons/icon-192x192.png"
+    />
+    <meta name="msapplication-square310x310logo" content="icon_largetile.png" />
 
-	<!-- multiple icons for IE -->
-	<meta name="msapplication-square70x70logo" content="icons/icon-72x72.png">
-	<meta name="msapplication-square150x150logo" content="icons/icon-144x144.png">
-	<meta name="msapplication-wide310x150logo" content="icons/icon-192x192.png">
-	<meta name="msapplication-square310x310logo" content="icon_largetile.png">
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#28A9E1" />
 
-	<!-- Chrome, Firefox OS and Opera -->
-	<meta name="theme-color" content="#28A9E1">
+    <!-- change the status bar appearance on ios-->
+    <meta name="apple-mobile-web-app-status-bar" content="#28A9E1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+  </head>
 
-	<!-- change the status bar appearance on ios-->
-	<meta name="apple-mobile-web-app-status-bar" content="#28A9E1">
-	<meta name="apple-mobile-web-app-capable" content="yes">
+  <body>
+    <div class="no-bounce">
+      <div>
+        <div>
+          <div id="overlay">
+            <nav>
+              <a class="hamburger" id="nav-m"
+                ><img src="/button_menu.png" alt=""
+              /></a>
+              <a class="hamburger close"
+                ><img src="/button_close.png" alt=""
+              /></a>
 
-</head>
-
-
-<body>
-	<div class="no-bounce">
-		
-		<div>
-			
-			<div>
-				<div id="overlay">
-					
-					<nav>
-					
-						<a class="hamburger" id="nav-m"><img src="/button_menu.png" alt="" /></a>
-						<a class="hamburger close"><img src="/button_close.png" alt="" /></a>
-						
-						<ul class="menu">
-
-							<li><button class="menu-btn " id="about-btn" title="About this App"><img class="btn-icon"
-										src="/about_white.png">About</button></li>
-							<li><button class="menu-btn" id="firststeps-btn" title="Tutorial"><img class="btn-icon"
-										src="/help_white.png">Help</button></li>
-						<!--	<li><button class="menu-btn" id="documentation-btn" title="Read the documentation"><img
+              <ul class="menu">
+                <li>
+                  <button
+                    class="menu-btn"
+                    id="about-btn"
+                    title="About this App"
+                  >
+                    <img class="btn-icon" src="/about_white.png" />About
+                  </button>
+                </li>
+                <li>
+                  <button class="menu-btn" id="firststeps-btn" title="Tutorial">
+                    <img class="btn-icon" src="/help_white.png" />Help
+                  </button>
+                </li>
+                <!--	<li><button class="menu-btn" id="documentation-btn" title="Read the documentation"><img
 										class="btn-icon" src="/documentation_white.png">Documentation</button></li>-->
-							<li><button class="menu-btn" id="survey-btn" title="What do you think so far?"><img
-										class="btn-icon" src="/survey_white.png">Contact</button></li>
-						<!--	<li><button class="menu-btn" id="github-btn" title="Get involved"><img class="btn-icon"
+                <li>
+                  <button
+                    class="menu-btn"
+                    id="survey-btn"
+                    title="What do you think so far?"
+                  >
+                    <img class="btn-icon" src="/survey_white.png" />Contact
+                  </button>
+                </li>
+                <!--	<li><button class="menu-btn" id="github-btn" title="Get involved"><img class="btn-icon"
 										src="/github.png">Github</button></li> -->
-							<li><button class="menu-btn" id="settings-btn" title="Settings and more"><img
-										class="btn-icon" src="/settings_white.png">Settings</button></li>
-						</ul>
-					</nav>
-				</div>
-				
-				<div id="menubar">
-					<section>
-						<ul class="actionmenu menu">
-							<li><button class="menu-btn-bar" id="home-btn" title="Back to topics"><img
-										class="btn-bar-icon" src="/back_white.png"></button></li>
-							<li><button class="menu-btn-bar" id="search-btn" title="Search for opinions"><img
-										class="btn-bar-icon" src="/search.png"></button></li>
-							<li id="new-topic-li"><button class="menu-btn-bar" id="new-topic-btn" title="Create a new topic"><img
-										class="btn-bar-icon"></button></li>
-							<li id="new-opinion-li"><button class="menu-btn-bar" id="new-opinion-btn" title="Create a new Opinion"><img
-										class="btn-bar-icon"></button></li>
-							<li><button class="menu-btn-bar" id="dialogues-btn" title="Open the dialog list"><img
-										class="btn-bar-icon" src="/messagelist_white.png">
-									<div class="listcount" id="dialog-btn-label"></div></button></li>
-									<!--
+                <li>
+                  <button
+                    class="menu-btn"
+                    id="settings-btn"
+                    title="Settings and more"
+                  >
+                    <img class="btn-icon" src="/settings_white.png" />Settings
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+          <div id="menubar">
+            <section>
+              <ul class="actionmenu menu">
+                <li>
+                  <button
+                    class="menu-btn-bar"
+                    id="home-btn"
+                    title="Back to topics"
+                  >
+                    <img class="btn-bar-icon" src="/back_white.png" />
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="menu-btn-bar"
+                    id="search-btn"
+                    title="Search for opinions"
+                  >
+                    <img class="btn-bar-icon" src="/search.png" />
+                  </button>
+                </li>
+                <li id="new-topic-li">
+                  <button
+                    class="menu-btn-bar"
+                    id="new-topic-btn"
+                    title="Create a new topic"
+                  >
+                    <img class="btn-bar-icon" />
+                  </button>
+                </li>
+                <li id="new-opinion-li">
+                  <button
+                    class="menu-btn-bar"
+                    id="new-opinion-btn"
+                    title="Create a new Opinion"
+                  >
+                    <img class="btn-bar-icon" />
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="menu-btn-bar"
+                    id="dialogues-btn"
+                    title="Open the dialog list"
+                  >
+                    <img class="btn-bar-icon" src="/messagelist_white.png" />
+                    <div class="listcount" id="dialog-btn-label"></div>
+                  </button>
+                </li>
+                <!--
 							<li><button class="menu-btn-bar" id="setup-btn" title="Setup"><img
 										class="btn-bar-icon" src="/setup_white.png"></button></li>
 									-->
-						</ul>
-					</section>
-				</div>
+              </ul>
+            </section>
+          </div>
 
-				<!-- BABYLON CANVAS -->
-				<canvas id="renderCanvas" tabindex="1"></canvas>
-				<div class="brand"><a href=""><img src="brand_dpt.png" alt="digital peace talks" height="30" width="auto"></a></div>
-			</div>
-		</div>
-	</div>
-	<div id="misc2"></div>
+          <!-- BABYLON CANVAS -->
+          <canvas id="renderCanvas" tabindex="1"></canvas>
+          <div class="brand">
+            <a href=""
+              ><img
+                src="brand_dpt.png"
+                alt="digital peace talks"
+                height="30"
+                width="auto"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="misc2"></div>
+  </body>
 
-</body>
-
-
-
-<!-- Guided Tour-->
-<!--Container  und Pfeil-->
-<!--
+  <!-- Guided Tour-->
+  <!--Container  und Pfeil-->
+  <!--
 <div class="tutorialBorder" id="tutorialBorder" style="display: none"></div>
 -->
-<div id="animCircle" class="animated-circle" style="visibility: hidden">
-	<div class="arrowcontainer">
-		<div class="arrow">
-			<div class="block1"></div>
-			<div class="block2"></div>
-		</div>
-	</div>
+  <div id="animCircle" class="animated-circle" style="visibility: hidden;">
+    <div class="arrowcontainer">
+      <div class="arrow">
+        <div class="block1"></div>
+        <div class="block2"></div>
+      </div>
+    </div>
+  </div>
 
-</div>
+  <div class="fb_gd_wrap">
+    <div class="content" id="guideContent">
+      <div class="header">
+        <button class="closeButtonTutorial" id="closeBtn">&#10005;</button>
 
-
-<div class="fb_gd_wrap">
-
-	<div class="content" id="guideContent">
-			
-		<div class="header">
-			<button class="closeButtonTutorial" id="closeBtn">&#10005;</button>
-			
-			<span class="text" id="guideTitle">digital peace talks GUIDE</span>
-			
-		</div>
-		<div class="body">
-			<div class="text">
-				<div id="guideBodyText" class="textList">
-					<p>Digital Peace Talks is a platform for conflicting views to discuss constructively. <br>This tour shows you how to use it.</p>
-					<p><img src="/tutorial_twofingers.png" alt="gestures" height="auto" width="100%"></p>
-					<p><img src="/tutorial_rightclick.png" alt="gestures" height="auto" width="100%"></p>
-					<p>Click on the futuristic text boxes to discuss the subject. <img src="/tutorial_click_topic.png" alt="click topic" height="auto" width="100%"></p>
-					<p>Click this symbol to add your opinion! <img src="/tutorial_opinions.png" alt="start opinion" height="auto" width="100%"></p>
-					<p>If you added your opinion, you can click this icon to request 1-on-1 chats.<br><img src="/tutorial_chatbubble.png" alt="chat" height="auto" width="100%"></p>
-					<p>Manage your requests and active chats in the dialogue list. <br><img src="/tutorial_dialoguelist.png" alt="dialoguelist" height="auto" width="100%"> </p>
-					<p>You know the basics now. <br><br>Have fun discovering many more features! <br>
-						<!-- <label>
+        <span class="text" id="guideTitle">digital peace talks GUIDE</span>
+      </div>
+      <div class="body">
+        <div class="text">
+          <div id="guideBodyText" class="textList">
+            <p>
+              Digital Peace Talks is a platform for conflicting views to discuss
+              constructively. <br />This tour shows you how to use it.
+            </p>
+            <p>
+              <img
+                src="/tutorial_twofingers.png"
+                alt="gestures"
+                height="auto"
+                width="100%"
+              />
+            </p>
+            <p>
+              <img
+                src="/tutorial_rightclick.png"
+                alt="gestures"
+                height="auto"
+                width="100%"
+              />
+            </p>
+            <p>
+              Click on the futuristic text boxes to discuss the subject.
+              <img
+                src="/tutorial_click_topic.png"
+                alt="click topic"
+                height="auto"
+                width="100%"
+              />
+            </p>
+            <p>
+              Click this symbol to add your opinion!
+              <img
+                src="/tutorial_opinions.png"
+                alt="start opinion"
+                height="auto"
+                width="100%"
+              />
+            </p>
+            <p>
+              If you added your opinion, you can click this icon to request
+              1-on-1 chats.<br /><img
+                src="/tutorial_chatbubble.png"
+                alt="chat"
+                height="auto"
+                width="100%"
+              />
+            </p>
+            <p>
+              Manage your requests and active chats in the dialogue list.
+              <br /><img
+                src="/tutorial_dialoguelist.png"
+                alt="dialoguelist"
+                height="auto"
+                width="100%"
+              />
+            </p>
+            <p>
+              You know the basics now. <br /><br />Have fun discovering many
+              more features! <br />
+              <!-- <label>
 							<input type="checkbox" id="disableGuidedTour">Disable the guided tour
 						</label> -->
-					<br>
-					<!--<input type="submit" value="Stop the guided tour">-->
-					</p>
-				</div>
-			</div>
-			
-		</div>
-		
-		<div class="footer">
-		
-			<button id="guidePrevBtn" class="btn prev"></button>
-			<ul class="steps" id="steps">
-				<li class="dot active"></li>
-				<li class="dot"></li>
-				<li class="dot"></li>
-				<li class="dot"></li>
-				<li class="dot"></li>
-				<li class="dot"></li>
-				<li class="dot"></li>
-				<li class="dot"></li>
-			</ul>
-			<button class="closeButtonTutorial2" id="closeBtn2">CLOSE TOUR</button>
-			<button id="guideNextBtn" class="btn next">START TOUR</button>
-			
-		</div>
-		<div class="text" id="text">
-			<label>
-				<input type="checkbox" id="disableGuidedTour">Don't show this again
-			</label>
-		</div>
-		
-	</div>
-</div>
-<!-- End Guided Tour-->
+              <br />
+              <!--<input type="submit" value="Stop the guided tour">-->
+            </p>
+          </div>
+        </div>
+      </div>
 
+      <div class="footer">
+        <button id="guidePrevBtn" class="btn prev"></button>
+        <ul class="steps" id="steps">
+          <li class="dot active"></li>
+          <li class="dot"></li>
+          <li class="dot"></li>
+          <li class="dot"></li>
+          <li class="dot"></li>
+          <li class="dot"></li>
+          <li class="dot"></li>
+          <li class="dot"></li>
+        </ul>
+        <button class="closeButtonTutorial2" id="closeBtn2">CLOSE TOUR</button>
+        <button id="guideNextBtn" class="btn next">START TOUR</button>
+      </div>
+      <div class="text" id="text">
+        <label>
+          <input type="checkbox" id="disableGuidedTour" />Don't show this again
+        </label>
+      </div>
+    </div>
+  </div>
+  <!-- End Guided Tour-->
 
-<!--
+  <!--
 	<script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
@@ -216,108 +344,111 @@
 	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
 -->
 
-<script src="/external/pep.js"></script>
-<script src="/external/babylon.js"></script>
-<script src="/external/babylonjs.materials.min.js"></script>
-<script src="/external/babylonjs.serializers.min.js"></script>
-<script src="/external/babylon.gui.min.js"></script>
-<script src="/external/socket.io.js"></script>
-<script src="/external/jquery-1.11.1.js"></script>
-<script src="/external/trumbowyg.min.js"></script>
+  <script src="/external/pep.js"></script>
+  <script src="/external/babylon.js"></script>
+  <script src="/external/babylonjs.materials.min.js"></script>
+  <script src="/external/babylonjs.serializers.min.js"></script>
+  <script src="/external/babylon.gui.min.js"></script>
+  <script src="/external/socket.io.js"></script>
+  <script src="/external/jquery-1.11.1.js"></script>
+  <script src="/external/trumbowyg.min.js"></script>
 
-<script src="dpt3d.js"></script>
-<script src="dpt-client.js"></script>
-<script src="babylon-main.js"></script>
-<script src="babylon-misc.js"></script>
-<script src="babylon-topics.js"></script>
-<script src="babylon-opinions.js"></script>
-<script src="ui-main.js"></script>
-<script src="ui-misc.js"></script>
-<script src="ui-opinion.js"></script>
-<script src="ui-dialog.js"></script>
-<script src="ui-dialoglist.js"></script>
-<script src="ui-crisis.js"></script>
-<script src="ui-topic.js"></script>
-<script src="ui-proposition.js"></script>
-<script src="ui-settings.js"></script>
+  <script src="dpt3d.js"></script>
+  <script src="dpt-client.js"></script>
+  <script src="babylon-main.js"></script>
+  <script src="babylon-misc.js"></script>
+  <script src="babylon-topics.js"></script>
+  <script src="babylon-opinions.js"></script>
+  <script src="ui-main.js"></script>
+  <script src="ui-misc.js"></script>
+  <script src="ui-opinion.js"></script>
+  <script src="ui-dialog.js"></script>
+  <script src="ui-dialoglist.js"></script>
+  <script src="ui-crisis.js"></script>
+  <script src="ui-topic.js"></script>
+  <script src="ui-proposition.js"></script>
+  <script src="ui-settings.js"></script>
 
-<script>
+  <script>
+    var hamburgerOpen = false;
+    document.addEventListener("DOMContentLoaded", function (event) {
+      var mql = window.matchMedia("(orientation: landscape)");
+      mql.addListener(function (m) {
+        if (m.matches) {
+          if (!hamburgerOpen) {
+            jQuery("nav ul").css("left", 640);
+          }
+        }
+      });
 
-	var hamburgerOpen = false;
-	document.addEventListener("DOMContentLoaded", function (event) {
+      jQuery("a.hamburger").on("click touch", function (event) {
+        var menuLeft = canvas.width;
+        if (canvas.width > 640) {
+          menuLeft = 280;
+        }
 
-		var mql = window.matchMedia("(orientation: landscape)");
-		mql.addListener(function (m) {
-			if (m.matches) {
-				if (!hamburgerOpen) {
-					jQuery("nav ul").css("left", 640);
-				}
-			}
-		});
-	
-		jQuery("a.hamburger").on('click touch', function (event) {
-			var menuLeft = canvas.width;
-			if (canvas.width > 640) {
-				menuLeft = 280;
-			}
-	
-			hamburgerOpen = !hamburgerOpen;
-			if (hamburgerOpen) {
-				jQuery("nav ul").css("left", "0px");
-				jQuery("a.hamburger").html('<img src="/button_close.png">');
-				/*
+        hamburgerOpen = !hamburgerOpen;
+        if (hamburgerOpen) {
+          jQuery("nav ul").css("left", "0px");
+          jQuery("a.hamburger").html('<img src="/button_close.png">');
+          /*
 				if(isMobile) {
 					hamburgerOpen = !hamburgerOpen;
 				}
 				*/
-			} else {
-				jQuery("nav ul").css("left", menuLeft);
-				jQuery("a.hamburger").html('<img src="/button_menu.png">');
-			}
-		});
-	
-		if ('serviceWorker' in navigator) {
-			window.addEventListener('load', function () {
-				navigator.serviceWorker.register('/sw.js')
-				.then(function (registration) {
-					// Registration was successful
-					console.log('ServiceWorker registration successful with scope: ', registration.scope);
-				}, function (err) {
-					// registration failed :(
-					console.log('ServiceWorker registration failed: ', err);
-				});
-			});
-		}
-	
-		jQuery(window).keyup(function(event) {
-			if (jQuery(event.target).is(':not(input, textarea, div.trumbowyg-editor)')) {
-				switch(event.keyCode) {
-					case 70:
-						requestSearch();
-						break;
-					case 72:
-						switchToTopics();
-						break;
-					case 76:
-						toggleDialogList();
-						break;
-					case 79:
-						if(currentScene.name == "opinionScene") {
-							jQuery('#form').remove();
-							dpt.opinionPostAllowed(currentTopic);
-						}
-						break;
-					case 84:
-						if(currentScene.name == "topicScene") {
-							jQuery('#form').remove();
-							topicForm();
-						}
-						break;
-				}
-			}
-		});
-	});
+        } else {
+          jQuery("nav ul").css("left", menuLeft);
+          jQuery("a.hamburger").html('<img src="/button_menu.png">');
+        }
+      });
 
-</script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("/sw.js").then(
+            function (registration) {
+              // Registration was successful
+              console.log(
+                "ServiceWorker registration successful with scope: ",
+                registration.scope
+              );
+            },
+            function (err) {
+              // registration failed :(
+              console.log("ServiceWorker registration failed: ", err);
+            }
+          );
+        });
+      }
 
+      jQuery(window).keyup(function (event) {
+        if (
+          jQuery(event.target).is(":not(input, textarea, div.trumbowyg-editor)")
+        ) {
+          switch (event.keyCode) {
+            case 70:
+              requestSearch();
+              break;
+            case 72:
+              switchToTopics();
+              break;
+            case 76:
+              toggleDialogList();
+              break;
+            case 79:
+              if (currentScene.name == "opinionScene") {
+                jQuery("#form").remove();
+                dpt.opinionPostAllowed(currentTopic);
+              }
+              break;
+            case 84:
+              if (currentScene.name == "topicScene") {
+                jQuery("#form").remove();
+                topicForm();
+              }
+              break;
+          }
+        }
+      });
+    });
+  </script>
 </html>

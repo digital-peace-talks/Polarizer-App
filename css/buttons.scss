@@ -1,6 +1,6 @@
 .button {
-  transition: opacity .2s cubic-bezier(.4,0,.6,1);
-  -webkit-transition: opacity .2s cubic-bezier(.4,0,.6,1);
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.6, 1);
+  -webkit-transition: opacity 0.2s cubic-bezier(0.4, 0, 0.6, 1);
   &:hover {
     opacity: 0.9;
   }

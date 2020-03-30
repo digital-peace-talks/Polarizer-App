@@ -1,18 +1,15 @@
-
 function crisisForm(messageId) {
+  var message = "";
 
-	var message = '';
+  for (var i = 0; i < currentDialog.messages.length; i++) {
+    if (currentDialog.messages[i].messageId == messageId) {
+      message = currentDialog.messages[i].content;
+      break;
+    }
+  }
 
-	for (var i = 0; i < currentDialog.messages.length; i++) {
-		if (currentDialog.messages[i].messageId == messageId) {
-			message = currentDialog.messages[i].content;
-			break;
-		}
-	}
-
-
-	jQuery('#misc2').text('');
-	jQuery('#misc2').append(`
+  jQuery("#misc2").text("");
+  jQuery("#misc2").append(`
 		<div id="crisis">
 			<h1>Finishing this dialogue</h1><br>
 			<!--
@@ -81,50 +78,50 @@ function crisisForm(messageId) {
 		</div>
 	`);
 
-	jQuery('#range-slider').on('change', function () {
-		jQuery('.smile').css('transform', 'rotateX(' + jQuery(this).val() + 'deg)');
-	});
+  jQuery("#range-slider").on("change", function () {
+    jQuery(".smile").css("transform", "rotateX(" + jQuery(this).val() + "deg)");
+  });
 
+  jQuery(".crisis").focus();
 
-	jQuery(".crisis").focus();
+  function mapRange(num, in_min, in_max, out_min, out_max) {
+    return ((num - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min;
+  }
 
-	function mapRange(num, in_min, in_max, out_min, out_max) {
-		return ((num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
-	}
-
-	jQuery("#crisis").submit(function (event) {
-		event.stopImmediatePropagation();
-		event.preventDefault();
-		var reason = jQuery('input[name="reason"]').val();
-		if (reason.length > 0) {
-			dpt.postCrisis(
-				reason,
-				//				jQuery("input[name='rating']:checked").val(),
-				mapRange(jQuery("input[name='rating2']").val(), 1, 180, -1, 1),
-				currentDialog.dialog,
-				messageId,
-				whoami.dptUUID);
-			jQuery('#misc2').empty();
-			jQuery('form#dialogFrame').html(`
+  jQuery("#crisis").submit(function (event) {
+    event.stopImmediatePropagation();
+    event.preventDefault();
+    var reason = jQuery('input[name="reason"]').val();
+    if (reason.length > 0) {
+      dpt.postCrisis(
+        reason,
+        //				jQuery("input[name='rating']:checked").val(),
+        mapRange(jQuery("input[name='rating2']").val(), 1, 180, -1, 1),
+        currentDialog.dialog,
+        messageId,
+        whoami.dptUUID
+      );
+      jQuery("#misc2").empty();
+      jQuery("form#dialogFrame").html(`
 			<br>
 			<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
 			`);
-		} else {
-			alert('Please enter a conclusion.');
-		}
-	});
+    } else {
+      alert("Please enter a conclusion.");
+    }
+  });
 
-	jQuery(document).on('click', "#crisisCloseWindow", function (event) {
-		dialogFormOpen = 0;
-		jQuery('#misc2').empty();
-		event.preventDefault();
-	});
+  jQuery(document).on("click", "#crisisCloseWindow", function (event) {
+    dialogFormOpen = 0;
+    jQuery("#misc2").empty();
+    event.preventDefault();
+  });
 
-	jQuery(document).on('keyup', '#dialogInput', function (event) {
-		if (event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
-			event.stopImmediatePropagation();
-			event.preventDefault();
-			jQuery('form#crisis').submit();
-		}
-	});
+  jQuery(document).on("keyup", "#dialogInput", function (event) {
+    if (event.ctrlKey && (event.keyCode == 10 || event.keyCode == 13)) {
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      jQuery("form#crisis").submit();
+    }
+  });
 }
