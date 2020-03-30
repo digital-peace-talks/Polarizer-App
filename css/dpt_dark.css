@@ -167,7 +167,7 @@ input {
   color: #15b76a;
 }
 
-input[type=text] {
+input[type="text"] {
   border-color: #005b98;
   color: #005b98;
   border-style: solid;
@@ -429,7 +429,7 @@ div#dialogFrame {
   width: 280px;
   height: 48px;
   border: 1px solid #1d324e;
-  background-color: #030911BB;
+  background-color: #030911bb;
   color: #b5bec4;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
@@ -448,7 +448,7 @@ div#dialogFrame {
   font-size: 20px;
   height: 48px;
   border: 1px solid #1d324e;
-  background-color: #030911BB;
+  background-color: #030911bb;
   color: #b5bec4;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
@@ -464,7 +464,7 @@ div#dialogFrame {
   width: 280px;
   height: 48px;
   border: 1px solid #1d324e;
-  background-color: #030911BB;
+  background-color: #030911bb;
   color: #b5bec4;
   -webkit-box-pack: left;
   -ms-flex-pack: left;
@@ -529,7 +529,7 @@ div#dialogFrame {
   z-index: 2;
   font-family: DPTFontDin;
   font-size: 16px;
-  background-color: #030911BB;
+  background-color: #030911bb;
   visibility: hidden;
   bottom: 0px;
   left: 0%;
@@ -571,7 +571,8 @@ textarea {
   font-weight: normal;
 }
 
-.trumbowyg-editor, .trumbowyg-textarea {
+.trumbowyg-editor,
+.trumbowyg-textarea {
   background-color: white;
   color: #005b98;
   padding: 5px !important;
@@ -1204,7 +1205,8 @@ section ul li {
   z-index: 500;
 }
 
-.pulse-circle, .pulse-circle2 {
+.pulse-circle,
+.pulse-circle2 {
   border-radius: 50%;
   width: 2px;
   height: 2px;
@@ -1405,8 +1407,8 @@ section ul li {
   }
 
   .dialogleft,
-.dialogcenter,
-.dialogright {
+  .dialogcenter,
+  .dialogright {
     width: 100%;
   }
 
@@ -1507,12 +1509,12 @@ section ul li {
 
   /* Normalize the lists */
   .menu,
-.sub-menu {
+  .sub-menu {
     margin: 0;
     padding: 0;
   }
   .menu li,
-.sub-menu li {
+  .sub-menu li {
     margin: 0;
   }
 
@@ -1547,7 +1549,7 @@ section ul li {
   }
 
   nav a#nav-m img,
-nav a.close img {
+  nav a.close img {
     width: 40px;
     height: auto;
     position: absolute;
@@ -1556,14 +1558,14 @@ nav a.close img {
   }
 
   nav > .close,
-nav a#nav-m:target {
+  nav a#nav-m:target {
     display: none;
     right: 0px;
     top: 0px;
   }
 
   nav a:target ~ ul,
-nav a:target ~ .close {
+  nav a:target ~ .close {
     display: inline-block;
   }
 
@@ -1582,7 +1584,7 @@ nav a:target ~ .close {
   }
 
   section a#section-m img,
-section a.close img {
+  section a.close img {
     width: 40px;
     height: auto;
     position: absolute;
@@ -1591,14 +1593,14 @@ section a.close img {
   }
 
   section > .close,
-section a#section-m:target {
+  section a#section-m:target {
     display: none;
     right: 0px;
     top: 0px;
   }
 
   section a:target ~ ul,
-section a:target ~ .close {
+  section a:target ~ .close {
     display: inline-block;
   }
 

@@ -13,20 +13,21 @@ section {
     margin: 0;
     padding: 0;
 
-    @media screen and (max-width:640px) {
+    @media screen and (max-width: 640px) {
       flex-grow: 1;
     }
-    
-    li{
+
+    li {
       display: flex;
       align-items: stretch;
       justify-content: stretch;
       flex-grow: 1;
-      
+
       button {
         width: 100%;
       }
-      &#new-topic-li, &#new-opinion-li {
+      &#new-topic-li,
+      &#new-opinion-li {
         display: none;
       }
     }

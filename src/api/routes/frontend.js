@@ -1,19 +1,18 @@
-const express = require('express');
-const metadata = require('../services/metadata');
-const User = require('../models/user');
-const userService = require('../services/user');
-const uuid = require('uuid/v4');
+const express = require("express");
+const metadata = require("../services/metadata");
+const User = require("../models/user");
+const userService = require("../services/user");
+const uuid = require("uuid/v4");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const getPhrase = require('../../lib/phrasegenerator')
+const getPhrase = require("../../lib/phrasegenerator");
 
 const router = new express.Router();
 
-router.get('/', async (req, res, next) => {
-	try {
-
-		// from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
-		var c2c = `
+router.get("/", async (req, res, next) => {
+  try {
+    // from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
+    var c2c = `
 		<script>
 		const copyToClipboard = (str) => {
 			const el = document.createElement('textarea');  // Create a <textarea> element
@@ -37,20 +36,22 @@ router.get('/', async (req, res, next) => {
 		</script>
 		`;
 
-		res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-	   	var user = await User.userModel.findOne({publicKey: req.signedCookies.dptUUID});
-		if(req.signedCookies.dptUUID === undefined || !user) {
-		//if(req.signedCookies.dptUUID === undefined) {
-			var phrase = await getPhrase();
-			//console.log("no cookie found, set new one");
-			//console.log("new phrase: " + phrase);
-			// The client need to get the uuid for the first time, it needs to send it back.
-			
-			/*Digital peace talks is currently in private alpha! Only a minimum viable product is viable at the moment,
+    res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");
+    var user = await User.userModel.findOne({
+      publicKey: req.signedCookies.dptUUID,
+    });
+    if (req.signedCookies.dptUUID === undefined || !user) {
+      //if(req.signedCookies.dptUUID === undefined) {
+      var phrase = await getPhrase();
+      //console.log("no cookie found, set new one");
+      //console.log("new phrase: " + phrase);
+      // The client need to get the uuid for the first time, it needs to send it back.
+
+      /*Digital peace talks is currently in private alpha! Only a minimum viable product is viable at the moment,
 			and our primary goal is to get direct feedback from a small set of users to evaluate our core design. 
 			Thank you.*/
-			
-		res.send(`
+
+      res.send(`
 		<!DOCTYPE html>
 		<html>
 		<head>
@@ -86,7 +87,9 @@ router.get('/', async (req, res, next) => {
 						<br>
 						Please write it down or memorize it! 
 						If you loose or forget this phrase there is no chance to generate a new one for your existing account.
-						<a class="start" href="/recover?phrase=${encodeURIComponent(phrase)}">Let me enter &#9655;</a>
+						<a class="start" href="/recover?phrase=${encodeURIComponent(
+              phrase
+            )}">Let me enter &#9655;</a>
 						<br>
 						<br>
 						<br>
@@ -117,8 +120,8 @@ router.get('/', async (req, res, next) => {
 			<br>
 			</body>
 			</html>`);
-		} else {
-			res.send(`
+    } else {
+      res.send(`
 			<!DOCTYPE html>
 			<html>
 			<head>
@@ -178,81 +181,93 @@ router.get('/', async (req, res, next) => {
 				</body>
 				</html>
 			`);
-		}
-		res.status(200);
-	} catch (err) {
-		next(err);
-	}
+    }
+    res.status(200);
+  } catch (err) {
+    next(err);
+  }
 });
 
+router.get("/recover", async (req, res, next) => {
+  //console.log('recover get ' + req.query.phrase);
+  var dptUUID;
+  var cookieOptions = {
+    maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
+    signed: true,
+    httpOnly: false,
+  };
 
-router.get('/recover', async(req, res, next) => {
-	//console.log('recover get ' + req.query.phrase);
-	var dptUUID;
-	var cookieOptions = {
-		maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
-		signed: true,
-		httpOnly: false
-	}
+  if (req.signedCookies.dptUUID === undefined) {
+    console.log("no cookie found, set new one");
+    // The client need to get the uuid for the first time, it needs to send it back.
+    //		cookieOptions.httpOnly = false;
+    //		res.cookie('dptUUID', dptUUID, cookieOptions)
+  } else {
+    console.log("use old cookie");
+    dptUUID = cookieParser.signedCookie(
+      req.signedCookies.dptUUID,
+      process.env.DPT_SECRET
+    );
+  }
 
-	if (req.signedCookies.dptUUID === undefined) {
-		console.log("no cookie found, set new one");
-		// The client need to get the uuid for the first time, it needs to send it back.
-		//		cookieOptions.httpOnly = false;
-		//		res.cookie('dptUUID', dptUUID, cookieOptions)
-	} else {
-		console.log("use old cookie");
-		dptUUID = cookieParser.signedCookie(req.signedCookies.dptUUID, process.env.DPT_SECRET);
-	}
-
-	var ret = await userService.userReclaim({ body: { phraseGuess: '', newPhrase: req.query.phrase, dptUUID: dptUUID } });
-	if (ret.newCookie) {
-		res.cookie('dptUUID', ret.newCookie, cookieOptions);
-		await res.writeHead(302, {
-			'Location': '/dpt3d.html'
-				//'Location': '/'
-				//add other headers here...
-		});
-		res.end();
-	} else {
-		res.send('bla ' + req.body.phraseinput);
-		res.status(201);
-	}
+  var ret = await userService.userReclaim({
+    body: { phraseGuess: "", newPhrase: req.query.phrase, dptUUID: dptUUID },
+  });
+  if (ret.newCookie) {
+    res.cookie("dptUUID", ret.newCookie, cookieOptions);
+    await res.writeHead(302, {
+      Location: "/dpt3d.html",
+      //'Location': '/'
+      //add other headers here...
+    });
+    res.end();
+  } else {
+    res.send("bla " + req.body.phraseinput);
+    res.status(201);
+  }
 });
 
-router.post('/recover', async(req, res, next) => {
-	var dptUUID;
-	var cookieOptions = {
-		maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
-		signed: true,
-		httpOnly: false
-	}
-	if (req.signedCookies.dptUUID === undefined) {
-		console.log("no cookie found, set new one");
-		// The client need to get the uuid for the first time, it needs to send it back.
-		// cookieOptions.httpOnly = false;
-		// res.cookie('dptUUID', dptUUID, cookieOptions)
-	} else {
-		console.log("use old cookie");
-		dptUUID = cookieParser.signedCookie(req.signedCookies.dptUUID, process.env.DPT_SECRET);
-	}
-	var ret = await userService.userReclaim({ body: { phraseGuess: req.body.phraseinput, newPhrase: req.body.phrase, dptUUID: dptUUID } });
-	if (ret.newCookie && ret.status == 200) {
-		res.cookie('dptUUID', ret.newCookie, cookieOptions);
-		await res.writeHead(302, {
-			'Location': '/dpt3d.html'
-			//'Location': '/'
-			//add other headers here...
-		});
-		res.end();
-	} else {
-		res.send(`<head><link rel="stylesheet" href="dpt_start.css"/></head>
+router.post("/recover", async (req, res, next) => {
+  var dptUUID;
+  var cookieOptions = {
+    maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
+    signed: true,
+    httpOnly: false,
+  };
+  if (req.signedCookies.dptUUID === undefined) {
+    console.log("no cookie found, set new one");
+    // The client need to get the uuid for the first time, it needs to send it back.
+    // cookieOptions.httpOnly = false;
+    // res.cookie('dptUUID', dptUUID, cookieOptions)
+  } else {
+    console.log("use old cookie");
+    dptUUID = cookieParser.signedCookie(
+      req.signedCookies.dptUUID,
+      process.env.DPT_SECRET
+    );
+  }
+  var ret = await userService.userReclaim({
+    body: {
+      phraseGuess: req.body.phraseinput,
+      newPhrase: req.body.phrase,
+      dptUUID: dptUUID,
+    },
+  });
+  if (ret.newCookie && ret.status == 200) {
+    res.cookie("dptUUID", ret.newCookie, cookieOptions);
+    await res.writeHead(302, {
+      Location: "/dpt3d.html",
+      //'Location': '/'
+      //add other headers here...
+    });
+    res.end();
+  } else {
+    res.send(`<head><link rel="stylesheet" href="dpt_start.css"/></head>
 			<body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png"
 			alt="digital peace talks" height="400" width="400">
 			<br><br><br>${ret.status}<br><br>${ret.data}</center></body>`);
-		res.status(201);
-	}
+    res.status(201);
+  }
 });
-
 
 module.exports = router;

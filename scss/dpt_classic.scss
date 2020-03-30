@@ -587,25 +587,24 @@ div#dialogFrame {
   overflow-y: auto;
   padding-top: 40px;
 }
-#form.dialog-form{
-    position:absolute;
-    width:40%;
-    height:12em;
-    left:0;
-    right:0;
-    top:0;
-    bottom:0;
-    padding:1em;
-    margin:auto;
-    
+#form.dialog-form {
+  position: absolute;
+  width: 40%;
+  height: 12em;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 1em;
+  margin: auto;
 }
 
-#form.dialog-form form{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:space-between;
-    height:100%;
+#form.dialog-form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
 }
 textarea {
   font-family: DPTFont;
@@ -621,14 +620,15 @@ textarea {
   font-weight: normal;
 }
 
-.trumbowyg-editor, .trumbowyg-textarea {
+.trumbowyg-editor,
+.trumbowyg-textarea {
   background-color: white;
   color: $dpt-third-text;
   padding: 5px !important;
   padding-top: 0px !important;
 }
 .trumbowyg-editor p {
-  	margin: 5px !important;
+  margin: 5px !important;
 }
 
 .textareaDialog {
@@ -781,16 +781,16 @@ textarea {
   -webkit-appearance: none;
 }
 .button-second {
-    font-family: DPTFontDin;
-    color: $dpt-prime-text;
-    background-color: $dpt-second-button;
-    border: none;
-    font-size: 16px;
-    height: 40px;
-    margin: 5px auto;
-    margin-left: 10px;
-    float: right;
-    -webkit-appearance: none;
+  font-family: DPTFontDin;
+  color: $dpt-prime-text;
+  background-color: $dpt-second-button;
+  border: none;
+  font-size: 16px;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  float: right;
+  -webkit-appearance: none;
 }
 
 .buttonRed {
@@ -805,7 +805,6 @@ textarea {
   float: right;
   -webkit-appearance: none;
 }
-
 
 .closeButton {
   font-family: DPTFontDin;
@@ -977,7 +976,6 @@ section ul li button {
   text-transform: uppercase;
 }
 
-
 section a#nav-m,
 section a.close {
   display: none;
@@ -1068,7 +1066,7 @@ section ul li {
   background: $dpt-prime-button;
 }
 
-.reason{
+.reason {
   position: absolute;
   bottom: 70px;
   width: 95%;
@@ -1155,7 +1153,7 @@ section ul li {
   font-size: 0.9rem;
   color: $dpt-prime-text;
   overflow: hidden;
- // width: 360px;
+  // width: 360px;
   margin: 0 20px;
 }
 
@@ -1235,79 +1233,150 @@ section ul li {
   box-shadow: 0px 0px 20px $dpt-shadow;
 }
 
-.tutorialBorder{
-border-color:rgb(255, 251, 0); 
-border-style: dashed; 
-border-width: 3px; 
-height: 96%; 
-width:96%; 
-position:fixed; 
-z-index: 50; 
-top: 2%; 
-left: 2%; 
-display: "none";
-pointer-events: none;
+.tutorialBorder {
+  border-color: rgb(255, 251, 0);
+  border-style: dashed;
+  border-width: 3px;
+  height: 96%;
+  width: 96%;
+  position: fixed;
+  z-index: 50;
+  top: 2%;
+  left: 2%;
+  display: "none";
+  pointer-events: none;
 }
 
 /* pulsating circle*/
 
-.animated-circle{
-  position:absolute;
-  margin-left:30px;
+.animated-circle {
+  position: absolute;
+  margin-left: 30px;
   margin-top: 10px;
   z-index: 500;
 }
-.pulse-circle, .pulse-circle2{
-  border-radius:50%;
-  width:2px;
-  height:2px;
-  position:absolute;
-  opacity:0;
+.pulse-circle,
+.pulse-circle2 {
+  border-radius: 50%;
+  width: 2px;
+  height: 2px;
+  position: absolute;
+  opacity: 0;
   transition: all 10s ease;
 }
-.pulse-circle{
+.pulse-circle {
   -webkit-animation: pulseline 2s ease-out infinite;
   -moz-animation: pulseline 2s ease-out infinite;
   animation: pulseline 2s ease-out infinite;
 }
-.pulse-circle2{
-  -webkit-animation: pulseline 1s ease-out infinite .5s ;
-  -moz-animation: pulseline 1s ease-out infinite .5s ;
-  -ms-animation: pulseline 1s ease-out infinite .5s ;
-  -o-animation: pulseline 1s ease-out infinite .5s ;
-  animation: pulseline 1s ease-out infinite .5s ;
+.pulse-circle2 {
+  -webkit-animation: pulseline 1s ease-out infinite 0.5s;
+  -moz-animation: pulseline 1s ease-out infinite 0.5s;
+  -ms-animation: pulseline 1s ease-out infinite 0.5s;
+  -o-animation: pulseline 1s ease-out infinite 0.5s;
+  animation: pulseline 1s ease-out infinite 0.5s;
 }
 @-webkit-keyframes pulseline {
-  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px $dpt-hint;    }
-  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px $dpt-hint;   }
+  0% {
+    width: 2px;
+    height: 2px;
+    opacity: 1;
+    left: 0;
+    top: 0;
+    box-shadow: 0 0 0 0px $dpt-hint;
+  }
+  100% {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    left: -40px;
+    top: -40px;
+    box-shadow: 0 0 0 6px $dpt-hint;
+  }
 }
 @-moz-keyframes pulseline {
-  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px $dpt-hint;   }
-  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px $dpt-hint;   }
+  0% {
+    width: 2px;
+    height: 2px;
+    opacity: 1;
+    left: 0;
+    top: 0;
+    box-shadow: 0 0 0 0px $dpt-hint;
+  }
+  100% {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    left: -40px;
+    top: -40px;
+    box-shadow: 0 0 0 6px $dpt-hint;
+  }
 }
 @-ms-keyframes pulseline {
-  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px $dpt-hint;    }
-  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px $dpt-hint;   }
+  0% {
+    width: 2px;
+    height: 2px;
+    opacity: 1;
+    left: 0;
+    top: 0;
+    box-shadow: 0 0 0 0px $dpt-hint;
+  }
+  100% {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    left: -40px;
+    top: -40px;
+    box-shadow: 0 0 0 6px $dpt-hint;
+  }
 }
 @-o-keyframes pulseline {
-  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px $dpt-hint;   }
-  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px $dpt-hint;   }
+  0% {
+    width: 2px;
+    height: 2px;
+    opacity: 1;
+    left: 0;
+    top: 0;
+    box-shadow: 0 0 0 0px $dpt-hint;
+  }
+  100% {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    left: -40px;
+    top: -40px;
+    box-shadow: 0 0 0 6px $dpt-hint;
+  }
 }
 @keyframes pulseline {
-  0%   {   width:2px;height:2px;opacity:1;left:0;top:0;box-shadow:0 0 0 0px $dpt-hint;    }
-  100% {  width:80px;height:80px;opacity:0;left:-40px;top:-40px;box-shadow:0 0 0 6px $dpt-hint;   }
+  0% {
+    width: 2px;
+    height: 2px;
+    opacity: 1;
+    left: 0;
+    top: 0;
+    box-shadow: 0 0 0 0px $dpt-hint;
+  }
+  100% {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    left: -40px;
+    top: -40px;
+    box-shadow: 0 0 0 6px $dpt-hint;
+  }
 }
-.circle-center{
-  position:absolute;
-  left:-7px;
-  top:-7px;
-  border-radius:50%;
-  width:15px;
-  height:15px;
-  background:$dpt-hint; 
+.circle-center {
+  position: absolute;
+  left: -7px;
+  top: -7px;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background: $dpt-hint;
 }
 
-.arrowcontainer{
+.arrowcontainer {
   position: absolute;
   left: -10px;
   top: -120px;
@@ -1335,13 +1404,13 @@ pointer-events: none;
 
 @keyframes animate {
   0% {
-      margin-top: 20px;
+    margin-top: 20px;
   }
   50% {
-      margin-top: 0px;
+    margin-top: 0px;
   }
   100% {
-      margin-top: 20px;
+    margin-top: 20px;
   }
 }
 

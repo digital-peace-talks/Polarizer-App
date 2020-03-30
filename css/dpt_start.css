@@ -108,7 +108,7 @@ a {
   padding: 10px;
 }
 
-input[type=text] {
+input[type="text"] {
   font-family: "DPTFont";
   background: #f0f3f5;
   border-color: #005b98;
