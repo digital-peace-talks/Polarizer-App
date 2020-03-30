@@ -480,7 +480,6 @@ div#dialogFrame {
   font-family: "DPTFontDin";
   text-transform: uppercase;
   font-size: 20px;
-  width: 25%;
   height: 48px;
   border: 1px solid $dpt-prime-border;
   background-color: $dpt-menu;
@@ -942,38 +941,12 @@ nav a:target ~ ul {
   left: 0;
 }
 
-section {
-  margin: 0 auto;
-  width: 400px;
-  bottom: 48px;
-  height: 0px;
-  text-align: right;
-  position: absolute;
-  left: 50%;
-  margin-left: -200px;
-}
-
-section ul {
-  margin: 0;
-  padding: 0 0 0 0;
-}
-
-section ul li {
-  list-style: none;
-  margin: 0;
-  display: inline;
-}
-
 section ul li button {
   position: relative;
   padding: 0 0 0.5em 0;
   display: inline-block;
   text-decoration: none;
   text-transform: uppercase;
-}
-
-section ul.menu {
-  max-height: 20px;
 }
 
 section a#nav-m,
@@ -1520,32 +1493,6 @@ pointer-events: none;
   }
   nav a:target ~ ul {
     left: 0;
-  }
-  // ------------------------------------------
-  section {
-    width: 100%;
-    left: 50%;
-    margin-left: -50%;
-  }
-  section ul {
-    bottom: -20px;
-    position: absolute;
-    width: 100%;
-    left: 0px;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  section ul li {
-    display: block;
-    text-align: left;
-    padding: 0em 0em;
-  }
-  section ul li button {
-    padding: 1em 0;
-  }
-  section ul.menu li a:hover {
-    border-bottom: 0;
   }
   /*Hamburger-Icon*/
   section a#section-m {
