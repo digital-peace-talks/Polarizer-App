@@ -71,39 +71,36 @@ router.get('/', async (req, res, next) => {
 			</header>
 				<div id="mehrspaltig">
 					<div class="links">
-						<h1>Welcome stranger!</h1>
-						<br>
-						<b>It seems this is your first visit.</b><br>
-						<br>
-						Making an account is simple and we don´t even need your data. <br>
-						Instead of giving us your mail address and unnecessary information we give you an unique pass phrase. <br>
-						It consists of four words and will work as your future key for this app. <br><br>
-						And this is your unique pass phrase:<br><br>
-						<div class="phrase">${phrase}</div>
-						<br>
-						<input type="image" class="copytoclip" src="/copytoclipboard_dark.png" onClick="copyToClipboard('${phrase}');"/>Copy phrase to clipboard!
-						<br>
-						<br>
-						Please write it down or memorize it! 
-						If you loose or forget this phrase there is no chance to generate a new one for your existing account.
-						<a class="start" href="/recover?phrase=${encodeURIComponent(phrase)}">Let me enter &#9655;</a>
-						<br>
-						<br>
-						<br>
-						<br>
+						<h1>Create a new account</h1>
+						<p>
+							Digital Peace Talks uses a randomly generated passphraze to authenticate you. The passphrase cannot be recovered. You can find your passphrase anytime at <code>menu>settings</code>
+						</p>
+						<div class="phrase-wrapper">
+							<div class="col"></div>
+							<div class="phrase">${phrase}</div>
+							<div class="col"></div>
+						</div>
+						<div class="row">
+							<div class="col"></div>
+							<div class="col">
+								<a class="start" href="/recover?phrase=${encodeURIComponent(phrase)}">Start &#9655;</a>
+							</div>
+							<div class="col"></div>
+						</div>
 					</div>
 					<div class="rechts">
-						<h1>Allready a member?</h1>
-						<br>
-						Just type in your unique pass phrase to log into your account.<br><br>
-
-						<div class="label">Enter your pass-phrase:</div><br>
-						<form method="post" action="/recover"><input type=text name=phraseinput>
-						<input type="hidden" name="phrase" value="${phrase}"></form>
-					
-						<br>
-						<br>
-						<br>
+						<h1>Sign in to existing account</h1>
+						<p>If you already have a passphrase, enter it below.</p>
+						<form method="post" action="/recover">
+						<div class="row center">
+						<div class="col"></div>
+							<div class="col">
+								<input type=text name=phraseinput>
+								<input type="hidden" name="phrase" value="${phrase}">
+							</div>
+							<div class="col"></div>
+						</div>
+						</form>
 					</div>
 				</div>
 			<footer>
@@ -118,67 +115,8 @@ router.get('/', async (req, res, next) => {
 			</body>
 			</html>`);
 		} else {
-			res.send(`
-			<!DOCTYPE html>
-			<html>
-			<head>
-				<link rel="stylesheet" href="dpt_start.css" />
-			</head>
-				<body>
-				<div id="wrapper">
-					<header>
-						<meta name="viewport" content="width=device-width, initial-scale=1.0">
-						<img src="logo_dpt.png" alt="digital peace talks" class="logo">
-						<h1>Welcome to digital peace talks.</h1>
-						This is a free open source prototype being developed by a social enterprise.<br><br>
-						Click here for more information about the project:
-						<a href="https://digitalpeacetalks.com/" target="_blank">Our Website</a><br>
-						Or learn more about the App:
-						<a href="dpt-doku.html" target="_blank">How to use dpt.</a>
-						<br>
-					</header>
-					<div id="mehrspaltig">
-						<div class="links">
-							<h1>Welcome back!</h1>
-							<br>
-							So awesome to see you again! <br>
-							Just enter and continue where you left off last time.<br>
-							<br>
-							<a class="start" href=/dpt3d.html>Enter the App &#9655;</a>
-							<br>
-							<br>
-							<br>
-							<br>
-							<!--
-							<a class="start" onClick="function gcv(a) {var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');return b?b.pop():''};document.cookie='dptUUID='+gcv('dptUUID')+'; max-age=0; path=/; domain='+window.location.hostname+';location.reload(true);">delete cookie</a>
-							-->
-								
-						</div>
-						<div class="rechts">
-							<h1>Not your device? Login Problems?</h1>
-							<br>
-							You can delete the cookie for this app and clear your account data from this device.<br><br>
-							<b>Caution:</b> If you delete this cookie and you don´t know your pass phrase this account will be inevitably lost forever!<br><br>
-							 
-							<a class="button" onClick="function gcv(a){
-								var b=document.cookie.match('(^|;)\\s*'+a+'\\s*=\\s*([^;]+)');
-								return (b ? b.pop():'')
-							}
-							document.cookie='dptUUID=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-							location.reload(true);">I know what I do!</a>
-							<br>
-							<br>
-							<br>
-						</div>
-					</div>
-					<footer>Note:<br>
-						Please keep in mind: This project is still under development and is far from major or done. Things can change dramatically. Every time! It's up to the user community to influence the way we go.
-					</footer>
-				</div>
-				</body>
-				</html>
-			`);
-		}
+			res.redirect('dpt3d.html');
+			}
 		res.status(200);
 	} catch (err) {
 		next(err);
