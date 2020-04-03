@@ -73,7 +73,10 @@ router.get('/', async (req, res, next) => {
 					<div class="links">
 						<h1>Create a new account</h1>
 						<p>
-							Digital Peace Talks uses a randomly generated passphraze to authenticate you. The passphrase cannot be recovered. You can find your passphrase anytime at <code>menu>settings</code>
+							Digital Peace Talks uses a randomly generated passphraze to authenticate you.
+						</p>
+						<h3><i>The passphrase cannot be recovered.</i></h3> 
+						<p>You can find your passphrase anytime at <code>menu>settings</code></p>
 						</p>
 						<div class="phrase-wrapper">
 							<div class="col"></div>
@@ -104,8 +107,7 @@ router.get('/', async (req, res, next) => {
 					</div>
 				</div>
 			<footer>
-				Note:<br>
-				Please keep in mind: This project is still under development and is far from major or done. Things can change dramatically. Every time! It's up to the user community to influence the way we go.
+				Please be aware that DPT grants everyone the right to voice their opinion. Even if it is, within the boundaries of the German federal law, radical. Nobody, on the other hand, will ever be allowed to cross your personal boundaries in DPT (one strike policy).
 			</footer>
 			</div>
 			<br>
