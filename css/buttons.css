@@ -13,4 +13,17 @@
   align-items: center;
 }
 
+.crisis {
+  font-family: DPTFontDin;
+  border: none;
+  font-size: 16px;
+  padding: 0 16px;
+  height: 30px;
+  -webkit-appearance: none;
+  z-index: 40;
+  position: absolute;
+  right: 0px;
+  bottom: 66px;
+}
+
 /*# sourceMappingURL=buttons.css.map */
