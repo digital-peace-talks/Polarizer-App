@@ -107,7 +107,7 @@ router.get('/', async (req, res, next) => {
 					</div>
 				</div>
 			<footer>
-				Please be aware that DPT grants everyone the right to voice their opinion. Even if it is, within the boundaries of the German federal law, radical. Nobody, on the other hand, will ever be allowed to cross your personal boundaries in DPT (one strike policy).
+				Please be aware that DPT grants everyone the right to voice their opinion. Even if it is, within the boundaries of the German federal law, extreme. Nobody, on the other hand, will ever be allowed to cross your personal boundaries in DPT (one strike policy).
 			</footer>
 			</div>
 			<br>
