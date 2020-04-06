@@ -557,6 +557,26 @@ div#dialogFrame {
   padding-top: 40px;
 }
 
+#form.dialog-form {
+  position: absolute;
+  width: 40%;
+  height: 12em;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  padding: 1em;
+  margin: auto;
+}
+
+#form.dialog-form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
 textarea {
   font-family: DPTFont;
   font-size: 18px;
@@ -699,6 +719,19 @@ textarea {
   font-family: DPTFontDin;
   color: #f0f3f5;
   background-color: #002c4b;
+  border: none;
+  font-size: 16px;
+  height: 40px;
+  margin: 5px auto;
+  margin-left: 10px;
+  float: right;
+  -webkit-appearance: none;
+}
+
+.button-second {
+  font-family: DPTFontDin;
+  color: #f0f3f5;
+  background-color: #003b98;
   border: none;
   font-size: 16px;
   height: 40px;

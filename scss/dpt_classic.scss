@@ -10,7 +10,7 @@ $dpt-prime-base: #28a9e1;
 $dpt-second-base: #005b98;
 
 $dpt-prime-button: #002c4b;
-$dpt-second-button: #005b98;
+$dpt-second-button: #003b98;
 
 $dpt-left-chat: #005b98;
 $dpt-right-chat: #002c4b;
@@ -587,7 +587,25 @@ div#dialogFrame {
   overflow-y: auto;
   padding-top: 40px;
 }
-
+#form.dialog-form{
+    position:absolute;
+    width:40%;
+    height:12em;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    padding:1em;
+    margin:auto;
+    
+    form {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:space-between;
+      height:100%;
+    }
+}
 textarea {
   font-family: DPTFont;
   font-size: 18px;
@@ -736,6 +754,18 @@ textarea {
   margin-left: 10px;
   float: right;
   -webkit-appearance: none;
+}
+.button-second {
+    font-family: DPTFontDin;
+    color: $dpt-prime-text;
+    background-color: $dpt-second-button;
+    border: none;
+    font-size: 16px;
+    height: 40px;
+    margin: 5px auto;
+    margin-left: 10px;
+    float: right;
+    -webkit-appearance: none;
 }
 
 .buttonRed {

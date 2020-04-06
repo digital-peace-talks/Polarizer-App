@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "nodemon --inspect=0.0.0.0:9229 src/bin/www | node node_modules/.bin/bunyan",
-    "sass": "sass css"
+    "sass": "sass --watch scss:css"
   },
   "dependencies": {
     "body-parser": ">=1.19.0",
