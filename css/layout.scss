@@ -1,0 +1,16 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -12px;
+
+  &.center {
+    justify-content: center;
+    margin: 0;
+  }
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 12px;
+}

@@ -69,7 +69,7 @@ $ cd DPT
 $ cp .env.example .env
 $ vi .env
 $ npm install
-$ node src/bin/www
+$ npm start
 ```
 In .env file you update the absolute path to the directory of the cloned repository and a secret for identifying the session cookie.
 
