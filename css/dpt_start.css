@@ -1,3 +1,20 @@
+.row, #mehrspaltig .links .phrase-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -12px;
+}
+.row.center, #mehrspaltig .links .phrase-wrapper {
+  justify-content: center;
+  margin: 0;
+}
+
+.col, #mehrspaltig .links .phrase-wrapper .phrase {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 12px;
+}
+
 @font-face {
   font-family: "DPTFont";
   src: url("font.ttf") format("truetype");
@@ -44,18 +61,25 @@ header {
 #mehrspaltig {
   flex: 1;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
-
-.links {
+#mehrspaltig .links {
   flex: 1;
   padding: 20px;
   vertical-align: middle;
   background: linear-gradient(to bottom, #03406b, #001625);
   color: #e3f3fa;
 }
-
-.rechts {
+#mehrspaltig .links .phrase-wrapper .phrase {
+  color: #66b4e7;
+  font-size: 18px;
+  text-align: center;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #f0f3f5;
+  padding: 16px 12px;
+}
+#mehrspaltig .rechts {
   flex: 1;
   padding: 20px;
   vertical-align: middle;
@@ -80,7 +104,6 @@ footer {
 h1 {
   font-family: "DPTFont";
   font-size: 32px;
-  text-align: center;
 }
 
 h2 {
@@ -96,16 +119,6 @@ a {
 
 .label {
   text-align: left;
-}
-
-.phrase {
-  color: #66b4e7;
-  font-size: 18px;
-  text-align: center;
-  border-style: solid;
-  border-width: 1px;
-  border-color: #f0f3f5;
-  padding: 10px;
 }
 
 input[type=text] {
@@ -152,13 +165,9 @@ input {
   background-color: #005b98;
   border: none;
   font-size: 24px;
-  height: 60px;
-  margin: 5px auto;
-  width: 100%;
-  float: left;
+  padding: 12px 16px;
   -webkit-appearance: none;
   text-align: center;
-  line-height: 60px;
 }
 
 .copytoclip {

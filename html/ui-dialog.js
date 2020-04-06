@@ -229,7 +229,7 @@ function dialogForm(secondDialog) {
   if (currentDialog.status == "ACTIVE") {
     if (viewOnly) {
       var endDialog =
-        '<input type="button" class="crisis" value="finish dialog" name="end dialog" id="none">';
+        '<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none"> Leave Dialog</button>';
       for (var i in currentDialog.crisises) {
         if (currentDialog.crisises[i].initiator == "me") {
           endDialog = "";
@@ -260,8 +260,7 @@ function dialogForm(secondDialog) {
 							<textarea class="textareaDialog" type="text" name="message" id="dialogInput">${dialogInput}</textarea>
 								<br>
 								<input type="submit" class="buttonSend" name="send" value="send">
-								
-								<input type="button" class="crisis" value="finish dialog" name="end dialog" id="none">
+								<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none" name="end dialog"> Leave Dialog</button>
 							</form>
 							<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
 						
@@ -277,7 +276,7 @@ function dialogForm(secondDialog) {
 							<form id="dialogFrame">
 								<br>
 								
-								<input type="button" class="crisis" value="finish dialog" name="end dialog" id="none">
+								<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none" name="end dialog"> Leave Dialog</button>
 							</form>
 							<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
 						
@@ -327,7 +326,7 @@ function dialogForm(secondDialog) {
 								<br>
 								<input type="submit" class="buttonSend" name="send" value="send">
 								
-								<input type="button" class="crisis" value="finish dialog" name="end dialog" id="none">
+								<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none" name="end dialog"> Leave Dialog</button>
 							</form>
 							<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
 						
