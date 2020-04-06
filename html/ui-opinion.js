@@ -43,11 +43,11 @@ function opinionContext(context) {
 }
 function opinionEdit(context) {
   opinionForm(true, context);
+  jQuery("#edit-btn").addClass("CloseOpinionForm");
+  jQuery("#edit-btn").attr("onclick", "");
 }
 
 function opinionForm(edit, context) {
-  console.log("enter opinion");
-
   jQuery("#form").remove();
   formVisible = true;
 
@@ -57,14 +57,13 @@ function opinionForm(edit, context) {
   var deleteButton = "";
   if (edit) {
     opinion = context.content;
-    opinionContext = context.opinionContext;
+    opinionContext = context.context;
     edit = `<input type="hidden" class="edit" name="edit" value="edit" />`;
     opinionIdHidden = `<input type="hidden" class="opinionId" name="opinionId" value="${context.opinionId}" />`;
     //deleteButton = `<input class="button" type="button" value="Delete" name="Delete" id="DeleteOpinion"/>`;
   } else {
     edit = "";
   }
-  var opinionContext = "";
   if (context && context.opinionContext) {
     opinionContext = context.opinionContext;
   }
@@ -76,8 +75,8 @@ function opinionForm(edit, context) {
 		Details:
 		<textarea class="opinionContext">${opinionContext}</textarea>
 		<input class="button" type="submit" value="Confirm"> 
-		<input class="closeButton" type="button" value="&#10005;" name="close window"
-		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}
+		<input class="closeButton CloseOpinionForm" type="button" value="&#10005;" name="close window"
+		>${deleteButton}${edit}${opinionIdHidden}
 		</form></div>
 	`);
   jQuery(".opinionContext").trumbowyg({
@@ -96,12 +95,17 @@ function opinionForm(edit, context) {
 
   jQuery(".opinion").focus();
 
-  jQuery(document).on("click", "#CloseOpinionForm", function (event) {
+  jQuery(document).on("click", ".CloseOpinionForm", function (event) {
     opinionFormOpen = 0;
     jQuery("#form").remove();
     formVisible = false;
     focusAtCanvas();
     event.preventDefault();
+    jQuery(event.target).removeClass("CloseOpinionForm");
+    jQuery("#edit-btn").attr(
+      "onclick",
+      "event.stopPropagation(); opinionEdit(topicUserOpinion)"
+    );
   });
 
   jQuery(document).on("keydown", ".opinion", function (event) {

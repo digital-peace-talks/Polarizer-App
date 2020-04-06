@@ -30,12 +30,11 @@ function switchToTopics() {
 
 // GUI Menubar Buttons
 var createGUIScene = function (dptMode) {
-  if (whoami.developer == true) {
+  if (whoami.developer == true && !jQuery("#setup-button")) {
     jQuery(".actionmenu").append(
       `<li><button class="menu-btn-bar" id="setup-btn" title="Setup">
 			<img class="btn-bar-icon" src="/setup_white.png"></button></li>`
     );
-    jQuery(".menu-btn-bar").css("width", "20%");
     jQuery(document).on("click touch", "#setup-btn", function (event) {
       event.stopImmediatePropagation();
       event.preventDefault();
@@ -291,6 +290,10 @@ var createGUIScene = function (dptMode) {
   var homeBtn = jQuery("#home-btn");
   homeBtn.show();
 
+  function removeEditOpinionButton() {
+    jQuery("#edit-btn").css("display", "none");
+  }
+
   homeBtn.on("click touch", function (event) {
     if (isMobile) {
       closeRightMenu();
@@ -302,9 +305,6 @@ var createGUIScene = function (dptMode) {
       formVisible = false;
     }
 
-    function removeEditOpinionButton() {
-      jQuery("#edit-btn").css("display", "none");
-    }
     opinionCamState = currentScene.cameras[0].storeState();
     currentScene.dispose();
     currentScene = __topicScene("topicScene");
