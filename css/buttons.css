@@ -1,0 +1,29 @@
+.button {
+  transition: opacity 0.2s cubic-bezier(0.4, 0, 0.6, 1);
+  -webkit-transition: opacity 0.2s cubic-bezier(0.4, 0, 0.6, 1);
+}
+.button:hover {
+  opacity: 0.9;
+}
+.button.block {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.crisis {
+  font-family: DPTFontDin;
+  border: none;
+  font-size: 16px;
+  padding: 0 16px;
+  height: 30px;
+  -webkit-appearance: none;
+  z-index: 40;
+  position: absolute;
+  right: 0px;
+  bottom: 66px;
+}
+
+/*# sourceMappingURL=buttons.css.map */

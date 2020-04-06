@@ -8,7 +8,7 @@ const router = new express.Router();
 
 router.get('/nilsTestPath', async (req, res, next) => {
 	try {
-		await res.sendFile(process.env.DPT_PATH+'/static/nilsTestPath.html');
+		await res.sendFile(process.cwd()+'/static/nilsTestPath.html');
 		res.status(200);
 	} catch (err) {
 		next(err);
@@ -19,7 +19,7 @@ router.get('/nilsTestPath', async (req, res, next) => {
  */
 router.get('/api', async (req, res, next) => {
 	try {
-		await res.sendFile(process.env.DPT_PATH+'/docs/dpt-oas-current.json');
+		await res.sendFile(process.cwd()+'/docs/dpt-oas-current.json');
 		res.status(200);
 	} catch (err) {
 		next(err);

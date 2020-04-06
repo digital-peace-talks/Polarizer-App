@@ -12,21 +12,41 @@ function opinionContext(context) {
 			${context.opinionContext ? context.opinionContext : "<p>none.</p>"}
 			<input class="closeButton" type="button" value="&#10005;" name="close" id="closeSettingsForm" >
 			</div>
+			${
+        context.canInvite
+          ? `<button id="btn-request-dialog" class="button block">request dialog</button>`
+          : ``
+      }
 		</div>
 	`);
+  jQuery("#btn-request-dialog").on("click touch", () => {
+    closeOpinion();
+    propositionForm(context.opinionId, currentTopic);
+  });
   jQuery("#closeSettingsForm").on("click touch", function (event) {
-    jQuery("#form").remove();
-    formVisible = false;
     event.stopImmediatePropagation();
     event.preventDefault();
+    closeOpinion();
   });
+  jQuery("#closeSettingsForm").on("click touch", function (event) {
+    event.stopImmediatePropagation();
+    event.preventDefault();
+    closeOpinion();
+  });
+  /**
+   * Closes opinion modal
+   */
+  const closeOpinion = () => {
+    jQuery("#form").remove();
+    formVisible = false;
+  };
 }
 function opinionEdit(context) {
   opinionForm(true, context);
 }
 
 function opinionForm(edit, context) {
-  console.log("edit opinion");
+  console.log("enter opinion");
 
   jQuery("#form").remove();
   formVisible = true;
@@ -37,13 +57,14 @@ function opinionForm(edit, context) {
   var deleteButton = "";
   if (edit) {
     opinion = context.content;
-    opinionContext = context.context;
+    opinionContext = context.opinionContext;
     edit = `<input type="hidden" class="edit" name="edit" value="edit" />`;
-    opinionIdHidden = `<input type="hidden" class="opinionId" name="opinionId" value="${context._id}" />`;
+    opinionIdHidden = `<input type="hidden" class="opinionId" name="opinionId" value="${context.opinionId}" />`;
     //deleteButton = `<input class="button" type="button" value="Delete" name="Delete" id="DeleteOpinion"/>`;
   } else {
     edit = "";
   }
+  var opinionContext = "";
   if (context && context.opinionContext) {
     opinionContext = context.opinionContext;
   }

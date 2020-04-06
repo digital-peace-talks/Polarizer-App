@@ -29,7 +29,6 @@ function switchToTopics() {
 }
 
 // GUI Menubar Buttons
-
 var createGUIScene = function (dptMode) {
   if (whoami.developer == true) {
     jQuery(".actionmenu").append(
@@ -291,6 +290,7 @@ var createGUIScene = function (dptMode) {
   //create home button
   var homeBtn = jQuery("#home-btn");
   homeBtn.show();
+
   homeBtn.on("click touch", function (event) {
     if (isMobile) {
       closeRightMenu();
@@ -343,30 +343,40 @@ var createGUIScene = function (dptMode) {
     jQuery("#form").remove();
     formVisible = false;
 
-    jQuery("#new-opinion-btn").hide();
+    jQuery("#new-opinion-li").hide();
+
     var newTopicBtn = jQuery("#new-topic-btn");
-    newTopicBtn.show();
+    //TODO: wait fo Iwan response
+    var isAuthForNewTopics = false;
 
-    newTopicBtn.html(`<img class="btn-bar-icon" src="/topic_white.png">`);
+    if (!isAuthForNewTopics) {
+      var newTopicLi = jQuery("#new-topic-li");
+      newTopicLi.hide();
+    }
+    if (isAuthForNewTopics) {
+      newTopicBtn.show();
 
-    newTopicBtn.on("click touch", function (event) {
-      event.stopImmediatePropagation();
-      event.preventDefault();
+      newTopicBtn.html(`<img class="btn-bar-icon" src="/topic_white.png">`);
 
-      if (formVisible && jQuery("#form>form").hasClass("topicForm")) {
-        formVisible = false;
-        jQuery("#form").remove();
-      } else {
-        hideDialogList();
+      newTopicBtn.on("click touch", function (event) {
+        event.stopImmediatePropagation();
+        event.preventDefault();
 
-        topicForm();
+        if (formVisible && jQuery("#form>form").hasClass("topicForm")) {
+          formVisible = false;
+          jQuery("#form").remove();
+        } else {
+          hideDialogList();
 
-        if (isMobile) {
-          console.log("mobile behavior!");
-          hideMenu();
+          topicForm();
+
+          if (isMobile) {
+            console.log("mobile behavior!");
+            hideMenu();
+          }
         }
-      }
-    });
+      });
+    }
 
     //create opinion button
   } else if (dptMode == "opinionScene") {
@@ -375,7 +385,7 @@ var createGUIScene = function (dptMode) {
 
     jQuery("#new-topic-btn").hide();
     var newOpinionBtn = jQuery("#new-opinion-btn");
-    newOpinionBtn.show();
+    newOpinionBtn.parent().show();
 
     newOpinionBtn.html(`<img class="btn-bar-icon" src="/opinion_white.png">`);
     newOpinionBtn.on("click touch", function (event) {
