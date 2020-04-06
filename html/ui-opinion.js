@@ -19,6 +19,7 @@ function opinionContext(context) {
       }
 		</div>
 	`);
+<<<<<<< HEAD
   jQuery("#btn-request-dialog").on("click touch", () => {
     closeOpinion();
     propositionForm(context.opinionId, currentTopic);
@@ -40,6 +41,29 @@ function opinionContext(context) {
     jQuery("#form").remove();
     formVisible = false;
   };
+=======
+	jQuery("#btn-request-dialog").on('click touch', () => {
+		closeOpinion();
+		propositionForm(context.opinionId, currentTopic)
+	})
+	jQuery("#closeSettingsForm").on('click touch', function(event) {
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		closeOpinion();
+	});
+	jQuery("#closeSettingsForm").on('click touch', function(event) {
+		event.stopImmediatePropagation();
+		event.preventDefault();
+		closeOpinion();
+	});
+	/**
+	 * Closes opinion modal
+	 */
+	const closeOpinion = () => {
+		jQuery('#form').remove();
+		formVisible = false;
+	}
+>>>>>>> 4f5fbef21af589a2f05ff748e822befab00d9e6a
 }
 function opinionEdit(context) {
   opinionForm(true, context);
