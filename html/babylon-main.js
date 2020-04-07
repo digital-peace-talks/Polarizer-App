@@ -231,7 +231,6 @@ var createGenericScene = function(dptMode) {
 							&& picked.name == "texttexture"
 							&& picked.dpt.canInvite == true) {
 
-								propositionForm(picked.dpt.opinionId, currentTopic);
 								return;
 							}
 						} else if(click.x >= .36 && click.x < .72) {

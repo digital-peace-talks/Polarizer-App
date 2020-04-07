@@ -220,24 +220,8 @@ function textBlock(x, y, z, name, text, options) {
 		(options.fontSize || 22) + 42, DTWidth -1, options.fontSize || 22);
 
 	var dpt = JSON.parse(name);
-	if(dpt.canInvite) {
-		textureContext.drawImage(inviteIcon, 0, 0, 36, 36);
-		textureContext.globalCompositeOperation = "xor";
-		switch(whoami.user.preferences.colorScheme) {
-			case DPTGlobal.COLORS_dark:
-				textureContext.fillStyle = "#00ff00";
-				break;
-			case DPTGlobal.COLORS_bright:
-				textureContext.fillStyle = "#00801a";
-				break;
-			case DPTGlobal.COLORS_default:
-			default:
-				textureContext.fillStyle = "#51c1fe";
-		}
-		textureContext.fillRect(0,0,36,36);
-	}
 
-	if(dpt.canEdit) {
+	if(dpt.canEdit && dpt.context == "topicScene") {
 		textureContext.drawImage(editIcon, 36, 0, 36, 36);
 		textureContext.globalCompositeOperation = "xor";
 		switch(whoami.user.preferences.colorScheme) {

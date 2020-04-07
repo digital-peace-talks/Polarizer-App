@@ -9,6 +9,7 @@
 	<title>Digital Peace Talks</title>
 
 	<!--	<link rel="stylesheet" href="/dpt_classic.css" /> -->
+	<link type="text/css" rel="stylesheet" media="all" href="dpt3d.css" />
 	<link type="text/css" rel="stylesheet" media="all" href="dpt_classic.css" id="theme_css" />
 	<link rel="stylesheet" href="/external/trumbowyg.min.css" />
 
@@ -43,6 +44,9 @@
 	<!-- change the status bar appearance on ios-->
 	<meta name="apple-mobile-web-app-status-bar" content="#28A9E1">
 	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<!-- Material Design Icons -->
+	<link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css">
 
 </head>
 
@@ -85,9 +89,9 @@
 										class="btn-bar-icon" src="/back_white.png"></button></li>
 							<li><button class="menu-btn-bar" id="search-btn" title="Search for opinions"><img
 										class="btn-bar-icon" src="/search.png"></button></li>
-							<li><button class="menu-btn-bar" id="new-topic-btn" title="Create a new topic"><img
+							<li id="new-topic-li"><button class="menu-btn-bar" id="new-topic-btn" title="Create a new topic"><img
 										class="btn-bar-icon"></button></li>
-							<li><button class="menu-btn-bar" id="new-opinion-btn" title="Create a new Opinion"><img
+							<li id="new-opinion-li"><button class="menu-btn-bar" id="new-opinion-btn" title="Create a new Opinion"><img
 										class="btn-bar-icon"></button></li>
 							<li><button class="menu-btn-bar" id="dialogues-btn" title="Open the dialog list"><img
 										class="btn-bar-icon" src="/messagelist_white.png">
@@ -237,7 +241,6 @@
 <script src="ui-dialoglist.js"></script>
 <script src="ui-crisis.js"></script>
 <script src="ui-topic.js"></script>
-<script src="ui-proposition.js"></script>
 <script src="ui-settings.js"></script>
 
 <script>
