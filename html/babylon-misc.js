@@ -221,7 +221,7 @@ function textBlock(x, y, z, name, text, options) {
 
 	var dpt = JSON.parse(name);
 
-	if(dpt.canEdit) {
+	if(dpt.canEdit && dpt.context == "topicScene") {
 		textureContext.drawImage(editIcon, 36, 0, 36, 36);
 		textureContext.globalCompositeOperation = "xor";
 		switch(whoami.user.preferences.colorScheme) {

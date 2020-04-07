@@ -42,6 +42,13 @@ function opinionContext(context) {
 }
 
 function opinionEdit(context) {
+	if (context == null && myOpinion) {
+		context = {
+			opinionId: myOpinion._id,
+			content: myOpinion.content,
+			opinionContext: myOpinion.context
+		}
+	}
 	opinionForm(true, context);
 }
 

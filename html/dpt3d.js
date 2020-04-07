@@ -16,6 +16,8 @@ var powerSave = false;
 var currentTopic;
 var currentTopicStr;
 
+var myOpinion;
+
 var currentDialog;
 var isMobile = false; //initiate as false
 var myDialogMenu = [];
@@ -373,13 +375,14 @@ function onWebSocketAPI(restObj) {
 			searchResultTopics(restObj);
 		} else if(restObj.path == "/opinion/" + currentTopic + "/") {
 			if(currentScene.name == 'opinionScene') {
+				myOpinion = restObj.data && restObj.data.find(opinion => opinion.user == "mine");
 				loadOpinions(restObj);
 			}
 		} else if(restObj.path == '/opinion/postAllowed/') {
 			if(restObj.data.value == true) {
 				opinionForm();
 			} else {
-				alert('Only one opinion per topic.');
+				opinionEdit();
 			}
 		} else if(restObj.path == '/dialog/list/') {
 			loadDialogList(restObj);
