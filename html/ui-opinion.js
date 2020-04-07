@@ -20,7 +20,7 @@ function opinionContext(context) {
 	`);
 	jQuery("#btn-request-dialog").on('click touch', () => {
 		closeOpinion();
-		propositionForm(context.opinionId, currentTopic)
+    dpt.postDialog('', whoami.dptUUID, context.opinionId, currentTopic);
 	})
 	jQuery("#closeSettingsForm").on('click touch', function(event) {
 		event.stopImmediatePropagation();
