@@ -77,4 +77,21 @@ section ul.menu li#new-topic-li, section ul.menu li#new-opinion-li {
   bottom: 66px;
 }
 
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -12px;
+}
+.row.center {
+  justify-content: center;
+  margin: 0;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 12px;
+}
+
 /*# sourceMappingURL=dpt3d.css.map */

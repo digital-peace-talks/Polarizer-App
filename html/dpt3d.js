@@ -15,6 +15,8 @@ var powerSave = false;
 var currentTopic;
 var currentTopicStr;
 
+var myOpinion;
+
 var currentDialog;
 var isMobile = false; //initiate as false
 var myDialogMenu = [];
@@ -413,7 +415,6 @@ function openDialogFormDialogSet(restObj) {
 
   dialogForm(restObj.data[1]);
 }
-
 function replaceNewOpinionWithEdit() {
   jQuery("#new-opinion-btn").hide();
   jQuery("#edit-btn").css("display", "block");
@@ -449,7 +450,6 @@ function webSocketHandleGet(restObj) {
         searchResultTopics(restObj);
       }
       break;
-
     case "/opinion/" + currentTopic + "/":
       if (currentScene.name == "opinionScene") {
         loadOpinions(restObj);

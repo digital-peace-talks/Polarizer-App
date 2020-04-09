@@ -568,7 +568,6 @@ div#dialogFrame {
   padding: 1em;
   margin: auto;
 }
-
 #form.dialog-form form {
   display: flex;
   flex-direction: column;

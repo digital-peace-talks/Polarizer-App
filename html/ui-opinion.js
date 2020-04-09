@@ -21,7 +21,7 @@ function opinionContext(context) {
 	`);
   jQuery("#btn-request-dialog").on("click touch", () => {
     closeOpinion();
-    propositionForm(context.opinionId, currentTopic);
+    dpt.postDialog("", whoami.dptUUID, context.opinionId, currentTopic);
   });
   jQuery("#closeSettingsForm").on("click touch", function (event) {
     event.stopImmediatePropagation();
@@ -41,7 +41,15 @@ function opinionContext(context) {
     formVisible = false;
   };
 }
+
 function opinionEdit(context) {
+  if (context == null && myOpinion) {
+    context = {
+      opinionId: myOpinion._id,
+      content: myOpinion.content,
+      opinionContext: myOpinion.context,
+    };
+  }
   opinionForm(true, context);
   jQuery("#edit-btn").addClass("CloseOpinionForm");
   jQuery("#edit-btn").attr("onclick", "");

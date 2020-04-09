@@ -26,6 +26,7 @@ function emoticon(d) {
 }
 
 function dialogForm(secondDialog) {
+  const QUIT_DIALOG_BUTTON = '<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none"> Quit and rate dialog</button>';
   var headerMine;
   var headerOther;
   var dialog = "";
@@ -228,8 +229,7 @@ function dialogForm(secondDialog) {
 
   if (currentDialog.status == "ACTIVE") {
     if (viewOnly) {
-      var endDialog =
-        '<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none"> Leave Dialog</button>';
+      var endDialog = QUIT_DIALOG_BUTTON;
       for (var i in currentDialog.crisises) {
         if (currentDialog.crisises[i].initiator == "me") {
           endDialog = "";
@@ -260,7 +260,7 @@ function dialogForm(secondDialog) {
 							<textarea class="textareaDialog" type="text" name="message" id="dialogInput">${dialogInput}</textarea>
 								<br>
 								<input type="submit" class="buttonSend" name="send" value="send">
-								<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none" name="end dialog"> Leave Dialog</button>
+								${QUIT_DIALOG_BUTTON}
 							</form>
 							<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
 						
@@ -276,7 +276,7 @@ function dialogForm(secondDialog) {
 							<form id="dialogFrame">
 								<br>
 								
-								<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none" name="end dialog"> Leave Dialog</button>
+								${QUIT_DIALOG_BUTTON}
 							</form>
 							<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
 						
@@ -326,7 +326,7 @@ function dialogForm(secondDialog) {
 								<br>
 								<input type="submit" class="buttonSend" name="send" value="send">
 								
-								<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none" name="end dialog"> Leave Dialog</button>
+								${QUIT_DIALOG_BUTTON}
 							</form>
 							<div id="c3">Messages: <b>${currentDialog.messages.length} of ${maxMessages}<br>${extensionRequest}</div>
 						
