@@ -384,7 +384,7 @@ var createGUIScene = function (dptMode) {
 		var newOpinionBtn = jQuery('#new-opinion-btn');
 		newOpinionBtn.parent().show();
 
-		newOpinionBtn.html(`<img class="btn-bar-icon" src="/edit.png">`);
+		newOpinionBtn.html(`<img class="btn-bar-icon" src="/opinion_white.png">`);
 		newOpinionBtn.on('click touch', function (event) {
 
 			event.stopImmediatePropagation();
