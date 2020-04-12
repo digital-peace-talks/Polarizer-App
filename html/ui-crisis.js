@@ -96,7 +96,9 @@ function crisisForm(messageId) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		var reason = jQuery('input[name="reason"]').val();
-		if (reason.length > 0) {
+      if(reason === (undefined || "")){
+          reason = "No reason provided";
+      };
 			dpt.postCrisis(
 				reason,
 				//				jQuery("input[name='rating']:checked").val(),
@@ -109,9 +111,6 @@ function crisisForm(messageId) {
 			<br>
 			<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
 			`);
-		} else {
-			alert('Please enter a conclusion.');
-		}
 	});
 
 	jQuery(document).on('click', "#crisisCloseWindow", function (event) {
