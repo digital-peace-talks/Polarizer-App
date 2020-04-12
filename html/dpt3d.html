@@ -1,615 +1,475 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, user-scalable=no"
-    />
 
-    <title>Digital Peace Talks</title>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <!--	<link rel="stylesheet" href="/dpt_classic.css" /> -->
-    <link rel="stylesheet"
+	<title>Digital Peace Talks</title>
+
+  <!--	<link rel="stylesheet" href="/dpt_classic.css" /> -->
+  <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Markazi">
+	<link type="text/css" rel="stylesheet" media="all" href="dpt3d.css" />
+	<link type="text/css" rel="stylesheet" media="all" href="dpt_classic.css" id="theme_css" />
+	<link rel="stylesheet" href="/external/trumbowyg.min.css" />
 
-    <link type="text/css" rel="stylesheet" media="all" href="dpt3d.css" />
-    <link
-      type="text/css"
-      rel="stylesheet"
-      media="all"
-      href="dpt_classic.css"
-      id="theme_css"
-    />
-    <link rel="stylesheet" href="/external/trumbowyg.min.css" />
+	<!-- Startup configuration -->
+	<link rel="manifest" href="manifest.webmanifest">
 
-    <!-- Startup configuration -->
-    <link rel="manifest" href="manifest.webmanifest" />
+	<!-- Fallback application metadata for legacy browsers -->
+	<meta name="application-name" content="DPT">
 
-    <!-- Fallback application metadata for legacy browsers -->
-    <meta name="application-name" content="DPT" />
+	<!-- icon in the highest resolution we need it for -->
+	<link rel="icon" sizes="16x16 32x32 48x48" href="icons/icon-72x72.png">
+	<link rel="icon" sizes="512x512" href="icons/icon-512x512.png">
 
-    <!-- icon in the highest resolution we need it for -->
-    <link rel="icon" sizes="16x16 32x32 48x48" href="icons/icon-72x72.png" />
-    <link rel="icon" sizes="512x512" href="icons/icon-512x512.png" />
+	<!-- multiple icons for Safari -->
+	<link rel="apple-touch-icon" href="icons/touch-icon-iphone.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="icons/touch-icon-ipad.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="icons/touch-icon-iphone-retina.png">
+	<link rel="apple-touch-icon" sizes="167x167" href="icons/touch-icon-ipad-retina.png">
 
-    <!-- multiple icons for Safari -->
-    <link rel="apple-touch-icon" href="icons/touch-icon-iphone.png" />
-    <link
-      rel="apple-touch-icon"
-      sizes="152x152"
-      href="icons/touch-icon-ipad.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="icons/touch-icon-iphone-retina.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="167x167"
-      href="icons/touch-icon-ipad-retina.png"
-    />
+	<!-- splash screen icon for Apple -->
+	<link rel="apple-touch-startup-image" href="icons/ios-icon.png">
 
-    <!-- splash screen icon for Apple -->
-    <link rel="apple-touch-startup-image" href="icons/ios-icon.png" />
+	<!-- multiple icons for IE -->
+	<meta name="msapplication-square70x70logo" content="icons/icon-72x72.png">
+	<meta name="msapplication-square150x150logo" content="icons/icon-144x144.png">
+	<meta name="msapplication-wide310x150logo" content="icons/icon-192x192.png">
+	<meta name="msapplication-square310x310logo" content="icon_largetile.png">
 
-    <!-- multiple icons for IE -->
-    <meta name="msapplication-square70x70logo" content="icons/icon-72x72.png" />
-    <meta
-      name="msapplication-square150x150logo"
-      content="icons/icon-144x144.png"
-    />
-    <meta
-      name="msapplication-wide310x150logo"
-      content="icons/icon-192x192.png"
-    />
-    <meta name="msapplication-square310x310logo" content="icon_largetile.png" />
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#28A9E1">
 
-    <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#28A9E1" />
+	<!-- change the status bar appearance on ios-->
+	<meta name="apple-mobile-web-app-status-bar" content="#28A9E1">
+	<meta name="apple-mobile-web-app-capable" content="yes">
 
-    <!-- change the status bar appearance on ios-->
-    <meta name="apple-mobile-web-app-status-bar" content="#28A9E1" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+	<!-- Material Design Icons -->
+	<link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css">
 
-    <!-- Material Design Icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css"
-    />
-  </head>
+</head>
 
-  <body>
-    <div class="no-bounce">
-      <div>
-        <div>
-          <div id="overlay">
-            <nav>
-              <a class="hamburger" id="nav-m"
-                ><img src="/button_menu.png" alt=""
-              /></a>
-              <a class="hamburger close"
-                ><img src="/button_close.png" alt=""
-              /></a>
 
-              <ul class="menu">
-                <li>
-                  <button
-                    class="menu-btn"
-                    id="about-btn"
-                    title="About this App"
-                  >
-                    <img class="btn-icon" src="/about_white.png" />About
-                  </button>
-                </li>
-                <li>
-                  <button class="menu-btn" id="firststeps-btn" title="Tutorial">
-                    <img class="btn-icon" src="/help_white.png" />Help
-                  </button>
-                </li>
-                <!--	<li><button class="menu-btn" id="documentation-btn" title="Read the documentation"><img
+<body>
+	<div class="no-bounce">
+		
+		<div>
+			
+			<div>
+				<div id="overlay">
+					
+					<nav>
+					
+						<a class="hamburger" id="nav-m"><img src="/button_menu.png" alt="" /></a>
+						<a class="hamburger close"><img src="/button_close.png" alt="" /></a>
+						
+						<ul class="menu">
+
+							<li><button class="menu-btn " id="about-btn" title="About this App"><img class="btn-icon"
+										src="/about_white.png">About</button></li>
+							<li><button class="menu-btn" id="firststeps-btn" title="Tutorial"><img class="btn-icon"
+										src="/help_white.png">Help</button></li>
+						<!--	<li><button class="menu-btn" id="documentation-btn" title="Read the documentation"><img
 										class="btn-icon" src="/documentation_white.png">Documentation</button></li>-->
-                <li>
-                  <button
-                    class="menu-btn"
-                    id="survey-btn"
-                    title="What do you think so far?"
-                  >
-                    <img class="btn-icon" src="/survey_white.png" />Contact
-                  </button>
-                </li>
-                <!--	<li><button class="menu-btn" id="github-btn" title="Get involved"><img class="btn-icon"
+							<li><button class="menu-btn" id="survey-btn" title="What do you think so far?"><img
+										class="btn-icon" src="/survey_white.png">Contact</button></li>
+						<!--	<li><button class="menu-btn" id="github-btn" title="Get involved"><img class="btn-icon"
 										src="/github.png">Github</button></li> -->
-                <li>
-                  <button
-                    class="menu-btn"
-                    id="settings-btn"
-                    title="Settings and more"
-                  >
-                    <img class="btn-icon" src="/settings_white.png" />Settings
-                  </button>
-                </li>
-              </ul>
-            </nav>
-          </div>
-
-          <div id="menubar">
-            <section>
-              <ul class="actionmenu menu">
-                <li>
-                  <button
-                    class="menu-btn-bar"
-                    id="home-btn"
-                    title="Back to topics"
-                  >
-                    <img class="btn-bar-icon" src="/back_white.png" />
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="menu-btn-bar"
-                    id="search-btn"
-                    title="Search for opinions"
-                  >
-                    <img class="btn-bar-icon" src="/search.png" />
-                  </button>
-                </li>
-                <li id="new-topic-li">
-                  <button
-                    class="menu-btn-bar"
-                    id="new-topic-btn"
-                    title="Create a new topic"
-                  >
-                    <img class="btn-bar-icon" />
-                  </button>
-                </li>
-                <li id="new-opinion-li">
-                  <button
-                    class="menu-btn-bar"
-                    id="new-opinion-btn"
-                    title="Create a new Opinion"
-                  >
-                    <img class="btn-bar-icon" />
-                  </button>
-                </li>
-                <li>
-                  <button
-                    class="menu-btn-bar"
-                    id="dialogues-btn"
-                    title="Open the dialog list"
-                  >
-                    <img class="btn-bar-icon" src="/messagelist_white.png" />
-                    <div class="listcount" id="dialog-btn-label"></div>
-                  </button>
-                </li>
-                <!--
+							<li><button class="menu-btn" id="settings-btn" title="Settings and more"><img
+										class="btn-icon" src="/settings_white.png">Settings</button></li>
+						</ul>
+					</nav>
+				</div>
+				
+				<div id="menubar">
+					<section>
+						<ul class="actionmenu menu">
+							<li><button class="menu-btn-bar" id="home-btn" title="Back to topics"><img
+										class="btn-bar-icon" src="/back_white.png"></button></li>
+							<li><button class="menu-btn-bar" id="search-btn" title="Search for opinions"><img
+										class="btn-bar-icon" src="/search.png"></button></li>
+							<li id="new-topic-li"><button class="menu-btn-bar" id="new-topic-btn" title="Create a new topic"><img
+										class="btn-bar-icon"></button></li>
+							<li id="new-opinion-li"><button class="menu-btn-bar" id="new-opinion-btn" title="Create a new Opinion"><img
+										class="btn-bar-icon"></button></li>
+							<li><button class="menu-btn-bar" id="dialogues-btn" title="Open the dialog list"><img
+										class="btn-bar-icon" src="/messagelist_white.png">
+									<div class="listcount" id="dialog-btn-label"></div></button></li>
+									<!--
 							<li><button class="menu-btn-bar" id="setup-btn" title="Setup"><img
 										class="btn-bar-icon" src="/setup_white.png"></button></li>
 									-->
-              </ul>
-            </section>
-          </div>
+						</ul>
+					</section>
+				</div>
 
-          <!-- BABYLON CANVAS -->
-          <canvas id="renderCanvas" tabindex="1"></canvas>
+				<!-- BABYLON CANVAS -->
+        <canvas id="renderCanvas" tabindex="1"></canvas>
         <div class="nav-help">
-            <div class="nav-help-col">
-                <div class="nav-help-row">
-                    <span class="label"></span>
-                </div>
-                <div class="nav-help-row">
-                    <span class="label">Rotate View</span>
-                </div>
-                <div class="nav-help-row">
-                    <span class="label">Move View</span>
-                </div>
-                <div class="nav-help-row">
-                    <span class="label">Zoom</span>
-                </div>
-            </div>
-            <div class="nav-help-col">
-                <div class="nav-help-row">
-                    Desktop
-                </div>
-                <div class="nav-help-row">
-                    <img src="/tutorial_rightclick.png" class="img-hint" style="transform:scaleX(-1);"></img>
-                </div>
-                <div class="nav-help-row">
-                    <img src="/tutorial_rightclick.png" class="img-hint"></img>
-                </div>
-                <div class="nav-help-row">
-                    <img src="/mouse_scroll.png" class="img-hint-invert" title="mouse scroll by Hoang Loi from the Noun Project"> </img>
-                </div>
-            </div>
-            <div class="nav-help-col">
-                <div class="nav-help-row">
-                    Mobile
-                </div>
-                <div class="nav-help-row">
-                    <span class=" hint mdi mdi-gesture-swipe"></span>
-                </div>
-                <div class="nav-help-row">
-                    <img src="/tutorial_twofingers.png" class="img-hint"></img>
-                </div>
-                <div class="nav-help-row">
-                    <span class=" hint mdi mdi-gesture-spread"></span>
-                </div>
-            </div>
-            </div>
-        </div>
-        <!-- <div class="nav-help">
-             <u>How to navigate</u>
-             <p> To <span class="hint">rotate</span> the view around you,</p>
-             <div>
-             <p>
-             Swipe using one finger
-             <span class=" hint mdi mdi-gesture-swipe"></span>
-             </p>
-             <p>
-             Use the arrow keys
-             <span class=" hint mdi mdi-arrow-left"></span>
-             <span class=" hint mdi mdi-arrow-up"></span>
-             <span class=" hint mdi mdi-arrow-right"></span>
-             <span class=" hint mdi mdi-arrow-down"></span>
-             </p>
-             <p>
-             Or click anddrag the mouse
-             <span class=" hint mdi mdi-mouse"></span>
-             <span class=" hint mdi mdi-drag-variant"></span>
-             </p>
-             </div>
-             <p> To <span class="hint">move</span> inside the view </p>
-             <div>
-             <p>
-             Swipe using two fingers
-             <span class=" hint mdi mdi-gesture-two-tap"></span>
-             <span class=" hint mdi mdi-gesture-swipe"></span>
-             </p>
-             <p>
-             Press <span class="hint">CTRL</span> <span>+</span>
-             <span class=" hint mdi mdi-arrow-left"></span>
-             <span class=" hint mdi mdi-arrow-up"></span>
-             <span class=" hint mdi mdi-arrow-right"></span>
-             <span class=" hint mdi mdi-arrow-down"></span>
-             </p>
-             <p>
-             Or click and drag using the mouse right button
-             <img src="/tutorial_rightclick.png" width= "10"></img>
-             </p>
-             </div>
-             <p> To <span class="hint">Zoom in</span> and <span class="hint">Zoom out</span> </p>
-             <div>
-             <p>
-             Use pinch and spread gestures
-             <span class=" hint mdi mdi-gesture-pinch"></span>
-             <span class=" hint mdi mdi-gesture-spread"></span>
-             </p>
-             <p>
-             Press <span class="hint">ALT</span> <span>+</span>
-             <span class=" hint mdi mdi-arrow-up"></span>
-             <span class=" hint mdi mdi-arrow-down"></span>
-             </p>
-             <p>
-             Or scroll with the mouse
-             <span class=" hint mdi mdi-mouse"></span>
-             </p>
-             </div>
-             </div> -->
-        <div class="brand">
-            <a href=""
-            ><img
-                 src="brand_dpt.png"
-                 alt="digital peace talks"
-                 height="30"
-                 width="auto"
-             /></a>
-        </div>
-        
-        </div>
-      </div>
-    </div>
-    <div id="misc2"></div>
-
-    <style type="text/css">
-     .hint{color:cyan;
-         font-size:2.75em;
-     }
-     .img-hint{
-         height:2.75em;
-         filter: invert(16%) sepia(84%) saturate(1128%) hue-rotate(104deg) brightness(101%) contrast(104%);
-margin-bottom:0.5em;
-     }
-
-     .img-hint-invert{
-         height:2.75em;
-         filter: invert(84%) sepia(84%) saturate(1128%) hue-rotate(104deg) brightness(101%) contrast(104%);
-     }
-     .nav-help {
-         z-index:1;
-         position: absolute;
-         background: #000a;
-         color:white;
-         font-family:"Markazi",serif;
-         font-size:12px;
-         overflow:hidden;
-         bottom: 0;
-         right: 0;
-         margin: 2%;
-         border: solid black 2px;
-         display:flex;
-         justify-content:center;
-         width:27em;
-     }
-     .nav-help-row {
-         display:flex;
-         flex-shrink:0;
-         min-height:4em;
-         justify-content:center;
-         align-content:baseline;
-     }
-     .nav-help-col {
-         display:flex;
-         min-width:9em;
-         flex-direction:column;
-         justify-content:space-around;
-     }
-    </style>
-    <link
-        rel="stylesheet"
-        href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css"
-    />
-  </body>
-
-  <!-- Guided Tour-->
-  <!--Container  und Pfeil-->
-  <!--
-       <div class="tutorialBorder" id="tutorialBorder" style="display: none"></div>
-  -->
-  <div id="animCircle" class="animated-circle" style="visibility: hidden;">
-      <div class="arrowcontainer">
-          <div class="arrow">
-              <div class="block1"></div>
-              <div class="block2"></div>
-          </div>
-      </div>
-  </div>
-
-  <div class="fb_gd_wrap">
-      <div class="content" id="guideContent">
-          <div class="header">
-              <button class="closeButtonTutorial" id="closeBtn">&#10005;</button>
-
-              <span class="text" id="guideTitle">digital peace talks GUIDE</span>
-          </div>
-          <div class="body">
-              <div class="text">
-                  <div id="guideBodyText" class="textList">
-                      <p>
-                          Digital Peace Talks is a platform for conflicting views to discuss
-                          constructively. <br />This tour shows you how to use it.
-                      </p>
-                      <p>
-                          <img
-                              src="/tutorial_twofingers.png"
-                              alt="gestures"
-                              height="auto"
-                              width="100%"
-                          />
-                      </p>
-                      <p>
-                          <img
-                              src="/tutorial_rightclick.png"
-                              alt="gestures"
-                              height="auto"
-                              width="100%"
-                          />
-                      </p>
-                      <p>
-                          Click on the futuristic text boxes to discuss the subject.
-                          <img
-                              src="/tutorial_click_topic.png"
-                              alt="click topic"
-                              height="auto"
-                              width="100%"
-                          />
-                      </p>
-                      <p>
-                          Click this symbol to add your opinion!
-                          <img
-                              src="/tutorial_opinions.png"
-                              alt="start opinion"
-                              height="auto"
-                              width="100%"
-                          />
-                      </p>
-                      <p>
-                          If you added your opinion, you can click this icon to request
-                          1-on-1 chats.<br /><img
-                                                 src="/tutorial_chatbubble.png"
-                                                 alt="chat"
-                                                 height="auto"
-                                                 width="100%"
-                                             />
-                      </p>
-                      <p>
-                          Manage your requests and active chats in the dialogue list.
-                          <br /><img
-                                    src="/tutorial_dialoguelist.png"
-                                    alt="dialoguelist"
-                                    height="auto"
-                                    width="100%"
-                                />
-                      </p>
-                      <p>
-                          You know the basics now. <br /><br />Have fun discovering many
-                          more features! <br />
-                          <!-- <label>
-                               <input type="checkbox" id="disableGuidedTour">Disable the guided tour
-                               </label> -->
-                          <br />
-                          <!--<input type="submit" value="Stop the guided tour">-->
-                      </p>
-                  </div>
+          <div class="nav-help-col">
+              <div class="nav-help-row">
+                  <span class="label"></span>
+              </div>
+              <div class="nav-help-row">
+                  <span class="label">Rotate View</span>
+              </div>
+              <div class="nav-help-row">
+                  <span class="label">Move View</span>
+              </div>
+              <div class="nav-help-row">
+                  <span class="label">Zoom</span>
               </div>
           </div>
-
-          <div class="footer">
-              <button id="guidePrevBtn" class="btn prev"></button>
-              <ul class="steps" id="steps">
-                  <li class="dot active"></li>
-                  <li class="dot"></li>
-                  <li class="dot"></li>
-                  <li class="dot"></li>
-                  <li class="dot"></li>
-                  <li class="dot"></li>
-                  <li class="dot"></li>
-                  <li class="dot"></li>
-              </ul>
-              <button class="closeButtonTutorial2" id="closeBtn2">CLOSE TOUR</button>
-              <button id="guideNextBtn" class="btn next">START TOUR</button>
+          <div class="nav-help-col">
+              <div class="nav-help-row">
+                  Desktop
+              </div>
+              <div class="nav-help-row">
+                  <img src="/tutorial_rightclick.png" class="img-hint" style="transform:scaleX(-1);"></img>
+              </div>
+              <div class="nav-help-row">
+                  <img src="/tutorial_rightclick.png" class="img-hint"></img>
+              </div>
+              <div class="nav-help-row">
+                  <img src="/mouse_scroll.png" class="img-hint-invert" title="mouse scroll by Hoang Loi from the Noun Project"> </img>
+              </div>
           </div>
-          <div class="text" id="text">
-              <label>
-                  <input type="checkbox" id="disableGuidedTour" />Don't show this again
-              </label>
+          <div class="nav-help-col">
+              <div class="nav-help-row">
+                  Mobile
+              </div>
+              <div class="nav-help-row">
+                  <span class=" hint mdi mdi-gesture-swipe"></span>
+              </div>
+              <div class="nav-help-row">
+                  <img src="/tutorial_twofingers.png" class="img-hint"></img>
+              </div>
+              <div class="nav-help-row">
+                  <span class=" hint mdi mdi-gesture-spread"></span>
+              </div>
+          </div>
           </div>
       </div>
-  </div>
-  <!-- End Guided Tour-->
+      <!-- <div class="nav-help">
+           <u>How to navigate</u>
+           <p> To <span class="hint">rotate</span> the view around you,</p>
+           <div>
+           <p>
+           Swipe using one finger
+           <span class=" hint mdi mdi-gesture-swipe"></span>
+           </p>
+           <p>
+           Use the arrow keys
+           <span class=" hint mdi mdi-arrow-left"></span>
+           <span class=" hint mdi mdi-arrow-up"></span>
+           <span class=" hint mdi mdi-arrow-right"></span>
+           <span class=" hint mdi mdi-arrow-down"></span>
+           </p>
+           <p>
+           Or click anddrag the mouse
+           <span class=" hint mdi mdi-mouse"></span>
+           <span class=" hint mdi mdi-drag-variant"></span>
+           </p>
+           </div>
+           <p> To <span class="hint">move</span> inside the view </p>
+           <div>
+           <p>
+           Swipe using two fingers
+           <span class=" hint mdi mdi-gesture-two-tap"></span>
+           <span class=" hint mdi mdi-gesture-swipe"></span>
+           </p>
+           <p>
+           Press <span class="hint">CTRL</span> <span>+</span>
+           <span class=" hint mdi mdi-arrow-left"></span>
+           <span class=" hint mdi mdi-arrow-up"></span>
+           <span class=" hint mdi mdi-arrow-right"></span>
+           <span class=" hint mdi mdi-arrow-down"></span>
+           </p>
+           <p>
+           Or click and drag using the mouse right button
+           <img src="/tutorial_rightclick.png" width= "10"></img>
+           </p>
+           </div>
+           <p> To <span class="hint">Zoom in</span> and <span class="hint">Zoom out</span> </p>
+           <div>
+           <p>
+           Use pinch and spread gestures
+           <span class=" hint mdi mdi-gesture-pinch"></span>
+           <span class=" hint mdi mdi-gesture-spread"></span>
+           </p>
+           <p>
+           Press <span class="hint">ALT</span> <span>+</span>
+           <span class=" hint mdi mdi-arrow-up"></span>
+           <span class=" hint mdi mdi-arrow-down"></span>
+           </p>
+           <p>
+           Or scroll with the mouse
+           <span class=" hint mdi mdi-mouse"></span>
+           </p>
+           </div>
+           </div> -->
+				<div class="brand"><a href=""><img src="brand_dpt.png" alt="digital peace talks" height="30" width="auto"></a></div>
+			</div>
+		</div>
+	</div>
+  <div id="misc2"></div>
+  
+  <style type="text/css">
+    .hint{color:cyan;
+        font-size:2.75em;
+    }
+    .img-hint{
+        height:2.75em;
+        filter: invert(16%) sepia(84%) saturate(1128%) hue-rotate(104deg) brightness(101%) contrast(104%);
+margin-bottom:0.5em;
+    }
 
-  <!--
-       <script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+    .img-hint-invert{
+        height:2.75em;
+        filter: invert(84%) sepia(84%) saturate(1128%) hue-rotate(104deg) brightness(101%) contrast(104%);
+    }
+    .nav-help {
+        z-index:1;
+        position: absolute;
+        background: #000a;
+        color:white;
+        font-family:"Markazi",serif;
+        font-size:12px;
+        overflow:hidden;
+        bottom: 0;
+        right: 0;
+        margin: 2%;
+        border: solid black 2px;
+        display:flex;
+        justify-content:center;
+        width:27em;
+    }
+    .nav-help-row {
+        display:flex;
+        flex-shrink:0;
+        min-height:4em;
+        justify-content:center;
+        align-content:baseline;
+    }
+    .nav-help-col {
+        display:flex;
+        min-width:9em;
+        flex-direction:column;
+        justify-content:space-around;
+    }
+   </style>
 
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
-       <script src="https://preview.babylonjs.com/ammo.js"></script>
-       <script src="https://preview.babylonjs.com/cannon.js"></script>
-       <script src="https://preview.babylonjs.com/Oimo.js"></script>
-       <script src="https://preview.babylonjs.com/gltf_validator.js"></script>
-       <script src="https://preview.babylonjs.com/earcut.min.js"></script>
-       <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
-       <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
-       <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
-       <script src="https://preview.babylonjs.com/babylon.js"></script>
-       <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+</body>
 
-       <script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
-       <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"/>
-       <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
-       <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
 
-       <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-       <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-       <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-       <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
-  -->
 
-  <script src="/external/pep.js"></script>
-  <script src="/external/babylon.js"></script>
-  <script src="/external/babylonjs.materials.min.js"></script>
-  <script src="/external/babylonjs.serializers.min.js"></script>
-  <script src="/external/babylon.gui.min.js"></script>
-  <script src="/external/socket.io.js"></script>
-  <script src="/external/jquery-1.11.1.js"></script>
-  <script src="/external/trumbowyg.min.js"></script>
+<!-- Guided Tour-->
+<!--Container  und Pfeil-->
+<!--
+<div class="tutorialBorder" id="tutorialBorder" style="display: none"></div>
+-->
+<div id="animCircle" class="animated-circle" style="visibility: hidden">
+	<div class="arrowcontainer">
+		<div class="arrow">
+			<div class="block1"></div>
+			<div class="block2"></div>
+		</div>
+	</div>
 
-  <script src="dpt3d.js"></script>
-  <script src="dpt-client.js"></script>
-  <script src="babylon-main.js"></script>
-  <script src="babylon-misc.js"></script>
-  <script src="babylon-topics.js"></script>
-  <script src="babylon-opinions.js"></script>
-  <script src="ui-main.js"></script>
-  <script src="ui-misc.js"></script>
-  <script src="ui-opinion.js"></script>
-  <script src="ui-dialog.js"></script>
-  <script src="ui-dialoglist.js"></script>
-  <script src="ui-crisis.js"></script>
-  <script src="ui-topic.js"></script>
-  <script src="ui-settings.js"></script>
+</div>
 
-  <script>
-   var hamburgerOpen = false;
-   document.addEventListener("DOMContentLoaded", function (event) {
-       var mql = window.matchMedia("(orientation: landscape)");
-       mql.addListener(function (m) {
-           if (m.matches) {
-               if (!hamburgerOpen) {
-                   jQuery("nav ul").css("left", 640);
-               }
-           }
-       });
 
-       jQuery("a.hamburger").on("click touch", function (event) {
-           var menuLeft = canvas.width;
-           if (canvas.width > 640) {
-               menuLeft = 280;
-           }
+<div class="fb_gd_wrap">
 
-           hamburgerOpen = !hamburgerOpen;
-           if (hamburgerOpen) {
-               jQuery("nav ul").css("left", "0px");
-               jQuery("a.hamburger").html('<img src="/button_close.png">');
-               /*
-                  if(isMobile) {
-                  hamburgerOpen = !hamburgerOpen;
-                  }
-                */
-           } else {
-               jQuery("nav ul").css("left", menuLeft);
-               jQuery("a.hamburger").html('<img src="/button_menu.png">');
-           }
-       });
+	<div class="content" id="guideContent">
+			
+		<div class="header">
+			<button class="closeButtonTutorial" id="closeBtn">&#10005;</button>
+			
+			<span class="text" id="guideTitle">digital peace talks GUIDE</span>
+			
+		</div>
+		<div class="body">
+			<div class="text">
+				<div id="guideBodyText" class="textList">
+					<p>Digital Peace Talks is a platform for conflicting views to discuss constructively. <br>This tour shows you how to use it.</p>
+					<p><img src="/tutorial_twofingers.png" alt="gestures" height="auto" width="100%"></p>
+					<p><img src="/tutorial_rightclick.png" alt="gestures" height="auto" width="100%"></p>
+					<p>Click on the futuristic text boxes to discuss the subject. <img src="/tutorial_click_topic.png" alt="click topic" height="auto" width="100%"></p>
+					<p>Click this symbol to add your opinion! <img src="/tutorial_opinions.png" alt="start opinion" height="auto" width="100%"></p>
+					<p>If you added your opinion, you can click this icon to request 1-on-1 chats.<br><img src="/tutorial_chatbubble.png" alt="chat" height="auto" width="100%"></p>
+					<p>Manage your requests and active chats in the dialogue list. <br><img src="/tutorial_dialoguelist.png" alt="dialoguelist" height="auto" width="100%"> </p>
+					<p>You know the basics now. <br><br>Have fun discovering many more features! <br>
+						<!-- <label>
+							<input type="checkbox" id="disableGuidedTour">Disable the guided tour
+						</label> -->
+					<br>
+					<!--<input type="submit" value="Stop the guided tour">-->
+					</p>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="footer">
+		
+			<button id="guidePrevBtn" class="btn prev"></button>
+			<ul class="steps" id="steps">
+				<li class="dot active"></li>
+				<li class="dot"></li>
+				<li class="dot"></li>
+				<li class="dot"></li>
+				<li class="dot"></li>
+				<li class="dot"></li>
+				<li class="dot"></li>
+				<li class="dot"></li>
+			</ul>
+			<button class="closeButtonTutorial2" id="closeBtn2">CLOSE TOUR</button>
+			<button id="guideNextBtn" class="btn next">START TOUR</button>
+			
+		</div>
+		<div class="text" id="text">
+			<label>
+				<input type="checkbox" id="disableGuidedTour">Don't show this again
+			</label>
+		</div>
+		
+	</div>
+</div>
+<!-- End Guided Tour-->
 
-       if ("serviceWorker" in navigator) {
-           window.addEventListener("load", function () {
-               navigator.serviceWorker.register("/sw.js").then(
-                   function (registration) {
-                       // Registration was successful
-                       console.log(
-                           "ServiceWorker registration successful with scope: ",
-                           registration.scope
-                       );
-                   },
-                   function (err) {
-                       // registration failed :(
-                       console.log("ServiceWorker registration failed: ", err);
-                   }
-               );
-           });
-       }
 
-       jQuery(window).keyup(function (event) {
-           if (
-               jQuery(event.target).is(":not(input, textarea, div.trumbowyg-editor)")
-           ) {
-               switch (event.keyCode) {
-                   case 70:
-                       requestSearch();
-                       break;
-                   case 72:
-                       switchToTopics();
-                       break;
-                   case 76:
-                       toggleDialogList();
-                       break;
-                   case 79:
-                       if (currentScene.name == "opinionScene") {
-                           jQuery("#form").remove();
-                           dpt.opinionPostAllowed(currentTopic);
-                       }
-                       break;
-                   case 84:
-                       if (currentScene.name == "topicScene") {
-                           jQuery("#form").remove();
-                           topicForm();
-                       }
-                       break;
-               }
-           }
-       });
-   });
-  </script>
+<!--
+	<script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+	<script src="https://preview.babylonjs.com/ammo.js"></script>
+	<script src="https://preview.babylonjs.com/cannon.js"></script>
+	<script src="https://preview.babylonjs.com/Oimo.js"></script>
+	<script src="https://preview.babylonjs.com/gltf_validator.js"></script>
+	<script src="https://preview.babylonjs.com/earcut.min.js"></script>
+	<script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+	<script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+	<script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+	<script src="https://preview.babylonjs.com/babylon.js"></script>
+	<script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+
+	<script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+	<script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"/>
+	<script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+	<script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+
+	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+-->
+
+<script src="/external/pep.js"></script>
+<script src="/external/babylon.js"></script>
+<script src="/external/babylonjs.materials.min.js"></script>
+<script src="/external/babylonjs.serializers.min.js"></script>
+<script src="/external/babylon.gui.min.js"></script>
+<script src="/external/socket.io.js"></script>
+<script src="/external/jquery-1.11.1.js"></script>
+<script src="/external/trumbowyg.min.js"></script>
+
+<script src="dpt3d.js"></script>
+<script src="dpt-client.js"></script>
+<script src="babylon-main.js"></script>
+<script src="babylon-misc.js"></script>
+<script src="babylon-topics.js"></script>
+<script src="babylon-opinions.js"></script>
+<script src="ui-main.js"></script>
+<script src="ui-misc.js"></script>
+<script src="ui-opinion.js"></script>
+<script src="ui-dialog.js"></script>
+<script src="ui-dialoglist.js"></script>
+<script src="ui-crisis.js"></script>
+<script src="ui-topic.js"></script>
+<script src="ui-settings.js"></script>
+
+<script>
+
+	var hamburgerOpen = false;
+	document.addEventListener("DOMContentLoaded", function (event) {
+
+		var mql = window.matchMedia("(orientation: landscape)");
+		mql.addListener(function (m) {
+			if (m.matches) {
+				if (!hamburgerOpen) {
+					jQuery("nav ul").css("left", 640);
+				}
+			}
+		});
+	
+		jQuery("a.hamburger").on('click touch', function (event) {
+			var menuLeft = canvas.width;
+			if (canvas.width > 640) {
+				menuLeft = 280;
+			}
+	
+			hamburgerOpen = !hamburgerOpen;
+			if (hamburgerOpen) {
+				jQuery("nav ul").css("left", "0px");
+				jQuery("a.hamburger").html('<img src="/button_close.png">');
+				/*
+				if(isMobile) {
+					hamburgerOpen = !hamburgerOpen;
+				}
+				*/
+			} else {
+				jQuery("nav ul").css("left", menuLeft);
+				jQuery("a.hamburger").html('<img src="/button_menu.png">');
+			}
+		});
+	
+		if ('serviceWorker' in navigator) {
+			window.addEventListener('load', function () {
+				navigator.serviceWorker.register('/sw.js')
+				.then(function (registration) {
+					// Registration was successful
+					console.log('ServiceWorker registration successful with scope: ', registration.scope);
+				}, function (err) {
+					// registration failed :(
+					console.log('ServiceWorker registration failed: ', err);
+				});
+			});
+		}
+	
+		jQuery(window).keyup(function(event) {
+			if (jQuery(event.target).is(':not(input, textarea, div.trumbowyg-editor)')) {
+				switch(event.keyCode) {
+					case 70:
+						requestSearch();
+						break;
+					case 72:
+						switchToTopics();
+						break;
+					case 76:
+						toggleDialogList();
+						break;
+					case 79:
+						if(currentScene.name == "opinionScene") {
+							jQuery('#form').remove();
+							dpt.opinionPostAllowed(currentTopic);
+						}
+						break;
+					case 84:
+						if(currentScene.name == "topicScene") {
+							jQuery('#form').remove();
+							topicForm();
+						}
+						break;
+				}
+			}
+		});
+	});
+
+</script>
+
 </html>
