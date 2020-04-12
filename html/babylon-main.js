@@ -250,7 +250,9 @@ var createGenericScene = function (dptMode) {
                 picked.name == "texttexture" &&
                 picked.dpt.canInvite == true
               ) {
+                //TODO: see if this line needs to be kept or omitted.
                 propositionForm(picked.dpt.opinionId, currentTopic);
+                //
                 return;
               }
             } else if (click.x >= 0.36 && click.x < 0.72) {
