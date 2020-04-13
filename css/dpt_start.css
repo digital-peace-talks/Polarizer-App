@@ -14,6 +14,17 @@
   flex-grow: 1;
   padding: 12px;
 }
+.col.col-1, #mehrspaltig .links .phrase-wrapper .col-1.phrase {
+  flex: 0 0 8.333333%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
 
 @font-face {
   font-family: "DPTFont";

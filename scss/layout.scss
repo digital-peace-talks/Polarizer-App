@@ -13,4 +13,16 @@
   flex-direction: column;
   flex-grow: 1;
   padding: 12px;
+  
+  &.col-1 {
+    flex: 0 0 8.333333%;
+  }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.justify-center {
+  justify-content: center;
 }

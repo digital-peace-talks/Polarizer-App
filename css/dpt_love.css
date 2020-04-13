@@ -280,15 +280,6 @@ div.dialogInfo {
   font-size: 0px;
 }
 
-div.col {
-  float: left;
-  padding-left: 10px;
-  height: 100%;
-  width: 30%;
-  max-width: 30%;
-  overflow-y: auto;
-}
-
 div.row:after {
   content: "";
   display: table;
@@ -921,60 +912,19 @@ section ul li {
   background-color: #9e0035;
 }
 
-.frame1 {
-  width: 400px;
-  height: 200px;
-  margin-left: -200px;
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-}
-
-.container1 {
-  position: absolute;
-  top: 80px;
-  width: 300px;
-  left: 50%;
-  margin-left: -150px;
-}
-
 .slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 1px;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  margin: 0;
-  width: 300px;
-  height: 10px;
   background: #9b0235;
   background: -webkit-linear-gradient(to left, #15b76a, #005b98, #ff6666);
   background: linear-gradient(to left, #15b76a, #005b98, #ff6666);
-  border-radius: 1px;
   border-color: #9b0235;
 }
-.slider:focus {
-  outline: none;
-}
 .slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
   border: 1px solid #ffe3ec;
-  border-radius: 50%;
   background: #ffe3ec;
-  cursor: pointer;
 }
 .slider::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
   border: 1px solid #ffe3ec;
-  border-radius: 50%;
   background: #ffe3ec;
-  cursor: pointer;
 }
 
 .smile-wrapper {
