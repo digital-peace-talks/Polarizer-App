@@ -68,7 +68,7 @@ function crisisForm(messageId) {
 				<br>
 				<br>
 					Please enter a reason for your rating:<br>
-					<input type="text" name="reason">
+					<input type="text" name="reason" placeholder="Please enter a reason (optional)">
 				</div>
 				
 				
