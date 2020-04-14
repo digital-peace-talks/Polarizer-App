@@ -96,7 +96,7 @@ function crisisForm(messageId) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
 		var reason = jQuery('input[name="reason"]').val();
-      if(reason === (undefined || "")){
+      if(!reason){
           reason = "No reason provided";
       };
 			dpt.postCrisis(
