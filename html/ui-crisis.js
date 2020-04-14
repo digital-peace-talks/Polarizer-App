@@ -34,19 +34,15 @@ function crisisForm(messageId) {
 
 	jQuery(".crisis").focus();
 
-	function mapRange(num, in_min, in_max, out_min, out_max) {
-		return ((num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min);
-	}
-
 	jQuery("#crisis").submit(function (event) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
+		const rating = getMeanRating();
 		var reason = jQuery('input[name="reason"]').val();
 		if (reason.length > 0) {
 			dpt.postCrisis(
 				reason,
-				//				jQuery("input[name='rating']:checked").val(),
-				mapRange(jQuery("input[name='rating2']").val(), 1, 180, -1, 1),
+				rating,
 				currentDialog.dialog,
 				messageId,
 				whoami.dptUUID);
@@ -89,7 +85,7 @@ function crisisForm(messageId) {
 							<span class="mdi mdi-thumb-down"></span>
 						</div>
 						<div class="col justify-center">
-							<input type="range" style="z-index:400" name="rating2" min="1" max="180" value="100" class="slider" id="range-slider" />
+							<input type="range" style="z-index:400" name="rating" min="-100" max="100" value="0" class="slider" />
 						</div>
 						<div class="col col-1">
 							<span class="mdi mdi-thumb-up"></span>
@@ -98,5 +94,17 @@ function crisisForm(messageId) {
 				</div>
 			</div>
 		`;
+	}
+
+	/**
+	 * Calculates the mean rating from all of the sliders
+	 * @returns {number}
+	 */
+	function getMeanRating() {
+		const ratingSum = parseInt(jQuery('.slider')[0].value) / 100
+		 + parseInt(jQuery('.slider')[1].value) / 100 
+		 + parseInt(jQuery('.slider')[2].value) / 100;
+		 const mean = ratingSum / 3;
+		 return mean;
 	}
 }
