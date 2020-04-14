@@ -24,7 +24,7 @@ function crisisForm(messageId) {
 				${sliderRowTemplate("How well did we back our claims?")}
 				<div class="reason">
 					<div>Please enter a reason for your rating:</div>
-					<input type="text" name="reason">
+					<input type="text" name="reason" placeholder="Please enter a reason (optional)">
 				</div>	
 				<input type="submit" class="buttonCrisisSend" name="send" value="Yes, I want to finish this dialog">
 				<input type="button" class="closeButton" value="&#10005;" name="close window" id="crisisCloseWindow">
@@ -39,7 +39,9 @@ function crisisForm(messageId) {
 		event.preventDefault();
 		const rating = getMeanRating();
 		var reason = jQuery('input[name="reason"]').val();
-		if (reason.length > 0) {
+      if(!reason) {
+          reason = "No reason provided";
+      };
 			dpt.postCrisis(
 				reason,
 				rating,
@@ -51,9 +53,6 @@ function crisisForm(messageId) {
 			<br>
 			<input type="button" class="buttondialogclose" value="&#10005;" name="close window" id="dialogClose">
 			`);
-		} else {
-			alert('Please enter a conclusion.');
-		}
 	});
 
 	jQuery(document).on('click', "#crisisCloseWindow", function (event) {
