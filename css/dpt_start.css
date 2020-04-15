@@ -1,7 +1,7 @@
 .row, #mehrspaltig .links .phrase-wrapper {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -12px;
+  margin: 12px -12px;
 }
 .row.center, #mehrspaltig .links .phrase-wrapper {
   justify-content: center;
@@ -12,7 +12,18 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 12px;
+  padding: 0 12px;
+}
+.col.col-1, #mehrspaltig .links .phrase-wrapper .col-1.phrase {
+  flex: 0 0 8.333333%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.justify-center {
+  justify-content: center;
 }
 
 @font-face {
