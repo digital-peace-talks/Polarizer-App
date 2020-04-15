@@ -1,7 +1,7 @@
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -12px;
+  margin: 12px -12px;
 }
 .row.center {
   justify-content: center;
@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 12px;
+  padding: 0 12px;
 }
 .col.col-1 {
   flex: 0 0 8.333333%;
