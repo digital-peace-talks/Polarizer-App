@@ -60,29 +60,32 @@ function startGuidedTour() {
 			buttonLeftName: "",
 			buttonRightName: "START TOUR",
 			guideText: "Get started!",
-		}, {
-			// tutorial mobile
-			top: "auto",
-			left: "0px",
-			bottom: "0px",
-			right: "auto",
-			topMark: "30%",
-			leftMark: "50%",
-			buttonLeftName: "BACK",
-			buttonRightName: "NEXT",
-			guideText: "Use two fingers",
-		}, {
-			// tutorial desktop
-			top: "auto",
-			left: "0px",
-			bottom: "0px",
-			right: "auto",
-			topMark: "40%",
-			leftMark: "50%",
-			buttonLeftName: "BACK",
-			buttonRightName: "NEXT",
-			guideText: "Use right clicks",
-		}, {
+		}, // {
+		// 	// tutorial mobile
+		// 	top: "auto",
+		// 	left: "0px",
+		// 	bottom: "0px",
+		// 	right: "auto",
+		// 	topMark: "30%",
+		// 	leftMark: "50%",
+		// 	buttonLeftName: "BACK",
+		// 	buttonRightName: "NEXT",
+		// 	guideText: "Use two fingers",
+		// }
+                           // ,  {
+		// 	// tutorial desktop
+		// 	top: "auto",
+		// 	left: "0px",
+		// 	bottom: "0px",
+		// 	right: "auto",
+		// 	topMark: "40%",
+		// 	leftMark: "50%",
+		// 	buttonLeftName: "BACK",
+		// 	buttonRightName: "NEXT",
+		// 	guideText: "Use right clicks",
+		// }
+                           //,
+                           {
 			// Choose a topic 
 			top: "auto",
 			left: "0px",
