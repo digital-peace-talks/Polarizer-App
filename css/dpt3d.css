@@ -165,7 +165,6 @@ section ul.menu li#new-topic-li, section ul.menu li#new-opinion-li {
   bottom: 48px;
   margin: 2%;
   border: solid #22224433 2px;
-  display: flex;
   justify-content: space-around;
   display: none;
 }
@@ -193,6 +192,7 @@ section ul.menu li#new-topic-li, section ul.menu li#new-opinion-li {
     right: 0;
     left: 0;
   }
+}
 .slider {
   border-radius: 1px;
   cursor: pointer;
