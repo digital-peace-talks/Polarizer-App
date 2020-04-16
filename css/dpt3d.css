@@ -180,4 +180,13 @@ section ul.menu li#new-topic-li, section ul.menu li#new-opinion-li {
   cursor: pointer;
 }
 
+#guideContent {
+  transform: scale(0.8);
+}
+
+.edit-img {
+  width: 100%;
+  padding: 7% 36% 0 36%;
+}
+
 /*# sourceMappingURL=dpt3d.css.map */
