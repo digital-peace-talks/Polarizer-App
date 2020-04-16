@@ -80,7 +80,7 @@ section ul.menu li#new-topic-li, section ul.menu li#new-opinion-li {
 .row {
   display: flex;
   flex-wrap: wrap;
-  margin: 0 -12px;
+  margin: 12px -12px;
 }
 .row.center {
   justify-content: center;
@@ -91,7 +91,132 @@ section ul.menu li#new-topic-li, section ul.menu li#new-opinion-li {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 12px;
+  padding: 0 12px;
+}
+.col.col-1 {
+  flex: 0 0 8.333333%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.hint {
+  color: cyan;
+  font-size: 2.75em;
+}
+
+.img-hint {
+  height: 2.75em;
+  filter: invert(16%) sepia(84%) saturate(1128%) hue-rotate(104deg) brightness(101%) contrast(104%);
+  margin-bottom: 0.5em;
+}
+
+.img-hint-invert {
+  height: 2.75em;
+  filter: invert(84%) sepia(84%) saturate(1128%) hue-rotate(104deg) brightness(101%) contrast(104%);
+}
+
+.nav-help {
+  z-index: 1;
+  position: absolute;
+  background: #0003;
+  color: white;
+  font-family: "Markazi", serif;
+  font-size: 12px;
+  overflow: hidden;
+  bottom: 5%;
+  right: 0;
+  margin: 2%;
+  border: solid black 2px;
+  display: flex;
+  justify-content: center;
+  width: 27em;
+}
+
+.nav-help-row {
+  display: flex;
+  flex-shrink: 0;
+  min-height: 4em;
+  justify-content: center;
+  align-content: baseline;
+}
+
+.nav-help-col {
+  display: flex;
+  min-width: 9em;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.nav-help-mobile {
+  z-index: 1;
+  position: absolute;
+  background: #0003;
+  color: white;
+  font-family: "Markazi", serif;
+  font-size: 10px;
+  padding: 0 1% 0 1%;
+  overflow: hidden;
+  bottom: 48px;
+  border: solid #22224433 2px;
+  justify-content: space-around;
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .nav-help {
+    display: none;
+  }
+
+  .nav-help-col {
+    align-items: center;
+  }
+
+  .nav-help-mobile {
+    width: auto;
+    justify-content: space-evenly;
+    right: 25%;
+    left: 25%;
+    display: flex;
+  }
+}
+@media screen and (max-width: 640px) {
+  .nav-help-mobile {
+    width: 100%;
+    right: 0;
+    left: 0;
+  }
+}
+.slider {
+  border-radius: 1px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  height: 10px;
+  border-radius: 1px;
+}
+.slider:focus {
+  outline: none;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=dpt3d.css.map */

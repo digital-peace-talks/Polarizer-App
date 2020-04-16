@@ -45,20 +45,6 @@ function makePlanesDragable(opinion1, opinion2, edge) {
 	plane2.addBehavior(plane2.pointerDragBehavior);
 }
 
-function recipientRating(rating) {
-	switch(rating) {
-		case "negative":
-			return("red");
-		case "neutral":
-			return("blue");
-		case "positive":
-			return("green");
-		case "unset":
-		default:
-			return("grey");
-	}
-}
-
 function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections) {
 
 	var status = opinionDialogConnections.dialogStatus;
@@ -144,16 +130,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 32, currentScene);
 	var ctx = dynamicTexture.getContext();
 
-	var combination = '';
-	if(initiatorOpinion.rating == 'negative') {
-		combination = 'red-' + recipientRating(recipientOpinion.rating);
-	} else if(initiatorOpinion.rating == 'neutral') {
-		combination = 'blue-' + recipientRating(recipientOpinion.rating);
-	} else if(initiatorOpinion.rating == 'positive') {
-		combination = 'green-' + recipientRating(recipientOpinion.rating);
-	} else if(initiatorOpinion.rating == 'unset') {
-		combination = 'grey-' + recipientRating(recipientOpinion.rating);
-	}
+	let combination = calculateDialogColor(opinionDialogConnections);
 
 	var reverse = 0;
 	if(combination == 'green-blue') {
@@ -433,3 +410,17 @@ function loadOpinions(restObj) {
 	dialogRelations(opinionDialogConnections);
 }
 
+function calculateDialogColor(opinionDialogConnection) {
+	const { initiatorRating, recipientRating } = opinionDialogConnection;
+	if (initiatorRating == null || recipientRating == null) {
+		return 'grey-grey'
+	}
+	const mean = (initiatorRating + recipientRating) / 2;
+	if (mean < -1 / 3) {
+		return 'red-red'
+	} 
+	if (mean > 1 / 3) {
+		return 'green-green';
+	}
+	return 'blue-blue';
+}

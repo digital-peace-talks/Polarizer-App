@@ -79,6 +79,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 							topo.recipientsOpinion = opinionRecipient.content;
 	
 						if(crisisInitiator) {
+							topo.initiatorRating = crisisInitiator.rating;
 							if(crisisInitiator.rating > 0.25) {
 								topo.leafs.positive.push(opinionInitiator._id);
 							} else if(crisisInitiator.rating < -0.25) {
@@ -90,6 +91,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 							topo.leafs.unset.push(opinionInitiator._id);
 						}
 						if(crisisRecipient) {
+							topo.recipientRating = crisisRecipient.rating;
 							if(crisisRecipient.rating > 0.25) {
 								topo.leafs.positive.push(opinionRecipient._id);
 							} else if(crisisRecipient.rating < -0.25) {

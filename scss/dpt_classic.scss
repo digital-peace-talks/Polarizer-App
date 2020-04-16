@@ -308,15 +308,6 @@ div.dialogInfo {
   font-size: 0px;
 }
 
-div.col {
-  float: left;
-  padding-left: 10px;
-  height: 100%;
-  width: 30%;
-  max-width: 30%;
-  overflow-y: auto;
-}
-
 div.row:after {
   content: "";
   display: table;
@@ -406,7 +397,7 @@ div#dialogFrame {
   display: grid;
   background-color: transparent;
   border: 0px;
-  z-index: 400;
+  z-index: 10;
   /* grid-auto-flow: column; */
   grid-template-columns: 280px;
   //pointer-events: none;
@@ -978,58 +969,18 @@ section ul li {
   background-color: $dpt-second-base;
 }
 
-.frame1 {
-  width: 400px;
-  height: 200px;
-  margin-left: -200px;
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-}
-
-.container1 {
-  position: absolute;
-  top: 80px;
-  width: 300px;
-  left: 50%;
-  margin-left: -150px;
-}
 .slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-radius: 1px;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  margin: 0;
-  width: 300px;
-  height: 10px;
   background: $dpt-prime-border;
   background: -webkit-linear-gradient(to left, $dpt-green, $dpt-blue, $dpt-red);
   background: linear-gradient(to left, $dpt-green, $dpt-blue, $dpt-red);
-  border-radius: 1px;
   border-color: $dpt-prime-border;
-  &:focus {
-    outline: none;
-  }
   &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
     border: 1px solid $dpt-prime-text;
-    border-radius: 50%;
     background: $dpt-prime-text;
-    cursor: pointer;
   }
   &::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
     border: 1px solid $dpt-prime-text;
-    border-radius: 50%;
     background: $dpt-prime-text;
-    cursor: pointer;
   }
 }
 .smile-wrapper {
