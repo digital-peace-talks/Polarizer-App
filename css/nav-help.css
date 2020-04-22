@@ -46,4 +46,44 @@
   justify-content: space-around;
 }
 
+.nav-help-mobile {
+  z-index: 1;
+  position: absolute;
+  background: #0003;
+  color: white;
+  font-family: "Markazi", serif;
+  font-size: 10px;
+  padding: 0 1% 0 1%;
+  overflow: hidden;
+  bottom: 48px;
+  border: solid #22224433 2px;
+  justify-content: space-around;
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .nav-help {
+    display: none;
+  }
+
+  .nav-help-col {
+    align-items: center;
+  }
+
+  .nav-help-mobile {
+    width: auto;
+    justify-content: space-evenly;
+    right: 25%;
+    left: 25%;
+    display: flex;
+  }
+}
+@media screen and (max-width: 640px) {
+  .nav-help-mobile {
+    width: 100%;
+    right: 0;
+    left: 0;
+  }
+}
+
 /*# sourceMappingURL=nav-help.css.map */
