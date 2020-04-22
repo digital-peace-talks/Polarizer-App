@@ -795,11 +795,8 @@ textarea {
   font-size: 16px;
   position: absolute;
   background-color: transparent;
-  top: 264px;
-  left: 6px;
   border-color: transparent;
   color: #f0f3f5;
-  line-height: 0px;
 }
 
 .copyToClip {

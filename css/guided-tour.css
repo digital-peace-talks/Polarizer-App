@@ -2,6 +2,17 @@
   transform: scale(0.8);
 }
 
+#guideBodyText p {
+  padding-top: 10px;
+  color: #f0f0f0;
+  font-size: 1.25rem;
+}
+
+#guideBodyText .guided-tour-centered {
+  transform: translate(80px, 50px);
+  font-size: 1.75rem;
+}
+
 .edit-img {
   width: 100%;
   padding: 7% 36% 0 36%;

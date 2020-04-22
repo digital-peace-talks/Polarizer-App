@@ -57,9 +57,8 @@ function startGuidedTour() {
 			right: "auto",
 			topMark: document.getElementById('guideNextBtn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px",
-			buttonLeftName: "",
-			buttonRightName: "START TOUR",
-			guideText: "Get started!",
+			buttonLeftName: "CLOSE TOUR",
+			buttonRightName: "START TOUR"
 		}, {
 			// Choose a topic 
 			top: "auto",
@@ -69,8 +68,7 @@ function startGuidedTour() {
 			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
 			buttonLeftName: "BACK",
-			buttonRightName: "NEXT",
-			guideText: "Which topic would you like?"
+			buttonRightName: "NEXT"
 		}, {
 			// start opinion
 			top: "auto",
@@ -78,8 +76,7 @@ function startGuidedTour() {
 			bottom: "0px",
 			right: "auto",
 			buttonLeftName: "BACK",
-			buttonRightName: "NEXT",
-			guideText: "Now publish your opinion"
+			buttonRightName: "NEXT"
 		}, {
 			// open list
 			top: "auto",
@@ -91,8 +88,7 @@ function startGuidedTour() {
 			topMark: "40%",
 			leftMark: "50%",
 			buttonLeftName: "BACK",
-			buttonRightName: "NEXT",
-			guideText: "You are ready to discuss others!"
+			buttonRightName: "NEXT"
 		}, {
 			// start with opinion/topic
 			top: "auto",
@@ -102,19 +98,7 @@ function startGuidedTour() {
 			topMark: document.getElementById('dialogues-btn').getBoundingClientRect().top + "px",
 			leftMark: document.getElementById('dialogues-btn').getBoundingClientRect().left + "px",
 			buttonLeftName: "BACK",
-			buttonRightName: "NEXT",
-			guideText: "Accept or deny chat requests",
-		}, {
-			// exit the guided tour
-			top: "auto",
-			left: "0px",
-			bottom: "0px",
-			right: "auto",
-			topMark: "-200px",
-			leftMark: "-200px",
-			buttonLeftName: "BACK",
-			buttonRightName: "LET'S GO!",
-			guideText: "You are all set!",
+			buttonRightName: "FINISH"
 		}];
 	
 
@@ -193,7 +177,6 @@ function startGuidedTour() {
 			contentEle2.style.left = guidePosition[currentStepIndex].leftMark;
 			buttonLeft.innerText = guidePosition[currentStepIndex].buttonLeftName;
 			buttonRight.innerText = guidePosition[currentStepIndex].buttonRightName;
-			guideTitle.innerText = guidePosition[currentStepIndex].guideText;
 		
 			if (currentStepIndex < 1) {
 				jQuery("#text").css("display","block");
