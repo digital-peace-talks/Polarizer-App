@@ -1,0 +1,21 @@
+#guideContent {
+  max-width: 100%;
+  
+  #guideBodyText {
+    p {
+      padding-top:10px;
+      color: #f0f0f0;
+      font-size:1.25rem;
+    }
+        
+    .guided-tour-centered {
+      text-align: center;
+      font-size:1.75rem;
+    }
+
+    img {
+      width:48px;
+      margin: 32px 0;
+    }
+  }
+}
