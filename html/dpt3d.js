@@ -78,7 +78,7 @@ function startGuidedTour() {
 			buttonLeftName: "BACK",
 			buttonRightName: "NEXT"
 		}, {
-			// open list
+			// Click an opinion to request a dialog
 			top: "auto",
 			left: "0px",
 			bottom: "0px",
@@ -88,18 +88,9 @@ function startGuidedTour() {
 			topMark: "40%",
 			leftMark: "50%",
 			buttonLeftName: "BACK",
-			buttonRightName: "NEXT"
-		}, {
-			// start with opinion/topic
-			top: "auto",
-			left: "0px",
-			bottom: "0px",
-			right: "auto",
-			topMark: document.getElementById('dialogues-btn').getBoundingClientRect().top + "px",
-			leftMark: document.getElementById('dialogues-btn').getBoundingClientRect().left + "px",
-			buttonLeftName: "BACK",
 			buttonRightName: "FINISH"
-		}];
+		}
+	];
 	
 
 		
