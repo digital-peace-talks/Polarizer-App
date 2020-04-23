@@ -120,12 +120,6 @@ function startGuidedTour() {
 		document.getElementById("guideContent").remove();
 		document.getElementById("animCircle").remove();
 	}, false);
-	document.getElementById('closeBtn2').addEventListener('click', () => {
-		// schliessen aktion
-		jQuery("#tutorialBorder").css("display","none");
-		document.getElementById("guideContent").remove();
-		document.getElementById("animCircle").remove();
-	}, false);
 	
 	jQuery("#disableGuidedTour").change(function() {
 	    if(this.checked) {
