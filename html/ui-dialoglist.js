@@ -1,5 +1,8 @@
+var touchmoved;
 jQuery(document).on("click touch touchend", "span.myDialogs", function(event) {
-  if (touchmoved != true) {
+  if (touchmoved) {
+      return;
+  }
     // button click action
     jQuery("#dialogInfo").remove();
     jQuery("#form").remove();
@@ -28,7 +31,6 @@ jQuery(document).on("click touch touchend", "span.myDialogs", function(event) {
     dpt.getDialog(currentDialog.dialog);
     event.stopImmediatePropagation();
     event.preventDefault();
-  }
 }).on('touchmove', function(e) {
   touchmoved = true;
 }).on('touchstart', function() {
