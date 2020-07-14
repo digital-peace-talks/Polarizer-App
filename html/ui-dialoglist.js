@@ -1,31 +1,38 @@
-jQuery(document).on("click touch touchend", "span.myDialogs", function (event) {
-  jQuery("#dialogInfo").remove();
-  jQuery("#form").remove();
-  focusAtCanvas();
+jQuery(document).on("click touch touchend", "span.myDialogs", function(event) {
+  if (touchmoved != true) {
+    // button click action
+    jQuery("#dialogInfo").remove();
+    jQuery("#form").remove();
+    focusAtCanvas();
 
-  var oldCount = jQuery(this).attr("count");
-  var text = jQuery(this).children("h2").text();
-  var count = jQuery("span#dialog-btn-label").attr("count");
+    var oldCount = jQuery(this).attr("count");
+    var text = jQuery(this).children("h2").text();
+    var count = jQuery("span#dialog-btn-label").attr("count");
 
-  jQuery(this).attr("count", 0);
-  text = text.replace(` ${oldCount}`, "");
-  jQuery(this).children("h2").text(text);
-  text = jQuery("span#dialog-btn-label").text();
+    jQuery(this).attr("count", 0);
+    text = text.replace(` ${oldCount}`, "");
+    jQuery(this).children("h2").text(text);
+    text = jQuery("span#dialog-btn-label").text();
 
-  if (count - oldCount > 0) {
-    text = text.replace(` ${count}`, " " + (count - oldCount) + "");
-    jQuery("span#dialog-btn-label").text(text);
-    jQuery("span#dialog-btn-label").attr("count", count - oldCount);
-  } else {
-    text = text.replace(` ${count}`, "");
-    jQuery("span#dialog-btn-label").text(text);
-    jQuery("span#dialog-btn-label").attr("count", 0);
+    if (count - oldCount > 0) {
+      text = text.replace(` ${count}`, " " + (count - oldCount) + "");
+      jQuery("span#dialog-btn-label").text(text);
+      jQuery("span#dialog-btn-label").attr("count", count - oldCount);
+    } else {
+      text = text.replace(` ${count}`, "");
+      jQuery("span#dialog-btn-label").text(text);
+      jQuery("span#dialog-btn-label").attr("count", 0);
+    }
+
+    currentDialog = myDialogMenu[event.currentTarget.id];
+    dpt.getDialog(currentDialog.dialog);
+    event.stopImmediatePropagation();
+    event.preventDefault();
   }
-
-  currentDialog = myDialogMenu[event.currentTarget.id];
-  dpt.getDialog(currentDialog.dialog);
-  event.stopImmediatePropagation();
-  event.preventDefault();
+}).on('touchmove', function(e) {
+  touchmoved = true;
+}).on('touchstart', function() {
+  touchmoved = false;
 });
 
 function toggleDialogList() {
