@@ -1,36 +1,36 @@
 var touchmoved;
 jQuery(document).on("click touch touchend", "span.myDialogs", function(event) {
   if (touchmoved) {
-      return;
+    return;
   }
-    // button click action
-    jQuery("#dialogInfo").remove();
-    jQuery("#form").remove();
-    focusAtCanvas();
+  // button click action
+  jQuery("#dialogInfo").remove();
+  jQuery("#form").remove();
+  focusAtCanvas();
 
-    var oldCount = jQuery(this).attr("count");
-    var text = jQuery(this).children("h2").text();
-    var count = jQuery("span#dialog-btn-label").attr("count");
+  var oldCount = jQuery(this).attr("count");
+  var text = jQuery(this).children("h2").text();
+  var count = jQuery("span#dialog-btn-label").attr("count");
 
-    jQuery(this).attr("count", 0);
-    text = text.replace(` ${oldCount}`, "");
-    jQuery(this).children("h2").text(text);
-    text = jQuery("span#dialog-btn-label").text();
+  jQuery(this).attr("count", 0);
+  text = text.replace(` ${oldCount}`, "");
+  jQuery(this).children("h2").text(text);
+  text = jQuery("span#dialog-btn-label").text();
 
-    if (count - oldCount > 0) {
-      text = text.replace(` ${count}`, " " + (count - oldCount) + "");
-      jQuery("span#dialog-btn-label").text(text);
-      jQuery("span#dialog-btn-label").attr("count", count - oldCount);
-    } else {
-      text = text.replace(` ${count}`, "");
-      jQuery("span#dialog-btn-label").text(text);
-      jQuery("span#dialog-btn-label").attr("count", 0);
-    }
+  if (count - oldCount > 0) {
+    text = text.replace(` ${count}`, " " + (count - oldCount) + "");
+    jQuery("span#dialog-btn-label").text(text);
+    jQuery("span#dialog-btn-label").attr("count", count - oldCount);
+  } else {
+    text = text.replace(` ${count}`, "");
+    jQuery("span#dialog-btn-label").text(text);
+    jQuery("span#dialog-btn-label").attr("count", 0);
+  }
 
-    currentDialog = myDialogMenu[event.currentTarget.id];
-    dpt.getDialog(currentDialog.dialog);
-    event.stopImmediatePropagation();
-    event.preventDefault();
+  currentDialog = myDialogMenu[event.currentTarget.id];
+  dpt.getDialog(currentDialog.dialog);
+  event.stopImmediatePropagation();
+  event.preventDefault();
 }).on('touchmove', function(e) {
   touchmoved = true;
 }).on('touchstart', function() {
@@ -102,13 +102,13 @@ function loadDialogList(restObj) {
   });
 
   if (!dialogs.length) {
-		jQuery('#dialogList').append(`
-			<div class="dialoglist-empty">
-				<img src="/illustrations/blank_canvas.svg" />
-				<h1>You don't have any dialogs yet</h1>
-			</div>
-		`);
-	}
+    jQuery('#dialogList').append(`
+      <div class="dialoglist-empty">
+        <img src="/illustrations/blank_canvas.svg" />
+        <h1>You don't have any dialogs yet</h1>
+      </div>
+    `);
+  }
 
   for (var i = 0; i < dialogs.length; i++) {
     if (dialogs[i].unreadMessages > 0) {
@@ -118,28 +118,28 @@ function loadDialogList(restObj) {
     }
 
     menuEntry = `
-			<span class="myDialogs" id="${dialogs[i].dialog}" count="${dialogs[i].unreadMessages}">
-			<i>Dialog about:</i><h2>${dialogs[i].recipientOpinion}${sum}</h2></span>
-		`;
+      <span class="myDialogs" id="${dialogs[i].dialog}" count="${dialogs[i].unreadMessages}">
+      <i>Dialog about:</i><h2>${dialogs[i].recipientOpinion}${sum}</h2></span>
+    `;
 
     dialog = `
-			<u style="font-size: 32px">Dialog Info</u><br><br>
-			<i>Dialog about:</i><br><h2>${dialogs[i].recipientOpinion}<h2>
-			<i>topic:</i><br>${dialogs[i].topic}<br><br>
-		`;
+      <u style="font-size: 32px">Dialog Info</u><br><br>
+      <i>Dialog about:</i><br><h2>${dialogs[i].recipientOpinion}<h2>
+      <i>topic:</i><br>${dialogs[i].topic}<br><br>
+    `;
 
     if (dialogs[i].initiator == "me") {
       dialog += `
-				<i>my opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
-				<i>other's opinion:</i><br><h2>${dialogs[i].recipientOpinion}<h2>
-				<i>initiator:</i> me<br><br>
-			`;
+        <i>my opinion:</i><br>${dialogs[i].initiatorOpinion}<br><br>
+        <i>other's opinion:</i><br><h2>${dialogs[i].recipientOpinion}<h2>
+        <i>initiator:</i> me<br><br>
+      `;
     } else {
       dialog += `
-				<i>my opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>		
-				<i>other's opinion:</i><br><h2>${dialogs[i].initiatorOpinion}<h2>
-				<i>initiator:</i> other<br><br>
-			`;
+        <i>my opinion:</i><br>${dialogs[i].recipientOpinion}<br><br>		
+        <i>other's opinion:</i><br><h2>${dialogs[i].initiatorOpinion}<h2>
+        <i>initiator:</i> other<br><br>
+      `;
     }
 
     dialog += `<i>status:</i> ${dialogs[i].status}`;
