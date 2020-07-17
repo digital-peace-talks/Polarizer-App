@@ -1,6 +1,7 @@
 var touchmoved;
 jQuery(document).on("click touch touchend", "span.myDialogs", function(event) {
-  if (touchmoved) {
+  var selection = window.getSelection();
+  if (touchmoved || (selection.type == "Range")) {
     return;
   }
   // button click action
