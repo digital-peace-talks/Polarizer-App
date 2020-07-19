@@ -564,6 +564,8 @@ div#dialogFrame {
   width: 400px;
   left: 50%;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
   margin-left: -200px;
   border: $dpt-prime-border;
   border-style: solid;

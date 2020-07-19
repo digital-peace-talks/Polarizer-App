@@ -26,6 +26,10 @@
   justify-content: center;
 }
 
+.opinion-form-layout {
+  overflow: auto;
+}
+
 @font-face {
   font-family: "DPTFont";
   src: url("font.ttf") format("truetype");
