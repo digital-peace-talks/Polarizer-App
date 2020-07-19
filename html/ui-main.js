@@ -283,12 +283,25 @@ var createGUIScene = function (dptMode) {
 
 	});
 
-	//create home button
-	var homeBtn = jQuery('#home-btn');
-	homeBtn.show();
 
-	homeBtn.on('click touch', function (event) {
+	//create search button
+	var searchBtn = jQuery('#search-btn');
+	searchBtn.show();
 
+	searchBtn.on('click touch', function (event) {
+		event.stopImmediatePropagation();
+		event.preventDefault();
+
+		if (formVisible && jQuery('#form>form').hasClass('searchForm')) {
+			jQuery("#form").remove();
+			formVisible = false;
+		} else {
+			hideDialogList();
+			requestSearch();
+		}
+	});
+
+  function goHome (event){
 		if (isMobile) {
 			closeRightMenu();
 		}
@@ -312,38 +325,20 @@ var createGUIScene = function (dptMode) {
 			hideMenu();
 		}
 		focusAtCanvas();
-	});
-
-	//create search button
-	var searchBtn = jQuery('#search-btn');
-	searchBtn.show();
-
-	searchBtn.on('click touch', function (event) {
-		event.stopImmediatePropagation();
-		event.preventDefault();
-
-		if (formVisible && jQuery('#form>form').hasClass('searchForm')) {
-			jQuery("#form").remove();
-			formVisible = false;
-		} else {
-			hideDialogList();
-			requestSearch();
-		}
-	});
-
+  }
 	//create topic button 
 	if (dptMode == 'topicScene') {
 
+		jQuery('#home-btn').parent().remove();
 		jQuery('#form').remove();
 		formVisible = false;
 
 		jQuery('#new-opinion-li').hide();
-		
-		
+
 		var newTopicBtn = jQuery('#new-topic-btn');
 		//TODO: wait fo Iwan response 
 		var isAuthForNewTopics = false;
-		
+
 		if (! isAuthForNewTopics) {			
 			var newTopicLi =  jQuery('#new-topic-li');
 			newTopicLi.hide();			
@@ -377,6 +372,16 @@ var createGUIScene = function (dptMode) {
 		//create opinion button 
 	} else if (dptMode == 'opinionScene') {
 
+    jQuery('.actionmenu.menu li:first-child').before(
+      `<li><button class="menu-btn-bar" id="home-btn" title="Back to topics"><img
+			class="btn-bar-icon" src="/back_white.png"></button></li>`
+    );
+
+	  //create home button
+	  var homeBtn = jQuery('#home-btn');
+	  homeBtn.show();
+
+	  homeBtn.on('click touch', goHome);
 		jQuery('#form').remove();
 		formVisible = false;
 
