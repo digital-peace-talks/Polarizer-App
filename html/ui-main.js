@@ -1,12 +1,3 @@
-function hideMenu() {
-	var menuLeft = canvas.width;
-	if (canvas.width > 640) {
-		menuLeft = 228;
-	}
-
-	jQuery("nav ul").css("left", menuLeft);
-	jQuery("a.hamburger").html('<img src="/button_menu.png">');
-}
 
 function switchToTopics() {
 	opinionCamState = currentScene.cameras[0].storeState();
@@ -96,22 +87,6 @@ var createGUIScene = function (dptMode) {
 		}
 
 	});
-
-	function closeRightMenu() {
-		var menuLeft = canvas.width;
-		if (canvas.width > 640) {
-			menuLeft = 228;
-		}
-
-		hamburgerOpen = !hamburgerOpen;
-		if (hamburgerOpen) {
-			jQuery("nav ul").css("left", "0px");
-			jQuery("a.hamburger").html('<img src="/button_close.png">');
-		} else {
-			jQuery("nav ul").css("left", menuLeft);
-			jQuery("a.hamburger").html('<img src="/button_menu.png">');
-		}
-	}
 
 	//create first steps button
 	var fsBtn = jQuery('#firststeps-btn');
@@ -301,31 +276,6 @@ var createGUIScene = function (dptMode) {
 		}
 	});
 
-  function goHome (event){
-		if (isMobile) {
-			closeRightMenu();
-		}
-		hideDialogList();
-
-		if (formVisible) {
-			jQuery('#form').remove();
-			formVisible = false;
-		}
-
-		opinionCamState = currentScene.cameras[0].storeState();
-		currentScene.dispose();
-		currentScene = __topicScene("topicScene");
-		currentScene.name = "topicScene";
-		dpt.getTopic();
-		event.stopImmediatePropagation();
-		event.preventDefault();
-
-		if (isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
-		}
-		focusAtCanvas();
-  }
 	//create topic button 
 	if (dptMode == 'topicScene') {
 
@@ -372,16 +322,8 @@ var createGUIScene = function (dptMode) {
 		//create opinion button 
 	} else if (dptMode == 'opinionScene') {
 
-    jQuery('.actionmenu.menu li:first-child').before(
-      `<li><button class="menu-btn-bar" id="home-btn" title="Back to topics"><img
-			class="btn-bar-icon" src="/back_white.png"></button></li>`
-    );
+    addHomeBtn();
 
-	  //create home button
-	  var homeBtn = jQuery('#home-btn');
-	  homeBtn.show();
-
-	  homeBtn.on('click touch', goHome);
 		jQuery('#form').remove();
 		formVisible = false;
 
