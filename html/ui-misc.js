@@ -63,10 +63,6 @@ function addHomeBtn (){
   }
 }
 
-function removeHomeBtn (){
-  jQuery("#home-btn").parent().remove();
-}
-
 function requestSearch() {
 	
 	jQuery("#form").remove();
