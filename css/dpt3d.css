@@ -113,6 +113,21 @@ section ul.menu li#new-topic-li, section ul.menu li#new-opinion-li {
   overflow: auto;
 }
 
+#form {
+  position: absolute;
+  bottom: 48px;
+  width: 400px;
+  left: 50%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-left: -200px;
+  z-index: 300;
+  overflow-y: auto;
+  max-height: 80%;
+  padding-top: 40px;
+}
+
 .hint {
   color: cyan;
   font-size: 2.75em;
