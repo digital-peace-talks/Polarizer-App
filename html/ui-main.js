@@ -1,12 +1,3 @@
-function hideMenu() {
-	var menuLeft = canvas.width;
-	if (canvas.width > 640) {
-		menuLeft = 228;
-	}
-
-	jQuery("nav ul").css("left", menuLeft);
-	jQuery("a.hamburger").html('<img src="/button_menu.png">');
-}
 
 function switchToTopics() {
 	opinionCamState = currentScene.cameras[0].storeState();
@@ -96,22 +87,6 @@ var createGUIScene = function (dptMode) {
 		}
 
 	});
-
-	function closeRightMenu() {
-		var menuLeft = canvas.width;
-		if (canvas.width > 640) {
-			menuLeft = 228;
-		}
-
-		hamburgerOpen = !hamburgerOpen;
-		if (hamburgerOpen) {
-			jQuery("nav ul").css("left", "0px");
-			jQuery("a.hamburger").html('<img src="/button_close.png">');
-		} else {
-			jQuery("nav ul").css("left", menuLeft);
-			jQuery("a.hamburger").html('<img src="/button_menu.png">');
-		}
-	}
 
 	//create first steps button
 	var fsBtn = jQuery('#firststeps-btn');
@@ -283,36 +258,6 @@ var createGUIScene = function (dptMode) {
 
 	});
 
-	//create home button
-	var homeBtn = jQuery('#home-btn');
-	homeBtn.show();
-
-	homeBtn.on('click touch', function (event) {
-
-		if (isMobile) {
-			closeRightMenu();
-		}
-		hideDialogList();
-
-		if (formVisible) {
-			jQuery('#form').remove();
-			formVisible = false;
-		}
-
-		opinionCamState = currentScene.cameras[0].storeState();
-		currentScene.dispose();
-		currentScene = __topicScene("topicScene");
-		currentScene.name = "topicScene";
-		dpt.getTopic();
-		event.stopImmediatePropagation();
-		event.preventDefault();
-
-		if (isMobile) {
-			console.log("mobile behavior!")
-			hideMenu();
-		}
-		focusAtCanvas();
-	});
 
 	//create search button
 	var searchBtn = jQuery('#search-btn');
@@ -334,16 +279,16 @@ var createGUIScene = function (dptMode) {
 	//create topic button 
 	if (dptMode == 'topicScene') {
 
+		jQuery('#home-btn').parent().remove();
 		jQuery('#form').remove();
 		formVisible = false;
 
 		jQuery('#new-opinion-li').hide();
-		
-		
+
 		var newTopicBtn = jQuery('#new-topic-btn');
 		//TODO: wait fo Iwan response 
 		var isAuthForNewTopics = false;
-		
+
 		if (! isAuthForNewTopics) {			
 			var newTopicLi =  jQuery('#new-topic-li');
 			newTopicLi.hide();			
@@ -376,6 +321,8 @@ var createGUIScene = function (dptMode) {
 
 		//create opinion button 
 	} else if (dptMode == 'opinionScene') {
+
+    addHomeBtn();
 
 		jQuery('#form').remove();
 		formVisible = false;

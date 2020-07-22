@@ -1,3 +1,68 @@
+function hideMenu() {
+  var menuLeft = canvas.width;
+  if (canvas.width > 640) {
+    menuLeft = 228;
+  }
+
+  jQuery("nav ul").css("left", menuLeft);
+  jQuery("a.hamburger").html('<img src="/button_menu.png">');
+}
+
+function closeRightMenu() {
+  var menuLeft = canvas.width;
+  if (canvas.width > 640) {
+    menuLeft = 228;
+  }
+
+  hamburgerOpen = !hamburgerOpen;
+  if (hamburgerOpen) {
+    jQuery("nav ul").css("left", "0px");
+    jQuery("a.hamburger").html('<img src="/button_close.png">');
+  } else {
+    jQuery("nav ul").css("left", menuLeft);
+    jQuery("a.hamburger").html('<img src="/button_menu.png">');
+  }
+}
+
+function goHome (event){
+  isSearching = false;
+  if (isMobile) {
+    closeRightMenu();
+  }
+  hideDialogList();
+
+  if (formVisible) {
+    jQuery('#form').remove();
+    formVisible = false;
+  }
+
+  opinionCamState = currentScene.cameras[0].storeState();
+  currentScene.dispose();
+  currentScene = __topicScene("topicScene");
+  currentScene.name = "topicScene";
+  dpt.getTopic();
+  event.stopImmediatePropagation();
+  event.preventDefault();
+
+  if (isMobile) {
+    console.log("mobile behavior!")
+    hideMenu();
+  }
+  focusAtCanvas();
+}
+
+function addHomeBtn (){
+  if (!document.querySelector('#home-btn')){
+    var homeBtn = `<li><button class="menu-btn-bar" id="home-btn" title="Back to topics"><img
+      class="btn-bar-icon" src="/back_white.png"></button></li>`;
+    jQuery('.actionmenu.menu li:first-child').before(homeBtn);
+
+    //Reassign homeBtn to the dom element, and add to it an onclick event handler.
+    homeBtn = jQuery('#home-btn');
+    homeBtn.on('click touch', goHome);
+  }
+}
+
 function requestSearch() {
 	
 	jQuery("#form").remove();
@@ -32,6 +97,9 @@ function requestSearch() {
 		}
 		dpt.searchTopicsAndOpinions(searchString);
 		jQuery('#form').remove();
+    if (!document.querySelector("#home-btn")){
+      addHomeBtn();
+    }
 		formVisible = false;
 	});
 	jQuery(document).on('keydown', '#searchString', function(event) {
