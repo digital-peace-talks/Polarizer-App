@@ -108,12 +108,6 @@ function dialogForm(secondDialog) {
         '<p class="right">' + currentDialog.messages[i].content + "</p>";
     } else {
       var option = "";
-      if (viewOnly == false) {
-        option =
-          ' <span class="crisis icon" id="' +
-          currentDialog.messages[i].messageId +
-          '">&#9878;</span>';
-      }
       dialog +=
         '<p class="left">' +
         currentDialog.messages[i].content +
