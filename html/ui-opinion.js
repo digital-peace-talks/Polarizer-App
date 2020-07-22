@@ -2,7 +2,7 @@ function opinionContext(context) {
 	jQuery("#form").remove();
 	jQuery("body").append(`
 		<div id="form">
-			<div style="height: 500px; overflow: auto;">
+			<div class="opinion-form-layout">
 			<i>Opinion:</i>
 			<p>
 			${context.content}

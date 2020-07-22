@@ -7,10 +7,14 @@
 }
 .button.block {
   width: 100%;
-  margin: auto;
+  margin: 2em auto 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#btn-request-dialog {
+  flex-shrink: 0;
 }
 
 .crisis {
