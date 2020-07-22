@@ -528,24 +528,14 @@ div#dialogFrame {
 }
 
 #form {
-  position: absolute;
-  bottom: 48px;
-  width: 400px;
-  left: 50%;
-  padding: 10px;
-  margin-left: -200px;
   border: #f0f3f5;
   border-style: solid;
   border-width: 1px;
   color: #f0f3f5;
-  z-index: 300;
   font-family: DPTFontDin;
   font-size: 18px;
   background-color: #28a9e1;
   box-shadow: 0px 0px 20px #030911;
-  max-height: 80%;
-  overflow-y: auto;
-  padding-top: 40px;
 }
 
 #form.dialog-form {
@@ -795,8 +785,11 @@ textarea {
   font-size: 16px;
   position: absolute;
   background-color: transparent;
+  top: 264px;
+  left: 6px;
   border-color: transparent;
   color: #f0f3f5;
+  line-height: 0px;
 }
 
 .copyToClip {

@@ -26,4 +26,23 @@
   justify-content: center;
 }
 
+.opinion-form-layout {
+  overflow: auto;
+}
+
+#form {
+  position: absolute;
+  bottom: 48px;
+  width: 400px;
+  left: 50%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-left: -200px;
+  z-index: 300;
+  overflow-y: auto;
+  max-height: 80%;
+  padding-top: 40px;
+}
+
 /*# sourceMappingURL=layout.css.map */

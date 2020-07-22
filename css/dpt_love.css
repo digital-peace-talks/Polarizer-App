@@ -528,24 +528,14 @@ div#dialogFrame {
 }
 
 #form {
-  position: absolute;
-  bottom: 48px;
-  width: 400px;
-  left: 50%;
-  padding: 10px;
-  margin-left: -200px;
   border: #9b0235;
   border-style: solid;
   border-width: 1px;
   color: #ffe3ec;
-  z-index: 300;
   font-family: DPTFontDin;
   font-size: 18px;
   background-color: #ca0144;
   box-shadow: 0px 0px 20px #770028;
-  max-height: 80%;
-  overflow-y: auto;
-  padding-top: 40px;
 }
 
 textarea {
