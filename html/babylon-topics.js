@@ -17,28 +17,8 @@ function loadTopics(restObj) {
 	x = xstart;
 	y = ystart;
 	for(var i in restObj.data) {
-/*
-		if(i % cols == 0) {
-			x = xstart;
-			y -= 3.2;
-		} else {
-			x += 4.8;
-		}
-		var l = len - 1 - i;
-		var plane = textBlock(
-			x, y, -2,
-			JSON.stringify({
-				"name": "texttexture",
-				"context": "topicScene",
-				"topicId": restObj.data[l]._id,
-				"content": restObj.data[l].content,
-				"topic": restObj.data[l].content,
-				"canEdit": (restObj.data[l].user == 'mine') ? true : false,
-			}),
-			`${restObj.data[l].content} [${restObj.data[l].opinions.length}]`,
-		);
-*/
-		var plane = textBlock(
+
+		textBlock(
 			restObj.data[i].position.x,
 			restObj.data[i].position.y,
 			restObj.data[i].position.z,

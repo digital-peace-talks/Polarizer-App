@@ -21,67 +21,6 @@ function circleText(ctx, text, x, y, radius, angle) {
 	ctx.restore();
 }
 
-function circleTextPlane(x, y, z, name, text) {
-	//Set width an height for plane
-	var planeWidth = 12;
-	var planeHeight = 12; //10;
-
-	//Create plane
-	var plane = BABYLON.MeshBuilder.CreatePlane(
-		name, {
-			width: planeWidth,
-			height: planeHeight
-		}, currentScene);
-	plane.dpt = JSON.parse('{"context": "topicCircle"}');
-
-	//Set width and height for dynamic texture using same multiplier
-	var DTWidth = planeWidth * 100; //64;
-	var DTHeight = planeHeight * 100; //64
-
-	var dynamicTexture = new BABYLON.DynamicTexture(
-		"DynamicTexture",
-		{
-			width: DTWidth,
-			height: DTHeight
-		}, currentScene);
-
-	//Check width of text for given font type at any size of font
-	var ctx = dynamicTexture.getContext();
-
-	dynamicTexture.hasAlpha = true;
-	ctx.fillStyle = 'transparent';
-
-	textureContext = dynamicTexture.getContext();
-	textureContext.font = "28px DPTFont";
-	textureContext.save();
-	textureContext.fillStyle = "#00ccff";
-
-	circleText(textureContext, text, 600, 600, 550, -Math.PI / 3)
-		//			textureContext.scale(3, 3);
-	textureContext.restore();
-
-	dynamicTexture.update();
-
-	//create material
-	var mat = new BABYLON.StandardMaterial("mat", currentScene);
-	mat.diffuseTexture = dynamicTexture;
-	mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
-
-	//apply material
-	plane.material = mat;
-	//mat.freeze();
-
-	// set the position
-	plane.position.x = x + 2;
-	plane.position.y = y;
-	plane.position.z = z;
-
-	plane.scaling.x *= 1.5;
-	plane.scaling.y *= 1.5;
-	//plane.doNotSyncBoundingInfo = true
-	//plane.freezeWorldMatrix();
-	return (plane);
-}
 
 function circlePoints(points, radius, center) {
 	var slice = 2 * Math.PI / points;
@@ -95,23 +34,6 @@ function circlePoints(points, radius, center) {
 		var newX = center.X + radius * Math.cos(angle);
 		var newY = center.Y + radius * Math.sin(angle);
 		nodes.push({ x: newX, y: newY });
-		/*
-		var box = new BABYLON.MeshBuilder.CreateBox("box", {
-			width: 0.1,
-			height: 0.1,
-			depth: 0.1,
-			sideOrientation: 1
-		}, currentScene);
-		box.position = new BABYLON.Vector3(newX, newY, -1);
-		//create material
-		var mat = new BABYLON.StandardMaterial("mat", currentScene);
-		mat.diffuseColor = new BABYLON.Color3(1,.5,0);
-		mat.emissiveColor = new BABYLON.Color3(1,.5,0);
-
-		//apply material
-		box.material = mat;
-		mat.freeze();
-		*/
 	}
 	return (nodes);
 }
