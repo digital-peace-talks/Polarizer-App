@@ -171,198 +171,163 @@
 	</div>
   <div id="misc2"></div>
   
+  <div id="misc2"></div><!-- Guided Tour-->
+  <!--Container  und Pfeil-->
+  <!--
+       <!-- <div class="tutorialBorder" id="tutorialBorder" style="display: none"></div>
+  -->
+  <!-- <div id="animCircle" class="animated-circle" style=
+       "visibility: hidden">
+       <div class="arrowcontainer">
+       <div class="arrow">
+       <div class="block1"></div>
+       <div class="block2"></div>
+       </div>
+       </div>
+       </div>
+       <div class="fb_gd_wrap">
+       <div class="content" id="guideContent">
+       <div class="body">
+       <button class="closeButtonTutorial" id=
+       "closeBtn">✕</button>
+       <div class="text">
+       <div id="guideBodyText" class="textList">
+       <p class="guided-tour-centered">How to use DPT</p>
+       <p class="guided-tour-centered">Choose a topic</p>
+       <p class="guided-tour-centered">Write your opinion<br>
+       <img src="/edit.png" alt="start opinion" height="auto"
+       class="edit-img"></p>
+       <p class="guided-tour-centered">Click an opinion<br>
+       to request a dialog</p>
+       </div>
+       </div>
+       </div>
+       <div class="footer">
+       <button id="guidePrevBtn" class="btn prev"></button>
+       <ul class="steps" id="steps">
+       <li class="dot active"></li>
+       <li class="dot"></li>
+       <li class="dot"></li>
+       <li class="dot"></li>
+       </ul><button id="guideNextBtn" class="btn next">START
+       TOUR</button>
+       </div>
+       <div class="text" id="text">
+       <label><input type="checkbox" id="disableGuidedTour">Don't
+       show this again</label>
+       </div>
+       </div>
+       </div> -->
+  <!-- End Guided Tour-->
+  <script src="/external/pep.js"></script>
+  <script src="/external/babylon.js"></script>
+  <script src="/external/babylonjs.materials.min.js"></script>
+  <script src="/external/babylonjs.serializers.min.js"></script>
+  <script src="/external/babylon.gui.min.js"></script>
+  <script src="/external/socket.io.js"></script>
+  <script src="/external/jquery-1.11.1.js"></script>
+  <script src="/external/trumbowyg.min.js"></script>
+  <script src=
+  "https://cdnjs.cloudflare.com/ajax/libs/driver.js/0.9.8/driver.min.js"
+  integrity=
+  "sha512-TMCPpR1wPPr92/7kiF88j9uTWczLpHyUTzt8sScGyN2btq/xWN22GjsdgNfUIMDtXV5WXUZ4s2OThcgpVxQv4w=="
+  crossorigin="anonymous"></script>
+  <script src="dpt3d.js"></script>
+  <script src="dpt-client.js"></script>
+  <script src="babylon-main.js"></script>
+  <script src="babylon-misc.js"></script>
+  <script src="babylon-topics.js"></script>
+  <script src="babylon-opinions.js"></script>
+  <script src="ui-main.js"></script>
+  <script src="ui-misc.js"></script>
+  <script src="ui-opinion.js"></script>
+  <script src="ui-dialog.js"></script>
+  <script src="ui-dialoglist.js"></script>
+  <script src="ui-crisis.js"></script>
+  <script src="ui-topic.js"></script>
+  <script src="ui-settings.js"></script>
+  <script>
+
+
+
+
+
+        var hamburgerOpen = false;
+        document.addEventListener("DOMContentLoaded", function (event) {
+
+                var mql = window.matchMedia("(orientation: landscape)");
+                mql.addListener(function (m) {
+                        if (m.matches) {
+                                if (!hamburgerOpen) {
+                                        jQuery("nav ul").css("left", 640);
+                                }
+                        }
+                });
+
+                jQuery("a.hamburger").on('click touch', function (event) {
+                        var menuLeft = canvas.width;
+                        if (canvas.width > 640) {
+                                menuLeft = 280;
+                        }
+
+                        hamburgerOpen = !hamburgerOpen;
+                        if (hamburgerOpen) {
+                                jQuery("nav ul").css("left", "0px");
+                                jQuery("a.hamburger").html('<img src="/button_close.png">');
+                                /*
+                                if(isMobile) {
+                                        hamburgerOpen = !hamburgerOpen;
+                                }
+                                */
+                        } else {
+                                jQuery("nav ul").css("left", menuLeft);
+                                jQuery("a.hamburger").html('<img src="/button_menu.png" alt="open menu">');
+                        }
+                });
+
+                if ('serviceWorker' in navigator) {
+                        window.addEventListener('load', function () {
+                                navigator.serviceWorker.register('/sw.js')
+                                .then(function (registration) {
+                                        // Registration was successful
+                                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                                }, function (err) {
+                                        // registration failed :(
+                                        console.log('ServiceWorker registration failed: ', err);
+                                });
+                        });
+                }
+
+                jQuery(window).keyup(function(event) {
+                        if (jQuery(event.target).is(':not(input, textarea, div.trumbowyg-editor)')) {
+                                switch(event.keyCode) {
+                                        case 70:
+                                                requestSearch();
+                                                break;
+                                        case 72:
+                                                switchToTopics();
+                                                break;
+                                        case 76:
+                                                toggleDialogList();
+                                                break;
+                                        case 79:
+                                                if(currentScene.name == "opinionScene") {
+                                                        jQuery('#form').remove();
+                                                        dpt.opinionPostAllowed(currentTopic);
+                                                }
+                                                break;
+                                        case 84:
+                                                if(currentScene.name == "topicScene") {
+                                                        jQuery('#form').remove();
+                                                        topicForm();
+                                                }
+                                                break;
+                                }
+                        }
+                });
+        });
+
+  </script>
 </body>
-
-
-
-<!-- Guided Tour-->
-<!--Container  und Pfeil-->
-<!--
-<div class="tutorialBorder" id="tutorialBorder" style="display: none"></div>
--->
-<div id="animCircle" class="animated-circle" style="visibility: hidden">
-	<div class="arrowcontainer">
-		<div class="arrow">
-			<div class="block1"></div>
-			<div class="block2"></div>
-		</div>
-	</div>
-
-</div>
-
-
-<div class="fb_gd_wrap">
-
-	<div class="content" id="guideContent">
-			
-		<div class="body">
-			  <button class="closeButtonTutorial" id="closeBtn">&#10005;</button>
-			<div class="text">
-				<div id="guideBodyText" class="textList">
-					<p class="guided-tour-centered">How to use DPT</p>
-					<p class="guided-tour-centered">Choose a topic</p>
-					<p class="guided-tour-centered">
-						Write your opinion 
-						<br>
-						<img src="/edit.png" alt="start opinion" height="auto" class="edit-img">
-					</p>
-					<p class="guided-tour-centered">Click an opinion <br>to request a dialog</p>
-				</div>
-			</div>
-			
-		</div>
-		
-		<div class="footer">
-		
-			<button id="guidePrevBtn" class="btn prev"></button>
-			<ul class="steps" id="steps">
-				<li class="dot active"></li>
-				<li class="dot"></li>
-				<li class="dot"></li>
-				<li class="dot"></li>
-			</ul>
-			    <button id="guideNextBtn" class="btn next">START TOUR</button>
-
-		</div>
-		<div class="text" id="text">
-			<label>
-				<input type="checkbox" id="disableGuidedTour">Don't show this again
-			</label>
-		</div>
-		
-	</div>
-</div>
-<!-- End Guided Tour-->
-
-
-<!--
-	<script src="https://code.jquery.com/pep/0.4.3/pep.js"></script>
-
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
-	<script src="https://preview.babylonjs.com/ammo.js"></script>
-	<script src="https://preview.babylonjs.com/cannon.js"></script>
-	<script src="https://preview.babylonjs.com/Oimo.js"></script>
-	<script src="https://preview.babylonjs.com/gltf_validator.js"></script>
-	<script src="https://preview.babylonjs.com/earcut.min.js"></script>
-	<script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
-	<script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
-	<script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
-	<script src="https://preview.babylonjs.com/babylon.js"></script>
-	<script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
-
-	<script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
-	<script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.min.js"/>
-	<script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
-	<script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
-
-	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
-	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
--->
-
-<script src="/external/pep.js"></script>
-<script src="/external/babylon.js"></script>
-<script src="/external/babylonjs.materials.min.js"></script>
-<script src="/external/babylonjs.serializers.min.js"></script>
-<script src="/external/babylon.gui.min.js"></script>
-<script src="/external/socket.io.js"></script>
-<script src="/external/jquery-1.11.1.js"></script>
-<script src="/external/trumbowyg.min.js"></script>
-
-<script src="dpt3d.js"></script>
-<script src="dpt-client.js"></script>
-<script src="babylon-main.js"></script>
-<script src="babylon-misc.js"></script>
-<script src="babylon-topics.js"></script>
-<script src="babylon-opinions.js"></script>
-<script src="ui-main.js"></script>
-<script src="ui-misc.js"></script>
-<script src="ui-opinion.js"></script>
-<script src="ui-dialog.js"></script>
-<script src="ui-dialoglist.js"></script>
-<script src="ui-crisis.js"></script>
-<script src="ui-topic.js"></script>
-<script src="ui-settings.js"></script>
-
-<script>
-
-	var hamburgerOpen = false;
-	document.addEventListener("DOMContentLoaded", function (event) {
-
-		var mql = window.matchMedia("(orientation: landscape)");
-		mql.addListener(function (m) {
-			if (m.matches) {
-				if (!hamburgerOpen) {
-					jQuery("nav ul").css("left", 640);
-				}
-			}
-		});
-	
-		jQuery("a.hamburger").on('click touch', function (event) {
-			var menuLeft = canvas.width;
-			if (canvas.width > 640) {
-				menuLeft = 280;
-			}
-	
-			hamburgerOpen = !hamburgerOpen;
-			if (hamburgerOpen) {
-				jQuery("nav ul").css("left", "0px");
-				jQuery("a.hamburger").html('<img src="/button_close.png">');
-				/*
-				if(isMobile) {
-					hamburgerOpen = !hamburgerOpen;
-				}
-				*/
-			} else {
-				jQuery("nav ul").css("left", menuLeft);
-				jQuery("a.hamburger").html('<img src="/button_menu.png">');
-			}
-		});
-	
-		if ('serviceWorker' in navigator) {
-			window.addEventListener('load', function () {
-				navigator.serviceWorker.register('/sw.js')
-				.then(function (registration) {
-					// Registration was successful
-					console.log('ServiceWorker registration successful with scope: ', registration.scope);
-				}, function (err) {
-					// registration failed :(
-					console.log('ServiceWorker registration failed: ', err);
-				});
-			});
-		}
-	
-		jQuery(window).keyup(function(event) {
-			if (jQuery(event.target).is(':not(input, textarea, div.trumbowyg-editor)')) {
-				switch(event.keyCode) {
-					case 70:
-						requestSearch();
-						break;
-					case 72:
-						switchToTopics();
-						break;
-					case 76:
-						toggleDialogList();
-						break;
-					case 79:
-						if(currentScene.name == "opinionScene") {
-							jQuery('#form').remove();
-							dpt.opinionPostAllowed(currentTopic);
-						}
-						break;
-					case 84:
-						if(currentScene.name == "topicScene") {
-							jQuery('#form').remove();
-							topicForm();
-						}
-						break;
-				}
-			}
-		});
-	});
-
-</script>
 
 </html>
