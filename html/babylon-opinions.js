@@ -45,16 +45,63 @@ function makePlanesDragable(opinion1, opinion2, edge) {
 	plane2.addBehavior(plane2.pointerDragBehavior);
 }
 
+
+/*
+  https://stackoverflow.com/questions/50252070/svg-draw-connection-line-between-two-rectangles
+  Say you have two rects and you know the center of them (cx1, cy1) and (cx2, cy2).
+  You also have the width and height divided by 2 (i.e. the distance from the center
+  to the sides): (w1, h1) and (w2, h2).
+  The distance between them is:
+  var dx = cx2 - cx1;
+  var dy = cy2 - cy1;
+  Then you can calculate the intersection point for the two rects with:
+  var p1 = getIntersection(dx, dy, cx1, cy1, w1, h1);
+  var p2 = getIntersection(-dx, -dy, cx2, cy2, w2, h2);
+  Where getIntersection is:
+*/
+function getIntersection(dx, dy, cx, cy, w, h) {
+	if(Math.abs(dy / dx) < h / w) {
+		// Hit vertical edge of box1
+		return [cx + (dx > 0 ? w : -w), cy + dy * w / Math.abs(dx)];
+	} else {
+		// Hit horizontal edge of box1
+		return [cx + dx * h / Math.abs(dy), cy + (dy > 0 ? h : -h)];
+	}
+};
+
+function calculateDialogColor(opinionDialogConnection) {
+	const { initiatorRating, recipientRating } = opinionDialogConnection;
+	if (initiatorRating == null || recipientRating == null) {
+		return 'grey-grey'
+	}
+	const mean = (initiatorRating + recipientRating) / 2;
+	if (mean < -1 / 3) {
+		return 'red-red'
+	} 
+	if (mean > 1 / 3) {
+		return 'green-green';
+	}
+	return 'blue-blue';
+}
+
+//TODO question: What would be BiColor?
+//This function seem to define the geometric shape of the lines based on two opinions and a
+//record of opinion connections?
 function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConnections) {
 
 	var status = opinionDialogConnections.dialogStatus;
+
+	//Default color for the line connecting dialogs
 	var emissiveColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+
 	var distance = 0;
 
 	if(status == 'PENDING') {
 //		return;
 	}
+	//Start Value?
 	var sv = new BABYLON.Vector3(initiatorOpinion.position);
+	//End Value?
 	var ev = new BABYLON.Vector3(recipientOpinion.position);
 	sv.x = initiatorOpinion.position.x;
 	sv.y = initiatorOpinion.position.y;
@@ -63,29 +110,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	ev.y = recipientOpinion.position.y;
 	ev.z = recipientOpinion.position.z;
 	
-	/*
-	https://stackoverflow.com/questions/50252070/svg-draw-connection-line-between-two-rectangles
-	Say you have two rects and you know the center of them (cx1, cy1) and (cx2, cy2).
-	You also have the width and height divided by 2 (i.e. the distance from the center
-	to the sides): (w1, h1) and (w2, h2).
-	The distance between them is:
-	var dx = cx2 - cx1;
-	var dy = cy2 - cy1;
-	Then you can calculate the intersection point for the two rects with:
-	var p1 = getIntersection(dx, dy, cx1, cy1, w1, h1);
-	var p2 = getIntersection(-dx, -dy, cx2, cy2, w2, h2);
-	Where getIntersection is:
-		 */
 
-	function getIntersection(dx, dy, cx, cy, w, h) {
-		if(Math.abs(dy / dx) < h / w) {
-			// Hit vertical edge of box1
-			return [cx + (dx > 0 ? w : -w), cy + dy * w / Math.abs(dx)];
-		} else {
-			// Hit horizontal edge of box1
-			return [cx + dx * h / Math.abs(dy), cy + (dy > 0 ? h : -h)];
-		}
-	};
 
 	var dx = ev.x - sv.x;
 	var dy = ev.y - sv.y
@@ -104,10 +129,14 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 
 	var radius = 0.04;
 	var occupacy = 0.85;
+
+	// If dialog is closed, make line thicker
 	if(status == "CLOSED") {
 		radius = 0.08;
 		occupacy = .99;
 	}
+
+	//Define "tube" as a new Tube object
 	var tube = new BABYLON.MeshBuilder.CreateTube(
 		"tube", {
 			path: [sv, ev],
@@ -118,6 +147,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 		},
 		currentScene);
 
+	//The properties of the line connecting opinions for a dialog
 	tube.dpt = {
 		context: 'tubeConnection',
 		dialogId: opinionDialogConnections.dialogId,
@@ -127,11 +157,17 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 		emissiveColor: emissiveColor,
 	};
 
+	//TODO What is this?
 	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 32, currentScene);
+	//TODO What is this?
 	var ctx = dynamicTexture.getContext();
 
+	//Calculate the dialog color.
 	let combination = calculateDialogColor(opinionDialogConnections);
 
+	// Determines colors for something
+	// TODO find out for what
+	// TODO more documentation
 	var reverse = 0;
 	if(combination == 'green-blue') {
 		var reverse = 1;
@@ -139,11 +175,11 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	} else if(combination == 'green-red') {
 		var reverse = 1;
 		combination = 'red-green';
-		emmisiveColor = new BABYLON.Vector3(0.5, 0.5, 0.5);
+		emissiveColor = new BABYLON.Vector3(0.5, 0.5, 0.5);
 	} else if(combination == 'blue-red') {
 		var reverse = 1;
 		combination = 'red-blue';
-		emmisiveColor = new BABYLON.Vector3(0.2, 0.2, 0.2);
+		emissiveColor = new BABYLON.Vector3(0.2, 0.2, 0.2);
 	}
 
 	if(combination.indexOf('grey') >= 0) {
@@ -157,7 +193,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	if(1) {
 		if(combination.indexOf('red') >= 0) {
 			combination = 'red-red';
-			emmisiveColor = new BABYLON.Vector3(0.6, 0.6, 0.6);
+			emissiveColor = new BABYLON.Vector3(0.6, 0.6, 0.6);
 		}
 		if(combination.indexOf('green') >= 0) {
 			combination = 'green-green';
@@ -318,6 +354,7 @@ function dialogRelations(opinionDialogConnections) {
 				}
 			}
 	
+			//Create the lines representing dialogs related to this position
 			if('position' in initiatorOpinion
 			&& 'position' in recipientOpinion) {
 				createBiColorTube(initiatorOpinion, recipientOpinion, odc[i]);
@@ -342,8 +379,10 @@ function loadOpinions(restObj) {
 	}
 
 	var opinionDialogConnections = {};
+	//Populate the dialog connections from ?
 	for(var i = 0; i < restObj.data.length; i++) {
 		if('topos' in restObj.data[i]) {
+			//A key value relation between ID in restObj and the corresponding topos.
 			opinionDialogConnections[restObj.data[i]._id] = restObj.data[i].topos;
 		}
 		if(restObj.data[i].user == 'mine') {
@@ -407,20 +446,7 @@ function loadOpinions(restObj) {
 			JSON.stringify({ "context": "opinionTopic" }),
 			currentTopicStr, {fontSize: 128, width: 19.2, height: 12.8, color: "#550033"});
 
+	//Last thing that is loaded is the dialog relations
 	dialogRelations(opinionDialogConnections);
 }
 
-function calculateDialogColor(opinionDialogConnection) {
-	const { initiatorRating, recipientRating } = opinionDialogConnection;
-	if (initiatorRating == null || recipientRating == null) {
-		return 'grey-grey'
-	}
-	const mean = (initiatorRating + recipientRating) / 2;
-	if (mean < -1 / 3) {
-		return 'red-red'
-	} 
-	if (mean > 1 / 3) {
-		return 'green-green';
-	}
-	return 'blue-blue';
-}
