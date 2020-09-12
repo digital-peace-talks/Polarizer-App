@@ -188,6 +188,26 @@ function textBlock(x, y, z, name, text, options) {
 			}, currentScene);
 	plane.dpt = dpt;
 
+	//plane actionManager to handle hover effect
+	plane.actionManager = new BABYLON.ActionManager(currentScene);
+
+	// bold ON MOUSE ENTER
+	plane.actionManager.registerAction(
+		new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOverTrigger,
+			function(ev) {
+				// var driver = new Driver()
+				// driver.highlight(".btn-bar-icon")
+				var meshLocal = ev.meshUnderPointer;
+				canvas.style.cursor = "move";
+			}, false));
+
+	// normal ON MOUSE EXIT
+	plane.actionManager.registerAction(
+		new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPointerOutTrigger,
+			function(ev) {
+				var meshLocal = ev.meshUnderPointer;
+				canvas.style.cursor = "default";
+			}, false));
 //    var pngBase64 = textureContext.canvas.toDataURL("image/png", 0.99);
 
     plane.bjs = {
