@@ -40,8 +40,7 @@ Both users can rate an ended dialogue with negative, neutral or positive. Once b
 -->The protocols of rated dialogues are pubslished! 
 
 ## Live demos
-- [sandbox](https://sandbox.dpt.world/) (reset every night)
-- [user tests](https://try.digitalpeacetalks.com/) (every second wendesday 8 PM CET)
+- [user tests](https://demo.dpt.world/)
 
 
 ## Screenshot:
