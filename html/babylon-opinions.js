@@ -328,6 +328,8 @@ function dialogRelations(opinionDialogConnections) {
 		htmlDiv.className = "textBox";
 		document.querySelector("#renderCanvas").insertAdjacentElement("afterend", htmlDiv);
 		var defStyle = `background: #f0f0;
+						top:${plane.position.y};
+						left:${plane.position.x};
 						pointer-events:none;
 						width:50px; height:50px;
 						z-index: 1; position: absolute;
@@ -406,12 +408,15 @@ function loadOpinions(restObj) {
 			`${restObj.data[i].content}`
 		);
 
+		debug_plane=plane;
 		camera = currentScene.cameras[0];
 		var htmlDiv = document.createElement("div");
 		htmlDiv.className = "textBox";
 		document.querySelector("#renderCanvas").insertAdjacentElement("afterend", htmlDiv);
 		var needsUpdate = true;
 		var defStyle = `background: #f0f0;
+						top:${plane.position.y};
+						left:${plane.position.x};
 						pointer-events:none;
 						width:50px; height:50px;
 						z-index: 1; position: absolute;

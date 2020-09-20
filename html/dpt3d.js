@@ -555,5 +555,5 @@ tour.addStep({
 
 document.addEventListener("DOMContentLoaded", function() {
 	main();
-	tour.start();
+	window.setTimeout(function(){tour.start()}, 1000);
 });
