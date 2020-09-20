@@ -88,7 +88,7 @@ function getCollisionBox() {
 	return(box);
 }
 
-function getCamera(rotate) {
+function getCamera() {
 
 	var camera = new BABYLON.ArcRotateCamera(
 			"Camera",
