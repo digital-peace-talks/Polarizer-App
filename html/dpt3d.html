@@ -1,181 +1,180 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-	<title>Digital Peace Talks</title>
-
-  <!--	<link rel="stylesheet" href="/dpt_classic.css" /> -->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Markazi+Text"> 
-	<link type="text/css" rel="stylesheet" media="all" href="dpt3d.css" />
-	<link type="text/css" rel="stylesheet" media="all" href="dpt_classic.css" id="theme_css" />
-	<link rel="stylesheet" href="/external/trumbowyg.min.css" />
-
-	<!-- Startup configuration -->
-	<link rel="manifest" href="manifest.webmanifest">
-
-	<!-- Fallback application metadata for legacy browsers -->
-	<meta name="application-name" content="DPT">
-
-	<!-- icon in the highest resolution we need it for -->
-	<link rel="icon" sizes="16x16 32x32 48x48" href="icons/icon-72x72.png">
-	<link rel="icon" sizes="512x512" href="icons/icon-512x512.png">
-
-	<!-- multiple icons for Safari -->
-	<link rel="apple-touch-icon" href="icons/touch-icon-iphone.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="icons/touch-icon-ipad.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="icons/touch-icon-iphone-retina.png">
-	<link rel="apple-touch-icon" sizes="167x167" href="icons/touch-icon-ipad-retina.png">
-
-	<!-- splash screen icon for Apple -->
-	<link rel="apple-touch-startup-image" href="icons/ios-icon.png">
-
-	<!-- multiple icons for IE -->
-	<meta name="msapplication-square70x70logo" content="icons/icon-72x72.png">
-	<meta name="msapplication-square150x150logo" content="icons/icon-144x144.png">
-	<meta name="msapplication-wide310x150logo" content="icons/icon-192x192.png">
-	<meta name="msapplication-square310x310logo" content="icon_largetile.png">
-
-	<!-- Chrome, Firefox OS and Opera -->
-	<meta name="theme-color" content="#28A9E1">
-
-	<!-- change the status bar appearance on ios-->
-	<meta name="apple-mobile-web-app-status-bar" content="#28A9E1">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-
-	<!-- Material Design Icons -->
-	<link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.0.45/css/materialdesignicons.min.css">
-
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content=
+  "width=device-width, initial-scale=1, user-scalable=no">
+  <title>Digital Peace Talks</title>
+  <!--  <link rel="stylesheet" href="/dpt_classic.css" /> -->
   <link rel="stylesheet" href=
-  "https://cdnjs.cloudflare.com/ajax/libs/driver.js/0.9.8/driver.min.css"
-  integrity=
-  "sha512-yQuTmOu0Rm68Udrrd2uqDvHc/xzvQxJoNzYgLn7SK+EpPuEKZu82S44D2G++HLiz6lhUShgJPOri7zvRTVtyZQ=="
-  crossorigin="anonymous">
+  "https://fonts.googleapis.com/css?family=Markazi+Text">
+  <link type="text/css" rel="stylesheet" media="all" href=
+  "dpt3d.css">
+  <link type="text/css" rel="stylesheet" media="all" href=
+  "dpt_classic.css" id="theme_css">
+  <link rel="stylesheet" href="/external/trumbowyg.min.css">
+  <!-- Startup configuration -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <!-- Fallback application metadata for legacy browsers -->
+  <meta name="application-name" content="DPT">
+  <!-- icon in the highest resolution we need it for -->
+  <link rel="icon" sizes="16x16 32x32 48x48" href=
+  "icons/icon-72x72.png">
+  <link rel="icon" sizes="512x512" href="icons/icon-512x512.png">
+  <!-- multiple icons for Safari -->
+  <link rel="apple-touch-icon" href="icons/touch-icon-iphone.png">
+  <link rel="apple-touch-icon" sizes="152x152" href=
+  "icons/touch-icon-ipad.png">
+  <link rel="apple-touch-icon" sizes="180x180" href=
+  "icons/touch-icon-iphone-retina.png">
+  <link rel="apple-touch-icon" sizes="167x167" href=
+  "icons/touch-icon-ipad-retina.png">
+  <!-- splash screen icon for Apple -->
+  <link rel="apple-touch-startup-image" href="icons/ios-icon.png">
+  <!-- multiple icons for IE -->
+  <meta name="msapplication-square70x70logo" content=
+  "icons/icon-72x72.png">
+  <meta name="msapplication-square150x150logo" content=
+  "icons/icon-144x144.png">
+  <meta name="msapplication-wide310x150logo" content=
+  "icons/icon-192x192.png">
+  <meta name="msapplication-square310x310logo" content=
+  "icon_largetile.png"><!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#28A9E1">
+  <!-- change the status bar appearance on ios-->
+  <meta name="apple-mobile-web-app-status-bar" content="#28A9E1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- Material Design Icons -->
+
+  <script src=
+  "https://cdn.jsdelivr.net/npm/shepherd.js@8.0.2/dist/js/shepherd.min.js"></script>
 </head>
-
-
 <body>
-	<div class="no-bounce">
-		
-		<div>
-			
-			<div>
-				<div id="overlay">
-					
-					<nav>
-					
-						<a class="hamburger" id="nav-m"><img src="/button_menu.png" alt="" /></a>
-						<a class="hamburger close"><img src="/button_close.png" alt="" /></a>
-						
-						<ul class="menu">
-
-							<li><button class="menu-btn " id="about-btn" title="About this App"><img class="btn-icon"
-										src="/about_white.png">About</button></li>
-							<li><button class="menu-btn" id="firststeps-btn" title="Tutorial"><img class="btn-icon"
-										src="/help_white.png">Help</button></li>
-						<!--	<li><button class="menu-btn" id="documentation-btn" title="Read the documentation"><img
-										class="btn-icon" src="/documentation_white.png">Documentation</button></li>-->
-							<li><button class="menu-btn" id="survey-btn" title="What do you think so far?"><img
-										class="btn-icon" src="/survey_white.png">Contact</button></li>
-						<!--	<li><button class="menu-btn" id="github-btn" title="Get involved"><img class="btn-icon"
-										src="/github.png">Github</button></li> -->
-							<li><button class="menu-btn" id="settings-btn" title="Settings and more"><img
-										class="btn-icon" src="/settings_white.png">Settings</button></li>
-						</ul>
-					</nav>
-				</div>
-				
-				<div id="menubar">
-					<section>
-						<ul class="actionmenu menu">
-							
-							<li><button class="menu-btn-bar" id="search-btn" title="Search for opinions"><img
-										class="btn-bar-icon" src="/search.png"></button></li>
-							<li id="new-topic-li"><button class="menu-btn-bar" id="new-topic-btn" title="Create a new topic"><img
-										class="btn-bar-icon"></button></li>
-							<li id="new-opinion-li"><button class="menu-btn-bar" id="new-opinion-btn" title="Create a new Opinion"><img
-										class="btn-bar-icon"></button></li>
-							<li><button class="menu-btn-bar" id="dialogues-btn" title="Open the dialog list"><img
-										class="btn-bar-icon" src="/messagelist_white.png">
-									<div class="listcount" id="dialog-btn-label"></div></button></li>
-									<!--
-							<li><button class="menu-btn-bar" id="setup-btn" title="Setup"><img
-										class="btn-bar-icon" src="/setup_white.png"></button></li>
-									-->
-						</ul>
-					</section>
-				</div>
-
-				<!-- BABYLON CANVAS -->
+  <div class="no-bounce">
+    <div>
+      <div>
+        <div id="overlay">
+          <nav>
+            <a class="hamburger" id="nav-m"><img src=
+            "/button_menu.png" alt=""></a> <a class=
+            "hamburger close"><img src="/button_close.png" alt=
+            ""></a>
+            <ul class="menu">
+              <li><button class="menu-btn" id="about-btn" title=
+              "About this App"><img class="btn-icon" src=
+              "/about_white.png">About</button></li>
+              <li><button class="menu-btn" id="firststeps-btn"
+              title="Tutorial"><img class="btn-icon" src=
+              "/help_white.png">Help</button></li>
+              <!--    <li><button class="menu-btn" id="documentation-btn" title="Read the documentation"><img
+                                                                                class="btn-icon" src="/documentation_white.png">Documentation</button></li>-->
+              <li><button class="menu-btn" id="survey-btn" title=
+              "What do you think so far?"><img class="btn-icon"
+              src="/survey_white.png">Contact</button></li>
+              <!--    <li><button class="menu-btn" id="github-btn" title="Get involved"><img class="btn-icon"
+                                                                                src="/github.png">Github</button></li> -->
+              <li><button class="menu-btn" id="settings-btn" title=
+              "Settings and more"><img class="btn-icon" src=
+              "/settings_white.png">Settings</button></li>
+            </ul>
+          </nav>
+        </div>
+        <div id="menubar">
+          <section>
+            <ul class="actionmenu menu">
+              <li><button class="menu-btn-bar" id="search-btn"
+              title="Search for opinions"><img class="btn-bar-icon"
+              src="/search.png"></button></li>
+              <li id="new-topic-li"><button class="menu-btn-bar"
+              id="new-topic-btn" title=
+              "Create a new topic"><img class=
+              "btn-bar-icon"></button></li>
+              <li id="new-opinion-li"><button class="menu-btn-bar"
+              id="new-opinion-btn" title=
+              "Create a new Opinion"><img class=
+              "btn-bar-icon"></button></li>
+              <li>
+                <button class="menu-btn-bar" id="dialogues-btn"
+                title="Open the dialog list"><img class=
+                "btn-bar-icon" src=
+                "/messagelist_white.png"></button>
+                <div class="listcount" id="dialog-btn-label">
+                  <button class="menu-btn-bar" id="dialogues-btn"
+                  title="Open the dialog list"></button>
+                </div>
+              </li><!--
+                                                        <li><button class="menu-btn-bar" id="setup-btn" title="Setup"><img
+                                                                                class="btn-bar-icon" src="/setup_white.png"></button></li>
+                                                                        -->
+            </ul>
+          </section>
+        </div><!-- BABYLON CANVAS -->
         <canvas id="renderCanvas" tabindex="1"></canvas>
-       <div class="nav-help">
+        <div class="nav-help">
           <div class="nav-help-col">
-              <div class="nav-help-row">
-                  <span class="label"></span>
-              </div>
-              <div class="nav-help-row">
-                  <span class="label">Rotate View</span>
-              </div>
-              <div class="nav-help-row">
-                  <span class="label">Move View</span>
-              </div>
-              <div class="nav-help-row">
-                  <span class="label">Zoom</span>
-              </div>
-          </div>
-          <div class="nav-help-col">
-              <div class="nav-help-row">
-                  Mouse
-              </div>
-              <div class="nav-help-row">
-                  <img src="/tutorial_rightclick.png" class="img-hint" style="transform:scaleX(-1);"></img>
-              </div>
-              <div class="nav-help-row">
-                  <img src="/tutorial_rightclick.png" class="img-hint"></img>
-              </div>
-              <div class="nav-help-row">
-                  <img src="/mouse_scroll.png" class="img-hint-invert" title="mouse scroll by Hoang Loi from the Noun Project"> </img>
-              </div>
+            <div class="nav-help-row">
+              <span class="label"></span>
+            </div>
+            <div class="nav-help-row">
+              <span class="label">Rotate View</span>
+            </div>
+            <div class="nav-help-row">
+              <span class="label">Move View</span>
+            </div>
+            <div class="nav-help-row">
+              <span class="label">Zoom</span>
+            </div>
           </div>
           <div class="nav-help-col">
-              <div class="nav-help-row">
-                  Touch
-              </div>
-              <div class="nav-help-row">
-                  <span class=" hint mdi mdi-gesture-swipe"></span>
-              </div>
-              <div class="nav-help-row">
-                  <img src="/tutorial_twofingers.png" class="img-hint"></img>
-              </div>
-              <div class="nav-help-row">
-                  <span class=" hint mdi mdi-gesture-spread"></span>
-              </div>
+            <div class="nav-help-row">
+              Mouse
+            </div>
+            <div class="nav-help-row"><img src=
+            "/tutorial_rightclick.png" class="img-hint" style=
+            "transform:scaleX(-1);"></div>
+            <div class="nav-help-row"><img src=
+            "/tutorial_rightclick.png" class="img-hint"></div>
+            <div class="nav-help-row"><img src="/mouse_scroll.png"
+            class="img-hint-invert" title=
+            "mouse scroll by Hoang Loi from the Noun Project"></div>
           </div>
-          </div> 
-          <div class="nav-help-mobile">
-              <div class="nav-help-col">
-                  <span class="label">Rotate View</span>
-                  <span class=" hint mdi mdi-gesture-swipe"></span>
-              </div>
-              <div class="nav-help-col">
-                  <span class="label">Move View</span>
-                  <img src="/tutorial_twofingers.png" class="img-hint"></img>
-              </div>
-              <div class="nav-help-col">
-                  <span class="label">Zoom</span>
-                  <span class=" hint mdi mdi-gesture-spread"></span>
-              </div>
+          <div class="nav-help-col">
+            <div class="nav-help-row">
+              Touch
+            </div>
+            <div class="nav-help-row">
+              <span class="hint mdi mdi-gesture-swipe"></span>
+            </div>
+            <div class="nav-help-row"><img src=
+            "/tutorial_twofingers.png" class="img-hint"></div>
+            <div class="nav-help-row">
+              <span class="hint mdi mdi-gesture-spread"></span>
+            </div>
           </div>
-      <!--  -->
-				<div class="brand"><a href=""><img src="brand_dpt.png" alt="digital peace talks" height="30" width="auto"></a></div>
-			</div>
-		</div>
-	</div>
+        </div>
+        <div class="nav-help-mobile">
+          <div class="nav-help-col">
+            <span class="label">Rotate View</span> <span class=
+            "hint mdi mdi-gesture-swipe"></span>
+          </div>
+          <div class="nav-help-col"><span class="label">Move
+          View</span> <img src="/tutorial_twofingers.png" class=
+          "img-hint"></div>
+          <div class="nav-help-col">
+            <span class="label">Zoom</span> <span class=
+            "hint mdi mdi-gesture-spread"></span>
+          </div>
+        </div><!--  -->
+        <div class="brand">
+          <a href=""><img src="brand_dpt.png" alt=
+          "digital peace talks" height="30" width="auto"></a>
+        </div>
+      </div>
+    </div>
+  </div>
   <div id="misc2"></div>
-  
   <div id="misc2"></div><!-- Guided Tour-->
   <!--Container  und Pfeil-->
   <!--
