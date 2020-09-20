@@ -515,17 +515,41 @@ function main() {
 
 
 const tour = new Shepherd.Tour({
+  useModalOverlay: true,
   defaultStepOptions: {
     classes: 'shadow-md bg-purple-dark',
     scrollTo: true
   }}
 );
 tour.addStep({
-  id: 'example-step',
-  text: 'This step is attached to the bottom of the <code>.example-css-selector</code> element.',
+  id: 'page-load-step',
+  text: 'Welcome to Digital Peace Talks!',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+tour.addStep({
+  id: 'navigation-step',
+  text: 'Navigate around and explore the space',
+  attachTo: {
+    element: '.nav-help',
+    on: 'left'
+  },
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+tour.addStep({
+  id: 'topic-step',
+  text: 'You can click on any of the topics that interests you',
   attachTo: {
     element: '.textBox',
-    on: 'bottom'
   },
   classes: 'example-step-extra-class',
   buttons: [
@@ -535,12 +559,163 @@ tour.addStep({
     }
   ]
 });
-tour.addStep({
-  id: 'example-step',
-  text: 'This step is attached to the bottom of the <code>.example-css-selector</code> element.',
+
+
+tour2.addStep({
+  id: 'opinion-topic-step',
+  text: 'You chose topic, good choice',
   attachTo: {
-    element: '#search-btn',
-    on: 'bottom'
+    element: '.textBox',
+  },
+  classes: 'example-step-extra-class',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+
+tour2.addStep({
+  id: 'opinion-opinions-step',
+  text: 'These are opinions other users expressed',
+  attachTo: {
+    element: '.textBox',
+  },
+  classes: 'example-step-extra-class',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+
+tour2.addStep({
+  id: 'opinion-dialogs-step',
+  text: 'The lines represent dialogs between opinions',
+  attachTo: {
+    element: '.textBox',
+  },
+  classes: 'example-step-extra-class',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+
+tour2.addStep({
+  id: 'opinion-add-step',
+  text: 'Click here to add your own opinion',
+  attachTo: {
+    element: '.textBox',
+  },
+  classes: 'example-step-extra-class',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+
+tour2.addStep({
+  id: 'opinion-added-step',
+  text: 'Nice! You\'ve added your first opinion',
+  attachTo: {
+    element: '.textBox',
+  },
+  classes: 'example-step-extra-class',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+
+tour2.addStep({
+  id: 'opinion-request-dialog-step',
+  text: 'Now click another opinion to request a dialog',
+  attachTo: {
+    element: '.textBox',
+  },
+  classes: 'example-step-extra-class',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+
+tour2.addStep({
+  id: 'opinion-dialog-requested-step',
+  text: 'You\'ve requested a dialog',
+  attachTo: {
+    element: '.textBox',
+  },
+  classes: 'example-step-extra-class',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+
+tour2.addStep({
+  id: 'opinion-dialog-requested-2-step',
+  text: 'You will be notified once the other user accepted your request',
+  attachTo: {
+    element: '.textBox',
+  },
+  classes: 'example-step-extra-class',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+
+tour2.addStep({
+  id: 'opinion-dialog-requested-3-step',
+  text: 'Try posting in several topics and request many dialogs to get moving',
+  attachTo: {
+    element: '.textBox',
+  },
+  classes: 'example-step-extra-class',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+
+tour2.addStep({
+  id: 'opinion-dialog-started-step',
+  text: 'Your request was accepted! Click the list to start chatting',
+  attachTo: {
+    element: '.textBox',
+  },
+  classes: 'example-step-extra-class',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+
+tour2.addStep({
+  id: 'opinion-dialog-started-step',
+  text: 'Use this slider to rate how well the dialogue is going, A positive rating will bring your opinions closer together, A negative one will drive them apart!',
+  attachTo: {
+    element: '.textBox',
   },
   classes: 'example-step-extra-class',
   buttons: [
