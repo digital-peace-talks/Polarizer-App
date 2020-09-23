@@ -325,11 +325,11 @@ function dialogRelations(opinionDialogConnections) {
 			}
 
 		var htmlDiv = document.createElement("div");
-		htmlDiv.className = "textBox";
+		htmlDiv.className = "babylonElementWrapper dialogWrapper";
 		document.querySelector("#renderCanvas").insertAdjacentElement("afterend", htmlDiv);
 		var defStyle = `background: #f0f0;
-						top:${plane.position.y};
-						left:${plane.position.x};
+						top:${tube.position.y};
+						left:${tube.position.x};
 						pointer-events:none;
 						width:50px; height:50px;
 						z-index: 1; position: absolute;
@@ -341,7 +341,7 @@ function dialogRelations(opinionDialogConnections) {
 		}
 	}
 }
-
+firstTimeLoaded = true;
 function loadOpinions(restObj) {
 	var canInvite = false;
 
@@ -351,7 +351,7 @@ function loadOpinions(restObj) {
 				console.log("dispose: "+currentScene.meshes[i].dpt.context);
 				currentScene.meshes[i].dispose();
 			}
-				document.querySelectorAll(".textBox").forEach(function(e){e.remove()});
+				document.querySelectorAll(".babylonElementWrapper").forEach(function(e){e.remove()});
 		}
 	} else {
 		return;
@@ -411,7 +411,7 @@ function loadOpinions(restObj) {
 		debug_plane=plane;
 		camera = currentScene.cameras[0];
 		var htmlDiv = document.createElement("div");
-		htmlDiv.className = "textBox";
+		htmlDiv.className = "babylonElementWrapper opinionWrapper";
 		document.querySelector("#renderCanvas").insertAdjacentElement("afterend", htmlDiv);
 		var needsUpdate = true;
 		var defStyle = `background: #f0f0;
@@ -478,6 +478,10 @@ function loadOpinions(restObj) {
 			currentTopicStr, {fontSize: 128, width: 19.2, height: 12.8, color: "#550033"});
 
 	dialogRelations(opinionDialogConnections);
+	if(firstTimeLoaded){
+		window.setTimeout(function(){tour2.start()}, 1000);
+	}
+	firstTimeLoaded=false;
 }
 
 function calculateDialogColor(opinionDialogConnection) {

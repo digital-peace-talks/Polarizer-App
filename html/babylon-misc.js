@@ -239,6 +239,9 @@ function textBlock(x, y, z, name, text, options) {
 	//plane.bakeCurrentTransformIntoVertices();
 
 	plane.doNotSyncBoundingInfo = false;
+
+
+
 	//plane.freezeWorldMatrix();
 	return (plane);
 }

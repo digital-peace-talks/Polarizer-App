@@ -12,7 +12,7 @@ function loadTopics(restObj) {
 			&& currentScene.meshes[i].dpt.context == 'topicScene') {
 				currentScene.meshes[i].dispose();
 			}
-				document.querySelectorAll(".textBox").forEach(function(e){e.remove()});
+				document.querySelectorAll(".babylonElementWrapper").forEach(function(e){e.remove()});
 		}
 	}
 	x = xstart;
@@ -21,6 +21,10 @@ function loadTopics(restObj) {
 	var planes = [];
 	var divs = [];
 
+	var htmlDivContainer = document.createElement("div");
+	htmlDivContainer.id = "topics";
+
+	document.querySelector("#renderCanvas").insertAdjacentElement("afterend", htmlDivContainer);
 	for(var i in restObj.data) {
 
 		var plane = textBlock(
@@ -39,16 +43,12 @@ function loadTopics(restObj) {
 		);
 		camera = currentScene.cameras[0];
 		var htmlDiv = document.createElement("div");
-		htmlDiv.className = "textBox";
-		document.querySelector("#renderCanvas").insertAdjacentElement("afterend", htmlDiv);
+		htmlDiv.className = "babylonElementWrapper topicWrapper";
+		document.querySelector("#topics").appendChild(htmlDiv);
 		var needsUpdate = true;
-		var defStyle = `background: #f0f0;
-						top:${plane.position.y};
+		var defStyle = `top:${plane.position.y};
 						left:${plane.position.x};
-						pointer-events:none;
-						width:50px; height:50px;
-						z-index: 1; position: absolute;
-						transform: translate(-50%, -50%);`;
+						`;
 		htmlDiv.style = defStyle;
 
 		planes.push(plane);
