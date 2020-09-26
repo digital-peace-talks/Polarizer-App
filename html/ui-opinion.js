@@ -160,6 +160,6 @@ function opinionForm(edit, context) {
 		}
 		jQuery('#form').remove();
 		formVisible = false;
-		//window.setTimeout(function(){tour3.start()}, 1000);
+		window.setTimeout(function(){tour3.start()}, 1000);
 	});
 }
