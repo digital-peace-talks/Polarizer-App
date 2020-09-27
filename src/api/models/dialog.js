@@ -13,6 +13,12 @@ const messageSchema = mongoose.Schema({
 	content: String,
 });
 
+
+const ratingSchema = mongoose.Schema({
+	sender: { type: Schema.Types.ObjectId, ref: "User", required: true },
+	content: String,
+});
+
 const crisisSchema = mongoose.Schema({
 	startDate: { type: Date, required: true, default: Date.now },
 	expirationDate: { type: Date, default: () => { return Date.now() + 86400000 * 5 }, required: true },
@@ -23,6 +29,9 @@ const crisisSchema = mongoose.Schema({
 });
 
 const dialogSchema = mongoose.Schema({
+
+	ratings: [ratingSchema],
+
 	topic: {
 		type: Schema.Types.ObjectId,
 		ref: "Topic",

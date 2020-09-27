@@ -542,6 +542,30 @@ match.push({
 });
 
 match.push({
+	path: "/dialog/"+ dialogIdReg +"/rating/",
+	method: "post",
+	fun: async function(data, dptUUID, socket) {
+		var user = userRegistered(data.publicKey);
+		if(user) {
+			console.log("update rating");
+			const ret = await dialogService.updateRating({
+				dialogId: data.dialogId,
+				body: {
+					content: data.rating,
+					sender: user.user.id
+				}
+			});
+			if(ret.status == 200) {
+				//publishDialogUpdate(data.dialogId);
+			}
+			return({data: ret});
+		} else {
+			return({data: {status: 400, data: "User not found" }});
+		}
+	}
+});
+
+match.push({
 	path: "/dialog/"+ dialogIdReg +"/message/",
 	method: "post",
 	fun: async function(data, dptUUID, socket) {

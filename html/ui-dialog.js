@@ -190,12 +190,14 @@ function dialogForm(secondDialog) {
     var opinionLabel2 = "Opinion B";
   }
 
+
   var html = `
 		<div id="dialogFrame">
 
 			<div class="top">
 				<center>
 					<h3>${currentDialog.topic}</h3>
+				${sliderRowTemplate("How polarised is the chat right now?")}
 				</center>
 				
 			</div>
@@ -419,4 +421,15 @@ function dialogForm(secondDialog) {
   } else {
     jQuery("#dialogInput").focus();
   }
+  jQuery(".slider").on("input change", function(e) {
+    // console.log(e.target.value);
+    //console.log("get dialog");
+    //
+    var rating = e.target.value;
+    dpt.updateDialogRating(rating, whoami.dptUUID, currentDialog.dialog);
+    console.log("update dialog liverating");
+    console.log("get tube");
+    console.log("re-render-tube");
+
+  });
 }
