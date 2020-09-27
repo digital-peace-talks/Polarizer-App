@@ -70,32 +70,6 @@ function crisisForm(messageId) {
 	});
 
 	/**
-	 * Generates a slider that answers a numeric question
-	 * @param {string} question Question for the current slider
-	 * @returns {string}
-	 */
-	function sliderRowTemplate(question) {
-		return `
-			<div class="row">
-				<div class="col">
-					<div class="text-center">${question}</div>
-					<div class="row">
-						<div class="col col-1">
-							<span class="mdi mdi-thumb-down"></span>
-						</div>
-						<div class="col justify-center">
-							<input type="range" style="z-index:400" name="rating" min="-100" max="100" value="0" class="slider" />
-						</div>
-						<div class="col col-1">
-							<span class="mdi mdi-thumb-up"></span>
-						</div>
-					</div>
-				</div>
-			</div>
-		`;
-	}
-
-	/**
 	 * Calculates the mean rating from all of the sliders
 	 * @returns {number}
 	 */

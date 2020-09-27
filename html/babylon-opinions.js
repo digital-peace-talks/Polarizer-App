@@ -157,17 +157,12 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 		emissiveColor: emissiveColor,
 	};
 
-	//TODO What is this?
 	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 32, currentScene);
-	//TODO What is this?
 	var ctx = dynamicTexture.getContext();
 
 	//Calculate the dialog color.
 	let combination = calculateDialogColor(opinionDialogConnections);
 
-	// Determines colors for something
-	// TODO find out for what
-	// TODO more documentation
 	var reverse = 0;
 	if(combination == 'green-blue') {
 		var reverse = 1;

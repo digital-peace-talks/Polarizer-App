@@ -1,3 +1,33 @@
+	/**
+	 * Generates a slider that answers a numeric question
+	 * @param {string} question Question for the current slider
+	 * @returns {string}
+	 */
+	function sliderRowTemplate(question) {
+   if(currentDialog.status != "ACTIVE"){
+      var inputState = "disabled"}
+    else{
+    var inputState = ""}
+		return `
+			<div class="row">
+				<div class="col">
+					<div class="text-center">${question}</div>
+					<div class="row">
+						<div class="col col-1">
+							<span class="mdi mdi-thumb-down"></span>
+						</div>
+						<div class="col justify-center">
+							<input type="range" style="z-index:400" name="rating" min="-100" max="100" value="0" class="slider" ${inputState} />
+						</div>
+						<div class="col col-1">
+							<span class="mdi mdi-thumb-up"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+		`;
+	}
+
 function hideMenu() {
   var menuLeft = canvas.width;
   if (canvas.width > 640) {
