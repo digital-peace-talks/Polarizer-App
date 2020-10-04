@@ -42,42 +42,6 @@ var DPTGlobal = {
 	"COLORS_skybox": 3,
 };
 
-// Script Guided Tour
-// function startGuidedTour() {
-
-// 	jQuery('#animCircle').css('visibility', 'visible');
-
-// 	console.log(isMobile);
-
-// 	let currentStepIndex = -1;
-// 	const stepLength = guidePosition.length;
-// 	changeStep();
-// 	document.getElementById("guideNextBtn").addEventListener('click', () => {
-// 		changeStep('next');
-
-// 	}, false);
-// 	document.getElementById("guidePrevBtn").addEventListener('click', () => {
-// 		changeStep('prev');
-// 	}, false);
-// 	document.getElementById('closeBtn').addEventListener('click', () => {
-// 		// schliessen aktion
-// 		jQuery("#tutorialBorder").css("display","none");
-// 		document.getElementById("guideContent").remove();
-// 		document.getElementById("animCircle").remove();
-// 	}, false);
-	
-// 	jQuery("#disableGuidedTour").change(function() {
-// 	    if(this.checked) {
-// 			whoami.user.preferences.guidedTour = false;
-// 	    	dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": false}});
-// 	    } else {
-// 	    	whoami.user.preferences.guidedTour = true;
-// 	    	dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": true}});
-// 	    }
-// 	});
-
-// } // End Script Guided Tour
-
 
 // from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
 function copyToClipboard(str) {
