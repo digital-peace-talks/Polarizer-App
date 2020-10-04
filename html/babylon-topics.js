@@ -46,7 +46,7 @@ function loadTopics(restObj) {
 		htmlDiv.className = "babylonElementWrapper topicWrapper";
 		document.querySelector("#topics").appendChild(htmlDiv);
 		var needsUpdate = true;
-		var defStyle = `top:${plane.position.y};
+		var defStyle = `top:${Math.min(window.innerHeight - 50, plane.position.y)};
 						left:${plane.position.x};
 						`;
 		htmlDiv.style = defStyle;

@@ -1,24 +1,23 @@
-const tour1 = new Shepherd.Tour({
+const tour = new Shepherd.Tour({
   useModalOverlay: true,
   defaultStepOptions: {
     scrollTo: true
-  }}
+  }
+}
 );
 
-tour1.addStep({
-  id: 'page-load-step',
+tour.addStep({
   text: 'Welcome to Digital Peace Talks!',
   buttons: [
     {
       text: 'Next',
-      action: tour1.next
+      action: tour.next
     }
   ]
 });
 
-tour1.addStep({
-  id: 'navigation-step',
-  text: 'Navigate around and explore the space',
+tour.addStep({
+  text: 'Use these controls to navigate.',
   attachTo: {
     element: '.nav-help',
     on: 'left'
@@ -26,213 +25,149 @@ tour1.addStep({
   buttons: [
     {
       text: 'Next',
-      action: tour1.next
+      action: tour.next
     }
   ]
 });
 
-tour1.addStep({
-  id: 'topic-step',
-  text: 'You can click on any of the topics that interests you',
+tour.addStep({
+  text: "See these spacy floating items? That's topics up for discussion!",
   attachTo: {
     element: '.babylonElementWrapper',
-	on: 'top'
+    on: 'top'
   },
-  classes: 'example-step-extra-class',
   buttons: [
     {
       text: 'Next',
-      action: tour1.next
+      action: tour.next
     }
   ]
 });
 
-
-const tour2 = new Shepherd.Tour({
-  useModalOverlay: true,
-  defaultStepOptions: {
-    scrollTo: true
-  }}
-);
-chosenTopic = "";
-tour2.addStep({
-  id: 'opinion-topic-step',
-  text: "You chose topic"+ chosenTopic + ", good choice",
-  classes: 'example-step-extra-class',
+tour.addStep({
+  text: "Let's get right to it: Click the topic you are most interested in.",
   buttons: [
     {
       text: 'Next',
-      action: tour2.next
+      action: tour.hide
     }
   ]
 });
 
-tour2.addStep({
-  id: 'opinion-opinions-step',
-  text: 'These are opinions other users expressed',
+tour.addStep({
+  text: "Well done!",
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+
+tour.addStep({
+  text: 'The items in this space are expressions of opinions from other users.',
   attachTo: {
     element: '.babylonElementWrapper.opinionWrapper',
   },
-  classes: 'example-step-extra-class',
   buttons: [
     {
       text: 'Next',
-      action: tour2.next
+      action: tour.next
     }
   ]
 });
 
-tour2.addStep({
-  id: 'opinion-dialogs-step',
-  text: 'The lines represent dialogs between opinions',
+tour.addStep({
+  text: 'The lines between the opinions mean they are engaged in a dialogue. Green lines means the dialogue was perceived as positive!',
   attachTo: {
     element: '.babylonElementWrapper.dialogWrapper',
   },
-  classes: 'example-step-extra-class',
   buttons: [
     {
       text: 'Next',
-      action: tour2.next
+      action: tour.next
     }
   ]
 });
 
-tour2.addStep({
-  id: 'opinion-add-step',
-  text: 'Click here to add your own opinion',
+tour.addStep({
+  text: 'Once you are ready to join in, click here to publish your opinion.',
   attachTo: {
     element: '#new-opinion-btn',
     on: 'top'
   },
-  classes: 'example-step-extra-class',
   buttons: [
     {
       text: 'Next',
-      action: tour2.next
+      action: tour.hide
     }
   ]
 });
 
-
-const tour3 = new Shepherd.Tour({
-  useModalOverlay: true,
-  defaultStepOptions: {
-    scrollTo: true
-  }}
-);
-
-tour3.addStep({
-  id: 'opinion-added-step',
-  text: 'Nice! You\'ve added your first opinion',
-  classes: 'example-step-extra-class',
+tour.addStep({
+  text: 'Your opinion has been added!',
   buttons: [
     {
       text: 'Next',
-      action: tour3.next
+      action: tour.next
     }
   ]
 });
 
-tour3.addStep({
-  id: 'opinion-request-dialog-step',
-  text: 'Now click another opinion to request a dialog',
+tour.addStep({
+  text: 'To get attention for your opinion, you need to engage in positive rated dialogues! Simply click on an opinion you want to discuss with.',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.hide
+    }
+  ]
+});
+
+tour.addStep({
+  text: "Dialogues need both sides' consent! Click here to request it.",
   attachTo: {
-    element: '.babylonElementWrapper.opinionWrapper',
-  },
-  classes: 'example-step-extra-class',
-  buttons: [
-    {
-      text: 'Next',
-      action: tour3.next
-    }
-  ]
-});
-
-const tour4 = new Shepherd.Tour({
-  useModalOverlay: true,
-  defaultStepOptions: {
-    scrollTo: true
-  }}
-);
-
-tour4.addStep({
-  id: 'opinion-dialog-requested-step',
-  text: 'You\'ve requested a dialog',
-  classes: 'example-step-extra-class',
-  buttons: [
-    {
-      text: 'Next',
-      action: tour4.next
-    }
-  ]
-});
-
-tour4.addStep({
-  id: 'opinion-dialog-requested-2-step',
-  text: 'You will be notified once the other user accepted your request',
-  classes: 'example-step-extra-class',
-  buttons: [
-    {
-      text: 'Next',
-      action: tour4.next
-    }
-  ]
-});
-
-tour4.addStep({
-  id: 'opinion-dialog-requested-4-step',
-  text: 'Try posting in several topics and request many dialogs to get moving',
-  classes: 'example-step-extra-class',
-  buttons: [
-    {
-      text: 'Next',
-      action: tour4.next
-    }
-  ]
-});
-
-
-const tour5 = new Shepherd.Tour({
-  useModalOverlay: true,
-  defaultStepOptions: {
-    scrollTo: true
-  }}
-);
-
-tour5.addStep({
-  id: 'opinion-dialog-started-step',
-  text: 'Your request was accepted! Click the list to start chatting',
-  attachTo: {
-    element: '.btn-bar-icon',
+    element: '#btn-request-dialog',
     on: 'top'
   },
-  classes: 'example-step-extra-class',
   buttons: [
     {
       text: 'Next',
-      action: tour5.next
+      action: tour.hide
     }
   ]
 });
 
-const tour6 = new Shepherd.Tour({
-  useModalOverlay: true,
-  defaultStepOptions: {
-    scrollTo: true
-  }}
-);
-
-tour6.addStep({
-  id: 'opinion-dialog-started-step',
-  text: 'Use this slider to rate how well the dialogue is going, A positive rating will bring your opinions closer together, A negative one will drive them apart!',
-  attachTo: {
-    element: '.babylonElementWrapper',
-  },
-  classes: 'example-step-extra-class',
+tour.addStep({
+  text: 'Request sent',
   buttons: [
     {
       text: 'Next',
-      action: tour6.next
+      action: tour.next
+    }
+  ]
+});
+
+tour.addStep({
+  text: 'You have reached the end of the tutorial. Once your first requests get accepted, it is up to you to engage in dialogues perceived as positive!',
+  buttons: [
+    {
+      text: 'Next',
+      action: tour.next
+    }
+  ]
+});
+
+tour.addStep({
+  text: 'This is where you will be notified when others users approve or request a dialogue with you. Good luck!',
+  buttons: [
+    {
+      text: 'Finish',
+      action: () => {
+        whoami.user.preferences.guidedTour = false;
+	    	dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": false}});
+        tour.next();
+      }
     }
   ]
 });

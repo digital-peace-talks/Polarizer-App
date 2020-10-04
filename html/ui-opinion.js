@@ -18,10 +18,15 @@ function opinionContext(context) {
 			}
 		</div>
 	`);
+	if (whoami.user.preferences.guidedTour) {
+		tour.next()
+	}
 	jQuery("#btn-request-dialog").on('click touch', () => {
 		closeOpinion();
 		dpt.postDialog('', whoami.dptUUID, context.opinionId, currentTopic);
-		window.setTimeout(function(){tour4.start()}, 1000);
+		if (whoami.user.preferences.guidedTour) {
+			tour.next();
+		}
 	})
 	jQuery("#closeSettingsForm").on('click touch', function(event) {
 		event.stopImmediatePropagation();
@@ -160,6 +165,8 @@ function opinionForm(edit, context) {
 		}
 		jQuery('#form').remove();
 		formVisible = false;
-		window.setTimeout(function(){tour3.start()}, 1000);
+		if (whoami.user.preferences.guidedTour) {
+			tour.next()
+		}
 	});
 }

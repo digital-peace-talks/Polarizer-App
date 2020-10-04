@@ -205,8 +205,6 @@ function onWebSocketAPI(restObj) {
 			searchResultTopics(restObj);
 		} else if(restObj.path == "/opinion/" + currentTopic + "/") {
 			if(currentScene.name == 'opinionScene') {
-				var firstStep = tour2.getById('opinion-topic-step');
-				firstStep.options.text = "You chose the topic \"" + currentTopicStr + "\", good choice!";
 				myOpinion = restObj.data && restObj.data.find(opinion => opinion.user == "mine");
 				loadOpinions(restObj);
 			}
@@ -334,7 +332,7 @@ function main() {
 					dpt.getDialogList();
 
 					if(whoami.user.preferences.guidedTour) {
-						//startGuidedTour();
+						window.setTimeout(function(){tour.start()}, 1000);
 					} else {
 						jQuery('.tutorialBorder').remove();
 						jQuery('.animated-circle').remove();
@@ -405,5 +403,4 @@ function main() {
 
 document.addEventListener("DOMContentLoaded", function() {
 	main();
-	window.setTimeout(function(){tour1.start()}, 1000);
 });

@@ -478,8 +478,8 @@ function loadOpinions(restObj) {
 			currentTopicStr, {fontSize: 128, width: 19.2, height: 12.8, color: "#550033"});
 
 	dialogRelations(opinionDialogConnections);
-	if(firstTimeLoaded){
-		window.setTimeout(function(){tour2.start()}, 1000);
+	if(firstTimeLoaded && whoami.user.preferences.guidedTour){
+		tour.next()
 	}
 	firstTimeLoaded=false;
 }
