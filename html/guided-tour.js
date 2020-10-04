@@ -160,6 +160,10 @@ tour.addStep({
 
 tour.addStep({
   text: 'This is where you will be notified when others users approve or request a dialogue with you. Good luck!',
+  attachTo: {
+    element: '#dialogues-btn',
+    on: 'top'
+  },
   buttons: [
     {
       text: 'Finish',
