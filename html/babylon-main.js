@@ -75,7 +75,6 @@ function getCollisionBox() {
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
 	mat.diffuseColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
 	mat.specularColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
-	//mat.Color = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
 	mat.emissiveColor = new BABYLON.Color3(10 / 255, 80 / 255, 119 / 255);
 	mat.alpha = 0.45;
 	
@@ -89,7 +88,7 @@ function getCollisionBox() {
 	return(box);
 }
 
-function getCamera(rotate) {
+function getCamera() {
 
 	var camera = new BABYLON.ArcRotateCamera(
 			"Camera",
@@ -328,55 +327,11 @@ var createGenericScene = function(dptMode) {
 		powerSave = false;
 		switch (kbInfo.type) {
 			case BABYLON.KeyboardEventTypes.KEYDOWN:
-				/*
-				console.log("KEY DOWN: ", kbInfo.event.key);
-				var speed = camera._computeLocalCameraSpeed() * 20;
-				if(kbInfo.event.key == 'PageUp') {
-					camera._localDirection.copyFromFloats(0, 0, speed);
-					camera.position.z += speed;
-					console.log('fuck: '+speed);
-				}
-				*/
 				break;
 			case BABYLON.KeyboardEventTypes.KEYUP:
-				//console.log("KEY UP: ", kbInfo.event.keyCode);
-				/*
-				switch(kbInfo.event.code) {
-					case "KeyF":
-						requestSearch();
-						break;
-					case "KeyH":
-						switchToTopics();
-						break;
-					case "KeyL":
-						toggleDialogList();
-						break;
-					case "KeyO":
-						if(currentScene.name == "opinionScene") {
-							jQuery('#form').remove();
-							dpt.opinionPostAllowed(currentTopic);
-						}
-						break;
-					case "KeyT":
-						if(currentScene.name == "topicScene") {
-							jQuery('#form').remove();
-							topicForm();
-						}
-						break;
-				}
-				*/
 		}
 	});
 
-
-	//var gl = new BABYLON.GlowLayer("glow", currentScene);
-	
-	//currentScene.autoClear = false; // Color buffer
-	//currentScene.autoClearDepthAndStencil = false; // Depth and stencil, obviously
-	//currentScene.getAnimationRatio();
-	//currentScene.clearCachedVertexData();
-	//currentScene.cleanCachedTextureBuffer();
-	
 	return currentScene;
 }
 

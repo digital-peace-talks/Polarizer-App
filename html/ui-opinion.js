@@ -18,9 +18,15 @@ function opinionContext(context) {
 			}
 		</div>
 	`);
+	if (whoami.user.preferences.guidedTour) {
+		tour.next()
+	}
 	jQuery("#btn-request-dialog").on('click touch', () => {
 		closeOpinion();
-    dpt.postDialog('', whoami.dptUUID, context.opinionId, currentTopic);
+		dpt.postDialog('', whoami.dptUUID, context.opinionId, currentTopic);
+		if (whoami.user.preferences.guidedTour) {
+			tour.next();
+		}
 	})
 	jQuery("#closeSettingsForm").on('click touch', function(event) {
 		event.stopImmediatePropagation();
@@ -150,6 +156,7 @@ function opinionForm(edit, context) {
 		var opinionId = jQuery('.opinionId').val();
 		var edit = jQuery('.edit').val();
 		if (opinion) {
+				console.log("now I should add the opinion");
 			if (edit == 'edit') {
 				dpt.putOpinion(whoami.dptUUID, opinionId, currentTopic, opinion, context);
 			} else {
@@ -158,5 +165,8 @@ function opinionForm(edit, context) {
 		}
 		jQuery('#form').remove();
 		formVisible = false;
+		if (whoami.user.preferences.guidedTour) {
+			tour.next()
+		}
 	});
 }

@@ -42,158 +42,6 @@ var DPTGlobal = {
 	"COLORS_skybox": 3,
 };
 
-// Script Guided Tour
-function startGuidedTour() {
-
-	jQuery('#animCircle').css('visibility', 'visible');
-
-	console.log(isMobile);
-
-		const guidePosition = [{
-			// welcome to tour
-			top: "auto",
-			left: "0px",
-			bottom: "0px",
-			right: "auto",
-			topMark: document.getElementById('guideNextBtn').getBoundingClientRect().top + "px",
-			leftMark: document.getElementById('guideNextBtn').getBoundingClientRect().left + "px",
-			buttonLeftName: "CLOSE TOUR",
-			buttonRightName: "START TOUR"
-		}, {
-			// Choose a topic 
-			top: "auto",
-			left: "0px",
-			bottom: "0px",
-			right: "auto",
-			topMark: document.getElementById('new-topic-btn').getBoundingClientRect().top + "px",
-			leftMark: document.getElementById('new-topic-btn').getBoundingClientRect().left + "px",
-			buttonLeftName: "BACK",
-			buttonRightName: "NEXT"
-		}, {
-			// start opinion
-			top: "auto",
-			left: "0px",
-			bottom: "0px",
-			right: "auto",
-			buttonLeftName: "BACK",
-			buttonRightName: "NEXT"
-		}, {
-			// Click an opinion to request a dialog
-			top: "auto",
-			left: "0px",
-			bottom: "0px",
-			right: "auto",
-			topMark: "55%",
-			leftMark: "50%",
-			topMark: "40%",
-			leftMark: "50%",
-			buttonLeftName: "BACK",
-			buttonRightName: "FINISH"
-		}
-	];
-	
-
-		
-	
-	
-	const bodyTextEle = document.getElementById('guideBodyText');
-	const contentEle = document.getElementById('guideContent');
-	const contentEle2 = document.getElementById('animCircle');
-	const stepLiEle = document.getElementsByClassName('dot');
-	const buttonLeft = document.getElementById('guidePrevBtn');
-	const buttonRight = document.getElementById('guideNextBtn');
-	const guideTitle = document.getElementById('guideTitle');
-	
-	let currentStepIndex = -1;
-	const stepLength = guidePosition.length;
-	changeStep();
-	document.getElementById("guideNextBtn").addEventListener('click', () => {
-		changeStep('next');
-
-	}, false);
-	document.getElementById("guidePrevBtn").addEventListener('click', () => {
-		changeStep('prev');
-	}, false);
-	document.getElementById('closeBtn').addEventListener('click', () => {
-		// schliessen aktion
-		jQuery("#tutorialBorder").css("display","none");
-		document.getElementById("guideContent").remove();
-		document.getElementById("animCircle").remove();
-	}, false);
-	
-	jQuery("#disableGuidedTour").change(function() {
-	    if(this.checked) {
-			whoami.user.preferences.guidedTour = false;
-	    	dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": false}});
-	    } else {
-	    	whoami.user.preferences.guidedTour = true;
-	    	dpt.userUpdate(whoami.dptUUID, { preferences: { "guidedTour": true}});
-	    }
-	});
-
-	function changeStep(direction) {
-
-		if ((direction === 'prev' && currentStepIndex === 0) || (direction === 'next' && currentStepIndex === stepLength - 1)) {
-			document.getElementById("guideContent").remove();
-		} else {
-			let eraseDotIndex;
-			if (direction === 'prev') {
-				currentStepIndex = currentStepIndex - 1;
-				eraseDotIndex = currentStepIndex === stepLength - 1 ? 0 : currentStepIndex + 1;
-				stepLiEle[eraseDotIndex].classList.remove('active'); // remove dot active
-
-			} else {
-				currentStepIndex = currentStepIndex + 1;
-				eraseDotIndex = currentStepIndex === 0 ? stepLength - 1 : currentStepIndex - 1;
-			}
-			bodyTextEle.style.marginLeft = `${-340 * currentStepIndex}px`; // margin-left 
-			// bodyTextEle.style.left = `${-360*currentStepIndex}px`; // relative+left 
-			//stepLiEle[eraseDotIndex].setAttribute('data-step', ''); // erase number
-			//stepLiEle[currentStepIndex].setAttribute('data-step', currentStepIndex + 1); // add number
-			//stepLiEle[eraseDotIndex].classList.remove('active'); // remove dot active
-			stepLiEle[currentStepIndex].classList.add('active');    // add dot active
-
-			contentEle.style.top = guidePosition[currentStepIndex].top;
-			contentEle.style.left = guidePosition[currentStepIndex].left;
-			contentEle.style.bottom = guidePosition[currentStepIndex].bottom;
-			contentEle.style.right = guidePosition[currentStepIndex].right;
-
-			contentEle2.style.top = "-220px"; //make arrow outside
-			contentEle2.style.left = guidePosition[currentStepIndex].leftMark;
-			buttonLeft.innerText = guidePosition[currentStepIndex].buttonLeftName;
-			buttonRight.innerText = guidePosition[currentStepIndex].buttonRightName;
-		
-			if (currentStepIndex < 1) {
-				jQuery("#text").css("display","block");
-				jQuery(".closeButtonTutorial").css("display","none");
-				jQuery(".closeButtonTutorial2").css("display","block");
-		
-			} else {
-				jQuery("#text").css("display","none");
-				jQuery(".closeButtonTutorial").css("display","block");
-				jQuery(".closeButtonTutorial2").css("display","none");
-			
-			}
-
-			if (currentStepIndex == 0) {
-				jQuery("#steps").css("visibility","hidden");
-			} else {
-				jQuery("#steps").css("visibility","visible");
-			}
-
-			
-			/*
-			if (currentStepIndex == 3) {
-				jQuery("#tutorialBorder").css("display","block");
-			} else {
-				jQuery("#tutorialBorder").css("display","none");
-			}
-			*/
-		}
-	}
-
-} // End Script Guided Tour
-
 
 // from https://hackernoon.com/copying-text-to-clipboard-with-javascript-df4d4988697f
 function copyToClipboard(str) {
@@ -448,7 +296,7 @@ function main() {
 					dpt.getDialogList();
 
 					if(whoami.user.preferences.guidedTour) {
-						startGuidedTour();
+						window.setTimeout(function(){tour.start()}, 1000);
 					} else {
 						jQuery('.tutorialBorder').remove();
 						jQuery('.animated-circle').remove();
@@ -510,10 +358,13 @@ function main() {
 
 	// get 3D.
 	startBabylonEngine();
+	
 }
+
+
 
 // hooray! we start our javascript in main().
 
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function() {
 	main();
 });

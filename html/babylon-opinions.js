@@ -227,13 +227,14 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	if(0) {
 		makePlanesDragable(initiatorOpinion.opinionId, recipientOpinion.opinionId, tube);
 	}
+	return tube;
 }
-
 
 function dialogRelations(opinionDialogConnections) {
 	var initiatorOpinion = {};
 	var i;
 	var recipientOpinion = {};
+	tubes = [];
 	for(var h in opinionDialogConnections) {
 		var odc = opinionDialogConnections[h];
 		for(i in odc) {
@@ -320,13 +321,27 @@ function dialogRelations(opinionDialogConnections) {
 	
 			if('position' in initiatorOpinion
 			&& 'position' in recipientOpinion) {
-				createBiColorTube(initiatorOpinion, recipientOpinion, odc[i]);
+				var tube = createBiColorTube(initiatorOpinion, recipientOpinion, odc[i]);
 			}
+
+		var htmlDiv = document.createElement("div");
+		htmlDiv.className = "babylonElementWrapper dialogWrapper";
+		document.querySelector("#renderCanvas").insertAdjacentElement("afterend", htmlDiv);
+		var defStyle = `background: #f0f0;
+						top:${tube.position.y};
+						left:${tube.position.x};
+						pointer-events:none;
+						width:50px; height:50px;
+						z-index: 1; position: absolute;
+						transform: translate(-50%, -50%);`;
+		htmlDiv.style = defStyle;
+
+		tubes.push(tube);
+		divs.push(htmlDiv);
 		}
 	}
 }
-
-
+firstTimeLoaded = true;
 function loadOpinions(restObj) {
 	var canInvite = false;
 
@@ -336,6 +351,7 @@ function loadOpinions(restObj) {
 				console.log("dispose: "+currentScene.meshes[i].dpt.context);
 				currentScene.meshes[i].dispose();
 			}
+				document.querySelectorAll(".babylonElementWrapper").forEach(function(e){e.remove()});
 		}
 	} else {
 		return;
@@ -352,7 +368,9 @@ function loadOpinions(restObj) {
 		}
 	}
 
-	//var nodes = circlePoints(restObj.data.length, 5, { X: 4, Y: 0 });
+	planes = [];
+	divs = [];
+
 	for(var i = 0; i < restObj.data.length; i++) {
 
 		// check, if the opinion owner already lead a discussion with the other opinion
@@ -390,16 +408,68 @@ function loadOpinions(restObj) {
 			`${restObj.data[i].content}`
 		);
 
-		/*
-	    var minion0 = BABYLON.MeshBuilder.CreateSphere("minion0", {diameter: 0.5}, currentScene);
-	    minion0.position = new BABYLON.Vector3(1,1,1);
-	    plane.onUpdateTextPos.add(function(value) {       
-	        minion0.position.x = value.x;
-	        minion0.position.y = value.y;
-	    })
-	    */
+		debug_plane=plane;
+		camera = currentScene.cameras[0];
+		var htmlDiv = document.createElement("div");
+		htmlDiv.className = "babylonElementWrapper opinionWrapper";
+		document.querySelector("#renderCanvas").insertAdjacentElement("afterend", htmlDiv);
+		var needsUpdate = true;
+		var defStyle = `background: #f0f0;
+						top:${plane.position.y};
+						left:${plane.position.x};
+						pointer-events:none;
+						width:50px; height:50px;
+						z-index: 1; position: absolute;
+						transform: translate(-50%, -50%);`;
+		htmlDiv.style = defStyle;
+
+		planes.push(plane);
+		divs.push(htmlDiv);
 	}
 
+		camera.onProjectionMatrixChangedObservable.add(() => {
+			needsUpdate = true;
+		});
+
+		camera.onViewMatrixChangedObservable.add(() => {
+			needsUpdate = true;
+		});
+		currentScene.registerAfterRender(() => {
+			if (needsUpdate) {
+			planes.forEach(function (plane, i){ 
+
+				// update text node position            
+				const pos = BABYLON.Vector3.Project(
+					plane.getAbsolutePosition(),
+					BABYLON.Matrix.IdentityReadOnly,
+					currentScene.getTransformMatrix(),
+					camera.viewport.toGlobal(
+						engine.getRenderWidth(),
+						engine.getRenderHeight(),
+					),
+				);
+				divs[i].style = `${defStyle} left: ${pos.x}px; top: ${pos.y}px;`;
+
+			}
+			);
+
+			tubes.forEach(function (tube, i){ 
+
+				// update text node position
+				const pos = BABYLON.Vector3.Project(
+					tube.getBoundingInfo().boundingSphere.center,
+					BABYLON.Matrix.IdentityReadOnly,
+					currentScene.getTransformMatrix(),
+					camera.viewport.toGlobal(
+						engine.getRenderWidth(),
+						engine.getRenderHeight(),
+					),
+				);
+				divs[planes.length + i].style = `${defStyle} left: ${pos.x}px; top: ${pos.y}px;`;
+
+				needsUpdate = false;
+			})
+			}});
 
 	// paint the topic
 	var plane = textBlock(
@@ -408,6 +478,10 @@ function loadOpinions(restObj) {
 			currentTopicStr, {fontSize: 128, width: 19.2, height: 12.8, color: "#550033"});
 
 	dialogRelations(opinionDialogConnections);
+	if(firstTimeLoaded && whoami.user.preferences.guidedTour){
+		tour.next()
+	}
+	firstTimeLoaded=false;
 }
 
 function calculateDialogColor(opinionDialogConnection) {
