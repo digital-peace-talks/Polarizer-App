@@ -12,32 +12,21 @@ function loadTopics(restObj) {
 			&& currentScene.meshes[i].dpt.context == 'topicScene') {
 				currentScene.meshes[i].dispose();
 			}
+				document.querySelectorAll(".babylonElementWrapper").forEach(function(e){e.remove()});
 		}
 	}
 	x = xstart;
 	y = ystart;
+
+	var planes = [];
+	var divs = [];
+
+	var htmlDivContainer = document.createElement("div");
+	htmlDivContainer.id = "topics";
+
+	document.querySelector("#renderCanvas").insertAdjacentElement("afterend", htmlDivContainer);
 	for(var i in restObj.data) {
-/*
-		if(i % cols == 0) {
-			x = xstart;
-			y -= 3.2;
-		} else {
-			x += 4.8;
-		}
-		var l = len - 1 - i;
-		var plane = textBlock(
-			x, y, -2,
-			JSON.stringify({
-				"name": "texttexture",
-				"context": "topicScene",
-				"topicId": restObj.data[l]._id,
-				"content": restObj.data[l].content,
-				"topic": restObj.data[l].content,
-				"canEdit": (restObj.data[l].user == 'mine') ? true : false,
-			}),
-			`${restObj.data[l].content} [${restObj.data[l].opinions.length}]`,
-		);
-*/
+
 		var plane = textBlock(
 			restObj.data[i].position.x,
 			restObj.data[i].position.y,
@@ -52,7 +41,46 @@ function loadTopics(restObj) {
 			}),
 			`${restObj.data[i].content} [${restObj.data[i].opinions.length}]`,
 		);
+		camera = currentScene.cameras[0];
+		var htmlDiv = document.createElement("div");
+		htmlDiv.className = "babylonElementWrapper topicWrapper";
+		document.querySelector("#topics").appendChild(htmlDiv);
+		var needsUpdate = true;
+		var defStyle = `top:${Math.min(window.innerHeight - 50, plane.position.y)};
+						left:${plane.position.x};
+						`;
+		htmlDiv.style = defStyle;
+
+		planes.push(plane);
+		divs.push(htmlDiv);
 	}
+		camera.onProjectionMatrixChangedObservable.add(() => {
+			needsUpdate = true;
+		});
+
+		camera.onViewMatrixChangedObservable.add(() => {
+			needsUpdate = true;
+		});
+		currentScene.registerAfterRender(() => {
+			if (needsUpdate) {
+			planes.forEach(function (plane, i){ 
+
+				// update text node position            
+				const pos = BABYLON.Vector3.Project(
+					plane.getAbsolutePosition(),
+					BABYLON.Matrix.IdentityReadOnly,
+					currentScene.getTransformMatrix(),
+					camera.viewport.toGlobal(
+						engine.getRenderWidth(),
+						engine.getRenderHeight(),
+					),
+				);
+				divs[i].style = `${defStyle} left: ${pos.x}px; top: ${pos.y}px;`;
+
+				needsUpdate = false;
+			}
+			)}
+		});
 }
 
 function searchResultTopics(restObj) {
@@ -64,7 +92,7 @@ function searchResultTopics(restObj) {
 	if(currentScene.name == 'topicScene') {
 		for(var i = currentScene.meshes.length - 1; i >= 0; i--) {
 			if('dpt' in currentScene.meshes[i]
-			&& currentScene.meshes[i].dpt.context == 'topicScene') {
+			   && currentScene.meshes[i].dpt.context == 'topicScene') {
 				currentScene.meshes[i].dispose();
 			}
 		}

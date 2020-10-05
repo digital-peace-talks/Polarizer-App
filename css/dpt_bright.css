@@ -20,7 +20,7 @@ filter: invert(%);
 }
 .no-bounce {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
@@ -41,7 +41,7 @@ html,
 body {
   font-family: "DPTFont";
   width: 100%;
-  height: 100%;
+  height: 100vh;
   margin: 0px;
   overflow: hidden;
   position: absolute;
