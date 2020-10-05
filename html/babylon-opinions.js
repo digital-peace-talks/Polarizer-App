@@ -69,19 +69,35 @@ function getIntersection(dx, dy, cx, cy, w, h) {
 	}
 };
 
-function calculateDialogColor(opinionDialogConnection) {
-	const { initiatorRating, recipientRating } = opinionDialogConnection;
-	if (initiatorRating == null || recipientRating == null) {
-		return 'grey-grey'
+function calculateDialogColor(ratings) {
+	blue=1;
+	red=0;
+	green=0;
+	if(ratings.length >= 2){
+		rating1=parseInt(ratings[0].content);
+		rating2=parseInt(ratings[1].content);
+		average=(rating1+rating2)/2;
+		if(average>0){
+			green=average/200;
+		}
+		if(average<0){
+			red=average/200;
+		}
 	}
-	const mean = (initiatorRating + recipientRating) / 2;
-	if (mean < -1 / 3) {
-		return 'red-red'
-	} 
-	if (mean > 1 / 3) {
-		return 'green-green';
-	}
-	return 'blue-blue';
+	var emissiveColor = new BABYLON.Vector3(red,green,blue);
+	return emissiveColor;
+	// const { initiatorRating, recipientRating } = opinionDialogConnection;
+	// if (initiatorRating == null || recipientRating == null) {
+	// 	return 'grey-grey'
+	// }
+	// const mean = (initiatorRating + recipientRating) / 2;
+	// if (mean < -1 / 3) {
+	// 	return 'red-red'
+	// } 
+	// if (mean > 1 / 3) {
+	// 	return 'green-green';
+	// }
+	// return 'blue-blue';
 }
 
 //TODO question: What would be BiColor?
@@ -92,7 +108,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	var status = opinionDialogConnections.dialogStatus;
 
 	//Default color for the line connecting dialogs
-	var emissiveColor = new BABYLON.Color3(0.1, 0.1, 0.1);
+	var emissiveColor = calculateDialogColor(opinionDialogConnections.ratings);
 
 	var distance = 0;
 
@@ -137,6 +153,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	}
 
 	//Define "tube" as a new Tube object
+	 
 	var tube = new BABYLON.MeshBuilder.CreateTube(
 		"tube", {
 			path: [sv, ev],
@@ -156,63 +173,64 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 		status: opinionDialogConnections.dialogStatus,
 		emissiveColor: emissiveColor,
 	};
+	console.log(opinionDialogConnections.ratings);
 
 	var dynamicTexture = new BABYLON.DynamicTexture("DynamicTexture", 32, currentScene);
 	var ctx = dynamicTexture.getContext();
 
 	//Calculate the dialog color.
-	let combination = calculateDialogColor(opinionDialogConnections);
+	//let combination = calculateDialogColor(opinionDialogConnections);
 
 	var reverse = 0;
-	if(combination == 'green-blue') {
-		var reverse = 1;
-		combination = 'blue-green';
-	} else if(combination == 'green-red') {
-		var reverse = 1;
-		combination = 'red-green';
-		emissiveColor = new BABYLON.Vector3(0.5, 0.5, 0.5);
-	} else if(combination == 'blue-red') {
-		var reverse = 1;
-		combination = 'red-blue';
-		emissiveColor = new BABYLON.Vector3(0.2, 0.2, 0.2);
-	}
+	// if(combination == 'green-blue') {
+	// 	var reverse = 1;
+	// 	combination = 'blue-green';
+	// } else if(combination == 'green-red') {
+	// 	var reverse = 1;
+	// 	combination = 'red-green';
+	// 	emissiveColor = new BABYLON.Vector3(0.5, 0.5, 0.5);
+	// } else if(combination == 'blue-red') {
+	// 	var reverse = 1;
+	// 	combination = 'red-blue';
+	// 	emissiveColor = new BABYLON.Vector3(0.2, 0.2, 0.2);
+	// }
 
-	if(combination.indexOf('grey') >= 0) {
-		combination = 'grey-grey';
-		if(status == 'PENDING') {
-			combination = 'brown-brown';
-		}
-	}
+	// if(combination.indexOf('grey') >= 0) {
+	// 	combination = 'grey-grey';
+	// 	if(status == 'PENDING') {
+	// 		combination = 'brown-brown';
+	// 	}
+	// }
 	
 	// dominant color scheme
-	if(1) {
-		if(combination.indexOf('red') >= 0) {
-			combination = 'red-red';
-			emissiveColor = new BABYLON.Vector3(0.6, 0.6, 0.6);
-		}
-		if(combination.indexOf('green') >= 0) {
-			combination = 'green-green';
-		}
-	}
+	// if(1) {
+	// 	if(combination.indexOf('red') >= 0) {
+	// 		combination = 'red-red';
+	// 		emissiveColor = new BABYLON.Vector3(0.6, 0.6, 0.6);
+	// 	}
+	// 	if(combination.indexOf('green') >= 0) {
+	// 		combination = 'green-green';
+	// 	}
+	// }
 
-	tube.dpt.emissiveColor = emissiveColor;
-	image = new Image();
-	image.src = '/' + combination + '.png';
+	//tube.dpt.emissiveColor = emissiveColor;
+	 image = new Image();
+	 image.src = '/' + "grey-grey" + '.png';
 
-	image.onload = function() {
+	 image.onload = function() {
 
-		if(reverse || 1) {
-			ctx.translate(-16, 16);
-			ctx.rotate(-1.57079632679489661922); // -pi/2
-			ctx.translate(-16, 16);
-		} else {
-			ctx.translate(16, -16);
-			ctx.rotate(1.57079632679489661922); // pi/2
-			ctx.translate(16, -16);
-		}
-		ctx.drawImage(this, 0, 0);
-		dynamicTexture.update();
-	};
+	// 	if(reverse || 1) {
+	 		ctx.translate(-16, 16);
+	 		ctx.rotate(-1.57079632679489661922); // -pi/2
+	 		ctx.translate(-16, 16);
+	// 	} else {
+	// 		ctx.translate(16, -16);
+	// 		ctx.rotate(1.57079632679489661922); // pi/2
+	// 		ctx.translate(16, -16);
+	// 	}
+	 	 ctx.drawImage(this, 0, 0);
+	 	dynamicTexture.update();
+	 };
 
 	var mat = new BABYLON.StandardMaterial("mat", currentScene);
 	//mat.alpha = 0.25;
@@ -230,7 +248,7 @@ function createBiColorTube(initiatorOpinion, recipientOpinion, opinionDialogConn
 	mat.diffuseTexture.vScale=distance*8;
 	mat.diffuseTexture.wrapU=1;
 	mat.diffuseTexture.wrapV=1;
-	mat.specularColor = new BABYLON.Color3.Black;
+	mat.specularColor = emissiveColor;
 	//mat.emissiveColor = new BABYLON.Color3(1, 1, 1);
 	mat.emissiveColor = emissiveColor;
 	tube.material = mat;
