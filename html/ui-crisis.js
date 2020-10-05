@@ -19,13 +19,6 @@ function crisisForm(messageId) {
 				After ending this dialog it will be open to everyone in the topic: "${currentDialog.topic}"
 			</p>
 			<form id="crisis">
-				${sliderRowTemplate("How well did we explore our own perspectives?")}
-				${sliderRowTemplate("How well did we explore other perspectives?")}
-				${sliderRowTemplate("How well did we back our claims?")}
-				<div class="reason">
-					<div>Please enter a reason for your rating:</div>
-					<input type="text" name="reason" placeholder="Please enter a reason (optional)">
-				</div>	
 				<input type="submit" class="buttonCrisisSend" name="send" value="Yes, I want to finish this dialog">
 				<input type="button" class="closeButton" value="&#10005;" name="close window" id="crisisCloseWindow">
 			</form>

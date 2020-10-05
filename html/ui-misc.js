@@ -4,6 +4,8 @@
 	 * @returns {string}
 	 */
 	function sliderRowTemplate(question) {
+    rating = currentDialog.ratings.filter(e => e.sender == whoami.user._id) || 0;
+    console.log(rating);
    if(currentDialog.status != "ACTIVE"){
       var inputState = "disabled"}
     else{
@@ -17,7 +19,7 @@
 							<span class="mdi mdi-thumb-down"></span>
 						</div>
 						<div class="col justify-center">
-							<input type="range" style="z-index:400" name="rating" min="-100" max="100" value="0" class="slider" ${inputState} />
+							<input type="range" style="z-index:400" name="rating" min="-100" max="100" value="${rating[0].content}" class="slider" ${inputState} />
 						</div>
 						<div class="col col-1">
 							<span class="mdi mdi-thumb-up"></span>
