@@ -53,6 +53,7 @@ module.exports.getOpinionsByTopicId = async (options, userId) => {
 	
 						var topo = {
 							dialogId: dialog._id,
+							ratings: dialog.ratings,
 							opinionId: opinions[i]._id,
 							initiatorsOpinion: '',
 							recipientsOpinion: '',

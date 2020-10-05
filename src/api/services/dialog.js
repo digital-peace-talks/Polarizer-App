@@ -404,10 +404,17 @@ module.exports.updateRating = async (options) => {
 	var dialog;
 	
 	try {
-
 		dialog = await Dialog.findById(options.dialogId);
-		console.log("message");
-		// dialog.ratings.({'sender': options.body.sender}, options.body, {upsert: true});
+		if(dialog.ratings.some(e => e.sender == options.body.sender)){
+			console.log("true");
+			dialog.ratings.forEach((e,i) =>
+				{if(e.sender == options.body.sender){
+					dialog.ratings[i]=options.body;
+				}})
+		} else {
+			dialog.ratings.push(options.body);
+		}
+		console.log(dialog.ratings);
 		dialog.save();
 
 	} catch(error) {

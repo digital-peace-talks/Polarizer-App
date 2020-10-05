@@ -391,6 +391,7 @@ async function getDialogById(data, dptUUID, socket, getSet) {
 		for(var r in ret) {
 	//		dialog.crisises = ret.crisises;
 			dialog[r] = {};
+			dialog[r].ratings = ret[r].ratings;
 			dialog[r].messages = [];
 			dialog[r].crisises = [];
 			dialog[r].extensionRequests = [];
