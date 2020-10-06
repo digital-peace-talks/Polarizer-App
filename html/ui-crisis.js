@@ -16,10 +16,10 @@ function crisisForm(messageId) {
 		<div id="crisis">
 			<h1>Finishing this dialog</h1>
 			<p>
-				After ending this dialog it will be open to everyone in the topic: "${currentDialog.topic}"
+				Do you want to make your chat public? No changes can be made afterwards.
 			</p>
 			<form id="crisis">
-				<input type="submit" class="buttonCrisisSend" name="send" value="Yes, I want to finish this dialog">
+				<input type="submit" class="buttonCrisisSend" name="send" value="Yes, publish now">
 				<input type="button" class="closeButton" value="&#10005;" name="close window" id="crisisCloseWindow">
 			</form>
 		</div>
@@ -30,7 +30,8 @@ function crisisForm(messageId) {
 	jQuery("#crisis").submit(function (event) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
-		const rating = getMeanRating();
+		//crisis rating is deprecated, rating has moved to dialog
+		const rating = 0;
 		var reason = jQuery('input[name="reason"]').val();
       if(!reason) {
           reason = "No reason provided";
@@ -62,15 +63,4 @@ function crisisForm(messageId) {
 		}
 	});
 
-	/**
-	 * Calculates the mean rating from all of the sliders
-	 * @returns {number}
-	 */
-	function getMeanRating() {
-		const ratingSum = parseInt(jQuery('.slider')[0].value) / 100
-		 + parseInt(jQuery('.slider')[1].value) / 100 
-		 + parseInt(jQuery('.slider')[2].value) / 100;
-		 const mean = ratingSum / 3;
-		 return mean;
-	}
 }

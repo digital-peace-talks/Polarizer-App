@@ -296,7 +296,7 @@ function main() {
 					dpt.getDialogList();
 
 					if(whoami.user.preferences.guidedTour) {
-						window.setTimeout(function(){tour.start()}, 1000);
+						window.setTimeout(function(){tour.start()}, 2000);
 					} else {
 						jQuery('.tutorialBorder').remove();
 						jQuery('.animated-circle').remove();

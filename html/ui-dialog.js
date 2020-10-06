@@ -26,7 +26,7 @@ function emoticon(d) {
 }
 
 function dialogForm(secondDialog) {
-  const QUIT_DIALOG_BUTTON = '<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none"> Quit and rate dialog</button>';
+  const QUIT_DIALOG_BUTTON = '<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none"> Publish Now</button>';
   var headerMine;
   var headerOther;
   var dialog = "";
@@ -197,7 +197,7 @@ function dialogForm(secondDialog) {
 			<div class="top">
 				<center>
 					<h3>${currentDialog.topic}</h3>
-				${sliderRowTemplate("How polarised is the chat right now?")}
+				${sliderRowTemplate("How do you currently feel about this chat?")}
 				</center>
 				
 			</div>
@@ -427,9 +427,5 @@ function dialogForm(secondDialog) {
     //
     var rating = e.target.value;
     dpt.updateDialogRating(rating, whoami.dptUUID, currentDialog.dialog);
-    console.log("update dialog liverating");
-    console.log("get tube");
-    console.log("re-render-tube");
-
   });
 }
