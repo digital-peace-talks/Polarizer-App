@@ -30,8 +30,9 @@ function crisisForm(messageId) {
 	jQuery("#crisis").submit(function (event) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
-		//crisis rating is deprecated, rating has moved to dialog
-		const rating = 0;
+		const userRatings = currentDialog.ratings.filter(e => e.sender == whoami.user._id);
+		const ratings = userRatings.map(r => parseInt(r.content));
+		const rating = ratings.reduce((a, r) => a + r)/ratings.length;
 		var reason = jQuery('input[name="reason"]').val();
       if(!reason) {
           reason = "No reason provided";
