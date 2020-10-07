@@ -69,11 +69,11 @@ function dialogForm(secondDialog) {
       ) {
         headerMine += `Last statement: ${
           currentDialog.crisises[i].reason
-        }<br>Rating: ${emoticon(currentDialog.crisises[i].rating)}`;
+        }<br>Rating: ${emoticon(currentDialog.ratings.filter(e => e.sender === whoami.user._id )[0].content)}`;
       } else if (currentDialog.crisises[i].initiator == "notme") {
         headerOther += `Last statement: ${
           currentDialog.crisises[i].reason
-        }<br>Rating: ${emoticon(currentDialog.crisises[i].rating)}`;
+        }<br>Rating: ${emoticon(currentDialog.ratings.filter(e => e.sender !== whoami.user._id )[0].content)}`;
       }
     } else {
       if (

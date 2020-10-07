@@ -30,7 +30,9 @@ function crisisForm(messageId) {
 	jQuery("#crisis").submit(function (event) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
-		const userRatings = currentDialog.ratings.filter(e => e.sender == whoami.user._id);
+		//this code is deprecated, rating is derived from the dialog object rating
+		// It is left here for not breaking the postCrisis function
+		const userRatings = currentDialog.ratings.filter(e => e.sender === whoami.user._id);
 		const ratings = userRatings.map(r => parseInt(r.content));
 		const rating = ratings.reduce((a, r) => a + r)/ratings.length;
 		var reason = jQuery('input[name="reason"]').val();
