@@ -182,6 +182,11 @@ function onWebSocketAPI(restObj) {
 			loadDialogList(restObj);
 		}	
 	} else if(restObj.method == 'post') {
+		if(restObj.path.endsWith('/rating/')) {
+			if(currentScene.name == 'opinionScene') {
+				dpt.getOpinionByTopic(currentTopic);
+			}
+		}
 		if(restObj.path == '/dialog/') {
 			dpt.getOpinionByTopic(currentTopic);
 		}	
