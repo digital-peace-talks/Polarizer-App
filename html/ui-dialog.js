@@ -69,11 +69,11 @@ function dialogForm(secondDialog) {
       ) {
         headerMine += `Last statement: ${
           currentDialog.crisises[i].reason
-        }<br>Rating: ${emoticon(currentDialog.ratings.filter(e => e.sender === whoami.user._id )[0].content)}`;
+        }<br>Rating: ${emoticon(currentDialog.ratings[0].content)}`;
       } else if (currentDialog.crisises[i].initiator == "notme") {
         headerOther += `Last statement: ${
           currentDialog.crisises[i].reason
-        }<br>Rating: ${emoticon(currentDialog.ratings.filter(e => e.sender !== whoami.user._id )[0].content)}`;
+        }<br>Rating: ${emoticon(currentDialog.ratings[1].content)}`;
       }
     } else {
       if (
@@ -196,9 +196,14 @@ function dialogForm(secondDialog) {
 
 			<div class="top">
 				<center>
-					<h3>${currentDialog.topic}</h3>
-				${sliderRowTemplate("How do you currently feel about this chat?")}
-				</center>
+					<h3>${currentDialog.topic}</h3>`
+   
+  if(currentDialog.status == "ACTIVE"){
+    html +=sliderRowTemplate("How do you currently feel about this chat?")
+  }
+
+  html += `
+        </center>
 				
 			</div>
 			<div class="middle">
