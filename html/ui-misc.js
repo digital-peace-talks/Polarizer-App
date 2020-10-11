@@ -1,3 +1,34 @@
+	/**
+	 * Generates a slider that answers a numeric question
+	 * @param {string} question Question for the current slider
+	 * @returns {string}
+	 */
+	function sliderRowTemplate(question) {
+    var rating = currentDialog.ratings.filter(e => e.sender == whoami.user._id);
+    var ratingVal = (rating.length > 0) ? rating[0].content : 0 ;
+   if(currentDialog.status != "ACTIVE"){
+     return
+    }
+		return `
+			<div class="row">
+				<div class="col">
+					<div class="text-center">${question}</div>
+					<div class="row">
+						<div class="col col-1">
+							<span class="mdi mdi-heart-broken">💔</span>
+						</div>
+						<div class="col justify-center">
+							<input type="range" style="z-index:400" name="rating" min="-100" max="100" value="${ratingVal}" class="slider" />
+						</div>
+						<div class="col col-1">
+							<span class="mdi mdi-heart">❤️</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		`;
+	}
+
 function hideMenu() {
   var menuLeft = canvas.width;
   if (canvas.width > 640) {

@@ -182,6 +182,11 @@ function onWebSocketAPI(restObj) {
 			loadDialogList(restObj);
 		}	
 	} else if(restObj.method == 'post') {
+		if(restObj.path.endsWith('/rating/')) {
+			if(currentScene.name == 'opinionScene') {
+				dpt.getOpinionByTopic(currentTopic);
+			}
+		}
 		if(restObj.path == '/dialog/') {
 			dpt.getOpinionByTopic(currentTopic);
 		}	
@@ -296,7 +301,7 @@ function main() {
 					dpt.getDialogList();
 
 					if(whoami.user.preferences.guidedTour) {
-						window.setTimeout(function(){tour.start()}, 1000);
+						window.setTimeout(function(){tour.start()}, 2000);
 					} else {
 						jQuery('.tutorialBorder').remove();
 						jQuery('.animated-circle').remove();

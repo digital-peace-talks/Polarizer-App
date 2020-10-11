@@ -245,6 +245,18 @@ class DPT {
 		this.socket.emit('api', obj);
 	}
 	
+	updateDialogRating(rating, publicKey, dialogId) {
+		this.socket.emit('api', {
+			method: 'post',
+			path: '/dialog/'+dialogId+'/rating/',
+			data: {
+				publicKey: publicKey,
+				rating: rating,
+				dialogId: dialogId
+			},
+		});
+	}
+
 	postMessage(message, publicKey, dialogId) {
 		this.socket.emit('api', {
 			method: 'post',

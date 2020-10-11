@@ -86,8 +86,6 @@ function opinionForm(edit, context) {
 		Please enter a new opinion:<br>
 		<form id="opinion" class="opinionForm">
 		<textarea name="opinion" class="opinion">${opinion}</textarea><br>
-		Details:
-		<textarea class="opinionContext">${opinionContext}</textarea>
 		<input class="button" type="submit" value="Confirm"> 
 		<input class="closeButton" type="button" value="&#10005;" name="close window"
 		id="CloseOpinionForm">${deleteButton}${edit}${opinionIdHidden}

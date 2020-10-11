@@ -16,17 +16,10 @@ function crisisForm(messageId) {
 		<div id="crisis">
 			<h1>Finishing this dialog</h1>
 			<p>
-				After ending this dialog it will be open to everyone in the topic: "${currentDialog.topic}"
+				Do you want to make your chat public? No changes can be made afterwards.
 			</p>
 			<form id="crisis">
-				${sliderRowTemplate("How well did we explore our own perspectives?")}
-				${sliderRowTemplate("How well did we explore other perspectives?")}
-				${sliderRowTemplate("How well did we back our claims?")}
-				<div class="reason">
-					<div>Please enter a reason for your rating:</div>
-					<input type="text" name="reason" placeholder="Please enter a reason (optional)">
-				</div>	
-				<input type="submit" class="buttonCrisisSend" name="send" value="Yes, I want to finish this dialog">
+				<input type="submit" class="buttonCrisisSend" name="send" value="Yes, publish now">
 				<input type="button" class="closeButton" value="&#10005;" name="close window" id="crisisCloseWindow">
 			</form>
 		</div>
@@ -37,7 +30,11 @@ function crisisForm(messageId) {
 	jQuery("#crisis").submit(function (event) {
 		event.stopImmediatePropagation();
 		event.preventDefault();
-		const rating = getMeanRating();
+		//this code is deprecated, rating is derived from the dialog object rating
+		// It is left here for not breaking the postCrisis function
+		const userRatings = currentDialog.ratings.filter(e => e.sender === whoami.user._id);
+		const ratings = userRatings.map(r => parseInt(r.content));
+		const rating = ratings.reduce((a, r) => a + r)/ratings.length;
 		var reason = jQuery('input[name="reason"]').val();
       if(!reason) {
           reason = "No reason provided";
@@ -69,41 +66,4 @@ function crisisForm(messageId) {
 		}
 	});
 
-	/**
-	 * Generates a slider that answers a numeric question
-	 * @param {string} question Question for the current slider
-	 * @returns {string}
-	 */
-	function sliderRowTemplate(question) {
-		return `
-			<div class="row">
-				<div class="col">
-					<div class="text-center">${question}</div>
-					<div class="row">
-						<div class="col col-1">
-							<span class="mdi mdi-thumb-down"></span>
-						</div>
-						<div class="col justify-center">
-							<input type="range" style="z-index:400" name="rating" min="-100" max="100" value="0" class="slider" />
-						</div>
-						<div class="col col-1">
-							<span class="mdi mdi-thumb-up"></span>
-						</div>
-					</div>
-				</div>
-			</div>
-		`;
-	}
-
-	/**
-	 * Calculates the mean rating from all of the sliders
-	 * @returns {number}
-	 */
-	function getMeanRating() {
-		const ratingSum = parseInt(jQuery('.slider')[0].value) / 100
-		 + parseInt(jQuery('.slider')[1].value) / 100 
-		 + parseInt(jQuery('.slider')[2].value) / 100;
-		 const mean = ratingSum / 3;
-		 return mean;
-	}
 }

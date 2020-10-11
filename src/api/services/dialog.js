@@ -395,6 +395,46 @@ module.exports.postMessage = async (options) => {
 
 /**
  * @param {Object} options
+ * @param {String} options.dialogId ID of dialog to update
+ * @throws {Error}
+ * @return {Promise}
+ */
+module.exports.updateRating = async (options) => {
+
+	var dialog;
+	
+	try {
+		dialog = await Dialog.findById(options.dialogId);
+		if(dialog.ratings.some(e => e.sender == options.body.sender)){
+			console.log("true");
+			dialog.ratings.forEach((e,i) =>
+				{if(e.sender == options.body.sender){
+					dialog.ratings[i]=options.body;
+				}})
+		} else {
+			dialog.ratings.push(options.body);
+		}
+		console.log(dialog.ratings);
+		dialog.save();
+
+	} catch(error) {
+
+		throw {
+			status: 500,
+			data: error.message||error.data,
+		};
+
+	}
+
+	return {
+		status: 200,
+		data: dialog,
+	};
+};
+
+
+/**
+ * @param {Object} options
  * @param {String} options.dialogId ID of dialog to post crisis to
  * @throws {Error}
  * @return {Promise}

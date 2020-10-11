@@ -26,7 +26,7 @@ function emoticon(d) {
 }
 
 function dialogForm(secondDialog) {
-  const QUIT_DIALOG_BUTTON = '<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none"> Quit and rate dialog</button>';
+  const QUIT_DIALOG_BUTTON = '<button class="crisis mdi mdi-18px mdi-account-arrow-right" id="none"> Publish Now</button>';
   var headerMine;
   var headerOther;
   var dialog = "";
@@ -69,11 +69,11 @@ function dialogForm(secondDialog) {
       ) {
         headerMine += `Last statement: ${
           currentDialog.crisises[i].reason
-        }<br>Rating: ${emoticon(currentDialog.crisises[i].rating)}`;
+        }<br>Rating: ${emoticon(currentDialog.ratings[0].content)}`;
       } else if (currentDialog.crisises[i].initiator == "notme") {
         headerOther += `Last statement: ${
           currentDialog.crisises[i].reason
-        }<br>Rating: ${emoticon(currentDialog.crisises[i].rating)}`;
+        }<br>Rating: ${emoticon(currentDialog.ratings[1].content)}`;
       }
     } else {
       if (
@@ -190,13 +190,20 @@ function dialogForm(secondDialog) {
     var opinionLabel2 = "Opinion B";
   }
 
+
   var html = `
 		<div id="dialogFrame">
 
 			<div class="top">
 				<center>
-					<h3>${currentDialog.topic}</h3>
-				</center>
+					<h3>${currentDialog.topic}</h3>`
+   
+  if(currentDialog.status == "ACTIVE"){
+    html +=sliderRowTemplate("How do you currently feel about this chat?")
+  }
+
+  html += `
+        </center>
 				
 			</div>
 			<div class="middle">
@@ -419,4 +426,11 @@ function dialogForm(secondDialog) {
   } else {
     jQuery("#dialogInput").focus();
   }
+  jQuery(".slider").on("input change", function(e) {
+    // console.log(e.target.value);
+    //console.log("get dialog");
+    //
+    var rating = e.target.value;
+    dpt.updateDialogRating(rating, whoami.dptUUID, currentDialog.dialog);
+  });
 }
