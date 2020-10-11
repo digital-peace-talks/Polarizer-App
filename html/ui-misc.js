@@ -7,9 +7,8 @@
     var rating = currentDialog.ratings.filter(e => e.sender == whoami.user._id);
     var ratingVal = (rating.length > 0) ? rating[0].content : 0 ;
    if(currentDialog.status != "ACTIVE"){
-      var inputState = "disabled"}
-    else{
-    var inputState = ""}
+     return
+    }
 		return `
 			<div class="row">
 				<div class="col">
@@ -19,7 +18,7 @@
 							<span class="mdi mdi-heart-broken">💔</span>
 						</div>
 						<div class="col justify-center">
-							<input type="range" style="z-index:400" name="rating" min="-100" max="100" value="${ratingVal}" class="slider" ${inputState} />
+							<input type="range" style="z-index:400" name="rating" min="-100" max="100" value="${ratingVal}" class="slider" />
 						</div>
 						<div class="col col-1">
 							<span class="mdi mdi-heart">❤️</span>

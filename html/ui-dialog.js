@@ -60,27 +60,31 @@ function dialogForm(secondDialog) {
     dialog = '<i id="props">&nbsp;</i>';
   }
 
-  for (const crisis of currentDialog.crisises) {
+  for (var i = 0; i < currentDialog.crisises.length; i++) {
     viewOnly = true;
     if (currentDialog.status == "CLOSED") {
-      if (crisis.initiator == "me" || crisis.recipient == "notme2") {
-        const rating = currentDialog.ratings.length
-          ? currentDialog.ratings.filter(e => e.sender === whoami.user._id)[0].content
-          : crisis.rating
-        headerMine += `Last statement: ${crisis.reason
-          }<br>Rating: ${emoticon(rating)}`;
-      } else if (crisis.initiator == "notme") {
-        const rating = currentDialog.ratings.length ? currentDialog.ratings.filter(e => e.sender !== whoami.user._id)[0].content : crisis.rating
-        headerOther += `Last statement: ${crisis.reason
-          }<br>Rating: ${emoticon(rating)}`;
+      if (
+        currentDialog.crisises[i].initiator == "me" ||
+        currentDialog.crisises[i].recipient == "notme2"
+      ) {
+        headerMine += `Last statement: ${
+          currentDialog.crisises[i].reason
+        }<br>Rating: ${emoticon(currentDialog.ratings[0].content)}`;
+      } else if (currentDialog.crisises[i].initiator == "notme") {
+        headerOther += `Last statement: ${
+          currentDialog.crisises[i].reason
+        }<br>Rating: ${emoticon(currentDialog.ratings[1].content)}`;
       }
     } else {
-      if (crisis.initiator == "me" || crisis.recipient == "notme2") {
+      if (
+        currentDialog.crisises[i].initiator == "me" ||
+        currentDialog.crisises[i].recipient == "notme2"
+      ) {
         headerMine += "<h4>Ready to End</h4>";
-      } else if (crisis.initiator == "notme") {
+      } else if (currentDialog.crisises[i].initiator == "notme") {
         headerOther += "<h4>Ready to End</h4>";
         otherReadyToEnd = true;
-      } else if (crisis.initiator == "notme") {
+      } else if (currentDialog.crisises[i].initiator == "notme") {
       }
     }
   }
@@ -130,15 +134,17 @@ function dialogForm(secondDialog) {
         ) {
           propositionMine = `Proposion: ${secondDialog.headerProposition}<br>`;
         }
-        ratingMe = `${propositionMine}Last statement: ${secondDialog.crisises[i].reason
-          }<br>Rating: ${emoticon(secondDialog.crisises[i].rating)}`;
+        ratingMe = `${propositionMine}Last statement: ${
+          secondDialog.crisises[i].reason
+        }<br>Rating: ${emoticon(secondDialog.crisises[i].rating)}`;
       } else if (secondDialog.crisises[i].initiator == "notme") {
         var propositionOther = "";
         if (secondDialog.initiator == "notme") {
           propositionOther = `Proposion: ${secondDialog.headerProposition}<br>`;
         }
-        ratingOther = `${propositionOther}Last statement: ${secondDialog.crisises[i].reason
-          }<br>Rating: ${emoticon(secondDialog.crisises[i].rating)}`;
+        ratingOther = `${propositionOther}Last statement: ${
+          secondDialog.crisises[i].reason
+        }<br>Rating: ${emoticon(secondDialog.crisises[i].rating)}`;
       }
     }
 
@@ -190,9 +196,14 @@ function dialogForm(secondDialog) {
 
 			<div class="top">
 				<center>
-					<h3>${currentDialog.topic}</h3>
-				${sliderRowTemplate("How do you currently feel about this chat?")}
-				</center>
+					<h3>${currentDialog.topic}</h3>`
+   
+  if(currentDialog.status == "ACTIVE"){
+    html +=sliderRowTemplate("How do you currently feel about this chat?")
+  }
+
+  html += `
+        </center>
 				
 			</div>
 			<div class="middle">
@@ -415,7 +426,7 @@ function dialogForm(secondDialog) {
   } else {
     jQuery("#dialogInput").focus();
   }
-  jQuery(".slider").on("input change", function (e) {
+  jQuery(".slider").on("input change", function(e) {
     // console.log(e.target.value);
     //console.log("get dialog");
     //

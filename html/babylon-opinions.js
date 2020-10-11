@@ -78,10 +78,12 @@ function calculateDialogColor(ratings) {
 		rating2=parseInt(ratings[1].content);
 		average=(rating1+rating2)/2;
 		if(average>0){
-			green=average/200;
+			green=average/100;
+			blue=1-green;
 		}
 		if(average<0){
-			red=average/200;
+			red=(average/100)*-1;
+			blue=1-red;
 		}
 	}
 	var emissiveColor = new BABYLON.Vector3(red,green,blue);
