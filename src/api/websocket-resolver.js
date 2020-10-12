@@ -389,11 +389,24 @@ async function getDialogById(data, dptUUID, socket, getSet) {
 		var ret = await dialogService.getDialog(data, getSet);
 		ret = ret.data;
 		for(var r in ret) {
-	//		dialog.crisises = ret.crisises;
+			if((ret[r].ratings.length == 0) && (ret[r].crisises.length == 2)){
+				for(var i=0; i<2; i++){
+					const rating = ret[r].crisises[i].rating*100;
+					const sender = ret[r].crisises[i].initiator;
+					ret[r].ratings[i] = {"content": rating, "sender": sender};
+					await dialogService.updateRating({
+						dialogId: data.body.dialogId,
+						body: {
+							content: rating,
+							sender: sender
+						}
+			});
+				}
+			}
 			dialog[r] = {};
-			dialog[r].ratings = ret[r].ratings;
 			dialog[r].messages = [];
 			dialog[r].crisises = [];
+			dialog[r].ratings = ret[r].ratings;
 			dialog[r].extensionRequests = [];
 			dialog[r].status = ret[r].status;
 			dialog[r].opinionProposition = ret[r].opinionProposition;
@@ -422,19 +435,6 @@ async function getDialogById(data, dptUUID, socket, getSet) {
 			for(var i=0; i < ret[r].crisises.length; i++) {
 				var crisis = {};
 				crisis.crisisesId = ret[r].crisises[i]._id.toString();
-				/*
-				if(ret[r].crisises[i].initiator.toString() == user.user.id) {
-					crisis.initiator = 'me';
-					crisis.recipient = 'notme';
-//				} else if(dialog[r].recipient == "notme2") {
-				} else if(ret[r].crisises[i].initiator.toString() == notme) {
-					crisis.initiator = 'notme';
-					crisis.recipient = 'me';
-				} else {
-					crisis.initiator = 'notme';
-					crisis.recipient = 'notme2';
-				}
-				*/
 				if(ret[r].crisises[i].initiator.toString() == me) {
 					crisis.initiator = 'me';
 					crisis.recipient = 'notme';

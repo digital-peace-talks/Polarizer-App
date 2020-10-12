@@ -16,9 +16,9 @@ function setCaretToPos(input, pos) {
 }
 
 function emoticon(d) {
-  if (d > 0.25) {
+  if (d > 25) {
     return '<span id="positive" style="font-size: 28px">&#128512; Positive</span>';
-  } else if (d < -0.25) {
+  } else if (d < -25) {
     return '<span id="negative" style="font-size: 28px">&#128544; Negative</span>';
   } else {
     return '<span id="neutral" style="font-size: 28px">&#128528; Neutral</span>';
