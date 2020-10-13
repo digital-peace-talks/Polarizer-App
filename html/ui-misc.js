@@ -15,7 +15,7 @@
 					<div class="text-center">${question}</div>
 					<div class="row">
 						<div class="col col-1">
-							<span class="mdi mdi-heart-broken">💔</span>
+							<span class="mdi mdi-skull">💀</span>
 						</div>
 						<div class="col justify-center">
 							<input type="range" style="z-index:400" name="rating" min="-100" max="100" value="${ratingVal}" class="slider" />
