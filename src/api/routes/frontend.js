@@ -136,7 +136,7 @@ router.get('/recover', async(req, res, next) => {
 	}
 
 	if (req.signedCookies.dptUUID === undefined) {
-		console.log("no cookie found, set new one");
+		console.log("no cookie found, set new one in get method");
 		// The client need to get the uuid for the first time, it needs to send it back.
 		//		cookieOptions.httpOnly = false;
 		//		res.cookie('dptUUID', dptUUID, cookieOptions)
