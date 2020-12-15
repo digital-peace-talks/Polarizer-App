@@ -1,8 +1,8 @@
-# Digital Peace Talks
+# Polarizer.io
 
 ## About
 
-Digital Peace Talks is (and always will be) a free and open web app that visualises the quality of interactions between opinions expressed to a given topic. 
+Polarizer.io is (and always will be) a free and open web app that visualises the quality of interactions between opinions expressed to a given topic. 
 
 ## Features:
 
@@ -40,7 +40,7 @@ Both users can rate an ended dialogue with negative, neutral or positive. Once b
 -->The protocols of rated dialogues are pubslished! 
 
 ## Live demos
-- [user tests](https://demo.dpt.world/)
+- [user tests](https://demo.polarizer.io/)
 
 
 ## Screenshot:
