@@ -148,29 +148,39 @@ router.get('/', async (req, res, next) => {
 				  fetch("/metamask?publicAddress=" + publicAddress)
 				  .then((response) => (response.json()))
 				  .then((data) => {
-				    const nonce = data.nonce;
-				    const publicAddress = data.publicAddress;
-				    const message = "I authorize Metamask to sign my one-time nonce for sign-in to DPT: " + nonce;
+				  	return handleSign({data.nonce, data.publicAddress});
+				  })
+				  .then((res) => {
+				    handleVerify(res);
+				  })
+				  .catch((err) => console.log(err));
+				}
+
+
+				
+				const handleSign = ({nonce, publicAddress}) => {
+					return new Promise((resolve, reject) => {
+					  const message = "I authorize Metamask to sign my one-time nonce for sign-in to DPT: " + nonce;
 				    window.web3.personal.sign(
 				      window.web3.fromUtf8(message), publicAddress, ((err, signature) => {
 				        if (err) {
 				          console.log("Error in signing");
+				          return reject(err);
 				        }
 				        console.log("Success signing!");
-				        return {signature: signature, publicAddress: publicAddress}; 
+				        return resolve({signature: signature, publicAddress: publicAddress}); 
 				      })
 				    )
-				  })
-				  .then((data) => {
-				    console.log("Verifying!");
-				    console.log(data);
-				    fetch("/verifysig?publicAddress" + data.publicAddress + "&signature=" + data.signature)
-				    .then((data) => {
+					});    
+				}
+				
+				const handleVerify = ({publicAddress, signature}) => {
+				  	console.log("Verifying!");
+				    fetch("/verifysig?publicAddress" + publicAddress + "&signature=" + signature)
+				    .then((res) => {
 				      console.log("Redirect here");
-				      fetch("/recovermeta?session=" + data.newCookie)
-				    });				  	
-				  })
-				  .catch((err) => console.log(err));
+				      fetch("/recovermeta?session=" + res.newCookie)
+				    });				
 				}
 			</script>
 			</body>
