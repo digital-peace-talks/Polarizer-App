@@ -26,11 +26,12 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  dbUrl: mongodb://localhost/dpt-dev
+  dbUrl: mongodb+srv://devpatrick:polarizer@testdpt.wfj1w.mongodb.net/test
+#  dbUrl: mongodb://localhost/dpt-dev
 
 production:
   <<: *defaults
-  dbUrl: mongodb://localhost/dpt-prod
+  dbUrl: mongodb+srv://devpatrick:polarizer@testdpt.wfj1w.mongodb.net/test
 
   logger:
     level: debug
