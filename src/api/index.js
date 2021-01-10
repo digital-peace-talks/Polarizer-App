@@ -6,6 +6,7 @@ const config = require("../lib/config");
 const logger = require("../lib/logger");
 const cors = require("cors");
 const favicon = require('serve-favicon');
+const path = require('path');
 
 const log = logger(config.logger);
 const app = express();
@@ -46,6 +47,8 @@ app.use(favicon(process.cwd()+'/static/favicon.ico'));
  * Routes
  */
 app.use("/metadata", require("./routes/metadata"));
+app.use("/metamask", require("./routes/metamask"));
+app.use("/verifysig", require("./routes/verifysig"));
 app.use("/user", require("./routes/user"));
 app.use("/topic", require("./routes/topic"));
 app.use("/opinion", require("./routes/opinion"));
@@ -55,6 +58,7 @@ app.use("/misc", require("./routes/misc"));
 app.use(express.static("static"));
 app.use(express.static("html"));
 app.use(express.static("css"));
+app.use(express.static(path.join(__dirname, '../html')));
 app.use("/external/", express.static("external"));
 app.use("/skybox/", express.static("skybox"));
 app.use("/", require("./routes/frontend"));

@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const crypto = require('crypto');
-const generate = require("../../lib/utils.js").generateNonce;
 const onlineTimesSchema = mongoose.Schema({
 	login: {type: Date, default: Date.now},
 	logout: {type: Date, default: Date.now},
@@ -31,7 +30,7 @@ const userSchema = mongoose.Schema({
 	publicAddress: {type: String, unique: true},
 
 	// Nonce for Metamask/web3 wallet login
-	nonce: {type: String, unique: true, default: generate},
+	nonce: {type: String, unique: true},
 
 	// humanID
 	humanID: {type: String, unique: true},

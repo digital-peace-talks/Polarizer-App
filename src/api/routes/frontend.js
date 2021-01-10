@@ -6,7 +6,7 @@ const uuid = require('uuid/v4');
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const getPhrase = require('../../lib/phrasegenerator')
-const web3 = require('web3');
+const Web3 = require('web3');
 
 
 const router = new express.Router();
@@ -75,7 +75,7 @@ router.get('/', async (req, res, next) => {
 					<div class="links">
 						<h1>Create a new account</h1>
 						<p>
-							Digital Peace Talks uses a randomly generated passphraze to authenticate you.
+							Digital Peace Talks uses a randomly generated passphrase to authenticate you.
 						</p>
 						<h3><i>The passphrase cannot be recovered.</i></h3> 
 						<p>You can find your passphrase anytime at <code>menu>settings</code></p>
@@ -108,12 +108,23 @@ router.get('/', async (req, res, next) => {
 						</form>
 					</div>
 					<div class="rechts">
-						<h1>Sign in with Metamask</h1>
-						<p>If you have a Metamask wallet, you may login securely using it.</p>
+						<h1>Sign in with humanID</h1>
+						<p>Sign in anonymously and securely through humanID using a phone number</p>
 						<div class="row center">
 						<div class="col"></div>
 							<div class="col">
-								<button type="button" onclick="loginEth()" class="start" name="metamask">Authenticate with Metamask &#9655;</button>
+								<a href="[target-page]" class="human"><img src="anonymous-login.svg" alt="Anonymous Login with humanID" height="32"></a>
+							</div>
+							<div class="col"></div>
+						</div>
+					</div>
+					<div class="rechts">
+						<h1>Sign in with Metamask</h1>
+						<p>Sign in using your Metamask crypto wallet</p>
+						<div class="row center">
+						<div class="col"></div>
+							<div class="col">
+								<button type="button" onclick="loginEth();" class="start" name="metamask">Authenticate with Metamask &#9655;</button>
 							</div>
 							<div class="col"></div>
 						</div>
@@ -137,7 +148,7 @@ router.get('/', async (req, res, next) => {
 				}
 				const ethEnabled = () => {
 					if (window.ethereum) {
-						window.web3 = new web3(window.ethereum);
+						window.web3 = new Web3(window.ethereum);
 						window.ethereum.enable();
 						return true;
 					}
@@ -148,39 +159,32 @@ router.get('/', async (req, res, next) => {
 				  fetch("/metamask?publicAddress=" + publicAddress)
 				  .then((response) => (response.json()))
 				  .then((data) => {
-				  	return handleSign({data.nonce, data.publicAddress});
-				  })
-				  .then((res) => {
-				    handleVerify(res);
+				    const nonce = data.nonce;
+				    const publicAddress = data.publicAddress;
+				    const message = "I authorize Metamask to sign my one-time nonce for sign-in to DPT: " + nonce;
+				    return new Promise((resolve, reject) => {
+				    	window.web3.personal.sign(
+				      	window.web3.fromUtf8(message), publicAddress, ((err, signature) => {
+				        	if (err) {
+				          	console.log("Error in signing");
+				        	}
+				        	console.log("Success signing!");
+				        	return resolve({signature: signature, publicAddress: publicAddress}); 
+					      })
+					    )
+				    }).then((data) => {
+				      console.log("Verifying!");
+				      fetch("/verifysig?publicAddress=" + data.publicAddress + "&signature=" + data.signature)
+				      	.then((data) => { return data.json() })
+				      	.then((user) => {
+				      	  console.log("Redirect here");
+
+				      		fetch("/recovermeta?session=" + user.newCookie)
+				      		.then(() => location.reload());
+				      	})
+				    })
 				  })
 				  .catch((err) => console.log(err));
-				}
-
-
-				
-				const handleSign = ({nonce, publicAddress}) => {
-					return new Promise((resolve, reject) => {
-					  const message = "I authorize Metamask to sign my one-time nonce for sign-in to DPT: " + nonce;
-				    window.web3.personal.sign(
-				      window.web3.fromUtf8(message), publicAddress, ((err, signature) => {
-				        if (err) {
-				          console.log("Error in signing");
-				          return reject(err);
-				        }
-				        console.log("Success signing!");
-				        return resolve({signature: signature, publicAddress: publicAddress}); 
-				      })
-				    )
-					});    
-				}
-				
-				const handleVerify = ({publicAddress, signature}) => {
-				  	console.log("Verifying!");
-				    fetch("/verifysig?publicAddress" + publicAddress + "&signature=" + signature)
-				    .then((res) => {
-				      console.log("Redirect here");
-				      fetch("/recovermeta?session=" + res.newCookie)
-				    });				
 				}
 			</script>
 			</body>
@@ -194,9 +198,6 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
-/**
- * Route for creating a new account
- */
 router.get('/recover', async(req, res, next) => {
 	// console.log('recover get ' + req.query.phrase);
 	// console.log("Creating new account");
@@ -234,6 +235,71 @@ router.get('/recover', async(req, res, next) => {
 	}
 });
 
+
+router.get('/recovermeta', async(req, res, next) => {
+	// console.log('recover get ' + req.query.phrase);
+	// console.log("Creating new account");
+	var cookieOptions = {
+		maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
+		signed: true,
+		httpOnly: false
+	}
+
+	// if (req.signedCookies.dptUUID === undefined) {
+	// 	console.log("no cookie found, set new one in get method");
+	// 	// The client need to get the uuid for the first time, it needs to send it back.
+	// 	//		cookieOptions.httpOnly = false;
+	// 	//		res.cookie('dptUUID', dptUUID, cookieOptions)
+	// } else {
+	// 	console.log("use old cookie");
+	// 	dptUUID = cookieParser.signedCookie(req.signedCookies.dptUUID, process.env.DPT_SECRET);
+	// }
+	//
+	// var ret = await userService.userReclaim({ body: { phraseGuess: '', newPhrase: req.query.phrase, dptUUID: dptUUID } });
+	// if (ret.newCookie) {
+	console.log(req.query.session);
+	if (req.query.session) {
+		res.cookie('dptUUID', req.query.session, cookieOptions);
+		await res.writeHead(302, {
+			'Location': '/dpt3d.html'
+			//'Location': '/'
+			//add other headers here...
+		});
+		res.end();
+	} else {
+		console.log("missing cookie?");
+		res.send('bla ');
+		res.status(201);
+	}
+});
+
+router.post('/recovermeta', async(req, res, next) => {
+	var dptUUID;
+	var cookieOptions = {
+		maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
+		signed: true,
+		httpOnly: false
+	}
+	console.log("TEST");
+	console.log(req);
+	if (req.query.session) {
+		res.cookie('dptUUID', req.query.session, cookieOptions);
+		await res.writeHead(302, {
+			'Location': '/dpt3d.html'
+			//'Location': '/'
+			//add other headers here...
+		});
+		res.end();
+	} else {
+		res.send(`<head><link rel="stylesheet" href="dpt_start.css"/></head>
+			<body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png"
+			alt="digital peace talks" height="400" width="400">
+			<br><br><br>200<br><br>${req.query.session}</center></body>`);
+		res.status(201);
+	}
+});
+
+
 router.post('/recover', async(req, res, next) => {
 	var dptUUID;
 	var cookieOptions = {
@@ -267,68 +333,6 @@ router.post('/recover', async(req, res, next) => {
 		res.status(201);
 	}
 });
-//
-// router.get('/metamask', async(req, res, next) => {
-// 	var dptUUID;
-// 	var cookieOptions = {
-// 		maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
-// 		signed: true,
-// 		httpOnly: false
-// 	}
-//
-// 	if (req.signedCookies.dptUUID === undefined) {
-// 		console.log("no cookie found, set new one in get method");
-// 		// The client need to get the uuid for the first time, it needs to send it back.
-// 		//		cookieOptions.httpOnly = false;
-// 		//		res.cookie('dptUUID', dptUUID, cookieOptions)
-// 	} else {
-// 		console.log("use old cookie");
-// 		dptUUID = cookieParser.signedCookie(req.signedCookies.dptUUID, process.env.DPT_SECRET);
-// 	}
-//
-// 	var ret = await userService.retrieveNonce({ body: { publicAddress: req.query.address, dptUUID: dptUUID } });
-// 	if (ret.nonce && ret.publicAddress) {
-//
-//
-// 	} else {
-// 		res.send('Public address/nonce invalid');
-// 		res.status(400);
-// 	}
-// });
-//
-// router.post('/metamask', async(req, res, next) => {
-// 	var dptUUID;
-// 	var cookieOptions = {
-// 		maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
-// 		signed: true,
-// 		httpOnly: false
-// 	}
-// 	if (req.signedCookies.dptUUID === undefined) {
-// 		console.log("no cookie found, set new one");
-// 		// The client need to get the uuid for the first time, it needs to send it back.
-// 		// cookieOptions.httpOnly = false;
-// 		// res.cookie('dptUUID', dptUUID, cookieOptions)
-// 	} else {
-// 		console.log("use old cookie");
-// 		dptUUID = cookieParser.signedCookie(req.signedCookies.dptUUID, process.env.DPT_SECRET);
-// 	}
-// 	var ret = await userService.userReclaim({ body: { phraseGuess: req.body.phraseinput, newPhrase: req.body.phrase, dptUUID: dptUUID } });
-// 	if (ret.newCookie && ret.status == 200) {
-// 		res.cookie('dptUUID', ret.newCookie, cookieOptions);
-// 		await res.writeHead(302, {
-// 			'Location': '/dpt3d.html'
-// 			//'Location': '/'
-// 			//add other headers here...
-// 		});
-// 		res.end();
-// 	} else {
-// 		res.send(`<head><link rel="stylesheet" href="dpt_start.css"/></head>
-// 			<body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png"
-// 			alt="digital peace talks" height="400" width="400">
-// 			<br><br><br>${ret.status}<br><br>${ret.data}</center></body>`);
-// 		res.status(201);
-// 	}
-// });
 
 
 module.exports = router;
