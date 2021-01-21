@@ -6,8 +6,6 @@ const uuid = require('uuid/v4');
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const getPhrase = require('../../lib/phrasegenerator')
-const Web3 = require('web3');
-
 
 const router = new express.Router();
 
@@ -138,23 +136,119 @@ router.get('/', async (req, res, next) => {
 			<br>
 			<br>
 			<br>
+			<script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
 			<script>
-				window.onload = function() {
-				  if (!ethEnabled()) {
-				    // alert("Ethereum and Metamask are not enabled");
+				// window.onload = function() {
+				//   if (!ethEnabled()) {
+				//     // alert("Ethereum and Metamask are not enabled");
+				//   } else {
+				//     // alert("Test message! Ethereum connected!");
+				//   }
+				// }
+				// async function ethEnabled() {
+				// 	if (window.ethereum) {
+				// 	  try {
+				// 	    const accounts = await window.ethereum.request( {
+				// 	    	method: 'eth_requestAccounts'
+				// 	    });
+				// 	    console.log(accounts);
+				// 	  } catch (error) {
+				// 	    if (error.code === 4001) {
+				// 	      console.log("User rejection");
+				// 	    } else {
+				// 	      console.log(error);
+				// 	    }
+				// 	  }
+				// 	}
+				// }
+				
+				async function loginEth() {
+				  const provider = await detectEthereumProvider();
+				  
+				  if (!provider) {
+				    alert("Please install Metamask!");
+				  } else if (provider !== window.ethereum) {
+				    alert('Do you have multiple wallets installed?');
 				  } else {
-				    // alert("Test message! Ethereum connected!");
+				    let currentAccount = null;
+				    try {
+				      const accounts = await window.ethereum.request( {
+					    	method: 'eth_requestAccounts'
+					    });
+				      currentAccount = accounts[0];
+				      if (currentAccount) {
+				        fetch("/metamask?publicAddress=" + currentAccount.toLowerCase())
+				        .then((response) => (response.json()))
+				  			.then((data) => {
+				  			  const nonce = data.nonce;
+				    			const publicAddress = data.publicAddress;
+				    			const message = "I authorize Metamask to sign my one-time nonce for sign-in to DPT: " + nonce;
+				    			// return new Promise((resolve, reject) => {
+				    				window.ethereum.request( {
+				    					method: 'personal_sign',
+				    					params: [publicAddress, message]
+				    				// }).then((data) => console.log(data));
+				    			  // window.ethereum.sign(
+				      			// 	message, publicAddress, ((err, signature) => {
+				        		// 		if (err) {
+				          	// 			console.log("Error in signing");
+				        		// 		}
+				        		// 		console.log("Success signing!");
+				        		// 		return resolve({signature: signature, publicAddress: publicAddress}); 
+					      		// 	})
+					    			// )
+				    			}).then((data) => {
+				    			  console.log("Verifying!");
+				      			fetch("/verifysig?publicAddress=" + publicAddress + "&signature=" + data)
+				      				.then((data) => { return data.json() })
+				      				.then((user) => {
+				      	  			console.log("Redirect here");
+
+				      					fetch("/recovermeta?session=" + user.newCookie)
+				      						.then(() => location.reload());
+				      				})
+				    			})
+				    		})
+				      }
+				    } catch {
+				      
+				    }
 				  }
+				
+				  // fetch("/metamask?publicAddress=" + publicAddress)
+				  // .then((response) => (response.json()))
+				  // .then((data) => {
+				  //   const nonce = data.nonce;
+				  //   const publicAddress = data.publicAddress;
+				  //   const message = "I authorize Metamask to sign my one-time nonce for sign-in to DPT: " + nonce;
+				  //   return new Promise((resolve, reject) => {
+				  //   	window.web3.personal.sign(
+				  //     	window.web3.fromUtf8(message), publicAddress, ((err, signature) => {
+				  //       	if (err) {
+				  //         	console.log("Error in signing");
+				  //       	}
+				  //       	console.log("Success signing!");
+				  //       	return resolve({signature: signature, publicAddress: publicAddress}); 
+					//       })
+					//     )
+				  //   }).then((data) => {
+				  //     console.log("Verifying!");
+				  //     fetch("/verifysig?publicAddress=" + data.publicAddress + "&signature=" + data.signature)
+				  //     	.then((data) => { return data.json() })
+				  //     	.then((user) => {
+				  //     	  console.log("Redirect here");
+          //
+				  //     		fetch("/recovermeta?session=" + user.newCookie)
+				  //     		.then(() => location.reload());
+				  //     	})
+				  //   })
+				  // })
+				  // .catch((err) => console.log(err));
 				}
-				const ethEnabled = () => {
-					if (window.ethereum) {
-						window.web3 = new Web3(window.ethereum);
-						window.ethereum.enable();
-						return true;
-					}
-					return false;
-					}
-				const loginEth = () => {
+				
+				
+				const loginEthOld = () => {
+				  console.log(web3.eth.getAccounts());
 				  const publicAddress = web3.eth.coinbase.toLowerCase();
 				  fetch("/metamask?publicAddress=" + publicAddress)
 				  .then((response) => (response.json()))
