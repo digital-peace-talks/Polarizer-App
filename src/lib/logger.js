@@ -28,5 +28,5 @@ module.exports = config => {
     bunyanConfig.push(logger);
   });
 
-  return bunyan.createLogger({ src: true, name: config.name, streams: bunyanConfig });
+  return bunyan.createLogger({ src: true, name: /*config.name*/"dpt", streams: bunyanConfig });
 };
