@@ -34,6 +34,7 @@ production:
   dbUrl: mongodb+srv://devpatrick:polarizer@testdpt.wfj1w.mongodb.net/test
 
   logger:
+    name: dpt-server
     level: debug
     levels:
       trace:
