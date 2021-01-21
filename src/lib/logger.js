@@ -27,6 +27,11 @@ module.exports = config => {
 
     bunyanConfig.push(logger);
   });
+  console.log("debug");
+  console.log("Here is bunyanConfig");
+  console.log(bunyanConfig);
+  console.log("Here is config");
+  console.log(config);
 
   return bunyan.createLogger({ src: true, name: config.name, streams: bunyanConfig });
 };
