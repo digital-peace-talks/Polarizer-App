@@ -12,6 +12,7 @@ const connection = mongoose.connect(dbUrl, {
   useNewUrlParser: true,
 }, function(error) {
   if(error) {
+    console.log(dbUrl);
     log.error("db error, can't connect " + error.message);
   }
 });
