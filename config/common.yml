@@ -26,12 +26,12 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  dbUrl: mongodb+srv://devpatrick:polarizer@testdpt.wfj1w.mongodb.net/test
+  dbUrl: mongodb+srv://devpatrick:polarizer@testdpt.wfj1w.mongodb.net/test?retryWrites=true&w=majority
 #  dbUrl: mongodb://localhost/dpt-dev
 
 production:
   <<: *defaults
-  dbUrl: mongodb+srv://devpatrick:polarizer@testdpt.wfj1w.mongodb.net/test
+  dbUrl: mongodb+srv://devpatrick:polarizer@testdpt.wfj1w.mongodb.net/test?retryWrites=true&w=majority
 
   logger:
     name: dpt-server
