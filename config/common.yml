@@ -39,7 +39,13 @@ production:
     levels:
       trace:
       debug: STDOUT
-      info: ./log/info.log
-      warn: ./log/warn.log
-      error: ./log/error.log
-      fatal: ./log/fatal.log
+      info: STDOUT
+      warn: STDOUT
+      error: STDERR
+      fatal: STDERR
+
+
+#      info: ./log/info.log
+#      warn: ./log/warn.log
+#      error: ./log/error.log
+#      fatal: ./log/fatal.log
