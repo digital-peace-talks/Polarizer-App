@@ -111,7 +111,7 @@ router.get('/', async (req, res, next) => {
 						<div class="row center">
 						<div class="col"></div>
 							<div class="col">
-								<a href="[target-page]" class="human"><img src="anonymous-login.svg" alt="Anonymous Login with humanID" height="32"></a>
+								<a href="/human" class="human"><img src="anonymous-login.svg" alt="Anonymous Login with humanID" height="32"></a>
 							</div>
 							<div class="col"></div>
 						</div>
@@ -138,29 +138,6 @@ router.get('/', async (req, res, next) => {
 			<br>
 			<script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
 			<script>
-				// window.onload = function() {
-				//   if (!ethEnabled()) {
-				//     // alert("Ethereum and Metamask are not enabled");
-				//   } else {
-				//     // alert("Test message! Ethereum connected!");
-				//   }
-				// }
-				// async function ethEnabled() {
-				// 	if (window.ethereum) {
-				// 	  try {
-				// 	    const accounts = await window.ethereum.request( {
-				// 	    	method: 'eth_requestAccounts'
-				// 	    });
-				// 	    console.log(accounts);
-				// 	  } catch (error) {
-				// 	    if (error.code === 4001) {
-				// 	      console.log("User rejection");
-				// 	    } else {
-				// 	      console.log(error);
-				// 	    }
-				// 	  }
-				// 	}
-				// }
 				
 				async function loginEth() {
 				  const provider = await detectEthereumProvider();
@@ -187,16 +164,7 @@ router.get('/', async (req, res, next) => {
 				    				window.ethereum.request( {
 				    					method: 'personal_sign',
 				    					params: [publicAddress, message]
-				    				// }).then((data) => console.log(data));
-				    			  // window.ethereum.sign(
-				      			// 	message, publicAddress, ((err, signature) => {
-				        		// 		if (err) {
-				          	// 			console.log("Error in signing");
-				        		// 		}
-				        		// 		console.log("Success signing!");
-				        		// 		return resolve({signature: signature, publicAddress: publicAddress}); 
-					      		// 	})
-					    			// )
+
 				    			}).then((data) => {
 				    			  console.log("Verifying!");
 				      			fetch("/verifysig?publicAddress=" + publicAddress + "&signature=" + data)
@@ -211,75 +179,11 @@ router.get('/', async (req, res, next) => {
 				    		})
 				      }
 				    } catch {
-				      
+				    	console.log("Unable to access ETH accounts");
 				    }
 				  }
-				
-				  // fetch("/metamask?publicAddress=" + publicAddress)
-				  // .then((response) => (response.json()))
-				  // .then((data) => {
-				  //   const nonce = data.nonce;
-				  //   const publicAddress = data.publicAddress;
-				  //   const message = "I authorize Metamask to sign my one-time nonce for sign-in to DPT: " + nonce;
-				  //   return new Promise((resolve, reject) => {
-				  //   	window.web3.personal.sign(
-				  //     	window.web3.fromUtf8(message), publicAddress, ((err, signature) => {
-				  //       	if (err) {
-				  //         	console.log("Error in signing");
-				  //       	}
-				  //       	console.log("Success signing!");
-				  //       	return resolve({signature: signature, publicAddress: publicAddress}); 
-					//       })
-					//     )
-				  //   }).then((data) => {
-				  //     console.log("Verifying!");
-				  //     fetch("/verifysig?publicAddress=" + data.publicAddress + "&signature=" + data.signature)
-				  //     	.then((data) => { return data.json() })
-				  //     	.then((user) => {
-				  //     	  console.log("Redirect here");
-          //
-				  //     		fetch("/recovermeta?session=" + user.newCookie)
-				  //     		.then(() => location.reload());
-				  //     	})
-				  //   })
-				  // })
-				  // .catch((err) => console.log(err));
 				}
 				
-				
-				const loginEthOld = () => {
-				  console.log(web3.eth.getAccounts());
-				  const publicAddress = web3.eth.coinbase.toLowerCase();
-				  fetch("/metamask?publicAddress=" + publicAddress)
-				  .then((response) => (response.json()))
-				  .then((data) => {
-				    const nonce = data.nonce;
-				    const publicAddress = data.publicAddress;
-				    const message = "I authorize Metamask to sign my one-time nonce for sign-in to DPT: " + nonce;
-				    return new Promise((resolve, reject) => {
-				    	window.web3.personal.sign(
-				      	window.web3.fromUtf8(message), publicAddress, ((err, signature) => {
-				        	if (err) {
-				          	console.log("Error in signing");
-				        	}
-				        	console.log("Success signing!");
-				        	return resolve({signature: signature, publicAddress: publicAddress}); 
-					      })
-					    )
-				    }).then((data) => {
-				      console.log("Verifying!");
-				      fetch("/verifysig?publicAddress=" + data.publicAddress + "&signature=" + data.signature)
-				      	.then((data) => { return data.json() })
-				      	.then((user) => {
-				      	  console.log("Redirect here");
-
-				      		fetch("/recovermeta?session=" + user.newCookie)
-				      		.then(() => location.reload());
-				      	})
-				    })
-				  })
-				  .catch((err) => console.log(err));
-				}
 			</script>
 			</body>
 			</html>`);

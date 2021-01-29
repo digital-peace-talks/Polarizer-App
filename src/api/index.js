@@ -49,6 +49,7 @@ app.use(favicon(process.cwd()+'/static/favicon.ico'));
 app.use("/metadata", require("./routes/metadata"));
 app.use("/metamask", require("./routes/metamask"));
 app.use("/verifysig", require("./routes/verifysig"));
+app.use("/human", require("./routes/human"));
 app.use("/user", require("./routes/user"));
 app.use("/topic", require("./routes/topic"));
 app.use("/opinion", require("./routes/opinion"));
