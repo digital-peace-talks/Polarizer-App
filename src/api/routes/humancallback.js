@@ -20,12 +20,12 @@ router.get("/", async (req, res, next) => {
   try {
     const exchange = decodeURIComponent(req.query.et);
     const requestBody = {
-      "exchangeToken" : exchange
+      exchangeToken : exchange
     }
     console.log(exchange);
     fetch('https://core.human-id.org/v0.0.3/server/users/exchange', {
       method: 'post',
-      body: requestBody,
+      body: JSON.stringify(requestBody),
       headers: { 'client-id': process.env.DPT_HUMAN_ID, 'client-secret': process.env.DPT_HUMAN_SECRET, 'Content-Type': 'application/json' }
     })
       .then(res => console.log(res))
