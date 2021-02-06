@@ -28,6 +28,11 @@ router.get("/", async (req, res, next) => {
     })
       .then(res => res.json())
       .then(json => console.log(json))
+      // TODO: Implement recovery similar to verifysig to find a user. If user does not exist by humanID create new
+      // If the user does exist, generate new cookie
+      // TODO: Synchronize human/phrase/metamask in a meaningful way in model
+      // Metamask address should be unique - required, essentially.
+      // humanID is also unique.
       .catch(err => console.log("Unable to reach humanID server: " + err))
 
   } catch (err) {
