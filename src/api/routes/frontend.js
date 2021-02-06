@@ -255,7 +255,6 @@ router.get('/recovermeta', async(req, res, next) => {
 	//
 	// var ret = await userService.userReclaim({ body: { phraseGuess: '', newPhrase: req.query.phrase, dptUUID: dptUUID } });
 	// if (ret.newCookie) {
-	console.log(req.query.session);
 	if (req.query.session) {
 		res.cookie('dptUUID', req.query.session, cookieOptions);
 		await res.writeHead(302, {

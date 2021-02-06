@@ -15,7 +15,7 @@ router.get("/", async (req, res, next) => {
     .then(res => res.json())
     .then((json) => {
       console.log(json);
-      // res.status(301).redirect(json.data.webLoginUrl)
+      res.status(301).redirect(json.data.webLoginUrl)
     })
     .catch(err => console.log("Unable to reach humanID server: " + err))
 
