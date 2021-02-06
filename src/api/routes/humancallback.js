@@ -19,11 +19,14 @@ router.get("/", async (req, res, next) => {
   console.log(encoded);
   try {
     const exchange = decodeURIComponent(req.query.et);
+    const requestBody = {
+      "exchangeToken" : exchange
+    }
     console.log(exchange);
     fetch('https://core.human-id.org/v0.0.3/server/users/exchange', {
       method: 'post',
-      headers: { 'client-id': process.env.DPT_HUMAN_ID, 'client-secret': process.env.DPT_HUMAN_SECRET, 'Content-Type': 'application/json' },
-      body: { "exchangeToken": exchange }
+      body: requestBody,
+      headers: { 'client-id': process.env.DPT_HUMAN_ID, 'client-secret': process.env.DPT_HUMAN_SECRET, 'Content-Type': 'application/json' }
     })
       .then(res => console.log(res))
       .catch(err => console.log("Unable to reach humanID server: " + err))
