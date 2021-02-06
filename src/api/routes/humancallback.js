@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
 
   const encoded = req.query.et;
   try {
-    const exchange = decodeURI(req.query.et);
+    const exchange = decodeURIComponent(req.query.et);
     fetch('https://core.human-id.org/v0.0.3/server/users/exchange', {
       method: 'post',
       headers: { 'client-id': process.env.DPT_HUMAN_ID, 'client-secret': process.env.DPT_HUMAN_SECRET, 'Content-Type': 'application/json' },
