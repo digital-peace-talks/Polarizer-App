@@ -57,6 +57,8 @@ app.use("/opinion", require("./routes/opinion"));
 app.use("/dialog", require("./routes/dialog"));
 app.use("/canvas", require("./routes/canvas"));
 app.use("/misc", require("./routes/misc"));
+app.use("/recover", require("./routes/recoverphrase"));
+app.use("/recovermeta", require("./routes/recovermeta"));
 app.use(express.static("static"));
 app.use(express.static("html"));
 app.use(express.static("css"));

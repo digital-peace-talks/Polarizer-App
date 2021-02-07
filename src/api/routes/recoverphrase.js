@@ -4,8 +4,9 @@ const User = require('../models/user');
 const userService = require('../services/user');
 const uuid = require('uuid/v4');
 const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
 const getPhrase = require('../../lib/phrasegenerator')
+
+const router = new express.Router();
 
 router.get('/', async(req, res, next) => {
   // console.log('recover get ' + req.query.phrase);

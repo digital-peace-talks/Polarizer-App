@@ -196,6 +196,8 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
+/*
+
 router.get('/recover', async(req, res, next) => {
 	// console.log('recover get ' + req.query.phrase);
 	// console.log("Creating new account");
@@ -331,5 +333,7 @@ router.post('/recover', async(req, res, next) => {
 	}
 });
 
+
+ */
 
 module.exports = router;
