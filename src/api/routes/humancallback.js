@@ -1,6 +1,7 @@
 const express = require("express");
 const fetch = require('node-fetch');
 const router = new express.Router();
+const User = require("../models/user").userModel;
 
 /**
  *
@@ -27,7 +28,29 @@ router.get("/", async (req, res, next) => {
       headers: { 'client-id': process.env.DPT_HUMAN_ID, 'client-secret': process.env.DPT_HUMAN_SECRET, 'Content-Type': 'application/json' }
     })
       .then(res => res.json())
-      .then(json => console.log(json))
+      .then(json => {
+        const userHuman = json.data.userAppId;
+        let userAccount = User.findOne({ humanID: userHuman });
+        console.log(userAccount);
+        if (!userAccount) {
+          const new_user = new User;
+          new_user.publicKey = uuid();
+          new_user.phrase = options.body.newPhrase;
+          new_user.signupTime = new Date();
+          new_user.preferences = {
+            colorScheme: 0,
+          }
+          userAccount = User.create(new_user);
+          console.log("created new account! debug");
+          console.log(userAccount);
+          return({
+            newCookie: new_user.publicKey,
+            status: 200
+          });
+        }
+
+
+      })
       // TODO: Implement recovery similar to verifysig to find a user. If user does not exist by humanID create new
       // If the user does exist, generate new cookie
       // TODO: Synchronize human/phrase/metamask in a meaningful way in model

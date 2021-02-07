@@ -97,6 +97,8 @@ module.exports.onlineUsers = async (options) => {
 	};
 }
 
+
+
 module.exports.whoamiByDptUUID = async (options) => {
 	var user = Lo_.find(global.dptNS.online, {dptUUID: options.body.dptUUID});
 	if(user.registered) {
