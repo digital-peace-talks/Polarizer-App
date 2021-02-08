@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const crypto = require('crypto');
-const generate = require("../../lib/utils.js").generateNonce;
 const onlineTimesSchema = mongoose.Schema({
 	login: {type: Date, default: Date.now},
 	logout: {type: Date, default: Date.now},
@@ -25,16 +24,28 @@ const userSchema = mongoose.Schema({
 	publicKey: { type: String, unique: true, required: true },
 
 	// Login phrase for BIP-39 style authentication
-	phrase: { type: String, unique: true},
+	phrase: { type: String, index: {
+		unique: true, sparse: true,
+			partialFilterExpression: {phrase: {$type: "string"}}
+		}},
 
 	// Public address for ETH wallet utilizing Metamask
-	publicAddress: {type: String, unique: true},
+	publicAddress: {type: String, index: {
+			unique: true, sparse: true,
+			partialFilterExpression: {phrase: {$type: "string"}}
+		}},
 
 	// Nonce for Metamask/web3 wallet login
-	nonce: {type: String, unique: true, default: generate},
+	nonce: {type: String, index: {
+			unique: true, sparse: true,
+			partialFilterExpression: {phrase: {$type: "string"}}
+		}},
 
 	// humanID
-	humanID: {type: String, unique: true},
+	humanID: {type: String, index: {
+			unique: true, sparse: true,
+			partialFilterExpression: {phrase: {$type: "string"}}
+		}},
 
 	// Defines type of login chosen for user
 	authType: {type: String},

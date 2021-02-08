@@ -6,8 +6,6 @@ const uuid = require('uuid/v4');
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const getPhrase = require('../../lib/phrasegenerator')
-const Web3 = require('web3');
-
 
 const router = new express.Router();
 
@@ -75,7 +73,7 @@ router.get('/', async (req, res, next) => {
 					<div class="links">
 						<h1>Create a new account</h1>
 						<p>
-							Digital Peace Talks uses a randomly generated passphraze to authenticate you.
+							Digital Peace Talks uses a randomly generated passphrase to authenticate you.
 						</p>
 						<h3><i>The passphrase cannot be recovered.</i></h3> 
 						<p>You can find your passphrase anytime at <code>menu>settings</code></p>
@@ -107,6 +105,28 @@ router.get('/', async (req, res, next) => {
 						</div>
 						</form>
 					</div>
+					<div class="rechts">
+						<h1>Sign in with humanID</h1>
+						<p>Sign in anonymously and securely through humanID using a phone number</p>
+						<div class="row center">
+						<div class="col"></div>
+							<div class="col">
+								<a href="/human" class="human"><img src="anonymous-login.svg" alt="Anonymous Login with humanID" height="32"></a>
+							</div>
+							<div class="col"></div>
+						</div>
+					</div>
+					<div class="rechts">
+						<h1>Sign in with Metamask</h1>
+						<p>Sign in using your Metamask crypto wallet</p>
+						<div class="row center">
+						<div class="col"></div>
+							<div class="col">
+								<button type="button" onclick="loginEth();" class="start" name="metamask">Authenticate with Metamask &#9655;</button>
+							</div>
+							<div class="col"></div>
+						</div>
+					</div>
 				</div>
 			<footer>
 				Please be aware that DPT grants everyone the right to voice their opinion. Even if it is, within the boundaries of the German federal law, extreme. Nobody, on the other hand, will ever be allowed to cross your personal boundaries in DPT (one strike policy).
@@ -116,22 +136,54 @@ router.get('/', async (req, res, next) => {
 			<br>
 			<br>
 			<br>
+			<script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
 			<script>
-				window.onload = function() {
-				  if (!ethEnabled()) {
-				    alert("No eth??");
+				
+				async function loginEth() {
+				  const provider = await detectEthereumProvider();
+				  
+				  if (!provider) {
+				    alert("Please install Metamask!");
+				  } else if (provider !== window.ethereum) {
+				    alert('Do you have multiple wallets installed?');
 				  } else {
-				    alert("Test message! Ethereum connected!");
+				    let currentAccount = null;
+				    try {
+				      const accounts = await window.ethereum.request( {
+					    	method: 'eth_requestAccounts'
+					    });
+				      currentAccount = accounts[0];
+				      if (currentAccount) {
+				        fetch("/metamask?publicAddress=" + currentAccount.toLowerCase())
+				        .then((response) => (response.json()))
+				  			.then((data) => {
+				  			  const nonce = data.nonce;
+				    			const publicAddress = data.publicAddress;
+				    			const message = "I authorize Metamask to sign my one-time nonce for sign-in to DPT: " + nonce;
+				    			// return new Promise((resolve, reject) => {
+				    				window.ethereum.request( {
+				    					method: 'personal_sign',
+				    					params: [publicAddress, message]
+
+				    			}).then((data) => {
+				    			  console.log("Verifying!");
+				      			fetch("/verifysig?publicAddress=" + publicAddress + "&signature=" + data)
+				      				.then((data) => { return data.json() })
+				      				.then((user) => {
+				      	  			console.log("Redirect here");
+
+				      					fetch("/recover-alt?session=" + user.newCookie)
+				      						.then(() => location.reload());
+				      				})
+				    			})
+				    		})
+				      }
+				    } catch {
+				    	console.log("Unable to access ETH accounts");
+				    }
 				  }
 				}
-				const ethEnabled = () => {
-					if (window.ethereum) {
-						window.web3 = new Web3(window.ethereum);
-						window.ethereum.enable();
-						return true;
-					}
-					return false;
-					}
+				
 			</script>
 			</body>
 			</html>`);
@@ -144,9 +196,8 @@ router.get('/', async (req, res, next) => {
 	}
 });
 
-/**
- * Route for creating a new account
- */
+/*
+
 router.get('/recover', async(req, res, next) => {
 	// console.log('recover get ' + req.query.phrase);
 	// console.log("Creating new account");
@@ -169,6 +220,7 @@ router.get('/recover', async(req, res, next) => {
 
 	var ret = await userService.userReclaim({ body: { phraseGuess: '', newPhrase: req.query.phrase, dptUUID: dptUUID } });
 	if (ret.newCookie) {
+		console.log("new cookie?");
 		res.cookie('dptUUID', ret.newCookie, cookieOptions);
 		await res.writeHead(302, {
 			'Location': '/dpt3d.html'
@@ -177,10 +229,75 @@ router.get('/recover', async(req, res, next) => {
 		});
 		res.end();
 	} else {
+		console.log("old cookie?");
 		res.send('bla ' + req.body.phraseinput);
 		res.status(201);
 	}
 });
+
+
+router.get('/recovermeta', async(req, res, next) => {
+	// console.log('recover get ' + req.query.phrase);
+	// console.log("Creating new account");
+	var cookieOptions = {
+		maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
+		signed: true,
+		httpOnly: false
+	}
+
+	// if (req.signedCookies.dptUUID === undefined) {
+	// 	console.log("no cookie found, set new one in get method");
+	// 	// The client need to get the uuid for the first time, it needs to send it back.
+	// 	//		cookieOptions.httpOnly = false;
+	// 	//		res.cookie('dptUUID', dptUUID, cookieOptions)
+	// } else {
+	// 	console.log("use old cookie");
+	// 	dptUUID = cookieParser.signedCookie(req.signedCookies.dptUUID, process.env.DPT_SECRET);
+	// }
+	//
+	// var ret = await userService.userReclaim({ body: { phraseGuess: '', newPhrase: req.query.phrase, dptUUID: dptUUID } });
+	// if (ret.newCookie) {
+	if (req.query.session) {
+		res.cookie('dptUUID', req.query.session, cookieOptions);
+		await res.writeHead(302, {
+			'Location': '/dpt3d.html'
+			//'Location': '/'
+			//add other headers here...
+		});
+		res.end();
+	} else {
+		console.log("missing cookie?");
+		res.send('bla ');
+		res.status(201);
+	}
+});
+
+router.post('/recovermeta', async(req, res, next) => {
+	var dptUUID;
+	var cookieOptions = {
+		maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
+		signed: true,
+		httpOnly: false
+	}
+	console.log("TEST");
+	console.log(req);
+	if (req.query.session) {
+		res.cookie('dptUUID', req.query.session, cookieOptions);
+		await res.writeHead(302, {
+			'Location': '/dpt3d.html'
+			//'Location': '/'
+			//add other headers here...
+		});
+		res.end();
+	} else {
+		res.send(`<head><link rel="stylesheet" href="dpt_start.css"/></head>
+			<body><center><img src="https://www.digitalpeacetalks.com/img/DPT_Logo_Ball_blue.png"
+			alt="digital peace talks" height="400" width="400">
+			<br><br><br>200<br><br>${req.query.session}</center></body>`);
+		res.status(201);
+	}
+});
+
 
 router.post('/recover', async(req, res, next) => {
 	var dptUUID;
@@ -216,41 +333,7 @@ router.post('/recover', async(req, res, next) => {
 	}
 });
 
-router.get('/metamask', async(req, res, next) => {
-	// console.log('recover get ' + req.query.phrase);
-	// console.log("Creating new account");
-	var dptUUID;
-	var cookieOptions = {
-		maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
-		signed: true,
-		httpOnly: false
-	}
 
-	if (req.signedCookies.dptUUID === undefined) {
-		console.log("no cookie found, set new one in get method");
-		// The client need to get the uuid for the first time, it needs to send it back.
-		//		cookieOptions.httpOnly = false;
-		//		res.cookie('dptUUID', dptUUID, cookieOptions)
-	} else {
-		console.log("use old cookie");
-		dptUUID = cookieParser.signedCookie(req.signedCookies.dptUUID, process.env.DPT_SECRET);
-	}
-
-	var ret = await userService.userReclaim({ body: { phraseGuess: '', newPhrase: req.query.phrase, dptUUID: dptUUID } });
-	if (ret.newCookie) {
-		res.cookie('dptUUID', ret.newCookie, cookieOptions);
-		await res.writeHead(302, {
-			'Location': '/dpt3d.html'
-			//'Location': '/'
-			//add other headers here...
-		});
-		res.end();
-	} else {
-		res.send('bla ' + req.body.phraseinput);
-		res.status(201);
-	}
-});
-
-
+ */
 
 module.exports = router;
