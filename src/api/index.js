@@ -59,7 +59,6 @@ app.use("/canvas", require("./routes/canvas"));
 app.use("/misc", require("./routes/misc"));
 app.use("/recover", require("./routes/recoverphrase"));
 app.use("/recover-alt", require("./routes/recover-alt"));
-app.use("/recover-human", require("./routes/recover-human"));
 app.use(express.static("static"));
 app.use(express.static("html"));
 app.use(express.static("css"));

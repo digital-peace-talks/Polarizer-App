@@ -42,12 +42,6 @@ router.get("/", async (req, res, next) => {
         res.redirect(baseURL + '/dpt3d.html');
         res.end();
 
-        // if (ret.newCookie) {
-        //   const baseURL = process.env.BASE_URL;
-        //   return fetch(baseURL + "/recover-human?session=" + ret.newCookie);
-        // } else {
-        //   res.status(400).send("Error in sign-in");
-        // }
       })
         .catch(err => console.log(err));
 
