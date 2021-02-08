@@ -1,7 +1,8 @@
 const express = require("express");
 const fetch = require('node-fetch');
-const router = new express.Router();
+const uuid = require("uuid/v4");
 const User = require("../models/user").userModel;
+const router = new express.Router();
 
 /**
  *
@@ -28,15 +29,12 @@ router.get("/", async (req, res, next) => {
       headers: { 'client-id': process.env.DPT_HUMAN_ID, 'client-secret': process.env.DPT_HUMAN_SECRET, 'Content-Type': 'application/json' }
     })
       .then(res => res.json())
-      .then(json => {
-        console.log("Attempt to read humanID data from response...");
-        console.log(json);
-        console.log(json.data);
-        console.log(json.data.appUserId);
-        const userHuman = json.data.appUserId;
-        let userAccount = User.findOne({ humanID: userHuman });
-
+      .then(json => User.findOne( { humanID: json.data.appUserId }))
+      .then(userAccount => {
+        console.log("checking promise!");
+        console.log(userAccount);
         if (!userAccount) {
+          console.log("No account found!");
           const new_user = new User;
           new_user.publicKey = uuid();
           new_user.phrase = options.body.newPhrase;
@@ -52,15 +50,18 @@ router.get("/", async (req, res, next) => {
             status: 200
           });
         }
-
-
       })
+
+
+
+
+
       // TODO: Implement recovery similar to verifysig to find a user. If user does not exist by humanID create new
       // If the user does exist, generate new cookie
       // TODO: Synchronize human/phrase/metamask in a meaningful way in model
       // Metamask address should be unique - required, essentially.
       // humanID is also unique.
-      .catch(err => console.log("Unable to reach humanID server: " + err))
+      .catch(err => console.log(err))
 
   } catch (err) {
     // Malformed URI
