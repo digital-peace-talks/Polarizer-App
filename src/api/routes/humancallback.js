@@ -37,7 +37,7 @@ router.get("/", async (req, res, next) => {
           signed: true,
           httpOnly: false
         }
-        res.cookie('dptUUID', req.query.session, cookieOptions);
+        res.cookie('dptUUID', ret.newCookie, cookieOptions);
         const baseURL = process.env.BASE_URL;
         res.redirect(baseURL + '/dpt3d.html');
         res.end();
