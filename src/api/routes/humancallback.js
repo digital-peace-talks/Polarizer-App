@@ -34,7 +34,7 @@ router.get("/", async (req, res, next) => {
       .then(ret => {
         if (ret.newCookie) {
           const baseURL = process.env.BASE_URL;
-          fetch(baseURL + "/recover-alt?session=" + ret.newCookie);
+          return fetch(baseURL + "/recover-human?session=" + ret.newCookie);
         } else {
           res.status(400).send("Error in sign-in");
         }

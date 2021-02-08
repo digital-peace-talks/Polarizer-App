@@ -45,7 +45,7 @@ router.get('/', async(req, res, next) => {
   }
 });
 
-router.post('/recover', async(req, res, next) => {
+router.post('/', async(req, res, next) => {
   var dptUUID;
   var cookieOptions = {
     maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
