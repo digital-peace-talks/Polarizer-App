@@ -172,7 +172,7 @@ router.get('/', async (req, res, next) => {
 				      				.then((user) => {
 				      	  			console.log("Redirect here");
 
-				      					fetch("/recovermeta?session=" + user.newCookie)
+				      					fetch("/recover-alt?session=" + user.newCookie)
 				      						.then(() => location.reload());
 				      				})
 				    			})
