@@ -29,10 +29,10 @@ router.get("/", async (req, res, next) => {
     })
       .then(res => res.json())
       .then(json => {
-        console.log("Attempt to read humanID data from response: " + json.data.userAppId);
+        console.log("Attempt to read humanID data from response: " + json);
         const userHuman = json.data.userAppId;
         let userAccount = User.findOne({ humanID: userHuman });
-        console.log(userAccount);
+
         if (!userAccount) {
           const new_user = new User;
           new_user.publicKey = uuid();
