@@ -25,25 +25,25 @@ const userSchema = mongoose.Schema({
 
 	// Login phrase for BIP-39 style authentication
 	phrase: { type: String, index: {
-		unique: true,
+		unique: true, sparse: true,
 			partialFilterExpression: {phrase: {$type: "string"}}
 		}},
 
 	// Public address for ETH wallet utilizing Metamask
 	publicAddress: {type: String, index: {
-			unique: true,
+			unique: true, sparse: true,
 			partialFilterExpression: {phrase: {$type: "string"}}
 		}},
 
 	// Nonce for Metamask/web3 wallet login
 	nonce: {type: String, index: {
-			unique: true,
+			unique: true, sparse: true,
 			partialFilterExpression: {phrase: {$type: "string"}}
 		}},
 
 	// humanID
 	humanID: {type: String, index: {
-			unique: true,
+			unique: true, sparse: true,
 			partialFilterExpression: {phrase: {$type: "string"}}
 		}},
 
