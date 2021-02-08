@@ -32,7 +32,8 @@ router.get("/", async (req, res, next) => {
         console.log("Attempt to read humanID data from response...");
         console.log(json);
         console.log(json.data);
-        const userHuman = json.data.userAppId;
+        console.log(json.data.appUserId);
+        const userHuman = json.data.appUserId;
         let userAccount = User.findOne({ humanID: userHuman });
 
         if (!userAccount) {
