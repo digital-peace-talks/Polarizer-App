@@ -33,7 +33,8 @@ router.get("/", async (req, res, next) => {
       .then(json => userService.humanReclaim( { body: { humanID: json.data.appUserId }}))
       .then(ret => {
         if (ret.newCookie) {
-          fetch("/recoveralt?session=" + ret.newCookie);
+          const baseURL = process.env.BASE_URL;
+          fetch(baseURL + "/recoveralt?session=" + ret.newCookie);
         } else {
           res.status(400).send("Error in sign-in");
         }
