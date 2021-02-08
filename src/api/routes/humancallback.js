@@ -32,12 +32,22 @@ router.get("/", async (req, res, next) => {
       .then(res => res.json())
       .then(json => userService.humanReclaim( { body: { humanID: json.data.appUserId }}))
       .then(ret => {
-        if (ret.newCookie) {
-          const baseURL = process.env.BASE_URL;
-          return fetch(baseURL + "/recover-human?session=" + ret.newCookie);
-        } else {
-          res.status(400).send("Error in sign-in");
+        const cookieOptions = {
+          maxAge: 31536000000, // 1000 * 60 * 60 * 24 * 365 ===> Valid for one year
+          signed: true,
+          httpOnly: false
         }
+        res.cookie('dptUUID', req.query.session, cookieOptions);
+        const baseURL = process.env.BASE_URL;
+        res.redirect(baseURL + '/dpt3d.html');
+        res.end();
+
+        // if (ret.newCookie) {
+        //   const baseURL = process.env.BASE_URL;
+        //   return fetch(baseURL + "/recover-human?session=" + ret.newCookie);
+        // } else {
+        //   res.status(400).send("Error in sign-in");
+        // }
       })
         .catch(err => console.log(err));
 
