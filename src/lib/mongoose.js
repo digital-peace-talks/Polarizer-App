@@ -4,7 +4,7 @@ const config = require("../lib/config");
 const logger	= require("../lib/logger");
 const log		= logger(config.logger);
 
-const dbUrl = config.dbUrl;
+const dbUrl = config.dbUrl || process.env.MONGODB_URI;
 // Connect to the server
 
 
@@ -12,6 +12,7 @@ const connection = mongoose.connect(dbUrl, {
   useNewUrlParser: true,
 }, function(error) {
   if(error) {
+    console.log(dbUrl);
     log.error("db error, can't connect " + error.message);
   }
 });

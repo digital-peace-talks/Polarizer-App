@@ -5,7 +5,31 @@ const User = require("../models/user").userModel;
 const uuid = require('uuid/v4');
 const Lo_ = require('lodash');
 
+module.exports.humanReclaim = async (options) => {
+	const userByHumanID = await User.findOne( { humanID: options.body.humanID });
+	if (userByHumanID) {
+		console.log("User with humanID exists!");
+		return({
+			newCookie: userByHumanID.publicKey,
+			status: 200
+		});
+	} else {
+		const new_user = new User;
+		new_user.publicKey = uuid();
+		new_user.humanID = options.body.humanID;
+		new_user.signupTime = new Date();
+		new_user.preferences = {
+			colorScheme: 0,
+		}
+		const user = await User.create(new_user);
+		console.log(user);
+		return({
+			newCookie: new_user.publicKey,
+			status: 200
+		});
+	}
 
+}
 
 module.exports.userReclaim = async (options) => {
 	var status = 200;
@@ -97,6 +121,8 @@ module.exports.onlineUsers = async (options) => {
 		data: users
 	};
 }
+
+
 
 module.exports.whoamiByDptUUID = async (options) => {
 	var user = Lo_.find(global.dptNS.online, {dptUUID: options.body.dptUUID});
