@@ -4,7 +4,7 @@ const config = require("../lib/config");
 const logger	= require("../lib/logger");
 const log		= logger(config.logger);
 
-const dbUrl = process.env.MONGODB_URI || config.dbUrl;
+const dbUrl = config.dbUrl || process.env.MONGODB_URI;
 // Connect to the server
 
 
