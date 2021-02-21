@@ -2,15 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const crypto = require('crypto');
 const onlineTimesSchema = mongoose.Schema({
-	login: {type: Date, default: Date.now},
-	logout: {type: Date, default: Date.now},
+	login: { type: Date, default: Date.now },
+	logout: { type: Date, default: Date.now },
 });
 
 const preferencesSchema = mongoose.Schema({
 	colorScheme: { type: Number },
-	htmlScheme: {type: Number },
-	stealthMode: {type: Boolean, default: true },
-	guidedTour: {type: Boolean, default: true },
+	htmlScheme: { type: Number },
+	stealthMode: { type: Boolean, default: true },
+	guidedTour: { type: Boolean, default: true },
 });
 
 /**
@@ -24,37 +24,37 @@ const userSchema = mongoose.Schema({
 	publicKey: { type: String, unique: true, required: true },
 
 	// Login phrase for BIP-39 style authentication
-	phrase: { type: String, index: {
+	phrase: {
+		type: String, index: true,
 		unique: true, sparse: true,
-			partialFilterExpression: {phrase: {$type: "string"}}
-		}},
+	},
 
 	// Public address for ETH wallet utilizing Metamask
-	publicAddress: {type: String, index: {
-			unique: true, sparse: true,
-			partialFilterExpression: {phrase: {$type: "string"}}
-		}},
+	publicAddress: {
+		type: String, index: true,
+		unique: true, sparse: true,
+	},
 
 	// Nonce for Metamask/web3 wallet login
-	nonce: {type: String, index: {
-			unique: true, sparse: true,
-			partialFilterExpression: {phrase: {$type: "string"}}
-		}},
+	nonce: {
+		type: String, index: true,
+		unique: true, sparse: true,
+	},
 
 	// humanID
-	humanID: {type: String, index: {
-			unique: true, sparse: true,
-			partialFilterExpression: {phrase: {$type: "string"}}
-		}},
+	humanID: {
+		type: String, index: true,
+		unique: true, sparse: true,
+	},
 
 	// Defines type of login chosen for user
-	authType: {type: String},
+	authType: { type: String },
 
 	topics: [{ type: Schema.Types.ObjectId, ref: "Topic" }],
 	opinions: [{ type: Schema.Types.ObjectId, ref: "Opinion" }],
 	dialogs: [{ type: Schema.Types.ObjectId, ref: "Dialog" }],
 	signupTime: { type: Date, required: true },
-	onlineTimes: [ onlineTimesSchema ],
+	onlineTimes: [onlineTimesSchema],
 	preferences: preferencesSchema,
 });
 
