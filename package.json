@@ -21,7 +21,7 @@
     "dotenv": "^8.2.0",
     "eth-sig-util": "^3.0.0",
     "ethereumjs-util": "^7.0.7",
-    "express": ">=4.17.1",
+    "express": ">=4.17.3",
     "jsonwebtoken": ">=8.5.1",
     "mongoose": ">=5.7.5",
     "node-fetch": "^2.6.1",
