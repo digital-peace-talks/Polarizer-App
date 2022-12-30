@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@types/mongoose": ">=5.5.1",
-    "mocha": ">=6.2.0",
+    "mocha": ">=10.2.0",
     "nodemon": "^2.0.2",
     "sass": "^1.26.3"
   }
